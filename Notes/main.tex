@@ -10,6 +10,16 @@
 % Load shared preamble (packages, macros, notation)
 \input{preamble}
 
+% --- Solutions toggle ---
+% Set \solutionstrue to include solutions; \solutionsfalse to omit them.
+% The build script (build.sh) compiles both versions automatically.
+% Usage: \ifsolutions ... \fi around solution content
+\newif\ifsolutions
+% Default: solutions OFF (overridden by build.sh via \def\showsolutions{})
+\ifdefined\showsolutions
+    \solutionstrue
+\fi
+
 % --- Page geometry ---
 \usepackage[margin=1in,headheight=14.5pt]{geometry}
 
@@ -27,7 +37,10 @@
     {\Huge \textbf{Learning to Lens}} \\[0.5cm]
     {\Large An Introduction to General Relativity \\
     and Strong Gravitational Lensing} \\[1cm]
-    {\large with Mathematica}
+    {\large with Mathematica} \\[0.5cm]
+    \ifsolutions
+        {\normalsize\color{BrickRed}\textbf{--- Instructor Edition (with Solutions) ---}}
+    \fi
 }
 \author{
     Rodrigo Cordova Rosado \\
@@ -101,6 +114,8 @@ and scripts in the \texttt{Mathematica/} directory of this repository.
 \part{General Relativity Foundations}
 
 \include{01a_Special_Relativity/01a_Special_Relativity}
+\ifsolutions\input{01a_Special_Relativity/01a_Solutions}\fi
+
 \include{01b_Differential_Geometry/01b_Differential_Geometry}
 \include{01c_Schwarzschild/01c_Schwarzschild}
 \include{01d_Geodesics_Orbits/01d_Geodesics_Orbits}

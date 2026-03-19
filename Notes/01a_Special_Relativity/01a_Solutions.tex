@@ -1,0 +1,126 @@
+% =============================================================================
+% Module 1a: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:sr_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{01a_Special_Relativity/problems\_01a.wl}{problems\_01a.wl},
+which verifies each answer symbolically.
+
+% ----- Exercise 1.1 -----
+\subsection*{Exercise~\ref{ex:interval_classification}: Interval Classification}
+
+We compute $(\Delta s)^2 = -(\Delta t)^2 + (\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2$:
+\begin{enumerate}[label=(\alph*)]
+    \item $(\Delta s)^2 = -(2)^2 + (1)^2 + (1)^2 + (0)^2 = -4 + 1 + 1 = -2 < 0$
+          $\Rightarrow$ \textbf{Timelike}.  A massive particle can travel between these events.
+
+    \item $(\Delta s)^2 = -(1)^2 + (1)^2 + (0)^2 + (0)^2 = 0$
+          $\Rightarrow$ \textbf{Null}.  A light ray connects these events.
+
+    \item $(\Delta s)^2 = -(3)^2 + (1)^2 + (2)^2 + (2)^2 = -9 + 1 + 4 + 4 = 0$
+          $\Rightarrow$ \textbf{Null}.  Again lightlike: $|\Delta\mathbf{x}|^2 = 9 = (\Delta t)^2$.
+\end{enumerate}
+
+% ----- Exercise 1.2 -----
+\subsection*{Exercise~\ref{ex:boost_composition}: Boost Composition}
+
+The boost matrix for rapidity $\phi$ is
+$\Lambda(\phi) = \begin{psmallmatrix} \cosh\phi & -\sinh\phi \\ -\sinh\phi & \cosh\phi \end{psmallmatrix}$
+(showing only the $t$--$x$ block).  Computing the product:
+\begin{align*}
+    \Lambda(\phi_1)\,\Lambda(\phi_2)
+    &= \begin{pmatrix}
+        \cosh\phi_1\cosh\phi_2 + \sinh\phi_1\sinh\phi_2 &
+        -\cosh\phi_1\sinh\phi_2 - \sinh\phi_1\cosh\phi_2 \\
+        -\sinh\phi_1\cosh\phi_2 - \cosh\phi_1\sinh\phi_2 &
+        \sinh\phi_1\sinh\phi_2 + \cosh\phi_1\cosh\phi_2
+    \end{pmatrix} \\
+    &= \begin{pmatrix}
+        \cosh(\phi_1+\phi_2) & -\sinh(\phi_1+\phi_2) \\
+        -\sinh(\phi_1+\phi_2) & \cosh(\phi_1+\phi_2)
+    \end{pmatrix}
+    = \Lambda(\phi_1 + \phi_2) \,,
+\end{align*}
+using the hyperbolic addition formulas.
+
+For the velocity addition formula, we use $v = \tanh\phi$:
+\begin{equation*}
+    v = \tanh(\phi_1 + \phi_2)
+    = \frac{\tanh\phi_1 + \tanh\phi_2}{1 + \tanh\phi_1\tanh\phi_2}
+    = \frac{v_1 + v_2}{1 + v_1 v_2} \,.
+\end{equation*}
+Note: for $v_1 = v_2 = 1$ (speed of light), $v = 2/2 = 1$, confirming
+that the speed of light is invariant.
+
+% ----- Exercise 1.3 -----
+\subsection*{Exercise~\ref{ex:four_velocity_norm}: Four-Velocity Norm}
+
+The four-velocity is $U^\mu = \gamma(1, v^1, v^2, v^3)$ where
+$\gamma = (1 - v^2)^{-1/2}$ and $v^2 = (v^1)^2 + (v^2)^2 + (v^3)^2$.
+Then:
+\begin{align*}
+    U^\mu U_\mu &= \eta_{\mu\nu} U^\mu U^\nu
+    = \gamma^2\bigl[-(1)^2 + (v^1)^2 + (v^2)^2 + (v^3)^2\bigr] \\
+    &= \gamma^2(-1 + v^2)
+    = \frac{-(1 - v^2)}{1 - v^2}
+    = \boxed{-1} \,.
+\end{align*}
+
+% ----- Exercise 1.4 -----
+\subsection*{Exercise~\ref{ex:photon_energy}: Photon Energy (Relativistic Doppler)}
+
+\textbf{(a)} A photon with energy $E$ propagating at angle $\theta$ to the
+$x$-axis has four-momentum $p^\mu = E(1, \cos\theta, \sin\theta, 0)$.
+Applying the boost $\Lambda$ along $x$:
+\begin{equation*}
+    E' = p^{0'} = \gamma(p^0 - v\,p^1) = \gamma E(1 - v\cos\theta) \,.
+\end{equation*}
+
+\textbf{(b)} Special cases:
+\begin{itemize}
+    \item $\theta = 0$ (photon along $+x$, same direction as boost):
+    $E' = \gamma E(1-v) = E\sqrt{\frac{1-v}{1+v}}$.
+    This is a \textbf{redshift} ($E' < E$).  The observer recedes from the source.
+
+    \item $\theta = \pi/2$ (transverse):
+    $E' = \gamma E = E/\sqrt{1-v^2}$.
+    This is the \textbf{transverse Doppler effect} --- a purely relativistic
+    blueshift with no classical analogue, arising from time dilation.
+\end{itemize}
+
+% ----- Exercise 1.5 -----
+\subsection*{Exercise~\ref{ex:em_tensor}: Electromagnetic Field Strength Tensor}
+
+\textbf{(a)} By inspection, $F_{\mu\nu} = -F_{\nu\mu}$ (the matrix is
+antisymmetric: the diagonal is zero, and off-diagonal elements differ by a sign).
+
+\textbf{(b)} Raising both indices with the metric:
+$F^{\mu\nu} = \eta^{\mu\alpha}\eta^{\nu\beta}F_{\alpha\beta}$.
+In matrix form: $F^{\mu\nu} = \eta \cdot F_{\mu\nu} \cdot \eta$.
+The result is:
+\[
+    F^{\mu\nu} =
+    \begin{pmatrix}
+    0 & E_1 & E_2 & E_3 \\
+    -E_1 & 0 & B_3 & -B_2 \\
+    -E_2 & -B_3 & 0 & B_1 \\
+    -E_3 & B_2 & -B_1 & 0
+    \end{pmatrix}
+\]
+The electric field components flip sign (from raising the time index),
+while the magnetic components are unchanged.
+
+\textbf{(c)} The Lorentz scalar:
+\begin{align*}
+    F_{\mu\nu}F^{\mu\nu}
+    &= 2\bigl(-E_1^2 - E_2^2 - E_3^2 + B_1^2 + B_2^2 + B_3^2\bigr) \\
+    &= 2(|\mathbf{B}|^2 - |\mathbf{E}|^2) \,.
+\end{align*}
+This is a Lorentz invariant: all inertial observers agree on the value of
+$|\mathbf{B}|^2 - |\mathbf{E}|^2$.

@@ -35,10 +35,13 @@ Reference_Texts/
 *.run.xml
 *-blx.bib
 
-# Compiled PDFs from Notes — keep main.pdf for distribution, ignore sub-pdfs
+# LaTeX intermediate PDFs
 Notes/**/*.pdf
-# NOTE: We track Notes/main.pdf so students can access the compiled notes
-!Notes/main.pdf
+Notes/*.pdf
+
+# Final compiled PDFs live in Output/ — track both versions
+!Output/Learning_to_Lens.pdf
+!Output/Learning_to_Lens_Solutions.pdf
 
 # Keep Figures PDFs (these are exported from Mathematica)
 !Figures/**/*.pdf
