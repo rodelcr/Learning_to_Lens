@@ -21,3 +21,13 @@ Timestamped record of major milestones and work completed.
 - Meneghetti 2021 — Lensing with Python examples (adapting to Mathematica)
 - Schneider et al. 1992 — Classic monograph
 - Petters et al. 2001 — Singularity theory approach
+
+---
+
+## 2026-03-19 — Module 1a: Special Relativity & Tensor Basics
+
+- **LaTeX notes** (`Notes/01a_Special_Relativity/01a_Special_Relativity.tex`): 9 sections covering spacetime interval, Minkowski metric, index notation, Lorentz transforms, four-vectors, dual vectors, tensors, stress-energy tensor. 5 exercises.
+- **`lorentz_transforms.wl`**: Symbolic verification of Lorentz boost/rotation properties. All 7 checks pass (metric preservation, rapidity addition, velocity addition, time dilation, interval invariance, four-velocity norm).
+- **`four_vectors.nb`**: Interactive notebook — spacetime diagrams, light cones, Lorentz boost axis tilting, Lorentz factor plot, twin paradox, index manipulation.
+- **LaTeX compiled**: `main.pdf` builds cleanly (28 pages). Fixed `\order` conflict with `physics` package and `\headheight` warning.
+- Added `README.md` with full setup instructions and `environment.yml` for conda.

@@ -35,9 +35,10 @@ Reference_Texts/
 *.run.xml
 *-blx.bib
 
-# Compiled PDFs from Notes (keep the source .tex files)
+# Compiled PDFs from Notes — keep main.pdf for distribution, ignore sub-pdfs
 Notes/**/*.pdf
-Notes/*.pdf
+# NOTE: We track Notes/main.pdf so students can access the compiled notes
+!Notes/main.pdf
 
 # Keep Figures PDFs (these are exported from Mathematica)
 !Figures/**/*.pdf
