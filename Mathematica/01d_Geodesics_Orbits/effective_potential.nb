@@ -1,0 +1,862 @@
+Notebook[{
+
+(* =========================================================================
+   effective_potential.nb
+   Module 1d: Geodesics and Orbits in Schwarzschild Spacetime
+   =========================================================================
+   Purpose: Interactive visualizations of geodesic motion:
+            1. Manipulate: V_eff with sliders for L and epsilon
+            2. Orbit integration: precessing ellipse via NDSolve
+            3. Photon sphere: effective potential for photons
+
+   Sources: Carroll Ch. 5 (Secs. 5.4--5.5), Figs. 5.4--5.5
+            Congdon & Keeton Ch. 3.3.3
+
+   Units:   G = c = M = 1 throughout (geometrized units)
+            Rs = 2 in these units
+   ========================================================================= *)
+
+Cell[TextData[{"Module 1d: Effective Potential and Orbit Visualization"}], "Title"],
+
+Cell[TextData[{"This notebook provides interactive visualizations of geodesic \
+motion in Schwarzschild spacetime. All computations use geometrized units \
+G = c = M = 1, where the Schwarzschild radius Rs = 2. The effective \
+potential is V_eff(r) = -epsilon/r + L^2/(2r^2) - L^2/r^3, and the \
+effective energy equation is (1/2)(dr/dlambda)^2 + V_eff = (E^2 - epsilon)/2."}], "Text"],
+
+(* =====================================================================
+   Section 1: Interactive Effective Potential with Manipulate
+   =====================================================================
+   Sliders for angular momentum L (range 3 to 6) and particle type
+   epsilon (0 for photons, 1 for massive particles).
+   Circular orbit radii are marked on the plot.
+   ===================================================================== *)
+
+Cell[TextData[{"1. Interactive Effective Potential"}], "Section"],
+
+Cell[TextData[{"Use the sliders to vary the angular momentum L and switch \
+between massive particles (epsilon = 1) and photons (epsilon = 0). \
+Circular orbits occur at extrema of V_eff: minima are stable, maxima are \
+unstable. For massive particles, the ISCO occurs at L = 2*Sqrt[3] ~ 3.46 \
+where the stable and unstable circular orbits merge at r = 6."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Define the effective potential in G=c=M=1 units *)"}],
+    RowBox[{
+        RowBox[{
+            RowBox[{"Veff", "[",
+                RowBox[{"r_", ",", " ", "LL_", ",", " ", "eps_"}],
+            "]"}], " ", ":=", " ",
+            RowBox[{
+                RowBox[{"-", " ",
+                    RowBox[{"eps", "/", "r"}]
+                }], " ", "+", " ",
+                RowBox[{
+                    RowBox[{"LL", "^", "2"}], "/",
+                    RowBox[{"(", RowBox[{"2", " ",
+                        RowBox[{"r", "^", "2"}]
+                    }], ")"}]
+                }], " ", "-", " ",
+                RowBox[{
+                    RowBox[{"LL", "^", "2"}], "/",
+                    RowBox[{"r", "^", "3"}]
+                }]
+            }]
+        }], ";"
+    }]
+}], "Input"],
+
+Cell[BoxData[{
+    RowBox[{"(* Interactive Manipulate: V_eff with sliders for L and epsilon *)"}],
+    RowBox[{"(* Circular orbit radii are computed and marked dynamically *)"}],
+    RowBox[{
+        RowBox[{"Manipulate", "[", "\n",
+            RowBox[{
+                RowBox[{"Module", "[",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{
+                                "dV", ",", " ", "circRoots", ",", " ",
+                                "realRoots", ",", " ", "markers", ",", " ",
+                                "plotRange", ",", " ", "titleStr"
+                            }],
+                        "}"}], ",", "\n",
+                        RowBox[{
+                            RowBox[{"(* Compute dV/dr and find circular orbit radii *)"}], "\n",
+                            RowBox[{"dV", " ", "=", " ",
+                                RowBox[{"D", "[",
+                                    RowBox[{
+                                        RowBox[{"Veff", "[", RowBox[{"r", ",", " ", "Lval", ",", " ", "epsVal"}], "]"}],
+                                        ",", " ", "r"
+                                    }],
+                                "]"}]
+                            }], ";", "\n",
+                            RowBox[{"circRoots", " ", "=", " ",
+                                RowBox[{
+                                    RowBox[{"r", " ", "/.", " ",
+                                        RowBox[{"Solve", "[",
+                                            RowBox[{
+                                                RowBox[{"dV", " ", "==", " ", "0"}],
+                                                ",", " ", "r"
+                                            }],
+                                        "]"}]
+                                    }]
+                                }]
+                            }], ";", "\n",
+                            RowBox[{"(* Keep only real, positive roots *)"}], "\n",
+                            RowBox[{"realRoots", " ", "=", " ",
+                                RowBox[{"Select", "[",
+                                    RowBox[{"circRoots", ",", " ",
+                                        RowBox[{
+                                            RowBox[{
+                                                RowBox[{"Im", "[", "#", "]"}], " ", "==", " ", "0"
+                                            }], " ", "&&", " ",
+                                            RowBox[{"#", " ", ">", " ", "2"}],
+                                            " ", "&"
+                                        }]
+                                    }],
+                                "]"}]
+                            }], ";", "\n",
+                            RowBox[{"(* Build markers for circular orbit radii *)"}], "\n",
+                            RowBox[{"markers", " ", "=", " ",
+                                RowBox[{"Table", "[", "\n",
+                                    RowBox[{
+                                        RowBox[{"Module", "[",
+                                            RowBox[{
+                                                RowBox[{"{",
+                                                    RowBox[{"rv", ",", " ", "vv", ",", " ", "d2v", ",", " ",
+                                                        "col", ",", " ", "lab"
+                                                    }],
+                                                "}"}], ",", "\n",
+                                                RowBox[{
+                                                    RowBox[{"rv", " ", "=", " ", "rr"}], ";", "\n",
+                                                    RowBox[{"vv", " ", "=", " ",
+                                                        RowBox[{"Veff", "[", RowBox[{"rv", ",", " ", "Lval", ",", " ", "epsVal"}], "]"}]
+                                                    }], ";", "\n",
+                                                    RowBox[{"d2v", " ", "=", " ",
+                                                        RowBox[{
+                                                            RowBox[{"D", "[",
+                                                                RowBox[{
+                                                                    RowBox[{"Veff", "[", RowBox[{"r", ",", " ", "Lval", ",", " ", "epsVal"}], "]"}],
+                                                                    ",", " ",
+                                                                    RowBox[{"{", RowBox[{"r", ",", " ", "2"}], "}"}]
+                                                                }],
+                                                            "]"}], " ", "/.", " ",
+                                                            RowBox[{"r", " ", "->", " ", "rv"}]
+                                                        }]
+                                                    }], ";", "\n",
+                                                    RowBox[{"col", " ", "=", " ",
+                                                        RowBox[{"If", "[",
+                                                            RowBox[{
+                                                                RowBox[{"d2v", " ", ">", " ", "0"}], ",", " ",
+                                                                RowBox[{"Darker", "[", "Green", "]"}], ",", " ",
+                                                                "Red"
+                                                            }],
+                                                        "]"}]
+                                                    }], ";", "\n",
+                                                    RowBox[{"lab", " ", "=", " ",
+                                                        RowBox[{"If", "[",
+                                                            RowBox[{
+                                                                RowBox[{"d2v", " ", ">", " ", "0"}], ",", " ",
+                                                                "\"Stable\"", ",", " ",
+                                                                "\"Unstable\""
+                                                            }],
+                                                        "]"}]
+                                                    }], ";", "\n",
+                                                    RowBox[{"{",
+                                                        RowBox[{
+                                                            "col", ",", " ",
+                                                            RowBox[{"PointSize", "[", "0.02", "]"}], ",", " ",
+                                                            RowBox[{"Point", "[",
+                                                                RowBox[{"{", RowBox[{"rv", ",", " ", "vv"}], "}"}],
+                                                            "]"}], ",", "\n",
+                                                            RowBox[{"Text", "[",
+                                                                RowBox[{
+                                                                    RowBox[{"Style", "[",
+                                                                        RowBox[{
+                                                                            RowBox[{"Row", "[",
+                                                                                RowBox[{"{",
+                                                                                    RowBox[{
+                                                                                        "lab", ",", " ",
+                                                                                        "\"\\nr=\"", ",", " ",
+                                                                                        RowBox[{"NumberForm", "[", RowBox[{"rv", ",", " ", RowBox[{"{", RowBox[{"4", ",", " ", "1"}], "}"}]}], "]"}]
+                                                                                    }],
+                                                                                "}"}],
+                                                                            "]"}], ",", " ",
+                                                                            "10", ",", " ", "col"
+                                                                        }],
+                                                                    "]"}], ",", " ",
+                                                                    RowBox[{"{",
+                                                                        RowBox[{
+                                                                            RowBox[{"rv", " ", "+", " ", "3"}], ",", " ",
+                                                                            RowBox[{"vv", " ", "+", " ", "0.005"}]
+                                                                        }],
+                                                                    "}"}]
+                                                                }],
+                                                            "]"}]
+                                                        }],
+                                                    "}"}]
+                                                }]
+                                            }],
+                                        "]"}], ",", " ",
+                                        RowBox[{"{", RowBox[{"rr", ",", " ", "realRoots"}], "}"}]
+                                    }],
+                                "]"}]
+                            }], ";", "\n",
+                            RowBox[{"(* Set plot range depending on particle type *)"}], "\n",
+                            RowBox[{"plotRange", " ", "=", " ",
+                                RowBox[{"If", "[",
+                                    RowBox[{
+                                        RowBox[{"epsVal", " ", "==", " ", "1"}], ",", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"0", ",", " ", "40"}], "}"}], ",", " ",
+                                                RowBox[{"{", RowBox[{RowBox[{"-", "0.1"}], ",", " ", "0.06"}], "}"}]
+                                            }],
+                                        "}"}], ",", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"0", ",", " ", "30"}], "}"}], ",", " ",
+                                                RowBox[{"{", RowBox[{RowBox[{"-", "0.02"}], ",", " ", "0.1"}], "}"}]
+                                            }],
+                                        "}"}]
+                                    }],
+                                "]"}]
+                            }], ";", "\n",
+                            RowBox[{"titleStr", " ", "=", " ",
+                                RowBox[{"If", "[",
+                                    RowBox[{
+                                        RowBox[{"epsVal", " ", "==", " ", "1"}], ",", " ",
+                                        "\"Massive Particle\"", ",", " ",
+                                        "\"Photon\""
+                                    }],
+                                "]"}]
+                            }], ";", "\n",
+                            RowBox[{"(* Generate the plot *)"}], "\n",
+                            RowBox[{"Show", "[", "\n",
+                                RowBox[{
+                                    RowBox[{"Plot", "[",
+                                        RowBox[{
+                                            RowBox[{"Veff", "[", RowBox[{"r", ",", " ", "Lval", ",", " ", "epsVal"}], "]"}], ",", " ",
+                                            RowBox[{"{", RowBox[{"r", ",", " ", "2.01", ",", " ", "40"}], "}"}], ",", "\n",
+                                            RowBox[{"PlotRange", " ", "->", " ", "plotRange"}], ",", "\n",
+                                            RowBox[{"PlotStyle", " ", "->", " ",
+                                                RowBox[{"{", RowBox[{"Blue", ",", " ", "Thick"}], "}"}]
+                                            }], ",", "\n",
+                                            RowBox[{"AxesLabel", " ", "->", " ",
+                                                RowBox[{"{",
+                                                    RowBox[{"\"r (GM/c\\[TwoSuperior])\"", ",", " ",
+                                                        RowBox[{"Subscript", "[", RowBox[{"\"V\"", ",", " ", "\"eff\""}], "]"}]
+                                                    }],
+                                                "}"}]
+                                            }], ",", "\n",
+                                            RowBox[{"PlotLabel", " ", "->", " ",
+                                                RowBox[{"Style", "[",
+                                                    RowBox[{
+                                                        RowBox[{"Row", "[",
+                                                            RowBox[{"{",
+                                                                RowBox[{
+                                                                    "\"V_eff (\"", ",", " ",
+                                                                    "titleStr", ",", " ",
+                                                                    "\", L = \"", ",", " ",
+                                                                    RowBox[{"NumberForm", "[", RowBox[{"Lval", ",", " ", RowBox[{"{", RowBox[{"3", ",", " ", "1"}], "}"}]}], "]"}], ",", " ",
+                                                                    "\")\""
+                                                                }],
+                                                            "}"}],
+                                                        "]"}], ",", " ", "13"
+                                                    }],
+                                                "]"}]
+                                            }], ",", "\n",
+                                            RowBox[{"ImageSize", " ", "->", " ", "550"}]
+                                        }],
+                                    "]"}], ",", "\n",
+                                    RowBox[{"(* Mark the horizon at r = 2 *)"}], "\n",
+                                    RowBox[{"Graphics", "[",
+                                        RowBox[{"{", "\n",
+                                            RowBox[{
+                                                RowBox[{"{",
+                                                    RowBox[{"Gray", ",", " ", "Dashed", ",", " ",
+                                                        RowBox[{"InfiniteLine", "[",
+                                                            RowBox[{"{",
+                                                                RowBox[{
+                                                                    RowBox[{"{", RowBox[{"2", ",", " ", RowBox[{"-", "1"}]}], "}"}], ",", " ",
+                                                                    RowBox[{"{", RowBox[{"2", ",", " ", "1"}], "}"}]
+                                                                }],
+                                                            "}"}],
+                                                        "]"}]
+                                                    }],
+                                                "}"}], ",", "\n",
+                                                RowBox[{"Text", "[",
+                                                    RowBox[{
+                                                        RowBox[{"Style", "[", RowBox[{"\"Horizon\"", ",", " ", "9", ",", " ", "Gray"}], "]"}], ",", " ",
+                                                        RowBox[{"{", RowBox[{"3.5", ",", " ",
+                                                            RowBox[{
+                                                                RowBox[{"plotRange", "[",
+                                                                    RowBox[{"[", RowBox[{"2", ",", " ", "1"}], "]"}],
+                                                                "]"}], " ", "+", " ", "0.005"
+                                                            }]
+                                                        }], "}"}]
+                                                    }],
+                                                "]"}], ",", "\n",
+                                                RowBox[{"(* Mark ISCO at r = 6 for massive particles *)"}], "\n",
+                                                RowBox[{"If", "[",
+                                                    RowBox[{
+                                                        RowBox[{"epsVal", " ", "==", " ", "1"}], ",", "\n",
+                                                        RowBox[{"{",
+                                                            RowBox[{
+                                                                "Orange", ",", " ", "Dashed", ",", " ",
+                                                                RowBox[{"AbsoluteThickness", "[", "1", "]"}], ",", " ",
+                                                                RowBox[{"InfiniteLine", "[",
+                                                                    RowBox[{"{",
+                                                                        RowBox[{
+                                                                            RowBox[{"{", RowBox[{"6", ",", " ", RowBox[{"-", "1"}]}], "}"}], ",", " ",
+                                                                            RowBox[{"{", RowBox[{"6", ",", " ", "1"}], "}"}]
+                                                                        }],
+                                                                    "}"}],
+                                                                "]"}], ",", "\n",
+                                                                RowBox[{"Text", "[",
+                                                                    RowBox[{
+                                                                        RowBox[{"Style", "[", RowBox[{"\"ISCO (r=6)\"", ",", " ", "9", ",", " ", "Orange"}], "]"}], ",", " ",
+                                                                        RowBox[{"{", RowBox[{"8", ",", " ",
+                                                                            RowBox[{
+                                                                                RowBox[{"plotRange", "[",
+                                                                                    RowBox[{"[", RowBox[{"2", ",", " ", "1"}], "]"}],
+                                                                                "]"}], " ", "+", " ", "0.005"
+                                                                            }]
+                                                                        }], "}"}]
+                                                                    }],
+                                                                "]"}]
+                                                            }],
+                                                        "}"}], ",", "\n",
+                                                        RowBox[{"{", "}"}]
+                                                    }],
+                                                "]"}], ",", "\n",
+                                                RowBox[{"(* Mark photon sphere at r = 3 for photons *)"}], "\n",
+                                                RowBox[{"If", "[",
+                                                    RowBox[{
+                                                        RowBox[{"epsVal", " ", "==", " ", "0"}], ",", "\n",
+                                                        RowBox[{"{",
+                                                            RowBox[{
+                                                                "Orange", ",", " ", "Dashed", ",", " ",
+                                                                RowBox[{"AbsoluteThickness", "[", "1", "]"}], ",", " ",
+                                                                RowBox[{"InfiniteLine", "[",
+                                                                    RowBox[{"{",
+                                                                        RowBox[{
+                                                                            RowBox[{"{", RowBox[{"3", ",", " ", RowBox[{"-", "1"}]}], "}"}], ",", " ",
+                                                                            RowBox[{"{", RowBox[{"3", ",", " ", "1"}], "}"}]
+                                                                        }],
+                                                                    "}"}],
+                                                                "]"}], ",", "\n",
+                                                                RowBox[{"Text", "[",
+                                                                    RowBox[{
+                                                                        RowBox[{"Style", "[", RowBox[{"\"Photon sphere (r=3)\"", ",", " ", "9", ",", " ", "Orange"}], "]"}], ",", " ",
+                                                                        RowBox[{"{", RowBox[{"7", ",", " ",
+                                                                            RowBox[{
+                                                                                RowBox[{"plotRange", "[",
+                                                                                    RowBox[{"[", RowBox[{"2", ",", " ", "1"}], "]"}],
+                                                                                "]"}], " ", "+", " ", "0.005"
+                                                                            }]
+                                                                        }], "}"}]
+                                                                    }],
+                                                                "]"}]
+                                                            }],
+                                                        "}"}], ",", "\n",
+                                                        RowBox[{"{", "}"}]
+                                                    }],
+                                                "]"}], ",", "\n",
+                                                RowBox[{"(* Circular orbit markers *)"}], "\n",
+                                                RowBox[{"Sequence", " ", "@@", " ", "markers"}]
+                                            }],
+                                        "}"}],
+                                    "]"}]
+                                }],
+                            "]"}]
+                        }]
+                    }],
+                "]"}], ",", "\n",
+                RowBox[{"(* Slider for angular momentum L *)"}], "\n",
+                RowBox[{"{",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{"Lval", ",", " ", "4.0", ",", " ",
+                                "\"Angular momentum L\""
+                            }],
+                        "}"}], ",", " ", "3.0", ",", " ", "6.0", ",", " ", "0.05",
+                        ",", " ",
+                        RowBox[{"Appearance", " ", "->", " ", "\"Labeled\""}]
+                    }],
+                "}"}], ",", "\n",
+                RowBox[{"(* Selector for epsilon *)"}], "\n",
+                RowBox[{"{",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{"epsVal", ",", " ", "1", ",", " ",
+                                "\"Particle type \\[Epsilon]\""
+                            }],
+                        "}"}], ",", " ",
+                        RowBox[{"{",
+                            RowBox[{
+                                RowBox[{"1", " ", "->", " ", "\"Massive (\\[Epsilon]=1)\""}], ",", " ",
+                                RowBox[{"0", " ", "->", " ", "\"Photon (\\[Epsilon]=0)\""}]
+                            }],
+                        "}"}]
+                    }],
+                "}"}]
+            }],
+        "]"}]
+    }]
+}], "Input"],
+
+(* =====================================================================
+   Section 2: Orbit Integration — Precessing Ellipse
+   =====================================================================
+   Integrate the orbit equation using NDSolve with the substitution
+   u = 1/r as a function of phi.  The equation is:
+     d^2u/dphi^2 + u = epsilon/L^2 + 3u^2
+   (in G=c=M=1 units, where GM/L^2 = 1/L^2 for epsilon part, and
+    the GR correction is 3*GM*u^2 = 3u^2).
+   ===================================================================== *)
+
+Cell[TextData[{"2. Orbit Integration: Precessing Ellipse"}], "Section"],
+
+Cell[TextData[{"We integrate the relativistic orbit equation using the \
+substitution u = 1/r as a function of phi. The equation is \
+d^2u/dphi^2 + u = 1/p + 3u^2, where p = L^2 (in G=c=M=1 units) and \
+the last term is the GR correction. For comparison, the Newtonian orbit \
+(without the 3u^2 term) is a closed ellipse. The GR correction causes \
+the perihelion to precess."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Orbit integration: compare Newtonian (closed ellipse) vs GR (precessing) *)"}],
+    RowBox[{
+        RowBox[{"Manipulate", "[", "\n",
+            RowBox[{
+                RowBox[{"Module", "[",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{
+                                "p", ",", " ", "solGR", ",", " ", "solNewt", ",", " ",
+                                "uGR", ",", " ", "uNewt", ",", " ",
+                                "rGR", ",", " ", "rNewt", ",", " ",
+                                "phiMax"
+                            }],
+                        "}"}], ",", "\n",
+                        RowBox[{
+                            RowBox[{"p", " ", "=", " ",
+                                RowBox[{"Lorb", "^", "2"}]
+                            }], ";", "\n",
+                            RowBox[{"phiMax", " ", "=", " ",
+                                RowBox[{"nOrbits", " ", "*", " ", "2", " ", "*", " ", "Pi"}]
+                            }], ";", "\n",
+                            RowBox[{"(* GR orbit equation: d^2u/dphi^2 + u = 1/p + 3*u^2 *)"}], "\n",
+                            RowBox[{"solGR", " ", "=", " ",
+                                RowBox[{"NDSolve", "[",
+                                    RowBox[{
+                                        RowBox[{"{", "\n",
+                                            RowBox[{
+                                                RowBox[{
+                                                    RowBox[{
+                                                        RowBox[{"u", "''"}], "[", "phi", "]"
+                                                    }], " ", "+", " ",
+                                                    RowBox[{"u", "[", "phi", "]"}], " ", "==", " ",
+                                                    RowBox[{
+                                                        RowBox[{"1", "/", "p"}], " ", "+", " ",
+                                                        RowBox[{"3", " ",
+                                                            RowBox[{
+                                                                RowBox[{"u", "[", "phi", "]"}], "^", "2"
+                                                            }]
+                                                        }]
+                                                    }]
+                                                }], ",", "\n",
+                                                RowBox[{
+                                                    RowBox[{"u", "[", "0", "]"}], " ", "==", " ",
+                                                    RowBox[{
+                                                        RowBox[{"(", RowBox[{"1", " ", "+", " ", "ecc"}], ")"}],
+                                                        "/", "p"
+                                                    }]
+                                                }], ",", "\n",
+                                                RowBox[{
+                                                    RowBox[{
+                                                        RowBox[{"u", "'"}], "[", "0", "]"
+                                                    }], " ", "==", " ", "0"
+                                                }]
+                                            }],
+                                        "}"}], ",", " ",
+                                        "u", ",", " ",
+                                        RowBox[{"{", RowBox[{"phi", ",", " ", "0", ",", " ", "phiMax"}], "}"}]
+                                    }],
+                                "]"}]
+                            }], ";", "\n",
+                            RowBox[{"(* Newtonian orbit: d^2u/dphi^2 + u = 1/p (no GR term) *)"}], "\n",
+                            RowBox[{"solNewt", " ", "=", " ",
+                                RowBox[{"NDSolve", "[",
+                                    RowBox[{
+                                        RowBox[{"{", "\n",
+                                            RowBox[{
+                                                RowBox[{
+                                                    RowBox[{
+                                                        RowBox[{"u", "''"}], "[", "phi", "]"
+                                                    }], " ", "+", " ",
+                                                    RowBox[{"u", "[", "phi", "]"}], " ", "==", " ",
+                                                    RowBox[{"1", "/", "p"}]
+                                                }], ",", "\n",
+                                                RowBox[{
+                                                    RowBox[{"u", "[", "0", "]"}], " ", "==", " ",
+                                                    RowBox[{
+                                                        RowBox[{"(", RowBox[{"1", " ", "+", " ", "ecc"}], ")"}],
+                                                        "/", "p"
+                                                    }]
+                                                }], ",", "\n",
+                                                RowBox[{
+                                                    RowBox[{
+                                                        RowBox[{"u", "'"}], "[", "0", "]"
+                                                    }], " ", "==", " ", "0"
+                                                }]
+                                            }],
+                                        "}"}], ",", " ",
+                                        "u", ",", " ",
+                                        RowBox[{"{", RowBox[{"phi", ",", " ", "0", ",", " ", "phiMax"}], "}"}]
+                                    }],
+                                "]"}]
+                            }], ";", "\n",
+                            RowBox[{"uGR", " ", "=", " ",
+                                RowBox[{"u", " ", "/.", " ",
+                                    RowBox[{"First", "[", "solGR", "]"}]
+                                }]
+                            }], ";", "\n",
+                            RowBox[{"uNewt", " ", "=", " ",
+                                RowBox[{"u", " ", "/.", " ",
+                                    RowBox[{"First", "[", "solNewt", "]"}]
+                                }]
+                            }], ";", "\n",
+                            RowBox[{"rGR", "[", "phi_", "]"}], " ", ":=", " ",
+                            RowBox[{"1", "/", RowBox[{"uGR", "[", "phi", "]"}]}], ";", "\n",
+                            RowBox[{"rNewt", "[", "phi_", "]"}], " ", ":=", " ",
+                            RowBox[{"1", "/", RowBox[{"uNewt", "[", "phi", "]"}]}], ";", "\n",
+                            RowBox[{"(* Plot both orbits *)"}], "\n",
+                            RowBox[{"Show", "[", "\n",
+                                RowBox[{
+                                    RowBox[{"PolarPlot", "[",
+                                        RowBox[{
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    RowBox[{"rGR", "[", "phi", "]"}], ",", " ",
+                                                    RowBox[{"rNewt", "[", "phi", "]"}]
+                                                }],
+                                            "}"}], ",", " ",
+                                            RowBox[{"{", RowBox[{"phi", ",", " ", "0", ",", " ", "phiMax"}], "}"}], ",", "\n",
+                                            RowBox[{"PlotStyle", " ", "->", " ",
+                                                RowBox[{"{",
+                                                    RowBox[{
+                                                        RowBox[{"{", RowBox[{"Blue", ",", " ",
+                                                            RowBox[{"AbsoluteThickness", "[", "1.5", "]"}]
+                                                        }], "}"}], ",", " ",
+                                                        RowBox[{"{", RowBox[{"Gray", ",", " ", "Dashed", ",", " ",
+                                                            RowBox[{"AbsoluteThickness", "[", "1", "]"}]
+                                                        }], "}"}]
+                                                    }],
+                                                "}"}]
+                                            }], ",", "\n",
+                                            RowBox[{"PlotRange", " ", "->", " ", "All"}], ",", "\n",
+                                            RowBox[{"PlotLabel", " ", "->", " ",
+                                                RowBox[{"Style", "[",
+                                                    RowBox[{
+                                                        RowBox[{"Row", "[",
+                                                            RowBox[{"{",
+                                                                RowBox[{
+                                                                    "\"Orbit: L=\"", ",", " ",
+                                                                    RowBox[{"NumberForm", "[", RowBox[{"Lorb", ",", " ", RowBox[{"{", RowBox[{"3", ",", " ", "1"}], "}"}]}], "]"}], ",", " ",
+                                                                    "\", e=\"", ",", " ",
+                                                                    RowBox[{"NumberForm", "[", RowBox[{"ecc", ",", " ", RowBox[{"{", RowBox[{"2", ",", " ", "1"}], "}"}]}], "]"}]
+                                                                }],
+                                                            "}"}],
+                                                        "]"}], ",", " ", "13"
+                                                    }],
+                                                "]"}]
+                                            }], ",", "\n",
+                                            RowBox[{"PlotLegends", " ", "->", " ",
+                                                RowBox[{"Placed", "[",
+                                                    RowBox[{
+                                                        RowBox[{"{", RowBox[{"\"GR\"", ",", " ", "\"Newtonian\""}], "}"}], ",", " ",
+                                                        "Bottom"
+                                                    }],
+                                                "]"}]
+                                            }], ",", "\n",
+                                            RowBox[{"ImageSize", " ", "->", " ", "500"}]
+                                        }],
+                                    "]"}], ",", "\n",
+                                    RowBox[{"(* Mark the central mass *)"}], "\n",
+                                    RowBox[{"Graphics", "[",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                "Red", ",", " ",
+                                                RowBox[{"PointSize", "[", "0.02", "]"}], ",", " ",
+                                                RowBox[{"Point", "[",
+                                                    RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}],
+                                                "]"}], ",", "\n",
+                                                RowBox[{"Text", "[",
+                                                    RowBox[{
+                                                        RowBox[{"Style", "[", RowBox[{"\"M\"", ",", " ", "12", ",", " ", "Red", ",", " ", "Bold"}], "]"}], ",", " ",
+                                                        RowBox[{"{", RowBox[{"1", ",", " ", RowBox[{"-", "1"}]}], "}"}]
+                                                    }],
+                                                "]"}]
+                                            }],
+                                        "}"}],
+                                    "]"}]
+                                }],
+                            "]"}]
+                        }]
+                    }],
+                "]"}], ",", "\n",
+                RowBox[{"(* Sliders *)"}], "\n",
+                RowBox[{"{",
+                    RowBox[{
+                        RowBox[{"{", RowBox[{"Lorb", ",", " ", "4.2", ",", " ", "\"Angular momentum L\""}], "}"}],
+                        ",", " ", "3.6", ",", " ", "6.0", ",", " ", "0.1", ",", " ",
+                        RowBox[{"Appearance", " ", "->", " ", "\"Labeled\""}]
+                    }],
+                "}"}], ",", "\n",
+                RowBox[{"{",
+                    RowBox[{
+                        RowBox[{"{", RowBox[{"ecc", ",", " ", "0.3", ",", " ", "\"Eccentricity e\""}], "}"}],
+                        ",", " ", "0.05", ",", " ", "0.8", ",", " ", "0.05", ",", " ",
+                        RowBox[{"Appearance", " ", "->", " ", "\"Labeled\""}]
+                    }],
+                "}"}], ",", "\n",
+                RowBox[{"{",
+                    RowBox[{
+                        RowBox[{"{", RowBox[{"nOrbits", ",", " ", "5", ",", " ", "\"Number of orbits\""}], "}"}],
+                        ",", " ", "1", ",", " ", "15", ",", " ", "1", ",", " ",
+                        RowBox[{"Appearance", " ", "->", " ", "\"Labeled\""}]
+                    }],
+                "}"}]
+            }],
+        "]"}]
+    }]
+}], "Input"],
+
+(* =====================================================================
+   Section 3: Photon Sphere Visualization
+   =====================================================================
+   Show the photon effective potential for several values of L.
+   The maximum always occurs at r = 3 (photon sphere).
+   ===================================================================== *)
+
+Cell[TextData[{"3. Photon Sphere and Photon Effective Potential"}], "Section"],
+
+Cell[TextData[{"For photons (epsilon = 0), the effective potential is \
+V_eff = L^2/(2r^2) - L^2/r^3. It always has a maximum at r = 3 \
+(the photon sphere). The height of the maximum is \
+V_max = L^2/54. A photon with E_eff > V_max will be captured; \
+a photon with E_eff < V_max will be deflected and escape. \
+The critical impact parameter b_crit = L/E corresponds to \
+E_eff = V_max, giving b_crit = 3*Sqrt[3] (in G=c=M=1 units)."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Photon effective potential for several values of L *)"}],
+    RowBox[{"(* The maximum at r = 3 is the photon sphere *)"}],
+    RowBox[{
+        RowBox[{"Module", "[",
+            RowBox[{
+                RowBox[{"{", RowBox[{"Lvals", ",", " ", "colors"}], "}"}], ",", "\n",
+                RowBox[{
+                    RowBox[{"Lvals", " ", "=", " ",
+                        RowBox[{"{", RowBox[{"2", ",", " ", "3", ",", " ", "4", ",", " ", "5"}], "}"}]
+                    }], ";", "\n",
+                    RowBox[{"colors", " ", "=", " ",
+                        RowBox[{"{", RowBox[{"Orange", ",", " ", "Red", ",", " ", "Blue", ",", " ",
+                            RowBox[{"Darker", "[", "Green", "]"}]
+                        }], "}"}]
+                    }], ";", "\n",
+                    RowBox[{"Show", "[", "\n",
+                        RowBox[{
+                            RowBox[{"Plot", "[", "\n",
+                                RowBox[{
+                                    RowBox[{"Evaluate", "[",
+                                        RowBox[{"Table", "[",
+                                            RowBox[{
+                                                RowBox[{"Veff", "[", RowBox[{"r", ",", " ", "LL", ",", " ", "0"}], "]"}], ",", " ",
+                                                RowBox[{"{", RowBox[{"LL", ",", " ", "Lvals"}], "}"}]
+                                            }],
+                                        "]"}],
+                                    "]"}], ",", " ",
+                                    RowBox[{"{", RowBox[{"r", ",", " ", "2.01", ",", " ", "30"}], "}"}], ",", "\n",
+                                    RowBox[{"PlotRange", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"0", ",", " ", "30"}], "}"}], ",", " ",
+                                                RowBox[{"{", RowBox[{RowBox[{"-", "0.02"}], ",", " ", "0.12"}], "}"}]
+                                            }],
+                                        "}"}]
+                                    }], ",", "\n",
+                                    RowBox[{"PlotStyle", " ", "->", " ",
+                                        RowBox[{"Table", "[",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"col", ",", " ", RowBox[{"AbsoluteThickness", "[", "1.8", "]"}]}], "}"}], ",", " ",
+                                                RowBox[{"{", RowBox[{"col", ",", " ", "colors"}], "}"}]
+                                            }],
+                                        "]"}]
+                                    }], ",", "\n",
+                                    RowBox[{"AxesLabel", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{"\"r (GM/c\\[TwoSuperior])\"", ",", " ",
+                                                RowBox[{"Subscript", "[", RowBox[{"\"V\"", ",", " ", "\"eff\""}], "]"}]
+                                            }],
+                                        "}"}]
+                                    }], ",", "\n",
+                                    RowBox[{"PlotLabel", " ", "->", " ",
+                                        RowBox[{"Style", "[", RowBox[{"\"Photon Effective Potential (\\[Epsilon] = 0)\"", ",", " ", "14"}], "]"}]
+                                    }], ",", "\n",
+                                    RowBox[{"PlotLegends", " ", "->", " ",
+                                        RowBox[{"Placed", "[", "\n",
+                                            RowBox[{
+                                                RowBox[{"LineLegend", "[",
+                                                    RowBox[{
+                                                        RowBox[{"Table", "[",
+                                                            RowBox[{
+                                                                RowBox[{"Row", "[", RowBox[{"{", RowBox[{"\"L = \"", ",", " ", "LL"}], "}"}], "]"}], ",", " ",
+                                                                RowBox[{"{", RowBox[{"LL", ",", " ", "Lvals"}], "}"}]
+                                                            }],
+                                                        "]"}], ",", "\n",
+                                                        RowBox[{"LegendMarkerSize", " ", "->", " ", "15"}]
+                                                    }],
+                                                "]"}], ",", " ",
+                                                RowBox[{"{", RowBox[{"0.75", ",", " ", "0.7"}], "}"}]
+                                            }],
+                                        "]"}]
+                                    }], ",", "\n",
+                                    RowBox[{"ImageSize", " ", "->", " ", "550"}]
+                                }],
+                            "]"}], ",", "\n",
+                            RowBox[{"(* Mark the photon sphere maximum at r = 3 for each L *)"}], "\n",
+                            RowBox[{"Graphics", "[",
+                                RowBox[{"{", "\n",
+                                    RowBox[{
+                                        RowBox[{"(* Vertical line at r = 3 *)"}], "\n",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"Darker", "[", "Orange", "]"}], ",", " ", "Dashed", ",", " ",
+                                                RowBox[{"AbsoluteThickness", "[", "1", "]"}], ",", " ",
+                                                RowBox[{"InfiniteLine", "[",
+                                                    RowBox[{"{",
+                                                        RowBox[{
+                                                            RowBox[{"{", RowBox[{"3", ",", " ", RowBox[{"-", "1"}]}], "}"}], ",", " ",
+                                                            RowBox[{"{", RowBox[{"3", ",", " ", "1"}], "}"}]
+                                                        }],
+                                                    "}"}],
+                                                "]"}]
+                                            }],
+                                        "}"}], ",", "\n",
+                                        RowBox[{"Text", "[",
+                                            RowBox[{
+                                                RowBox[{"Style", "[",
+                                                    RowBox[{
+                                                        "\"Photon sphere\\nr = 3GM/c\\[TwoSuperior]\"", ",", " ",
+                                                        "10", ",", " ",
+                                                        RowBox[{"Darker", "[", "Orange", "]"}]
+                                                    }],
+                                                "]"}], ",", " ",
+                                                RowBox[{"{", RowBox[{"6.5", ",", " ", "0.1"}], "}"}]
+                                            }],
+                                        "]"}], ",", "\n",
+                                        RowBox[{"(* Mark maxima with points *)"}], "\n",
+                                        RowBox[{"Sequence", " ", "@@", " ",
+                                            RowBox[{"Table", "[",
+                                                RowBox[{
+                                                    RowBox[{"{",
+                                                        RowBox[{
+                                                            RowBox[{"colors", "[",
+                                                                RowBox[{"[", "i", "]"}],
+                                                            "]"}], ",", " ",
+                                                            RowBox[{"PointSize", "[", "0.015", "]"}], ",", " ",
+                                                            RowBox[{"Point", "[",
+                                                                RowBox[{"{",
+                                                                    RowBox[{"3", ",", " ",
+                                                                        RowBox[{"Veff", "[", RowBox[{"3", ",", " ",
+                                                                            RowBox[{"Lvals", "[",
+                                                                                RowBox[{"[", "i", "]"}],
+                                                                            "]"}], ",", " ", "0"
+                                                                        }], "]"}]
+                                                                    }],
+                                                                "}"}],
+                                                            "]"}]
+                                                        }],
+                                                    "}"}], ",", " ",
+                                                    RowBox[{"{", RowBox[{"i", ",", " ",
+                                                        RowBox[{"Length", "[", "Lvals", "]"}]
+                                                    }], "}"}]
+                                                }],
+                                            "]"}]
+                                        }], ",", "\n",
+                                        RowBox[{"(* Horizon *)"}], "\n",
+                                        RowBox[{"{",
+                                            RowBox[{"Gray", ",", " ", "Dashed", ",", " ",
+                                                RowBox[{"InfiniteLine", "[",
+                                                    RowBox[{"{",
+                                                        RowBox[{
+                                                            RowBox[{"{", RowBox[{"2", ",", " ", RowBox[{"-", "1"}]}], "}"}], ",", " ",
+                                                            RowBox[{"{", RowBox[{"2", ",", " ", "1"}], "}"}]
+                                                        }],
+                                                    "}"}],
+                                                "]"}]
+                                            }],
+                                        "}"}], ",", "\n",
+                                        RowBox[{"Text", "[",
+                                            RowBox[{
+                                                RowBox[{"Style", "[", RowBox[{"\"Horizon\"", ",", " ", "9", ",", " ", "Gray"}], "]"}], ",", " ",
+                                                RowBox[{"{", RowBox[{"2", ",", " ", RowBox[{"-", "0.015"}]}], "}"}]
+                                            }],
+                                        "]"}]
+                                    }],
+                                "}"}],
+                            "]"}]
+                        }],
+                    "]"}]
+                }]
+            }],
+        "]"}]
+    }]
+}], "Input"],
+
+Cell[TextData[{"The critical impact parameter for photon capture is \
+b_crit = 3*Sqrt[3]*GM/c^2 (about 5.196 GM/c^2). Photons with b < b_crit \
+are captured by the black hole; photons with b > b_crit are deflected \
+and escape. This sets the apparent size of the 'black hole shadow' \
+observed by the Event Horizon Telescope."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Compute the critical impact parameter *)"}],
+    RowBox[{"(* At the photon sphere, V_max = L^2/54 and E_eff = (E^2)/2 *)"}],
+    RowBox[{"(* Critical condition: E^2/2 = L^2/54 => b = L/E = Sqrt[27] = 3*Sqrt[3] *)"}],
+    RowBox[{
+        RowBox[{"Print", "[",
+            RowBox[{"\"Critical impact parameter: b_crit = 3*Sqrt[3] = \"", ",", " ",
+                RowBox[{"N", "[",
+                    RowBox[{
+                        RowBox[{"3", " ",
+                            RowBox[{"Sqrt", "[", "3", "]"}]
+                        }], ",", " ", "6"
+                    }],
+                "]"}], ",", " ",
+                "\" GM/c^2\""
+            }],
+        "]"}], ";"
+    }],
+    RowBox[{
+        RowBox[{"Print", "[",
+            RowBox[{"\"Photons with b < b_crit are captured (plunge into the black hole).\""}],
+        "]"}], ";"
+    }],
+    RowBox[{
+        RowBox[{"Print", "[",
+            RowBox[{"\"Photons with b > b_crit are deflected and escape.\""}],
+        "]"}], ";"
+    }],
+    RowBox[{
+        RowBox[{"Print", "[",
+            RowBox[{"\"This defines the angular size of the black hole shadow.\""}],
+        "]"}], ";"
+    }]
+}], "Input"]
+
+}, WindowSize -> {900, 900}, WindowTitle -> "Module 1d: Effective Potential and Orbits"]
