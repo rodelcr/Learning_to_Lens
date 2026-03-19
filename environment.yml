@@ -1,0 +1,33 @@
+# =============================================================================
+# environment.yml — Conda environment for Learning to Lens
+# =============================================================================
+# This provides LaTeX tools and optional Python utilities.
+# Mathematica must be installed separately (not available via conda).
+#
+# Usage:
+#   conda env create -f environment.yml
+#   conda activate learning_to_lens
+# =============================================================================
+
+name: learning_to_lens
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  # --- LaTeX (minimal TeX Live distribution) ---
+  - texlive-core            # Core LaTeX (pdflatex, etc.)
+  - texlive-latex-extra     # Additional LaTeX packages (amsmath, physics, etc.)
+  - texlive-fonts-extra     # Extended font collection
+  - texlive-bibtex-extra    # BibTeX/natbib support
+  - texlive-science         # Science packages (siunitx, etc.)
+  - latexmk                 # Build automation for LaTeX
+
+  # --- Python utilities (optional, for any helper scripts) ---
+  - python>=3.10
+  - numpy                   # Numerical arrays (cross-checking Mathematica results)
+  - matplotlib              # Plotting (cross-checking or quick visualizations)
+  - astropy                 # Cosmological distance calculations, FITS, units
+  - jupyter                 # Jupyter notebooks (can use Wolfram Language kernel)
+
+  # --- Development tools ---
+  - git
