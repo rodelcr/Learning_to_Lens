@@ -1,0 +1,61 @@
+# =============================================================================
+# Learning to Lens — .gitignore
+# =============================================================================
+
+# Copyrighted reference materials (textbooks, papers)
+Reference_Texts/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.synctex.gz
+*.synctex(busy)
+*.fls
+*.fdb_latexmk
+*.toc
+*.lof
+*.lot
+*.out
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.bcf
+*.run.xml
+*-blx.bib
+
+# Compiled PDFs from Notes (keep the source .tex files)
+Notes/**/*.pdf
+Notes/*.pdf
+
+# Keep Figures PDFs (these are exported from Mathematica)
+!Figures/**/*.pdf
+
+# Mathematica temporary files
+*.mx
+*.wl~
+*.nb~
+*Untitled*.nb
+
+# Python (in case any helper scripts are added)
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/

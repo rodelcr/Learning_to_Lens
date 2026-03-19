@@ -1,0 +1,135 @@
+% =============================================================================
+% main.tex — Learning to Lens: GR & Strong Gravitational Lensing Tutorials
+% =============================================================================
+% Master document that includes all module chapters.
+% Compile with: pdflatex main.tex (or use build.sh)
+% =============================================================================
+
+\documentclass[12pt,letterpaper,twoside]{report}
+
+% Load shared preamble (packages, macros, notation)
+\input{preamble}
+
+% --- Page geometry ---
+\usepackage[margin=1in]{geometry}
+
+% --- Headers/footers ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\leftmark}
+\fancyhead[LO]{\rightmark}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --- Title ---
+\title{
+    \vspace{-2cm}
+    {\Huge \textbf{Learning to Lens}} \\[0.5cm]
+    {\Large An Introduction to General Relativity \\
+    and Strong Gravitational Lensing} \\[1cm]
+    {\large with Mathematica}
+}
+\author{
+    Rodrigo Cordova Rosado \\
+    \textit{Harvard-Smithsonian Center for Astrophysics} \\
+    \texttt{rodrigo.cordova\_rosado@cfa.harvard.edu}
+}
+\date{\today}
+
+% =============================================================================
+\begin{document}
+
+\maketitle
+\tableofcontents
+\listoffigures
+
+% --- Notation Guide ---
+\chapter*{Notation Guide}
+\addcontentsline{toc}{chapter}{Notation Guide}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Units / Notes} \\
+\midrule
+\multicolumn{3}{l}{\textit{Coordinates and Angles}} \\
+$\vectheta$    & Image position (angular)      & radians or arcsec \\
+$\vecbeta$     & Source position (angular)      & radians or arcsec \\
+$\vecalpha$    & Reduced deflection angle       & radians \\
+$\alphahat$    & Physical deflection angle      & radians \\
+$\vecxi$       & Position in lens plane         & physical (kpc, Mpc) \\
+\midrule
+\multicolumn{3}{l}{\textit{Distances}} \\
+$\Dd$          & Observer--lens angular diameter distance   & Mpc \\
+$\Ds$          & Observer--source angular diameter distance & Mpc \\
+$\Dds$         & Lens--source angular diameter distance     & Mpc \\
+\midrule
+\multicolumn{3}{l}{\textit{Lensing Quantities}} \\
+$\thetaE$      & Einstein radius                & arcsec \\
+$\Sigmacr$     & Critical surface mass density  & g\,cm$^{-2}$ or $\Msun$\,pc$^{-2}$ \\
+$\kappab$      & Convergence $= \Sigma/\Sigmacr$ & dimensionless \\
+$\gammaL$      & Shear magnitude                & dimensionless \\
+$\psiL$        & Effective lensing potential     & dimensionless \\
+$\mu$          & Magnification                  & dimensionless \\
+$\Amat$        & Jacobian (inverse magnification) matrix & $2 \times 2$ \\
+\midrule
+\multicolumn{3}{l}{\textit{Cosmology}} \\
+$\Hubble$      & Hubble constant                & km\,s$^{-1}$\,Mpc$^{-1}$ \\
+$\Omegam$      & Matter density parameter       & dimensionless \\
+$\OmegaL$      & Dark energy density parameter  & dimensionless \\
+\midrule
+\multicolumn{3}{l}{\textit{GR / Metric}} \\
+$\metric$      & Metric tensor                  & \\
+$\christoffel{\alpha}{\mu}{\nu}$ & Christoffel symbols & \\
+$\riemann{\alpha}{\beta}{\mu}{\nu}$ & Riemann curvature tensor & \\
+$\ricci$       & Ricci tensor                   & \\
+$\ricciS$      & Ricci scalar                   & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\noindent
+\textbf{Mathematica files} are cross-linked throughout these notes. Links formatted as
+\texttt{filename.nb} or \texttt{filename.wl} point to companion Mathematica notebooks
+and scripts in the \texttt{Mathematica/} directory of this repository.
+
+% =============================================================================
+% Part I: General Relativity Foundations
+% =============================================================================
+\part{General Relativity Foundations}
+
+\include{01a_Special_Relativity/01a_Special_Relativity}
+\include{01b_Differential_Geometry/01b_Differential_Geometry}
+\include{01c_Schwarzschild/01c_Schwarzschild}
+\include{01d_Geodesics_Orbits/01d_Geodesics_Orbits}
+
+% =============================================================================
+% Part II: Gravitational Lensing Theory
+% =============================================================================
+\part{Gravitational Lensing Theory}
+
+\include{02_Light_Deflection/02_Light_Deflection}
+\include{03_Cosmological_Distances/03_Cosmological_Distances}
+\include{04_Lens_Equation/04_Lens_Equation}
+\include{05_Magnification_Convergence_Shear/05_Magnification_Convergence_Shear}
+\include{06_Fermat_Time_Delays/06_Fermat_Time_Delays}
+
+% =============================================================================
+% Part III: Lens Models and Applications
+% =============================================================================
+\part{Lens Models and Applications}
+
+\include{07_Axisymmetric_Models/07_Axisymmetric_Models}
+\include{08_Elliptical_Models_Caustics/08_Elliptical_Models_Caustics}
+\include{09_Galaxy_Lensing_Applications/09_Galaxy_Lensing_Applications}
+\include{10_Cluster_Lensing/10_Cluster_Lensing}
+
+% =============================================================================
+% Bibliography
+% =============================================================================
+% \bibliographystyle{unsrtnat}
+% \bibliography{references}
+
+\end{document}

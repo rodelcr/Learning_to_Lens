@@ -1,0 +1,138 @@
+% =============================================================================
+% preamble.tex — Shared LaTeX preamble for Learning to Lens notes
+% =============================================================================
+% This file is \input{} by main.tex and provides all packages, macros, and
+% formatting settings used across the tutorial modules.
+% =============================================================================
+
+% --- Core math and physics packages ---
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}          % Extensions to amsmath (e.g., \coloneqq)
+\usepackage{physics}            % Convenient notation: \dv, \pdv, \grad, \curl, etc.
+\usepackage{tensor}             % Index notation: \indices{^a_b}
+\usepackage{bm}                 % Bold math symbols
+
+% --- Figures and graphics ---
+\usepackage{graphicx}
+\usepackage{float}              % [H] placement for figures
+\usepackage{subcaption}         % Subfigures
+
+% --- Tables ---
+\usepackage{booktabs}           % Professional tables (\toprule, \midrule, \bottomrule)
+\usepackage{array}
+
+% --- Typography and layout ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}          % Improved typesetting
+\usepackage{enumitem}           % Customizable lists
+\usepackage{fancyhdr}           % Headers and footers
+\usepackage{titlesec}           % Section formatting
+
+% --- Colors and links ---
+\usepackage[dvipsnames]{xcolor}
+\usepackage[
+    colorlinks=true,
+    linkcolor=NavyBlue,
+    citecolor=ForestGreen,
+    urlcolor=BrickRed,
+    filecolor=Plum
+]{hyperref}
+
+% --- Code listings (for Mathematica snippets) ---
+\usepackage{listings}
+\lstdefinestyle{mathematica}{
+    language=Mathematica,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{NavyBlue}\bfseries,
+    commentstyle=\color{Gray}\itshape,
+    stringstyle=\color{BrickRed},
+    frame=single,
+    breaklines=true,
+    numbers=left,
+    numberstyle=\tiny\color{Gray},
+    backgroundcolor=\color{gray!5},
+    captionpos=b
+}
+
+% --- Bibliography ---
+\usepackage[numbers,sort&compress]{natbib}
+
+% --- Theorem environments ---
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{exercise}{Exercise}[section]
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\newtheorem*{note}{Note}
+
+% =============================================================================
+% Custom macros — Gravitational lensing notation
+% =============================================================================
+% Following the conventions of Narayan & Bartelmann (1997),
+% Congdon & Keeton (2018), and Saha et al. (2024).
+% =============================================================================
+
+% --- Vector quantities (bold, with arrows as needed) ---
+\newcommand{\vectheta}{\boldsymbol{\theta}}     % Image position vector
+\newcommand{\vecbeta}{\boldsymbol{\beta}}        % Source position vector
+\newcommand{\vecalpha}{\boldsymbol{\alpha}}      % Deflection angle vector
+\newcommand{\vecxi}{\boldsymbol{\xi}}            % Position in lens plane (physical)
+\newcommand{\veceta}{\boldsymbol{\eta}}          % Position in source plane (physical)
+
+% --- Angular diameter distances ---
+\newcommand{\Dd}{D_{\mathrm{d}}}                 % Observer-lens distance
+\newcommand{\Ds}{D_{\mathrm{s}}}                 % Observer-source distance
+\newcommand{\Dds}{D_{\mathrm{ds}}}               % Lens-source distance
+\newcommand{\Deff}{D_{\mathrm{eff}}}             % Effective lensing distance
+
+% --- Critical quantities ---
+\newcommand{\Sigmacr}{\Sigma_{\mathrm{cr}}}      % Critical surface mass density
+\newcommand{\thetaE}{\theta_{\mathrm{E}}}        % Einstein radius (angular)
+\newcommand{\RE}{R_{\mathrm{E}}}                 % Einstein radius (physical)
+\newcommand{\RS}{R_{\mathrm{S}}}                 % Schwarzschild radius
+
+% --- Lensing quantities ---
+\newcommand{\kappab}{\kappa}                     % Convergence
+\newcommand{\gammaL}{\gamma}                     % Shear magnitude
+\newcommand{\psiL}{\psi}                         % Lensing potential
+\newcommand{\alphahat}{\hat{\alpha}}             % Physical deflection angle
+
+% --- Jacobian / magnification ---
+\newcommand{\Amat}{\mathcal{A}}                  % Jacobian matrix (inverse magnification)
+\newcommand{\Mmat}{\mathcal{M}}                  % Magnification tensor
+
+% --- Cosmology ---
+\newcommand{\Omegam}{\Omega_{\mathrm{m}}}        % Matter density parameter
+\newcommand{\OmegaL}{\Omega_{\Lambda}}           % Dark energy density parameter
+\newcommand{\Hubble}{H_0}                        % Hubble constant
+
+% --- Physical constants ---
+\newcommand{\speedoflight}{c}                     % Speed of light
+\newcommand{\Gnewton}{G}                         % Newton's gravitational constant
+\newcommand{\Msun}{M_{\odot}}                    % Solar mass
+\newcommand{\Rsun}{R_{\odot}}                    % Solar radius
+
+% --- Metric and tensor notation ---
+\newcommand{\metric}{g_{\mu\nu}}                 % Metric tensor
+\newcommand{\christoffel}[3]{\Gamma^{#1}_{\ #2 #3}} % Christoffel symbol
+\newcommand{\riemann}[4]{R^{#1}_{\ #2 #3 #4}}  % Riemann tensor
+\newcommand{\ricci}{R_{\mu\nu}}                  % Ricci tensor
+\newcommand{\ricciS}{R}                          % Ricci scalar
+
+% --- Commonly used shorthands ---
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\inv}[1]{{#1}^{-1}}
+\newcommand{\ee}[1]{\times 10^{#1}}             % Scientific notation: 3\ee{8}
+\newcommand{\order}[1]{\mathcal{O}\!\left(#1\right)} % Order of magnitude
+
+% --- Cross-references to Mathematica files ---
+% Usage: \mathlink{01a_Special_Relativity/lorentz_transforms.wl}{Lorentz transform script}
+\newcommand{\mathlink}[2]{\href{../Mathematica/#1}{\texttt{#2}}}
+% Usage: \solnlink{01a_Special_Relativity/problems_01a.nb}{Solutions notebook}
+\newcommand{\solnlink}[2]{\href{../Solutions/#1}{\texttt{#2}}}
