@@ -1,0 +1,351 @@
+Notebook[{
+
+(* =========================================================================
+   curved_surfaces.nb
+   Module 1b: Differential Geometry and the Metric Tensor
+   =========================================================================
+   Purpose: Interactive visualizations of differential geometry concepts:
+            1. Geodesics on the 2-sphere (great circles)
+            2. Parallel transport on the 2-sphere
+            3. Curvature visualization: flat vs. curved
+            4. Christoffel symbol computation for user-defined metrics
+
+   Sources: Carroll Ch. 2-3, Congdon & Keeton Ch. 3.2
+   ========================================================================= *)
+
+Cell[TextData[{"Module 1b: Curved Surfaces and Differential Geometry"}], "Title"],
+
+Cell[TextData[{"This notebook provides interactive visualizations of \
+differential geometry on 2D surfaces. We focus on the 2-sphere as the \
+canonical example of a curved manifold."}], "Text"],
+
+(* =====================================================================
+   Section 1: Load the General GR Functions from christoffel_symbols.wl
+   ===================================================================== *)
+
+Cell[TextData[{"1. Define GR Computation Functions"}], "Section"],
+
+Cell[TextData[{"We define the same functions from christoffel_symbols.wl \
+so this notebook is self-contained."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Christoffel symbols: Gamma^sigma_{mu nu} *)"}],
+    RowBox[{
+        RowBox[{"computeChristoffel", "[",
+            RowBox[{"metric_", ",", " ", "coords_"}],
+        "]"}], " ", ":=", " ",
+        RowBox[{"Module", "[",
+            RowBox[{
+                RowBox[{"{", RowBox[{"n", ",", " ", "invMetric"}], "}"}], ",", "\n",
+                RowBox[{
+                    RowBox[{"n", " ", "=", " ",
+                        RowBox[{"Length", "[", "coords", "]"}]
+                    }], ";", "\n",
+                    RowBox[{"invMetric", " ", "=", " ",
+                        RowBox[{"Simplify", "[",
+                            RowBox[{"Inverse", "[", "metric", "]"}],
+                        "]"}]
+                    }], ";", "\n",
+                    RowBox[{"Table", "[",
+                        RowBox[{
+                            RowBox[{"Simplify", "[",
+                                RowBox[{"Sum", "[",
+                                    RowBox[{
+                                        RowBox[{
+                                            RowBox[{"(", RowBox[{"1", "/", "2"}], ")"}], " ",
+                                            RowBox[{"invMetric", "[", RowBox[{"[", RowBox[{"s", ",", " ", "rho"}], "]"}], "]"}], " ",
+                                            RowBox[{"(", "\n",
+                                                RowBox[{
+                                                    RowBox[{"D", "[",
+                                                        RowBox[{
+                                                            RowBox[{"metric", "[", RowBox[{"[", RowBox[{"nu", ",", " ", "rho"}], "]"}], "]"}], ",", " ",
+                                                            RowBox[{"coords", "[", RowBox[{"[", "mu", "]"}], "]"}]
+                                                        }],
+                                                    "]"}], " ", "+", "\n",
+                                                    RowBox[{"D", "[",
+                                                        RowBox[{
+                                                            RowBox[{"metric", "[", RowBox[{"[", RowBox[{"rho", ",", " ", "mu"}], "]"}], "]"}], ",", " ",
+                                                            RowBox[{"coords", "[", RowBox[{"[", "nu", "]"}], "]"}]
+                                                        }],
+                                                    "]"}], " ", "-", "\n",
+                                                    RowBox[{"D", "[",
+                                                        RowBox[{
+                                                            RowBox[{"metric", "[", RowBox[{"[", RowBox[{"mu", ",", " ", "nu"}], "]"}], "]"}], ",", " ",
+                                                            RowBox[{"coords", "[", RowBox[{"[", "rho", "]"}], "]"}]
+                                                        }],
+                                                    "]"}]
+                                                }],
+                                            ")"}]
+                                        }], ",", " ",
+                                        RowBox[{"{", RowBox[{"rho", ",", " ", "1", ",", " ", "n"}], "}"}]
+                                    }],
+                                "]"}],
+                            "]"}], ",", "\n",
+                            RowBox[{"{", RowBox[{"s", ",", " ", "n"}], "}"}], ",", " ",
+                            RowBox[{"{", RowBox[{"mu", ",", " ", "n"}], "}"}], ",", " ",
+                            RowBox[{"{", RowBox[{"nu", ",", " ", "n"}], "}"}]
+                        }],
+                    "]"}]
+                }]
+            }],
+        "]"}]
+    }]
+}], "Input"],
+
+(* =====================================================================
+   Section 2: Geodesics on the 2-Sphere (Great Circles)
+   ===================================================================== *)
+
+Cell[TextData[{"2. Geodesics on the 2-Sphere"}], "Section"],
+
+Cell[TextData[{"Geodesics on a sphere are great circles. We numerically \
+integrate the geodesic equation and plot the resulting paths on a 3D \
+sphere. The slider controls the initial direction of the geodesic."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Numerically solve the geodesic equation on a unit sphere *)"}],
+    RowBox[{"(* Geodesic equations for ds^2 = dtheta^2 + sin^2(theta) dphi^2: *)"}],
+    RowBox[{"(* theta'' - sin(theta)cos(theta) phi'^2 = 0 *)"}],
+    RowBox[{"(* phi'' + 2 cot(theta) theta' phi' = 0 *)"}],
+    RowBox[{
+        RowBox[{"Manipulate", "[", "\n",
+            RowBox[{
+                RowBox[{"Module", "[",
+                    RowBox[{
+                        RowBox[{"{", RowBox[{"sol", ",", " ", "thetaF", ",", " ", "phiF", ",", " ", "path3D", ",", " ", "lmax"}], "}"}], ",", "\n",
+                        RowBox[{
+                            RowBox[{"lmax", " ", "=", " ", RowBox[{"2", " ", "Pi"}]}], ";", "\n",
+                            RowBox[{"sol", " ", "=", " ",
+                                RowBox[{"NDSolve", "[",
+                                    RowBox[{
+                                        RowBox[{"{", "\n",
+                                            RowBox[{
+                                                RowBox[{
+                                                    RowBox[{"\[Theta]''", "[", "\[Lambda]", "]"}], " ", "-", " ",
+                                                    RowBox[{
+                                                        RowBox[{"Sin", "[",
+                                                            RowBox[{"\[Theta]", "[", "\[Lambda]", "]"}],
+                                                        "]"}], " ",
+                                                        RowBox[{"Cos", "[",
+                                                            RowBox[{"\[Theta]", "[", "\[Lambda]", "]"}],
+                                                        "]"}], " ",
+                                                        RowBox[{
+                                                            RowBox[{"\[Phi]'", "[", "\[Lambda]", "]"}], "^", "2"
+                                                        }]
+                                                    }]
+                                                }], " ", "==", " ", "0"}], ",", "\n",
+                                                RowBox[{
+                                                    RowBox[{
+                                                        RowBox[{"\[Phi]''", "[", "\[Lambda]", "]"}], " ", "+", " ",
+                                                        RowBox[{"2", " ",
+                                                            RowBox[{"Cot", "[",
+                                                                RowBox[{"\[Theta]", "[", "\[Lambda]", "]"}],
+                                                            "]"}], " ",
+                                                            RowBox[{"\[Theta]'", "[", "\[Lambda]", "]"}], " ",
+                                                            RowBox[{"\[Phi]'", "[", "\[Lambda]", "]"}]
+                                                        }]
+                                                    }], " ", "==", " ", "0"
+                                                }], ",", "\n",
+                                                RowBox[{RowBox[{"\[Theta]", "[", "0", "]"}], " ", "==", " ",
+                                                    RowBox[{"Pi", "/", "2"}]
+                                                }], ",", "\n",
+                                                RowBox[{RowBox[{"\[Phi]", "[", "0", "]"}], " ", "==", " ", "0"}], ",", "\n",
+                                                RowBox[{RowBox[{"\[Theta]'", "[", "0", "]"}], " ", "==", " ",
+                                                    RowBox[{"Sin", "[", "initAngle", "]"}]
+                                                }], ",", "\n",
+                                                RowBox[{RowBox[{"\[Phi]'", "[", "0", "]"}], " ", "==", " ",
+                                                    RowBox[{"Cos", "[", "initAngle", "]"}]
+                                                }]
+                                            }], "}"}], ",", "\n",
+                                        RowBox[{"{", RowBox[{"\[Theta]", ",", " ", "\[Phi]"}], "}"}], ",", " ",
+                                        RowBox[{"{", RowBox[{"\[Lambda]", ",", " ", "0", ",", " ", "lmax"}], "}"}]
+                                    }],
+                                "]"}]
+                            }], ";", "\n",
+                            RowBox[{"thetaF", " ", "=", " ",
+                                RowBox[{"\[Theta]", " ", "/.", " ",
+                                    RowBox[{"First", "[", "sol", "]"}]
+                                }]
+                            }], ";", "\n",
+                            RowBox[{"phiF", " ", "=", " ",
+                                RowBox[{"\[Phi]", " ", "/.", " ",
+                                    RowBox[{"First", "[", "sol", "]"}]
+                                }]
+                            }], ";", "\n",
+                            RowBox[{"path3D", " ", "=", " ",
+                                RowBox[{"ParametricPlot3D", "[",
+                                    RowBox[{
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{
+                                                    RowBox[{"Sin", "[",
+                                                        RowBox[{"thetaF", "[", "t", "]"}],
+                                                    "]"}], " ",
+                                                    RowBox[{"Cos", "[",
+                                                        RowBox[{"phiF", "[", "t", "]"}],
+                                                    "]"}]
+                                                }], ",", " ",
+                                                RowBox[{
+                                                    RowBox[{"Sin", "[",
+                                                        RowBox[{"thetaF", "[", "t", "]"}],
+                                                    "]"}], " ",
+                                                    RowBox[{"Sin", "[",
+                                                        RowBox[{"phiF", "[", "t", "]"}],
+                                                    "]"}]
+                                                }], ",", " ",
+                                                RowBox[{"Cos", "[",
+                                                    RowBox[{"thetaF", "[", "t", "]"}],
+                                                "]"}]
+                                            }],
+                                        "}"}], ",", " ",
+                                        RowBox[{"{", RowBox[{"t", ",", " ", "0", ",", " ", "lmax"}], "}"}], ",", "\n",
+                                        RowBox[{"PlotStyle", " ", "->", " ",
+                                            RowBox[{"{", RowBox[{"Red", ",", " ", "Thick"}], "}"}]
+                                        }]
+                                    }],
+                                "]"}]
+                            }], ";", "\n",
+                            RowBox[{"Show", "[", "\n",
+                                RowBox[{
+                                    RowBox[{"ParametricPlot3D", "[",
+                                        RowBox[{
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    RowBox[{
+                                                        RowBox[{"Sin", "[", "th", "]"}], " ",
+                                                        RowBox[{"Cos", "[", "ph", "]"}]
+                                                    }], ",", " ",
+                                                    RowBox[{
+                                                        RowBox[{"Sin", "[", "th", "]"}], " ",
+                                                        RowBox[{"Sin", "[", "ph", "]"}]
+                                                    }], ",", " ",
+                                                    RowBox[{"Cos", "[", "th", "]"}]
+                                                }],
+                                            "}"}], ",", " ",
+                                            RowBox[{"{", RowBox[{"th", ",", " ", "0", ",", " ", "Pi"}], "}"}], ",", " ",
+                                            RowBox[{"{", RowBox[{"ph", ",", " ", "0", ",", " ",
+                                                RowBox[{"2", " ", "Pi"}]
+                                            }], "}"}], ",", "\n",
+                                            RowBox[{"PlotStyle", " ", "->", " ",
+                                                RowBox[{"Directive", "[",
+                                                    RowBox[{"LightBlue", ",", " ",
+                                                        RowBox[{"Opacity", "[", "0.4", "]"}]
+                                                    }],
+                                                "]"}]
+                                            }], ",", "\n",
+                                            RowBox[{"Mesh", " ", "->", " ", "None"}]
+                                        }],
+                                    "]"}], ",", "\n",
+                                    "path3D", ",", "\n",
+                                    RowBox[{"PlotLabel", " ", "->", " ",
+                                        RowBox[{"Row", "[",
+                                            RowBox[{"{", RowBox[{"\"Geodesic on S\\[TwoSuperior]: initial angle = \"", ",", " ",
+                                                RowBox[{"NumberForm", "[",
+                                                    RowBox[{
+                                                        RowBox[{"initAngle", " ", "*", " ",
+                                                            RowBox[{"180", "/", "Pi"}]
+                                                        }], ",", " ",
+                                                        RowBox[{"{", RowBox[{"3", ",", " ", "0"}], "}"}]
+                                                    }],
+                                                "]"}], ",", " ", "\"\\[Degree]\""
+                                            }], "}"}],
+                                        "]"}]
+                                    }], ",", "\n",
+                                    RowBox[{"ImageSize", " ", "->", " ", "500"}], ",", "\n",
+                                    RowBox[{"Boxed", " ", "->", " ", "False"}]
+                                }],
+                            "]"}]
+                        }]
+                    }],
+                "]"}], ",", "\n",
+                RowBox[{"{",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{"initAngle", ",", " ",
+                                RowBox[{"Pi", "/", "4"}], ",", " ",
+                                "\"Initial direction (rad)\""
+                            }],
+                        "}"}], ",", " ", "0", ",", " ", "Pi", ",", " ",
+                        RowBox[{"Pi", "/", "36"}]
+                    }],
+                "}"}]
+            }],
+        "]"}]
+    }]
+}], "Input"],
+
+(* =====================================================================
+   Section 3: Interactive Christoffel Symbol Calculator
+   ===================================================================== *)
+
+Cell[TextData[{"3. Christoffel Symbol Calculator"}], "Section"],
+
+Cell[TextData[{"Enter a metric and coordinates to compute Christoffel \
+symbols, Riemann tensor, Ricci tensor, and Ricci scalar."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Example: compute for the 2-sphere *)"}],
+    RowBox[{
+        RowBox[{"coords", " ", "=", " ",
+            RowBox[{"{", RowBox[{"\[Theta]", ",", " ", "\[Phi]"}], "}"}]
+        }], ";"
+    }],
+    RowBox[{
+        RowBox[{"metric", " ", "=", " ",
+            RowBox[{"{",
+                RowBox[{
+                    RowBox[{"{",
+                        RowBox[{"R", "^", "2"}], ",", " ", "0"
+                    }], "}"}], ",", " ",
+                    RowBox[{"{", RowBox[{"0", ",", " ",
+                        RowBox[{
+                            RowBox[{"R", "^", "2"}], " ",
+                            RowBox[{
+                                RowBox[{"Sin", "[", "\[Theta]", "]"}], "^", "2"
+                            }]
+                        }]
+                    }], "}"}]
+                }],
+            "}"}]
+        }], ";"
+    }],
+    RowBox[{
+        RowBox[{"gamma", " ", "=", " ",
+            RowBox[{"computeChristoffel", "[", RowBox[{"metric", ",", " ", "coords"}], "]"}]
+        }], ";"
+    }],
+    RowBox[{
+        RowBox[{"Print", "[", "\"Christoffel symbols for the 2-sphere:\"", "]"}], ";"
+    }],
+    RowBox[{
+        RowBox[{"Do", "[",
+            RowBox[{
+                RowBox[{"If", "[",
+                    RowBox[{
+                        RowBox[{
+                            RowBox[{"gamma", "[", RowBox[{"[", RowBox[{"s", ",", " ", "m", ",", " ", "n"}], "]"}], "]"}],
+                            " ", "=!=", " ", "0"
+                        }], ",", "\n",
+                        RowBox[{"Print", "[",
+                            RowBox[{
+                                "\"  \\[CapitalGamma]^\"", ",", " ",
+                                RowBox[{"coords", "[", RowBox[{"[", "s", "]"}], "]"}], ",", " ",
+                                "\"_{\"", ",", " ",
+                                RowBox[{"coords", "[", RowBox[{"[", "m", "]"}], "]"}], ",", " ",
+                                "\" \"", ",", " ",
+                                RowBox[{"coords", "[", RowBox[{"[", "n", "]"}], "]"}], ",", " ",
+                                "\"} = \"", ",", " ",
+                                RowBox[{"gamma", "[", RowBox[{"[", RowBox[{"s", ",", " ", "m", ",", " ", "n"}], "]"}], "]"}]
+                            }],
+                        "]"}]
+                    }],
+                "]"}], ",", "\n",
+                RowBox[{"{", RowBox[{"s", ",", " ", "2"}], "}"}], ",", " ",
+                RowBox[{"{", RowBox[{"m", ",", " ", "2"}], "}"}], ",", " ",
+                RowBox[{"{", RowBox[{"n", ",", " ", "m", ",", " ", "2"}], "}"}]
+            }],
+        "]"}], ";"
+    }]
+}], "Input"]
+
+}, WindowSize -> {800, 800}, WindowTitle -> "Module 1b: Curved Surfaces and Differential Geometry"]

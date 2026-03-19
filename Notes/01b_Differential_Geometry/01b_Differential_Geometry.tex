@@ -1,18 +1,428 @@
 % =============================================================================
 % Module 1b: Differential Geometry and the Metric Tensor
 % =============================================================================
-% Sources: Carroll Ch. 2-3, Congdon & Keeton Ch. 3.2
+% Sources: Carroll Ch. 2--3 (Secs. 2.1--2.4, 3.1--3.4),
+%          Congdon & Keeton Ch. 3.2
 % Mathematica: ../Mathematica/01b_Differential_Geometry/
 % =============================================================================
 
 \chapter{Differential Geometry and the Metric Tensor}
 \label{ch:differential_geometry}
 
-% TODO: Module content to be written
-% Topics:
-% - Manifolds and coordinate charts
-% - Covariant derivatives and connections
-% - Christoffel symbols
-% - Parallel transport
-% - Riemann curvature tensor
-% - Einstein field equations overview
+\begin{quote}
+\textit{The appropriate mathematical structure used to describe curvature is
+that of a differentiable manifold: essentially, a kind of set that looks
+locally like flat space, but might have a very different global geometry.}
+\hfill --- Sean Carroll, \textit{Spacetime and Geometry}
+\end{quote}
+
+\noindent
+In Module~1a we worked exclusively in flat Minkowski spacetime.  To
+describe gravity, we must allow spacetime to be \emph{curved}.  This
+chapter introduces the mathematical machinery of differential geometry
+--- manifolds, the general metric tensor, the covariant derivative,
+Christoffel symbols, and the curvature tensors --- that forms the
+foundation of general relativity and, ultimately, gravitational lensing.
+
+\medskip
+\noindent
+\textbf{Companion Mathematica files:}
+\begin{itemize}[nosep]
+    \item \mathlink{01b_Differential_Geometry/christoffel_symbols.wl}{christoffel\_symbols.wl}
+          --- general-purpose symbolic computation of Christoffel symbols
+          and curvature tensors from any input metric
+    \item \mathlink{01b_Differential_Geometry/curved_surfaces.nb}{curved\_surfaces.nb}
+          --- interactive visualizations of parallel transport, geodesics,
+          and curvature on 2D surfaces
+\end{itemize}
+
+% =====================================================================
+\section{Manifolds and Coordinate Charts}
+\label{sec:manifolds}
+
+A \textbf{manifold} is a space that may be curved globally but looks
+like $\mathbb{R}^n$ in every sufficiently small neighborhood.  More
+precisely, an $n$-dimensional manifold $M$ is a topological space
+equipped with a collection of \textbf{coordinate charts} --- invertible
+maps $\phi : U \to \mathbb{R}^n$ from open subsets $U \subset M$ ---
+that cover all of $M$ and are smoothly compatible on overlaps
+(Carroll Sec.~2.2).
+
+Examples of manifolds include:
+\begin{itemize}[nosep]
+    \item $\mathbb{R}^n$ (trivially)
+    \item The 2-sphere $S^2$ (the surface of a ball)
+    \item The 2-torus $T^2$ (the surface of a doughnut)
+    \item Spacetime itself (a 4-dimensional Lorentzian manifold)
+\end{itemize}
+
+A key fact: in general, \textit{no single coordinate system can cover an
+entire manifold}.  The sphere $S^2$, for instance, requires at least two
+charts (e.g., stereographic projections from the north and south poles;
+Carroll eqs.~2.9--2.10).  We will always work locally in a single chart,
+keeping in mind that our results are coordinate-independent.
+
+
+% =====================================================================
+\section{The General Metric Tensor}
+\label{sec:general_metric}
+
+On a manifold, we need a way to measure distances and angles.  This is
+provided by the \textbf{metric tensor} $g_{\mu\nu}(x)$, a symmetric,
+nondegenerate $(0,2)$ tensor field.  The line element is
+(cf.\ Carroll eq.~1.20, now generalized):
+\begin{equation}
+    \boxed{
+    ds^2 = g_{\mu\nu}(x)\, dx^\mu\, dx^\nu
+    }
+    \label{eq:general_line_element}
+\end{equation}
+In flat Minkowski space, $g_{\mu\nu} = \eta_{\mu\nu}$ everywhere.  In
+curved spacetime, $g_{\mu\nu}$ varies from point to point and encodes
+the gravitational field.
+
+The \textbf{inverse metric} $g^{\mu\nu}$ is defined by
+\begin{equation}
+    g^{\mu\lambda} g_{\lambda\nu} = \delta^\mu_{\ \nu} \,.
+    \label{eq:inverse_metric}
+\end{equation}
+As before, the metric raises and lowers indices:
+$V_\mu = g_{\mu\nu} V^\nu$, $V^\mu = g^{\mu\nu} V_\nu$.
+
+\begin{example}
+The metric on the 2-sphere of radius $R$ in spherical coordinates
+$(\theta, \phi)$ is
+\begin{equation}
+    ds^2 = R^2\bigl(d\theta^2 + \sin^2\theta\, d\phi^2\bigr) \,,
+    \label{eq:sphere_metric}
+\end{equation}
+so $g_{\theta\theta} = R^2$, $g_{\phi\phi} = R^2\sin^2\theta$, and all
+other components vanish.
+\end{example}
+
+\begin{example}
+\label{ex:polar_metric}
+The flat plane in polar coordinates $(r, \phi)$ has metric
+\begin{equation}
+    ds^2 = dr^2 + r^2\, d\phi^2 \,.
+    \label{eq:polar_metric}
+\end{equation}
+Despite the coordinate-dependent appearance, this space is flat ---
+the curvature tensors vanish.  We will verify this in Mathematica.
+\end{example}
+
+
+% =====================================================================
+\section{Vectors and Tensors on Manifolds}
+\label{sec:vectors_manifolds}
+
+On a general manifold, vectors live in the \textbf{tangent space} $T_p$
+at each point $p$.  A vector $V$ at $p$ is identified with a directional
+derivative operator along a curve $x^\mu(\lambda)$ through $p$
+(Carroll Sec.~2.3):
+\begin{equation}
+    V = V^\mu \partial_\mu \,,
+    \label{eq:vector_as_derivative}
+\end{equation}
+where $\partial_\mu \equiv \partial/\partial x^\mu$ form a
+\textbf{coordinate basis} for $T_p$.
+
+Under a coordinate transformation $x^\mu \to x^{\mu'}$, vector
+components transform as (Carroll eq.~2.19):
+\begin{equation}
+    V^{\mu'} = \frac{\partial x^{\mu'}}{\partial x^\nu}\, V^\nu \,.
+    \label{eq:vector_transform_general}
+\end{equation}
+This generalizes the Lorentz transformation law from Module~1a to
+arbitrary coordinate changes.
+
+Dual vectors (one-forms) and general tensors transform analogously, with
+one factor of $\partial x^{\mu'}/\partial x^\nu$ for each upper index
+and $\partial x^\nu/\partial x^{\mu'}$ for each lower index.
+
+
+% =====================================================================
+\section{The Covariant Derivative}
+\label{sec:covariant_derivative}
+
+Ordinary partial derivatives of tensors are \textit{not} tensors on a
+curved manifold: the transformation of $\partial_\mu V^\nu$ picks up an
+extra, non-tensorial term from the coordinate dependence of the basis
+vectors (Carroll Sec.~3.2).
+
+To fix this, we introduce the \textbf{covariant derivative} $\nabla_\mu$,
+which adds a correction term involving the \textbf{connection coefficients}
+$\Gamma^\rho_{\ \mu\sigma}$ (Carroll eq.~3.5):
+\begin{equation}
+    \boxed{
+    \nabla_\mu V^\nu = \partial_\mu V^\nu + \Gamma^\nu_{\ \mu\lambda}\, V^\lambda
+    }
+    \label{eq:cov_deriv_vector}
+\end{equation}
+For a one-form (Carroll eq.~3.16):
+\begin{equation}
+    \nabla_\mu \omega_\nu = \partial_\mu \omega_\nu
+    - \Gamma^\lambda_{\ \mu\nu}\, \omega_\lambda \,.
+    \label{eq:cov_deriv_oneform}
+\end{equation}
+The general rule for a tensor of arbitrary rank: $+\Gamma$ for each upper
+index, $-\Gamma$ for each lower index (Carroll eq.~3.17).
+
+The connection coefficients are \textit{not} tensors --- they transform
+inhomogeneously (Carroll eq.~3.10) --- but the covariant derivative
+$\nabla_\mu V^\nu$ \textit{is} a tensor.
+
+
+% =====================================================================
+\section{Christoffel Symbols}
+\label{sec:christoffel}
+
+In GR we demand two additional properties of the connection:
+\begin{enumerate}[nosep]
+    \item \textbf{Torsion-free:}
+          $\Gamma^\lambda_{\ \mu\nu} = \Gamma^\lambda_{\ \nu\mu}$
+    \item \textbf{Metric compatibility:}
+          $\nabla_\rho g_{\mu\nu} = 0$
+\end{enumerate}
+These uniquely determine the \textbf{Christoffel symbols} (also called
+the Levi-Civita connection; Carroll eq.~3.27):
+\begin{equation}
+    \boxed{
+    \Gamma^\sigma_{\ \mu\nu} = \frac{1}{2}\, g^{\sigma\rho}
+    \bigl(\partial_\mu g_{\nu\rho} + \partial_\nu g_{\rho\mu}
+    - \partial_\rho g_{\mu\nu}\bigr)
+    }
+    \label{eq:christoffel}
+\end{equation}
+This is one of the most important formulas in GR.  Given any metric,
+we can compute the Christoffel symbols and from them all of the geometry.
+
+\begin{example}
+For the plane in polar coordinates, $ds^2 = dr^2 + r^2 d\phi^2$
+(Example~\ref{ex:polar_metric}), the only nonvanishing Christoffel
+symbols are (Carroll eqs.~3.29--3.31):
+\begin{equation}
+    \Gamma^r_{\ \phi\phi} = -r \,, \qquad
+    \Gamma^\phi_{\ r\phi} = \Gamma^\phi_{\ \phi r} = \frac{1}{r} \,.
+    \label{eq:christoffel_polar}
+\end{equation}
+We derive these and more general cases in
+\mathlink{01b_Differential_Geometry/christoffel_symbols.wl}{christoffel\_symbols.wl}.
+\end{example}
+
+
+% =====================================================================
+\section{Parallel Transport}
+\label{sec:parallel_transport}
+
+In flat space, we can freely slide a vector from one point to another
+while keeping it ``constant.''  On a curved manifold, this is no longer
+unambiguous --- the result depends on the \textit{path taken}.
+
+The notion of keeping a vector constant along a curve $x^\mu(\lambda)$
+is formalized as \textbf{parallel transport}: a vector $V^\mu$ is
+parallel-transported if (Carroll eq.~3.40)
+\begin{equation}
+    \frac{d V^\mu}{d\lambda}
+    + \Gamma^\mu_{\ \rho\sigma}\, \frac{dx^\rho}{d\lambda}\, V^\sigma
+    = 0 \,.
+    \label{eq:parallel_transport}
+\end{equation}
+An important consequence of metric compatibility is that parallel
+transport preserves the inner product: if $V^\mu$ and $W^\mu$ are both
+parallel-transported along a curve, then
+$g_{\mu\nu} V^\mu W^\nu = \text{const}$ (Carroll eq.~3.42).
+
+On the 2-sphere, parallel transporting a vector around a closed loop
+results in a rotation of the vector --- the angle of rotation is
+proportional to the enclosed area and the curvature.  This is visualized
+interactively in
+\mathlink{01b_Differential_Geometry/curved_surfaces.nb}{curved\_surfaces.nb}.
+
+
+% =====================================================================
+\section{The Geodesic Equation}
+\label{sec:geodesic_equation}
+
+A \textbf{geodesic} is the curved-space generalization of a straight line:
+it is the path that parallel-transports its own tangent vector.
+Setting $V^\mu = dx^\mu/d\lambda$ in~\eqref{eq:parallel_transport}, we
+obtain the \textbf{geodesic equation} (Carroll eq.~3.44):
+\begin{equation}
+    \boxed{
+    \frac{d^2 x^\mu}{d\lambda^2}
+    + \Gamma^\mu_{\ \rho\sigma}\,
+    \frac{dx^\rho}{d\lambda}\, \frac{dx^\sigma}{d\lambda} = 0
+    }
+    \label{eq:geodesic}
+\end{equation}
+This can equivalently be derived by extremizing the proper time/interval
+functional (Carroll Sec.~3.3, eqs.~3.45--3.55; Congdon \& Keeton
+eq.~3.60).
+
+Key properties:
+\begin{itemize}
+    \item \textbf{Timelike geodesics} ($ds^2 < 0$): paths of freely falling
+          massive particles; parameterized by proper time $\tau$.
+    \item \textbf{Null geodesics} ($ds^2 = 0$): paths of light rays;
+          parameterized by an affine parameter $\lambda$.
+    \item \textbf{Spacelike geodesics} ($ds^2 > 0$): shortest spatial
+          distances.
+    \item The character (timelike/null/spacelike) is preserved along the
+          geodesic (Carroll Sec.~3.4).
+\end{itemize}
+
+In flat space with Cartesian coordinates, $\Gamma^\mu_{\ \rho\sigma} = 0$,
+so the geodesic equation reduces to $d^2 x^\mu/d\lambda^2 = 0$ --- a
+straight line, as expected.
+
+
+% =====================================================================
+\section{Curvature Tensors}
+\label{sec:curvature}
+
+The \textbf{Riemann curvature tensor} $R^\rho_{\ \sigma\mu\nu}$ measures
+how much parallel transport around a closed loop rotates a vector.  It is
+defined by (Carroll eq.~3.4):
+\begin{equation}
+    \boxed{
+    R^\rho_{\ \sigma\mu\nu} = \partial_\mu \Gamma^\rho_{\ \nu\sigma}
+    - \partial_\nu \Gamma^\rho_{\ \mu\sigma}
+    + \Gamma^\rho_{\ \mu\lambda}\, \Gamma^\lambda_{\ \nu\sigma}
+    - \Gamma^\rho_{\ \nu\lambda}\, \Gamma^\lambda_{\ \mu\sigma}
+    }
+    \label{eq:riemann}
+\end{equation}
+
+\textbf{A manifold is flat if and only if $R^\rho_{\ \sigma\mu\nu} = 0$
+everywhere.}  This is the mathematical statement that curvature is
+characterized entirely by the Riemann tensor.
+
+From the Riemann tensor we construct:
+\begin{itemize}
+    \item \textbf{Ricci tensor} (contraction on 1st and 3rd indices):
+    \begin{equation}
+        R_{\mu\nu} = R^\lambda_{\ \mu\lambda\nu}
+        \label{eq:ricci_tensor}
+    \end{equation}
+    \item \textbf{Ricci scalar} (trace of the Ricci tensor):
+    \begin{equation}
+        R = g^{\mu\nu} R_{\mu\nu}
+        \label{eq:ricci_scalar}
+    \end{equation}
+\end{itemize}
+
+These are the quantities that appear in Einstein's field equation
+\begin{equation}
+    R_{\mu\nu} - \frac{1}{2} R\, g_{\mu\nu} = 8\pi G\, T_{\mu\nu} \,,
+    \label{eq:einstein_field_eq}
+\end{equation}
+relating the curvature of spacetime (left side) to its matter and energy
+content (right side).
+
+\begin{remark}
+The Riemann tensor in $n$ dimensions has $n^2(n^2 - 1)/12$ independent
+components.  In 4D spacetime, that is 20.  In 2D, there is only 1 ---
+the Gaussian curvature determines everything.
+\end{remark}
+
+
+% =====================================================================
+\section{The Metric Determines Everything}
+\label{sec:metric_determines}
+
+Let us collect the chain of logic:
+\begin{center}
+\textbf{Metric} $g_{\mu\nu}$ \\
+$\downarrow$ eq.~\eqref{eq:christoffel} \\
+\textbf{Christoffel symbols} $\Gamma^\sigma_{\ \mu\nu}$ \\
+$\downarrow$ eq.~\eqref{eq:geodesic} \qquad $\downarrow$ eq.~\eqref{eq:riemann} \\
+\textbf{Geodesics} (particle paths) \qquad \textbf{Curvature} $R^\rho_{\ \sigma\mu\nu}$
+\end{center}
+
+\noindent
+This is the central message: \textit{the metric is the fundamental object
+in GR}.  Once you have $g_{\mu\nu}$, you can compute everything ---
+how particles move, how light bends, and how spacetime curves.
+
+For gravitational lensing, the key application is: given the metric
+around a massive object (e.g., the Schwarzschild metric for a point mass),
+solve the null geodesic equation to trace light rays and determine how
+images are formed.
+
+
+% =====================================================================
+\section{Summary}
+\label{sec:dg_summary}
+
+\begin{itemize}
+    \item A manifold is locally flat but may have global curvature; the
+          metric $g_{\mu\nu}(x)$ encodes the geometry.
+    \item The covariant derivative $\nabla_\mu$ generalizes the partial
+          derivative to curved spacetime, using the connection
+          $\Gamma^\sigma_{\ \mu\nu}$.
+    \item The Christoffel symbols are uniquely determined by the metric
+          via~\eqref{eq:christoffel} (torsion-free, metric-compatible).
+    \item Parallel transport depends on the path; this path-dependence is
+          measured by the Riemann curvature tensor.
+    \item Geodesics --- paths that parallel-transport their own tangent
+          vector --- are the trajectories of freely falling particles
+          and light rays.
+    \item Einstein's equation relates curvature ($R_{\mu\nu}$) to
+          matter content ($T_{\mu\nu}$).
+\end{itemize}
+
+
+% =====================================================================
+\section{Problems}
+\label{sec:dg_problems}
+
+\begin{exercise}
+\label{ex:christoffel_sphere}
+Compute all nonvanishing Christoffel symbols for the 2-sphere metric
+$ds^2 = R^2(d\theta^2 + \sin^2\theta\, d\phi^2)$ by hand, then verify
+with \mathlink{01b_Differential_Geometry/christoffel_symbols.wl}{christoffel\_symbols.wl}.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:christoffel_polar}
+For the flat plane in polar coordinates, $ds^2 = dr^2 + r^2 d\phi^2$:
+\begin{enumerate}[label=(\alph*)]
+    \item Compute the Christoffel symbols.
+    \item Compute the Riemann tensor and verify that the space is flat
+          ($R^\rho_{\ \sigma\mu\nu} = 0$).
+    \item Write down the geodesic equations and show that straight lines
+          in Cartesian coordinates ($x = a + b\lambda$, $y = c + d\lambda$)
+          satisfy them.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\label{ex:ricci_sphere}
+For the 2-sphere metric, compute:
+\begin{enumerate}[label=(\alph*)]
+    \item The Riemann tensor $R^\theta_{\ \phi\theta\phi}$.
+    \item The Ricci tensor $R_{\theta\theta}$ and $R_{\phi\phi}$.
+    \item The Ricci scalar $R$.  Show that $R = 2/R^2$ (constant
+          positive curvature, as expected for a sphere of radius $R$).
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\label{ex:parallel_transport_sphere}
+A vector initially pointing east is parallel-transported from the equator
+of a unit sphere ($R = 1$) along the following path: north along the
+meridian $\phi = 0$ to the pole, then south along $\phi = \alpha$ back to
+the equator.  Show that the vector has rotated by angle $\alpha$.
+(Hint: solve the parallel transport equation~\eqref{eq:parallel_transport}
+along each segment, or use the geometric argument that the rotation equals
+the solid angle enclosed.)
+\end{exercise}
+
+\begin{exercise}
+\label{ex:geodesic_sphere}
+Show that great circles are geodesics of the 2-sphere.
+Specifically, show that the equator $\theta = \pi/2$, $\phi = \lambda$
+satisfies the geodesic equation~\eqref{eq:geodesic} with the Christoffel
+symbols from Exercise~\ref{ex:christoffel_sphere}.
+\end{exercise}

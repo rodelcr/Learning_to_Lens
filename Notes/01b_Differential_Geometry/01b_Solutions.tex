@@ -1,0 +1,97 @@
+% =============================================================================
+% Module 1b: Solutions to Exercises
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:dg_solutions}
+
+\noindent
+Full worked solutions verified in
+\solnlink{01b_Differential_Geometry/problems\_01b.wl}{problems\_01b.wl}.
+
+% ----- Exercise 1.1 -----
+\subsection*{Exercise~\ref{ex:christoffel_sphere}: Christoffel Symbols of the 2-Sphere}
+
+For $ds^2 = R^2(d\theta^2 + \sin^2\theta\, d\phi^2)$, the metric is
+$g_{\theta\theta} = R^2$, $g_{\phi\phi} = R^2\sin^2\theta$, with
+$g^{\theta\theta} = 1/R^2$, $g^{\phi\phi} = 1/(R^2\sin^2\theta)$.
+
+Applying~\eqref{eq:christoffel}:
+\begin{align*}
+    \Gamma^\theta_{\ \phi\phi}
+    &= \frac{1}{2} g^{\theta\theta}(-\partial_\theta g_{\phi\phi})
+    = \frac{1}{2} \cdot \frac{1}{R^2} \cdot (-2R^2\sin\theta\cos\theta)
+    = -\sin\theta\cos\theta \\
+    \Gamma^\phi_{\ \theta\phi}
+    &= \frac{1}{2} g^{\phi\phi}(\partial_\theta g_{\phi\phi})
+    = \frac{1}{2} \cdot \frac{1}{R^2\sin^2\theta} \cdot 2R^2\sin\theta\cos\theta
+    = \cot\theta
+\end{align*}
+All other components vanish (verified by Mathematica).
+
+% ----- Exercise 1.2 -----
+\subsection*{Exercise~\ref{ex:christoffel_polar}: Polar Coordinates}
+
+\textbf{(a)} For $ds^2 = dr^2 + r^2 d\phi^2$:
+$\Gamma^r_{\ \phi\phi} = -r$, \quad
+$\Gamma^\phi_{\ r\phi} = 1/r$.
+
+\textbf{(b)} Computing the Riemann tensor from these Christoffel symbols:
+$R^\rho_{\ \sigma\mu\nu} = 0$ for all index combinations.  The space is
+flat, confirming that the nonvanishing Christoffel symbols are purely a
+coordinate artifact.
+
+\textbf{(c)} The geodesic equations are:
+$\ddot{r} - r\dot{\phi}^2 = 0$ and
+$\ddot{\phi} + (2/r)\dot{r}\dot{\phi} = 0$.
+A straight line $x = a + b\lambda$, $y = c + d\lambda$ in Cartesian
+coordinates satisfies these when converted to polar coordinates
+$r = \sqrt{x^2 + y^2}$, $\phi = \arctan(y/x)$.
+
+% ----- Exercise 1.3 -----
+\subsection*{Exercise~\ref{ex:ricci_sphere}: Curvature of the 2-Sphere}
+
+\textbf{(a)} From~\eqref{eq:riemann}:
+$R^\theta_{\ \phi\theta\phi} = \sin^2\theta$.
+
+\textbf{(b)} Ricci tensor: $R_{\theta\theta} = R^\lambda_{\ \theta\lambda\theta}
+= R^\phi_{\ \theta\phi\theta} = 1$.
+$R_{\phi\phi} = R^\theta_{\ \phi\theta\phi} = \sin^2\theta$.
+
+\textbf{(c)} Ricci scalar:
+$R = g^{\theta\theta}R_{\theta\theta} + g^{\phi\phi}R_{\phi\phi}
+= \frac{1}{R^2}(1) + \frac{1}{R^2\sin^2\theta}(\sin^2\theta)
+= \frac{2}{R^2}$.
+This is constant and positive --- the sphere has uniform positive curvature.
+
+% ----- Exercise 1.4 -----
+\subsection*{Exercise~\ref{ex:parallel_transport_sphere}: Parallel Transport}
+
+Along a meridian ($\phi = \text{const}$), $d\phi/d\lambda = 0$, so the
+parallel transport equation reduces to $dV^\mu/d\lambda = 0$ --- the
+vector components are constant along the path.
+
+After traveling north to the pole along $\phi = 0$ and south along
+$\phi = \alpha$, the vector returns to the equator.  However, the
+coordinate basis $\hat{\phi}$ at $\phi = \alpha$ is rotated by angle
+$\alpha$ relative to $\hat{\phi}$ at $\phi = 0$.  The physical vector
+has therefore rotated by angle $\alpha$.
+
+Geometrically, the solid angle subtended by the triangular path
+(two meridians and a segment of the equator) is $\alpha$.  On a unit
+sphere, the holonomy angle equals the enclosed solid angle.
+
+% ----- Exercise 1.5 -----
+\subsection*{Exercise~\ref{ex:geodesic_sphere}: Great Circles as Geodesics}
+
+For the equator: $\theta(\lambda) = \pi/2$, $\phi(\lambda) = \lambda$,
+so $\dot{\theta} = 0$, $\dot{\phi} = 1$, $\ddot{\theta} = 0$,
+$\ddot{\phi} = 0$.
+
+$\theta$-equation: $0 + \Gamma^\theta_{\ \phi\phi} \cdot 1 \cdot 1
+= -\sin(\pi/2)\cos(\pi/2) = 0$.  \checkmark
+
+$\phi$-equation: $0 + 2\Gamma^\phi_{\ \theta\phi} \cdot 0 \cdot 1 = 0$.  \checkmark
+
+By the rotational symmetry of the sphere, any great circle can be mapped
+to the equator by a rotation, so all great circles are geodesics.
