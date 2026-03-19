@@ -376,6 +376,321 @@ images are formed.
 
 
 % =====================================================================
+\section{Computation Cookbook: A Step-by-Step Guide}
+\label{sec:dg_cookbook}
+
+Computing the geometric quantities of GR by hand is a rite of passage.
+This section gives explicit, algorithmic recipes for going from a metric
+to Christoffel symbols, to the Riemann tensor, to the Ricci tensor and
+scalar.  Work through the 2-sphere example in full, then use
+\mathlink{01b_Differential_Geometry/christoffel_symbols.wl}{christoffel\_symbols.wl}
+to check every result.
+
+% ---------------------------------------------------------------------
+\subsection{Algorithm: Christoffel Symbols from a Metric}
+\label{sec:dg_cookbook_christoffel}
+
+Given a metric $g_{\mu\nu}$ in coordinates $\{x^\mu\}$, compute all
+Christoffel symbols $\Gamma^\sigma_{\ \mu\nu}$ as follows.
+
+\begin{enumerate}
+    \item \textbf{Write down the metric components.}
+          List every nonvanishing $g_{\mu\nu}$ and note which coordinates
+          each component depends on.  For a diagonal metric, the only
+          nonvanishing components are $g_{11}, g_{22}, \ldots$
+
+    \item \textbf{Compute the inverse metric $g^{\mu\nu}$.}
+          For a diagonal metric this is trivial:
+          $g^{\mu\mu} = 1/g_{\mu\mu}$ (no sum), and all off-diagonal
+          components vanish.
+
+    \item \textbf{Compute the required partial derivatives.}
+          For each target symbol $\Gamma^\sigma_{\ \mu\nu}$, you need
+          the three derivatives
+          \[
+              \partial_\mu g_{\nu\rho}, \quad
+              \partial_\nu g_{\rho\mu}, \quad
+              \partial_\rho g_{\mu\nu}
+          \]
+          appearing in the Christoffel formula~\eqref{eq:christoffel}.
+          Most of these vanish for diagonal metrics with few
+          coordinate-dependent components.
+
+    \item \textbf{Apply the formula.}
+          \[
+              \Gamma^\sigma_{\ \mu\nu} = \frac{1}{2}\, g^{\sigma\rho}
+              \bigl(\partial_\mu g_{\nu\rho} + \partial_\nu g_{\rho\mu}
+              - \partial_\rho g_{\mu\nu}\bigr)
+          \]
+          For a diagonal metric, the sum over $\rho$ collapses to the
+          single term $\rho = \sigma$ (since $g^{\sigma\rho} = 0$ for
+          $\rho \neq \sigma$).
+
+    \item \textbf{Exploit symmetry.}
+          $\Gamma^\sigma_{\ \mu\nu} = \Gamma^\sigma_{\ \nu\mu}$, so
+          you only need to compute symbols with $\mu \leq \nu$.
+\end{enumerate}
+
+\begin{remark}[Diagonal metric shortcut]
+\label{rem:diagonal_shortcut}
+For a diagonal metric $g_{\mu\nu} = \operatorname{diag}(g_{11}, g_{22}, \ldots)$,
+the nonvanishing Christoffel symbols come in only three types
+(no sum on repeated indices here):
+\begin{align}
+    \Gamma^\mu_{\ \mu\mu} &= \frac{1}{2g_{\mu\mu}}\,
+        \frac{\partial g_{\mu\mu}}{\partial x^\mu} \,,
+        \label{eq:diag_type1} \\[4pt]
+    \Gamma^\mu_{\ \mu\nu} = \Gamma^\mu_{\ \nu\mu} &= \frac{1}{2g_{\mu\mu}}\,
+        \frac{\partial g_{\mu\mu}}{\partial x^\nu}
+        \qquad (\mu \neq \nu) \,,
+        \label{eq:diag_type2} \\[4pt]
+    \Gamma^\mu_{\ \nu\nu} &= -\frac{1}{2g_{\mu\mu}}\,
+        \frac{\partial g_{\nu\nu}}{\partial x^\mu}
+        \qquad (\mu \neq \nu) \,.
+        \label{eq:diag_type3}
+\end{align}
+All other components vanish.  These formulas dramatically reduce the work.
+\end{remark}
+
+% ---------------------------------------------------------------------
+\subsection{Algorithm: The Riemann Tensor from Christoffel Symbols}
+\label{sec:dg_cookbook_riemann}
+
+Given the Christoffel symbols, compute each component of
+$R^\rho_{\ \sigma\mu\nu}$ using~\eqref{eq:riemann}:
+\[
+    R^\rho_{\ \sigma\mu\nu} = \partial_\mu \Gamma^\rho_{\ \nu\sigma}
+    - \partial_\nu \Gamma^\rho_{\ \mu\sigma}
+    + \Gamma^\rho_{\ \mu\lambda}\, \Gamma^\lambda_{\ \nu\sigma}
+    - \Gamma^\rho_{\ \nu\lambda}\, \Gamma^\lambda_{\ \mu\sigma}
+\]
+
+\begin{enumerate}
+    \item \textbf{Index structure.}
+          The Riemann tensor is antisymmetric in its last two indices:
+          $R^\rho_{\ \sigma\mu\nu} = -R^\rho_{\ \sigma\nu\mu}$.
+          So only compute components with $\mu < \nu$.
+
+    \item \textbf{Partial derivatives of Christoffels.}
+          For each component, differentiate the relevant Christoffel
+          symbols with respect to the coordinates $x^\mu$ and $x^\nu$.
+
+    \item \textbf{Quadratic terms.}
+          For each component, sum over the dummy index $\lambda$ in the
+          two $\Gamma\Gamma$ products.  Only terms where \emph{both}
+          Christoffel symbols in the product are nonzero contribute.
+
+    \item \textbf{Independent components.}
+          In $n$ dimensions, the Riemann tensor has $n^2(n^2-1)/12$
+          independent components: $1$ in 2D, $6$ in 3D, $20$ in 4D.
+          In 2D, the single independent component determines everything.
+\end{enumerate}
+
+% ---------------------------------------------------------------------
+\subsection{Algorithm: Ricci Tensor and Ricci Scalar}
+\label{sec:dg_cookbook_ricci}
+
+\begin{enumerate}
+    \item \textbf{Ricci tensor.}  Contract the first and third indices
+          of the Riemann tensor:
+          \[
+              R_{\sigma\nu} = R^\lambda_{\ \sigma\lambda\nu}
+              = \sum_{\lambda} R^\lambda_{\ \sigma\lambda\nu} \,.
+          \]
+          In 2D this is a single sum; in 4D it is a sum of four terms.
+
+    \item \textbf{Ricci scalar.}  Trace with the inverse metric:
+          \[
+              R = g^{\sigma\nu} R_{\sigma\nu}
+              = \sum_{\sigma} g^{\sigma\sigma} R_{\sigma\sigma}
+          \]
+          (the last equality holding for a diagonal metric).
+\end{enumerate}
+
+% ---------------------------------------------------------------------
+\subsection{Worked Example: The 2-Sphere}
+\label{sec:dg_cookbook_sphere}
+
+We carry out the \emph{complete} calculation for the 2-sphere metric
+\begin{equation}
+    ds^2 = R^2\, d\theta^2 + R^2 \sin^2\theta\, d\phi^2 \,,
+    \label{eq:cookbook_sphere_metric}
+\end{equation}
+with coordinates $x^1 = \theta$, $x^2 = \phi$.
+
+\paragraph{Step 1: Metric components.}
+\[
+    g_{\theta\theta} = R^2 \,, \qquad
+    g_{\phi\phi} = R^2 \sin^2\theta \,, \qquad
+    g_{\theta\phi} = g_{\phi\theta} = 0 \,.
+\]
+Only $g_{\phi\phi}$ depends on a coordinate ($\theta$).
+
+\paragraph{Step 2: Inverse metric.}
+\[
+    g^{\theta\theta} = \frac{1}{R^2} \,, \qquad
+    g^{\phi\phi} = \frac{1}{R^2 \sin^2\theta} \,.
+\]
+
+\paragraph{Step 3: Partial derivatives of the metric.}
+The only nonvanishing derivative is
+\[
+    \partial_\theta g_{\phi\phi}
+    = R^2 \cdot 2\sin\theta\cos\theta
+    = R^2 \sin 2\theta \,.
+\]
+All other $\partial_\mu g_{\nu\rho} = 0$.
+
+\paragraph{Step 4: Christoffel symbols.}
+Using the diagonal shortcut formulas
+\eqref{eq:diag_type1}--\eqref{eq:diag_type3}:
+
+\begin{itemize}
+    \item Type~\eqref{eq:diag_type1} ($\Gamma^\mu_{\ \mu\mu}$):
+          Both $\partial_\theta g_{\theta\theta} = 0$ and
+          $\partial_\phi g_{\phi\phi} = 0$, so
+          $\Gamma^\theta_{\ \theta\theta} = 0$ and
+          $\Gamma^\phi_{\ \phi\phi} = 0$.
+
+    \item Type~\eqref{eq:diag_type2} ($\Gamma^\mu_{\ \mu\nu}$
+          with $\mu \neq \nu$):
+          \[
+              \Gamma^\phi_{\ \phi\theta}
+              = \Gamma^\phi_{\ \theta\phi}
+              = \frac{1}{2g_{\phi\phi}}\, \partial_\theta g_{\phi\phi}
+              = \frac{R^2 \sin 2\theta}{2 R^2 \sin^2\theta}
+              = \frac{\cos\theta}{\sin\theta}
+              = \cot\theta \,.
+          \]
+          Also $\Gamma^\theta_{\ \theta\phi} = \frac{1}{2g_{\theta\theta}}\partial_\phi g_{\theta\theta} = 0$.
+
+    \item Type~\eqref{eq:diag_type3} ($\Gamma^\mu_{\ \nu\nu}$
+          with $\mu \neq \nu$):
+          \[
+              \Gamma^\theta_{\ \phi\phi}
+              = -\frac{1}{2g_{\theta\theta}}\, \partial_\theta g_{\phi\phi}
+              = -\frac{R^2 \sin 2\theta}{2R^2}
+              = -\sin\theta\cos\theta \,.
+          \]
+          Also $\Gamma^\phi_{\ \theta\theta} = -\frac{1}{2g_{\phi\phi}}\partial_\phi g_{\theta\theta} = 0$.
+\end{itemize}
+
+\noindent
+\textbf{Result:} The nonvanishing Christoffel symbols are
+\begin{equation}
+    \boxed{
+    \Gamma^\theta_{\ \phi\phi} = -\sin\theta\cos\theta \,, \qquad
+    \Gamma^\phi_{\ \theta\phi} = \Gamma^\phi_{\ \phi\theta} = \cot\theta
+    }
+    \label{eq:cookbook_christoffel_sphere}
+\end{equation}
+Verify this with
+\mathlink{01b_Differential_Geometry/christoffel_symbols.wl}{christoffel\_symbols.wl}.
+
+\paragraph{Step 5: Riemann tensor.}
+In 2D there is only one independent component.  We compute
+$R^\theta_{\ \phi\theta\phi}$ (i.e., $\rho = \theta$, $\sigma = \phi$,
+$\mu = \theta$, $\nu = \phi$):
+\begin{align}
+    R^\theta_{\ \phi\theta\phi}
+    &= \partial_\theta \Gamma^\theta_{\ \phi\phi}
+     - \partial_\phi \Gamma^\theta_{\ \theta\phi}
+     + \Gamma^\theta_{\ \theta\lambda}\,\Gamma^\lambda_{\ \phi\phi}
+     - \Gamma^\theta_{\ \phi\lambda}\,\Gamma^\lambda_{\ \theta\phi}
+    \nonumber \\[4pt]
+    &= \partial_\theta(-\sin\theta\cos\theta) - 0
+     + \Gamma^\theta_{\ \theta\theta}\,\Gamma^\theta_{\ \phi\phi}
+     + \Gamma^\theta_{\ \theta\phi}\,\Gamma^\phi_{\ \phi\phi}
+    \nonumber \\
+    &\qquad
+     - \Gamma^\theta_{\ \phi\theta}\,\Gamma^\theta_{\ \theta\phi}
+     - \Gamma^\theta_{\ \phi\phi}\,\Gamma^\phi_{\ \theta\phi}
+    \nonumber \\[4pt]
+    &= (-\cos^2\theta + \sin^2\theta)
+     + 0 + 0
+     - 0 - (-\sin\theta\cos\theta)(\cot\theta)
+    \nonumber \\[4pt]
+    &= -\cos^2\theta + \sin^2\theta + \cos^2\theta
+    \nonumber \\[4pt]
+    &= \sin^2\theta \,.
+    \label{eq:cookbook_riemann_sphere}
+\end{align}
+
+\paragraph{Step 6: Ricci tensor.}
+\begin{align}
+    R_{\phi\phi}
+    &= R^\lambda_{\ \phi\lambda\phi}
+     = R^\theta_{\ \phi\theta\phi} + R^\phi_{\ \phi\phi\phi}
+     = \sin^2\theta + 0
+     = \sin^2\theta \,.
+    \label{eq:cookbook_ricci_phiphi}
+\end{align}
+For $R_{\theta\theta}$, we need $R^\phi_{\ \theta\phi\theta}$.
+By the antisymmetry $R^\rho_{\ \sigma\mu\nu} = -R^\rho_{\ \sigma\nu\mu}$
+and the symmetry of the fully lowered tensor:
+\[
+    R^\phi_{\ \theta\phi\theta}
+    = g^{\phi\phi}\, R_{\phi\theta\phi\theta}
+    = g^{\phi\phi}\, g_{\theta\theta}\, R^\theta_{\ \phi\theta\phi} \cdot (-1) \cdot (-1)
+\]
+More directly, a short computation analogous to the one above gives
+$R^\phi_{\ \theta\phi\theta} = 1$, so
+\begin{equation}
+    R_{\theta\theta}
+    = R^\lambda_{\ \theta\lambda\theta}
+    = R^\theta_{\ \theta\theta\theta} + R^\phi_{\ \theta\phi\theta}
+    = 0 + 1 = 1 \,.
+    \label{eq:cookbook_ricci_thth}
+\end{equation}
+
+\paragraph{Step 7: Ricci scalar.}
+\begin{equation}
+    R = g^{\theta\theta} R_{\theta\theta} + g^{\phi\phi} R_{\phi\phi}
+    = \frac{1}{R^2}\cdot 1 + \frac{1}{R^2\sin^2\theta}\cdot\sin^2\theta
+    = \frac{1}{R^2} + \frac{1}{R^2}
+    = \boxed{\frac{2}{R^2}} \,.
+    \label{eq:cookbook_ricci_scalar_sphere}
+\end{equation}
+This is the standard result: a sphere of radius $R$ has constant positive
+Gaussian curvature $K = 1/R^2$, and in 2D the Ricci scalar equals $2K$.
+
+% ---------------------------------------------------------------------
+\subsection{Tips and Tricks}
+\label{sec:dg_cookbook_tips}
+
+\begin{enumerate}
+    \item \textbf{Start with the diagonal shortcut.}
+          Most metrics encountered in GR courses are diagonal.  Use
+          eqs.~\eqref{eq:diag_type1}--\eqref{eq:diag_type3} rather than
+          the full Christoffel formula.
+
+    \item \textbf{Spot vanishing components early.}
+          A Christoffel symbol $\Gamma^\sigma_{\ \mu\nu}$ vanishes
+          whenever the relevant partial derivatives of the metric are all
+          zero.  Before computing, ask: does $g_{\mu\nu}$ depend on
+          $x^\sigma$?  Does $g_{\sigma\mu}$ depend on $x^\nu$?  If not,
+          the symbol is likely zero.
+
+    \item \textbf{Count before you compute.}
+          In $n$ dimensions there are $n^2(n+1)/2$ potentially independent
+          Christoffel symbols (accounting for the $\mu\nu$ symmetry).
+          In 2D that is $6$; in 4D it is $40$.  Most are zero for
+          typical metrics --- identify the nonvanishing ones first.
+
+    \item \textbf{Use Mathematica to verify.}
+          Always check hand calculations with
+          \mathlink{01b_Differential_Geometry/christoffel_symbols.wl}{christoffel\_symbols.wl}.
+          Even experts make sign and index errors in these computations.
+
+    \item \textbf{Look for symmetry.}
+          If the metric is independent of a coordinate $x^\alpha$
+          (a Killing symmetry), many Christoffel symbols simplify or vanish.
+          In the 2-sphere example, the metric is $\phi$-independent,
+          which immediately kills several terms.
+\end{enumerate}
+
+
+% =====================================================================
 \section{Summary}
 \label{sec:dg_summary}
 

@@ -263,6 +263,131 @@ in \mathlink{01c_Schwarzschild/schwarzschild_metric.wl}{schwarzschild\_metric.wl
 
 
 % =====================================================================
+\section{Inside the Event Horizon: The Coordinate Swap}
+\label{sec:dg_inside_horizon}
+
+The Schwarzschild metric~\eqref{eq:schwarzschild_metric} describes
+spacetime outside a spherical mass, but it also has something startling
+to say about the region $r < R_S$.  Understanding this interior, even
+briefly, sharpens our physical intuition about what the Schwarzschild
+radius really means.
+
+% ---------------------------------------------------------------------
+\subsection{The Signature Flip}
+\label{sec:dg_signature_flip}
+
+Recall the Schwarzschild line element:
+\[
+    ds^2 = -\!\left(1 - \frac{R_S}{r}\right) c^2\, dt^2
+    + \left(1 - \frac{R_S}{r}\right)^{-1} dr^2
+    + r^2\, d\Omega^2 \,.
+\]
+Outside the horizon ($r > R_S$), the factor $f(r) \equiv 1 - R_S/r$ is
+positive, so $g_{tt} < 0$ (timelike) and $g_{rr} > 0$ (spacelike).
+
+Inside the horizon ($r < R_S$), this factor becomes \emph{negative}:
+$f(r) < 0$.  Consequently:
+\begin{itemize}[nosep]
+    \item $g_{tt} = -f(r)\,c^2 > 0$ --- the $t$ direction is now
+          \textbf{spacelike}.
+    \item $g_{rr} = f(r)^{-1} < 0$ --- the $r$ direction is now
+          \textbf{timelike}.
+\end{itemize}
+The roles of $r$ and $t$ have swapped.  Inside the horizon, $r$ is a
+time coordinate and $t$ is a space coordinate.
+
+% ---------------------------------------------------------------------
+\subsection{Physical Meaning: The Singularity Is a Moment in Time}
+\label{sec:dg_singularity_time}
+
+Since $r$ is timelike inside the horizon, decreasing $r$ is the
+\emph{future direction}.  Every future-directed worldline must have
+$dr < 0$; the singularity at $r = 0$ is not a place you can steer
+away from --- it is a \emph{moment in time} that all interior
+observers inevitably reach.
+
+\begin{remark}
+You can no more avoid the singularity at $r = 0$ (once inside the
+horizon) than you can avoid next Tuesday.  This is the precise sense
+in which a black hole traps everything: it is not that the singularity
+pulls you toward a point in space, but that the future itself points
+toward $r = 0$.
+\end{remark}
+
+% ---------------------------------------------------------------------
+\subsection{Why Nothing Escapes: Tilting Light Cones}
+\label{sec:dg_light_cones}
+
+For radial null rays ($ds^2 = 0$, $d\Omega = 0$) in Schwarzschild
+coordinates:
+\begin{equation}
+    \frac{dr}{dt} = \pm\, c\left(1 - \frac{R_S}{r}\right) .
+    \label{eq:radial_null}
+\end{equation}
+Outside the horizon, the two signs give outgoing ($+$) and ingoing ($-$)
+light rays.  At $r = R_S$, both solutions give $dr/dt = 0$: light
+``stands still'' in these coordinates (a coordinate effect, not a
+physical one).
+
+For $r < R_S$, the factor $(1 - R_S/r)$ is negative, so
+$dr/dt$ has the \emph{same sign} for both solutions --- both
+``outgoing'' and ``ingoing'' light rays have $dr < 0$ when $dt > 0$.
+In other words, \textbf{all future-directed light cones point toward
+smaller~$r$}.  No signal --- not even light --- can move to larger $r$
+inside the horizon.
+
+% ---------------------------------------------------------------------
+\subsection{Eddington--Finkelstein Coordinates}
+\label{sec:dg_eddington_finkelstein}
+
+The pathological behavior at $r = R_S$ in Schwarzschild coordinates
+is a coordinate artifact.  We can remove it by switching to
+\textbf{ingoing Eddington--Finkelstein coordinates}.  Define the
+advanced time coordinate:
+\begin{equation}
+    v = t + r_* \,, \qquad
+    r_* = r + R_S \ln\!\left|\frac{r}{R_S} - 1\right| ,
+    \label{eq:tortoise_and_v}
+\end{equation}
+where $r_*$ is the \textbf{tortoise coordinate} (Carroll eq.~5.58).
+In terms of $(v, r, \theta, \phi)$, the Schwarzschild line element
+becomes (Carroll eq.~5.60):
+\begin{equation}
+    \boxed{
+    ds^2 = -\!\left(1 - \frac{R_S}{r}\right) c^2\, dv^2
+    + 2c\, dv\, dr + r^2\, d\Omega^2
+    }
+    \label{eq:eddington_finkelstein}
+\end{equation}
+This metric is manifestly regular at $r = R_S$: every component is
+finite and the determinant is nonzero.  The horizon is simply the
+surface where outgoing light rays have $dr/dv = 0$; ingoing rays cross
+it smoothly.
+
+\begin{remark}
+The Eddington--Finkelstein form makes it transparent that the event
+horizon is a \emph{one-way membrane}: ingoing light ($dv > 0$,
+$dr < 0$) crosses the horizon without incident, while outgoing light
+at $r = R_S$ remains at $r = R_S$ forever.
+\end{remark}
+
+% ---------------------------------------------------------------------
+\subsection{Relevance to Gravitational Lensing}
+\label{sec:dg_interior_relevance}
+
+\begin{remark}
+For gravitational lensing, we work exclusively in the region
+$r \gg R_S$ --- far outside the event horizon.  Galaxy-mass lenses
+have $R_S \sim 0.1$ pc, while lensing occurs at scales of kiloparsecs.
+The black hole interior is therefore not directly relevant to lensing
+calculations.  Nevertheless, understanding the interior clarifies
+\emph{why} the Schwarzschild radius is special (it is where light
+cones tip over) and deepens physical intuition about the boundary
+conditions of the exterior solution.
+\end{remark}
+
+
+% =====================================================================
 \section{The Weak-Field Limit}
 \label{sec:weak_field}
 

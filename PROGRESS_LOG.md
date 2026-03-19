@@ -58,3 +58,19 @@ Timestamped record of major milestones and work completed.
 - **Kerr**: Brief 3-5 page overview section within Module 1d (state metric, key features, note why not needed for galaxy-scale lensing).
 - **FRW**: Keep in Module 3 but expand with full derivation from Einstein equations + perfect fluid stress-energy tensor.
 - **Gravitational waves**: Skip entirely (mention in 1e, then move on).
+
+---
+
+## 2026-03-19 — Module 1b/1c Expansions
+
+- **Module 1b**: Added "Computation Cookbook" section — step-by-step algorithmic guide for computing Christoffel symbols, Riemann tensor, Ricci tensor/scalar from any metric. Includes diagonal metric shortcut formulas and a complete worked example (every step) for the 2-sphere. Tips and tricks section.
+- **Module 1c**: Added "Inside the Event Horizon" section — the coordinate swap (t↔r signature flip), physical meaning (singularity is a moment in time, not a place in space), tilting light cones, Eddington-Finkelstein coordinates, and relevance note for lensing.
+
+---
+
+## 2026-03-19 — Module 1d: Geodesics & Orbits in Schwarzschild Spacetime
+
+- **LaTeX notes** (`Notes/01d_Geodesics_Orbits/01d_Geodesics_Orbits.tex`): 9 sections covering Killing vectors and conservation laws, effective potential derivation, circular orbits and ISCO (r = 3Rs), photon sphere (r = 3Rs/2), Newtonian vs GR comparison, perihelion precession (43"/century for Mercury), null geodesics preview, and Kerr metric overview (stated, not derived; key features including frame dragging, ergosphere, spin-dependent ISCO). 5 exercises.
+- **`geodesic_equation.wl`**: Symbolic ISCO (r=6, L=2√3 in G=c=M=1 units), photon sphere (r=3, unstable), Mercury precession (43.0"/century — exact match). 4 figures exported.
+- **Figures**: effective_potential_massive.pdf, effective_potential_photon.pdf, newtonian_vs_gr.pdf, precessing_orbit.pdf — all embedded in LaTeX.
+- **Figures for Modules 1a-1c**: 8 publication-quality figures added and embedded (light cones, Lorentz boost, γ factor, parallel transport, geodesics on sphere, time dilation, gravitational redshift, Flamm's paraboloid).

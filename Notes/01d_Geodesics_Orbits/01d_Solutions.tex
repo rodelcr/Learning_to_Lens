@@ -1,0 +1,210 @@
+% =============================================================================
+% Module 1d: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:geodesics_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{01d_Geodesics_Orbits/problems\_01d.wl}{problems\_01d.wl},
+which verifies each answer symbolically.
+
+% ----- Exercise 1.1 -----
+\subsection*{Exercise~\ref{ex:derive_veff}: Deriving the Effective Potential}
+
+We start from the normalization condition~\eqref{eq:normalization} with
+$f(r) = 1 - R_S/r$:
+\begin{equation*}
+    -f\!\left(\frac{dt}{d\lambda}\right)^{\!2}
+    + \frac{1}{f}\left(\frac{dr}{d\lambda}\right)^{\!2}
+    + r^2\!\left(\frac{d\phi}{d\lambda}\right)^{\!2} = -\epsilon \,.
+\end{equation*}
+Substituting the conserved quantities $E = f\, dt/d\lambda$ and
+$L = r^2\, d\phi/d\lambda$:
+\begin{equation*}
+    -\frac{E^2}{f} + \frac{1}{f}\left(\frac{dr}{d\lambda}\right)^{\!2}
+    + \frac{L^2}{r^2} = -\epsilon \,.
+\end{equation*}
+Multiplying through by $f$ and rearranging:
+\begin{align*}
+    \left(\frac{dr}{d\lambda}\right)^{\!2}
+    &= E^2 - f(r)\!\left(\epsilon + \frac{L^2}{r^2}\right) \\
+    &= E^2 - \left(1 - \frac{R_S}{r}\right)\!\left(\epsilon + \frac{L^2}{r^2}\right) \\
+    &= E^2 - \epsilon + \frac{\epsilon R_S}{r} - \frac{L^2}{r^2} + \frac{R_S L^2}{r^3} \,.
+\end{align*}
+Dividing by 2 and identifying terms:
+\begin{equation*}
+    \frac{1}{2}\left(\frac{dr}{d\lambda}\right)^{\!2}
+    + \underbrace{\left(-\frac{\epsilon GM}{r}
+    + \frac{L^2}{2r^2}
+    - \frac{GML^2}{c^2 r^3}\right)}_{V_{\mathrm{eff}}(r)}
+    = \frac{1}{2}(E^2 - \epsilon) \equiv \mathcal{E} \,,
+\end{equation*}
+where we used $R_S = 2GM/c^2$.  This gives the effective
+potential~\eqref{eq:effective_potential}:
+\[
+    \boxed{V_{\mathrm{eff}}(r) = -\frac{\epsilon\, GM}{r}
+    + \frac{L^2}{2r^2} - \frac{GML^2}{c^2 r^3}}
+\]
+
+\textbf{Newtonian limit:} The last term $-GML^2/(c^2 r^3)$ is the GR
+correction.  In the Newtonian limit ($c \to \infty$, or equivalently
+$R_S \to 0$), this term vanishes, leaving:
+\[
+    V_{\mathrm{eff}}^{\mathrm{Newton}} = -\frac{GM}{r} + \frac{L^2}{2r^2} \,,
+\]
+which is the standard Newtonian effective potential.  The centrifugal
+barrier $L^2/(2r^2)$ diverges as $r \to 0$, preventing any particle from
+reaching the origin.  The GR correction term is attractive at small $r$
+and allows the barrier to be overcome --- this is why particles can plunge
+into black holes.
+
+% ----- Exercise 1.2 -----
+\subsection*{Exercise~\ref{ex:isco_derivation}: ISCO Derivation}
+
+Working in $G = c = M = 1$ units, the effective potential for massive
+particles is $V_{\mathrm{eff}} = -1/r + L^2/(2r^2) - L^2/r^3$.
+
+\textbf{Step 1: Circular orbit condition.}  Setting $dV_{\mathrm{eff}}/dr = 0$:
+\begin{equation*}
+    \frac{1}{r^2} - \frac{L^2}{r^3} + \frac{3L^2}{r^4} = 0
+    \quad\Longrightarrow\quad
+    r^2 - L^2 r + 3L^2 = 0 \,.
+\end{equation*}
+The two solutions are:
+\begin{equation*}
+    r_\pm = \frac{L^2 \pm \sqrt{L^4 - 12L^2}}{2}
+    = \frac{L^2}{2}\left(1 \pm \sqrt{1 - \frac{12}{L^2}}\right) \,.
+\end{equation*}
+
+\textbf{Step 2: ISCO condition.}  The ISCO occurs when the two circular
+orbits merge, i.e., when the discriminant vanishes:
+\begin{equation*}
+    L^4 - 12L^2 = 0 \quad\Longrightarrow\quad L^2(L^2 - 12) = 0
+    \quad\Longrightarrow\quad L = 2\sqrt{3} \,.
+\end{equation*}
+
+\textbf{Step 3: ISCO radius.}  Substituting $L^2 = 12$:
+\begin{equation*}
+    r_{\mathrm{ISCO}} = \frac{12}{2} = \boxed{6} \quad
+    \left(= \frac{6GM}{c^2} = 3\,R_S\right) \,.
+\end{equation*}
+
+\textbf{Verification via $d^2V/dr^2 = 0$:}  Alternatively, we can solve
+$dV/dr = 0$ and $d^2V/dr^2 = 0$ simultaneously:
+\begin{equation*}
+    \frac{d^2 V_{\mathrm{eff}}}{dr^2} = -\frac{2}{r^3} + \frac{3L^2}{r^4}
+    - \frac{12L^2}{r^5} = 0 \,.
+\end{equation*}
+Combined with $dV/dr = 0$, this yields $r = 6$, $L = 2\sqrt{3}$,
+confirming the result.
+
+% ----- Exercise 1.3 -----
+\subsection*{Exercise~\ref{ex:photon_sphere_derivation}: Photon Sphere}
+
+For photons ($\epsilon = 0$), the effective potential is (in $G = c = M = 1$ units):
+\begin{equation*}
+    V_{\mathrm{eff}}^{\mathrm{photon}} = \frac{L^2}{2r^2} - \frac{L^2}{r^3} \,.
+\end{equation*}
+
+\textbf{Circular orbit:}  Setting $dV/dr = 0$:
+\begin{equation*}
+    -\frac{L^2}{r^3} + \frac{3L^2}{r^4} = 0
+    \quad\Longrightarrow\quad
+    \frac{L^2}{r^4}(3 - r) = 0
+    \quad\Longrightarrow\quad
+    \boxed{r = 3}
+    \quad\left(= \frac{3GM}{c^2} = \frac{3}{2}\,R_S\right) \,.
+\end{equation*}
+
+\textbf{Stability:}  Evaluating the second derivative at $r = 3$:
+\begin{equation*}
+    \frac{d^2 V_{\mathrm{eff}}}{dr^2}\bigg|_{r=3}
+    = \frac{3L^2}{r^4} - \frac{12L^2}{r^5}\bigg|_{r=3}
+    = \frac{3L^2}{81} - \frac{12L^2}{243}
+    = \frac{L^2}{81}\left(3 - \frac{12}{3}\right)
+    = -\frac{L^2}{81}\left(1\right)
+    = -\frac{2L^2}{81} < 0 \,.
+\end{equation*}
+Since $d^2V/dr^2 < 0$, the effective potential has a \textbf{maximum}
+at $r = 3$, confirming that the photon orbit is \textbf{unstable}.
+Any perturbation causes the photon to spiral inward (capture) or
+escape to infinity.
+
+% ----- Exercise 1.4 -----
+\subsection*{Exercise~\ref{ex:mercury_precession}: Mercury's Perihelion Precession}
+
+Using eq.~\eqref{eq:perihelion_precession} with Mercury's orbital parameters:
+\begin{alignat*}{2}
+    G &= 6.674 \times 10^{-11} \; \text{m}^3\,\text{kg}^{-1}\,\text{s}^{-2} & \qquad
+    M_\odot &= 1.989 \times 10^{30} \; \text{kg} \\
+    a &= 5.79 \times 10^{10} \; \text{m} & \qquad
+    e &= 0.2056
+\end{alignat*}
+
+\textbf{Step 1: Precession per orbit.}
+\begin{align*}
+    \Delta\phi &= \frac{6\pi G M}{c^2\, a\,(1 - e^2)} \\
+    &= \frac{6\pi \times 6.674\!\times\!10^{-11} \times 1.989\!\times\!10^{30}}
+    {(2.998\!\times\!10^{8})^2 \times 5.79\!\times\!10^{10} \times (1 - 0.2056^2)} \\
+    &= 5.01 \times 10^{-7} \;\text{rad/orbit} \,.
+\end{align*}
+
+\textbf{Step 2: Convert to arcseconds.}
+\begin{equation*}
+    \Delta\phi = 5.01 \times 10^{-7} \;\text{rad}
+    \times \frac{180 \times 3600}{\pi} \;\frac{\text{arcsec}}{\text{rad}}
+    = 0.1034\;\text{arcsec/orbit} \,.
+\end{equation*}
+
+\textbf{Step 3: Orbits per century.}
+\begin{equation*}
+    N_{\mathrm{orbits}} = \frac{100 \times 365.25}{87.97} = 415.2 \;\text{orbits/century} \,.
+\end{equation*}
+
+\textbf{Step 4: Precession per century.}
+\begin{equation*}
+    \Delta\phi_{\mathrm{century}}
+    = 0.1034 \times 415.2
+    = \boxed{43.0 \;\text{arcsec/century}} \,.
+\end{equation*}
+This matches the observed anomalous precession of Mercury, confirming one
+of the three classical tests of general relativity.
+
+% ----- Exercise 1.5 -----
+\subsection*{Exercise~\ref{ex:orbit_integration}: Effective Potential for $L = 4$}
+
+\textbf{(a)} Working in $G = c = M = 1$ units with $L = 4$, the circular
+orbit radii are found by solving $dV_{\mathrm{eff}}/dr = 0$:
+\begin{equation*}
+    r^2 - 16r + 48 = 0
+    \quad\Longrightarrow\quad
+    r = \frac{16 \pm \sqrt{256 - 192}}{2}
+    = \frac{16 \pm 8}{2} \,.
+\end{equation*}
+Therefore:
+\begin{itemize}
+    \item \textbf{Stable circular orbit} (minimum of $V_{\mathrm{eff}}$):
+          $r_+ = 12$,\quad $V_{\mathrm{eff}}(12) = -1/24 \approx -0.0417$
+    \item \textbf{Unstable circular orbit} (maximum of $V_{\mathrm{eff}}$):
+          $r_- = 4$,\quad $V_{\mathrm{eff}}(4) = -1/8 + 1/2 - 1 = -0.0625 + \ldots$
+
+          More precisely: $V_{\mathrm{eff}}(4) = -1/4 + 16/32 - 16/64 = -0.25 + 0.5 - 0.25 = 0$
+    \item \textbf{ISCO} (for reference): $r_{\mathrm{ISCO}} = 6$ occurs at
+          $L = 2\sqrt{3} \approx 3.464$, which is below $L = 4$, so the two
+          circular orbits are well separated.
+\end{itemize}
+The plot (see \solnlink{01d_Geodesics_Orbits/problems\_01d.wl}{problems\_01d.wl})
+shows the GR potential (solid) with the Newtonian potential (dashed) for
+comparison.  The GR correction causes $V_{\mathrm{eff}} \to -\infty$ as
+$r \to 0$, allowing plunge orbits.
+
+\textbf{(b)} For $\mathcal{E}$ slightly above $V_{\mathrm{eff}}(r_+)$, the
+particle oscillates between a minimum radius (perihelion) and a maximum
+radius (aphelion), but the orbit does not close due to the GR correction
+term.  The perihelion advances by a small angle each orbit, producing a
+\textbf{bound precessing ellipse} --- the same effect responsible for
+Mercury's perihelion precession (Exercise~\ref{ex:mercury_precession}).
