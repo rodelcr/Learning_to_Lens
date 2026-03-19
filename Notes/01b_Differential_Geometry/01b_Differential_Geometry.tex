@@ -235,8 +235,23 @@ $g_{\mu\nu} V^\mu W^\nu = \text{const}$ (Carroll eq.~3.42).
 
 On the 2-sphere, parallel transporting a vector around a closed loop
 results in a rotation of the vector --- the angle of rotation is
-proportional to the enclosed area and the curvature.  This is visualized
-interactively in
+proportional to the enclosed area and the curvature (Figure~\ref{fig:parallel_transport}).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.6\textwidth]{../Figures/01b_Differential_Geometry/parallel_transport_sphere.pdf}
+    \caption{Parallel transport on the 2-sphere.  A vector (blue) initially
+    pointing east at the equator is transported north to the pole along
+    $\phi = 0$, then south along $\phi = 60°$ back to the equator.
+    The final vector (green) has rotated by $\alpha = 60°$ --- equal to
+    the solid angle enclosed by the path.  This rotation is a direct
+    manifestation of curvature.
+    (cf.\ Carroll Fig.~3.2)}
+    \label{fig:parallel_transport}
+\end{figure}
+
+\noindent
+This is also visualized interactively in
 \mathlink{01b_Differential_Geometry/curved_surfaces.nb}{curved\_surfaces.nb}.
 
 
@@ -275,6 +290,15 @@ Key properties:
 In flat space with Cartesian coordinates, $\Gamma^\mu_{\ \rho\sigma} = 0$,
 so the geodesic equation reduces to $d^2 x^\mu/d\lambda^2 = 0$ --- a
 straight line, as expected.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.55\textwidth]{../Figures/01b_Differential_Geometry/geodesics_sphere.pdf}
+    \caption{Geodesics on the 2-sphere are great circles.  Three
+    orthogonal great circles are shown, illustrating that the shortest
+    path between any two points on a sphere follows a great circle arc.}
+    \label{fig:geodesics_sphere}
+\end{figure}
 
 
 % =====================================================================

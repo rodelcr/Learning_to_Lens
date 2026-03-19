@@ -178,6 +178,16 @@ Since $\sqrt{1 - R_S/r} < 1$ for $r > R_S$, clocks closer to the mass
 run \textit{slower} than clocks farther away.  At $r = R_S$, the
 time dilation becomes infinite --- this is the event horizon.
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.65\textwidth]{../Figures/01c_Schwarzschild/time_dilation.pdf}
+    \caption{Gravitational time dilation factor $d\tau/dt = \sqrt{1 - R_S/r}$
+    as a function of $r/R_S$.  Clocks near the horizon ($r \to R_S$) are
+    dramatically slowed.  Far from the mass ($r \gg R_S$), the factor
+    approaches unity (flat spacetime).}
+    \label{fig:time_dilation}
+\end{figure}
+
 
 % =====================================================================
 \section{Gravitational Redshift}
@@ -203,6 +213,16 @@ The gravitational redshift parameter is:
 \end{equation}
 In the weak-field limit ($R_S/r \ll 1$): $z_{\mathrm{grav}} \approx GM/(rc^2)$
 (Congdon \& Keeton eq.~3.63).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.65\textwidth]{../Figures/01c_Schwarzschild/gravitational_redshift.pdf}
+    \caption{Gravitational redshift $z_{\mathrm{grav}}$ as a function of
+    emission radius $r/R_S$.  The redshift diverges at the horizon.  The
+    black dot marks a typical neutron star ($r/R_S \approx 2.4$,
+    $z \approx 0.3$).  For the Sun, $z \sim 10^{-6}$.}
+    \label{fig:grav_redshift}
+\end{figure}
 
 \begin{remark}
 The gravitational redshift was one of the three classical tests of GR
@@ -309,8 +329,19 @@ $(r, \phi, z)$ where $dl^2 = (1 + z'^2) dr^2 + r^2 d\phi^2$, we find:
     z(r) = 2\sqrt{R_S}\,\sqrt{r - R_S} \,,
     \label{eq:flamm}
 \end{equation}
-which is \textbf{Flamm's paraboloid}.  This is plotted interactively in
-\mathlink{01c_Schwarzschild/gravitational_redshift.nb}{gravitational\_redshift.nb}.
+which is \textbf{Flamm's paraboloid} (Figure~\ref{fig:flamm}).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../Figures/01c_Schwarzschild/flamm_paraboloid.pdf}
+    \caption{Flamm's paraboloid: the equatorial spatial geometry of the
+    Schwarzschild spacetime embedded in 3D Euclidean space.  The throat
+    at $r = R_S$ represents the event horizon.  The surface curves more
+    steeply near the throat, visualizing the spatial curvature caused by
+    gravity.  An interactive version is in
+    \texttt{gravitational\_redshift.nb}.}
+    \label{fig:flamm}
+\end{figure}
 
 
 % =====================================================================
