@@ -170,7 +170,7 @@ These notes draw from the following texts (not included in the repository due to
 
 ## Author
 
-**Rodrigo Cordova Rosado**
+**Rodrigo Córdova Rosado**
 Harvard-Smithsonian Center for Astrophysics
 [rodrigo.cordova_rosado@cfa.harvard.edu](mailto:rodrigo.cordova_rosado@cfa.harvard.edu)
 

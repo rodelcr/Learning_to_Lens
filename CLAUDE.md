@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Learning to Lens** is an educational tutorial suite teaching strong gravitational lensing theory and modeling to advanced undergraduate / early graduate students. The primary computational tool is **Wolfram Mathematica**, with companion **LaTeX** notes providing derivations and exposition.
 
-**Project lead:** Rodrigo Cordova Rosado (rodrigo.cordova_rosado@cfa.harvard.edu, Harvard CfA)
+**Project lead:** Rodrigo Córdova Rosado (rodrigo.cordova_rosado@cfa.harvard.edu, Harvard CfA)
 
 ## Repository Structure
 

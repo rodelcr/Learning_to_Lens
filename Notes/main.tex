@@ -37,13 +37,25 @@
     {\Huge \textbf{Learning to Lens}} \\[0.5cm]
     {\Large An Introduction to General Relativity \\
     and Strong Gravitational Lensing} \\[1cm]
-    {\large with Mathematica} \\[0.5cm]
+    {\large with Mathematica} \\[0.8cm]
+    {\normalsize Based on the published works of} \\[0.2cm]
+    {\normalsize
+    S.~Carroll;
+    A.~B.~Congdon \& C.~R.~Keeton;
+    R.~Narayan \& M.~Bartelmann;} \\
+    {\normalsize
+    P.~Saha, D.~Sluse, J.~Wagner \& L.~L.~R.~Williams;
+    M.~Meneghetti;} \\
+    {\normalsize
+    P.~Schneider, J.~Ehlers \& E.~E.~Falco;
+    A.~O.~Petters, H.~Levine \& J.~Wambsganss}
+    \\[0.5cm]
     \ifsolutions
         {\normalsize\color{BrickRed}\textbf{--- Instructor Edition (with Solutions) ---}}
     \fi
 }
 \author{
-    Rodrigo Cordova Rosado \\
+    Rodrigo C\'{o}rdova Rosado \\
     \textit{Harvard-Smithsonian Center for Astrophysics} \\
     \texttt{rodrigo.cordova\_rosado@cfa.harvard.edu}
 }
@@ -53,6 +65,66 @@
 \begin{document}
 
 \maketitle
+
+% =============================================================================
+% Disclaimer / About This Document
+% =============================================================================
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{center}
+{\Large \textbf{About This Document}}
+\end{center}
+\vspace{0.5cm}
+
+\noindent
+This tutorial suite was produced by \textbf{Rodrigo C\'{o}rdova Rosado}
+(Harvard--Smithsonian Center for Astrophysics) with the assistance of
+\textbf{Claude} (Anthropic), an AI language model, via
+\textbf{Claude Code} --- Anthropic's command-line tool for collaborative
+software engineering and technical writing.
+
+\medskip
+\noindent
+The workflow was as follows: the author directed Claude to co-write the
+\LaTeX\ lecture notes, Wolfram Mathematica scripts, and interactive
+notebooks, drawing on the reference textbooks listed on the title page.
+Claude drafted the text and code; the author reviewed, revised, and
+approved all content.
+
+\medskip
+\noindent
+\textbf{Importantly, all mathematical derivations and symbolic results
+in these notes have been verified deterministically using Wolfram
+Mathematica's computer algebra system} --- not generated probabilistically
+by an LLM\@.  Every equation, identity, and worked solution was checked
+by running the companion \texttt{.wl} scripts (via \texttt{wolframscript}),
+which perform exact symbolic computation.  The Mathematica verification
+outputs are reproducible and accompany each module in the repository.
+
+\medskip
+\noindent
+The AI assistant was used for:
+\begin{itemize}[nosep]
+    \item Drafting expository prose and pedagogical explanations
+    \item Structuring the curriculum and organizing modules
+    \item Writing Mathematica code (subsequently executed and verified)
+    \item Formatting \LaTeX\ and managing cross-references
+\end{itemize}
+
+\noindent
+The AI assistant was \textbf{not} used as a source of mathematical truth.
+All physics content derives from the published textbooks and review articles
+cited throughout, and all symbolic computations are verified by Mathematica.
+
+\medskip
+\noindent
+The full source code, Mathematica notebooks, and build scripts are available
+at: \url{https://github.com/rodelcr/Learning_to_Lens}
+
+\vspace*{\fill}
+\clearpage
+
+% =============================================================================
 \tableofcontents
 \listoffigures
 
