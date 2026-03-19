@@ -1,17 +1,384 @@
 % =============================================================================
 % Module 1c: The Schwarzschild Solution
 % =============================================================================
-% Sources: Carroll Ch. 5, Congdon & Keeton Ch. 3.3
+% Sources: Carroll Ch. 5 (Secs. 5.1--5.3), Congdon & Keeton Ch. 3.3
 % Mathematica: ../Mathematica/01c_Schwarzschild/
 % =============================================================================
 
 \chapter{The Schwarzschild Solution}
 \label{ch:schwarzschild}
 
-% TODO: Module content to be written
-% Topics:
-% - Spherically symmetric vacuum solution
-% - Schwarzschild metric derivation
-% - Birkhoff's theorem
-% - Coordinate singularities vs. physical singularities
-% - Event horizon and Schwarzschild radius
+\begin{quote}
+\textit{In GR, the unique spherically symmetric vacuum solution is the
+Schwarzschild metric; it is second only to Minkowski space in the list of
+important spacetimes.}
+\hfill --- Sean Carroll, \textit{Spacetime and Geometry}
+\end{quote}
+
+\noindent
+Having developed the general machinery of differential geometry in
+Module~1b, we now apply it to the most important exact solution in GR:
+the \textbf{Schwarzschild metric}, which describes the spacetime geometry
+outside any spherically symmetric, non-rotating mass.  This metric
+governs the gravitational field of stars, planets, and non-rotating
+black holes, and is the starting point for understanding gravitational
+lensing.
+
+\medskip
+\noindent
+\textbf{Companion Mathematica files:}
+\begin{itemize}[nosep]
+    \item \mathlink{01c_Schwarzschild/schwarzschild_metric.wl}{schwarzschild\_metric.wl}
+          --- derive and verify the Schwarzschild metric: compute
+          Christoffel symbols, Riemann tensor, verify $R_{\mu\nu} = 0$,
+          and compute the Kretschner scalar
+    \item \mathlink{01c_Schwarzschild/gravitational_redshift.nb}{gravitational\_redshift.nb}
+          --- interactive plots of gravitational redshift, time dilation,
+          and Flamm's paraboloid embedding diagram
+\end{itemize}
+
+% =====================================================================
+\section{The Most General Spherically Symmetric Metric}
+\label{sec:general_spherical}
+
+We seek the metric outside a static, spherically symmetric mass
+distribution.  The most general line element consistent with these
+symmetries can be written (Carroll eq.~5.5; cf.\ Congdon \& Keeton
+eq.~3.64):
+\begin{equation}
+    ds^2 = -e^{2\alpha(r)} dt^2 + e^{2\beta(r)} dr^2 + r^2\, d\Omega^2 \,,
+    \label{eq:general_spherical}
+\end{equation}
+where $d\Omega^2 = d\theta^2 + \sin^2\theta\, d\phi^2$ is the metric on
+the unit 2-sphere, and $\alpha(r)$ and $\beta(r)$ are functions to be
+determined from Einstein's equation.
+
+\begin{remark}
+The ``static'' assumption means the metric is independent of $t$ and
+has no $dt\,dr$ cross terms.  ``Spherically symmetric'' means the angular
+part takes the form $r^2 d\Omega^2$, with $r$ chosen so that spheres at
+constant $r$ have area $4\pi r^2$.
+\end{remark}
+
+
+% =====================================================================
+\section{Deriving the Schwarzschild Metric}
+\label{sec:schwarzschild_derivation}
+
+We solve Einstein's vacuum equation $R_{\mu\nu} = 0$ for the
+metric~\eqref{eq:general_spherical}.  The strategy follows Carroll
+Sec.~5.1:
+
+\paragraph{Step 1: Christoffel symbols.}
+The nonvanishing Christoffel symbols for~\eqref{eq:general_spherical} are
+(Carroll eq.~5.12):
+\begin{align}
+    &\Gamma^t_{\ tr} = \alpha' \,,\quad
+    \Gamma^r_{\ tt} = e^{2(\alpha-\beta)}\alpha' \,,\quad
+    \Gamma^r_{\ rr} = \beta' \,, \nonumber \\
+    &\Gamma^r_{\ \theta\theta} = -r\,e^{-2\beta} \,,\quad
+    \Gamma^r_{\ \phi\phi} = -r\,e^{-2\beta}\sin^2\theta \,, \nonumber \\
+    &\Gamma^\theta_{\ r\theta} = \Gamma^\phi_{\ r\phi} = \frac{1}{r} \,,\quad
+    \Gamma^\theta_{\ \phi\phi} = -\sin\theta\cos\theta \,,\quad
+    \Gamma^\phi_{\ \theta\phi} = \cot\theta \,,
+    \label{eq:christoffel_schwarzschild}
+\end{align}
+where primes denote $d/dr$.
+
+\paragraph{Step 2: Ricci tensor.}
+Computing the Ricci tensor components (Carroll eq.~5.14):
+\begin{align}
+    R_{tt} &= e^{2(\alpha-\beta)}\left[
+        \alpha'' + (\alpha')^2 - \alpha'\beta' + \frac{2}{r}\alpha'
+    \right] \,, \label{eq:Rtt} \\
+    R_{rr} &= -\alpha'' - (\alpha')^2 + \alpha'\beta' + \frac{2}{r}\beta'
+    \,, \label{eq:Rrr} \\
+    R_{\theta\theta} &= e^{-2\beta}\bigl[r(\beta' - \alpha') - 1\bigr] + 1
+    \,, \label{eq:Rthth} \\
+    R_{\phi\phi} &= R_{\theta\theta}\sin^2\theta \,.
+    \label{eq:Rphph}
+\end{align}
+
+\paragraph{Step 3: Solve $R_{\mu\nu} = 0$.}
+From $e^{-2(\alpha-\beta)}R_{tt} + R_{rr} = 0$, we get
+$\frac{2}{r}(\alpha' + \beta') = 0$, hence (Carroll eq.~5.17):
+\begin{equation}
+    \alpha = -\beta + \text{const} \,.
+    \label{eq:alpha_beta}
+\end{equation}
+By rescaling the time coordinate, we set the constant to zero:
+$\alpha = -\beta$.
+
+Setting $R_{\theta\theta} = 0$ (Carroll eq.~5.18):
+\begin{equation}
+    e^{2\alpha}(1 + 2r\alpha') = 1 \quad\Longrightarrow\quad
+    \partial_r(r\, e^{2\alpha}) = 1 \,.
+    \label{eq:Rthth_zero}
+\end{equation}
+Integrating:
+\begin{equation}
+    e^{2\alpha} = 1 - \frac{R_S}{r} \,,
+    \label{eq:e2alpha}
+\end{equation}
+where $R_S$ is an integration constant.
+
+\paragraph{Step 4: Identify $R_S$.}
+In the weak-field limit ($r \to \infty$), the metric must reduce to
+$g_{tt} \approx -(1 + 2\Phi/c^2)$ with $\Phi = -GM/r$.  Comparing with
+$g_{tt} = -(1 - R_S/r)$, we identify the \textbf{Schwarzschild radius}
+(Carroll eq.~5.23):
+\begin{equation}
+    \boxed{R_S = \frac{2GM}{c^2}}
+    \label{eq:schwarzschild_radius}
+\end{equation}
+
+\paragraph{Result: The Schwarzschild Metric.}
+\begin{equation}
+    \boxed{
+    ds^2 = -\left(1 - \frac{R_S}{r}\right) c^2\, dt^2
+    + \left(1 - \frac{R_S}{r}\right)^{-1} dr^2
+    + r^2\, d\Omega^2
+    }
+    \label{eq:schwarzschild_metric}
+\end{equation}
+This is the unique vacuum solution with spherical symmetry
+(\textbf{Birkhoff's theorem}; Carroll Sec.~5.2).  We verify $R_{\mu\nu} = 0$
+symbolically in
+\mathlink{01c_Schwarzschild/schwarzschild_metric.wl}{schwarzschild\_metric.wl}.
+
+
+% =====================================================================
+\section{Birkhoff's Theorem}
+\label{sec:birkhoff}
+
+\textbf{Birkhoff's theorem} states that the Schwarzschild metric is the
+\textit{unique} spherically symmetric vacuum solution to Einstein's
+equation.  The remarkable consequence: even a \textit{time-dependent}
+spherically symmetric source (e.g., a pulsating star) produces a
+\textit{static} exterior metric (Carroll Sec.~5.2).
+
+This is the GR analogue of Newton's shell theorem: the gravitational
+field outside a spherically symmetric mass depends only on the total
+enclosed mass $M$, not on how the mass is distributed.
+
+
+% =====================================================================
+\section{Gravitational Time Dilation}
+\label{sec:gravitational_time_dilation}
+
+A clock at radial coordinate $r$ in the Schwarzschild spacetime runs
+at a rate different from a clock at infinity.  For a stationary clock
+($dr = d\theta = d\phi = 0$), the proper time is related to coordinate
+time by (Congdon \& Keeton eq.~3.65):
+\begin{equation}
+    d\tau = \sqrt{1 - \frac{R_S}{r}}\, dt \,.
+    \label{eq:grav_time_dilation}
+\end{equation}
+Since $\sqrt{1 - R_S/r} < 1$ for $r > R_S$, clocks closer to the mass
+run \textit{slower} than clocks farther away.  At $r = R_S$, the
+time dilation becomes infinite --- this is the event horizon.
+
+
+% =====================================================================
+\section{Gravitational Redshift}
+\label{sec:gravitational_redshift}
+
+A photon emitted at radius $r_{\mathrm{em}}$ with frequency
+$\nu_{\mathrm{em}}$ is observed at $r_{\mathrm{obs}} \to \infty$ with
+frequency:
+\begin{equation}
+    \frac{\nu_{\mathrm{obs}}}{\nu_{\mathrm{em}}}
+    = \frac{\sqrt{1 - R_S/r_{\mathrm{em}}}}{\sqrt{1 - R_S/r_{\mathrm{obs}}}}
+    \xrightarrow{r_{\mathrm{obs}} \to \infty}
+    \sqrt{1 - \frac{R_S}{r_{\mathrm{em}}}} \,.
+    \label{eq:grav_redshift}
+\end{equation}
+Since $\nu_{\mathrm{obs}} < \nu_{\mathrm{em}}$, the photon is
+\textbf{redshifted} as it climbs out of the gravitational potential well.
+The gravitational redshift parameter is:
+\begin{equation}
+    z_{\mathrm{grav}} = \frac{\nu_{\mathrm{em}}}{\nu_{\mathrm{obs}}} - 1
+    = \left(1 - \frac{R_S}{r_{\mathrm{em}}}\right)^{-1/2} - 1 \,.
+    \label{eq:grav_redshift_z}
+\end{equation}
+In the weak-field limit ($R_S/r \ll 1$): $z_{\mathrm{grav}} \approx GM/(rc^2)$
+(Congdon \& Keeton eq.~3.63).
+
+\begin{remark}
+The gravitational redshift was one of the three classical tests of GR
+proposed by Einstein, along with the perihelion precession of Mercury
+and the bending of light.  It has been measured to high precision using
+atomic clocks at different altitudes (e.g., Pound--Rebka experiment, 1959;
+GPS satellite corrections).
+\end{remark}
+
+
+% =====================================================================
+\section{The Event Horizon and Singularities}
+\label{sec:event_horizon}
+
+The Schwarzschild metric has two apparent singularities: at $r = 0$ and
+at $r = R_S$.  Their nature is quite different (Carroll Sec.~5.3):
+
+\paragraph{$r = R_S$ (coordinate singularity).}
+The metric components diverge, but this is a \textit{coordinate artifact}.
+The curvature remains finite, and the geometry is perfectly smooth.  In
+appropriate coordinates (e.g., Eddington--Finkelstein or Kruskal--Szekeres),
+the metric is regular at $r = R_S$.  However, $r = R_S$ is the
+\textbf{event horizon}: once a particle crosses it, it can never return.
+
+\paragraph{$r = 0$ (true singularity).}
+This is a genuine physical singularity where the curvature becomes infinite.
+We can confirm this with a curvature invariant: the
+\textbf{Kretschner scalar}:
+\begin{equation}
+    K = R_{\mu\nu\rho\sigma}\, R^{\mu\nu\rho\sigma}
+    = \frac{12\, R_S^2}{r^6}
+    = \frac{48\, G^2 M^2}{c^4\, r^6} \,.
+    \label{eq:kretschner}
+\end{equation}
+This diverges as $r \to 0$ but is finite at $r = R_S$, confirming that
+only $r = 0$ is a true singularity.  We verify eq.~\eqref{eq:kretschner}
+in \mathlink{01c_Schwarzschild/schwarzschild_metric.wl}{schwarzschild\_metric.wl}.
+
+
+% =====================================================================
+\section{The Weak-Field Limit}
+\label{sec:weak_field}
+
+For $r \gg R_S$, the Schwarzschild metric reduces to the \textbf{weak-field}
+form (Congdon \& Keeton eq.~3.71):
+\begin{equation}
+    ds^2 \approx -\left(1 + \frac{2\Phi}{c^2}\right) c^2 dt^2
+    + \left(1 - \frac{2\Phi}{c^2}\right)
+    \bigl[dr^2 + r^2\, d\Omega^2\bigr] \,,
+    \label{eq:weak_field}
+\end{equation}
+where $\Phi = -GM/r$ is the Newtonian gravitational potential.  This
+form is valid for \textit{any} weak gravitational field, not just the
+Schwarzschild case, and will be the starting point for deriving the
+deflection angle of light in Module~2.
+
+\begin{remark}
+The weak-field metric~\eqref{eq:weak_field} has an important feature:
+the spatial part is modified by a factor $(1 - 2\Phi/c^2)$ as well as
+the time part.  This means that gravity affects both the \textit{rate}
+of clocks (time dilation) and the \textit{curvature of space}.
+Both effects contribute equally to the bending of light --- this is why
+GR gives twice the Newtonian deflection angle.
+\end{remark}
+
+
+% =====================================================================
+\section{Schwarzschild Radius for Astrophysical Objects}
+\label{sec:RS_examples}
+
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+\textbf{Object} & \textbf{Mass} & $R_S$ & \textbf{Actual Radius} \\
+\midrule
+Earth   & $6 \times 10^{24}$ kg  & 8.9 mm     & 6371 km \\
+Sun     & $2 \times 10^{30}$ kg  & 3.0 km     & $7 \times 10^5$ km \\
+Neutron star & $1.4\,\Msun$      & 4.1 km     & $\sim 10$ km \\
+SgrA*   & $4 \times 10^6\,\Msun$ & $1.2 \times 10^7$ km & --- (black hole) \\
+Galaxy ($10^{12}\,\Msun$) & $10^{12}\,\Msun$ & $3 \times 10^{12}$ km & --- \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For a galaxy-mass lens ($M \sim 10^{12}\, \Msun$), $R_S \sim 0.1$ pc ---
+far smaller than the galaxy itself.  This confirms that the weak-field
+limit is appropriate for gravitational lensing by galaxies.
+
+
+% =====================================================================
+\section{Embedding Diagram: Flamm's Paraboloid}
+\label{sec:flamm}
+
+To visualize the spatial curvature of the Schwarzschild geometry, we can
+embed the equatorial ($\theta = \pi/2$) spatial slice in 3D Euclidean space.
+At constant time $t$, the spatial metric on the equatorial plane is:
+\begin{equation}
+    dl^2 = \left(1 - \frac{R_S}{r}\right)^{-1} dr^2 + r^2\, d\phi^2 \,.
+    \label{eq:equatorial_metric}
+\end{equation}
+Embedding this as a surface of revolution $z(r)$ in cylindrical coordinates
+$(r, \phi, z)$ where $dl^2 = (1 + z'^2) dr^2 + r^2 d\phi^2$, we find:
+\begin{equation}
+    z(r) = 2\sqrt{R_S}\,\sqrt{r - R_S} \,,
+    \label{eq:flamm}
+\end{equation}
+which is \textbf{Flamm's paraboloid}.  This is plotted interactively in
+\mathlink{01c_Schwarzschild/gravitational_redshift.nb}{gravitational\_redshift.nb}.
+
+
+% =====================================================================
+\section{Summary}
+\label{sec:schwarzschild_summary}
+
+\begin{itemize}
+    \item The Schwarzschild metric is the unique spherically symmetric
+          vacuum solution (Birkhoff's theorem).
+    \item It is parameterized by a single quantity: the mass $M$
+          (or equivalently the Schwarzschild radius $R_S = 2GM/c^2$).
+    \item Gravitational time dilation: clocks run slower in stronger
+          gravitational fields; $d\tau = \sqrt{1 - R_S/r}\, dt$.
+    \item Gravitational redshift: photons lose energy climbing out
+          of a potential well.
+    \item $r = R_S$ is a coordinate singularity (event horizon);
+          $r = 0$ is a true curvature singularity.
+    \item The weak-field limit
+          ($ds^2 \approx -(1 + 2\Phi/c^2)c^2 dt^2 + (1 - 2\Phi/c^2) d\ell^2$)
+          will be the foundation for light deflection in Module~2.
+\end{itemize}
+
+
+% =====================================================================
+\section{Problems}
+\label{sec:schwarzschild_problems}
+
+\begin{exercise}
+\label{ex:verify_vacuum}
+Using the reusable functions from Module~1b
+(\mathlink{01b_Differential_Geometry/christoffel_symbols.wl}{christoffel\_symbols.wl}),
+verify that the Schwarzschild metric~\eqref{eq:schwarzschild_metric}
+satisfies $R_{\mu\nu} = 0$.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:kretschner}
+Compute the Kretschner scalar $K = R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma}$
+for the Schwarzschild metric and show that $K = 12\,R_S^2/r^6$.
+Verify that $K$ is finite at $r = R_S$ but diverges at $r = 0$.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:schwarzschild_radii}
+Compute the Schwarzschild radius for:
+\begin{enumerate}[label=(\alph*)]
+    \item The Earth ($M = 5.97 \times 10^{24}$ kg)
+    \item The Sun ($M = 1.99 \times 10^{30}$ kg)
+    \item A typical galaxy lens ($M = 10^{12}\, \Msun$)
+\end{enumerate}
+In each case, compare $R_S$ to the physical size of the object.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:grav_redshift_calc}
+A photon is emitted from the surface of a neutron star ($M = 1.4\,\Msun$,
+$R = 10$ km).
+\begin{enumerate}[label=(\alph*)]
+    \item Compute the gravitational redshift $z_{\mathrm{grav}}$.
+    \item By what fraction is the photon's wavelength increased by the time
+          it reaches a distant observer?
+    \item Compare to the redshift from the surface of the Sun.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\label{ex:flamm_derive}
+Derive the Flamm's paraboloid embedding~\eqref{eq:flamm} by embedding the
+equatorial spatial slice of the Schwarzschild geometry in 3D Euclidean
+space with cylindrical coordinates $(r, \phi, z)$.
+\end{exercise}

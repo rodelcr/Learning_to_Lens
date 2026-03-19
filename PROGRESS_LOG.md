@@ -41,3 +41,20 @@ Timestamped record of major milestones and work completed.
 - **`curved_surfaces.nb`**: Interactive geodesics on the 2-sphere (NDSolve + 3D visualization), Christoffel symbol calculator.
 - **Solutions**: `problems_01b.wl` (all 5 exercises verified), `01b_Solutions.tex` (LaTeX solutions).
 - **PDF**: Student 34 pages, Instructor 38 pages.
+
+---
+
+## 2026-03-19 — Module 1c: The Schwarzschild Solution
+
+- **LaTeX notes** (`Notes/01c_Schwarzschild/01c_Schwarzschild.tex`): 9 sections covering most general spherically symmetric metric, step-by-step derivation of Schwarzschild from R_μν=0, Birkhoff's theorem, gravitational time dilation, gravitational redshift, event horizon vs. true singularity, Kretschner scalar, weak-field limit, Schwarzschild radius table, Flamm's paraboloid embedding. 5 exercises.
+- **`schwarzschild_metric.wl`**: Full symbolic verification — all 10 Ricci components = 0, Kretschner scalar = 12Rs²/r⁶ (exact match), numerical Schwarzschild radii and gravitational redshift calculations.
+- **`gravitational_redshift.nb`**: Interactive plots of redshift, time dilation, Flamm's paraboloid, Rs calculator.
+- **Solutions**: `problems_01c.wl` (all 5 exercises verified), `01c_Solutions.tex`.
+- **PDF**: Student 39 pages, Instructor 46 pages.
+- **Confirmed**: `wolframscript` can export publication-quality PDF figures for embedding in LaTeX. Will add figure generation to future modules.
+
+### Planning: GR Expansion
+- **Module 1e (new)**: Linearized Gravity and the Weak-Field Metric — the critical bridge between exact Schwarzschild and the lensing formalism. Covers g = η + h, Newtonian limit, weak-field deflection angle.
+- **Kerr**: Brief 3-5 page overview section within Module 1d (state metric, key features, note why not needed for galaxy-scale lensing).
+- **FRW**: Keep in Module 3 but expand with full derivation from Einstein equations + perfect fluid stress-energy tensor.
+- **Gravitational waves**: Skip entirely (mention in 1e, then move on).

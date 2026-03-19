@@ -1,0 +1,209 @@
+% =============================================================================
+% Module 1c: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:schwarzschild_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{01c_Schwarzschild/problems\_01c.wl}{problems\_01c.wl},
+which verifies each answer symbolically and numerically.
+
+% ----- Exercise 1.1 -----
+\subsection*{Exercise~\ref{ex:ricci_schwarzschild}: Verify $R_{\mu\nu} = 0$ for Schwarzschild}
+
+The Schwarzschild metric in coordinates $(t, r, \theta, \phi)$ is
+\begin{equation*}
+    ds^2 = -\!\left(1 - \frac{R_s}{r}\right) dt^2
+           + \frac{dr^2}{1 - R_s/r}
+           + r^2\, d\theta^2
+           + r^2 \sin^2\!\theta\, d\phi^2 \,,
+\end{equation*}
+where $R_s = 2GM/c^2$.  We work in geometric units $c = G = 1$ so that $R_s = 2M$.
+
+\textbf{Step 1: Christoffel symbols.}
+The nonvanishing components are (using the symmetry $\Gamma^\sigma_{\ \mu\nu} = \Gamma^\sigma_{\ \nu\mu}$):
+\begin{align*}
+    \Gamma^t_{\ tr} &= \frac{R_s}{2r(r - R_s)} \,,
+    &\Gamma^r_{\ tt} &= \frac{R_s(r - R_s)}{2r^3} \,, \\
+    \Gamma^r_{\ rr} &= -\frac{R_s}{2r(r - R_s)} \,,
+    &\Gamma^r_{\ \theta\theta} &= -(r - R_s) \,, \\
+    \Gamma^r_{\ \phi\phi} &= -(r - R_s)\sin^2\!\theta \,,
+    &\Gamma^\theta_{\ r\theta} &= \frac{1}{r} \,, \\
+    \Gamma^\theta_{\ \phi\phi} &= -\sin\theta\cos\theta \,,
+    &\Gamma^\phi_{\ r\phi} &= \frac{1}{r} \,, \\
+    \Gamma^\phi_{\ \theta\phi} &= \cot\theta \,.
+\end{align*}
+
+\textbf{Step 2: Riemann and Ricci tensors.}
+Substituting into the definition of $R^\rho_{\ \sigma\mu\nu}$ and contracting
+to form $R_{\mu\nu} = R^\lambda_{\ \mu\lambda\nu}$, every component of
+$R_{\mu\nu}$ vanishes identically.  This confirms that the Schwarzschild metric
+is a vacuum solution to Einstein's field equations ($G_{\mu\nu} = 0$).
+
+\emph{Verified symbolically by Mathematica} --- see
+\solnlink{01c_Schwarzschild/problems\_01c.wl}{problems\_01c.wl}, Exercise~1.1.
+
+% ----- Exercise 1.2 -----
+\subsection*{Exercise~\ref{ex:kretschner}: Kretschner Scalar}
+
+The Kretschner scalar is the full contraction of the Riemann tensor:
+\begin{equation*}
+    K = R^{\alpha\beta\gamma\delta}\, R_{\alpha\beta\gamma\delta} \,.
+\end{equation*}
+
+Computing all components of $R_{\alpha\beta\gamma\delta}$ (with lowered first index)
+and fully contracting, the result simplifies to
+\begin{equation*}
+    \boxed{K = \frac{12\, R_s^2}{r^6} = \frac{48\, M^2}{r^6}} \,.
+\end{equation*}
+
+\emph{Verified symbolically by Mathematica} --- see
+\solnlink{01c_Schwarzschild/problems\_01c.wl}{problems\_01c.wl}, Exercise~1.2.
+
+\textbf{Behavior at the horizon ($r = R_s$):}
+\begin{equation*}
+    K(r = R_s) = \frac{12}{R_s^4} \,,
+\end{equation*}
+which is \emph{finite}.  The apparent singularity in the metric at $r = R_s$ is
+merely a coordinate singularity (removable by switching to, e.g., Eddington--Finkelstein
+coordinates).
+
+\textbf{Behavior at $r = 0$:}
+\begin{equation*}
+    K \to \infty \quad \text{as } r \to 0 \,.
+\end{equation*}
+This is a \emph{true curvature singularity}: tidal forces diverge regardless of
+the coordinate system chosen.
+
+% ----- Exercise 1.3 -----
+\subsection*{Exercise~\ref{ex:schwarzschild_radii}: Schwarzschild Radii for Astrophysical Objects}
+
+Using $R_s = 2GM/c^2$ with $G = 6.674\times 10^{-11}\;\text{m}^3\text{kg}^{-1}\text{s}^{-2}$
+and $c = 2.998\times 10^{8}\;\text{m/s}$:
+
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{Earth} ($M = 5.972\times 10^{24}\;\text{kg}$, $R = 6371\;\text{km}$):
+    \begin{equation*}
+        R_s = \frac{2 \times 6.674\times 10^{-11} \times 5.972\times 10^{24}}
+                   {(2.998\times 10^{8})^2}
+            \approx 8.87\times 10^{-3}\;\text{m}
+            \approx 8.87\;\text{mm} \,.
+    \end{equation*}
+    The ratio $R_s/R \approx 1.4\times 10^{-9}$: GR corrections on Earth's surface
+    are of order $10^{-9}$ (important for GPS, but tiny).
+
+    \item \textbf{Sun} ($M = 1.989\times 10^{30}\;\text{kg}$, $R = 6.957\times 10^{8}\;\text{m}$):
+    \begin{equation*}
+        R_s \approx 2953\;\text{m} \approx 2.95\;\text{km} \,.
+    \end{equation*}
+    The ratio $R_s/R \approx 4.24\times 10^{-6}$: small, but measurable via
+    gravitational redshift and light deflection.
+
+    \item \textbf{Galaxy lens} ($M \sim 10^{12}\, M_\odot$, extent $\sim 50\;\text{kpc}$):
+    \begin{equation*}
+        R_s \approx 2.95\times 10^{15}\;\text{m} \approx 0.096\;\text{pc} \,.
+    \end{equation*}
+    The ratio $R_s/R \approx 1.9\times 10^{-6}$: the Schwarzschild radius is
+    vastly smaller than the galaxy, justifying the weak-field/thin-lens
+    approximation used in gravitational lensing.
+\end{enumerate}
+
+% ----- Exercise 1.4 -----
+\subsection*{Exercise~\ref{ex:ns_redshift}: Gravitational Redshift from a Neutron Star}
+
+Parameters: $M = 1.4\, M_\odot = 2.785\times 10^{30}\;\text{kg}$,
+$R = 10\;\text{km} = 10^{4}\;\text{m}$.
+
+First, the Schwarzschild radius:
+\begin{equation*}
+    R_s = \frac{2GM}{c^2}
+        = \frac{2 \times 6.674\times 10^{-11} \times 2.785\times 10^{30}}
+               {(2.998\times 10^{8})^2}
+        \approx 4137\;\text{m}
+        \approx 4.14\;\text{km} \,.
+\end{equation*}
+So $R_s/R \approx 0.414$ --- a large fraction, meaning strong-field GR is essential.
+
+\textbf{(a) Gravitational redshift:}
+\begin{equation*}
+    z = \frac{1}{\sqrt{1 - R_s/R}} - 1
+      = \frac{1}{\sqrt{1 - 0.414}} - 1
+      = \frac{1}{\sqrt{0.586}} - 1
+      \approx \frac{1}{0.7655} - 1
+      \approx 0.306 \,.
+\end{equation*}
+
+\textbf{(b) Wavelength shift:}
+For a photon emitted at $\lambda_{\rm em} = 500\;\text{nm}$:
+\begin{equation*}
+    \lambda_{\rm obs} = \lambda_{\rm em}(1 + z)
+                      = 500 \times 1.306
+                      \approx 653\;\text{nm} \,,
+\end{equation*}
+a shift of $\Delta\lambda \approx 153\;\text{nm}$ --- blue/green light is shifted
+to red/near-infrared.
+
+\textbf{(c) Comparison to the Sun:}
+The Sun's surface redshift is
+\begin{equation*}
+    z_\odot = \frac{1}{\sqrt{1 - R_s^\odot / R_\odot}} - 1
+            \approx \frac{R_s^\odot}{2 R_\odot}
+            \approx 2.12\times 10^{-6} \,.
+\end{equation*}
+The neutron star redshift ($z \approx 0.306$) is roughly $1.4\times 10^{5}$ times
+larger --- a dramatic difference that strongly affects observed neutron star spectra.
+
+% ----- Exercise 1.5 -----
+\subsection*{Exercise~\ref{ex:flamm}: Flamm's Paraboloid}
+
+We embed the equatorial spatial slice ($t = \text{const}$, $\theta = \pi/2$) of the
+Schwarzschild geometry into flat 3D Euclidean space.
+
+\textbf{The 2D slice:}
+\begin{equation*}
+    dl^2 = \frac{dr^2}{1 - R_s/r} + r^2\, d\phi^2 \,.
+\end{equation*}
+
+\textbf{3D Euclidean space in cylindrical coordinates:}
+\begin{equation*}
+    dl^2_{\rm flat} = dz^2 + dr^2 + r^2\, d\phi^2 \,.
+\end{equation*}
+
+For a surface of revolution $z = z(r)$, the induced metric on the surface is
+\begin{equation*}
+    dl^2 = \left(1 + \left(\frac{dz}{dr}\right)^{\!2}\right) dr^2
+           + r^2\, d\phi^2 \,.
+\end{equation*}
+
+\textbf{Matching the $dr^2$ components:}
+\begin{equation*}
+    1 + \left(\frac{dz}{dr}\right)^{\!2} = \frac{1}{1 - R_s/r}
+    \quad\Longrightarrow\quad
+    \left(\frac{dz}{dr}\right)^{\!2} = \frac{R_s/r}{1 - R_s/r}
+    = \frac{R_s}{r - R_s} \,.
+\end{equation*}
+
+\textbf{Integrating:}
+\begin{equation*}
+    z(r) = \int \sqrt{\frac{R_s}{r - R_s}}\, dr
+         = 2\sqrt{R_s}\, \sqrt{r - R_s}
+         = 2\sqrt{R_s(r - R_s)} \,,
+\end{equation*}
+where we set $z(R_s) = 0$ at the throat.
+
+This is the equation of a \textbf{paraboloid of revolution} ($z^2 = 4 R_s (r - R_s)$).
+Key features:
+\begin{itemize}
+    \item The minimum circumferential radius is $r = R_s$ (the throat), where $z = 0$.
+    \item At large $r$, $z \sim 2\sqrt{R_s\, r}$ and the surface becomes approximately flat.
+    \item The diagram illustrates spatial curvature, not gravitational potential.
+    \item The full paraboloid (including $z < 0$) represents an Einstein--Rosen bridge
+          connecting two asymptotically flat regions.
+\end{itemize}
+
+\emph{Verified symbolically by Mathematica} --- see
+\solnlink{01c_Schwarzschild/problems\_01c.wl}{problems\_01c.wl}, Exercise~1.5.

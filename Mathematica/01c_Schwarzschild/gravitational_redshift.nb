@@ -1,0 +1,602 @@
+Notebook[{
+
+(* =========================================================================
+   gravitational_redshift.nb
+   Module 1c: The Schwarzschild Spacetime
+   =========================================================================
+   Purpose: Interactive visualizations of the Schwarzschild metric:
+            1. Gravitational redshift z_grav vs r/Rs with mass slider
+            2. Time dilation factor sqrt(1 - Rs/r) vs r
+            3. Flamm's paraboloid embedding diagram (3D surface of revolution)
+            4. Schwarzschild radius calculator for various masses
+
+   Sources: Carroll Ch. 5, Congdon & Keeton Ch. 3.3
+            Hartle, "Gravity", Ch. 9
+   ========================================================================= *)
+
+Cell[TextData[{"Module 1c: The Schwarzschild Spacetime"}], "Title"],
+
+Cell[TextData[{"This notebook provides interactive visualizations of the \
+Schwarzschild geometry. The Schwarzschild metric describes the unique \
+spherically symmetric vacuum solution to Einstein's field equations, \
+governing the spacetime outside any non-rotating, uncharged mass."}], "Text"],
+
+(* =====================================================================
+   Section 1: Gravitational Redshift — z_grav vs r/Rs
+   =====================================================================
+   A photon emitted at radius r_em in the Schwarzschild geometry is
+   observed at infinity with a gravitational redshift:
+       z_grav = 1/sqrt(1 - Rs/r_em) - 1
+   where Rs = 2GM/c^2 is the Schwarzschild radius.
+   ===================================================================== *)
+
+Cell[TextData[{"1. Gravitational Redshift"}], "Section"],
+
+Cell[TextData[{"A photon emitted at radius r in the gravitational field of \
+a mass M is redshifted when observed at infinity. The gravitational \
+redshift is z = 1/sqrt(1 - Rs/r) - 1, where Rs = 2GM/c^2. As r -> Rs, \
+the redshift diverges (infinite redshift surface = event horizon)."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Physical constants in SI units *)"}],
+    RowBox[{
+        RowBox[{"Gconst", " ", "=", " ",
+            RowBox[{"6.674", " ", "*", " ",
+                RowBox[{"10", "^", RowBox[{"(", "-11", ")"}]}]
+            }]
+        }], ";"
+    }],
+    RowBox[{"(* G in m^3 / (kg s^2) *)"}],
+    RowBox[{
+        RowBox[{"clight", " ", "=", " ",
+            RowBox[{"2.998", " ", "*", " ",
+                RowBox[{"10", "^", "8"}]
+            }]
+        }], ";"
+    }],
+    RowBox[{"(* c in m/s *)"}],
+    RowBox[{
+        RowBox[{"Msun", " ", "=", " ",
+            RowBox[{"1.989", " ", "*", " ",
+                RowBox[{"10", "^", "30"}]
+            }]
+        }], ";"
+    }],
+    RowBox[{"(* Solar mass in kg *)"}],
+    RowBox[{
+        RowBox[{"schwarzR", "[", "mass_", "]"}], " ", ":=", " ",
+        RowBox[{"2", " ", "Gconst", " ", "mass", " ", "/", " ",
+            RowBox[{"clight", "^", "2"}]
+        }]
+    }],
+    RowBox[{"(* Schwarzschild radius in meters *)"}]
+}], "Input"],
+
+Cell[BoxData[{
+    RowBox[{"(* Interactive plot: gravitational redshift z vs r/Rs *)"}],
+    RowBox[{"(* The slider controls the mass in solar masses, which sets Rs. *)"}],
+    RowBox[{"(* The shape of z(r/Rs) is universal; the mass only sets the *)"}],
+    RowBox[{"(* physical scale of Rs. We also mark the horizon at r/Rs = 1. *)"}],
+    RowBox[{
+        RowBox[{"Manipulate", "[", "\n",
+            RowBox[{
+                RowBox[{"Module", "[",
+                    RowBox[{
+                        RowBox[{"{", RowBox[{"rs", ",", " ", "zGrav"}], "}"}], ",", "\n",
+                        RowBox[{
+                            RowBox[{"rs", " ", "=", " ",
+                                RowBox[{"schwarzR", "[",
+                                    RowBox[{"massSolar", " ", "*", " ", "Msun"}],
+                                "]"}]
+                            }], ";", "\n",
+                            RowBox[{"(* z_grav = 1/sqrt(1 - Rs/r) - 1, written in terms of u = r/Rs *)"}], ";", "\n",
+                            RowBox[{"zGrav", "[", "u_", "]"}], " ", "=", " ",
+                                RowBox[{
+                                    RowBox[{"1", "/",
+                                        RowBox[{"Sqrt", "[",
+                                            RowBox[{"1", " ", "-", " ",
+                                                RowBox[{"1", "/", "u"}]
+                                            }],
+                                        "]"}]
+                                    }], " ", "-", " ", "1"
+                                }], ";", "\n",
+                            RowBox[{"Plot", "[",
+                                RowBox[{
+                                    RowBox[{"zGrav", "[", "u", "]"}], ",", " ",
+                                    RowBox[{"{", RowBox[{"u", ",", " ", "1.01", ",", " ", "10"}], "}"}], ",", "\n",
+                                    RowBox[{"PlotRange", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"1", ",", " ", "10"}], "}"}], ",", " ",
+                                                RowBox[{"{", RowBox[{"0", ",", " ", "5"}], "}"}]
+                                            }],
+                                        "}"}]
+                                    }], ",", "\n",
+                                    RowBox[{"AxesLabel", " ", "->", " ",
+                                        RowBox[{"{", RowBox[{"\"r / Rs\"", ",", " ", "\"z_grav\""}], "}"}]
+                                    }], ",", "\n",
+                                    RowBox[{"PlotLabel", " ", "->", " ",
+                                        RowBox[{"Row", "[",
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    "\"Gravitational Redshift (M = \"", ",", " ",
+                                                    RowBox[{"NumberForm", "[",
+                                                        RowBox[{"massSolar", ",", " ",
+                                                            RowBox[{"{", RowBox[{"4", ",", " ", "1"}], "}"}]
+                                                        }],
+                                                    "]"}], ",", " ",
+                                                    "\" M\\[CircleDot], Rs = \"", ",", " ",
+                                                    RowBox[{"ScientificForm", "[",
+                                                        RowBox[{"rs", ",", " ", "3"}],
+                                                    "]"}], ",", " ",
+                                                    "\" m)\""
+                                                }],
+                                            "}"}],
+                                        "]"}]
+                                    }], ",", "\n",
+                                    RowBox[{"PlotStyle", " ", "->", " ",
+                                        RowBox[{"{", RowBox[{"Blue", ",", " ", "Thick"}], "}"}]
+                                    }], ",", "\n",
+                                    RowBox[{"Epilog", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{",
+                                                    RowBox[{"Red", ",", " ", "Dashed", ",", " ",
+                                                        RowBox[{"InfiniteLine", "[",
+                                                            RowBox[{
+                                                                RowBox[{"{", RowBox[{"1", ",", " ", "0"}], "}"}], ",", " ",
+                                                                RowBox[{"{", RowBox[{"0", ",", " ", "1"}], "}"}]
+                                                            }],
+                                                        "]"}]
+                                                    }],
+                                                "}"}], ",", "\n",
+                                                RowBox[{"Text", "[",
+                                                    RowBox[{
+                                                        RowBox[{"Style", "[",
+                                                            RowBox[{"\"Horizon (r = Rs)\"", ",", " ", "Red", ",", " ", "12"}],
+                                                        "]"}], ",", " ",
+                                                        RowBox[{"{", RowBox[{"1.5", ",", " ", "4.5"}], "}"}]
+                                                    }],
+                                                "]"}]
+                                            }],
+                                        "}"}]
+                                    }], ",", "\n",
+                                    RowBox[{"ImageSize", " ", "->", " ", "550"}], ",", "\n",
+                                    RowBox[{"GridLines", " ", "->", " ", "Automatic"}]
+                                }],
+                            "]"}]
+                        }]
+                    }],
+                "]"}], ",", "\n",
+                RowBox[{"{",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{"massSolar", ",", " ", "1.0", ",", " ", "\"Mass (solar masses)\""}],
+                        "}"}], ",", " ", "0.5", ",", " ", "100", ",", " ",
+                        RowBox[{"Appearance", " ", "->", " ", "\"Labeled\""}]
+                    }],
+                "}"}]
+            }],
+        "]"}]
+    }]
+}], "Input"],
+
+(* =====================================================================
+   Section 2: Time Dilation Factor sqrt(1 - Rs/r) vs r
+   =====================================================================
+   The Schwarzschild time dilation factor relates proper time dtau of
+   a static observer at radius r to coordinate time dt:
+       dtau/dt = sqrt(1 - Rs/r)
+   This factor goes to 0 at the horizon and 1 at infinity.
+   ===================================================================== *)
+
+Cell[TextData[{"2. Time Dilation Factor"}], "Section"],
+
+Cell[TextData[{"A clock at radius r in the Schwarzschild spacetime ticks \
+slower compared to a clock at infinity. The ratio of proper time to \
+coordinate time is dtau/dt = sqrt(1 - Rs/r). This factor vanishes at \
+the event horizon r = Rs: time appears to freeze as seen from infinity."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Time dilation factor: sqrt(1 - Rs/r) vs r/Rs *)"}],
+    RowBox[{"(* We plot for r/Rs from 1 to 10 to show the approach to 1 at large r *)"}],
+    RowBox[{
+        RowBox[{"Manipulate", "[", "\n",
+            RowBox[{
+                RowBox[{"Module", "[",
+                    RowBox[{
+                        RowBox[{"{", "timeDilation", "}"}], ",", "\n",
+                        RowBox[{
+                            RowBox[{RowBox[{"timeDilation", "[", "u_", "]"}], " ", "=", " ",
+                                RowBox[{"Sqrt", "[",
+                                    RowBox[{"1", " ", "-", " ",
+                                        RowBox[{"1", "/", "u"}]
+                                    }],
+                                "]"}]
+                            }], ";", "\n",
+                            RowBox[{"Plot", "[",
+                                RowBox[{
+                                    RowBox[{"timeDilation", "[", "u", "]"}], ",", " ",
+                                    RowBox[{"{", RowBox[{"u", ",", " ", "1", ",", " ", "rmax"}], "}"}], ",", "\n",
+                                    RowBox[{"PlotRange", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"1", ",", " ", "rmax"}], "}"}], ",", " ",
+                                                RowBox[{"{", RowBox[{"0", ",", " ", "1.05"}], "}"}]
+                                            }],
+                                        "}"}]
+                                    }], ",", "\n",
+                                    RowBox[{"AxesLabel", " ", "->", " ",
+                                        RowBox[{"{", RowBox[{"\"r / Rs\"", ",", " ", "\"d\\[Tau]/dt\""}], "}"}]
+                                    }], ",", "\n",
+                                    RowBox[{"PlotLabel", " ", "->", " ",
+                                        "\"Time Dilation: d\\[Tau]/dt = \\[Sqrt](1 - Rs/r)\""
+                                    }], ",", "\n",
+                                    RowBox[{"PlotStyle", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"Darker", "[", "Green", "]"}], ",", " ", "Thick"
+                                            }],
+                                        "}"}]
+                                    }], ",", "\n",
+                                    RowBox[{"Filling", " ", "->", " ", "Bottom"}], ",", "\n",
+                                    RowBox[{"FillingStyle", " ", "->", " ",
+                                        RowBox[{"Directive", "[",
+                                            RowBox[{
+                                                RowBox[{"Lighter", "[", RowBox[{"Green", ",", " ", "0.8"}], "]"}], ",", " ",
+                                                RowBox[{"Opacity", "[", "0.3", "]"}]
+                                            }],
+                                        "]"}]
+                                    }], ",", "\n",
+                                    RowBox[{"Epilog", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{",
+                                                    RowBox[{"Red", ",", " ", "Dashed", ",", " ",
+                                                        RowBox[{"InfiniteLine", "[",
+                                                            RowBox[{
+                                                                RowBox[{"{", RowBox[{"1", ",", " ", "0"}], "}"}], ",", " ",
+                                                                RowBox[{"{", RowBox[{"0", ",", " ", "1"}], "}"}]
+                                                            }],
+                                                        "]"}]
+                                                    }],
+                                                "}"}], ",", "\n",
+                                                RowBox[{"{",
+                                                    RowBox[{"Gray", ",", " ", "Dashed", ",", " ",
+                                                        RowBox[{"InfiniteLine", "[",
+                                                            RowBox[{
+                                                                RowBox[{"{", RowBox[{"0", ",", " ", "1"}], "}"}], ",", " ",
+                                                                RowBox[{"{", RowBox[{"1", ",", " ", "0"}], "}"}]
+                                                            }],
+                                                        "]"}]
+                                                    }],
+                                                "}"}], ",", "\n",
+                                                RowBox[{"Text", "[",
+                                                    RowBox[{
+                                                        RowBox[{"Style", "[",
+                                                            RowBox[{"\"Horizon\"", ",", " ", "Red", ",", " ", "11"}],
+                                                        "]"}], ",", " ",
+                                                        RowBox[{"{", RowBox[{"1.3", ",", " ", "0.1"}], "}"}]
+                                                    }],
+                                                "]"}], ",", "\n",
+                                                RowBox[{"Text", "[",
+                                                    RowBox[{
+                                                        RowBox[{"Style", "[",
+                                                            RowBox[{"\"Flat spacetime limit\"", ",", " ", "Gray", ",", " ", "11"}],
+                                                        "]"}], ",", " ",
+                                                        RowBox[{"{",
+                                                            RowBox[{
+                                                                RowBox[{"rmax", " ", "-", " ", "1"}], ",", " ",
+                                                                "1.03"
+                                                            }],
+                                                        "}"}]
+                                                    }],
+                                                "]"}]
+                                            }],
+                                        "}"}]
+                                    }], ",", "\n",
+                                    RowBox[{"ImageSize", " ", "->", " ", "550"}], ",", "\n",
+                                    RowBox[{"GridLines", " ", "->", " ", "Automatic"}]
+                                }],
+                            "]"}]
+                        }]
+                    }],
+                "]"}], ",", "\n",
+                RowBox[{"{",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{"rmax", ",", " ", "10", ",", " ", "\"r/Rs range\""}],
+                        "}"}], ",", " ", "2", ",", " ", "50", ",", " ", "1", ",", " ",
+                        RowBox[{"Appearance", " ", "->", " ", "\"Labeled\""}]
+                    }],
+                "}"}]
+            }],
+        "]"}]
+    }]
+}], "Input"],
+
+(* =====================================================================
+   Section 3: Flamm's Paraboloid Embedding Diagram
+   =====================================================================
+   The equatorial (theta = pi/2, t = const) spatial slice of the
+   Schwarzschild geometry has the 2D line element:
+       dl^2 = dr^2/(1 - Rs/r) + r^2 dphi^2
+   This can be isometrically embedded in 3D Euclidean space as a
+   surface of revolution z(r) = 2*sqrt(Rs) * sqrt(r - Rs), known
+   as Flamm's paraboloid. It illustrates how space is "stretched"
+   near the black hole.
+   ===================================================================== *)
+
+Cell[TextData[{"3. Flamm's Paraboloid Embedding Diagram"}], "Section"],
+
+Cell[TextData[{"The spatial geometry around a Schwarzschild black hole can \
+be visualized by embedding the equatorial slice (t = const, theta = pi/2) \
+into 3D Euclidean space. The resulting surface of revolution is called \
+Flamm's paraboloid: z(r) = 2*sqrt(Rs*(r - Rs)). The 'throat' at r = Rs \
+shows how space is curved near the horizon."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Flamm's paraboloid: z(r) = 2 sqrt(Rs) sqrt(r - Rs) *)"}],
+    RowBox[{"(* We generate a surface of revolution in cylindrical coords: *)"}],
+    RowBox[{"(* (r cos(phi), r sin(phi), z(r)) for r >= Rs, 0 <= phi <= 2 Pi *)"}],
+    RowBox[{
+        RowBox[{"Manipulate", "[", "\n",
+            RowBox[{
+                RowBox[{"Module", "[",
+                    RowBox[{
+                        RowBox[{"{", RowBox[{"rs", ",", " ", "rOuter", ",", " ", "zFlamm"}], "}"}], ",", "\n",
+                        RowBox[{
+                            RowBox[{"rs", " ", "=", " ", "1"}], ";", "\n",
+                            RowBox[{"(* Work in units where Rs = 1 *)"}], ";", "\n",
+                            RowBox[{"rOuter", " ", "=", " ", "outerR"}], ";", "\n",
+                            RowBox[{RowBox[{"zFlamm", "[", "rr_", "]"}], " ", "=", " ",
+                                RowBox[{"2", " ",
+                                    RowBox[{"Sqrt", "[",
+                                        RowBox[{"rs", " ",
+                                            RowBox[{"(", RowBox[{"rr", " ", "-", " ", "rs"}], ")"}]
+                                        }],
+                                    "]"}]
+                                }]
+                            }], ";", "\n",
+                            RowBox[{"Show", "[", "\n",
+                                RowBox[{
+                                    RowBox[{"(* Upper sheet of the paraboloid *)"}],
+                                    RowBox[{"ParametricPlot3D", "[",
+                                        RowBox[{
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    RowBox[{"rr", " ",
+                                                        RowBox[{"Cos", "[", "phi", "]"}]
+                                                    }], ",", " ",
+                                                    RowBox[{"rr", " ",
+                                                        RowBox[{"Sin", "[", "phi", "]"}]
+                                                    }], ",", " ",
+                                                    RowBox[{"zFlamm", "[", "rr", "]"}]
+                                                }],
+                                            "}"}], ",", "\n",
+                                            RowBox[{"{", RowBox[{"rr", ",", " ", "rs", ",", " ", "rOuter"}], "}"}], ",", " ",
+                                            RowBox[{"{", RowBox[{"phi", ",", " ", "0", ",", " ",
+                                                RowBox[{"2", " ", "Pi"}]
+                                            }], "}"}], ",", "\n",
+                                            RowBox[{"PlotStyle", " ", "->", " ",
+                                                RowBox[{"Directive", "[",
+                                                    RowBox[{
+                                                        RowBox[{"Opacity", "[", "0.7", "]"}], ",", " ",
+                                                        RowBox[{"RGBColor", "[", RowBox[{"0.2", ",", " ", "0.4", ",", " ", "0.8"}], "]"}]
+                                                    }],
+                                                "]"}]
+                                            }], ",", "\n",
+                                            RowBox[{"Mesh", " ", "->", " ",
+                                                RowBox[{"{", RowBox[{"15", ",", " ", "24"}], "}"}]
+                                            }], ",", "\n",
+                                            RowBox[{"MeshStyle", " ", "->", " ",
+                                                RowBox[{"Directive", "[",
+                                                    RowBox[{"Gray", ",", " ",
+                                                        RowBox[{"Opacity", "[", "0.3", "]"}]
+                                                    }],
+                                                "]"}]
+                                            }]
+                                        }],
+                                    "]"}], ",", "\n",
+                                    RowBox[{"(* Lower sheet — mirror image for visual effect *)"}],
+                                    RowBox[{"ParametricPlot3D", "[",
+                                        RowBox[{
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    RowBox[{"rr", " ",
+                                                        RowBox[{"Cos", "[", "phi", "]"}]
+                                                    }], ",", " ",
+                                                    RowBox[{"rr", " ",
+                                                        RowBox[{"Sin", "[", "phi", "]"}]
+                                                    }], ",", " ",
+                                                    RowBox[{"-",
+                                                        RowBox[{"zFlamm", "[", "rr", "]"}]
+                                                    }]
+                                                }],
+                                            "}"}], ",", "\n",
+                                            RowBox[{"{", RowBox[{"rr", ",", " ", "rs", ",", " ", "rOuter"}], "}"}], ",", " ",
+                                            RowBox[{"{", RowBox[{"phi", ",", " ", "0", ",", " ",
+                                                RowBox[{"2", " ", "Pi"}]
+                                            }], "}"}], ",", "\n",
+                                            RowBox[{"PlotStyle", " ", "->", " ",
+                                                RowBox[{"Directive", "[",
+                                                    RowBox[{
+                                                        RowBox[{"Opacity", "[", "0.4", "]"}], ",", " ",
+                                                        RowBox[{"RGBColor", "[", RowBox[{"0.6", ",", " ", "0.3", ",", " ", "0.1"}], "]"}]
+                                                    }],
+                                                "]"}]
+                                            }], ",", "\n",
+                                            RowBox[{"Mesh", " ", "->", " ",
+                                                RowBox[{"{", RowBox[{"15", ",", " ", "24"}], "}"}]
+                                            }], ",", "\n",
+                                            RowBox[{"MeshStyle", " ", "->", " ",
+                                                RowBox[{"Directive", "[",
+                                                    RowBox[{"Gray", ",", " ",
+                                                        RowBox[{"Opacity", "[", "0.2", "]"}]
+                                                    }],
+                                                "]"}]
+                                            }]
+                                        }],
+                                    "]"}], ",", "\n",
+                                    RowBox[{"PlotLabel", " ", "->", " ",
+                                        "\"Flamm's Paraboloid: z = 2\\[Sqrt](Rs(r - Rs))\""
+                                    }], ",", "\n",
+                                    RowBox[{"AxesLabel", " ", "->", " ",
+                                        RowBox[{"{", RowBox[{"\"x/Rs\"", ",", " ", "\"y/Rs\"", ",", " ", "\"z/Rs\""}], "}"}]
+                                    }], ",", "\n",
+                                    RowBox[{"Boxed", " ", "->", " ", "False"}], ",", "\n",
+                                    RowBox[{"ImageSize", " ", "->", " ", "600"}], ",", "\n",
+                                    RowBox[{"ViewPoint", " ", "->", " ",
+                                        RowBox[{"{", RowBox[{"2.5", ",", " ", "1.5", ",", " ", "1.5"}], "}"}]
+                                    }]
+                                }],
+                            "]"}]
+                        }]
+                    }],
+                "]"}], ",", "\n",
+                RowBox[{"{",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{"outerR", ",", " ", "6", ",", " ", "\"Outer radius (r/Rs)\""}],
+                        "}"}], ",", " ", "1.5", ",", " ", "20", ",", " ", "0.5", ",", " ",
+                        RowBox[{"Appearance", " ", "->", " ", "\"Labeled\""}]
+                    }],
+                "}"}]
+            }],
+        "]"}]
+    }]
+}], "Input"],
+
+(* =====================================================================
+   Section 4: Schwarzschild Radius Calculator
+   =====================================================================
+   Compute Rs = 2GM/c^2 for various astrophysical objects and compare
+   to their physical sizes.
+   ===================================================================== *)
+
+Cell[TextData[{"4. Schwarzschild Radius Calculator"}], "Section"],
+
+Cell[TextData[{"The Schwarzschild radius Rs = 2GM/c^2 sets the scale of \
+general-relativistic effects. For a black hole, Rs is the radius of the \
+event horizon. For ordinary objects (stars, planets), Rs is deep inside \
+the body. Compare Rs to the physical radius to gauge the importance of \
+GR corrections."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Schwarzschild radius calculator *)"}],
+    RowBox[{"(* Compute Rs for a range of astrophysical objects *)"}],
+    RowBox[{
+        RowBox[{"Gconst", " ", "=", " ",
+            RowBox[{"6.674", " ", "*", " ",
+                RowBox[{"10", "^", RowBox[{"(", "-11", ")"}]}]
+            }]
+        }], ";"
+    }],
+    RowBox[{
+        RowBox[{"clight", " ", "=", " ",
+            RowBox[{"2.998", " ", "*", " ",
+                RowBox[{"10", "^", "8"}]
+            }]
+        }], ";"
+    }],
+    RowBox[{
+        RowBox[{"Msun", " ", "=", " ",
+            RowBox[{"1.989", " ", "*", " ",
+                RowBox[{"10", "^", "30"}]
+            }]
+        }], ";"
+    }],
+    RowBox[{
+        RowBox[{"schwarzR", "[", "mass_", "]"}], " ", ":=", " ",
+        RowBox[{"2", " ", "Gconst", " ", "mass", " ", "/", " ",
+            RowBox[{"clight", "^", "2"}]
+        }]
+    }],
+    RowBox[{""],
+    RowBox[{"(* Object data: {name, mass (kg), physical radius (m)} *)"}],
+    RowBox[{
+        RowBox[{"objects", " ", "=", " ",
+            RowBox[{"{", "\n",
+                RowBox[{
+                    RowBox[{"{", RowBox[{"\"Earth\"", ",", " ",
+                        RowBox[{"5.972", " ", "*", " ",
+                            RowBox[{"10", "^", "24"}]
+                        }], ",", " ",
+                        RowBox[{"6.371", " ", "*", " ",
+                            RowBox[{"10", "^", "6"}]
+                        }]
+                    }], "}"}], ",", "\n",
+                    RowBox[{"{", RowBox[{"\"Sun\"", ",", " ", "Msun", ",", " ",
+                        RowBox[{"6.957", " ", "*", " ",
+                            RowBox[{"10", "^", "8"}]
+                        }]
+                    }], "}"}], ",", "\n",
+                    RowBox[{"{", RowBox[{"\"White Dwarf (1 Msun)\"", ",", " ", "Msun", ",", " ",
+                        RowBox[{"6.0", " ", "*", " ",
+                            RowBox[{"10", "^", "6"}]
+                        }]
+                    }], "}"}], ",", "\n",
+                    RowBox[{"{", RowBox[{"\"Neutron Star (1.4 Msun)\"", ",", " ",
+                        RowBox[{"1.4", " ", "*", " ", "Msun"}], ",", " ",
+                        RowBox[{"1.0", " ", "*", " ",
+                            RowBox[{"10", "^", "4"}]
+                        }]
+                    }], "}"}], ",", "\n",
+                    RowBox[{"{", RowBox[{"\"Sgr A* (4e6 Msun)\"", ",", " ",
+                        RowBox[{"4.0", " ", "*", " ",
+                            RowBox[{"10", "^", "6"}], " ", "*", " ", "Msun"
+                        }], ",", " ", "0"
+                    }], "}"}], ",", "\n",
+                    RowBox[{"{", RowBox[{"\"Galaxy lens (1e12 Msun)\"", ",", " ",
+                        RowBox[{"1.0", " ", "*", " ",
+                            RowBox[{"10", "^", "12"}], " ", "*", " ", "Msun"
+                        }], ",", " ",
+                        RowBox[{"5.0", " ", "*", " ",
+                            RowBox[{"10", "^", "20"}]
+                        }]
+                    }], "}"}]
+                }],
+            "}"}]
+        }], ";"
+    }],
+    RowBox[{""],
+    RowBox[{"Print", "[", "\"Schwarzschild Radius Comparison:\"", "]"}],
+    RowBox[{"Print", "[", "\"========================================\"", "]"}],
+    RowBox[{
+        RowBox[{"Do", "[", "\n",
+            RowBox[{
+                RowBox[{"Module", "[",
+                    RowBox[{
+                        RowBox[{"{", RowBox[{"name", ",", " ", "mass", ",", " ", "rphys", ",", " ", "rs", ",", " ", "ratio"}], "}"}], ",", "\n",
+                        RowBox[{
+                            RowBox[{RowBox[{"{", RowBox[{"name", ",", " ", "mass", ",", " ", "rphys"}], "}"}], " ", "=", " ", "obj"}], ";", "\n",
+                            RowBox[{"rs", " ", "=", " ",
+                                RowBox[{"schwarzR", "[", "mass", "]"}]
+                            }], ";", "\n",
+                            RowBox[{"ratio", " ", "=", " ",
+                                RowBox[{"If", "[",
+                                    RowBox[{
+                                        RowBox[{"rphys", " ", ">", " ", "0"}], ",", " ",
+                                        RowBox[{"rs", " ", "/", " ", "rphys"}], ",", " ",
+                                        "\"N/A (black hole)\""
+                                    }],
+                                "]"}]
+                            }], ";", "\n",
+                            RowBox[{"Print", "[",
+                                RowBox[{
+                                    "name", ",", " ", "\": Rs = \"", ",", " ",
+                                    RowBox[{"ScientificForm", "[", RowBox[{"rs", ",", " ", "4"}], "]"}], ",", " ",
+                                    "\" m, Rs/R = \"", ",", " ",
+                                    RowBox[{"ScientificForm", "[", RowBox[{"ratio", ",", " ", "3"}], "]"}]
+                                }],
+                            "]"}]
+                        }]
+                    }],
+                "]"}], ",", "\n",
+                RowBox[{"{", RowBox[{"obj", ",", " ", "objects"}], "}"}]
+            }],
+        "]"}], ";"
+    }]
+}], "Input"]
+
+}, WindowSize -> {900, 850}, WindowTitle -> "Module 1c: The Schwarzschild Spacetime"]
