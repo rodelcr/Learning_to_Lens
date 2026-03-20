@@ -145,6 +145,7 @@ Learning_to_Lens/
 │   └── XX_ModuleName/
 ├── environment.yml            # Conda environment specification
 ├── CLAUDE.md                  # Project context for Claude Code
+├── VERIFICATION.md            # Verification procedures and test results
 ├── PROGRESS_LOG.md            # Timestamped work log
 └── repo_preferences.md        # Default repo conventions
 ```
@@ -154,6 +155,29 @@ Learning_to_Lens/
 - **`.wl` (Wolfram Language scripts):** Symbolic derivations and tensor computations. Run headlessly: `wolframscript -file script.wl`
 - **`.nb` (Mathematica notebooks):** Interactive content with plots and `Manipulate[]` widgets. Open in the Mathematica GUI.
 - **`.tex` (LaTeX):** Lecture notes with derivations and cross-links to Mathematica files.
+
+---
+
+## Verification
+
+All mathematical results have been verified deterministically using Wolfram
+Mathematica — not generated probabilistically by an LLM. The verification
+has three levels:
+
+1. **Per-module `.wl` scripts** — each module has a Mathematica script that
+   symbolically derives and verifies its key results
+2. **Cross-validation against `ResourceFunction`** — our custom GR functions
+   match Mathematica's built-in `ResourceFunction["ChristoffelSymbol"]` exactly
+3. **Cross-validation against textbook equations** — a master test suite
+   (`Mathematica/verify_against_textbooks.wl`) checks 12 key results against
+   Carroll (2004) and Congdon & Keeton (2018). **All 12 tests pass.**
+
+```bash
+# Run the master verification
+wolframscript -file Mathematica/verify_against_textbooks.wl
+```
+
+Full details: [VERIFICATION.md](VERIFICATION.md)
 
 ---
 
