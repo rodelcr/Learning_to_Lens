@@ -38,6 +38,132 @@ lensing.
 \end{itemize}
 
 % =====================================================================
+\section{The Equivalence Principle}
+\label{sec:equivalence_principle}
+
+Before diving into the Schwarzschild solution, it is worth pausing to
+ask a foundational question: \textit{why} should gravity be described
+by the geometry of spacetime at all?  The answer lies in the
+\textbf{equivalence principle}, arguably the single most important
+physical insight behind general relativity.
+
+% ---------------------------------------------------------------------
+\subsection{The Weak Equivalence Principle}
+\label{sec:weak_equivalence}
+
+The oldest form of the equivalence principle dates back to Galileo:
+\textit{all objects fall at the same rate, regardless of their
+composition or internal structure.}  More precisely, the
+\textbf{weak equivalence principle} (WEP) states that the
+\textbf{inertial mass} $m_i$ (which appears in Newton's second law,
+$F = m_i\, a$) is equal to the \textbf{gravitational mass} $m_g$
+(which appears in Newton's law of gravitation, $F = m_g\, g$):
+\begin{equation}
+    m_i = m_g \,.
+    \label{eq:wep}
+\end{equation}
+This equality has no explanation within Newtonian mechanics --- it is
+simply an empirical fact.  Yet it has been tested to extraordinary
+precision: the E\"otv\"os experiments and their modern successors
+(Dicke, Braginsky, and the MICROSCOPE satellite mission) have verified
+eq.~\eqref{eq:wep} to better than one part in $10^{13}$:
+\begin{equation}
+    \frac{|m_i - m_g|}{m_g} < 10^{-13} \,.
+    \label{eq:wep_precision}
+\end{equation}
+The universality of free fall is not an accident --- Einstein elevated
+it to a \textit{principle}.
+
+% ---------------------------------------------------------------------
+\subsection{Einstein's Elevator}
+\label{sec:einstein_elevator}
+
+Einstein's great insight was to take the WEP seriously as a
+fundamental principle, not merely an empirical coincidence.  He
+expressed this through the famous \textbf{elevator thought experiment}:
+
+\begin{quote}
+\textit{An observer in a closed, windowless elevator cannot distinguish
+between the following two situations:}
+\begin{enumerate}[nosep]
+    \item[(a)] \textit{The elevator is at rest on the surface of the Earth,
+    where the gravitational acceleration is $g$.}
+    \item[(b)] \textit{The elevator is in empty space, accelerating
+    upward at $g$.}
+\end{enumerate}
+\end{quote}
+
+\noindent
+Conversely, an observer in free fall in a gravitational field
+(``falling elevator'') experiences exactly the same conditions as
+an observer floating in empty space, far from any gravitating body.
+Dropped objects float alongside the observer; there is no local
+experiment that can detect the gravitational field.
+
+This equivalence between gravity and acceleration is \textit{local}:
+it holds in a sufficiently small region of spacetime where tidal
+effects (variations of the gravitational field across the elevator)
+can be neglected.
+
+% ---------------------------------------------------------------------
+\subsection{The Strong Equivalence Principle}
+\label{sec:strong_equivalence}
+
+Einstein extended the elevator argument to its fullest form as the
+\textbf{strong equivalence principle} (SEP):
+
+\begin{quote}
+\textit{The results of any local experiment (gravitational or not) in
+a freely falling reference frame are indistinguishable from those of
+the same experiment in special relativity.}
+\end{quote}
+
+\noindent
+This has a profound consequence.  If a freely falling observer
+experiences special relativity locally, then gravity cannot be a
+``force'' acting in Minkowski spacetime --- it must instead be encoded
+in the \textit{geometry} of spacetime itself.  Different freely falling
+observers at different locations each see flat (Minkowski) spacetime
+locally, but the global structure connecting these local frames is
+curved.  Gravity \textit{is} the curvature of spacetime.
+
+% ---------------------------------------------------------------------
+\subsection{From the Equivalence Principle to Geodesics}
+\label{sec:ep_to_geodesics}
+
+The equivalence principle connects directly to the mathematical
+framework developed in Module~1b.  A freely falling object
+experiences no forces in its local (freely falling) frame --- it
+follows a ``straight line'' through its local Minkowski patch of
+spacetime.  But a straight line in a curved manifold is precisely a
+\textbf{geodesic} (Module~1b, Section~\ref{sec:geodesics}).
+
+Therefore, the equivalence principle implies that \textit{freely
+falling particles follow geodesics of the spacetime metric}.  This
+is the physical content of the geodesic equation:
+\begin{equation}
+    \frac{d^2 x^\mu}{d\tau^2}
+    + \Gamma^\mu_{\ \alpha\beta}\,
+    \frac{dx^\alpha}{d\tau}\,\frac{dx^\beta}{d\tau} = 0 \,.
+    \label{eq:geodesic_ep}
+\end{equation}
+In Newtonian language, the Christoffel symbols $\Gamma^\mu_{\ \alpha\beta}$
+play the role of gravitational ``forces,'' but in GR they are
+geometric quantities --- they describe how the coordinate system
+(not the particle) is ``accelerating.''
+
+\begin{remark}
+The equivalence principle tells us that gravity \textit{curves}
+spacetime, but it does not tell us \textit{how} the curvature is
+related to the matter content.  That information requires Einstein's
+field equations $G_{\mu\nu} = 8\pi G\, T_{\mu\nu}/c^4$, which were
+stated in Module~1b and whose simplest vacuum solution ($T_{\mu\nu} = 0$)
+we derive in this module.  The field equations will be used throughout
+the remaining modules as the foundation for gravitational lensing.
+\end{remark}
+
+
+% =====================================================================
 \section{The Most General Spherically Symmetric Metric}
 \label{sec:general_spherical}
 
@@ -411,6 +537,105 @@ the time part.  This means that gravity affects both the \textit{rate}
 of clocks (time dilation) and the \textit{curvature of space}.
 Both effects contribute equally to the bending of light --- this is why
 GR gives twice the Newtonian deflection angle.
+\end{remark}
+
+
+% =====================================================================
+\section{Isotropic Coordinates}
+\label{sec:isotropic_coords}
+
+The standard Schwarzschild coordinates $(t, r, \theta, \phi)$ have
+an important asymmetry: the radial and angular parts of the spatial
+metric carry \textit{different} factors.  In
+eq.~\eqref{eq:schwarzschild_metric}, the $dr^2$ term is multiplied by
+$(1 - R_S/r)^{-1}$ while the angular part $r^2\,d\Omega^2$ has no such
+factor.  The spatial part of the Schwarzschild metric is therefore
+\textit{not} conformally flat --- it is not proportional to the
+flat-space metric $dr^2 + r^2\,d\Omega^2$.
+
+We can remedy this by introducing \textbf{isotropic coordinates}, in
+which the spatial metric \textit{is} conformally flat.
+
+\subsection{The Isotropic Radial Coordinate}
+
+Define a new radial coordinate $\rho$ via:
+\begin{equation}
+    r = \rho\left(1 + \frac{R_S}{4\rho}\right)^{\!2} .
+    \label{eq:isotropic_r}
+\end{equation}
+This transformation is invertible for $r > R_S$ (i.e., outside the
+event horizon), with the inverse
+$\rho = \tfrac{1}{2}(r - R_S/2 + \sqrt{r^2 - r\,R_S})$.
+
+\subsection{The Schwarzschild Metric in Isotropic Form}
+
+In the coordinates $(t, \rho, \theta, \phi)$, the Schwarzschild
+metric becomes:
+\begin{equation}
+    \boxed{
+    ds^2 = -\left(\frac{1 - R_S/(4\rho)}{1 + R_S/(4\rho)}\right)^{\!2}
+    c^2\, dt^2
+    + \left(1 + \frac{R_S}{4\rho}\right)^{\!4}
+    \bigl(d\rho^2 + \rho^2\, d\Omega^2\bigr)
+    }
+    \label{eq:schwarzschild_isotropic}
+\end{equation}
+The crucial feature is that the spatial part is now proportional to
+the \textit{flat-space metric} $d\rho^2 + \rho^2\,d\Omega^2$ ---
+the spatial geometry is \textbf{conformally flat}.  The single
+conformal factor $(1 + R_S/(4\rho))^4$ multiplies all three spatial
+directions equally, hence the name ``isotropic.''
+
+\subsection{Weak-Field Expansion}
+
+To first order in $R_S/\rho$ (the weak-field regime $\rho \gg R_S$),
+the isotropic metric reduces to:
+\begin{equation}
+    ds^2 \approx -\left(1 - \frac{R_S}{2\rho}\right) c^2\, dt^2
+    + \left(1 + \frac{R_S}{2\rho}\right)
+    \bigl(d\rho^2 + \rho^2\, d\Omega^2\bigr) .
+    \label{eq:isotropic_weak_field}
+\end{equation}
+Since $R_S = 2GM/c^2$, we have $R_S/(2\rho) = GM/(\rho\, c^2) =
+-\Phi/c^2$ where $\Phi = -GM/\rho$ is the Newtonian potential.
+Equation~\eqref{eq:isotropic_weak_field} is therefore:
+\begin{equation}
+    ds^2 \approx -\left(1 + \frac{2\Phi}{c^2}\right) c^2\, dt^2
+    + \left(1 - \frac{2\Phi}{c^2}\right)
+    \bigl(d\rho^2 + \rho^2\, d\Omega^2\bigr) ,
+    \label{eq:isotropic_newtonian}
+\end{equation}
+which is precisely the weak-field metric~\eqref{eq:weak_field} with
+$r$ replaced by $\rho$.  (In the weak-field regime, $r$ and $\rho$
+agree to leading order.)
+
+\subsection{Connection to the Linearized Gravity Formalism}
+
+This result provides the explicit \textbf{bridge} between the exact
+Schwarzschild solution (this module) and the linearized gravity
+approach (Module~1e).  In Module~1e, the weak-field metric is derived
+from first principles as a perturbation of flat spacetime:
+$g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}$ with
+$h_{00} = -2\Phi/c^2$ and $h_{ij} = -2\Phi/c^2\,\delta_{ij}$.
+The isotropic form~\eqref{eq:isotropic_newtonian} shows that the
+Schwarzschild solution, when expanded to first order, reproduces
+exactly this linearized metric.  The two descriptions --- exact
+solution in curved coordinates, and perturbation theory in nearly
+flat coordinates --- describe the \textit{same physics} in different
+coordinate systems.
+
+\begin{remark}
+The isotropic form makes the connection to the parameterized
+post-Newtonian (PPN) formalism and the factor-of-2 in light
+deflection transparent.  In eq.~\eqref{eq:isotropic_newtonian}, both
+$h_{00} = -2\Phi/c^2$ (time perturbation) and
+$h_{ij} = -2\Phi/c^2\,\delta_{ij}$ (space perturbation) are
+proportional to $R_S/\rho$, confirming that the time and space
+perturbations are \textit{equal}.  In the PPN formalism, this
+equality corresponds to $\gamma_{\mathrm{PPN}} = 1$, which is the GR
+prediction.  As we saw in the weak-field limit discussion, this equal
+contribution of time and space curvature is precisely why GR predicts
+\textit{twice} the Newtonian deflection angle for light.
 \end{remark}
 
 

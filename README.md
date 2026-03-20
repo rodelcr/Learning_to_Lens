@@ -2,7 +2,7 @@
 
 **An Introduction to General Relativity and Strong Gravitational Lensing — with Mathematica**
 
-A 13-module tutorial suite designed for advanced undergraduate and early graduate students learning gravitational lensing theory and modeling. Each module pairs **LaTeX lecture notes** with **Wolfram Mathematica** notebooks and scripts for symbolic derivations, numerical computations, and interactive visualizations.
+A 14-module tutorial suite (199 student pages / 245 instructor pages, ~100 exercises, ~75 figures) designed for advanced undergraduate and early graduate students learning gravitational lensing theory and modeling. Each module pairs **LaTeX lecture notes** with **Wolfram Mathematica** notebooks and scripts for symbolic derivations, numerical computations, and interactive visualizations.
 
 ---
 
@@ -79,7 +79,9 @@ cd Learning_to_Lens
 conda env create -f environment.yml
 conda activate learning_to_lens
 
-# Build the LaTeX notes
+# Build the LaTeX notes (produces two PDFs in Output/)
+#   Output/Learning_to_Lens.pdf           — student edition (199 pp)
+#   Output/Learning_to_Lens_Solutions.pdf  — instructor edition with solutions (245 pp)
 cd Notes && bash build.sh
 
 # Open a Mathematica notebook (macOS)
@@ -98,28 +100,29 @@ wolframscript -file Mathematica/01a_Special_Relativity/lorentz_transforms.wl
 | Module | Title | Key Topics |
 |--------|-------|------------|
 | **1a** | Special Relativity & Tensor Basics | Lorentz transforms, 4-vectors, Minkowski metric |
-| **1b** | Differential Geometry & the Metric Tensor | Christoffel symbols, covariant derivative, curvature tensors |
-| **1c** | The Schwarzschild Solution | Schwarzschild metric, gravitational redshift, time dilation |
-| **1d** | Geodesics & Orbits | Effective potential, ISCO, photon sphere, perihelion precession |
+| **1b** | Differential Geometry & Metric Tensor | Christoffel symbols, covariant derivative, curvature tensors, computation cookbook |
+| **1c** | The Schwarzschild Solution | Equivalence principle, Schwarzschild metric, time dilation, redshift, interior, isotropic coords |
+| **1d** | Geodesics & Orbits | Effective potential, ISCO, photon sphere, perihelion precession, Kerr overview |
+| **1e** | Linearized Gravity & Weak-Field Metric | Metric perturbation, Newtonian limit, effective refractive index, superposition |
 
 ### Part II: Gravitational Lensing Theory
 
 | Module | Title | Key Topics |
 |--------|-------|------------|
-| **2** | Light Deflection in Curved Spacetime | Newtonian & GR deflection angles, Shapiro delay |
-| **3** | Cosmological Distances | FRW cosmology, angular diameter distances |
-| **4** | The Gravitational Lens Equation | Thin screen approximation, Einstein radius |
-| **5** | Magnification, Convergence & Shear | Lensing potential, Jacobian matrix, image distortion |
-| **6** | Fermat's Principle & Time Delays | Arrival-time surface, H₀ cosmography |
+| **2** | Light Deflection | Soldner's calculation, GR deflection angle, Shapiro delay |
+| **3** | Cosmological Distances | FRW metric (full derivation), Friedmann equations, angular diameter distances |
+| **4** | The Lens Equation | Thin screen, Einstein radius, point mass imaging, critical density |
+| **5** | Magnification, Convergence & Shear | Lensing potential, Jacobian, convergence, shear, distortion |
+| **6** | Fermat's Principle & Time Delays | Arrival-time surface, Morse theory, H₀ cosmography |
 
 ### Part III: Lens Models and Applications
 
 | Module | Title | Key Topics |
 |--------|-------|------------|
-| **7** | Axisymmetric Lens Models | SIS, NIS, NFW profiles |
-| **8** | Elliptical Models & Critical Curves | SIE, external shear, caustics, image configurations |
-| **9** | Galaxy Lensing Applications | Mass-sheet degeneracy, lens modeling, kinematics |
-| **10** | Cluster Lensing | NFW clusters, giant arcs, mass estimation |
+| **7** | Axisymmetric Models | SIS, NIS, NFW profiles |
+| **8** | Elliptical Models & Critical Curves | SIE, external shear, caustics, image topology |
+| **9** | Galaxy Lensing Applications | Mass-sheet degeneracy, lensing + kinematics, time-delay cosmography |
+| **10** | Cluster Lensing | NFW clusters, giant arcs, cosmic telescope, weak lensing intro |
 
 ---
 

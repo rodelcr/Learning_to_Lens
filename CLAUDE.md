@@ -34,19 +34,19 @@ Learning_to_Lens/
 | # | Module | Key Topics |
 |---|--------|------------|
 | 1a | Special Relativity & Tensor Basics | Lorentz transforms, 4-vectors, Minkowski metric |
-| 1b | Differential Geometry & Metric Tensor | Christoffel symbols, covariant derivative, curvature tensors |
-| 1c | The Schwarzschild Solution | Schwarzschild metric, time dilation, redshift |
-| 1d | Geodesics & Orbits | Effective potential, ISCO, photon sphere, perihelion precession |
-| 1e | Linearized Gravity & Weak-Field Metric | Metric perturbation, Newtonian limit, effective refractive index |
-| 2 | Light Deflection | Newtonian & GR deflection, Shapiro delay |
-| 3 | Cosmological Distances | FRW cosmology, angular diameter distances |
-| 4 | The Lens Equation | Thin screen, Einstein radius, point mass imaging |
-| 5 | Magnification, Convergence & Shear | Lensing potential, Jacobian, distortion |
-| 6 | Fermat's Principle & Time Delays | Arrival-time surface, H₀ cosmography |
-| 7 | Axisymmetric Models | SIS, NIS, NFW |
-| 8 | Elliptical Models & Caustics | SIE, external shear, critical curves, image configs |
-| 9 | Galaxy Lensing Applications | Mass-sheet degeneracy, modeling, kinematics |
-| 10 | Cluster Lensing | NFW clusters, giant arcs, mass estimation |
+| 1b | Differential Geometry & Metric Tensor | Christoffel symbols, covariant derivative, curvature tensors, computation cookbook |
+| 1c | The Schwarzschild Solution | Equivalence principle, Schwarzschild metric, time dilation, redshift, interior, isotropic coords |
+| 1d | Geodesics & Orbits | Effective potential, ISCO, photon sphere, perihelion precession, Kerr overview |
+| 1e | Linearized Gravity & Weak-Field Metric | Metric perturbation, Newtonian limit, effective refractive index, superposition |
+| 2 | Light Deflection | Soldner's calculation, GR deflection angle, Shapiro delay |
+| 3 | Cosmological Distances | FRW metric (full derivation), Friedmann equations, angular diameter distances |
+| 4 | The Lens Equation | Thin screen, Einstein radius, point mass imaging, critical density |
+| 5 | Magnification, Convergence & Shear | Lensing potential, Jacobian, convergence, shear, distortion |
+| 6 | Fermat's Principle & Time Delays | Arrival-time surface, Morse theory, H₀ cosmography |
+| 7 | Axisymmetric Models | SIS, NIS, NFW profiles |
+| 8 | Elliptical Models & Critical Curves | SIE, external shear, caustics, image topology |
+| 9 | Galaxy Lensing Applications | Mass-sheet degeneracy, lensing + kinematics, time-delay cosmography |
+| 10 | Cluster Lensing | NFW clusters, giant arcs, cosmic telescope, weak lensing intro |
 
 ## Key Conventions
 
