@@ -162,8 +162,17 @@ the two-dimensional Laplacian), so that:
 Equation~\eqref{eq:poisson_2d} is a fundamental relation: it connects
 the lensing potential (a ``smooth'' quantity that can be differentiated)
 to the convergence (a ``physical'' quantity related to the surface mass
-density).  This is the lensing analog of Poisson's equation in
-Newtonian gravity.
+density).  Equivalently, one can derive this directly from the definitions:
+since $\vecalpha = \nabla\psiL$ (eq.~\ref{eq:alpha_grad_psi}) and
+$\kappab = \Sigma/\Sigmacr = \frac{1}{2}\nabla\cdot\vecalpha$
+(from the deflection angle integral, Narayan \& Bartelmann eq.~18;
+Congdon \& Keeton eq.~4.16), it follows immediately that
+$\frac{1}{2}\nabla^2\psiL = \frac{1}{2}\nabla\cdot(\nabla\psiL)
+= \frac{1}{2}\nabla\cdot\vecalpha = \kappab$,
+recovering $\nabla^2\psiL = 2\kappab$.
+This is the lensing analog of Poisson's equation in
+Newtonian gravity.  The relation is verified symbolically in
+\mathlink{05_Magnification_Convergence_Shear/lensing_potential.wl}{lensing\_potential.wl}.
 
 
 % =====================================================================

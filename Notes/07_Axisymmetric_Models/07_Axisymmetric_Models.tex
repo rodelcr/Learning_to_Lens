@@ -291,8 +291,21 @@ the enclosed mass $M(\xi) = \pi \sigma_v^2 \xi / \Gnewton$:
 \end{equation}
 This is \textbf{constant} --- independent of the impact parameter!
 Every light ray is deflected by the same angle, regardless of how
-close it passes to the lens center.  This is the key simplifying
-feature of the isothermal profile.
+close it passes to the lens center.  This deeply counterintuitive
+result has a clean physical explanation: the SIS has $\rho \propto r^{-2}$,
+so the projected (surface) mass enclosed within a cylinder of radius
+$\xi$ grows linearly, $M(\xi) = \pi\sigma_v^2\xi/\Gnewton \propto \xi$
+(eq.~\ref{eq:enclosed_mass} and Exercise~\ref{ex:sis_deflection_derivation}).
+Since the deflection angle is $\alphahat = 4\Gnewton M(\xi)/(\speedoflight^2\,\xi)$,
+the $\xi$ in numerator and denominator cancel exactly, leaving
+$\alphahat$ independent of $\xi$.  The $\rho \propto r^{-2}$ profile is
+the \textit{unique} power law for which this cancellation occurs; any
+steeper or shallower profile gives a deflection that varies with impact
+parameter.  This is also why the velocity dispersion $\sigma_v$ --- rather
+than a mass scale --- is the natural parameter of the SIS
+(Congdon \& Keeton Sec.~6.1; Narayan \& Bartelmann Sec.~3.4;
+verified in
+\mathlink{07_Axisymmetric_Models/axisymmetric_models.wl}{axisymmetric\_models.wl}).
 
 The reduced deflection angle is:
 \begin{equation}

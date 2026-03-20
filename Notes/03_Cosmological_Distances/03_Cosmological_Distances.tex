@@ -618,8 +618,18 @@ when the universe was smaller: at $z = 1$, $a = 1/2$; at $z = 2$,
 $a = 1/3$; and so on.
 
 Using eq.~\eqref{eq:redshift_scale_factor}, the Friedmann equation can
-be rewritten entirely in terms of redshift.  The Hubble parameter as a
-function of redshift is (Congdon \& Keeton eq.~3.123):
+be rewritten entirely in terms of redshift.  From the first Friedmann
+equation~\eqref{eq:friedmann_1}, $H^2 = 8\pi\Gnewton\rho/3
+- k\speedoflight^2/a^2 + \Lambda\speedoflight^2/3$.  Each component's
+density scales as $\rho_i = \rho_{i,0}\,a^{-3(1+w_i)}$
+(eq.~\ref{eq:rho_scaling}), and $a = 1/(1+z)$ (eq.~\ref{eq:redshift_scale_factor}),
+so $\rho_m = \rho_{m,0}(1+z)^3$, $\rho_r = \rho_{r,0}(1+z)^4$, and
+$\rho_\Lambda = \rho_{\Lambda,0}$.  Dividing through by $\Hubble^2$ and
+using the density parameter definitions~\eqref{eq:density_parameters}:
+$H^2/\Hubble^2 = \Omegam(1+z)^3 + \Omega_r(1+z)^4 + \OmegaL +
+\Omega_k(1+z)^2$.  Taking the square root
+(Congdon \& Keeton eq.~3.123; verified in
+\mathlink{03_Cosmological_Distances/friedmann_equations.wl}{friedmann\_equations.wl}):
 \begin{equation}
     \boxed{
     H(z) = \Hubble\sqrt{\Omegam(1+z)^3
@@ -721,12 +731,20 @@ maximum at $z \approx 1.6$ and then \textit{decreases} at higher
 redshifts.
 
 Physically, this means that objects at very high redshifts appear
-\textit{larger} on the sky than one would naively expect.  The reason
-is that the photons we observe from such objects were emitted when the
-universe was much smaller, so the physical size corresponding to a given
-comoving size was smaller, and the angular size is determined by the
-physical size at the time of emission divided by the angular diameter
-distance.
+\textit{larger} on the sky than one would naively expect.  The turnover
+arises from two competing effects.  For nearby objects, increasing
+redshift means greater comoving distance $\chi$, so $D_A = \chi/(1+z)$
+grows.  But at high $z$, the factor $1/(1+z)$ dominates: the universe
+was much smaller when the light was emitted ($a = 1/(1+z) \ll 1$), so
+the \textit{physical} transverse size of the object at emission ---
+which determines the angle it subtends --- was correspondingly smaller.
+A smaller physical size at fixed comoving size subtends a \textit{larger}
+angle, making $D_A$ decrease.  The turnover at $z \approx 1.6$ (for the
+concordance cosmology) occurs where these two effects balance:
+$d\chi/dz = \chi/(1+z)$, i.e., where the fractional growth of comoving
+distance equals the fractional growth of the redshift factor
+(Carroll Sec.~8.4; computed numerically in
+\mathlink{03_Cosmological_Distances/friedmann_equations.wl}{friedmann\_equations.wl}).
 
 \begin{figure}[ht]
     \centering
