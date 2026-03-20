@@ -132,22 +132,9 @@
 \renewcommand{\order}[1]{\mathcal{O}\!\left(#1\right)} % Order of magnitude (override physics pkg)
 
 % --- Cross-references to Mathematica files ---
-% Two link modes controlled by \iflocallinks:
-%   LOCAL (default when building from repo): relative paths that open actual files
-%   GITHUB (for published PDFs on website): absolute GitHub URLs
-%
-% To build the GitHub-linked version:  \def\githublinks{}\input{main.tex}
-% To build the local-linked version:   pdflatex main.tex  (default)
-\newif\iflocallinks
-\locallinkstrue  % default: local relative paths
-\ifdefined\githublinks
-    \locallinksfalse
-\fi
+% All links point to the GitHub repository so they work from any context
+% (local PDF, website, email attachment, etc.).
 % Usage: \mathlink{01a_Special_Relativity/lorentz_transforms.wl}{Lorentz transform script}
-\iflocallinks
-    \newcommand{\mathlink}[2]{\href{run:../Mathematica/#1}{\texttt{#2}}}
-    \newcommand{\solnlink}[2]{\href{run:../Solutions/#1}{\texttt{#2}}}
-\else
-    \newcommand{\mathlink}[2]{\href{https://github.com/rodelcr/Learning_to_Lens/blob/main/Mathematica/#1}{\texttt{#2}}}
-    \newcommand{\solnlink}[2]{\href{https://github.com/rodelcr/Learning_to_Lens/blob/main/Solutions/#1}{\texttt{#2}}}
-\fi
+\newcommand{\mathlink}[2]{\href{https://github.com/rodelcr/Learning_to_Lens/blob/main/Mathematica/#1}{\texttt{#2}}}
+% Usage: \solnlink{01a_Special_Relativity/problems_01a.wl}{Solutions script}
+\newcommand{\solnlink}[2]{\href{https://github.com/rodelcr/Learning_to_Lens/blob/main/Solutions/#1}{\texttt{#2}}}

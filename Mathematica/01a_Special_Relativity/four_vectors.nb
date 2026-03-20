@@ -1,661 +1,1586 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     67714,       1576]
+NotebookOptionsPosition[     63883,       1502]
+NotebookOutlinePosition[     64342,       1519]
+CellTagsIndexPosition[     64299,       1516]
+WindowTitle->Module 1a: Four-Vectors and Spacetime Diagrams
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
 Notebook[{
 
-(* =========================================================================
-   four_vectors.nb
-   Module 1a: Special Relativity and Tensor Basics
-   =========================================================================
-   Purpose: Interactive visualizations of special relativity concepts:
-            1. Spacetime diagrams with worldlines and light cones
-            2. Lorentz boost visualization (tilting of axes)
-            3. Time dilation demonstration
-            4. Twin paradox worldlines
-            5. Interval classification
+Cell[CellGroupData[{
+Cell["Module 1a: Four-Vectors and Spacetime Diagrams", "Title",ExpressionUUID->"a9f40c5d-80ac-4b08-a9ee-f77259f5a84b"],
 
-   Sources: Carroll Ch. 1, Figs. 1.1--1.7
-            Congdon & Keeton Ch. 3.1
-   ========================================================================= *)
+Cell["\<\
+This notebook provides interactive visualizations of special relativity \
+concepts. Each section builds on the Lorentz transformation formalism \
+developed in lorentz_transforms.wl and the LaTeX notes.\
+\>", "Text",ExpressionUUID->"304a5874-8c72-4470-84ce-cb3fdefc1306"],
 
-Cell[TextData[{"Module 1a: Four-Vectors and Spacetime Diagrams"}], "Title"],
+Cell[CellGroupData[{
 
-Cell[TextData[{"This notebook provides interactive visualizations of special \
-relativity concepts. Each section builds on the Lorentz transformation \
-formalism developed in lorentz_transforms.wl and the LaTeX notes."}], "Text"],
+Cell["1. The Minkowski Metric and Interval Classification", "Section",ExpressionUUID->"0d7d66c1-62c6-48e2-8722-616cc69d634f"],
 
-(* =====================================================================
-   Section 1: The Minkowski Metric and Interval Classification
-   ===================================================================== *)
+Cell["\<\
+The spacetime interval ds^2 = -dt^2 + dx^2 + dy^2 + dz^2 classifies event \
+separations as timelike (ds^2 < 0), null (ds^2 = 0), or spacelike (ds^2 > 0). \
+We work in natural units c = 1.\
+\>", "Text",ExpressionUUID->"95c2c44e-a0a1-46b7-96a2-94292931b7b5"],
 
-Cell[TextData[{"1. The Minkowski Metric and Interval Classification"}], "Section"],
+Cell[CellGroupData[{
 
-Cell[TextData[{"The spacetime interval ds^2 = -dt^2 + dx^2 + dy^2 + dz^2 \
-classifies event separations as timelike (ds^2 < 0), null (ds^2 = 0), \
-or spacelike (ds^2 > 0). We work in natural units c = 1."}], "Text"],
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Define", " ", "the", " ", "Minkowski", " ", "metric"}], " ", 
+   "*)"}], "\n", 
+  RowBox[{
+   RowBox[{"\[Eta]", " ", "=", " ", 
+    RowBox[{"DiagonalMatrix", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", " ", "1", ",", " ", "1", ",", " ", "1"}], 
+      "}"}], "]"}]}], "\n", 
+   RowBox[{"MatrixForm", "[", "\[Eta]", "]"}]}]}]], "Input",
+ CellLabel->"In[1]:=",ExpressionUUID->"ff0ccf49-0d3e-4020-bde3-95892bd63c42"],
 
-Cell[BoxData[{
-    RowBox[{"(* Define the Minkowski metric *)"}],
-    RowBox[{"\[Eta]", " ", "=", " ",
-        RowBox[{"DiagonalMatrix", "[",
-            RowBox[{"{",
-                RowBox[{"-1", ",", " ", "1", ",", " ", "1", ",", " ", "1"}],
-            "}"}],
-        "]"}]}],
-    RowBox[{"MatrixForm", "[", "\[Eta]", "]"}]
-}], "Input"],
-
-Cell[TextData[{"Classify given event separations (cf. LaTeX Exercise 1.1):"}], "Text"],
-
-Cell[BoxData[{
-    RowBox[{"(* Exercise: Classify event separations *)"}],
-    RowBox[{"(* Event pairs from the problem set *)"}],
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
     RowBox[{
-        RowBox[{"events", " ", "=", " ",
-            RowBox[{"{", "\n",
+     RowBox[{"-", "1"}], ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "1", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "1", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0", ",", "1"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.983003350606965*^9},
+ CellLabel->"Out[1]=",ExpressionUUID->"2cd2fbf6-8e50-4477-af22-d46c1b43d9a0"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{"-", "1"}], "0", "0", "0"},
+     {"0", "1", "0", "0"},
+     {"0", "0", "1", "0"},
+     {"0", "0", "0", "1"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{3.98300335060915*^9},
+ CellLabel->
+  "Out[2]//MatrixForm=",ExpressionUUID->"c97481e1-77fe-40e2-825a-\
+fb49ba709001"]
+}, Open  ]],
+
+Cell["Classify given event separations (cf. LaTeX Exercise 1.1):", "Text",ExpressionUUID->"b0b00b60-cafc-424a-a78b-a017dcf57de3"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Exercise", ":", " ", 
+    RowBox[{"Classify", " ", "event", " ", "separations"}]}], " ", "*)"}], 
+  "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Event", " ", "pairs", " ", "from", " ", "the", " ", "problem", " ", 
+    "set"}], " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"events", " ", "=", " ", 
+     RowBox[{"{", "\n", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "0", ",", "0"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"2", ",", "1", ",", "1", ",", "0"}], "}"}], "}"}], ",", "\n", 
+       RowBox[{"{", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "0", ",", "0"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "1", ",", "0", ",", "0"}], "}"}], "}"}], ",", "\n", 
+       RowBox[{"{", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "0", ",", "0"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"3", ",", "1", ",", "2", ",", "2"}], "}"}], "}"}]}], "}"}]}],
+     ";"}], "\n", 
+   RowBox[{
+    RowBox[{"classifyInterval", "[", 
+     RowBox[{"eventA_", ",", " ", "eventB_"}], "]"}], " ", ":=", " ", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"dx", ",", " ", "ds2"}], "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"dx", " ", "=", " ", 
+        RowBox[{"eventB", " ", "-", " ", "eventA"}]}], ";", "\n", 
+       RowBox[{"ds2", " ", "=", " ", 
+        RowBox[{"dx", " ", ".", " ", "\[Eta]", " ", ".", " ", "dx"}]}], ";", 
+       "\n", 
+       RowBox[{"Which", "[", 
+        RowBox[{
+         RowBox[{"ds2", " ", "<", " ", "0"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"ds2", ",", " ", "\"\<Timelike\>\""}], "}"}], ",", "\n", 
+         RowBox[{"ds2", " ", "==", " ", "0"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"ds2", ",", " ", "\"\<Null\>\""}], "}"}], ",", "\n", 
+         RowBox[{"ds2", " ", ">", " ", "0"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"ds2", ",", " ", "\"\<Spacelike\>\""}], "}"}]}], "]"}]}]}], 
+     "]"}]}], "\n", 
+   RowBox[{
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"events", "[", 
+         RowBox[{"[", 
+          RowBox[{"i", ",", "2"}], "]"}], "]"}], ",", " ", 
+        RowBox[{"classifyInterval", "[", 
+         RowBox[{
+          RowBox[{"events", "[", 
+           RowBox[{"[", 
+            RowBox[{"i", ",", "1"}], "]"}], "]"}], ",", " ", 
+          RowBox[{"events", "[", 
+           RowBox[{"[", 
+            RowBox[{"i", ",", "2"}], "]"}], "]"}]}], "]"}]}], "}"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", " ", "3"}], "}"}]}], "]"}], " ", "//", " ", 
+    "TableForm"}]}]}]], "Input",
+ CellLabel->"In[3]:=",ExpressionUUID->"5d0450bf-b184-422d-82d7-8154aa888c63"],
+
+Cell[BoxData[
+ InterpretationBox[GridBox[{
+    {GridBox[{
+       {"2"},
+       {"1"},
+       {"1"},
+       {"0"}
+      },
+      GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+      GridBoxSpacings->{"Columns" -> {
+          Offset[0.27999999999999997`], {
+           Offset[0.7]}, 
+          Offset[0.27999999999999997`]}, "Rows" -> {
+          Offset[0.2], {
+           Offset[0.1]}, 
+          Offset[0.2]}}], GridBox[{
+       {
+        RowBox[{"-", "2"}]},
+       {"\<\"Timelike\"\>"}
+      },
+      GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+      GridBoxSpacings->{"Columns" -> {
+          Offset[0.27999999999999997`], {
+           Offset[0.7]}, 
+          Offset[0.27999999999999997`]}, "Rows" -> {
+          Offset[0.2], {
+           Offset[0.1]}, 
+          Offset[0.2]}}]},
+    {GridBox[{
+       {"1"},
+       {"1"},
+       {"0"},
+       {"0"}
+      },
+      GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+      GridBoxSpacings->{"Columns" -> {
+          Offset[0.27999999999999997`], {
+           Offset[0.7]}, 
+          Offset[0.27999999999999997`]}, "Rows" -> {
+          Offset[0.2], {
+           Offset[0.1]}, 
+          Offset[0.2]}}], GridBox[{
+       {"0"},
+       {"\<\"Null\"\>"}
+      },
+      GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+      GridBoxSpacings->{"Columns" -> {
+          Offset[0.27999999999999997`], {
+           Offset[0.7]}, 
+          Offset[0.27999999999999997`]}, "Rows" -> {
+          Offset[0.2], {
+           Offset[0.1]}, 
+          Offset[0.2]}}]},
+    {GridBox[{
+       {"3"},
+       {"1"},
+       {"2"},
+       {"2"}
+      },
+      GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+      GridBoxSpacings->{"Columns" -> {
+          Offset[0.27999999999999997`], {
+           Offset[0.7]}, 
+          Offset[0.27999999999999997`]}, "Rows" -> {
+          Offset[0.2], {
+           Offset[0.1]}, 
+          Offset[0.2]}}], GridBox[{
+       {"0"},
+       {"\<\"Null\"\>"}
+      },
+      GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+      GridBoxSpacings->{"Columns" -> {
+          Offset[0.27999999999999997`], {
+           Offset[0.7]}, 
+          Offset[0.27999999999999997`]}, "Rows" -> {
+          Offset[0.2], {
+           Offset[0.1]}, 
+          Offset[0.2]}}]}
+   },
+   GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+   GridBoxSpacings->{"Columns" -> {
+       Offset[0.27999999999999997`], {
+        Offset[2.0999999999999996`]}, 
+       Offset[0.27999999999999997`]}, "Rows" -> {
+       Offset[0.2], {
+        Offset[0.4]}, 
+       Offset[0.2]}}],
+  TableForm[{{{2, 1, 1, 0}, {-2, "Timelike"}}, {{1, 1, 0, 0}, {0, "Null"}}, {{
+     3, 1, 2, 2}, {0, "Null"}}}]]], "Output",
+ CellChangeTimes->{3.983003350753292*^9},
+ CellLabel->
+  "Out[5]//TableForm=",ExpressionUUID->"09fb0828-f52d-4053-88e9-1dc9d42e051e"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["2. Spacetime Diagram with Light Cones", "Section",ExpressionUUID->"ff7c5a29-1425-48c2-970f-6001acbf9da0"],
+
+Cell["\<\
+Interactive spacetime diagram showing the light cone structure. The light \
+cone divides spacetime into timelike (inside), null (on the cone), and \
+spacelike (outside) regions. Cf. Carroll Figures 1.2 and 1.5.\
+\>", "Text",ExpressionUUID->"defd5495-836c-453a-853a-b27c74864db5"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Spacetime", " ", 
+    RowBox[{"diagram", ":", " ", 
+     RowBox[{"1", "+", 
+      RowBox[{"1", " ", "dimensions", " ", "for", " ", "clarity"}]}]}]}], " ",
+    "*)"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "Light", " ", "cones", " ", "are", " ", "the", " ", "lines", " ", "x"}], 
+    " ", "=", " ", 
+    RowBox[{"+", 
+     RowBox[{"/", 
+      RowBox[{"-", " ", "t"}]}]}]}], " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"lightConePlot", " ", "=", " ", 
+     RowBox[{"Show", "[", "\n", 
+      RowBox[{"(*", " ", 
+       RowBox[{"Shade", " ", "the", " ", "timelike", " ", "region"}], " ", 
+       "*)"}], "\n", 
+      RowBox[{
+       RowBox[{"RegionPlot", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"x", "^", "2"}], " ", "<", " ", 
+          RowBox[{"t", "^", "2"}]}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", " ", 
+           RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"t", ",", " ", 
+           RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", "\n", 
+         RowBox[{"PlotStyle", " ", "->", " ", 
+          RowBox[{"Directive", "[", 
+           RowBox[{"LightBlue", ",", " ", 
+            RowBox[{"Opacity", "[", "0.3", "]"}]}], "]"}]}], ",", "\n", 
+         RowBox[{"BoundaryStyle", " ", "->", " ", "None"}]}], "]"}], ",", 
+       "\n", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Light", " ", "cone", " ", "lines"}], " ", "*)"}], "\n", 
+       RowBox[{"Plot", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"x", ",", " ", 
+           RowBox[{"-", "x"}]}], "}"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", " ", 
+           RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", "\n", 
+         RowBox[{"PlotStyle", " ", "->", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"Orange", ",", " ", "Dashed", ",", " ", "Thick"}], "}"}],
+             ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"Orange", ",", " ", "Dashed", ",", " ", "Thick"}], 
+             "}"}]}], "}"}]}]}], "]"}], ",", "\n", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Example", " ", "worldlines"}], " ", "*)"}], "\n", 
+       RowBox[{"Graphics", "[", 
+        RowBox[{"{", "\n", 
+         RowBox[{"(*", " ", 
+          RowBox[{"Stationary", " ", 
+           RowBox[{"particle", ":", " ", 
+            RowBox[{"vertical", " ", "worldline"}]}]}], " ", "*)"}], "\n", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"Blue", ",", " ", "Thick", ",", " ", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", " ", 
+                 RowBox[{"-", "2.5"}]}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", " ", "2.5"}], "}"}]}], "}"}], "]"}]}], 
+           "}"}], ",", "\n", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+            RowBox[{"Moving", " ", 
+             RowBox[{"particle", ":", " ", "v"}]}], " ", "=", " ", "0.5"}], 
+           " ", "*)"}], "\n", 
+          RowBox[{"{", 
+           RowBox[{"Red", ",", " ", "Thick", ",", " ", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
                 RowBox[{
-                    RowBox[{"{", RowBox[{"{", RowBox[{"0", ",", "0", ",", "0", ",", "0"}], "}"}], ",", " ", RowBox[{"{", RowBox[{"2", ",", "1", ",", "1", ",", "0"}], "}"}], "}"}], ",", "\n",
-                    RowBox[{"{", RowBox[{"{", RowBox[{"0", ",", "0", ",", "0", ",", "0"}], "}"}], ",", " ", RowBox[{"{", RowBox[{"1", ",", "1", ",", "0", ",", "0"}], "}"}], "}"}], ",", "\n",
-                    RowBox[{"{", RowBox[{"{", RowBox[{"0", ",", "0", ",", "0", ",", "0"}], "}"}], ",", " ", RowBox[{"{", RowBox[{"3", ",", "1", ",", "2", ",", "2"}], "}"}], "}"}]
-                }],
-            "}"}]
-        }], ";"
-    }],
+                 RowBox[{"-", "0.5"}], " ", "*", " ", "2.5", ",", " ", 
+                 RowBox[{"-", "2.5"}]}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{"0.5", " ", "*", " ", "2.5", ",", " ", "2.5"}], 
+                "}"}]}], "}"}], "]"}]}], "}"}], ",", "\n", 
+          RowBox[{"(*", " ", "Labels", " ", "*)"}], "\n", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Text", "[", 
+             RowBox[{"Style", "[", 
+              
+              RowBox[{"\"\<Timelike\\n(inside cone)\>\"", ",", " ", "12", ",",
+                " ", "Blue"}], "]"}], ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", " ", "1.5"}], "}"}], "]"}], ",", "\n", 
+            RowBox[{"Text", "[", 
+             RowBox[{"Style", "[", 
+              
+              RowBox[{"\"\<Spacelike\\n(outside)\>\"", ",", " ", "12", ",", 
+               " ", 
+               RowBox[{"Darker", "[", "Green", "]"}]}], "]"}], ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"2.2", ",", " ", "0.5"}], "}"}], "]"}], ",", "\n", 
+            RowBox[{"Text", "[", 
+             RowBox[{"Style", "[", 
+              
+              RowBox[{"\"\<Light cone\\n(null)\>\"", ",", " ", "12", ",", " ",
+                "Orange"}], "]"}], ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"2", ",", " ", "2.5"}], "}"}], "]"}]}], "}"}]}], "}"}], 
+        "]"}], ",", "\n", 
+       RowBox[{"AxesLabel", " ", "->", " ", 
+        RowBox[{"{", 
+         RowBox[{"\"\<x\>\"", ",", " ", "\"\<t\>\""}], "}"}]}], ",", "\n", 
+       RowBox[{
+       "PlotLabel", " ", "->", " ", "\"\<Spacetime Diagram (1+1D)\>\""}], ",",
+        "\n", 
+       RowBox[{"AspectRatio", " ", "->", " ", "1"}], ",", "\n", 
+       RowBox[{"ImageSize", " ", "->", " ", "500"}]}], "]"}]}], ";"}], "\n", 
+   "lightConePlot"}]}]], "Input",
+ CellLabel->"In[6]:=",ExpressionUUID->"4bd2d129-935d-4777-a0ca-7c026b72206b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["3. Interactive Lorentz Boost", "Section",ExpressionUUID->"24e0ea00-22f6-468f-82de-c820d2dad042"],
+
+Cell["\<\
+Use the slider to vary the boost velocity v and see how the (t', x') axes \
+tilt. Light cones (x = +/- t) are invariant under boosts. Cf. Carroll Figure \
+1.7.\
+\>", "Text",ExpressionUUID->"aa04480b-dcb1-471d-a2cd-939bb2276849"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Interactive", " ", "Lorentz", " ", 
+    RowBox[{"boost", ":", " ", 
+     RowBox[{
+     "see", " ", "how", " ", "the", " ", "primed", " ", "axes", " ", 
+      "tilt"}]}]}], " ", "*)"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
     RowBox[{
-        RowBox[{"classifyInterval", "[",
-            RowBox[{"eventA_", ",", " ", "eventB_"}],
-        "]"}], " ", ":=", " ",
-        RowBox[{"Module", "[",
+     RowBox[{"The", " ", 
+      RowBox[{"t", "'"}], " ", "axis", " ", "is", " ", "the", " ", "line", " ",
+       "x"}], " ", "=", " ", 
+     RowBox[{"v", "*", "t"}]}], ";", " ", 
+    RowBox[{
+     RowBox[{"the", " ", 
+      RowBox[{"x", "'"}], " ", "axis", " ", "is", " ", "t"}], " ", "=", " ", 
+     RowBox[{"v", "*", "x"}]}]}], " ", "*)"}], "\n", 
+  RowBox[{"Manipulate", "[", "\n", 
+   RowBox[{
+    RowBox[{"Show", "[", "\n", 
+     RowBox[{"(*", " ", 
+      RowBox[{"Light", " ", "cone"}], " ", "*)"}], "\n", 
+     RowBox[{
+      RowBox[{"Plot", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"x", ",", " ", 
+          RowBox[{"-", "x"}]}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", " ", 
+          RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", "\n", 
+        RowBox[{"PlotStyle", " ", "->", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"Orange", ",", " ", "Dashed"}], "}"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"Orange", ",", " ", "Dashed"}], "}"}]}], "}"}]}]}], "]"}],
+       ",", "\n", 
+      RowBox[{"(*", " ", 
+       RowBox[{"Primed", " ", "axes"}], " ", "*)"}], "\n", 
+      RowBox[{"Graphics", "[", 
+       RowBox[{"{", "\n", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"t", "'"}], " ", 
+            RowBox[{"axis", ":", " ", "x"}]}], " ", "=", " ", 
+           RowBox[{"v", "*", "t"}]}], ",", " ", 
+          RowBox[{
+           RowBox[{"so", " ", "t"}], " ", "=", " ", 
+           RowBox[{
+            RowBox[{"x", "/", "v"}], " ", "for", " ", "display", " ", "as", " ",
+             "x", 
+            RowBox[{"(", "t", ")"}]}]}]}], " ", "*)"}], "\n", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"Red", ",", " ", "Thick", ",", " ", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", " ", "0"}], "}"}], ",", " ", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"vBoost", " ", "*", " ", "2.8"}], ",", " ", "2.8"}], 
+               "}"}]}], "}"}], "]"}]}], "}"}], ",", "\n", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"x", "'"}], " ", 
+            RowBox[{"axis", ":", " ", "t"}]}], " ", "=", " ", 
+           RowBox[{"v", "*", "x"}]}], " ", "*)"}], "\n", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Darker", "[", "Red", "]"}], ",", " ", "Thick", ",", " ", 
+           RowBox[{"Arrow", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", " ", "0"}], "}"}], ",", " ", 
+              RowBox[{"{", 
+               RowBox[{"2.8", ",", " ", 
+                RowBox[{"vBoost", " ", "*", " ", "2.8"}]}], "}"}]}], "}"}], 
+            "]"}]}], "}"}], ",", "\n", 
+         RowBox[{"(*", " ", "Labels", " ", "*)"}], "\n", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Text", "[", 
             RowBox[{
-                RowBox[{"{",
-                    RowBox[{"dx", ",", " ", "ds2"}],
-                "}"}], ",", "\n",
+             RowBox[{"Style", "[", 
+              
+              RowBox[{"\"\<t'\>\"", ",", " ", "14", ",", " ", "Red", ",", " ",
+                "Bold"}], "]"}], ",", " ", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"vBoost", "*", "2.8", " ", "+", " ", "0.2"}], ",", " ",
+                "2.9"}], "}"}]}], "]"}], ",", "\n", 
+           RowBox[{"Text", "[", 
+            RowBox[{
+             RowBox[{"Style", "[", 
+              RowBox[{"\"\<x'\>\"", ",", " ", "14", ",", " ", 
+               RowBox[{"Darker", "[", "Red", "]"}], ",", " ", "Bold"}], "]"}],
+              ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"2.9", ",", " ", 
+               RowBox[{"vBoost", "*", "2.8", " ", "+", " ", "0.2"}]}], 
+              "}"}]}], "]"}]}], "}"}]}], "}"}], "]"}], ",", "\n", 
+      RowBox[{"AxesLabel", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<x\>\"", ",", " ", "\"\<t\>\""}], "}"}]}], ",", "\n", 
+      RowBox[{"PlotRange", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "3"}], ",", " ", "3"}], "}"}]}], "}"}]}], ",", "\n", 
+      RowBox[{"AspectRatio", " ", "->", " ", "1"}], ",", "\n", 
+      RowBox[{"PlotLabel", " ", "->", " ", 
+       RowBox[{"Row", "[", 
+        RowBox[{"{", 
+         RowBox[{"\"\<Lorentz Boost: v = \>\"", ",", " ", 
+          RowBox[{"NumberForm", "[", 
+           RowBox[{"vBoost", ",", " ", "2"}], "]"}], ",", 
+          " ", "\"\<, \[Gamma] = \>\"", ",", " ", 
+          RowBox[{"NumberForm", "[", 
+           RowBox[{
+            RowBox[{"1", "/", 
+             RowBox[{"Sqrt", "[", 
+              RowBox[{"1", " ", "-", " ", 
+               RowBox[{"vBoost", "^", "2"}]}], "]"}]}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"4", ",", " ", "2"}], "}"}]}], "]"}]}], "}"}], "]"}]}], ",",
+       "\n", 
+      RowBox[{"ImageSize", " ", "->", " ", "500"}]}], "]"}], ",", "\n", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"vBoost", ",", " ", "0.3", ",", " ", "\"\<Velocity v/c\>\""}], 
+       "}"}], ",", " ", "0", ",", " ", "0.95", ",", " ", "0.01"}], "}"}]}], 
+   "]"}]}]], "Input",
+ CellLabel->"In[6]:=",ExpressionUUID->"b1700e24-5d84-407d-ab6e-385cab4cec31"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`vBoost$$ = 0.47000000000000003`, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`vBoost$$], 0.3, "Velocity v/c"}, 0, 0.95, 0.01, 
+      ControlType -> Manipulator}}, Typeset`size$$ = {
+    500., {255.937744140625, 261.669677734375}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = True, 
+    Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`vBoost$$ = 0.3}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$, Typeset`keyframeActionsQ$$, 
+        Typeset`keyframeList$$}, "Body" :> Show[
+        Plot[{$CellContext`x, -$CellContext`x}, {$CellContext`x, -3, 3}, 
+         PlotStyle -> {{Orange, Dashed}, {Orange, Dashed}}], 
+        Graphics[{{Red, Thick, 
+           Arrow[{{0, 0}, {$CellContext`vBoost$$ 2.8, 2.8}}]}, {
+           Darker[Red], Thick, 
+           Arrow[{{0, 0}, {2.8, $CellContext`vBoost$$ 2.8}}]}, {
+           Text[
+            Style[
+            "t'", 14, Red, Bold], {$CellContext`vBoost$$ 2.8 + 0.2, 2.9}], 
+           Text[
+            Style["x'", 14, 
+             Darker[Red], Bold], {2.9, $CellContext`vBoost$$ 2.8 + 0.2}]}}], 
+        AxesLabel -> {"x", "t"}, PlotRange -> {{-3, 3}, {-3, 3}}, AspectRatio -> 
+        1, PlotLabel -> Row[{"Lorentz Boost: v = ", 
+           NumberForm[$CellContext`vBoost$$, 2], ", \[Gamma] = ", 
+           NumberForm[1/Sqrt[1 - $CellContext`vBoost$$^2], {4, 2}]}], 
+        ImageSize -> 500], 
+      "Specifications" :> {{{$CellContext`vBoost$$, 0.3, "Velocity v/c"}, 0, 
+         0.95, 0.01}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{
+      549.0999999999999, {303.60816955566406`, 309.34010314941406`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.983003350782959*^9},
+ CellLabel->"Out[6]=",ExpressionUUID->"6612be44-600c-4479-85fc-10fe3114e7e1"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["4. Time Dilation Demonstration", "Section",ExpressionUUID->"ce8428ba-c3c2-46e0-886e-2efae1fb307a"],
+
+Cell["\<\
+The Lorentz factor gamma = 1/Sqrt[1 - v^2] determines how much a moving clock \
+slows down relative to a stationary observer. This plot shows gamma as a \
+function of v/c.\
+\>", "Text",ExpressionUUID->"013b198c-281e-4460-8fcf-9819eb982af5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Plot", " ", "the", " ", "Lorentz", " ", "factor", " ", "gamma", " ", "vs",
+     " ", "velocity"}], " ", "*)"}], "\n", 
+  RowBox[{"Plot", "[", 
+   RowBox[{
+    RowBox[{"1", "/", 
+     RowBox[{"Sqrt", "[", 
+      RowBox[{"1", " ", "-", " ", 
+       RowBox[{"v", "^", "2"}]}], "]"}]}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"v", ",", " ", "0", ",", " ", "0.999"}], "}"}], ",", "\n", 
+    RowBox[{"PlotRange", " ", "->", " ", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", " ", "25"}], "}"}]}], ",", "\n", 
+    RowBox[{"AxesLabel", " ", "->", " ", 
+     RowBox[{"{", 
+      RowBox[{"\"\<v/c\>\"", ",", " ", "\"\<\[Gamma]\>\""}], "}"}]}], ",", 
+    "\n", 
+    RowBox[{
+    "PlotLabel", " ", "->", 
+     " ", "\"\<Lorentz Factor \[Gamma] = 1/\\!\\(\\*SqrtBox[\\(1 - \
+v\\^2/c\\^2\\)]\\)\>\""}], ",", "\n", 
+    RowBox[{"PlotStyle", " ", "->", " ", 
+     RowBox[{"{", 
+      RowBox[{"Blue", ",", " ", "Thick"}], "}"}]}], ",", "\n", 
+    RowBox[{"GridLines", " ", "->", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"0.5", ",", " ", "0.9", ",", " ", "0.99"}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", " ", "2", ",", " ", "5", ",", " ", "10"}], "}"}]}], 
+      "}"}]}], ",", "\n", 
+    RowBox[{"Epilog", " ", "->", " ", 
+     RowBox[{"{", "\n", 
+      RowBox[{
+       RowBox[{"Text", "[", 
+        RowBox[{
+         RowBox[{"Style", "[", 
+          RowBox[{"\"\<v = 0.5c: \[Gamma] = 1.15\>\"", ",", " ", "10"}], 
+          "]"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"0.5", ",", " ", "3"}], "}"}]}], "]"}], ",", "\n", 
+       RowBox[{"Text", "[", 
+        RowBox[{
+         RowBox[{"Style", "[", 
+          RowBox[{"\"\<v = 0.9c: \[Gamma] = 2.29\>\"", ",", " ", "10"}], 
+          "]"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"0.75", ",", " ", "5"}], "}"}]}], "]"}], ",", "\n", 
+       RowBox[{"Text", "[", 
+        RowBox[{
+         RowBox[{"Style", "[", 
+          RowBox[{"\"\<v = 0.99c: \[Gamma] = 7.09\>\"", ",", " ", "10"}], 
+          "]"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"0.85", ",", " ", "10"}], "}"}]}], "]"}]}], "}"}]}], ",", 
+    "\n", 
+    RowBox[{"ImageSize", " ", "->", " ", "500"}]}], "]"}]}]], "Input",
+ CellLabel->"In[7]:=",ExpressionUUID->"74c14af0-2621-4cc0-b07b-59e83ebccc95"],
+
+Cell[BoxData[
+ GraphicsBox[
+  InterpretationBox[{
+    TagBox[{{{}, {}, 
+       TagBox[
+        {RGBColor[0, 0, 1], Thickness[Large], Opacity[1.], 
+         LineBox[CompressedData["
+1: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
+TND7gOXv3//B/X3PlXl2fD36HxcddXE=
+          "]]},
+        Annotation[#, "Charting`Private`Tag#1"]& ]}, {}},
+     {"WolframDynamicHighlight", <|
+      "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>}], 
+    StyleBox[
+     DynamicBox[(Charting`HighlightActionBox["DynamicHighlight", {}, 
+       Slot["HighlightElements"], 
+       Slot["LayoutOptions"], 
+       Slot["Meta"], 
+       Charting`HighlightActionFunction["DynamicHighlight", {{{{}, {}, 
+           Annotation[{
+             Directive[
+              Opacity[1.], 
+              AbsoluteThickness[2], 
+              RGBColor[0, 0, 1], 
+              Thickness[Large]], 
+             Line[CompressedData["
+1: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
+TND7gOXv3//B/X3PlXl2fD36HxcddXE=
+              "]]}, "Charting`Private`Tag#1"]}}, {}}, <|
+        "HighlightElements" -> <|
+          "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+         "LayoutOptions" -> <|
+          "PanelPlotLayout" -> <||>, 
+           "PlotRange" -> {{0., 0.9989999796122448}, {0., 25.}}, 
+           "Frame" -> {{False, False}, {False, False}}, 
+           "AxesOrigin" -> {0, 0}, "ImageSize" -> {500, 500/GoldenRatio}, 
+           "Axes" -> {True, True}, "LabelStyle" -> {}, "AspectRatio" -> 
+           GoldenRatio^(-1), "DefaultStyle" -> {
+             Directive[
+              Opacity[1.], 
+              AbsoluteThickness[2], 
+              RGBColor[0, 0, 1], 
+              Thickness[Large]]}, 
+           "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> ({
+               (Identity[#]& )[
+                Part[#, 1]], 
+               (Identity[#]& )[
+                Part[#, 2]]}& ), 
+             "ScalingFunctions" -> {{Identity, Identity}, {
+               Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> 
+           False|>, 
+         "Meta" -> <|
+          "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+           Plot, "GroupHighlight" -> False|>|>]]& )[<|
+       "HighlightElements" -> <|
+         "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+        "LayoutOptions" -> <|
+         "PanelPlotLayout" -> <||>, 
+          "PlotRange" -> {{0., 0.9989999796122448}, {0., 25.}}, 
+          "Frame" -> {{False, False}, {False, False}}, "AxesOrigin" -> {0, 0},
+           "ImageSize" -> {500, 500/GoldenRatio}, "Axes" -> {True, True}, 
+          "LabelStyle" -> {}, "AspectRatio" -> GoldenRatio^(-1), 
+          "DefaultStyle" -> {
+            Directive[
+             Opacity[1.], 
+             AbsoluteThickness[2], 
+             RGBColor[0, 0, 1], 
+             Thickness[Large]]}, 
+          "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> ({
+              (Identity[#]& )[
+               Part[#, 1]], 
+              (Identity[#]& )[
+               Part[#, 2]]}& ), 
+            "ScalingFunctions" -> {{Identity, Identity}, {
+              Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> False|>,
+         "Meta" -> <|
+         "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+          Plot, "GroupHighlight" -> False|>|>],
+      ImageSizeCache->{{4.503599627370496*^15, -4.503599627370496*^15}, {
+       4.503599627370496*^15, -4.503599627370496*^15}}],
+     Selectable->False]},
+   Annotation[{{{{}, {}, 
+       Annotation[{
+         Directive[
+          Opacity[1.], 
+          AbsoluteThickness[2], 
+          RGBColor[0, 0, 1], 
+          Thickness[Large]], 
+         Line[CompressedData["
+1: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
+TND7gOXv3//B/X3PlXl2fD36HxcddXE=
+          "]]}, "Charting`Private`Tag#1"]}}, {}}, <|
+    "HighlightElements" -> <|
+      "Label" -> {"XYLabel"}, "Ball" -> {"InterpolatedBall"}|>, 
+     "LayoutOptions" -> <|
+      "PanelPlotLayout" -> <||>, 
+       "PlotRange" -> {{0., 0.9989999796122448}, {0., 25.}}, 
+       "Frame" -> {{False, False}, {False, False}}, "AxesOrigin" -> {0, 0}, 
+       "ImageSize" -> {500, 500/GoldenRatio}, "Axes" -> {True, True}, 
+       "LabelStyle" -> {}, "AspectRatio" -> GoldenRatio^(-1), "DefaultStyle" -> {
+         Directive[
+          Opacity[1.], 
+          AbsoluteThickness[2], 
+          RGBColor[0, 0, 1], 
+          Thickness[Large]]}, 
+       "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> ({
+           (Identity[#]& )[
+            Part[#, 1]], 
+           (Identity[#]& )[
+            Part[#, 2]]}& ), 
+         "ScalingFunctions" -> {{Identity, Identity}, {Identity, Identity}}|>,
+        "Primitives" -> {}, "GCFlag" -> False|>, 
+     "Meta" -> <|
+      "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+       Plot, "GroupHighlight" -> False|>|>, "DynamicHighlight"]],
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{
+    FormBox[
+     TagBox["\"v/c\"", HoldForm], TraditionalForm], 
+    FormBox[
+     TagBox["\"\[Gamma]\"", HoldForm], TraditionalForm]},
+  AxesOrigin->{0, 0},
+  DefaultBaseStyle->{"PlotGraphics", "Graphics"},
+  DisplayFunction->Identity,
+  Epilog->{
+    InsetBox[
+     FormBox[
+      StyleBox["\"v = 0.5c: \[Gamma] = 1.15\"", 10, StripOnInput -> False], 
+      TraditionalForm], {0.5, 3}], 
+    InsetBox[
+     FormBox[
+      StyleBox["\"v = 0.9c: \[Gamma] = 2.29\"", 10, StripOnInput -> False], 
+      TraditionalForm], {0.75, 5}], 
+    InsetBox[
+     FormBox[
+      StyleBox["\"v = 0.99c: \[Gamma] = 7.09\"", 10, StripOnInput -> False], 
+      TraditionalForm], {0.85, 10}]},
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{{0.5, 0.9, 0.99}, {1, 2, 5, 10}},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->All,
+  ImageSize->500,
+  Method->{
+   "DefaultBoundaryStyle" -> Automatic, 
+    "DefaultGraphicsInteraction" -> {
+     "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+      "Effects" -> {
+       "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2}, 
+        "Droplines" -> {
+         "freeformCursorMode" -> True, 
+          "placement" -> {"x" -> "All", "y" -> "None"}}}}, "DefaultMeshStyle" -> 
+    AbsolutePointSize[6], "ScalingFunctions" -> None, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& )}},
+  PlotInteractivity:>True,
+  PlotLabel->FormBox[
+   "\"Lorentz Factor \[Gamma] = 1/\\!\\(\\*SqrtBox[\\(1 - \
+v\\^2/c\\^2\\)]\\)\"", TraditionalForm],
+  PlotRange->{{0., 0.9989999796122448}, {0., 25.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {0, 0}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.983003350921232*^9},
+ CellLabel->"Out[7]=",ExpressionUUID->"1c04d6f6-6af6-4945-8ddd-af957fec898a"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["5. Twin Paradox (Carroll Fig. 1.6)", "Section",ExpressionUUID->"21767be1-1447-4f52-9f39-5d2a2166c750"],
+
+Cell["\<\
+The traveling twin takes a longer path through space but a shorter path \
+through spacetime (less proper time). This is the geometric origin of the \
+twin paradox \[AHat]\.80\.94 in Minkowski space, the straight path has the \
+LONGEST proper time, opposite to Euclidean intuition.\
+\>", "Text",ExpressionUUID->"f1153267-3e15-4572-9bf2-678e3ccdc22d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Twin", " ", 
+    RowBox[{"paradox", ":", " ", 
+     RowBox[{
+     "compare", " ", "proper", " ", "times", " ", "along", " ", "two", " ", 
+      "paths"}]}]}], " ", "*)"}], "\n", 
+  RowBox[{"Manipulate", "[", "\n", 
+   RowBox[{
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "totalT", ",", " ", "halfT", ",", " ", "xTurn", ",", " ", "tauStay", ",",
+         " ", "tauTravel"}], "}"}], ",", "\n", 
+      RowBox[{
+       RowBox[{"totalT", " ", "=", " ", "4"}], ";", "\n", 
+       RowBox[{"halfT", " ", "=", " ", 
+        RowBox[{"totalT", "/", "2"}]}], ";", "\n", 
+       RowBox[{"xTurn", " ", "=", " ", 
+        RowBox[{"vTwin", " ", "*", " ", "halfT"}]}], ";", "\n", 
+       RowBox[{"tauStay", " ", "=", " ", "totalT"}], ";", "\n", 
+       RowBox[{"tauTravel", " ", "=", " ", 
+        RowBox[{"totalT", " ", "*", " ", 
+         RowBox[{"Sqrt", "[", 
+          RowBox[{"1", " ", "-", " ", 
+           RowBox[{"vTwin", "^", "2"}]}], "]"}]}]}], ";", "\n", 
+       RowBox[{"Show", "[", "\n", 
+        RowBox[{
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", "\n", 
+           RowBox[{"(*", " ", 
+            RowBox[{"Stationary", " ", 
+             RowBox[{"twin", ":", " ", 
+              RowBox[{"straight", " ", "worldline"}]}]}], " ", "*)"}], "\n", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"Blue", ",", " ", "Thick", ",", " ", 
+              RowBox[{"Arrow", "[", 
+               RowBox[{"{", 
                 RowBox[{
-                    RowBox[{"dx", " ", "=", " ",
-                        RowBox[{"eventB", " ", "-", " ", "eventA"}]
-                    }], ";", "\n",
-                    RowBox[{"ds2", " ", "=", " ",
-                        RowBox[{"dx", " ", ".", " ", "\[Eta]", " ", ".", " ", "dx"}]
-                    }], ";", "\n",
-                    RowBox[{"Which", "[",
-                        RowBox[{
-                            RowBox[{"ds2", " ", "<", " ", "0"}], ",", " ",
-                            RowBox[{"{", RowBox[{"ds2", ",", " ", "\"Timelike\""}], "}"}], ",", "\n",
-                            RowBox[{"ds2", " ", "==", " ", "0"}], ",", " ",
-                            RowBox[{"{", RowBox[{"ds2", ",", " ", "\"Null\""}], "}"}], ",", "\n",
-                            RowBox[{"ds2", " ", ">", " ", "0"}], ",", " ",
-                            RowBox[{"{", RowBox[{"ds2", ",", " ", "\"Spacelike\""}], "}"}]
-                        }],
-                    "]"}]
-                }]
-            }],
-        "]"}]
-    }],
-    RowBox[{
-        RowBox[{"Table", "[",
-            RowBox[{
-                RowBox[{"{",
-                    RowBox[{
-                        RowBox[{"events", "[", RowBox[{"[", RowBox[{"i", ",", "2"}], "]"}], "]"}], ",", " ",
-                        RowBox[{"classifyInterval", "[",
-                            RowBox[{
-                                RowBox[{"events", "[", RowBox[{"[", RowBox[{"i", ",", "1"}], "]"}], "]"}], ",", " ",
-                                RowBox[{"events", "[", RowBox[{"[", RowBox[{"i", ",", "2"}], "]"}], "]"}]
-                            }],
-                        "]"}]
-                    }],
-                "}"}], ",", " ",
-                RowBox[{"{", RowBox[{"i", ",", " ", "3"}], "}"}]
-            }],
-        "]"}], " ", "//", " ", "TableForm"
-    }]
-}], "Input"],
-
-(* =====================================================================
-   Section 2: Spacetime Diagram with Light Cones
-   ===================================================================== *)
-
-Cell[TextData[{"2. Spacetime Diagram with Light Cones"}], "Section"],
-
-Cell[TextData[{"Interactive spacetime diagram showing the light cone \
-structure. The light cone divides spacetime into timelike (inside), \
-null (on the cone), and spacelike (outside) regions. \
-Cf. Carroll Figures 1.2 and 1.5."}], "Text"],
-
-Cell[BoxData[{
-    RowBox[{"(* Spacetime diagram: 1+1 dimensions for clarity *)"}],
-    RowBox[{"(* Light cones are the lines x = +/- t *)"}],
-    RowBox[{
-        RowBox[{"lightConePlot", " ", "=", " ",
-            RowBox[{"Show", "[", "\n",
+                 RowBox[{"{", 
+                  RowBox[{"0", ",", " ", "0"}], "}"}], ",", " ", 
+                 RowBox[{"{", 
+                  RowBox[{"0", ",", " ", "totalT"}], "}"}]}], "}"}], "]"}]}], 
+             "}"}], ",", "\n", 
+            RowBox[{"(*", " ", 
+             RowBox[{"Traveling", " ", 
+              RowBox[{"twin", ":", " ", 
+               RowBox[{"bent", " ", "worldline"}]}]}], " ", "*)"}], "\n", 
+            RowBox[{"{", 
+             RowBox[{"Red", ",", " ", "Thick", ",", " ", 
+              RowBox[{"Arrow", "[", 
+               RowBox[{"{", 
                 RowBox[{
-                    RowBox[{"(* Shade the timelike region *)"}], "\n",
-                    RowBox[{"RegionPlot", "[",
-                        RowBox[{
-                            RowBox[{
-                                RowBox[{"x", "^", "2"}], " ", "<", " ",
-                                RowBox[{"t", "^", "2"}]
-                            }], ",", " ",
-                            RowBox[{"{", RowBox[{"x", ",", " ", RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", " ",
-                            RowBox[{"{", RowBox[{"t", ",", " ", RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", "\n",
-                            RowBox[{"PlotStyle", " ", "->", " ",
-                                RowBox[{"Directive", "[",
-                                    RowBox[{"LightBlue", ",", " ",
-                                        RowBox[{"Opacity", "[", "0.3", "]"}]
-                                    }],
-                                "]"}]
-                            }], ",", "\n",
-                            RowBox[{"BoundaryStyle", " ", "->", " ", "None"}]
-                        }],
-                    "]"}], ",", "\n",
-                    RowBox[{"(* Light cone lines *)"}], "\n",
-                    RowBox[{"Plot", "[",
-                        RowBox[{
-                            RowBox[{"{", RowBox[{"x", ",", " ", RowBox[{"-", "x"}]}], "}"}], ",", " ",
-                            RowBox[{"{", RowBox[{"x", ",", " ", RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", "\n",
-                            RowBox[{"PlotStyle", " ", "->", " ",
-                                RowBox[{"{",
-                                    RowBox[{
-                                        RowBox[{"{", RowBox[{"Orange", ",", " ", "Dashed", ",", " ", "Thick"}], "}"}], ",", " ",
-                                        RowBox[{"{", RowBox[{"Orange", ",", " ", "Dashed", ",", " ", "Thick"}], "}"}]
-                                    }],
-                                "}"}]
-                            }]
-                        }],
-                    "]"}], ",", "\n",
-                    RowBox[{"(* Example worldlines *)"}], "\n",
-                    RowBox[{"Graphics", "[",
-                        RowBox[{"{", "\n",
-                            RowBox[{
-                                RowBox[{"(* Stationary particle: vertical worldline *)"}], "\n",
-                                RowBox[{"{",
-                                    RowBox[{"Blue", ",", " ", "Thick", ",", " ",
-                                        RowBox[{"Arrow", "[",
-                                            RowBox[{"{",
-                                                RowBox[{
-                                                    RowBox[{"{", RowBox[{"0", ",", " ", RowBox[{"-", "2.5"}]}], "}"}], ",", " ",
-                                                    RowBox[{"{", RowBox[{"0", ",", " ", "2.5"}], "}"}]
-                                                }],
-                                            "}"}],
-                                        "]"}]
-                                    }],
-                                "}"}], ",", "\n",
-                                RowBox[{"(* Moving particle: v = 0.5 *)"}], "\n",
-                                RowBox[{"{",
-                                    RowBox[{"Red", ",", " ", "Thick", ",", " ",
-                                        RowBox[{"Arrow", "[",
-                                            RowBox[{"{",
-                                                RowBox[{
-                                                    RowBox[{"{", RowBox[{RowBox[{"-", "0.5"}], " ", "*", " ", "2.5", ",", " ", RowBox[{"-", "2.5"}]}], "}"}], ",", " ",
-                                                    RowBox[{"{", RowBox[{"0.5", " ", "*", " ", "2.5", ",", " ", "2.5"}], "}"}]
-                                                }],
-                                            "}"}],
-                                        "]"}]
-                                    }],
-                                "}"}], ",", "\n",
-                                RowBox[{"(* Labels *)"}], "\n",
-                                RowBox[{"{",
-                                    RowBox[{
-                                        RowBox[{"Text", "[",
-                                            RowBox[{"Style", "[",
-                                                RowBox[{"\"Timelike\\n(inside cone)\"", ",", " ", "12", ",", " ", "Blue"}],
-                                            "]"}], ",", " ",
-                                            RowBox[{"{", RowBox[{"0", ",", " ", "1.5"}], "}"}],
-                                        "]"}], ",", "\n",
-                                        RowBox[{"Text", "[",
-                                            RowBox[{"Style", "[",
-                                                RowBox[{"\"Spacelike\\n(outside)\"", ",", " ", "12", ",", " ",
-                                                    RowBox[{"Darker", "[", "Green", "]"}]
-                                                }],
-                                            "]"}], ",", " ",
-                                            RowBox[{"{", RowBox[{"2.2", ",", " ", "0.5"}], "}"}],
-                                        "]"}], ",", "\n",
-                                        RowBox[{"Text", "[",
-                                            RowBox[{"Style", "[",
-                                                RowBox[{"\"Light cone\\n(null)\"", ",", " ", "12", ",", " ", "Orange"}],
-                                            "]"}], ",", " ",
-                                            RowBox[{"{", RowBox[{"2", ",", " ", "2.5"}], "}"}],
-                                        "]"}]
-                                    }],
-                                "}"}]
-                            }],
-                        "}"}],
-                    "]"}], ",", "\n",
-                    RowBox[{"AxesLabel", " ", "->", " ",
-                        RowBox[{"{", RowBox[{"\"x\"", ",", " ", "\"t\""}], "}"}]
-                    }], ",", "\n",
-                    RowBox[{"PlotLabel", " ", "->", " ", "\"Spacetime Diagram (1+1D)\""}], ",", "\n",
-                    RowBox[{"AspectRatio", " ", "->", " ", "1"}], ",", "\n",
-                    RowBox[{"ImageSize", " ", "->", " ", "500"}]
-                }],
-            "]"}]
-        }], ";"
-    }],
-    RowBox[{"lightConePlot"}]
-}], "Input"],
+                 RowBox[{"{", 
+                  RowBox[{"0", ",", " ", "0"}], "}"}], ",", " ", 
+                 RowBox[{"{", 
+                  RowBox[{"xTurn", ",", " ", "halfT"}], "}"}]}], "}"}], "]"}],
+               ",", "\n", 
+              RowBox[{"Arrow", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"xTurn", ",", " ", "halfT"}], "}"}], ",", " ", 
+                 RowBox[{"{", 
+                  RowBox[{"0", ",", " ", "totalT"}], "}"}]}], "}"}], "]"}]}], 
+             "}"}], ",", "\n", 
+            RowBox[{"(*", " ", "Labels", " ", "*)"}], "\n", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Text", "[", 
+               RowBox[{
+                RowBox[{"Style", "[", 
+                 RowBox[{
+                  RowBox[{"Row", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"\<Stay: \[Tau] = \>\"", ",", " ", 
+                    RowBox[{"NumberForm", "[", 
+                    RowBox[{"tauStay", ",", " ", "3"}], "]"}]}], "}"}], "]"}],
+                   ",", " ", "12", ",", " ", "Blue"}], "]"}], ",", " ", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"-", "1"}], ",", " ", "2"}], "}"}]}], "]"}], ",", 
+              "\n", 
+              RowBox[{"Text", "[", 
+               RowBox[{
+                RowBox[{"Style", "[", 
+                 RowBox[{
+                  RowBox[{"Row", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"\<Travel: \[Tau] = \>\"", ",", " ", 
+                    RowBox[{"NumberForm", "[", 
+                    RowBox[{"tauTravel", ",", " ", 
+                    RowBox[{"{", 
+                    RowBox[{"4", ",", " ", "2"}], "}"}]}], "]"}]}], "}"}], 
+                   "]"}], ",", " ", "12", ",", " ", "Red"}], "]"}], ",", " ", 
+                
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"xTurn", " ", "+", " ", "0.5"}], ",", " ", "2"}], 
+                 "}"}]}], "]"}]}], "}"}]}], "}"}], "]"}], ",", "\n", 
+         RowBox[{"Axes", " ", "->", " ", "True"}], ",", "\n", 
+         RowBox[{"AxesLabel", " ", "->", " ", 
+          RowBox[{"{", 
+           RowBox[{"\"\<x\>\"", ",", " ", "\"\<t\>\""}], "}"}]}], ",", "\n", 
+         RowBox[{"PlotRange", " ", "->", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "2"}], ",", " ", "3"}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.5"}], ",", " ", "5"}], "}"}]}], "}"}]}], ",", 
+         "\n", 
+         RowBox[{"AspectRatio", " ", "->", " ", "1"}], ",", "\n", 
+         RowBox[{"PlotLabel", " ", "->", " ", "\"\<Twin Paradox\>\""}], ",", 
+         "\n", 
+         RowBox[{"ImageSize", " ", "->", " ", "400"}]}], "]"}]}]}], "]"}], ",",
+     "\n", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "vTwin", ",", " ", "0.6", ",", " ", "\"\<Travel velocity v/c\>\""}], 
+       "}"}], ",", " ", "0.1", ",", " ", "0.95", ",", " ", "0.01"}], "}"}]}], 
+   "]"}]}]], "Input",
+ CellLabel->"In[8]:=",ExpressionUUID->"9ee6204f-8b2a-4e7e-9d77-4a1cf2e2459f"],
 
-(* =====================================================================
-   Section 3: Interactive Lorentz Boost Visualization
-   ===================================================================== *)
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`vTwin$$ = 0.6, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`vTwin$$], 0.6, "Travel velocity v/c"}, 0.1, 0.95, 
+      0.01, ControlType -> Manipulator}}, Typeset`size$$ = {
+    400., {203.20705837673611`, 208.93899197048611`}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = True, 
+    Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`vTwin$$ = 0.6}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$, Typeset`keyframeActionsQ$$, 
+        Typeset`keyframeList$$}, "Body" :> 
+      Module[{$CellContext`totalT$, $CellContext`halfT$, $CellContext`xTurn$, \
+$CellContext`tauStay$, $CellContext`tauTravel$}, $CellContext`totalT$ = 
+         4; $CellContext`halfT$ = $CellContext`totalT$/
+          2; $CellContext`xTurn$ = $CellContext`vTwin$$ $CellContext`halfT$; \
+$CellContext`tauStay$ = $CellContext`totalT$; $CellContext`tauTravel$ = \
+$CellContext`totalT$ Sqrt[1 - $CellContext`vTwin$$^2]; Show[
+          Graphics[{{Blue, Thick, 
+             Arrow[{{0, 0}, {0, $CellContext`totalT$}}]}, {Red, Thick, 
+             Arrow[{{0, 0}, {$CellContext`xTurn$, $CellContext`halfT$}}], 
+             
+             Arrow[{{$CellContext`xTurn$, $CellContext`halfT$}, {
+               0, $CellContext`totalT$}}]}, {
+             Text[
+              Style[
+               Row[{"Stay: \[Tau] = ", 
+                 NumberForm[$CellContext`tauStay$, 3]}], 12, Blue], {-1, 2}], 
+             
+             Text[
+              Style[
+               Row[{"Travel: \[Tau] = ", 
+                 NumberForm[$CellContext`tauTravel$, {4, 2}]}], 12, 
+               Red], {$CellContext`xTurn$ + 0.5, 2}]}}], Axes -> True, 
+          AxesLabel -> {"x", "t"}, PlotRange -> {{-2, 3}, {-0.5, 5}}, 
+          AspectRatio -> 1, PlotLabel -> "Twin Paradox", ImageSize -> 400]], 
+      "Specifications" :> {{{$CellContext`vTwin$$, 0.6, 
+          "Travel velocity v/c"}, 0.1, 0.95, 0.01}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{449.1, {250.8774837917752, 256.60941738552515`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.983003350939534*^9},
+ CellLabel->"Out[8]=",ExpressionUUID->"bcb9c331-4a7c-4fe5-b462-631cd26711bd"]
+}, Open  ]]
+}, Open  ]],
 
-Cell[TextData[{"3. Interactive Lorentz Boost"}], "Section"],
+Cell[CellGroupData[{
 
-Cell[TextData[{"Use the slider to vary the boost velocity v and see how \
-the (t', x') axes tilt. Light cones (x = +/- t) are invariant under \
-boosts. Cf. Carroll Figure 1.7."}], "Text"],
+Cell["6. Index Manipulation with the Metric", "Section",ExpressionUUID->"00aad1b1-0bb7-42fb-af5f-b67b3af171af"],
 
-Cell[BoxData[{
-    RowBox[{"(* Interactive Lorentz boost: see how the primed axes tilt *)"}],
-    RowBox[{"(* The t' axis is the line x = v*t; the x' axis is t = v*x *)"}],
+Cell["\<\
+Demonstrate raising and lowering indices using the Minkowski metric. V_mu = \
+eta_{mu nu} V^nu flips the sign of the time component. (Carroll eqs. \
+1.72--1.75)\
+\>", "Text",ExpressionUUID->"0689d4c0-24b6-43ca-bc99-c4adb884759e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Example", ":", " ", 
     RowBox[{
-        RowBox[{"Manipulate", "[", "\n",
-            RowBox[{
-                RowBox[{"Show", "[", "\n",
-                    RowBox[{
-                        RowBox[{"(* Light cone *)"}], "\n",
-                        RowBox[{"Plot", "[",
-                            RowBox[{
-                                RowBox[{"{", RowBox[{"x", ",", " ", RowBox[{"-", "x"}]}], "}"}], ",", " ",
-                                RowBox[{"{", RowBox[{"x", ",", " ", RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", "\n",
-                                RowBox[{"PlotStyle", " ", "->", " ",
-                                    RowBox[{"{",
-                                        RowBox[{
-                                            RowBox[{"{", RowBox[{"Orange", ",", " ", "Dashed"}], "}"}], ",", " ",
-                                            RowBox[{"{", RowBox[{"Orange", ",", " ", "Dashed"}], "}"}]
-                                        }],
-                                    "}"}]
-                                }]
-                            }],
-                        "]"}], ",", "\n",
-                        RowBox[{"(* Primed axes *)"}], "\n",
-                        RowBox[{"Graphics", "[",
-                            RowBox[{"{", "\n",
-                                RowBox[{
-                                    RowBox[{"(* t' axis: x = v*t, so t = x/v for display as x(t) *)"}], "\n",
-                                    RowBox[{"{",
-                                        RowBox[{"Red", ",", " ", "Thick", ",", " ",
-                                            RowBox[{"Arrow", "[",
-                                                RowBox[{"{",
-                                                    RowBox[{
-                                                        RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}], ",", " ",
-                                                        RowBox[{"{",
-                                                            RowBox[{
-                                                                RowBox[{"vBoost", " ", "*", " ", "2.8"}], ",", " ", "2.8"
-                                                            }],
-                                                        "}"}]
-                                                    }],
-                                                "}"}],
-                                            "]"}]
-                                        }],
-                                    "}"}], ",", "\n",
-                                    RowBox[{"(* x' axis: t = v*x *)"}], "\n",
-                                    RowBox[{"{",
-                                        RowBox[{
-                                            RowBox[{"Darker", "[", "Red", "]"}], ",", " ", "Thick", ",", " ",
-                                            RowBox[{"Arrow", "[",
-                                                RowBox[{"{",
-                                                    RowBox[{
-                                                        RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}], ",", " ",
-                                                        RowBox[{"{",
-                                                            RowBox[{
-                                                                "2.8", ",", " ",
-                                                                RowBox[{"vBoost", " ", "*", " ", "2.8"}]
-                                                            }],
-                                                        "}"}]
-                                                    }],
-                                                "}"}],
-                                            "]"}]
-                                        }],
-                                    "}"}], ",", "\n",
-                                    RowBox[{"(* Labels *)"}], "\n",
-                                    RowBox[{"{",
-                                        RowBox[{
-                                            RowBox[{"Text", "[",
-                                                RowBox[{
-                                                    RowBox[{"Style", "[", RowBox[{"\"t'\"", ",", " ", "14", ",", " ", "Red", ",", " ", "Bold"}], "]"}], ",", " ",
-                                                    RowBox[{"{",
-                                                        RowBox[{
-                                                            RowBox[{"vBoost", "*", "2.8", " ", "+", " ", "0.2"}], ",", " ", "2.9"
-                                                        }],
-                                                    "}"}]
-                                                }],
-                                            "]"}], ",", "\n",
-                                            RowBox[{"Text", "[",
-                                                RowBox[{
-                                                    RowBox[{"Style", "[", RowBox[{"\"x'\"", ",", " ", "14", ",", " ",
-                                                        RowBox[{"Darker", "[", "Red", "]"}], ",", " ", "Bold"
-                                                    }], "]"}], ",", " ",
-                                                    RowBox[{"{",
-                                                        RowBox[{
-                                                            "2.9", ",", " ",
-                                                            RowBox[{"vBoost", "*", "2.8", " ", "+", " ", "0.2"}]
-                                                        }],
-                                                    "}"}]
-                                                }],
-                                            "]"}]
-                                        }],
-                                    "}"}]
-                                }],
-                            "}"}],
-                        "]"}], ",", "\n",
-                        RowBox[{"AxesLabel", " ", "->", " ",
-                            RowBox[{"{", RowBox[{"\"x\"", ",", " ", "\"t\""}], "}"}]
-                        }], ",", "\n",
-                        RowBox[{"PlotRange", " ", "->", " ",
-                            RowBox[{"{",
-                                RowBox[{
-                                    RowBox[{"{", RowBox[{RowBox[{"-", "3"}], ",", " ", "3"}], "}"}], ",", " ",
-                                    RowBox[{"{", RowBox[{RowBox[{"-", "3"}], ",", " ", "3"}], "}"}]
-                                }],
-                            "}"}]
-                        }], ",", "\n",
-                        RowBox[{"AspectRatio", " ", "->", " ", "1"}], ",", "\n",
-                        RowBox[{"PlotLabel", " ", "->", " ",
-                            RowBox[{"Row", "[",
-                                RowBox[{"{",
-                                    RowBox[{
-                                        "\"Lorentz Boost: v = \"", ",", " ",
-                                        RowBox[{"NumberForm", "[", RowBox[{"vBoost", ",", " ", "2"}], "]"}], ",", " ",
-                                        "\", \\[Gamma] = \"", ",", " ",
-                                        RowBox[{"NumberForm", "[",
-                                            RowBox[{
-                                                RowBox[{"1", "/",
-                                                    RowBox[{"Sqrt", "[",
-                                                        RowBox[{"1", " ", "-", " ",
-                                                            RowBox[{"vBoost", "^", "2"}]
-                                                        }],
-                                                    "]"}]
-                                                }], ",", " ",
-                                                RowBox[{"{", RowBox[{"4", ",", " ", "2"}], "}"}]
-                                            }],
-                                        "]"}]
-                                    }],
-                                "}"}],
-                            "]"}]
-                        }], ",", "\n",
-                        RowBox[{"ImageSize", " ", "->", " ", "500"}]
-                    }],
-                "]"}], ",", "\n",
-                RowBox[{"{",
-                    RowBox[{
-                        RowBox[{"{",
-                            RowBox[{"vBoost", ",", " ", "0.3", ",", " ", "\"Velocity v/c\""}],
-                        "}"}], ",", " ", "0", ",", " ", "0.95", ",", " ", "0.01"
-                    }],
-                "}"}]
-            }],
-        "]"}]
-    }]
-}], "Input"],
-
-(* =====================================================================
-   Section 4: Time Dilation — Moving Clocks Run Slow
-   ===================================================================== *)
-
-Cell[TextData[{"4. Time Dilation Demonstration"}], "Section"],
-
-Cell[TextData[{"The Lorentz factor gamma = 1/Sqrt[1 - v^2] determines \
-how much a moving clock slows down relative to a stationary observer. \
-This plot shows gamma as a function of v/c."}], "Text"],
-
-Cell[BoxData[{
-    RowBox[{"(* Plot the Lorentz factor gamma vs velocity *)"}],
+     RowBox[{
+     "lower", " ", "the", " ", "index", " ", "of", " ", "a", " ", "four"}], "-",
+      "vector"}]}], " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"\[Eta]", " ", "=", " ", 
+     RowBox[{"DiagonalMatrix", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", " ", "1", ",", " ", "1", ",", " ", "1"}], 
+       "}"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Vup", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{"E0", ",", " ", "px", ",", " ", "py", ",", " ", "pz"}], "}"}]}],
+     ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Vdown", " ", "=", " ", 
+     RowBox[{"\[Eta]", " ", ".", " ", "Vup"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<V^\[Mu] = \>\"", ",", " ", "Vup"}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<V_\[Mu] = \[Eta]_{\[Mu]\[Nu]} V^\[Nu] = \>\"", ",", " ", 
+      "Vdown"}], "]"}], ";"}], "\n", 
+   RowBox[{
     RowBox[{
-        RowBox[{"Plot", "[",
-            RowBox[{
-                RowBox[{"1", "/",
-                    RowBox[{"Sqrt", "[",
-                        RowBox[{"1", " ", "-", " ",
-                            RowBox[{"v", "^", "2"}]
-                        }],
-                    "]"}]
-                }], ",", " ",
-                RowBox[{"{", RowBox[{"v", ",", " ", "0", ",", " ", "0.999"}], "}"}], ",", "\n",
-                RowBox[{"PlotRange", " ", "->", " ",
-                    RowBox[{"{", RowBox[{"0", ",", " ", "25"}], "}"}]
-                }], ",", "\n",
-                RowBox[{"AxesLabel", " ", "->", " ",
-                    RowBox[{"{", RowBox[{"\"v/c\"", ",", " ", "\"\\[Gamma]\""}], "}"}]
-                }], ",", "\n",
-                RowBox[{"PlotLabel", " ", "->", " ", "\"Lorentz Factor \\[Gamma] = 1/\\!\\(\\*SqrtBox[\\(1 - v\\^2/c\\^2\\)]\\)\""}], ",", "\n",
-                RowBox[{"PlotStyle", " ", "->", " ",
-                    RowBox[{"{", RowBox[{"Blue", ",", " ", "Thick"}], "}"}]
-                }], ",", "\n",
-                RowBox[{"GridLines", " ", "->", " ",
-                    RowBox[{"{",
-                        RowBox[{
-                            RowBox[{"{", RowBox[{"0.5", ",", " ", "0.9", ",", " ", "0.99"}], "}"}], ",", " ",
-                            RowBox[{"{", RowBox[{"1", ",", " ", "2", ",", " ", "5", ",", " ", "10"}], "}"}]
-                        }],
-                    "}"}]
-                }], ",", "\n",
-                RowBox[{"Epilog", " ", "->", " ",
-                    RowBox[{"{", "\n",
-                        RowBox[{
-                            RowBox[{"Text", "[",
-                                RowBox[{
-                                    RowBox[{"Style", "[", RowBox[{"\"v = 0.5c: \\[Gamma] = 1.15\"", ",", " ", "10"}], "]"}], ",", " ",
-                                    RowBox[{"{", RowBox[{"0.5", ",", " ", "3"}], "}"}]
-                                }],
-                            "]"}], ",", "\n",
-                            RowBox[{"Text", "[",
-                                RowBox[{
-                                    RowBox[{"Style", "[", RowBox[{"\"v = 0.9c: \\[Gamma] = 2.29\"", ",", " ", "10"}], "]"}], ",", " ",
-                                    RowBox[{"{", RowBox[{"0.75", ",", " ", "5"}], "}"}]
-                                }],
-                            "]"}], ",", "\n",
-                            RowBox[{"Text", "[",
-                                RowBox[{
-                                    RowBox[{"Style", "[", RowBox[{"\"v = 0.99c: \\[Gamma] = 7.09\"", ",", " ", "10"}], "]"}], ",", " ",
-                                    RowBox[{"{", RowBox[{"0.85", ",", " ", "10"}], "}"}]
-                                }],
-                            "]"}]
-                        }],
-                    "}"}]
-                }], ",", "\n",
-                RowBox[{"ImageSize", " ", "->", " ", "500"}]
-            }],
-        "]"}]
-    }]
-}], "Input"],
+    "Print", "[", "\"\<Note: V_0 = -V^0 (sign flip), V_i = V^i (no \
+change)\>\"", "]"}], ";"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Compute", " ", "the", " ", "invariant", " ", "norm", " ", 
+     RowBox[{"V", "^", "mu"}], " ", "V_mu"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"norm", " ", "=", " ", 
+     RowBox[{"Vup", " ", ".", " ", "Vdown"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<V^\[Mu] V_\[Mu] = \>\"", ",", " ", "norm"}], "]"}], 
+    ";"}]}]}]], "Input",
+ CellLabel->"In[9]:=",ExpressionUUID->"374338b4-2d41-4222-9487-4aab9e229dc0"],
 
-(* =====================================================================
-   Section 5: Twin Paradox Visualization
-   ===================================================================== *)
+Cell[CellGroupData[{
 
-Cell[TextData[{"5. Twin Paradox (Carroll Fig. 1.6)"}], "Section"],
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"V^\[Mu] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"E0", ",", "px", ",", "py", ",", "pz"}], "}"}]}],
+  SequenceForm[
+  "V^\[Mu] = ", {$CellContext`E0, $CellContext`px, $CellContext`py, \
+$CellContext`pz}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.983003350960072*^9},
+ CellLabel->
+  "During evaluation of \
+In[9]:=",ExpressionUUID->"b4e3ae0e-e0ff-40c2-8cbb-63698ca87fb9"],
 
-Cell[TextData[{"The traveling twin takes a longer path through space but a \
-shorter path through spacetime (less proper time). This is the geometric \
-origin of the twin paradox — in Minkowski space, the straight path has \
-the LONGEST proper time, opposite to Euclidean intuition."}], "Text"],
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"V_\[Mu] = \[Eta]_{\[Mu]\[Nu]} V^\[Nu] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "E0"}], ",", "px", ",", "py", ",", "pz"}], "}"}]}],
+  SequenceForm[
+  "V_\[Mu] = \[Eta]_{\[Mu]\[Nu]} V^\[Nu] = ", {-$CellContext`E0, \
+$CellContext`px, $CellContext`py, $CellContext`pz}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.983003350960565*^9},
+ CellLabel->
+  "During evaluation of \
+In[9]:=",ExpressionUUID->"09900604-0da6-4c8a-b3a9-a3428d8822f0"],
 
-Cell[BoxData[{
-    RowBox[{"(* Twin paradox: compare proper times along two paths *)"}],
-    RowBox[{
-        RowBox[{"Manipulate", "[", "\n",
-            RowBox[{
-                RowBox[{"Module", "[",
-                    RowBox[{
-                        RowBox[{"{",
-                            RowBox[{
-                                "totalT", ",", " ", "halfT", ",", " ",
-                                "xTurn", ",", " ", "tauStay", ",", " ", "tauTravel"
-                            }],
-                        "}"}], ",", "\n",
-                        RowBox[{
-                            RowBox[{"totalT", " ", "=", " ", "4"}], ";", "\n",
-                            RowBox[{"halfT", " ", "=", " ",
-                                RowBox[{"totalT", "/", "2"}]
-                            }], ";", "\n",
-                            RowBox[{"xTurn", " ", "=", " ",
-                                RowBox[{"vTwin", " ", "*", " ", "halfT"}]
-                            }], ";", "\n",
-                            RowBox[{"tauStay", " ", "=", " ", "totalT"}], ";", "\n",
-                            RowBox[{"tauTravel", " ", "=", " ",
-                                RowBox[{"totalT", " ", "*", " ",
-                                    RowBox[{"Sqrt", "[",
-                                        RowBox[{"1", " ", "-", " ",
-                                            RowBox[{"vTwin", "^", "2"}]
-                                        }],
-                                    "]"}]
-                                }]
-                            }], ";", "\n",
-                            RowBox[{"Show", "[", "\n",
-                                RowBox[{
-                                    RowBox[{"Graphics", "[",
-                                        RowBox[{"{", "\n",
-                                            RowBox[{
-                                                RowBox[{"(* Stationary twin: straight worldline *)"}], "\n",
-                                                RowBox[{"{",
-                                                    RowBox[{"Blue", ",", " ", "Thick", ",", " ",
-                                                        RowBox[{"Arrow", "[",
-                                                            RowBox[{"{",
-                                                                RowBox[{
-                                                                    RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}], ",", " ",
-                                                                    RowBox[{"{", RowBox[{"0", ",", " ", "totalT"}], "}"}]
-                                                                }],
-                                                            "}"}],
-                                                        "]"}]
-                                                    }],
-                                                "}"}], ",", "\n",
-                                                RowBox[{"(* Traveling twin: bent worldline *)"}], "\n",
-                                                RowBox[{"{",
-                                                    RowBox[{"Red", ",", " ", "Thick", ",", " ",
-                                                        RowBox[{"Arrow", "[",
-                                                            RowBox[{"{",
-                                                                RowBox[{
-                                                                    RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}], ",", " ",
-                                                                    RowBox[{"{", RowBox[{"xTurn", ",", " ", "halfT"}], "}"}]
-                                                                }],
-                                                            "}"}],
-                                                        "]"}], ",", "\n",
-                                                        RowBox[{"Arrow", "[",
-                                                            RowBox[{"{",
-                                                                RowBox[{
-                                                                    RowBox[{"{", RowBox[{"xTurn", ",", " ", "halfT"}], "}"}], ",", " ",
-                                                                    RowBox[{"{", RowBox[{"0", ",", " ", "totalT"}], "}"}]
-                                                                }],
-                                                            "}"}],
-                                                        "]"}]
-                                                    }],
-                                                "}"}], ",", "\n",
-                                                RowBox[{"(* Labels *)"}], "\n",
-                                                RowBox[{"{",
-                                                    RowBox[{
-                                                        RowBox[{"Text", "[",
-                                                            RowBox[{
-                                                                RowBox[{"Style", "[",
-                                                                    RowBox[{
-                                                                        RowBox[{"Row", "[", RowBox[{"{", RowBox[{"\"Stay: \\[Tau] = \"", ",", " ", RowBox[{"NumberForm", "[", RowBox[{"tauStay", ",", " ", "3"}], "]"}]}], "}"}], "]"}], ",", " ",
-                                                                        "12", ",", " ", "Blue"
-                                                                    }],
-                                                                "]"}], ",", " ",
-                                                                RowBox[{"{", RowBox[{RowBox[{"-", "1"}], ",", " ", "2"}], "}"}]
-                                                            }],
-                                                        "]"}], ",", "\n",
-                                                        RowBox[{"Text", "[",
-                                                            RowBox[{
-                                                                RowBox[{"Style", "[",
-                                                                    RowBox[{
-                                                                        RowBox[{"Row", "[", RowBox[{"{", RowBox[{"\"Travel: \\[Tau] = \"", ",", " ", RowBox[{"NumberForm", "[", RowBox[{"tauTravel", ",", " ", RowBox[{"{", RowBox[{"4", ",", " ", "2"}], "}"}]}], "]"}]}], "}"}], "]"}], ",", " ",
-                                                                        "12", ",", " ", "Red"
-                                                                    }],
-                                                                "]"}], ",", " ",
-                                                                RowBox[{"{", RowBox[{
-                                                                    RowBox[{"xTurn", " ", "+", " ", "0.5"}], ",", " ", "2"
-                                                                }], "}"}]
-                                                            }],
-                                                        "]"}]
-                                                    }],
-                                                "}"}]
-                                            }],
-                                        "}"}],
-                                    "]"}], ",", "\n",
-                                    RowBox[{"Axes", " ", "->", " ", "True"}], ",", "\n",
-                                    RowBox[{"AxesLabel", " ", "->", " ",
-                                        RowBox[{"{", RowBox[{"\"x\"", ",", " ", "\"t\""}], "}"}]
-                                    }], ",", "\n",
-                                    RowBox[{"PlotRange", " ", "->", " ",
-                                        RowBox[{"{",
-                                            RowBox[{
-                                                RowBox[{"{", RowBox[{RowBox[{"-", "2"}], ",", " ", "3"}], "}"}], ",", " ",
-                                                RowBox[{"{", RowBox[{RowBox[{"-", "0.5"}], ",", " ", "5"}], "}"}]
-                                            }],
-                                        "}"}]
-                                    }], ",", "\n",
-                                    RowBox[{"AspectRatio", " ", "->", " ", "1"}], ",", "\n",
-                                    RowBox[{"PlotLabel", " ", "->", " ", "\"Twin Paradox\""}], ",", "\n",
-                                    RowBox[{"ImageSize", " ", "->", " ", "400"}]
-                                }],
-                            "]"}]
-                        }]
-                    }],
-                "]"}], ",", "\n",
-                RowBox[{"{",
-                    RowBox[{
-                        RowBox[{"{",
-                            RowBox[{"vTwin", ",", " ", "0.6", ",", " ", "\"Travel velocity v/c\""}],
-                        "}"}], ",", " ", "0.1", ",", " ", "0.95", ",", " ", "0.01"
-                    }],
-                "}"}]
-            }],
-        "]"}]
-    }]
-}], "Input"],
+Cell[BoxData["\<\"Note: V_0 = -V^0 (sign flip), V_i = V^i (no change)\"\>"], \
+"Print",
+ CellChangeTimes->{3.9830033509611187`*^9},
+ CellLabel->
+  "During evaluation of \
+In[9]:=",ExpressionUUID->"67c26e1f-480c-42c5-b50a-46566741a2bc"],
 
-(* =====================================================================
-   Section 6: Raising and Lowering Indices
-   ===================================================================== *)
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"V^\[Mu] V_\[Mu] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", 
+     SuperscriptBox["E0", "2"]}], "+", 
+    SuperscriptBox["px", "2"], "+", 
+    SuperscriptBox["py", "2"], "+", 
+    SuperscriptBox["pz", "2"]}]}],
+  SequenceForm[
+  "V^\[Mu] V_\[Mu] = ", -$CellContext`E0^2 + $CellContext`px^2 + \
+$CellContext`py^2 + $CellContext`pz^2],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.983003350961411*^9},
+ CellLabel->
+  "During evaluation of \
+In[9]:=",ExpressionUUID->"45e89ec9-3333-4070-bac7-53f60203f117"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1328, 1013},
+WindowMargins->{{-1577, Automatic}, {5, Automatic}},
+WindowTitle->"Module 1a: Four-Vectors and Spacetime Diagrams",
+FrontEndVersion->"14.3 for Mac OS X ARM (64-bit) (July 8, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"07c71082-5844-454f-abef-c28fd481e3ba"
+]
+(* End of Notebook Content *)
 
-Cell[TextData[{"6. Index Manipulation with the Metric"}], "Section"],
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[636, 23, 118, 0, 96, "Title",ExpressionUUID->"a9f40c5d-80ac-4b08-a9ee-f77259f5a84b"],
+Cell[757, 25, 280, 4, 55, "Text",ExpressionUUID->"304a5874-8c72-4470-84ce-cb3fdefc1306"],
+Cell[CellGroupData[{
+Cell[1062, 33, 125, 0, 66, "Section",ExpressionUUID->"0d7d66c1-62c6-48e2-8722-616cc69d634f"],
+Cell[1190, 35, 266, 4, 33, "Text",ExpressionUUID->"95c2c44e-a0a1-46b7-96a2-94292931b7b5"],
+Cell[CellGroupData[{
+Cell[1481, 43, 498, 13, 70, "Input",ExpressionUUID->"ff0ccf49-0d3e-4020-bde3-95892bd63c42"],
+Cell[1982, 58, 510, 13, 33, "Output",ExpressionUUID->"2cd2fbf6-8e50-4477-af22-d46c1b43d9a0"],
+Cell[2495, 73, 714, 22, 94, "Output",ExpressionUUID->"c97481e1-77fe-40e2-825a-fb49ba709001"]
+}, Open  ]],
+Cell[3224, 98, 129, 0, 33, "Text",ExpressionUUID->"b0b00b60-cafc-424a-a78b-a017dcf57de3"],
+Cell[CellGroupData[{
+Cell[3378, 102, 2826, 75, 274, "Input",ExpressionUUID->"5d0450bf-b184-422d-82d7-8154aa888c63"],
+Cell[6207, 179, 2907, 91, 196, "Output",ExpressionUUID->"09fb0828-f52d-4053-88e9-1dc9d42e051e"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9163, 276, 111, 0, 66, "Section",ExpressionUUID->"ff7c5a29-1425-48c2-970f-6001acbf9da0"],
+Cell[9277, 278, 289, 4, 55, "Text",ExpressionUUID->"defd5495-836c-453a-853a-b27c74864db5"],
+Cell[9569, 284, 5281, 132, 519, "Input",ExpressionUUID->"4bd2d129-935d-4777-a0ca-7c026b72206b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14887, 421, 102, 0, 66, "Section",ExpressionUUID->"24e0ea00-22f6-468f-82de-c820d2dad042"],
+Cell[14992, 423, 238, 4, 33, "Text",ExpressionUUID->"aa04480b-dcb1-471d-a2cd-939bb2276849"],
+Cell[CellGroupData[{
+Cell[15255, 431, 5722, 147, 458, "Input",ExpressionUUID->"b1700e24-5d84-407d-ab6e-385cab4cec31"],
+Cell[20980, 580, 2738, 53, 629, "Output",ExpressionUUID->"6612be44-600c-4479-85fc-10fe3114e7e1"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23767, 639, 104, 0, 66, "Section",ExpressionUUID->"ce8428ba-c3c2-46e0-886e-2efae1fb307a"],
+Cell[23874, 641, 250, 4, 33, "Text",ExpressionUUID->"013b198c-281e-4460-8fcf-9819eb982af5"],
+Cell[CellGroupData[{
+Cell[24149, 649, 2357, 62, 254, "Input",ExpressionUUID->"74c14af0-2621-4cc0-b07b-59e83ebccc95"],
+Cell[26509, 713, 24407, 458, 364, "Output",ExpressionUUID->"1c04d6f6-6af6-4945-8ddd-af957fec898a"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[50965, 1177, 108, 0, 66, "Section",ExpressionUUID->"21767be1-1447-4f52-9f39-5d2a2166c750"],
+Cell[51076, 1179, 359, 5, 55, "Text",ExpressionUUID->"f1153267-3e15-4572-9bf2-678e3ccdc22d"],
+Cell[CellGroupData[{
+Cell[51460, 1188, 5362, 129, 519, "Input",ExpressionUUID->"9ee6204f-8b2a-4e7e-9d77-4a1cf2e2459f"],
+Cell[56825, 1319, 3132, 60, 524, "Output",ExpressionUUID->"bcb9c331-4a7c-4fe5-b462-631cd26711bd"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[60006, 1385, 111, 0, 66, "Section",ExpressionUUID->"00aad1b1-0bb7-42fb-af5f-b67b3af171af"],
+Cell[60120, 1387, 239, 4, 33, "Text",ExpressionUUID->"0689d4c0-24b6-43ca-bc99-c4adb884759e"],
+Cell[CellGroupData[{
+Cell[60384, 1395, 1629, 45, 213, "Input",ExpressionUUID->"374338b4-2d41-4222-9487-4aab9e229dc0"],
+Cell[CellGroupData[{
+Cell[62038, 1444, 447, 12, 23, "Print",ExpressionUUID->"b4e3ae0e-e0ff-40c2-8cbb-63698ca87fb9"],
+Cell[62488, 1458, 529, 13, 23, "Print",ExpressionUUID->"09900604-0da6-4c8a-b3a9-a3428d8822f0"],
+Cell[63020, 1473, 235, 5, 23, "Print",ExpressionUUID->"67c26e1f-480c-42c5-b50a-46566741a2bc"],
+Cell[63258, 1480, 573, 16, 23, "Print",ExpressionUUID->"45e89ec9-3333-4070-bac7-53f60203f117"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
 
-Cell[TextData[{"Demonstrate raising and lowering indices using the \
-Minkowski metric. V_mu = eta_{mu nu} V^nu flips the sign of the time \
-component. (Carroll eqs. 1.72--1.75)"}], "Text"],
+(* End of internal cache information *)
 
-Cell[BoxData[{
-    RowBox[{"(* Example: lower the index of a four-vector *)"}],
-    RowBox[{
-        RowBox[{"\[Eta]", " ", "=", " ",
-            RowBox[{"DiagonalMatrix", "[",
-                RowBox[{"{", RowBox[{"-1", ",", " ", "1", ",", " ", "1", ",", " ", "1"}], "}"}],
-            "]"}]
-        }], ";"
-    }],
-    RowBox[{
-        RowBox[{"Vup", " ", "=", " ",
-            RowBox[{"{", RowBox[{"E0", ",", " ", "px", ",", " ", "py", ",", " ", "pz"}], "}"}]
-        }], ";"
-    }],
-    RowBox[{
-        RowBox[{"Vdown", " ", "=", " ",
-            RowBox[{"\[Eta]", " ", ".", " ", "Vup"}]
-        }], ";"
-    }],
-    RowBox[{
-        RowBox[{"Print", "[",
-            RowBox[{"\"V^\\[Mu] = \"", ",", " ", "Vup"}],
-        "]"}], ";"
-    }],
-    RowBox[{
-        RowBox[{"Print", "[",
-            RowBox[{"\"V_\\[Mu] = \\[Eta]_{\\[Mu]\\[Nu]} V^\\[Nu] = \"", ",", " ", "Vdown"}],
-        "]"}], ";"
-    }],
-    RowBox[{
-        RowBox[{"Print", "[",
-            RowBox[{"\"Note: V_0 = -V^0 (sign flip), V_i = V^i (no change)\""}],
-        "]"}], ";"
-    }],
-    RowBox[{"(* Compute the invariant norm V^mu V_mu *)"}],
-    RowBox[{
-        RowBox[{"norm", " ", "=", " ",
-            RowBox[{"Vup", " ", ".", " ", "Vdown"}]
-        }], ";"
-    }],
-    RowBox[{
-        RowBox[{"Print", "[",
-            RowBox[{"\"V^\\[Mu] V_\\[Mu] = \"", ",", " ", "norm"}],
-        "]"}], ";"
-    }]
-}], "Input"]
-
-}, WindowSize -> {800, 800}, WindowTitle -> "Module 1a: Four-Vectors and Spacetime Diagrams"]
