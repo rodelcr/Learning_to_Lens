@@ -1,0 +1,217 @@
+% =============================================================================
+% Module 4: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:lens_eq_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{04_Lens_Equation/problems\_04.wl}{problems\_04.wl},
+which verifies each answer symbolically and numerically.
+
+% ----- Exercise 4.1 -----
+\subsection*{Exercise~\ref{ex:derive_lens_eq}: Derivation of the Lens Equation}
+
+\textbf{(a)} From the lensing geometry (Figure~\ref{fig:lensing_geometry}),
+consider a light ray that passes through the lens plane at physical position
+$\vecxi$ and is deflected by the angle $\boldsymbol{\hat{\alpha}}$.  In the
+small-angle approximation, the physical position in the source plane is
+determined by two contributions: (i) the extrapolation of the undeflected
+ray from the lens plane to the source plane, which gives a position
+$(\Ds/\Dd)\,\vecxi$, and (ii) the deflection, which displaces the ray by
+$-\Dds\,\boldsymbol{\hat{\alpha}}(\vecxi)$ in the source plane.  Therefore:
+\begin{equation*}
+    \veceta = \frac{\Ds}{\Dd}\,\vecxi
+    - \Dds\,\boldsymbol{\hat{\alpha}}(\vecxi) \,.
+\end{equation*}
+
+\textbf{(b)} Substituting $\vecxi = \Dd\,\vectheta$ and
+$\veceta = \Ds\,\vecbeta$:
+\begin{equation*}
+    \Ds\,\vecbeta = \frac{\Ds}{\Dd}\,\Dd\,\vectheta
+    - \Dds\,\boldsymbol{\hat{\alpha}}(\Dd\,\vectheta)
+    = \Ds\,\vectheta - \Dds\,\boldsymbol{\hat{\alpha}}(\Dd\,\vectheta) \,.
+\end{equation*}
+Dividing by $\Ds$:
+\begin{equation*}
+    \vecbeta = \vectheta
+    - \frac{\Dds}{\Ds}\,\boldsymbol{\hat{\alpha}}(\Dd\,\vectheta) \,.
+\end{equation*}
+
+\textbf{(c)} Defining the reduced deflection angle
+$\vecalpha(\vectheta) \equiv (\Dds/\Ds)\,
+\boldsymbol{\hat{\alpha}}(\Dd\,\vectheta)$, the lens equation becomes:
+\begin{equation*}
+    \vecbeta = \vectheta - \vecalpha(\vectheta) \,. \qquad \square
+\end{equation*}
+
+% ----- Exercise 4.2 -----
+\subsection*{Exercise~\ref{ex:point_mass_solve}: Point Mass Lens Equation}
+
+\textbf{(a)} For a point mass $M$ at the origin, the physical deflection
+angle is $\alphahat = 4\Gnewton M / (\speedoflight^2 \xi)$ where
+$\xi = \Dd\,\theta$.  The reduced deflection angle is:
+\begin{equation*}
+    \alpha(\theta) = \frac{\Dds}{\Ds}\,
+    \frac{4\Gnewton M}{\speedoflight^2\,\Dd\,\theta}
+    = \frac{1}{\theta}\,
+    \frac{4\Gnewton M}{\speedoflight^2}\,\frac{\Dds}{\Dd\,\Ds}
+    = \frac{\thetaE^2}{\theta} \,.
+\end{equation*}
+The lens equation is:
+$\beta = \theta - \alpha(\theta) = \theta - \thetaE^2/\theta$.
+
+\textbf{(b)} Multiplying by $\theta$:
+$\theta^2 - \beta\,\theta - \thetaE^2 = 0$.
+By the quadratic formula:
+\begin{equation*}
+    \theta_\pm = \frac{\beta \pm \sqrt{\beta^2 + 4\,\thetaE^2}}{2} \,.
+\end{equation*}
+
+\textbf{(c)} The discriminant is
+$\Delta = \beta^2 + 4\,\thetaE^2 > 0$ for all $\beta$ (since $\thetaE > 0$).
+Therefore two real solutions always exist.
+
+\textbf{(d)} From Vieta's formulas for $\theta^2 - \beta\,\theta - \thetaE^2 = 0$:
+\begin{itemize}[nosep]
+    \item Sum of roots: $\theta_+ + \theta_- = \beta$. \checkmark
+    \item Product of roots: $\theta_+\,\theta_- = -\thetaE^2$. \checkmark
+\end{itemize}
+
+\textbf{(e)} For $\beta > 0$: since $\sqrt{\beta^2 + 4\thetaE^2} > \beta$,
+we have $\theta_+ > 0$.  Moreover,
+$\theta_+ = (\beta + \sqrt{\beta^2 + 4\thetaE^2})/2 > \sqrt{\thetaE^2} = \thetaE$
+because $\beta + \sqrt{\beta^2 + 4\thetaE^2} > 2\thetaE$ (square both
+sides to verify).
+
+For $\theta_-$: $\sqrt{\beta^2 + 4\thetaE^2} > \beta$ implies
+$\theta_- = (\beta - \sqrt{\beta^2 + 4\thetaE^2})/2 < 0$.
+Also $|\theta_-| = (\sqrt{\beta^2 + 4\thetaE^2} - \beta)/2 < \thetaE$,
+which can be verified by noting $\sqrt{\beta^2 + 4\thetaE^2} - \beta < 2\thetaE$.
+\hfill $\square$
+
+% ----- Exercise 4.3 -----
+\subsection*{Exercise~\ref{ex:einstein_radius_compute}: Einstein Radius for Various Systems}
+
+Using $\thetaE = \sqrt{(4\Gnewton M/\speedoflight^2)\,(\Dds/\Dd\Ds)}$
+with $\Gnewton = 6.674 \times 10^{-11}$~m$^3$\,kg$^{-1}$\,s$^{-2}$,
+$\speedoflight = 2.998 \times 10^{8}$~m\,s$^{-1}$:
+
+\medskip
+\noindent\textbf{(a) Stellar microlensing:}
+$M = 1.989 \times 10^{30}$~kg, $\Dd = \Dds = 5$~kpc $= 1.543 \times 10^{20}$~m,
+$\Ds = 10$~kpc $= 3.086 \times 10^{20}$~m.
+\begin{align*}
+    \thetaE &= \sqrt{\frac{4 \times 6.674 \times 10^{-11} \times
+    1.989 \times 10^{30}}{(2.998 \times 10^8)^2} \times
+    \frac{1.543 \times 10^{20}}{1.543 \times 10^{20} \times
+    3.086 \times 10^{20}}} \\
+    &= \sqrt{5.906 \times 10^{-10} \times
+    \frac{1}{3.086 \times 10^{20}}} \\
+    &= \sqrt{1.914 \times 10^{-30}} \\
+    &\approx 1.38 \times 10^{-15}~\text{rad}
+    \approx 0.28~\text{mas} \,.
+\end{align*}
+Physical Einstein radius: $\RE = 5 \times 3.086 \times 10^{19} \times
+1.38 \times 10^{-15} \approx 2.1 \times 10^{-10}$~Mpc
+$\approx 6.6 \times 10^{-5}$~pc $\approx 14$~AU.
+
+\medskip
+\noindent\textbf{(b) Galaxy lensing:}
+$M = 10^{12} \times 1.989 \times 10^{30}$~kg, $\Dd = 900$~Mpc,
+$\Ds = 1700$~Mpc, $\Dds = 1200$~Mpc.
+Converting to meters ($1~\text{Mpc} = 3.086 \times 10^{22}$~m):
+\begin{align*}
+    \thetaE &= \sqrt{\frac{4 \times 6.674 \times 10^{-11} \times
+    1.989 \times 10^{42}}{(2.998 \times 10^8)^2} \times
+    \frac{1200}{900 \times 1700}~\text{Mpc}^{-1}} \\
+    &\approx 5.3 \times 10^{-6}~\text{rad} \approx 1.1'' \,.
+\end{align*}
+Physical Einstein radius: $\RE = 900 \times 5.3 \times 10^{-6}~\text{Mpc}
+\approx 4.8 \times 10^{-3}$~Mpc $\approx 4.8$~kpc.
+
+\medskip
+\noindent\textbf{(c) Cluster lensing:}
+$M = 10^{15} \times 1.989 \times 10^{30}$~kg, $\Dd = 900$~Mpc,
+$\Ds = 1800$~Mpc, $\Dds = 1400$~Mpc.
+\begin{equation*}
+    \thetaE \approx 1.7 \times 10^{-4}~\text{rad} \approx 35'' \,.
+\end{equation*}
+Physical Einstein radius: $\RE \approx 150$~kpc.
+
+% ----- Exercise 4.4 -----
+\subsection*{Exercise~\ref{ex:sigma_cr_compute}: Critical Surface Mass Density}
+
+\textbf{(a)} Dimensional analysis of $\Sigmacr = \speedoflight^2 /
+(4\pi\Gnewton) \times \Ds / (\Dd\,\Dds)$:
+\begin{equation*}
+    [\Sigmacr] = \frac{(\text{m/s})^2}{(\text{m}^3\,\text{kg}^{-1}\,\text{s}^{-2})}
+    \times \frac{\text{m}}{\text{m} \times \text{m}}
+    = \frac{\text{m}^2\,\text{s}^{-2} \times \text{kg}\,\text{s}^{2}}
+    {\text{m}^3} \times \frac{1}{\text{m}}
+    = \frac{\text{kg}}{\text{m}^2} \,.
+\end{equation*}
+So $\Sigmacr$ has units of mass per area, as required. \checkmark
+
+\textbf{(b)} For the galaxy lens ($\Dd = 900$~Mpc, $\Ds = 1700$~Mpc,
+$\Dds = 1200$~Mpc):
+\begin{equation*}
+    \Sigmacr = \frac{(2.998 \times 10^{8})^2}{4\pi \times
+    6.674 \times 10^{-11}} \times
+    \frac{1700 \times 3.086 \times 10^{22}}{900 \times 3.086 \times 10^{22}
+    \times 1200 \times 3.086 \times 10^{22}}
+    \approx 3.5~\text{kg\,m}^{-2} \,.
+\end{equation*}
+Converting: $3.5~\text{kg\,m}^{-2} = 0.35~\text{g\,cm}^{-2}
+\approx 1700~\Msun\,\text{pc}^{-2}$.
+
+\textbf{(c)} For the cluster lens ($\Dd = 900$~Mpc, $\Ds = 1800$~Mpc,
+$\Dds = 1400$~Mpc):
+\begin{equation*}
+    \Sigmacr \approx 3.0~\text{kg\,m}^{-2} = 0.30~\text{g\,cm}^{-2}
+    \approx 1500~\Msun\,\text{pc}^{-2} \,.
+\end{equation*}
+
+\textbf{(d)} A typical elliptical galaxy with
+$\Sigma_0 \approx 5000~\Msun\,\text{pc}^{-2}$ has
+$\kappab = \Sigma_0/\Sigmacr \approx 5000/1700 \approx 3 > 1$.
+Yes, it is a strong lens --- the central surface mass density exceeds
+the critical value, enabling the formation of multiple images.
+
+% ----- Exercise 4.5 -----
+\subsection*{Exercise~\ref{ex:image_positions_plot}: Image Positions for a Point Mass Lens}
+
+\textbf{(a)} For $\thetaE = 1''$ and $\theta_\pm = (\beta \pm
+\sqrt{\beta^2 + 4})/2$ (in arcseconds):
+
+\begin{center}
+\begin{tabular}{rccccc}
+\toprule
+$\beta$ (arcsec) & $\theta_+$ (arcsec) & $\theta_-$ (arcsec)
+& $\Delta\theta$ (arcsec) & $|\mu_+|$ & $|\mu_-|$ \\
+\midrule
+0.1  & $+1.025$ & $-0.975$ & 2.000 & 5.13 & 4.63 \\
+0.5  & $+1.281$ & $-0.781$ & 2.062 & 1.64 & 0.64 \\
+1.0  & $+1.618$ & $-0.618$ & 2.236 & 1.17 & 0.17 \\
+2.0  & $+2.414$ & $-0.414$ & 2.828 & 1.06 & 0.06 \\
+5.0  & $+5.193$ & $-0.193$ & 5.385 & 1.01 & 0.01 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(b)--(d)} Plots are generated in
+\mathlink{04_Lens_Equation/lens_equation.wl}{lens\_equation.wl}
+and
+\solnlink{04_Lens_Equation/problems\_04.wl}{problems\_04.wl}.
+See Figures~\ref{fig:image_positions} and~\ref{fig:einstein_ring}.
+
+The minimum image separation is $\Delta\theta_{\mathrm{min}} = 2\thetaE = 2''$,
+occurring at $\beta = 0$ (Einstein ring).
+
+The total magnification $|\mu_+| + |\mu_-|$ diverges as $\beta \to 0$
+and approaches 1 (no magnification) as $\beta \to \infty$.  For
+$\beta = \thetaE$, the total magnification is
+$(1 + 2)/(1 \cdot \sqrt{5}) \approx 1.34$.

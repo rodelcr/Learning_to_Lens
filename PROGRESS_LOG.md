@@ -89,3 +89,18 @@ Timestamped record of major milestones and work completed.
 - **`deflection_angle.wl`**: Confirmed deflection integral symbolically, numerical values match textbooks, Shapiro delay = 240 μs. 3 figures exported.
 - **Synergy review**: Module 1e derives deflection via Born approximation (weak-field integral), Module 2 derives via exact null geodesic orbit equation. Both arrive at α = 4GM/(c²b). Cross-references added between modules.
 - **PDF**: Student 79 pages, Instructor 97 pages.
+
+---
+
+## 2026-03-19 — Modules 3 & 4 (built in parallel)
+
+### Module 3: Cosmological Distances
+- **LaTeX notes**: Full FRW metric derivation from Einstein equations (as requested), including RW metric, Christoffel symbols, perfect fluid stress-energy, both Friedmann equations, fluid conservation, density parameters. Distance measures: comoving, angular diameter (with turnover!), luminosity. Distance ratio D_ds/(D_d D_s) for lensing. 5 exercises.
+- **`friedmann_equations.wl`**: Symbolic FRW Christoffel symbols, Friedmann equation verification, cosmological distance computation. 4 figures (D_A vs z, distances vs z, Einstein radius vs z_d, lensing efficiency).
+- **`cosmological_distances.nb`**: Interactive sliders for Ω_m, Ω_Λ, H₀.
+
+### Module 4: The Gravitational Lens Equation
+- **LaTeX notes**: Thin-screen approximation, lensing geometry, lens equation β = θ - α(θ), surface mass density, critical surface mass density Σ_cr, Einstein radius θ_E, point mass lens (two images, Einstein ring), magnification preview. 5 exercises.
+- **`lens_equation.wl`**: Point mass lens equation solved, θ_E computed for stellar/galaxy/cluster scales, Σ_cr numerical values. 7 figures (geometry, image positions, Einstein ring, magnification).
+- **`einstein_ring.nb`**: Interactive image position visualization.
+- **PDF**: Student 108 pages, Instructor 133 pages.

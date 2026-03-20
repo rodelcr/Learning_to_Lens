@@ -1,0 +1,478 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+(*** Wolfram Notebook File ***)
+(* CreatedBy='WolframDesktop 14.0' *)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Module 3: Cosmological Distances \[LongDash] Interactive Notebook", "Title"],
+
+Cell["\<\
+Interactive exploration of cosmological distance measures for gravitational \
+lensing. Use the sliders to see how distance-redshift relations change with \
+cosmological parameters.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+Cell["Setup: Physical Constants and Distance Functions", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"(*", " Physical constants ", "*)"}], "\n",
+  RowBox[{
+   RowBox[{"GN", "=",
+    RowBox[{"6.674", "*^",
+     RowBox[{"-", "11"}]}]}], ";"}]}], "\n",
+ RowBox[{
+  RowBox[{"clight", "=",
+   RowBox[{"2.998", "*^", "8"}]}], ";"}], "\n",
+ RowBox[{
+  RowBox[{"Msolar", "=",
+   RowBox[{"1.989", "*^", "30"}]}], ";"}], "\n",
+ RowBox[{
+  RowBox[{"MpcToM", "=",
+   RowBox[{"3.086", "*^", "22"}]}], ";"}], "\n",
+ RowBox[{
+  RowBox[{"kpcToM", "=",
+   RowBox[{"3.086", "*^", "19"}]}], ";"}], "\n",
+ RowBox[{
+  RowBox[{
+   RowBox[{"radToArcsec", "=",
+    RowBox[{"180", "*",
+     RowBox[{"3600", "/", "Pi"}]}]}], ";"}], "\n"}], "\n",
+ RowBox[{
+  RowBox[{"(*", " Hubble parameter E(z) = H(z)/H0 ", "*)"}], "\n",
+  RowBox[{
+   RowBox[{
+    RowBox[{"Efunc", "[",
+     RowBox[{"z_", ",", "Om_", ",", "OL_"}], "]"}], ":=",
+    RowBox[{"Sqrt", "[",
+     RowBox[{
+      RowBox[{"Om",
+       RowBox[{
+        RowBox[{"(",
+         RowBox[{"1", "+", "z"}], ")"}], "^", "3"}]}], "+", "OL", "+",
+      RowBox[{
+       RowBox[{"(",
+        RowBox[{"1", "-", "Om", "-", "OL"}], ")"}],
+       RowBox[{
+        RowBox[{"(",
+         RowBox[{"1", "+", "z"}], ")"}], "^", "2"}]}]}], "]"}]}], ";"}]}], "\n",
+ RowBox[{
+  RowBox[{"(*", " Comoving distance in Mpc ", "*)"}], "\n",
+  RowBox[{
+   RowBox[{
+    RowBox[{"chiFunc", "[",
+     RowBox[{"z_", ",", "Om_", ",", "OL_", ",", "H0_"}], "]"}], ":=",
+    RowBox[{"NIntegrate", "[",
+     RowBox[{
+      RowBox[{"clight", "/",
+       RowBox[{"(",
+        RowBox[{
+         RowBox[{"H0", "*",
+          RowBox[{"1000", "/", "MpcToM"}]}], "*",
+         RowBox[{"Efunc", "[",
+          RowBox[{"zz", ",", "Om", ",", "OL"}], "]"}]}], ")"}]}], "/",
+      "MpcToM"}], ",",
+     RowBox[{"{",
+      RowBox[{"zz", ",", "0", ",", "z"}], "}"}]}], "]"}]}], ";"}]}], "\n",
+ RowBox[{
+  RowBox[{
+   RowBox[{"DAFunc", "[",
+    RowBox[{"z_", ",", "Om_", ",", "OL_", ",", "H0_"}], "]"}], ":=",
+   RowBox[{
+    RowBox[{"chiFunc", "[",
+     RowBox[{"z", ",", "Om", ",", "OL", ",", "H0"}], "]"}], "/",
+    RowBox[{"(",
+     RowBox[{"1", "+", "z"}], ")"}]}]}], ";"}], "\n",
+ RowBox[{
+  RowBox[{
+   RowBox[{"DLFunc", "[",
+    RowBox[{"z_", ",", "Om_", ",", "OL_", ",", "H0_"}], "]"}], ":=",
+   RowBox[{
+    RowBox[{"chiFunc", "[",
+     RowBox[{"z", ",", "Om", ",", "OL", ",", "H0"}], "]"}], "*",
+    RowBox[{"(",
+     RowBox[{"1", "+", "z"}], ")"}]}]}], ";"}], "\n",
+ RowBox[{
+  RowBox[{
+   RowBox[{"DdsFunc", "[",
+    RowBox[{"zd_", ",", "zs_", ",", "Om_", ",", "OL_", ",", "H0_"}], "]"}],
+    ":=",
+   RowBox[{
+    RowBox[{"(",
+     RowBox[{
+      RowBox[{"chiFunc", "[",
+       RowBox[{"zs", ",", "Om", ",", "OL", ",", "H0"}], "]"}], "-",
+      RowBox[{"chiFunc", "[",
+       RowBox[{"zd", ",", "Om", ",", "OL", ",", "H0"}], "]"}]}], ")"}], "/",
+    RowBox[{"(",
+     RowBox[{"1", "+", "zs"}], ")"}]}]}], ";"}]}
+}], "Input"]
+}, Open]],
+
+Cell[CellGroupData[{
+Cell["Interactive: Distance-Redshift Relations", "Section"],
+
+Cell["\<\
+Adjust \[CapitalOmega]_m, \[CapitalOmega]_\[CapitalLambda], and H_0 to see \
+how the distance-redshift relations change. The angular diameter distance \
+turnover is highlighted.\
+\>", "Text"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[",
+  RowBox[{
+   RowBox[{"Module", "[",
+    RowBox[{
+     RowBox[{"{",
+      RowBox[{"daData", ",", "dlData", ",", "chiData"}], "}"}], ",",
+     RowBox[{
+      RowBox[{"daData", "=",
+       RowBox[{"Table", "[",
+        RowBox[{
+         RowBox[{"{",
+          RowBox[{"z0", ",",
+           RowBox[{"DAFunc", "[",
+            RowBox[{"z0", ",", "Om", ",", "OL", ",", "H0"}], "]"}]}],
+          "}"}], ",",
+         RowBox[{"{",
+          RowBox[{"z0", ",", "0.1", ",", "5", ",", "0.1"}], "}"}]}],
+        "]"}]}], ";",
+      RowBox[{"dlData", "=",
+       RowBox[{"Table", "[",
+        RowBox[{
+         RowBox[{"{",
+          RowBox[{"z0", ",",
+           RowBox[{"DLFunc", "[",
+            RowBox[{"z0", ",", "Om", ",", "OL", ",", "H0"}], "]"}]}],
+          "}"}], ",",
+         RowBox[{"{",
+          RowBox[{"z0", ",", "0.1", ",", "5", ",", "0.1"}], "}"}]}],
+        "]"}]}], ";",
+      RowBox[{"chiData", "=",
+       RowBox[{"Table", "[",
+        RowBox[{
+         RowBox[{"{",
+          RowBox[{"z0", ",",
+           RowBox[{"chiFunc", "[",
+            RowBox[{"z0", ",", "Om", ",", "OL", ",", "H0"}], "]"}]}],
+          "}"}], ",",
+         RowBox[{"{",
+          RowBox[{"z0", ",", "0.1", ",", "5", ",", "0.1"}], "}"}]}],
+        "]"}]}], ";",
+      RowBox[{"ListLinePlot", "[",
+       RowBox[{
+        RowBox[{"{",
+         RowBox[{"chiData", ",", "daData", ",", "dlData"}], "}"}], ",",
+        RowBox[{"PlotRange", "->",
+         RowBox[{"{",
+          RowBox[{
+           RowBox[{"{",
+            RowBox[{"0", ",", "5.2"}], "}"}], ",",
+           RowBox[{"{",
+            RowBox[{"0", ",", "20000"}], "}"}]}], "}"}]}], ",",
+        RowBox[{"PlotStyle", "->",
+         RowBox[{"{",
+          RowBox[{
+           RowBox[{"{",
+            RowBox[{"Blue", ",",
+             RowBox[{"AbsoluteThickness", "[", "2.5", "]"}]}], "}"}], ",",
+           RowBox[{"{",
+            RowBox[{"Red", ",",
+             RowBox[{"AbsoluteThickness", "[", "2.5", "]"}]}], "}"}], ",",
+           RowBox[{"{",
+            RowBox[{
+             RowBox[{"Darker", "[", "Green", "]"}], ",",
+             RowBox[{"AbsoluteThickness", "[", "2.5", "]"}]}], "}"}]}],
+          "}"}]}], ",",
+        RowBox[{"AxesLabel", "->",
+         RowBox[{"{",
+          RowBox[{
+           RowBox[{"Style", "[",
+            RowBox[{"\"\<Redshift z\>\"", ",", "14"}], "]"}], ",",
+           RowBox[{"Style", "[",
+            RowBox[{"\"\<Distance (Mpc)\>\"", ",", "14"}], "]"}]}],
+          "}"}]}], ",",
+        RowBox[{"PlotLabel", "->",
+         RowBox[{"Style", "[",
+          RowBox[{
+           RowBox[{"StringForm", "[",
+            RowBox[{"\"\<\[CapitalOmega]_m=``, \[CapitalOmega]_\[CapitalLambda]=``, H_0=``\>\"",
+             ",", "Om", ",", "OL", ",", "H0"}], "]"}], ",", "14", ",",
+           "Bold"}], "]"}]}], ",",
+        RowBox[{"PlotLegends", "->",
+         RowBox[{"Placed", "[",
+          RowBox[{
+           RowBox[{"LineLegend", "[",
+            RowBox[{
+             RowBox[{"{",
+              RowBox[{
+               "\"\<Comoving \[Chi]\>\"", ",",
+               "\"\<Angular diameter D_A\>\"", ",",
+               "\"\<Luminosity D_L\>\""}], "}"}], ",",
+             RowBox[{"LegendMarkerSize", "->", "15"}]}], "]"}], ",",
+           RowBox[{"{",
+            RowBox[{"0.3", ",", "0.75"}], "}"}]}], "]"}]}], ",",
+        RowBox[{"ImageSize", "->", "600"}], ",",
+        RowBox[{"GridLines", "->", "Automatic"}]}], "]"}]}]}], "]"}], ",",
+   RowBox[{"{",
+    RowBox[{
+     RowBox[{"{",
+      RowBox[{"Om", ",", "0.3", ",",
+       "\"\<\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(m\)]\)\>\""}], "}"}],
+     ",", "0.05", ",", "1.0"}], "}"}], ",",
+   RowBox[{"{",
+    RowBox[{
+     RowBox[{"{",
+      RowBox[{"OL", ",", "0.7", ",",
+       "\"\<\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(\[CapitalLambda]\)]\)\>\""}], "}"}],
+     ",", "0.0", ",", "1.0"}], "}"}], ",",
+   RowBox[{"{",
+    RowBox[{
+     RowBox[{"{",
+      RowBox[{"H0", ",", "70", ",",
+       "\"\<\!\(\*SubscriptBox[\(H\), \(0\)]\) (km/s/Mpc)\>\""}], "}"}],
+     ",", "50", ",", "100"}], "}"}]}], "]"}]
+], "Input"]
+}, Open]],
+
+Cell[CellGroupData[{
+Cell["Interactive: Lensing Geometry Calculator", "Section"],
+
+Cell["\<\
+Input lens and source redshifts and lens mass to compute D_d, D_s, D_ds, \
+\[Theta]_E, and \[CapitalSigma]_cr.\
+\>", "Text"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[",
+  RowBox[{
+   RowBox[{"Module", "[",
+    RowBox[{
+     RowBox[{"{",
+      RowBox[{"Dd", ",", "Ds", ",", "Dds", ",", "thetaE", ",", "sigmaCr"}],
+      "}"}], ",",
+     RowBox[{
+      RowBox[{"Dd", "=",
+       RowBox[{"DAFunc", "[",
+        RowBox[{"zd", ",", "0.3", ",", "0.7", ",", "70"}], "]"}]}], ";",
+      RowBox[{"Ds", "=",
+       RowBox[{"DAFunc", "[",
+        RowBox[{"zs", ",", "0.3", ",", "0.7", ",", "70"}], "]"}]}], ";",
+      RowBox[{"Dds", "=",
+       RowBox[{"DdsFunc", "[",
+        RowBox[{"zd", ",", "zs", ",", "0.3", ",", "0.7", ",", "70"}],
+        "]"}]}], ";",
+      RowBox[{"thetaE", "=",
+       RowBox[{
+        RowBox[{"Sqrt", "[",
+         RowBox[{"4", " ", "GN", " ",
+          RowBox[{"(",
+           RowBox[{
+            RowBox[{"10", "^", "logM"}], " ", "Msolar"}], ")"}], " ", "/",
+          " ",
+          RowBox[{"clight", "^", "2"}], " ", "*",
+          RowBox[{
+           RowBox[{"(",
+            RowBox[{"Dds", " ", "MpcToM"}], ")"}], "/",
+           RowBox[{"(",
+            RowBox[{
+             RowBox[{"(",
+              RowBox[{"Dd", " ", "MpcToM"}], ")"}],
+             RowBox[{"(",
+              RowBox[{"Ds", " ", "MpcToM"}], ")"}]}], ")"}]}]}], "]"}],
+        " ", "radToArcsec"}]}], ";",
+      RowBox[{"sigmaCr", "=",
+       RowBox[{
+        RowBox[{"clight", "^", "2"}], " ", "/",
+        " ",
+        RowBox[{"(",
+         RowBox[{"4", " ", "Pi", " ", "GN"}], ")"}], " ", "*",
+        RowBox[{
+         RowBox[{"(",
+          RowBox[{"Ds", " ", "MpcToM"}], ")"}], "/",
+         RowBox[{"(",
+          RowBox[{
+           RowBox[{"(",
+            RowBox[{"Dd", " ", "MpcToM"}], ")"}],
+           RowBox[{"(",
+            RowBox[{"Dds", " ", "MpcToM"}], ")"}]}], ")"}]}], "/",
+        "Msolar", " ", "*",
+        RowBox[{"kpcToM", "^", "2"}]}]}], ";",
+      RowBox[{"Column", "[",
+       RowBox[{
+        RowBox[{"{",
+         RowBox[{
+          RowBox[{"Style", "[",
+           RowBox[{"\"\<Lensing Geometry Results\>\"", ",", "16", ",", "Bold"}],
+           "]"}], ",", "\"\<\>\"", ",",
+          RowBox[{"Row", "[",
+           RowBox[{"{",
+            RowBox[{"\"\<D_d  = \>\"", ",",
+             RowBox[{"NumberForm", "[",
+              RowBox[{"Dd", ",",
+               RowBox[{"{",
+                RowBox[{"5", ",", "0"}], "}"}]}], "]"}], ",",
+             "\"\< Mpc\>\""}], "}"}], "]"}], ",",
+          RowBox[{"Row", "[",
+           RowBox[{"{",
+            RowBox[{"\"\<D_s  = \>\"", ",",
+             RowBox[{"NumberForm", "[",
+              RowBox[{"Ds", ",",
+               RowBox[{"{",
+                RowBox[{"5", ",", "0"}], "}"}]}], "]"}], ",",
+             "\"\< Mpc\>\""}], "}"}], "]"}], ",",
+          RowBox[{"Row", "[",
+           RowBox[{"{",
+            RowBox[{"\"\<D_ds = \>\"", ",",
+             RowBox[{"NumberForm", "[",
+              RowBox[{"Dds", ",",
+               RowBox[{"{",
+                RowBox[{"5", ",", "0"}], "}"}]}], "]"}], ",",
+             "\"\< Mpc\>\""}], "}"}], "]"}], ",", "\"\<\>\"", ",",
+          RowBox[{"Row", "[",
+           RowBox[{"{",
+            RowBox[{
+             "\"\<\[Theta]_E = \>\"", ",",
+             RowBox[{"NumberForm", "[",
+              RowBox[{"thetaE", ",",
+               RowBox[{"{",
+                RowBox[{"4", ",", "2"}], "}"}]}], "]"}], ",",
+             "\"\< arcsec\>\""}], "}"}], "]"}], ",",
+          RowBox[{"Row", "[",
+           RowBox[{"{",
+            RowBox[{
+             "\"\<\[CapitalSigma]_cr = \>\"", ",",
+             RowBox[{"ScientificForm", "[",
+              RowBox[{"sigmaCr", ",", "3"}], "]"}], ",",
+             "\"\< M\[CircleDot]/kpc\[TwoSuperior]\>\""}], "}"}], "]"}], ",",
+          "\"\<\>\"", ",",
+          RowBox[{"Style", "[",
+           RowBox[{
+            RowBox[{"Row", "[",
+             RowBox[{"{",
+              RowBox[{
+               "\"\<Note: D_s - D_d = \>\"", ",",
+               RowBox[{"NumberForm", "[",
+                RowBox[{
+                 RowBox[{"Ds", "-", "Dd"}], ",",
+                 RowBox[{"{",
+                  RowBox[{"5", ",", "0"}], "}"}]}], "]"}], ",",
+               "\"\< Mpc \[NotEqual] D_ds\>\""}], "}"}], "]"}], ",",
+            "Italic", ",",
+            RowBox[{"Darker", "[", "Red", "]"}]}], "]"}]}], "}"}], ",",
+        RowBox[{"Spacings", "->", "0.5"}]}], "]"}]}]}], "]"}], ",",
+   RowBox[{"{",
+    RowBox[{
+     RowBox[{"{",
+      RowBox[{"zd", ",", "0.3", ",", "\"\<Lens redshift \!\(\*SubscriptBox[\(z\), \(d\)]\)\>\""}],
+      "}"}], ",", "0.01", ",", "3.0"}], "}"}], ",",
+   RowBox[{"{",
+    RowBox[{
+     RowBox[{"{",
+      RowBox[{"zs", ",", "1.0", ",", "\"\<Source redshift \!\(\*SubscriptBox[\(z\), \(s\)]\)\>\""}],
+      "}"}], ",", "0.02", ",", "5.0"}], "}"}], ",",
+   RowBox[{"{",
+    RowBox[{
+     RowBox[{"{",
+      RowBox[{"logM", ",", "12", ",",
+       "\"\<log\!\(\*SubscriptBox[\(10\), \(\)]\)(M/M\[CircleDot])\>\""}],
+      "}"}], ",", "8", ",", "16"}], "}"}]}], "]"}]
+], "Input"]
+}, Open]],
+
+Cell[CellGroupData[{
+Cell["D_A(z) Turnover Visualization", "Section"],
+
+Cell[BoxData[
+ RowBox[{"Module", "[",
+  RowBox[{
+   RowBox[{"{",
+    RowBox[{"daData", ",", "maxVal", ",", "maxZ"}], "}"}], ",",
+   RowBox[{
+    RowBox[{"daData", "=",
+     RowBox[{"Table", "[",
+      RowBox[{
+       RowBox[{"{",
+        RowBox[{"z0", ",",
+         RowBox[{"DAFunc", "[",
+          RowBox[{"z0", ",", "0.3", ",", "0.7", ",", "70"}], "]"}]}],
+        "}"}], ",",
+       RowBox[{"{",
+        RowBox[{"z0", ",", "0.05", ",", "5", ",", "0.05"}], "}"}]}],
+      "]"}]}], ";",
+    RowBox[{"maxVal", "=",
+     RowBox[{"Max", "[",
+      RowBox[{"daData", "[",
+       RowBox[{"[",
+        RowBox[{"All", ",", "2"}], "]"}], "]"}], "]"}]}], ";",
+    RowBox[{"maxZ", "=",
+     RowBox[{
+      RowBox[{"Select", "[",
+       RowBox[{"daData", ",",
+        RowBox[{
+         RowBox[{
+          RowBox[{"#", "[",
+           RowBox[{"[", "2", "]"}], "]"}], "==", "maxVal"}], "&"}]}],
+       "]"}], "[",
+      RowBox[{"[",
+       RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ";",
+    RowBox[{"ListLinePlot", "[",
+     RowBox[{"daData", ",",
+      RowBox[{"PlotRange", "->",
+       RowBox[{"{",
+        RowBox[{
+         RowBox[{"{",
+          RowBox[{"0", ",", "5.2"}], "}"}], ",",
+         RowBox[{"{",
+          RowBox[{"0", ",", "2000"}], "}"}]}], "}"}]}], ",",
+      RowBox[{"PlotStyle", "->",
+       RowBox[{"{",
+        RowBox[{"Blue", ",",
+         RowBox[{"AbsoluteThickness", "[", "3", "]"}]}], "}"}]}], ",",
+      RowBox[{"AxesLabel", "->",
+       RowBox[{"{",
+        RowBox[{
+         RowBox[{"Style", "[",
+          RowBox[{"\"\<Redshift z\>\"", ",", "14"}], "]"}], ",",
+         RowBox[{"Style", "[",
+          RowBox[{"\"\<D_A (Mpc)\>\"", ",", "14"}], "]"}]}], "}"}]}], ",",
+      RowBox[{"PlotLabel", "->",
+       RowBox[{"Style", "[",
+        RowBox[{"\"\<Angular Diameter Distance Turnover\>\"", ",", "16", ",",
+         "Bold"}], "]"}]}], ",",
+      RowBox[{"Epilog", "->",
+       RowBox[{"{",
+        RowBox[{
+         "Red", ",",
+         RowBox[{"PointSize", "[", "0.02", "]"}], ",",
+         RowBox[{"Point", "[",
+          RowBox[{"{",
+           RowBox[{"maxZ", ",", "maxVal"}], "}"}], "]"}], ",",
+         RowBox[{"Text", "[",
+          RowBox[{
+           RowBox[{"Style", "[",
+            RowBox[{
+             RowBox[{"StringForm", "[",
+              RowBox[{"\"\<Maximum at z \[TildeEqual] ``\\nD_A \[TildeEqual] `` Mpc\>\"",
+               ",", "maxZ", ",",
+               RowBox[{"Round", "[", "maxVal", "]"}]}], "]"}], ",", "12",
+             ",", "Red"}], "]"}], ",",
+           RowBox[{"{",
+            RowBox[{
+             RowBox[{"maxZ", "+", "0.7"}], ",",
+             RowBox[{"maxVal", "+", "50"}]}], "}"}]}], "]"}]}], "}"}]}], ",",
+      RowBox[{"ImageSize", "->", "600"}], ",",
+      RowBox[{"GridLines", "->", "Automatic"}]}], "]"}]}]}], "]"}]
+], "Input"]
+}, Open]]
+}, Open]]
+},
+WindowSize->{900, 700},
+WindowMargins->{{Automatic, 100}, {Automatic, 50}},
+FrontEndVersion->"14.0 for Mac OS X x86 (64-bit)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)

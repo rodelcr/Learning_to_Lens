@@ -1,0 +1,660 @@
+Notebook[{
+
+(* =========================================================================
+   einstein_ring.nb
+   Module 4: The Gravitational Lens Equation
+   =========================================================================
+   Purpose: Interactive visualizations for the gravitational lens equation:
+            1. Manipulate: vary source position beta, show image positions
+               theta_+ and theta_- on the image plane
+            2. Einstein ring visualization (beta = 0)
+            3. Interactive Einstein radius calculator (input M, z_d, z_s)
+
+   Sources: Narayan & Bartelmann Sec. 2.1.3-2.1.5
+            Congdon & Keeton Ch. 2 & 4
+            Saha et al. Sec. 1
+
+   Units:   Angular positions in units of thetaE unless otherwise stated
+   ========================================================================= *)
+
+Cell[TextData[{"Module 4: Einstein Ring and Lens Equation --- Interactive Visualizations"}], "Title"],
+
+Cell[TextData[{"This notebook provides interactive visualizations of the gravitational \
+lens equation for a point mass lens. The Einstein radius \
+\!\(\*SubscriptBox[\(\[Theta]\), \(E\)]\) sets the characteristic angular \
+scale. Use the Manipulate panels below to explore how image positions, \
+magnifications, and the Einstein ring depend on the source position and \
+lens parameters."}], "Text"],
+
+(* =====================================================================
+   Section 1: Interactive Image Positions
+   =====================================================================
+   Manipulate with slider for source position beta.
+   Shows the lens plane with:
+   - Einstein ring (dashed circle)
+   - Source position (green star)
+   - Two image positions (blue and red dots)
+   - Magnification values
+   ===================================================================== *)
+
+Cell[TextData[{"1. Interactive Image Positions"}], "Section"],
+
+Cell[TextData[{"Use the slider to vary the source position \[Beta] (in units of \
+\!\(\*SubscriptBox[\(\[Theta]\), \(E\)]\)). The two images \
+\!\(\*SubscriptBox[\(\[Theta]\), \(+\)]\) (blue) and \
+\!\(\*SubscriptBox[\(\[Theta]\), \(-\)]\) (red) are shown as filled discs, \
+with sizes proportional to their magnification. When \[Beta] = 0, the images \
+merge into an Einstein ring."}], "Text"],
+
+Cell[BoxData[
+    RowBox[{"Manipulate", "[",
+        RowBox[{
+            RowBox[{"Module", "[",
+                RowBox[{
+                    RowBox[{"{",
+                        RowBox[{"thetaP", ",", " ", "thetaM", ",",
+                            " ", "u", ",", " ", "muP", ",",
+                            " ", "muM", ",", " ", "ring"},
+                    "}"}], ",", "\n",
+                    RowBox[{
+                        (* Compute image positions *)
+                        RowBox[{"thetaP", " ", "=", " ",
+                            RowBox[{"(", RowBox[{"beta", " ", "+", " ",
+                                RowBox[{"Sqrt", "[",
+                                    RowBox[{"beta", "^", "2", " ", "+", " ", "4"}],
+                                "]"}]
+                            }], ")", "/", "2"}]
+                        }], ";", "\n",
+                        RowBox[{"thetaM", " ", "=", " ",
+                            RowBox[{"(", RowBox[{"beta", " ", "-", " ",
+                                RowBox[{"Sqrt", "[",
+                                    RowBox[{"beta", "^", "2", " ", "+", " ", "4"}],
+                                "]"}]
+                            }], ")", "/", "2"}]
+                        }], ";", "\n",
+                        (* Compute magnifications *)
+                        RowBox[{"u", " ", "=", " ",
+                            RowBox[{"Max", "[", RowBox[{"beta", ",", " ", "0.001"}], "]"}]
+                        }], ";", "\n",
+                        RowBox[{"muP", " ", "=", " ",
+                            RowBox[{
+                                RowBox[{"(", RowBox[{
+                                    RowBox[{"u", "^", "2"}], " ", "+", " ", "2"}],
+                                ")"}], "/",
+                                RowBox[{"(", RowBox[{"2", " ", "u", " ",
+                                    RowBox[{"Sqrt", "[",
+                                        RowBox[{RowBox[{"u", "^", "2"}], " ", "+", " ", "4"}],
+                                    "]"}]
+                                }], ")"}]
+                            }], " ", "+", " ",
+                            RowBox[{"1", "/", "2"}]
+                        }], ";", "\n",
+                        RowBox[{"muM", " ", "=", " ",
+                            RowBox[{"Abs", "[",
+                                RowBox[{
+                                    RowBox[{"(", RowBox[{
+                                        RowBox[{"u", "^", "2"}], " ", "+", " ", "2"}],
+                                    ")"}], "/",
+                                    RowBox[{"(", RowBox[{"2", " ", "u", " ",
+                                        RowBox[{"Sqrt", "[",
+                                            RowBox[{RowBox[{"u", "^", "2"}], " ", "+", " ", "4"}],
+                                        "]"}]
+                                    }], ")"}]
+                                }], " ", "-", " ",
+                                RowBox[{"1", "/", "2"}]
+                            ]"}]
+                        }], ";", "\n",
+                        (* Draw the visualization *)
+                        RowBox[{"Graphics", "[",
+                            RowBox[{
+                                RowBox[{"{", "\n",
+                                    (* Einstein ring *)
+                                    RowBox[{
+                                        RowBox[{"{",
+                                            RowBox[{"Orange", ",", " ", "Dashed", ",",
+                                                " ", RowBox[{"AbsoluteThickness", "[", "2", "]"}], ",",
+                                                " ", RowBox[{"Circle", "[",
+                                                    RowBox[{RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}],
+                                                    ",", " ", "1"}],
+                                                "]"}]
+                                            }],
+                                        "}"}], ",", "\n",
+                                        (* Lens at center *)
+                                        RowBox[{"{",
+                                            RowBox[{"Black", ",", " ",
+                                                RowBox[{"Disk", "[",
+                                                    RowBox[{RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}],
+                                                    ",", " ", "0.05"}],
+                                                "]"}]
+                                            }],
+                                        "}"}], ",", "\n",
+                                        (* Source *)
+                                        RowBox[{"{",
+                                            RowBox[{RowBox[{"Darker", "[", "Green", "]"}], ",",
+                                                " ", RowBox[{"PointSize", "[", "0.02", "]"}], ",",
+                                                " ", RowBox[{"Point", "[",
+                                                    RowBox[{"{", RowBox[{"0", ",", " ", "beta"}], "}"}],
+                                                "]"}]
+                                            }],
+                                        "}"}], ",", "\n",
+                                        (* Primary image *)
+                                        RowBox[{"{",
+                                            RowBox[{"Blue", ",",
+                                                " ", RowBox[{"PointSize", "[",
+                                                    RowBox[{"Min", "[",
+                                                        RowBox[{"0.05", ",",
+                                                            " ", RowBox[{"0.01", " ", "*", " ",
+                                                                RowBox[{"Sqrt", "[", "muP", "]"}]}]
+                                                        }],
+                                                    "]"}],
+                                                "]"}], ",",
+                                                " ", RowBox[{"Point", "[",
+                                                    RowBox[{"{", RowBox[{"0", ",", " ", "thetaP"}], "}"}],
+                                                "]"}]
+                                            }],
+                                        "}"}], ",", "\n",
+                                        (* Secondary image *)
+                                        RowBox[{"{",
+                                            RowBox[{"Red", ",",
+                                                " ", RowBox[{"PointSize", "[",
+                                                    RowBox[{"Min", "[",
+                                                        RowBox[{"0.05", ",",
+                                                            " ", RowBox[{"0.01", " ", "*", " ",
+                                                                RowBox[{"Sqrt", "[", "muM", "]"}]}]
+                                                        }],
+                                                    "]"}],
+                                                "]"}], ",",
+                                                " ", RowBox[{"Point", "[",
+                                                    RowBox[{"{", RowBox[{"0", ",", " ", "thetaM"}], "}"}],
+                                                "]"}]
+                                            }],
+                                        "}"}], ",", "\n",
+                                        (* Labels *)
+                                        RowBox[{
+                                            RowBox[{"Text", "[",
+                                                RowBox[{
+                                                    RowBox[{"Style", "[",
+                                                        RowBox[{
+                                                            RowBox[{"StringForm", "[",
+                                                                RowBox[{"\"\\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(+\\)]\\) = ``\"", ",",
+                                                                    " ", RowBox[{"NumberForm", "[",
+                                                                        RowBox[{"thetaP", ",", " ", RowBox[{"{", RowBox[{"3", ",", " ", "2"}], "}"}]}],
+                                                                    "]"}]
+                                                                }],
+                                                            "]"}],
+                                                        ",", " ", "11", ",", " ", "Blue"}],
+                                                    "]"}], ",",
+                                                    " ", RowBox[{"{", RowBox[{"0.6", ",", " ", "thetaP"}], "}"}]
+                                                }],
+                                            "]"}]
+                                        }], ",", "\n",
+                                        RowBox[{
+                                            RowBox[{"Text", "[",
+                                                RowBox[{
+                                                    RowBox[{"Style", "[",
+                                                        RowBox[{
+                                                            RowBox[{"StringForm", "[",
+                                                                RowBox[{"\"\\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(-\\)]\\) = ``\"", ",",
+                                                                    " ", RowBox[{"NumberForm", "[",
+                                                                        RowBox[{"thetaM", ",", " ", RowBox[{"{", RowBox[{"3", ",", " ", "2"}], "}"}]}],
+                                                                    "]"}]
+                                                                }],
+                                                            "]"}],
+                                                        ",", " ", "11", ",", " ", "Red"}],
+                                                    "]"}], ",",
+                                                    " ", RowBox[{"{", RowBox[{"0.6", ",", " ", "thetaM"}], "}"}]
+                                                }],
+                                            "]"}]
+                                        }], ",", "\n",
+                                        RowBox[{
+                                            RowBox[{"Text", "[",
+                                                RowBox[{
+                                                    RowBox[{"Style", "[",
+                                                        RowBox[{
+                                                            RowBox[{"StringForm", "[",
+                                                                RowBox[{"\"\\[Mu]_total = ``\"", ",",
+                                                                    " ", RowBox[{"NumberForm", "[",
+                                                                        RowBox[{RowBox[{"muP", " ", "+", " ", "muM"}], ",",
+                                                                            " ", RowBox[{"{", RowBox[{"4", ",", " ", "2"}], "}"}]
+                                                                        }],
+                                                                    "]"}]
+                                                                }],
+                                                            "]"}],
+                                                        ",", " ", "12", ",", " ", "Bold"}],
+                                                    "]"}], ",",
+                                                    " ", RowBox[{"{", RowBox[{"0", ",", " ", RowBox[{"-", "1.7"}]}], "}"}]
+                                                }],
+                                            "]"}]
+                                        }]
+                                    }],
+                                "}"}], ",", "\n",
+                                RowBox[{"PlotRange", " ", "->", " ",
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{"{", RowBox[{RowBox[{"-", "2"}], ",", " ", "2"}], "}"}], ",",
+                                            " ", RowBox[{"{", RowBox[{RowBox[{"-", "2"}], ",", " ", "3"}], "}"}]
+                                        }],
+                                    "}"}]
+                                }], ",", "\n",
+                                RowBox[{"ImageSize", " ", "->", " ", "500"}], ",",
+                                RowBox[{"Axes", " ", "->", " ", "False"}], ",",
+                                RowBox[{"Frame", " ", "->", " ", "True"}], ",",
+                                RowBox[{"FrameLabel", " ", "->", " ",
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{"Style", "[",
+                                                RowBox[{"\"\\[Theta] / \\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\)\"",
+                                                ",", " ", "13"}],
+                                            "]"}], ",",
+                                            " ", RowBox[{"Style", "[",
+                                                RowBox[{"\"\\[Theta] / \\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\)\"",
+                                                ",", " ", "13"}],
+                                            "]"}]
+                                        }],
+                                    "}"}]
+                                }], ",",
+                                RowBox[{"AspectRatio", " ", "->", " ", "1"}]
+                            }],
+                        "]"}]
+                    }]
+                }],
+            "]"}], ",", "\n",
+            RowBox[{"{",
+                RowBox[{
+                    RowBox[{"{", RowBox[{"beta", ",", " ", "0.5", ",",
+                        " ", "\"\\[Beta] / \\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\)\""}],
+                    "}"}], ",",
+                    " ", "0", ",", " ", "3", ",", " ", "0.01"
+                }],
+            "}"}]
+        }],
+    "]"}]
+], "Input"],
+
+
+(* =====================================================================
+   Section 2: Einstein Ring Visualization
+   =====================================================================
+   Shows the full Einstein ring for beta = 0, and the deformation
+   into two images as the source moves off-axis.
+   ===================================================================== *)
+
+Cell[TextData[{"2. Einstein Ring: Source on the Optical Axis"}], "Section"],
+
+Cell[TextData[{"When the source lies exactly on the optical axis (\[Beta] = 0), the \
+circular symmetry of the point mass lens maps the source into a complete \
+ring of angular radius \!\(\*SubscriptBox[\(\[Theta]\), \(E\)]\). This is \
+the Einstein ring --- the most dramatic manifestation of gravitational \
+lensing. The ring is infinitely magnified in the geometric optics \
+approximation (wave optics gives a finite, though very large, magnification)."}],
+"Text"],
+
+Cell[BoxData[
+    RowBox[{"Module", "[",
+        RowBox[{
+            RowBox[{"{", RowBox[{"nPts", " ", "=", " ", "200"}], "}"}], ",", "\n",
+            RowBox[{"Graphics", "[",
+                RowBox[{
+                    RowBox[{"{", "\n",
+                        (* Filled Einstein ring *)
+                        RowBox[{
+                            RowBox[{"{",
+                                RowBox[{
+                                    RowBox[{"EdgeForm", "[",
+                                        RowBox[{"{",
+                                            RowBox[{"Blue", ",", " ",
+                                                RowBox[{"AbsoluteThickness", "[", "3", "]"}]
+                                            }],
+                                        "}"}],
+                                    "]"}], ",",
+                                    " ", RowBox[{"FaceForm", "[",
+                                        RowBox[{"Opacity", "[", RowBox[{"0.2", ",", " ", "Blue"}], "]"}],
+                                    "]"}], ",",
+                                    " ", RowBox[{"Annulus", "[",
+                                        RowBox[{
+                                            RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}], ",",
+                                            " ", RowBox[{"{", RowBox[{"0.95", ",", " ", "1.05"}], "}"}]
+                                        }],
+                                    "]"}]
+                                }],
+                            "}"}], ",", "\n",
+                            (* Lens at center *)
+                            RowBox[{"{",
+                                RowBox[{"Black", ",", " ",
+                                    RowBox[{"Disk", "[",
+                                        RowBox[{RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}],
+                                        ",", " ", "0.08"}],
+                                    "]"}]
+                                }],
+                            "}"}], ",", "\n",
+                            (* Source behind lens *)
+                            RowBox[{"{",
+                                RowBox[{
+                                    RowBox[{"Darker", "[", "Green", "]"}], ",",
+                                    " ", RowBox[{"AbsoluteThickness", "[", "2", "]"}], ",",
+                                    " ", RowBox[{"Line", "[",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{RowBox[{"-", "0.06"}], ",", " ", RowBox[{"-", "0.06"}]}], "}"}], ",",
+                                                " ", RowBox[{"{", RowBox[{"0.06", ",", " ", "0.06"}], "}"}]
+                                            }],
+                                        "}"}],
+                                    "]"}], ",",
+                                    " ", RowBox[{"Line", "[",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{RowBox[{"-", "0.06"}], ",", " ", "0.06"}], "}"}], ",",
+                                                " ", RowBox[{"{", RowBox[{"0.06", ",", " ", RowBox[{"-", "0.06"}]}], "}"}]
+                                            }],
+                                        "}"}],
+                                    "]"}]
+                                }],
+                            "}"}], ",", "\n",
+                            (* Labels *)
+                            RowBox[{
+                                RowBox[{"Text", "[",
+                                    RowBox[{
+                                        RowBox[{"Style", "[",
+                                            RowBox[{"\"Einstein Ring\\n\\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\)\"",
+                                            ",", " ", "14", ",", " ", "Blue", ",", " ", "Bold"}],
+                                        "]"}], ",",
+                                        " ", RowBox[{"{", RowBox[{"0", ",", " ", "1.35"}], "}"}]
+                                    }],
+                                "]"}]
+                            }], ",", "\n",
+                            RowBox[{
+                                RowBox[{"Text", "[",
+                                    RowBox[{
+                                        RowBox[{"Style", "[",
+                                            RowBox[{"\"Source (\\[Beta] = 0)\"",
+                                            ",", " ", "12", ",", " ",
+                                            RowBox[{"Darker", "[", "Green", "]"}]}],
+                                        "]"}], ",",
+                                        " ", RowBox[{"{", RowBox[{"0", ",", " ", RowBox[{"-", "0.2"}]}], "}"}]
+                                    }],
+                                "]"}]
+                            }], ",", "\n",
+                            RowBox[{
+                                RowBox[{"Text", "[",
+                                    RowBox[{
+                                        RowBox[{"Style", "[",
+                                            RowBox[{"\"Lens\"",
+                                            ",", " ", "12", ",", " ", "Bold"}],
+                                        "]"}], ",",
+                                        " ", RowBox[{"{", RowBox[{"0.2", ",", " ", "0.12"}], "}"}]
+                                    }],
+                                "]"}]
+                            }]
+                        }],
+                    "}"}], ",", "\n",
+                    RowBox[{"PlotRange", " ", "->", " ",
+                        RowBox[{"{",
+                            RowBox[{
+                                RowBox[{"{", RowBox[{RowBox[{"-", "1.8"}], ",", " ", "1.8"}], "}"}], ",",
+                                " ", RowBox[{"{", RowBox[{RowBox[{"-", "1.8"}], ",", " ", "1.8"}], "}"}]
+                            }],
+                        "}"}]
+                    }], ",",
+                    RowBox[{"ImageSize", " ", "->", " ", "450"}], ",",
+                    RowBox[{"Axes", " ", "->", " ", "False"}], ",",
+                    RowBox[{"Frame", " ", "->", " ", "False"}], ",",
+                    RowBox[{"AspectRatio", " ", "->", " ", "1"}]
+                }],
+            "]"}]
+        }],
+    "]"}]
+], "Input"],
+
+
+(* =====================================================================
+   Section 3: Interactive Einstein Radius Calculator
+   =====================================================================
+   Input: lens mass M (in Msun), lens redshift zd, source redshift zs
+   Output: thetaE in arcseconds, RE in kpc
+   Uses approximate angular diameter distances for flat LambdaCDM
+   ===================================================================== *)
+
+Cell[TextData[{"3. Interactive Einstein Radius Calculator"}], "Section"],
+
+Cell[TextData[{"Enter the lens mass (in solar masses), lens redshift, and source \
+redshift. The calculator uses a flat \[CapitalLambda]CDM cosmology with \
+\!\(\*SubscriptBox[\(H\), \(0\)]\) = 70 km/s/Mpc, \
+\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(m\)]\) = 0.3, \
+\!\(\*SubscriptBox[\(\[CapitalOmega]\), \(\[CapitalLambda]\)]\) = 0.7 to \
+compute angular diameter distances numerically."}], "Text"],
+
+Cell[BoxData[
+    RowBox[{"Module", "[",
+        RowBox[{
+            RowBox[{"{",
+                RowBox[{"GN", ",", " ", "clight", ",", " ", "Msun", ",",
+                    " ", "MpcToMeter", ",", " ", "H0", ",",
+                    " ", "OmM", ",", " ", "OmL", ",", " ", "radToAs"}],
+            "}"}], ",", "\n",
+            RowBox[{
+                RowBox[{"GN", " ", "=", " ", RowBox[{"6.674", "*^", RowBox[{"-", "11"}]}]}], ";", "\n",
+                RowBox[{"clight", " ", "=", " ", RowBox[{"2.998", "*^", "8"}]}], ";", "\n",
+                RowBox[{"Msun", " ", "=", " ", RowBox[{"1.989", "*^", "30"}]}], ";", "\n",
+                RowBox[{"MpcToMeter", " ", "=", " ", RowBox[{"3.086", "*^", "22"}]}], ";", "\n",
+                RowBox[{"H0", " ", "=", " ", RowBox[{"70", " ", "*", " ", "1000", " ", "/", " ", "MpcToMeter"}]}], ";", "\n",
+                RowBox[{"OmM", " ", "=", " ", "0.3"}], ";", "\n",
+                RowBox[{"OmL", " ", "=", " ", "0.7"}], ";", "\n",
+                RowBox[{"radToAs", " ", "=", " ", RowBox[{"180", " ", "*", " ", "3600", " ", "/", " ", "Pi"}]}], ";", "\n",
+                (* Comoving distance via numerical integration *)
+                RowBox[{"comovingDist", "[", "z_", "]"}], " ", RowBox[{":=", " ",
+                    RowBox[{RowBox[{"clight", " ", "/", " ", "H0"}], " ", "*", " ",
+                        RowBox[{"NIntegrate", "[",
+                            RowBox[{
+                                RowBox[{"1", "/",
+                                    RowBox[{"Sqrt", "[",
+                                        RowBox[{
+                                            RowBox[{"OmM", " ", "*", " ",
+                                                RowBox[{RowBox[{"(", RowBox[{"1", " ", "+", " ", "zp"}], ")"}],
+                                                "^", "3"}]
+                                            }], " ", "+", " ", "OmL"
+                                        }],
+                                    "]"}]
+                                }], ",",
+                                " ", RowBox[{"{", RowBox[{"zp", ",", " ", "0", ",", " ", "z"}], "}"}]
+                            }],
+                        "]"}]
+                    }]
+                }], ";", "\n",
+                RowBox[{"angDiamDist", "[", "z_", "]"}], " ", RowBox[{":=", " ",
+                    RowBox[{RowBox[{"comovingDist", "[", "z", "]"}], " ", "/", " ",
+                        RowBox[{"(", RowBox[{"1", " ", "+", " ", "z"}], ")"}]
+                    }]
+                }], ";", "\n",
+                RowBox[{"angDiamDistPair", "[",
+                    RowBox[{"z1_", ",", " ", "z2_"}],
+                "]"}], " ", RowBox[{":=", " ",
+                    RowBox[{
+                        RowBox[{"(", RowBox[{
+                            RowBox[{RowBox[{"comovingDist", "[", "z2", "]"}], " ", "-", " ",
+                                RowBox[{"comovingDist", "[", "z1", "]"}]
+                            }]
+                        }], ")"}],
+                        " ", "/", " ",
+                        RowBox[{"(", RowBox[{"1", " ", "+", " ", "z2"}], ")"}]
+                    }]
+                }], ";", "\n\n",
+                RowBox[{"Manipulate", "[",
+                    RowBox[{
+                        RowBox[{"Module", "[",
+                            RowBox[{
+                                RowBox[{"{",
+                                    RowBox[{"Mkg", ",", " ", "Dd", ",", " ", "Ds", ",",
+                                        " ", "Dds", ",", " ", "thetaE", ",",
+                                        " ", "RE", ",", " ", "sigCr"}],
+                                "}"}], ",", "\n",
+                                RowBox[{
+                                    RowBox[{"Mkg", " ", "=", " ",
+                                        RowBox[{"Mlog", " ", "*", " ", "Msun"}]
+                                    }], ";", "\n",
+                                    RowBox[{"Dd", " ", "=", " ",
+                                        RowBox[{"angDiamDist", "[", "zd", "]"}]
+                                    }], ";", "\n",
+                                    RowBox[{"Ds", " ", "=", " ",
+                                        RowBox[{"angDiamDist", "[", "zs", "]"}]
+                                    }], ";", "\n",
+                                    RowBox[{"Dds", " ", "=", " ",
+                                        RowBox[{"angDiamDistPair", "[", RowBox[{"zd", ",", " ", "zs"}], "]"}]
+                                    }], ";", "\n",
+                                    RowBox[{"thetaE", " ", "=", " ",
+                                        RowBox[{"Sqrt", "[",
+                                            RowBox[{
+                                                RowBox[{"4", " ", "GN", " ", "Mkg", " ", "/", " ",
+                                                    RowBox[{"clight", "^", "2"}]
+                                                }], " ", "*", " ",
+                                                RowBox[{"Dds", " ", "/", " ",
+                                                    RowBox[{"(", RowBox[{"Dd", " ", "*", " ", "Ds"}], ")"}]
+                                                }]
+                                            }],
+                                        "]"}]
+                                    }], ";", "\n",
+                                    RowBox[{"RE", " ", "=", " ",
+                                        RowBox[{"Dd", " ", "*", " ", "thetaE"}]
+                                    }], ";", "\n",
+                                    RowBox[{"sigCr", " ", "=", " ",
+                                        RowBox[{
+                                            RowBox[{"clight", "^", "2"}], " ", "/", " ",
+                                            RowBox[{"(", RowBox[{"4", " ", "Pi", " ", "GN"}], ")"}]
+                                        }], " ", "*", " ",
+                                        RowBox[{"Ds", " ", "/", " ",
+                                            RowBox[{"(", RowBox[{"Dd", " ", "*", " ", "Dds"}], ")"}]
+                                        }]
+                                    }], ";", "\n\n",
+                                    RowBox[{"Column", "[",
+                                        RowBox[{"{", "\n",
+                                            RowBox[{
+                                                RowBox[{"Style", "[",
+                                                    RowBox[{"\"Einstein Radius Calculator\"",
+                                                    ",", " ", "16", ",", " ", "Bold"}],
+                                                "]"}], ",", "\n",
+                                                RowBox[{"\"\""}], ",", "\n",
+                                                RowBox[{"StringForm", "[",
+                                                    RowBox[{"\"Lens mass: M = 10^`` \\!\\(\\*SubscriptBox[\\(M\\), \\(\[CircleDot]\\)]\\) = `` kg\"",
+                                                    ",", " ",
+                                                    RowBox[{"NumberForm", "[",
+                                                        RowBox[{RowBox[{"Log10", "[", "Mlog", "]"}], ",",
+                                                            " ", RowBox[{"{", RowBox[{"4", ",", " ", "1"}], "}"}]
+                                                        }],
+                                                    "]"}], ",", " ",
+                                                    RowBox[{"ScientificForm", "[", RowBox[{"Mkg", ",", " ", "3"}], "]"}]
+                                                    }],
+                                                "]"}], ",", "\n",
+                                                RowBox[{"StringForm", "[",
+                                                    RowBox[{"\"\\!\\(\\*SubscriptBox[\\(D\\), \\(d\\)]\\) = `` Mpc\"",
+                                                    ",", " ",
+                                                    RowBox[{"NumberForm", "[",
+                                                        RowBox[{RowBox[{"Dd", " ", "/", " ", "MpcToMeter"}], ",",
+                                                            " ", RowBox[{"{", RowBox[{"5", ",", " ", "1"}], "}"}]
+                                                        }],
+                                                    "]"}]
+                                                    }],
+                                                "]"}], ",", "\n",
+                                                RowBox[{"StringForm", "[",
+                                                    RowBox[{"\"\\!\\(\\*SubscriptBox[\\(D\\), \\(s\\)]\\) = `` Mpc\"",
+                                                    ",", " ",
+                                                    RowBox[{"NumberForm", "[",
+                                                        RowBox[{RowBox[{"Ds", " ", "/", " ", "MpcToMeter"}], ",",
+                                                            " ", RowBox[{"{", RowBox[{"5", ",", " ", "1"}], "}"}]
+                                                        }],
+                                                    "]"}]
+                                                    }],
+                                                "]"}], ",", "\n",
+                                                RowBox[{"StringForm", "[",
+                                                    RowBox[{"\"\\!\\(\\*SubscriptBox[\\(D\\), \\(ds\\)]\\) = `` Mpc\"",
+                                                    ",", " ",
+                                                    RowBox[{"NumberForm", "[",
+                                                        RowBox[{RowBox[{"Dds", " ", "/", " ", "MpcToMeter"}], ",",
+                                                            " ", RowBox[{"{", RowBox[{"5", ",", " ", "1"}], "}"}]
+                                                        }],
+                                                    "]"}]
+                                                    }],
+                                                "]"}], ",", "\n",
+                                                RowBox[{"\"\""}], ",", "\n",
+                                                RowBox[{"Style", "[",
+                                                    RowBox[{
+                                                        RowBox[{"StringForm", "[",
+                                                            RowBox[{"\"\\!\\(\\*SubscriptBox[\\(\[Theta]\\), \\(E\\)]\\) = `` arcsec\"",
+                                                            ",", " ",
+                                                            RowBox[{"NumberForm", "[",
+                                                                RowBox[{RowBox[{"thetaE", " ", "*", " ", "radToAs"}], ",",
+                                                                    " ", RowBox[{"{", RowBox[{"5", ",", " ", "3"}], "}"}]
+                                                                }],
+                                                            "]"}]
+                                                            }],
+                                                        "]"}],
+                                                    ",", " ", "14", ",", " ", "Bold", ",", " ", "Blue"}],
+                                                "]"}], ",", "\n",
+                                                RowBox[{"StringForm", "[",
+                                                    RowBox[{"\"\\!\\(\\*SubscriptBox[\\(R\\), \\(E\\)]\\) = `` kpc\"",
+                                                    ",", " ",
+                                                    RowBox[{"NumberForm", "[",
+                                                        RowBox[{RowBox[{"RE", " ", "/", " ",
+                                                            RowBox[{"(", RowBox[{"3.086", "*^", "19"}], ")"}]
+                                                        }], ",",
+                                                            " ", RowBox[{"{", RowBox[{"5", ",", " ", "2"}], "}"}]
+                                                        }],
+                                                    "]"}]
+                                                    }],
+                                                "]"}], ",", "\n",
+                                                RowBox[{"StringForm", "[",
+                                                    RowBox[{"\"\\!\\(\\*SubscriptBox[\\(\[CapitalSigma]\\), \\(cr\\)]\\) = `` g/cm\\!\\(\\*SuperscriptBox[\\(\\), \\(2\\)]\\)\"",
+                                                    ",", " ",
+                                                    RowBox[{"NumberForm", "[",
+                                                        RowBox[{RowBox[{"sigCr", " ", "*", " ", "10"}], ",",
+                                                            " ", RowBox[{"{", RowBox[{"4", ",", " ", "3"}], "}"}]
+                                                        }],
+                                                    "]"}]
+                                                    }],
+                                                "]"}]
+                                            }],
+                                        "}"}], ",", "\n",
+                                        RowBox[{"Spacings", " ", "->", " ", "1"}]
+                                    "]"}]
+                                }]
+                            }],
+                        "]"}], ",", "\n",
+                        RowBox[{"{",
+                            RowBox[{
+                                RowBox[{"{",
+                                    RowBox[{"Mlog", ",", " ",
+                                        RowBox[{"10", "^", "12"}], ",",
+                                        " ", "\"M / \\!\\(\\*SubscriptBox[\\(M\\), \\(\[CircleDot]\\)]\\)\""}],
+                                "}"}], ",",
+                                " ", RowBox[{"10", "^", "6"}], ",",
+                                " ", RowBox[{"10", "^", "16"}], ",",
+                                " ", RowBox[{"ControlType", " ", "->", " ",
+                                    RowBox[{"Slider", "[",
+                                        RowBox[{
+                                            RowBox[{"Log10", "[", "#", "]"}], " ", "&"}],
+                                    "]"}]
+                                }]
+                            }],
+                        "}"}], ",", "\n",
+                        RowBox[{"{",
+                            RowBox[{
+                                RowBox[{"{", RowBox[{"zd", ",", " ", "0.3", ",",
+                                    " ", "\"\\!\\(\\*SubscriptBox[\\(z\\), \\(d\\)]\\) (lens redshift)\""}],
+                                "}"}], ",",
+                                " ", "0.01", ",", " ", "2", ",", " ", "0.01"
+                            }],
+                        "}"}], ",", "\n",
+                        RowBox[{"{",
+                            RowBox[{
+                                RowBox[{"{", RowBox[{"zs", ",", " ", "1.0", ",",
+                                    " ", "\"\\!\\(\\*SubscriptBox[\\(z\\), \\(s\\)]\\) (source redshift)\""}],
+                                "}"}], ",",
+                                " ", "0.02", ",", " ", "5", ",", " ", "0.01"
+                            }],
+                        "}"}]
+                    }],
+                "]"}]
+            }]
+        }],
+    "]"}]
+], "Input"]
+
+}, WindowSize -> {900, 750}, WindowTitle -> "Module 4: Einstein Ring"]

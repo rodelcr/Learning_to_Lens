@@ -1,17 +1,1034 @@
 % =============================================================================
 % Module 3: Cosmological Distances
 % =============================================================================
-% Sources: Congdon & Keeton Ch. 3.5, Carroll, Narayan & Bartelmann
+% Sources: Carroll Ch. 8 (FRW cosmology, Friedmann equations);
+%          Congdon & Keeton Ch. 3.5 (cosmological distances for lensing);
+%          Narayan & Bartelmann Sec. 2.2;
+%          Weinberg, Cosmology (2008) Ch. 1
 % Mathematica: ../Mathematica/03_Cosmological_Distances/
 % =============================================================================
 
 \chapter{Cosmological Distances}
 \label{ch:cosmological_distances}
 
-% TODO: Module content to be written
-% Topics:
-% - FRW metric and expanding universe
-% - Comoving and proper distances
-% - Angular diameter distance
-% - Luminosity distance
-% - Distance ratios in lensing geometry
+\begin{quote}
+\textit{Not only does God play dice, but He sometimes confuses us by
+throwing them where they can't be seen.}
+\hfill --- Stephen Hawking
+\end{quote}
+
+\noindent
+Gravitational lensing is inherently a cosmological phenomenon: the lens
+and source are typically at redshifts $z \sim 0.1$--$3$, separated by
+distances of order gigaparsecs.  To connect the physical deflection angle
+$\alphahat = 4\Gnewton M / (\speedoflight^2 b)$ derived in Modules~1e
+and~2 to observable image positions on the sky, we need a precise
+definition of ``distance'' in an expanding universe.  Unlike in Euclidean
+space, there is no single notion of distance in cosmology: the
+\textit{angular diameter distance} (relevant for angles), the
+\textit{luminosity distance} (relevant for fluxes), and the
+\textit{comoving distance} (relevant for volumes) are all distinct.
+
+This module develops the full framework of cosmological distances from
+first principles.  In Part~A we derive the Friedmann--Lema\^{i}tre--Robertson--Walker (FLRW)
+metric from the cosmological principle, compute the Christoffel symbols
+and curvature tensors for this metric using the tools from Module~1b,
+and plug into Einstein's equations with a perfect-fluid
+stress-energy tensor to obtain the \textbf{Friedmann equations} ---
+the dynamical equations governing the expansion of the universe.  In
+Part~B we define the various distance measures, derive the key distance
+ratios that enter the lens equation, and highlight the counterintuitive
+\textit{non-monotonicity} of the angular diameter distance, which turns
+over at $z \sim 1.6$ for the concordance cosmology.
+
+\medskip
+\noindent
+\textbf{Companion Mathematica files:}
+\begin{itemize}[nosep]
+    \item \mathlink{03_Cosmological_Distances/friedmann_equations.wl}{friedmann\_equations.wl}
+          --- symbolic computation of Christoffel symbols and curvature
+          tensors for the FRW metric, derivation of the Friedmann equations,
+          scale factor solutions, cosmological distance calculations,
+          and figure generation
+    \item \mathlink{03_Cosmological_Distances/cosmological_distances.nb}{cosmological\_distances.nb}
+          --- interactive notebook with sliders for $\Omegam$,
+          $\OmegaL$, $\Hubble$ showing how distance--redshift relations
+          change; lensing geometry calculator
+\end{itemize}
+
+
+% #########################################################################
+% PART A: THE FRW METRIC AND FRIEDMANN EQUATIONS
+% #########################################################################
+
+\section*{Part A: The FRW Metric and Friedmann Equations}
+\addcontentsline{toc}{section}{Part A: The FRW Metric and Friedmann Equations}
+
+% =====================================================================
+\section{The Cosmological Principle}
+\label{sec:cosmological_principle}
+
+Modern cosmology rests on the \textbf{cosmological principle}: on
+sufficiently large scales ($\gtrsim 100$~Mpc), the universe is
+\textit{spatially homogeneous} (the same at every point) and
+\textit{spatially isotropic} (the same in every direction).  These two
+symmetry assumptions are supported by:
+\begin{itemize}
+    \item The near-perfect isotropy of the cosmic microwave background
+          (CMB), which is uniform to one part in $10^5$ across the sky.
+    \item The large-scale distribution of galaxies, which becomes
+          statistically uniform on scales $\gtrsim 100$~Mpc, as shown
+          by surveys such as SDSS, 2dFGRS, and DESI.
+\end{itemize}
+
+\begin{remark}
+Homogeneity and isotropy constrain only the \textit{spatial} geometry of
+the universe at each instant.  The universe is manifestly \textit{not}
+homogeneous in time: it was denser and hotter in the past.  The metric
+is therefore allowed to have time-dependent coefficients (the scale
+factor), and it is this time dependence that encodes the expansion
+history.
+\end{remark}
+
+The mathematical consequence of the cosmological principle is powerful:
+the spatial part of the metric must be a maximally symmetric
+3-dimensional Riemannian manifold.  By a classic theorem in differential
+geometry (see Carroll Sec.~8.1), maximally symmetric $n$-dimensional
+spaces have $n(n+1)/2$ Killing vectors, and there are exactly three
+possibilities for $n = 3$: positive curvature (the 3-sphere $S^3$),
+zero curvature (flat $\mathbb{R}^3$), or negative curvature (the
+3-hyperboloid $H^3$).  These are characterized by a single parameter,
+the \textbf{spatial curvature constant} $k$:
+\begin{equation}
+    k = \begin{cases}
+    +1 & \text{positive curvature (closed, finite volume)} \\
+    \phantom{+}0 & \text{zero curvature (flat, infinite volume)} \\
+    -1 & \text{negative curvature (open, infinite volume)}
+    \end{cases}
+    \label{eq:k_values}
+\end{equation}
+
+
+% =====================================================================
+\section{The Robertson--Walker Metric}
+\label{sec:rw_metric}
+
+Combining the cosmological principle with the requirement that spacetime
+be described by a Lorentzian 4-metric, the most general metric takes the
+\textbf{Robertson--Walker (RW)} form (Carroll eq.~8.2; Congdon \& Keeton
+eq.~3.113):
+\begin{equation}
+    \boxed{
+    ds^2 = -\speedoflight^2\, dt^2
+    + a^2(t) \left[\frac{dr^2}{1 - kr^2}
+    + r^2 \bigl(d\theta^2 + \sin^2\!\theta\, d\phi^2\bigr)\right]
+    }
+    \label{eq:rw_metric}
+\end{equation}
+where:
+\begin{itemize}
+    \item $t$ is \textbf{cosmic time} --- the proper time measured by
+          comoving observers (those at rest with respect to the Hubble
+          flow).
+    \item $a(t)$ is the \textbf{scale factor}, a dimensionless function
+          of time that encodes how distances between comoving observers
+          change.  We adopt the convention $a(t_0) = 1$ at the present
+          epoch.
+    \item $r$, $\theta$, $\phi$ are \textbf{comoving coordinates} ---
+          the coordinate labels assigned to comoving observers do not
+          change as the universe expands.  The \textit{physical} distance
+          between two comoving observers separated by coordinate distance
+          $\Delta r$ is $a(t)\,\Delta r$, which grows with time if the
+          universe is expanding ($\dot{a} > 0$).
+    \item $k = -1, 0, +1$ is the spatial curvature parameter.
+\end{itemize}
+
+\begin{remark}
+The metric~\eqref{eq:rw_metric} is purely \textit{kinematical}: it is
+the most general metric consistent with homogeneity and isotropy, but
+it tells us nothing about how $a(t)$ evolves.  The dynamics of $a(t)$
+come from plugging this metric into Einstein's field equations, which we
+do in the next sections to derive the Friedmann equations.
+\end{remark}
+
+It is often useful to write the spatial part of the metric using the
+\textbf{comoving distance} $\chi$ defined by
+\begin{equation}
+    d\chi = \frac{dr}{\sqrt{1 - kr^2}} \,,
+    \label{eq:comoving_distance_def}
+\end{equation}
+so that
+\begin{equation}
+    ds^2 = -\speedoflight^2\, dt^2
+    + a^2(t)\left[d\chi^2 + S_k^2(\chi)\, d\Omega^2\right] ,
+    \label{eq:rw_metric_chi}
+\end{equation}
+where $d\Omega^2 = d\theta^2 + \sin^2\!\theta\, d\phi^2$ and the
+\textbf{transverse comoving distance} $S_k(\chi)$ is
+\begin{equation}
+    S_k(\chi) = \begin{cases}
+    \sin\chi & k = +1 \\
+    \chi     & k = 0 \\
+    \sinh\chi & k = -1
+    \end{cases}
+    \label{eq:Sk}
+\end{equation}
+
+
+% =====================================================================
+\section{Christoffel Symbols for the FRW Metric}
+\label{sec:frw_christoffel}
+
+To derive the Friedmann equations, we need the Christoffel symbols,
+Ricci tensor, and Ricci scalar for the RW metric~\eqref{eq:rw_metric}.
+We use the general functions developed in Module~1b
+(\mathlink{01b_Differential_Geometry/christoffel_symbols.wl}{christoffel\_symbols.wl})
+and verified symbolically in
+\mathlink{03_Cosmological_Distances/friedmann_equations.wl}{friedmann\_equations.wl}.
+
+The coordinates are $x^\mu = (t, r, \theta, \phi)$, and the nonvanishing
+metric components are (reading off from eq.~\eqref{eq:rw_metric}):
+\begin{align}
+    g_{00} &= -\speedoflight^2 \,, &
+    g_{11} &= \frac{a^2(t)}{1 - kr^2} \,, \nonumber \\
+    g_{22} &= a^2(t)\, r^2 \,, &
+    g_{33} &= a^2(t)\, r^2 \sin^2\!\theta \,.
+    \label{eq:frw_metric_components}
+\end{align}
+
+Since this is a diagonal metric, we use the formulas from Module~1b
+(Section~4): for a diagonal metric with components $g_{aa}$ (no sum),
+\begin{align}
+    \christoffel{a}{b}{b} &= -\frac{1}{2g_{aa}}\, \partial_a g_{bb}
+    \qquad (a \neq b) \,, \nonumber \\
+    \christoffel{a}{a}{b} &= \frac{1}{2g_{aa}}\, \partial_b g_{aa}
+    \qquad (\text{no sum on } a) \,.
+    \label{eq:diagonal_christoffel}
+\end{align}
+
+The \textbf{nonvanishing Christoffel symbols} of the RW metric are
+(Carroll eq.~8.5; verified in
+\texttt{friedmann\_equations.wl}):
+
+\medskip
+\noindent\textbf{Time-space mixed:}
+\begin{equation}
+    \christoffel{0}{1}{1} = \frac{a\dot{a}}{\speedoflight^2(1-kr^2)} \,,
+    \quad
+    \christoffel{0}{2}{2} = \frac{a\dot{a}\, r^2}{\speedoflight^2} \,,
+    \quad
+    \christoffel{0}{3}{3} = \frac{a\dot{a}\, r^2 \sin^2\!\theta}{\speedoflight^2}
+    \label{eq:christoffel_0ij}
+\end{equation}
+and their transposes $\christoffel{i}{0}{i} = \dot{a}/(a\speedoflight^2) \cdot \speedoflight^2 = \dot{a}/a$:
+\begin{equation}
+    \christoffel{1}{0}{1} = \christoffel{2}{0}{2}
+    = \christoffel{3}{0}{3} = \frac{\dot{a}}{a}
+    \label{eq:christoffel_i0j}
+\end{equation}
+where the dot denotes $d/dt$.
+
+\medskip
+\noindent\textbf{Purely spatial:}
+\begin{align}
+    \christoffel{1}{1}{1} &= \frac{kr}{1-kr^2} \,, &
+    \christoffel{1}{2}{2} &= -r(1-kr^2) \,, \nonumber \\
+    \christoffel{1}{3}{3} &= -r(1-kr^2)\sin^2\!\theta \,, &
+    \christoffel{2}{1}{2} &= \frac{1}{r} \,, \nonumber \\
+    \christoffel{2}{3}{3} &= -\sin\theta\cos\theta \,, &
+    \christoffel{3}{1}{3} &= \frac{1}{r} \,, \nonumber \\
+    \christoffel{3}{2}{3} &= \frac{\cos\theta}{\sin\theta} \,.
+    \label{eq:christoffel_spatial}
+\end{align}
+
+\begin{exercise}
+\label{ex:frw_christoffel}
+Compute all nonvanishing Christoffel symbols of the RW metric by hand
+using the diagonal metric formulas~\eqref{eq:diagonal_christoffel}.
+Verify your results with
+\mathlink{03_Cosmological_Distances/friedmann_equations.wl}{friedmann\_equations.wl},
+which uses the general \texttt{computeChristoffel} function from
+Module~1b.
+\end{exercise}
+
+
+% =====================================================================
+\section{Ricci Tensor and Ricci Scalar}
+\label{sec:frw_ricci}
+
+From the Christoffel symbols, we compute the Riemann tensor
+$\riemann{\rho}{\sigma}{\mu}{\nu}$, contract to obtain the Ricci tensor
+$R_{\mu\nu} = R^\lambda_{\ \mu\lambda\nu}$, and then contract again
+with the inverse metric to get the Ricci scalar $\ricciS = g^{\mu\nu}
+R_{\mu\nu}$.  The computation is lengthy but straightforward; we quote
+the results here and verify them symbolically in
+\texttt{friedmann\_equations.wl}.
+
+The nonvanishing independent components of the \textbf{Ricci tensor} are
+(Carroll eq.~8.6):
+\begin{align}
+    R_{00} &= -\frac{3\ddot{a}}{\speedoflight^2\, a} \,,
+    \label{eq:R00} \\[6pt]
+    R_{11} &= \frac{1}{\speedoflight^2(1-kr^2)}
+    \left(a\ddot{a} + 2\dot{a}^2 + 2k\speedoflight^2\right) ,
+    \label{eq:R11} \\[6pt]
+    R_{22} &= \frac{r^2}{\speedoflight^2}
+    \left(a\ddot{a} + 2\dot{a}^2 + 2k\speedoflight^2\right) ,
+    \label{eq:R22} \\[6pt]
+    R_{33} &= \frac{r^2\sin^2\!\theta}{\speedoflight^2}
+    \left(a\ddot{a} + 2\dot{a}^2 + 2k\speedoflight^2\right) .
+    \label{eq:R33}
+\end{align}
+Notice that $R_{11}$, $R_{22}$, and $R_{33}$ all share the same
+combination $a\ddot{a} + 2\dot{a}^2 + 2k\speedoflight^2$, which is a
+consequence of spatial isotropy.  We can write the spatial components
+compactly as:
+\begin{equation}
+    R_{ij} = \frac{g_{ij}}{\speedoflight^2\, a^2}
+    \left(a\ddot{a} + 2\dot{a}^2 + 2k\speedoflight^2\right) .
+    \label{eq:Rij_compact}
+\end{equation}
+
+The \textbf{Ricci scalar} is:
+\begin{equation}
+    \boxed{
+    \ricciS = g^{\mu\nu} R_{\mu\nu}
+    = \frac{6}{\speedoflight^2}
+    \left(\frac{\ddot{a}}{a} + \frac{\dot{a}^2}{a^2}
+    + \frac{k\speedoflight^2}{a^2}\right)
+    }
+    \label{eq:ricci_scalar}
+\end{equation}
+
+
+% =====================================================================
+\section{Einstein's Equations with a Perfect Fluid}
+\label{sec:einstein_perfect_fluid}
+
+Einstein's field equations relate the geometry of spacetime (the
+Einstein tensor $G_{\mu\nu}$) to the matter content (the stress-energy
+tensor $T_{\mu\nu}$):
+\begin{equation}
+    G_{\mu\nu} + \Lambda g_{\mu\nu}
+    = R_{\mu\nu} - \half \ricciS\, g_{\mu\nu} + \Lambda g_{\mu\nu}
+    = \frac{8\pi\Gnewton}{\speedoflight^4}\, T_{\mu\nu}
+    \label{eq:einstein_field}
+\end{equation}
+where $\Lambda$ is the \textbf{cosmological constant}.
+
+For a \textbf{perfect fluid} at rest in the comoving frame (the natural
+choice for a homogeneous, isotropic universe), the stress-energy tensor
+is (Carroll eq.~8.8):
+\begin{equation}
+    T^{\mu\nu} = \left(\rho + \frac{p}{\speedoflight^2}\right)
+    U^\mu U^\nu + p\, g^{\mu\nu}
+    \label{eq:perfect_fluid}
+\end{equation}
+where $\rho$ is the \textbf{mass-energy density} (energy density
+$/\speedoflight^2$), $p$ is the \textbf{pressure}, and
+$U^\mu = (\speedoflight, 0, 0, 0)$ is the four-velocity of comoving
+observers.  The components in the comoving frame are:
+\begin{equation}
+    T^{00} = \rho\speedoflight^2 \,, \qquad
+    T^{ij} = p\, g^{ij} \,, \qquad
+    T^{0i} = 0 \,.
+    \label{eq:Tmunu_components}
+\end{equation}
+With indices lowered: $T_{00} = \rho\speedoflight^4$ and
+$T_{ij} = p\, g_{ij}$.
+
+\begin{remark}
+In cosmology, the ``fluid'' is not a literal gas: $\rho$ and $p$
+represent the averaged energy density and pressure of \textit{all}
+matter and radiation in the universe, smoothed over scales $\gg 100$~Mpc.
+The cosmological principle guarantees that $\rho$ and $p$ depend only
+on time: $\rho = \rho(t)$, $p = p(t)$.
+\end{remark}
+
+
+% =====================================================================
+\section{The Friedmann Equations}
+\label{sec:friedmann_equations}
+
+We now substitute the Ricci tensor~\eqref{eq:R00}--\eqref{eq:Rij_compact}
+and the Ricci scalar~\eqref{eq:ricci_scalar} into Einstein's
+equations~\eqref{eq:einstein_field} with the perfect-fluid
+stress-energy tensor~\eqref{eq:Tmunu_components}.
+
+\subsection{The First Friedmann Equation}
+\label{sec:friedmann_1}
+
+The $(0,0)$ component of Einstein's equations gives:
+\begin{equation}
+    R_{00} - \half \ricciS\, g_{00} + \Lambda g_{00}
+    = \frac{8\pi\Gnewton}{\speedoflight^4}\, T_{00} \,.
+    \label{eq:einstein_00}
+\end{equation}
+Substituting $R_{00} = -3\ddot{a}/(\speedoflight^2 a)$,
+$g_{00} = -\speedoflight^2$,
+$\ricciS = 6(\ddot{a}/a + \dot{a}^2/a^2 + k\speedoflight^2/a^2) / \speedoflight^2$,
+and $T_{00} = \rho\speedoflight^4$:
+
+\noindent Left side:
+\begin{align}
+    R_{00} - \half \ricciS\, g_{00} + \Lambda g_{00}
+    &= -\frac{3\ddot{a}}{\speedoflight^2 a}
+    + \frac{3}{\speedoflight^2}\left(\frac{\ddot{a}}{a}
+    + \frac{\dot{a}^2}{a^2} + \frac{k\speedoflight^2}{a^2}\right)
+    - \Lambda\speedoflight^2 \nonumber \\
+    &= \frac{3}{\speedoflight^2}\left(\frac{\dot{a}^2}{a^2}
+    + \frac{k\speedoflight^2}{a^2}\right) - \Lambda\speedoflight^2 \,.
+    \label{eq:lhs_00}
+\end{align}
+Right side:
+\begin{equation}
+    \frac{8\pi\Gnewton}{\speedoflight^4}\, \rho\speedoflight^4
+    = 8\pi\Gnewton\rho \,.
+    \label{eq:rhs_00}
+\end{equation}
+Setting these equal and rearranging:
+\begin{equation}
+    \boxed{
+    \left(\frac{\dot{a}}{a}\right)^{\!2}
+    = \frac{8\pi\Gnewton\rho}{3}
+    - \frac{k\speedoflight^2}{a^2}
+    + \frac{\Lambda\speedoflight^2}{3}
+    }
+    \label{eq:friedmann_1}
+\end{equation}
+This is the \textbf{first Friedmann equation}.  It relates the expansion
+rate $\dot{a}/a$ to the energy density~$\rho$, spatial curvature~$k$,
+and cosmological constant~$\Lambda$.
+
+\subsection{The Second Friedmann Equation}
+\label{sec:friedmann_2}
+
+The spatial $(i,j)$ components of Einstein's equations, using the
+compact form~\eqref{eq:Rij_compact} and $T_{ij} = p\, g_{ij}$, give
+(after dividing both sides by $g_{ij}/(\speedoflight^2 a^2)$):
+\begin{equation}
+    \boxed{
+    \frac{\ddot{a}}{a}
+    = -\frac{4\pi\Gnewton}{3}
+    \left(\rho + \frac{3p}{\speedoflight^2}\right)
+    + \frac{\Lambda\speedoflight^2}{3}
+    }
+    \label{eq:friedmann_2}
+\end{equation}
+This is the \textbf{second Friedmann equation} (or \textbf{acceleration
+equation}).  It shows that matter and radiation ($\rho > 0$, $p \geq 0$)
+cause the expansion to \textit{decelerate} ($\ddot{a} < 0$), while a
+positive cosmological constant $\Lambda > 0$ causes \textit{acceleration}
+($\ddot{a} > 0$).
+
+\begin{remark}
+The combination $\rho + 3p/\speedoflight^2$ in the second Friedmann
+equation is the key to understanding cosmic acceleration.  Pressure
+contributes to gravity in GR (unlike in Newtonian gravity), and the
+factor of~3 comes from the three spatial dimensions.  For a cosmological
+constant (with equation of state $p = -\rho\speedoflight^2$), this
+combination is $\rho + 3(-\rho) = -2\rho < 0$, leading to acceleration.
+\end{remark}
+
+\subsection{The Fluid Conservation Equation}
+\label{sec:fluid_conservation}
+
+The Friedmann equations~\eqref{eq:friedmann_1} and~\eqref{eq:friedmann_2}
+are not independent: differentiating the first and substituting the
+second yields the \textbf{fluid conservation equation} (equivalently,
+this follows from $\nabla_\mu T^{\mu\nu} = 0$):
+\begin{equation}
+    \boxed{
+    \dot{\rho} + 3\frac{\dot{a}}{a}
+    \left(\rho + \frac{p}{\speedoflight^2}\right) = 0
+    }
+    \label{eq:fluid_conservation}
+\end{equation}
+This is the relativistic analogue of the first law of thermodynamics:
+the energy density decreases as the universe expands, with the rate
+depending on both $\rho$ and $p$.  The $3\dot{a}/a$ factor reflects
+the three-dimensional expansion.
+
+\begin{exercise}
+\label{ex:derive_friedmann}
+Derive the Friedmann equations~\eqref{eq:friedmann_1}
+and~\eqref{eq:friedmann_2} from the Einstein
+equations~\eqref{eq:einstein_field} with the FRW Ricci
+tensor and the perfect-fluid stress-energy tensor.  Verify each step
+with
+\mathlink{03_Cosmological_Distances/friedmann_equations.wl}{friedmann\_equations.wl}.
+\end{exercise}
+
+
+% =====================================================================
+\section{The Hubble Parameter and Density Parameters}
+\label{sec:hubble_density}
+
+\subsection{The Hubble Parameter}
+
+The \textbf{Hubble parameter} is defined as the fractional expansion
+rate:
+\begin{equation}
+    H(t) \equiv \frac{\dot{a}(t)}{a(t)} \,.
+    \label{eq:hubble_parameter}
+\end{equation}
+Its present-day value is the \textbf{Hubble constant}:
+\begin{equation}
+    \Hubble \equiv H(t_0) \approx 70~\text{km\,s}^{-1}\,\text{Mpc}^{-1} \,.
+    \label{eq:hubble_constant}
+\end{equation}
+The associated timescale is $t_H \equiv 1/\Hubble \approx 14$~Gyr, and
+the associated length scale is the \textbf{Hubble distance}:
+\begin{equation}
+    d_H \equiv \frac{\speedoflight}{\Hubble}
+    \approx 4.28~\text{Gpc}
+    \approx 1.32 \times 10^{26}~\text{m} \,.
+    \label{eq:hubble_distance}
+\end{equation}
+
+\subsection{Density Parameters}
+
+The first Friedmann equation~\eqref{eq:friedmann_1} can be rewritten in
+terms of dimensionless \textbf{density parameters}.  Define the
+\textbf{critical density} as the density required for a spatially flat
+($k = 0$), $\Lambda = 0$ universe:
+\begin{equation}
+    \rho_{\mathrm{cr}}(t) \equiv \frac{3H^2(t)}{8\pi\Gnewton}
+    \,, \qquad
+    \rho_{\mathrm{cr},0} = \frac{3\Hubble^2}{8\pi\Gnewton}
+    \approx 9.5 \times 10^{-27}~\text{kg\,m}^{-3} \,.
+    \label{eq:critical_density}
+\end{equation}
+
+The density parameters are:
+\begin{align}
+    \Omegam &\equiv \frac{\rho_{m,0}}{\rho_{\mathrm{cr},0}} \,,
+    \qquad &\text{(matter: non-relativistic)} \nonumber \\
+    \Omega_r &\equiv \frac{\rho_{r,0}}{\rho_{\mathrm{cr},0}} \,,
+    \qquad &\text{(radiation: relativistic)} \nonumber \\
+    \OmegaL &\equiv \frac{\Lambda\speedoflight^2}{3\Hubble^2} \,,
+    \qquad &\text{(dark energy / cosmological constant)} \nonumber \\
+    \Omega_k &\equiv -\frac{k\speedoflight^2}{\Hubble^2} \,.
+    \qquad &\text{(spatial curvature)}
+    \label{eq:density_parameters}
+\end{align}
+With these definitions, the first Friedmann equation at the present
+epoch reduces to the elegant \textbf{cosmic sum rule}:
+\begin{equation}
+    \boxed{
+    \Omegam + \Omega_r + \OmegaL + \Omega_k = 1
+    }
+    \label{eq:cosmic_sum}
+\end{equation}
+Current observations (Planck 2018) give
+$\Omegam \approx 0.31$, $\OmegaL \approx 0.69$,
+$\Omega_r \approx 9 \times 10^{-5}$, and $|\Omega_k| < 0.01$,
+consistent with a spatially flat ($k = 0$) universe.  For most
+lensing calculations, we work with the \textbf{concordance
+cosmology}: $\Omegam = 0.3$, $\OmegaL = 0.7$, $\Hubble = 70$~km\,s$^{-1}$\,Mpc$^{-1}$.
+
+
+% =====================================================================
+\section{Equations of State and Scale Factor Solutions}
+\label{sec:equations_of_state}
+
+To solve the Friedmann equations, we need a relationship between $p$ and
+$\rho$: the \textbf{equation of state}
+\begin{equation}
+    p = w\rho\speedoflight^2 \,,
+    \label{eq:eos}
+\end{equation}
+where $w$ is a dimensionless constant for each component.
+
+\subsection{Matter, Radiation, and Dark Energy}
+
+The three primary components of the universe are:
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Component} & $w$ & $\rho \propto$ & $a(t) \propto$ \\
+\midrule
+Non-relativistic matter (dust) & $0$ & $a^{-3}$ & $t^{2/3}$ \\
+Radiation (photons, neutrinos) & $1/3$ & $a^{-4}$ & $t^{1/2}$ \\
+Cosmological constant ($\Lambda$) & $-1$ & $a^0$ (constant) & $e^{Ht}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+These follow from the fluid conservation
+equation~\eqref{eq:fluid_conservation}.  With $p = w\rho\speedoflight^2$:
+\begin{equation}
+    \dot{\rho} + 3\frac{\dot{a}}{a}(1 + w)\rho = 0
+    \qquad \Longrightarrow \qquad
+    \rho \propto a^{-3(1+w)} \,.
+    \label{eq:rho_scaling}
+\end{equation}
+For matter ($w = 0$): $\rho_m \propto a^{-3}$ (dilution by volume
+expansion).  For radiation ($w = 1/3$): $\rho_r \propto a^{-4}$ (volume
+dilution plus cosmological redshift of each photon's energy).  For
+$\Lambda$ ($w = -1$): $\rho_\Lambda = \text{constant}$.
+
+\subsection{Scale Factor Solutions}
+
+In a single-component universe with $k = 0$ (flat) and $\Lambda = 0$:
+
+\paragraph{Matter-dominated:}
+$H^2 = H_0^2\, \Omegam\, a^{-3}$ gives
+\begin{equation}
+    a(t) = \left(\frac{3}{2}\Hubble\sqrt{\Omegam}\, t\right)^{2/3}
+    \propto t^{2/3} \,.
+    \label{eq:a_matter}
+\end{equation}
+
+\paragraph{Radiation-dominated:}
+$H^2 = H_0^2\, \Omega_r\, a^{-4}$ gives
+\begin{equation}
+    a(t) = \left(2\Hubble\sqrt{\Omega_r}\, t\right)^{1/2}
+    \propto t^{1/2} \,.
+    \label{eq:a_radiation}
+\end{equation}
+
+\paragraph{$\Lambda$-dominated:}
+$H^2 = H_0^2\, \OmegaL$ (constant) gives de~Sitter expansion:
+\begin{equation}
+    a(t) \propto e^{H_\Lambda t} \,,
+    \qquad H_\Lambda = \Hubble\sqrt{\OmegaL} \,.
+    \label{eq:a_lambda}
+\end{equation}
+
+
+% =====================================================================
+\section{Redshift and the Scale Factor}
+\label{sec:redshift}
+
+As light propagates through the expanding universe, its wavelength
+stretches with the scale factor.  A photon emitted at time $t_{\mathrm{em}}$
+with wavelength $\lambda_{\mathrm{em}}$ is observed at $t_0$ with
+wavelength $\lambda_{\mathrm{obs}} = \lambda_{\mathrm{em}} \cdot
+a(t_0) / a(t_{\mathrm{em}})$.  The \textbf{cosmological redshift} is
+therefore:
+\begin{equation}
+    \boxed{
+    1 + z = \frac{a(t_0)}{a(t_{\mathrm{em}})} = \frac{1}{a(t_{\mathrm{em}})}
+    }
+    \label{eq:redshift_scale_factor}
+\end{equation}
+where we used $a(t_0) = 1$.  High-redshift objects emitted their light
+when the universe was smaller: at $z = 1$, $a = 1/2$; at $z = 2$,
+$a = 1/3$; and so on.
+
+Using eq.~\eqref{eq:redshift_scale_factor}, the Friedmann equation can
+be rewritten entirely in terms of redshift.  The Hubble parameter as a
+function of redshift is (Congdon \& Keeton eq.~3.123):
+\begin{equation}
+    \boxed{
+    H(z) = \Hubble\sqrt{\Omegam(1+z)^3
+    + \Omega_r(1+z)^4 + \OmegaL + \Omega_k(1+z)^2}
+    }
+    \label{eq:Hz}
+\end{equation}
+For the concordance cosmology ($\Omegam = 0.3$, $\OmegaL = 0.7$,
+$\Omega_r \approx 0$, $\Omega_k = 0$), this simplifies to:
+\begin{equation}
+    H(z) = \Hubble\sqrt{0.3\,(1+z)^3 + 0.7} \,.
+    \label{eq:Hz_concordance}
+\end{equation}
+
+
+% #########################################################################
+% PART B: DISTANCE MEASURES FOR LENSING
+% #########################################################################
+
+\section*{Part B: Distance Measures for Lensing}
+\addcontentsline{toc}{section}{Part B: Distance Measures for Lensing}
+
+% =====================================================================
+\section{Comoving Distance}
+\label{sec:comoving_distance}
+
+A photon traveling radially ($d\theta = d\phi = 0$) through the RW
+metric satisfies $ds^2 = 0$, which gives
+$\speedoflight\, dt = -a(t)\, d\chi$ (choosing the sign for incoming
+photons).  The \textbf{comoving distance} to an object at redshift~$z$
+is therefore:
+\begin{equation}
+    \chi(z) = \int_0^z \frac{\speedoflight\, dz'}{H(z')} \,.
+    \label{eq:comoving_distance}
+\end{equation}
+This integral must in general be evaluated numerically, using
+$H(z)$ from eq.~\eqref{eq:Hz}.  The comoving distance is the
+``distance at the present epoch'' --- the distance that would be
+measured by a chain of rulers laid end-to-end at time $t_0$.
+
+For the concordance cosmology, some representative values:
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+$z$ & $\chi(z)$ (Mpc) \\
+\midrule
+0.1 & 420 \\
+0.5 & 1880 \\
+1.0 & 3300 \\
+2.0 & 5200 \\
+5.0 & 7950 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+% =====================================================================
+\section{Angular Diameter Distance}
+\label{sec:angular_diameter_distance}
+
+The \textbf{angular diameter distance} is defined so that an object of
+physical (proper) size $\ell$ at redshift~$z$, subtending an angle
+$\delta\theta$ on the sky, satisfies the Euclidean-looking relation:
+\begin{equation}
+    \delta\theta = \frac{\ell}{D_A(z)} \,.
+    \label{eq:DA_def}
+\end{equation}
+From the RW metric~\eqref{eq:rw_metric_chi}, a physical transverse
+distance at redshift~$z$ (when $a = 1/(1+z)$) subtending angle
+$\delta\theta$ is $\ell = a(t)\, S_k(\chi)\, \delta\theta$, so
+\begin{equation}
+    \boxed{
+    D_A(z) = \frac{S_k(\chi(z))}{1+z}
+    }
+    \label{eq:DA}
+\end{equation}
+For a flat universe ($k = 0$), $S_k(\chi) = \chi$, and this simplifies to:
+\begin{equation}
+    D_A(z) = \frac{\chi(z)}{1+z}
+    = \frac{1}{1+z} \int_0^z \frac{\speedoflight\, dz'}{H(z')} \,.
+    \label{eq:DA_flat}
+\end{equation}
+
+The angular diameter distance is the distance measure that enters
+the \textbf{lens equation}.  The angular diameter distances
+$\Dd = D_A(z_d)$, $\Ds = D_A(z_s)$, and $\Dds$ (defined below)
+determine the mapping from physical deflection angles to angular
+positions on the sky.
+
+
+% =====================================================================
+\section{The Angular Diameter Distance Is Not Monotonic}
+\label{sec:DA_turnover}
+
+One of the most counterintuitive results in cosmology is that the angular
+diameter distance $D_A(z)$ is \textbf{not a monotonically increasing
+function} of redshift.  For the concordance cosmology, $D_A$ reaches a
+maximum at $z \approx 1.6$ and then \textit{decreases} at higher
+redshifts.
+
+Physically, this means that objects at very high redshifts appear
+\textit{larger} on the sky than one would naively expect.  The reason
+is that the photons we observe from such objects were emitted when the
+universe was much smaller, so the physical size corresponding to a given
+comoving size was smaller, and the angular size is determined by the
+physical size at the time of emission divided by the angular diameter
+distance.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../Figures/03_Cosmological_Distances/DA_vs_z.pdf}
+    \caption{Angular diameter distance $D_A(z)$ for the concordance
+    cosmology ($\Omegam = 0.3$, $\OmegaL = 0.7$,
+    $\Hubble = 70$~km\,s$^{-1}$\,Mpc$^{-1}$).  $D_A$ reaches a
+    maximum of approximately 1770~Mpc at $z \approx 1.6$ and
+    then decreases.  This turnover is a key consequence of the
+    expanding universe and has no analogue in Euclidean geometry.
+    Generated by \texttt{friedmann\_equations.wl}.}
+    \label{fig:DA_vs_z}
+\end{figure}
+
+\begin{remark}
+The turnover of $D_A(z)$ has practical consequences for lensing: a lens
+at $z_d \sim 0.5$ and a source at $z_s \sim 2$ might have a
+surprisingly large distance ratio $\Dds/\Ds$, and the ``sweet spot''
+for lensing efficiency is typically $z_d \sim 0.2$--$0.5$ for sources
+at $z_s \sim 1$--$3$.
+\end{remark}
+
+
+% =====================================================================
+\section{Luminosity Distance}
+\label{sec:luminosity_distance}
+
+The \textbf{luminosity distance} $D_L$ is defined so that the observed
+flux $F$ from a source of luminosity $L$ satisfies the Euclidean
+inverse-square law:
+\begin{equation}
+    F = \frac{L}{4\pi D_L^2} \,.
+    \label{eq:DL_def}
+\end{equation}
+In an expanding universe, two effects reduce the observed flux beyond
+the $1/r^2$ geometric dilution: (1) photon energies are redshifted by
+a factor $(1+z)$, and (2) photon arrival rates are reduced by another
+factor $(1+z)$.  This gives:
+\begin{equation}
+    D_L(z) = (1+z)\, S_k(\chi(z)) = (1+z)^2\, D_A(z) \,.
+    \label{eq:DL}
+\end{equation}
+
+The relation $D_L = (1+z)^2 D_A$ is the \textbf{Etherington reciprocity
+theorem} (or \textbf{distance-duality relation}).  It holds for any
+metric theory of gravity in which photons travel on null geodesics and
+photon number is conserved.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../Figures/03_Cosmological_Distances/distances_vs_z.pdf}
+    \caption{Comoving distance $\chi(z)$ (blue), angular diameter
+    distance $D_A(z)$ (red), and luminosity distance $D_L(z)$ (green)
+    for the concordance cosmology.  At low redshift ($z \ll 1$) all
+    three converge: $\chi \approx D_A \approx D_L \approx
+    \speedoflight z / \Hubble$.  At high redshift they diverge
+    dramatically.  The turnover of $D_A$ is clearly visible, while
+    $D_L$ grows monotonically.  Generated by
+    \texttt{friedmann\_equations.wl}.}
+    \label{fig:distances_vs_z}
+\end{figure}
+
+
+% =====================================================================
+\section{The Lens--Source Angular Diameter Distance}
+\label{sec:Dds}
+
+For gravitational lensing, we need not only $\Dd = D_A(z_d)$ and
+$\Ds = D_A(z_s)$, but also $\Dds$: the angular diameter distance from
+the \textit{lens} to the \textit{source}.  This is \textbf{not} simply
+$D_A(z_s) - D_A(z_d)$, because angular diameter distances do not add
+linearly.
+
+In a flat universe ($k = 0$), the comoving distances \textit{do} add:
+$\chi_{ds} = \chi_s - \chi_d$, and the lens--source angular diameter
+distance is:
+\begin{equation}
+    \boxed{
+    \Dds = \frac{\chi_s - \chi_d}{1 + z_s}
+    = \frac{1}{1+z_s}\int_{z_d}^{z_s}
+    \frac{\speedoflight\, dz'}{H(z')}
+    }
+    \label{eq:Dds_flat}
+\end{equation}
+For a general (non-flat) universe, one uses
+(Congdon \& Keeton eq.~3.127):
+\begin{equation}
+    \Dds = \frac{1}{1+z_s}\left[
+    S_k(\chi_s)\sqrt{1 - k\,S_k^2(\chi_d)/(S_k(\chi_d))^2}
+    - \text{(symmetric term)}
+    \right]
+    \label{eq:Dds_general}
+\end{equation}
+but for the spatially flat case ($k = 0$), eq.~\eqref{eq:Dds_flat} is
+exact and sufficient.
+
+\begin{remark}
+A common mistake is to write $\Dds = \Ds - \Dd$.  This is \textbf{wrong}
+in general.  Even in a flat universe, $\Dds \neq \Ds - \Dd$ because the
+factors of $(1+z)$ are different.  One must always compute $\Dds$ using
+eq.~\eqref{eq:Dds_flat} (or its curved-space generalization).  To
+illustrate: for $z_d = 0.5$ and $z_s = 2.0$ in the concordance
+cosmology, $\Dd = 1260$~Mpc, $\Ds = 1740$~Mpc, but $\Dds = 1450$~Mpc
+$\neq \Ds - \Dd = 480$~Mpc.
+\end{remark}
+
+
+% =====================================================================
+\section{The Distance Ratio for Lensing}
+\label{sec:distance_ratio}
+
+The \textbf{lens equation} (Module~4) and the \textbf{Einstein radius}
+both depend on a specific combination of distances.  The Einstein radius
+of a point mass $M$ is (Congdon \& Keeton eq.~4.9):
+\begin{equation}
+    \thetaE = \sqrt{\frac{4\Gnewton M}{\speedoflight^2}
+    \frac{\Dds}{\Dd\,\Ds}}
+    \label{eq:einstein_radius}
+\end{equation}
+and the critical surface mass density is:
+\begin{equation}
+    \Sigmacr = \frac{\speedoflight^2}{4\pi\Gnewton}
+    \frac{\Ds}{\Dd\,\Dds} \,.
+    \label{eq:sigma_cr}
+\end{equation}
+
+The key quantity is the \textbf{distance ratio}:
+\begin{equation}
+    \mathcal{D} \equiv \frac{\Dds}{\Dd\,\Ds} \,,
+    \label{eq:distance_ratio}
+\end{equation}
+which determines the ``lensing strength'' of a given observer--lens--source
+configuration.
+
+Note that $\mathcal{D}$ is \textit{not} simply $1/\Dd$, because $\Dds$
+depends on both $z_d$ and $z_s$ in a non-trivial way.  The distance
+ratio is maximized (lensing is most efficient) when the lens is roughly
+halfway between the observer and the source in terms of comoving
+distance.
+
+
+% =====================================================================
+\section{Lensing Efficiency}
+\label{sec:lensing_efficiency}
+
+For a fixed source redshift $z_s$, one can ask: at what lens redshift
+$z_d$ is lensing most efficient?  The answer is determined by the
+\textbf{lensing efficiency function}:
+\begin{equation}
+    \mathcal{E}(z_d; z_s) \equiv \frac{\Dd\,\Dds}{\Ds}
+    \label{eq:lensing_efficiency}
+\end{equation}
+which is proportional to the square of the Einstein radius (at fixed
+mass).  Note that $\thetaE^2 \propto \Dds/(\Dd\,\Ds) =
+\mathcal{D}$, while the physical Einstein ring area scales as
+$\Dd^2 \thetaE^2 \propto \Dd\,\Dds/\Ds = \mathcal{E}$.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../Figures/03_Cosmological_Distances/lensing_efficiency.pdf}
+    \caption{Lensing efficiency $\Dd\,\Dds/\Ds$ as a function of lens
+    redshift $z_d$ for several source redshifts $z_s = 1, 2, 3$ in
+    the concordance cosmology.  For $z_s = 1$, lensing is most
+    efficient at $z_d \approx 0.3$; for $z_s = 2$, at
+    $z_d \approx 0.5$.  The lens is typically most effective when
+    placed roughly ``halfway'' (in comoving distance) between the
+    observer and the source.  Generated by
+    \texttt{friedmann\_equations.wl}.}
+    \label{fig:lensing_efficiency}
+\end{figure}
+
+
+% =====================================================================
+\section{Summary}
+\label{sec:cosmo_summary}
+
+\begin{itemize}
+    \item The \textbf{cosmological principle} (homogeneity + isotropy)
+          constrains the spacetime metric to the Robertson--Walker form
+          $ds^2 = -\speedoflight^2 dt^2 + a^2(t)\left[dr^2/(1-kr^2)
+          + r^2 d\Omega^2\right]$.
+
+    \item Plugging the RW metric into \textbf{Einstein's equations} with
+          a perfect-fluid stress-energy tensor yields the
+          \textbf{Friedmann equations}:
+          \begin{align*}
+          H^2 &= \frac{8\pi\Gnewton\rho}{3}
+          - \frac{k\speedoflight^2}{a^2}
+          + \frac{\Lambda\speedoflight^2}{3} \,, \\
+          \frac{\ddot{a}}{a} &= -\frac{4\pi\Gnewton}{3}
+          \left(\rho + \frac{3p}{\speedoflight^2}\right)
+          + \frac{\Lambda\speedoflight^2}{3} \,.
+          \end{align*}
+
+    \item The density parameters $\Omegam$, $\OmegaL$, $\Omega_k$
+          satisfy $\Omegam + \OmegaL + \Omega_k = 1$ (ignoring
+          radiation at late times).
+
+    \item The \textbf{angular diameter distance} $D_A(z) = \chi(z)/(1+z)$
+          is \textit{not monotonic}: it turns over at $z \approx 1.6$
+          in the concordance cosmology.
+
+    \item The \textbf{luminosity distance} is $D_L = (1+z)^2 D_A$
+          (Etherington reciprocity).
+
+    \item The \textbf{lens--source distance} $\Dds \neq \Ds - \Dd$;
+          it must be computed as
+          $\Dds = (\chi_s - \chi_d)/(1+z_s)$ for a flat universe.
+
+    \item The \textbf{Einstein radius} $\thetaE \propto
+          \sqrt{\Dds/(\Dd\,\Ds)}$ depends on the distance configuration,
+          and lensing is most efficient when the lens is roughly
+          halfway (in comoving distance) to the source.
+\end{itemize}
+
+
+% =====================================================================
+\section{Problems}
+\label{sec:cosmo_problems}
+
+\begin{exercise}
+\label{ex:friedmann_derivation}
+\textbf{(Deriving the Friedmann equations from the RW metric.)}
+Starting from the Robertson--Walker metric~\eqref{eq:rw_metric}:
+\begin{enumerate}[label=(\alph*)]
+    \item Compute the Christoffel symbols for the FRW metric.
+    \item Compute the Ricci tensor $R_{\mu\nu}$ and Ricci scalar $\ricciS$.
+    \item Use Einstein's equations with the perfect-fluid
+          stress-energy tensor to derive the first and second
+          Friedmann equations.
+    \item Show that differentiating the first Friedmann equation and
+          using the second gives the fluid conservation equation.
+\end{enumerate}
+Verify all steps with
+\mathlink{03_Cosmological_Distances/friedmann_equations.wl}{friedmann\_equations.wl}.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:age_of_universe}
+\textbf{(Age of the universe for different cosmologies.)}
+The age of the universe is
+$t_0 = \int_0^\infty dz / [(1+z)\, H(z)]$.
+\begin{enumerate}[label=(\alph*)]
+    \item For an Einstein--de~Sitter universe ($\Omegam = 1$,
+          $\OmegaL = 0$, $k = 0$), show analytically that
+          $t_0 = 2/(3\Hubble)$.
+    \item Compute $t_0$ numerically for the concordance cosmology
+          ($\Omegam = 0.3$, $\OmegaL = 0.7$).  You should find
+          $t_0 \approx 13.5$~Gyr for $\Hubble = 70$~km\,s$^{-1}$\,Mpc$^{-1}$.
+    \item Compare with an open universe ($\Omegam = 0.3$,
+          $\OmegaL = 0$, $\Omega_k = 0.7$).
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\label{ex:DA_turnover}
+\textbf{(Angular diameter distance turnover.)}
+\begin{enumerate}[label=(\alph*)]
+    \item Plot $D_A(z)$ for the following cosmologies and identify the
+          turnover redshift in each:
+          (i) $\Omegam = 0.3$, $\OmegaL = 0.7$ (concordance);
+          (ii) $\Omegam = 1.0$, $\OmegaL = 0$ (Einstein--de~Sitter);
+          (iii) $\Omegam = 0.3$, $\OmegaL = 0$ (open).
+    \item Explain physically why $D_A$ turns over: why do high-redshift
+          objects appear \textit{larger} than intermediate-redshift objects?
+    \item For the concordance cosmology, find the redshift $z_{\max}$
+          at which $D_A$ is maximum by numerically solving
+          $dD_A/dz = 0$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\label{ex:real_lens}
+\textbf{(Distances for a real lens system: Q0957+561.)}
+The first gravitational lens discovered (Walsh, Carswell \& Weymann 1979)
+has lens redshift $z_d = 0.36$ and source redshift $z_s = 1.41$.
+Using the concordance cosmology:
+\begin{enumerate}[label=(\alph*)]
+    \item Compute $\Dd$, $\Ds$, and $\Dds$ in Mpc.
+    \item Verify that $\Dds \neq \Ds - \Dd$.
+    \item Compute the critical surface mass density $\Sigmacr$ in
+          $\Msun\,\text{kpc}^{-2}$.
+    \item Compute the Einstein radius $\thetaE$ for a lens mass
+          $M = 10^{12}\,\Msun$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\label{ex:einstein_radius_numerical}
+\textbf{(Einstein radius for a typical galaxy lens.)}
+For a flat $\Lambda$CDM universe with $\Omegam = 0.3$,
+$\OmegaL = 0.7$, $\Hubble = 70$~km\,s$^{-1}$\,Mpc$^{-1}$:
+\begin{enumerate}[label=(\alph*)]
+    \item Compute $\Dd$, $\Ds$, $\Dds$ for $z_d = 0.3$, $z_s = 1.0$.
+    \item Compute the Einstein radius $\thetaE$ for a lens mass
+          $M = 10^{12}\,\Msun$.  You should find $\thetaE \approx 2.4''$.
+    \item How does $\thetaE$ scale with $M$?  What mass gives
+          $\thetaE = 10''$?
+    \item Plot $\thetaE$ as a function of $z_d$ (with $z_s = 1$ and
+          $M = 10^{12}\,\Msun$ fixed).  At what $z_d$ is $\thetaE$
+          largest?
+\end{enumerate}
+Verify with
+\solnlink{03_Cosmological_Distances/problems\_03.wl}{problems\_03.wl}.
+\end{exercise}
