@@ -297,7 +297,7 @@ The \textbf{Ricci scalar} is:
     \left(\frac{\ddot{a}}{a} + \frac{\dot{a}^2}{a^2}
     + \frac{k\speedoflight^2}{a^2}\right)
     }
-    \label{eq:ricci_scalar}
+    \label{eq:ricci_scalar_frw}
 \end{equation}
 
 
@@ -312,7 +312,7 @@ tensor $T_{\mu\nu}$):
     G_{\mu\nu} + \Lambda g_{\mu\nu}
     = R_{\mu\nu} - \half \ricciS\, g_{\mu\nu} + \Lambda g_{\mu\nu}
     = \frac{8\pi\Gnewton}{\speedoflight^4}\, T_{\mu\nu}
-    \label{eq:einstein_field}
+    \label{eq:einstein_field_frw}
 \end{equation}
 where $\Lambda$ is the \textbf{cosmological constant}.
 
@@ -322,7 +322,7 @@ is (Carroll eq.~8.8):
 \begin{equation}
     T^{\mu\nu} = \left(\rho + \frac{p}{\speedoflight^2}\right)
     U^\mu U^\nu + p\, g^{\mu\nu}
-    \label{eq:perfect_fluid}
+    \label{eq:perfect_fluid_frw}
 \end{equation}
 where $\rho$ is the \textbf{mass-energy density} (energy density
 $/\speedoflight^2$), $p$ is the \textbf{pressure}, and
@@ -351,8 +351,8 @@ on time: $\rho = \rho(t)$, $p = p(t)$.
 \label{sec:friedmann_equations}
 
 We now substitute the Ricci tensor~\eqref{eq:R00}--\eqref{eq:Rij_compact}
-and the Ricci scalar~\eqref{eq:ricci_scalar} into Einstein's
-equations~\eqref{eq:einstein_field} with the perfect-fluid
+and the Ricci scalar~\eqref{eq:ricci_scalar_frw} into Einstein's
+equations~\eqref{eq:einstein_field_frw} with the perfect-fluid
 stress-energy tensor~\eqref{eq:Tmunu_components}.
 
 \subsection{The First Friedmann Equation}
@@ -453,7 +453,7 @@ the three-dimensional expansion.
 \label{ex:derive_friedmann}
 Derive the Friedmann equations~\eqref{eq:friedmann_1}
 and~\eqref{eq:friedmann_2} from the Einstein
-equations~\eqref{eq:einstein_field} with the FRW Ricci
+equations~\eqref{eq:einstein_field_frw} with the FRW Ricci
 tensor and the perfect-fluid stress-energy tensor.  Verify each step
 with
 \mathlink{03_Cosmological_Distances/friedmann_equations.wl}{friedmann\_equations.wl}.
@@ -844,13 +844,13 @@ of a point mass $M$ is (Congdon \& Keeton eq.~4.9):
 \begin{equation}
     \thetaE = \sqrt{\frac{4\Gnewton M}{\speedoflight^2}
     \frac{\Dds}{\Dd\,\Ds}}
-    \label{eq:einstein_radius}
+    \label{eq:einstein_radius_preview}
 \end{equation}
 and the critical surface mass density is:
 \begin{equation}
     \Sigmacr = \frac{\speedoflight^2}{4\pi\Gnewton}
     \frac{\Ds}{\Dd\,\Dds} \,.
-    \label{eq:sigma_cr}
+    \label{eq:sigma_cr_preview}
 \end{equation}
 
 The key quantity is the \textbf{distance ratio}:
