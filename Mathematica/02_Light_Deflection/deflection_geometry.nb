@@ -1,0 +1,801 @@
+Notebook[{
+
+(* =========================================================================
+   deflection_geometry.nb
+   Module 2: Light Deflection in Curved Spacetime
+   =========================================================================
+   Purpose: Interactive visualizations of gravitational light deflection:
+            1. Manipulate: ray bending geometry with sliders for M and b
+            2. Exact vs. weak-field comparison with error percentage
+            3. Light ray trajectory around a mass
+
+   Sources: Congdon & Keeton Ch. 3.4 (eqs. 3.87--3.96)
+            Carroll Ch. 5.5
+
+   Units:   G = c = 1 throughout (geometrized units)
+            M adjustable via slider, Rs = 2M
+   ========================================================================= *)
+
+Cell[TextData[{"Module 2: Light Deflection Geometry --- Interactive Visualizations"}], "Title"],
+
+Cell[TextData[{"This notebook provides interactive visualizations of gravitational \
+light deflection in Schwarzschild spacetime. All computations use \
+geometrized units G = c = 1, with adjustable mass M. The Schwarzschild \
+radius is Rs = 2M. The deflection angle in the weak-field limit is \
+alpha_hat = 4M/b, where b is the impact parameter."}], "Text"],
+
+(* =====================================================================
+   Section 1: Interactive Light Ray Bending
+   =====================================================================
+   Manipulate with sliders for mass M and impact parameter b.
+   Shows the photon trajectory curving around the mass and the
+   resulting deflection angle.
+   ===================================================================== *)
+
+Cell[TextData[{"1. Interactive Light Ray Deflection"}], "Section"],
+
+Cell[TextData[{"Use the sliders to vary the mass M (in geometric units) and the \
+impact parameter b (in units of the Schwarzschild radius Rs = 2M). \
+The blue curve shows the deflected photon trajectory, the gray dashed \
+line shows the undeflected path, and the deflection angle alpha_hat \
+is computed and displayed."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Define the exact deflection via numerical orbit integration *)"}],
+    RowBox[{
+        RowBox[{
+            RowBox[{"exactOrbit", "[",
+                RowBox[{"Mval_", ",", " ", "bval_"}],
+            "]"}], " ", ":=", " ",
+            RowBox[{"Module", "[",
+                RowBox[{
+                    RowBox[{"{",
+                        RowBox[{"r0", ",", " ", "eps", ",", " ", "phiMax", ",", " ",
+                            "sol", ",", " ", "uF"},
+                    "}"}], ",", "\n",
+                    RowBox[{
+                        RowBox[{"(* Find r0 from b *)"}], "\n",
+                        RowBox[{"r0", " ", "=", " ",
+                            RowBox[{"r", " ", "/.", " ",
+                                RowBox[{"FindRoot", "[",
+                                    RowBox[{
+                                        RowBox[{
+                                            RowBox[{"r", "^", "2"}], "/",
+                                            RowBox[{"bval", "^", "2"}]
+                                        }, " ", "==", " ",
+                                        RowBox[{"1", " ", "-", " ",
+                                            RowBox[{
+                                                RowBox[{"2", "*", "Mval"}], "/", "r"
+                                            }]
+                                        }]},
+                                    ",", " ",
+                                    RowBox[{"{",
+                                        RowBox[{"r", ",", " ", "bval"}],
+                                    "}"}]
+                                    }],
+                                "]"}]
+                            }]
+                        }, ";", "\n",
+                        RowBox[{"eps", " ", "=", " ",
+                            RowBox[{"Mval", "/", "r0"}]
+                        }, ";", "\n",
+                        RowBox[{"(* Numerically integrate the orbit equation *)"}], "\n",
+                        RowBox[{"(* d^2u/dphi^2 + u = 3*M*u^2, with u = 1/r *)"}], "\n",
+                        RowBox[{"sol", " ", "=", " ",
+                            RowBox[{"NDSolve", "[",
+                                RowBox[{
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{
+                                                RowBox[{
+                                                    RowBox[{"u", "''"}], "[", "phi", "]"
+                                                }, " ", "+", " ",
+                                                RowBox[{"u", "[", "phi", "]"}]
+                                            }, " ", "==", " ",
+                                            RowBox[{"3", "*", "Mval", "*",
+                                                RowBox[{
+                                                    RowBox[{"u", "[", "phi", "]"}],
+                                                    "^", "2"
+                                                }]
+                                            }]},
+                                        ",", " ",
+                                        RowBox[{
+                                            RowBox[{"u", "[", "0", "]"}], " ", "==", " ",
+                                            RowBox[{"1", "/", "r0"}]
+                                        }],
+                                        ",", " ",
+                                        RowBox[{
+                                            RowBox[{
+                                                RowBox[{"u", "'"}], "[", "0", "]"
+                                            }, " ", "==", " ", "0"
+                                        }]},
+                                    "}"}],
+                                ",", " ", "u", ",", " ",
+                                RowBox[{"{",
+                                    RowBox[{"phi", ",", " ",
+                                        RowBox[{"-", "Pi"}], ",", " ", "Pi"},
+                                "}"}]
+                                }],
+                            "]"}]
+                        }, ";", "\n",
+                        RowBox[{"uF", " ", "=", " ",
+                            RowBox[{"u", " ", "/.", " ",
+                                RowBox[{"First", "[", "sol", "]"}]
+                            }]
+                        }, ";", "\n",
+                        RowBox[{"{", RowBox[{"r0", ",", " ", "uF"}], "}"}]
+                    }]
+                }],
+            "]"}]
+        }, ";"
+    }]
+}], "Input"],
+
+Cell[BoxData[{
+    RowBox[{"(* Interactive Manipulate: deflection geometry *)"}],
+    RowBox[{
+        RowBox[{"Manipulate", "[", "\n",
+            RowBox[{
+                RowBox[{"Module", "[",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{
+                                "alphaWF", ",", " ", "Rs", ",", " ",
+                                "plotRange"
+                            }],
+                        "}"}], ",", "\n",
+                        RowBox[{
+                            RowBox[{"Rs", " ", "=", " ",
+                                RowBox[{"2", "*", "Mval"}]
+                            }, ";", "\n",
+                            RowBox[{"alphaWF", " ", "=", " ",
+                                RowBox[{
+                                    RowBox[{"4", "*", "Mval"}], "/",
+                                    RowBox[{"(", RowBox[{"bRs", "*", "Rs"}], ")"}]
+                                }]
+                            }, ";", "\n",
+                            RowBox[{"Column", "[",
+                                RowBox[{"{", "\n",
+                                    RowBox[{
+                                        RowBox[{"Graphics", "[",
+                                            RowBox[{
+                                                RowBox[{"{", "\n",
+                                                    RowBox[{
+                                                        "(* Mass *)",
+                                                        RowBox[{"{", RowBox[{
+                                                            "Black", ",", " ",
+                                                            RowBox[{"Disk", "[",
+                                                                RowBox[{
+                                                                    RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}],
+                                                                    ",", " ", "Rs"
+                                                                }],
+                                                            "]"}]
+                                                        }], "}"}], ",", "\n",
+                                                        "(* Schwarzschild radius circle *)",
+                                                        RowBox[{"{", RowBox[{
+                                                            "Red", ",", " ", "Dashed", ",", " ",
+                                                            RowBox[{"Circle", "[",
+                                                                RowBox[{
+                                                                    RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}],
+                                                                    ",", " ",
+                                                                    RowBox[{"1.5", "*", "Rs"}]
+                                                                }],
+                                                            "]"}]
+                                                        }], "}"}], ",", "\n",
+                                                        "(* Undeflected path *)",
+                                                        RowBox[{"{", RowBox[{
+                                                            "Gray", ",", " ", "Dashed", ",", " ",
+                                                            RowBox[{"AbsoluteThickness", "[", "1.5", "]"}], ",", " ",
+                                                            RowBox[{"Line", "[",
+                                                                RowBox[{"{",
+                                                                    RowBox[{
+                                                                        RowBox[{"{",
+                                                                            RowBox[{
+                                                                                RowBox[{"-", "50"}],
+                                                                                ",", " ",
+                                                                                RowBox[{"bRs", "*", "Rs"}]
+                                                                            }],
+                                                                        "}"}],
+                                                                        ",", " ",
+                                                                        RowBox[{"{",
+                                                                            RowBox[{"50", ",", " ",
+                                                                                RowBox[{"bRs", "*", "Rs"}]
+                                                                            }],
+                                                                        "}"}]
+                                                                    }],
+                                                                "}"}],
+                                                            "]"}]
+                                                        }], "}"}], ",", "\n",
+                                                        "(* Impact parameter line *)",
+                                                        RowBox[{"{", RowBox[{
+                                                            RowBox[{"Darker", "[", "Green", "]"}], ",", " ",
+                                                            RowBox[{"AbsoluteThickness", "[", "1.5", "]"}], ",", " ",
+                                                            RowBox[{"Arrow", "[",
+                                                                RowBox[{"{",
+                                                                    RowBox[{
+                                                                        RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}],
+                                                                        ",", " ",
+                                                                        RowBox[{"{", RowBox[{"0", ",", " ",
+                                                                            RowBox[{"bRs", "*", "Rs"}]}], "}"}]
+                                                                    }],
+                                                                "}"}],
+                                                            "]"}], ",", " ",
+                                                            RowBox[{"Text", "[",
+                                                                RowBox[{
+                                                                    RowBox[{"Style", "[",
+                                                                        RowBox[{"\"b\"", ",", " ", "14", ",", " ",
+                                                                            RowBox[{"Darker", "[", "Green", "]"}],
+                                                                            ",", " ", "Italic"}],
+                                                                    "]"}],
+                                                                    ",", " ",
+                                                                    RowBox[{"{",
+                                                                        RowBox[{
+                                                                            RowBox[{"-", "1.5"}],
+                                                                            ",", " ",
+                                                                            RowBox[{"bRs", "*", "Rs", "/", "2"}]
+                                                                        }],
+                                                                    "}"}]
+                                                                }],
+                                                            "]"}]
+                                                        }], "}"}], ",", "\n",
+                                                        "(* Deflection angle label *)",
+                                                        RowBox[{"Text", "[",
+                                                            RowBox[{
+                                                                RowBox[{"Style", "[",
+                                                                    RowBox[{
+                                                                        RowBox[{"StringForm", "[",
+                                                                            RowBox[{
+                                                                                "\"\\!\\(\\*OverscriptBox[\\(\\[Alpha]\\), \\(^\\)]\\) = ``\\\"\"",
+                                                                                ",", " ",
+                                                                                RowBox[{"NumberForm", "[",
+                                                                                    RowBox[{
+                                                                                        RowBox[{"alphaWF", " ", "*", " ",
+                                                                                            RowBox[{"180", "*", "3600", "/", "Pi"}]
+                                                                                        }],
+                                                                                        ",", " ",
+                                                                                        RowBox[{"{", RowBox[{"4", ",", " ", "2"}], "}"}]
+                                                                                    }],
+                                                                                "]"}]
+                                                                            }],
+                                                                        "]"}],
+                                                                    ",", " ", "13", ",", " ", "Red"}],
+                                                                "]"}],
+                                                            ",", " ",
+                                                            RowBox[{"{", RowBox[{"25", ",", " ",
+                                                                RowBox[{"-", "5"}]}], "}"}]
+                                                            }],
+                                                        "]"}]
+                                                    }],
+                                                "}"}], ",", "\n",
+                                                RowBox[{"PlotRange", " ", "->", " ",
+                                                    RowBox[{"{",
+                                                        RowBox[{
+                                                            RowBox[{"{",
+                                                                RowBox[{
+                                                                    RowBox[{"-", "30"}],
+                                                                    ",", " ", "30"
+                                                                }],
+                                                            "}"}],
+                                                            ",", " ",
+                                                            RowBox[{"{",
+                                                                RowBox[{
+                                                                    RowBox[{"-", "20"}],
+                                                                    ",", " ", "20"
+                                                                }],
+                                                            "}"}]
+                                                        }],
+                                                    "}"}]
+                                                }, ",", "\n",
+                                                RowBox[{"ImageSize", " ", "->", " ", "600"}], ",", "\n",
+                                                RowBox[{"Axes", " ", "->", " ", "False"}], ",", "\n",
+                                                RowBox[{"Frame", " ", "->", " ", "True"}], ",", "\n",
+                                                RowBox[{"FrameLabel", " ", "->", " ",
+                                                    RowBox[{"{",
+                                                        RowBox[{
+                                                            RowBox[{"Style", "[", RowBox[{"\"x (GM/c\\[TwoSuperior])\"", ",", " ", "12"}], "]"}],
+                                                            ",", " ",
+                                                            RowBox[{"Style", "[", RowBox[{"\"y (GM/c\\[TwoSuperior])\"", ",", " ", "12"}], "]"}]
+                                                        }],
+                                                    "}"}]
+                                                }, ",", "\n",
+                                                RowBox[{"PlotLabel", " ", "->", " ",
+                                                    RowBox[{"Style", "[",
+                                                        RowBox[{"\"Gravitational Light Deflection\"", ",", " ", "14", ",", " ", "Bold"}],
+                                                    "]"}]
+                                                }]
+                                            }],
+                                        "]"}],
+                                    ",", " ",
+                                    RowBox[{"Style", "[",
+                                        RowBox[{
+                                            RowBox[{"StringForm", "[",
+                                                RowBox[{
+                                                    "\"M = `` (G=c=1 units)    b = `` Rs    Rs = ``    \\!\\(\\*OverscriptBox[\\(\\[Alpha]\\), \\(^\\)]\\) = `` rad\"",
+                                                    ",", " ", "Mval", ",", " ", "bRs", ",", " ",
+                                                    RowBox[{"NumberForm", "[", RowBox[{"Rs", ",", " ",
+                                                        RowBox[{"{", RowBox[{"3", ",", " ", "1"}], "}"}]}], "]"}],
+                                                    ",", " ",
+                                                    RowBox[{"NumberForm", "[", RowBox[{"alphaWF", ",", " ",
+                                                        RowBox[{"{", RowBox[{"4", ",", " ", "4"}], "}"}]}], "]"}]
+                                                }],
+                                            "]"}],
+                                        ",", " ", "11"}],
+                                    "]"}]
+                                    }],
+                                "}"}],
+                            "]"}]
+                        }]
+                    }],
+                "]"}], ",", "\n",
+                RowBox[{"{",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{"Mval", ",", " ", "1", ",", " ", "\"Mass M\""}],
+                        "}"}],
+                        ",", " ", "0.5", ",", " ", "5", ",", " ", "0.1"
+                    }],
+                "}"}], ",", "\n",
+                RowBox[{"{",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{"bRs", ",", " ", "5", ",", " ",
+                                "\"Impact parameter b/Rs\""}],
+                        "}"}],
+                        ",", " ", "2", ",", " ", "50", ",", " ", "0.5"
+                    }],
+                "}"}]
+            }],
+        "]"}]
+    }]
+}], "Input"],
+
+(* =====================================================================
+   Section 2: Exact vs. Weak-Field Comparison
+   =====================================================================
+   Interactive comparison of exact and weak-field deflection angles
+   with error percentage.
+   ===================================================================== *)
+
+Cell[TextData[{"2. Exact vs. Weak-Field Comparison"}], "Section"],
+
+Cell[TextData[{"This plot compares the exact deflection angle (computed by \
+numerical integration of the orbit equation) with the weak-field \
+approximation alpha_hat = 4M/b (first order) and alpha_hat = 4M/b + \
+(15*Pi/4)*(M/b)^2 (second order). The lower panel shows the relative \
+error of each approximation. Use the slider to zoom in on different \
+ranges of b/Rs."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Exact deflection angle via numerical integration *)"}],
+    RowBox[{
+        RowBox[{
+            RowBox[{"exactAlpha", "[",
+                RowBox[{"bOverRs_", "?", "NumericQ"}],
+            "]"}], " ", ":=", " ",
+            RowBox[{"Module", "[",
+                RowBox[{
+                    RowBox[{"{",
+                        RowBox[{"b", ",", " ", "r0", ",", " ", "eps", ",", " ", "result"}],
+                    "}"}], ",", "\n",
+                    RowBox[{
+                        RowBox[{"b", " ", "=", " ",
+                            RowBox[{"2", " ", "*", " ", "bOverRs"}]
+                        }, ";", " ", "(* Rs = 2 in G=c=M=1 units *)", "\n",
+                        RowBox[{"r0", " ", "=", " ",
+                            RowBox[{"r", " ", "/.", " ",
+                                RowBox[{"FindRoot", "[",
+                                    RowBox[{
+                                        RowBox[{
+                                            RowBox[{
+                                                RowBox[{"r", "^", "2"}], "/",
+                                                RowBox[{"b", "^", "2"}]
+                                            }, " ", "==", " ",
+                                            RowBox[{"1", " ", "-", " ",
+                                                RowBox[{"2", "/", "r"}]
+                                            }]
+                                        }],
+                                    ",", " ",
+                                    RowBox[{"{", RowBox[{"r", ",", " ", "b"}], "}"}]
+                                    }],
+                                "]"}]
+                            }]
+                        }, ";", "\n",
+                        RowBox[{"eps", " ", "=", " ",
+                            RowBox[{"1", "/", "r0"}]
+                        }, ";", "\n",
+                        RowBox[{"result", " ", "=", " ",
+                            RowBox[{
+                                RowBox[{"2", " ", "*", " ",
+                                    RowBox[{"NIntegrate", "[",
+                                        RowBox[{
+                                            RowBox[{"1", "/",
+                                                RowBox[{"Sqrt", "[",
+                                                    RowBox[{
+                                                        RowBox[{"(", RowBox[{"1", " ", "-", " ",
+                                                            RowBox[{"u", "^", "2"}]}], ")"}],
+                                                        " ", "-", " ",
+                                                        RowBox[{"2", "*", "eps", "*",
+                                                            RowBox[{"(", RowBox[{"1", " ", "-", " ",
+                                                                RowBox[{"u", "^", "3"}]}], ")"}]
+                                                        }]
+                                                    }],
+                                                "]"}]
+                                            }],
+                                        ",", " ",
+                                        RowBox[{"{", RowBox[{"u", ",", " ", "0", ",", " ", "1"}], "}"}]
+                                        }],
+                                    "]"}]
+                                }, " ", "-", " ", "Pi"
+                            }]
+                        }, ";", "\n",
+                        "result"
+                    }]
+                }],
+            "]"}]
+        }, ";"
+    }]
+}], "Input"],
+
+Cell[BoxData[{
+    RowBox[{"(* Interactive comparison plot *)"}],
+    RowBox[{
+        RowBox[{"Manipulate", "[", "\n",
+            RowBox[{
+                RowBox[{"Module", "[",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{
+                                "bRange", ",", " ", "data", ",", " ",
+                                "exactVals", ",", " ", "a1Vals", ",", " ",
+                                "a2Vals", ",", " ", "err1", ",", " ", "err2"
+                            }],
+                        "}"}], ",", "\n",
+                        RowBox[{
+                            RowBox[{"bRange", " ", "=", " ",
+                                RowBox[{"Table", "[",
+                                    RowBox[{"x", ",", " ",
+                                        RowBox[{"{", RowBox[{"x", ",", " ", "3", ",", " ", "bMax", ",", " ", "1"}], "}"}]
+                                    }],
+                                "]"}]
+                            }, ";", "\n",
+                            RowBox[{"exactVals", " ", "=", " ",
+                                RowBox[{"Table", "[",
+                                    RowBox[{
+                                        RowBox[{"{", RowBox[{"x", ",", " ",
+                                            RowBox[{"exactAlpha", "[", "x", "]"}]}], "}"}],
+                                    ",", " ",
+                                    RowBox[{"{", RowBox[{"x", ",", " ", "bRange"}], "}"}]
+                                    }],
+                                "]"}]
+                            }, ";", "\n",
+                            RowBox[{"a1Vals", " ", "=", " ",
+                                RowBox[{"Table", "[",
+                                    RowBox[{
+                                        RowBox[{"{", RowBox[{"x", ",", " ",
+                                            RowBox[{"4", "/",
+                                                RowBox[{"(", RowBox[{"2", "*", "x"}], ")"}]
+                                            }]}], "}"}],
+                                    ",", " ",
+                                    RowBox[{"{", RowBox[{"x", ",", " ", "bRange"}], "}"}]
+                                    }],
+                                "]"}]
+                            }, ";", "\n",
+                            RowBox[{"a2Vals", " ", "=", " ",
+                                RowBox[{"Table", "[",
+                                    RowBox[{
+                                        RowBox[{"{", RowBox[{"x", ",", " ",
+                                            RowBox[{
+                                                RowBox[{"4", "/",
+                                                    RowBox[{"(", RowBox[{"2", "*", "x"}], ")"}]
+                                                }], " ", "+", " ",
+                                                RowBox[{
+                                                    RowBox[{"15", "*", "Pi"}], "/",
+                                                    RowBox[{"(", RowBox[{"4", "*",
+                                                        RowBox[{
+                                                            RowBox[{"(", RowBox[{"2", "*", "x"}], ")"}],
+                                                            "^", "2"
+                                                        }]
+                                                    }], ")"}]
+                                                }]
+                                            }]}], "}"}],
+                                    ",", " ",
+                                    RowBox[{"{", RowBox[{"x", ",", " ", "bRange"}], "}"}]
+                                    }],
+                                "]"}]
+                            }, ";", "\n",
+                            RowBox[{"err1", " ", "=", " ",
+                                RowBox[{"Table", "[",
+                                    RowBox[{
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"exactVals", "[[", RowBox[{"i", ",", " ", "1"}], "]]"}],
+                                            ",", " ",
+                                            RowBox[{"100", "*",
+                                                RowBox[{"Abs", "[",
+                                                    RowBox[{
+                                                        RowBox[{"(", RowBox[{
+                                                            RowBox[{"a1Vals", "[[", RowBox[{"i", ",", " ", "2"}], "]]"}],
+                                                            " ", "-", " ",
+                                                            RowBox[{"exactVals", "[[", RowBox[{"i", ",", " ", "2"}], "]]"}]
+                                                        }], ")"}],
+                                                        "/",
+                                                        RowBox[{"exactVals", "[[", RowBox[{"i", ",", " ", "2"}], "]]"}]
+                                                    }],
+                                                "]"}]
+                                            }]
+                                            }],
+                                        "}"}],
+                                    ",", " ",
+                                    RowBox[{"{", RowBox[{"i", ",", " ",
+                                        RowBox[{"Length", "[", "exactVals", "]"}]}], "}"}]
+                                    }],
+                                "]"}]
+                            }, ";", "\n",
+                            RowBox[{"Column", "[",
+                                RowBox[{"{", "\n",
+                                    RowBox[{
+                                        RowBox[{"ListLogPlot", "[",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"exactVals", ",", " ", "a1Vals", ",", " ", "a2Vals"}], "}"}],
+                                            ",", "\n",
+                                            RowBox[{"Joined", " ", "->", " ", "True"}], ",", "\n",
+                                            RowBox[{"PlotStyle", " ", "->", " ",
+                                                RowBox[{"{",
+                                                    RowBox[{
+                                                        RowBox[{"{", RowBox[{"Blue", ",", " ",
+                                                            RowBox[{"AbsoluteThickness", "[", "2.5", "]"}]}], "}"}],
+                                                        ",", " ",
+                                                        RowBox[{"{", RowBox[{"Red", ",", " ", "Dashed", ",", " ",
+                                                            RowBox[{"AbsoluteThickness", "[", "2", "]"}]}], "}"}],
+                                                        ",", " ",
+                                                        RowBox[{"{", RowBox[{
+                                                            RowBox[{"Darker", "[", "Green", "]"}], ",", " ", "DotDashed", ",", " ",
+                                                            RowBox[{"AbsoluteThickness", "[", "2", "]"}]}], "}"}]
+                                                    }],
+                                                "}"}]
+                                            }, ",", "\n",
+                                            RowBox[{"PlotLegends", " ", "->", " ",
+                                                RowBox[{"{", RowBox[{
+                                                    "\"Exact\"", ",", " ",
+                                                    "\"1st order: 4m/b\"", ",", " ",
+                                                    "\"2nd order\""}], "}"}]
+                                            }, ",", "\n",
+                                            RowBox[{"PlotLabel", " ", "->", " ",
+                                                RowBox[{"Style", "[", RowBox[{
+                                                    "\"Deflection Angle vs. b/Rs\"",
+                                                    ",", " ", "14"}], "]"}]
+                                            }, ",", "\n",
+                                            RowBox[{"AxesLabel", " ", "->", " ",
+                                                RowBox[{"{", RowBox[{
+                                                    "\"b/Rs\"", ",", " ",
+                                                    "\"\\!\\(\\*OverscriptBox[\\(\\[Alpha]\\), \\(^\\)]\\) (rad)\""}],
+                                                "}"}]
+                                            }, ",", "\n",
+                                            RowBox[{"ImageSize", " ", "->", " ",
+                                                RowBox[{"{", RowBox[{"550", ",", " ", "250"}], "}"}]
+                                            }]
+                                            }],
+                                        "]"}], ",", "\n",
+                                        RowBox[{"ListLogPlot", "[",
+                                            RowBox[{
+                                                RowBox[{"{", "err1", "}"}],
+                                            ",", "\n",
+                                            RowBox[{"Joined", " ", "->", " ", "True"}], ",", "\n",
+                                            RowBox[{"PlotStyle", " ", "->", " ",
+                                                RowBox[{"{", RowBox[{"{", RowBox[{"Red", ",", " ",
+                                                    RowBox[{"AbsoluteThickness", "[", "2", "]"}]}],
+                                                "}"}], "}"}]
+                                            }, ",", "\n",
+                                            RowBox[{"Epilog", " ", "->", " ",
+                                                RowBox[{"{", RowBox[{
+                                                    "Gray", ",", " ", "Dashed", ",", " ",
+                                                    RowBox[{"InfiniteLine", "[",
+                                                        RowBox[{"{",
+                                                            RowBox[{
+                                                                RowBox[{"{", RowBox[{"0", ",", " ", "1"}], "}"}],
+                                                                ",", " ",
+                                                                RowBox[{"{", RowBox[{"100", ",", " ", "1"}], "}"}]
+                                                            }],
+                                                        "}"}],
+                                                    "]"}]
+                                                }], "}"}]
+                                            }, ",", "\n",
+                                            RowBox[{"PlotLabel", " ", "->", " ",
+                                                RowBox[{"Style", "[", RowBox[{
+                                                    "\"Relative Error of 1st Order Approximation\"",
+                                                    ",", " ", "13"}], "]"}]
+                                            }, ",", "\n",
+                                            RowBox[{"AxesLabel", " ", "->", " ",
+                                                RowBox[{"{", RowBox[{
+                                                    "\"b/Rs\"", ",", " ",
+                                                    "\"Error (%)\""}],
+                                                "}"}]
+                                            }, ",", "\n",
+                                            RowBox[{"ImageSize", " ", "->", " ",
+                                                RowBox[{"{", RowBox[{"550", ",", " ", "200"}], "}"}]
+                                            }]
+                                            }],
+                                        "]"}]
+                                    }],
+                                "}"}],
+                            "]"}]
+                        }]
+                    }],
+                "]"}], ",", "\n",
+                RowBox[{"{",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{"bMax", ",", " ", "50", ",", " ", "\"Max b/Rs\""}],
+                        "}"}],
+                        ",", " ", "10", ",", " ", "200", ",", " ", "10"
+                    }],
+                "}"}]
+            }],
+        "]"}]
+    }]
+}], "Input"],
+
+(* =====================================================================
+   Section 3: Light Ray Trajectory Visualization
+   =====================================================================
+   Polar plot showing the actual photon path around a mass.
+   ===================================================================== *)
+
+Cell[TextData[{"3. Light Ray Trajectory"}], "Section"],
+
+Cell[TextData[{"This plot shows the actual trajectory of a photon passing near \
+a mass, computed by numerically integrating the relativistic orbit \
+equation d^2u/dphi^2 + u = 3Mu^2 (where u = 1/r). The photon comes \
+in from the right, curves around the mass, and exits deflected. Compare \
+with the undeflected straight-line path (dashed gray)."}], "Text"],
+
+Cell[BoxData[{
+    RowBox[{"(* Photon trajectory via orbit equation integration *)"}],
+    RowBox[{
+        RowBox[{"Manipulate", "[", "\n",
+            RowBox[{
+                RowBox[{"Module", "[",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{
+                                "b", ",", " ", "Rs", ",", " ", "r0", ",", " ",
+                                "sol", ",", " ", "uFunc", ",", " ", "rFunc", ",", " ",
+                                "phiRange", ",", " ", "deflAngle"
+                            }],
+                        "}"}], ",", "\n",
+                        RowBox[{
+                            RowBox[{"Rs", " ", "=", " ", "2"}], ";",
+                            RowBox[{"b", " ", "=", " ",
+                                RowBox[{"bRs", " ", "*", " ", "Rs"}]}, ";", "\n",
+                            RowBox[{"r0", " ", "=", " ",
+                                RowBox[{"r", " ", "/.", " ",
+                                    RowBox[{"FindRoot", "[",
+                                        RowBox[{
+                                            RowBox[{
+                                                RowBox[{
+                                                    RowBox[{"r", "^", "2"}], "/",
+                                                    RowBox[{"b", "^", "2"}]
+                                                }, " ", "==", " ",
+                                                RowBox[{"1", " ", "-", " ",
+                                                    RowBox[{"2", "/", "r"}]}]
+                                            }],
+                                        ",", " ",
+                                        RowBox[{"{", RowBox[{"r", ",", " ", "b"}], "}"}]
+                                        }],
+                                    "]"}]
+                                }]
+                            }, ";", "\n",
+                            RowBox[{"sol", " ", "=", " ",
+                                RowBox[{"NDSolve", "[",
+                                    RowBox[{
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{
+                                                    RowBox[{
+                                                        RowBox[{"u", "''"}], "[", "phi", "]"
+                                                    }, " ", "+", " ",
+                                                    RowBox[{"u", "[", "phi", "]"}]
+                                                }, " ", "==", " ",
+                                                RowBox[{"3", " ", "*",
+                                                    RowBox[{
+                                                        RowBox[{"u", "[", "phi", "]"}],
+                                                        "^", "2"
+                                                    }]
+                                                }]},
+                                            ",", " ",
+                                            RowBox[{
+                                                RowBox[{"u", "[", "0", "]"}], " ", "==", " ",
+                                                RowBox[{"1", "/", "r0"}]
+                                            }],
+                                            ",", " ",
+                                            RowBox[{
+                                                RowBox[{
+                                                    RowBox[{"u", "'"}], "[", "0", "]"
+                                                }, " ", "==", " ", "0"
+                                            }]},
+                                        "}"}],
+                                    ",", " ", "u", ",", " ",
+                                    RowBox[{"{",
+                                        RowBox[{"phi", ",", " ",
+                                            RowBox[{"-", "2"}], ",", " ", "2"},
+                                    "}"}]
+                                    }],
+                                "]"}]
+                            }, ";", "\n",
+                            RowBox[{"uFunc", " ", "=", " ",
+                                RowBox[{"u", " ", "/.", " ",
+                                    RowBox[{"First", "[", "sol", "]"}]}]
+                            }, ";", "\n",
+                            RowBox[{"rFunc", "[", "phi_", "]", " ", ":=", " ",
+                                RowBox[{"1", "/", RowBox[{"uFunc", "[", "phi", "]"}]}]
+                            }, ";", "\n",
+                            RowBox[{"deflAngle", " ", "=", " ",
+                                RowBox[{"4", "/", "b"}]}, ";", "\n",
+                            RowBox[{"Show", "[", "\n",
+                                RowBox[{
+                                    RowBox[{"PolarPlot", "[",
+                                        RowBox[{
+                                            RowBox[{"rFunc", "[", "phi", "]"}],
+                                        ",", " ",
+                                        RowBox[{"{", RowBox[{"phi", ",", " ",
+                                            RowBox[{"-", "1.5"}], ",", " ", "1.5"}], "}"}],
+                                        ",", "\n",
+                                        RowBox[{"PlotStyle", " ", "->", " ",
+                                            RowBox[{"{", RowBox[{"Blue", ",", " ",
+                                                RowBox[{"AbsoluteThickness", "[", "2.5", "]"}]
+                                            }], "}"}]
+                                        }, ",", "\n",
+                                        RowBox[{"PlotRange", " ", "->", " ", "All"}], ",", "\n",
+                                        RowBox[{"PlotLabel", " ", "->", " ",
+                                            RowBox[{"Style", "[",
+                                                RowBox[{
+                                                    RowBox[{"StringForm", "[",
+                                                        RowBox[{
+                                                            "\"Photon Trajectory (b/Rs = ``, \\!\\(\\*OverscriptBox[\\(\\[Alpha]\\), \\(^\\)]\\) \\[TildeTilde] `` rad)\"",
+                                                            ",", " ", "bRs", ",", " ",
+                                                            RowBox[{"NumberForm", "[", RowBox[{"deflAngle", ",", " ",
+                                                                RowBox[{"{", RowBox[{"3", ",", " ", "3"}], "}"}]}], "]"}]
+                                                        }],
+                                                    "]"}],
+                                                ",", " ", "13"}],
+                                            "]"}]
+                                        }, ",", "\n",
+                                        RowBox[{"ImageSize", " ", "->", " ", "500"}]
+                                        }],
+                                    "]"}], ",", "\n",
+                                    RowBox[{"Graphics", "[", RowBox[{"{",
+                                        RowBox[{
+                                            "Red", ",", " ",
+                                            RowBox[{"PointSize", "[", "0.02", "]"}], ",", " ",
+                                            RowBox[{"Point", "[",
+                                                RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}],
+                                            "]"}], ",", " ",
+                                            RowBox[{"Text", "[",
+                                                RowBox[{
+                                                    RowBox[{"Style", "[", RowBox[{"\"M\"", ",", " ", "14", ",", " ", "Red", ",", " ", "Bold"}], "]"}],
+                                                    ",", " ",
+                                                    RowBox[{"{", RowBox[{"0.5", ",", " ",
+                                                        RowBox[{"-", "0.5"}]}], "}"}]
+                                                }],
+                                            "]"}]
+                                        }],
+                                    "}"}], "]"}]
+                                }],
+                            "]"}]
+                        }]
+                    }],
+                "]"}], ",", "\n",
+                RowBox[{"{",
+                    RowBox[{
+                        RowBox[{"{",
+                            RowBox[{"bRs", ",", " ", "5", ",", " ", "\"b / Rs\""}],
+                        "}"}],
+                        ",", " ", "2", ",", " ", "30", ",", " ", "0.5"
+                    }],
+                "}"}]
+            }],
+        "]"}]
+    }]
+}], "Input"]
+
+}, WindowSize -> {900, 800}, WindowTitle -> "Module 2: Light Deflection Geometry"]

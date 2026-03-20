@@ -1,0 +1,281 @@
+Notebook[{
+
+(* =========================================================================
+   deflection_comparison.nb
+   Module 1e: Linearized Gravity — Interactive Notebook
+   =========================================================================
+   Purpose: Interactive comparison of exact Schwarzschild deflection
+            vs weak-field approximation; effective refractive index
+            visualization around a point mass.
+
+   Sources: Carroll Ch. 7.1, Congdon & Keeton Ch. 3.4
+
+   Instructions: Evaluate each cell in order. Use the Manipulate sliders
+                 to explore how the approximation breaks down near the
+                 photon sphere.
+   ========================================================================= *)
+
+Cell[TextData[{
+    StyleBox["Module 1e: Deflection Angle Comparison\n",
+        "Title", FontSize -> 20],
+    "Interactive exploration of exact vs weak-field deflection angles\n",
+    "and the effective refractive index."
+}], "Text"],
+
+(* ---- Setup ---- *)
+Cell[BoxData[{
+    RowBox[{"(*", " Physical constants ", "*)"}],
+    RowBox[{
+        RowBox[{"Gnewton", "=", RowBox[{"6.674", "*^", RowBox[{"-", "11"}]}]}], ";"}],
+    RowBox[{
+        RowBox[{"cc", "=", RowBox[{"2.998", "*^", "8"}]}], ";"}],
+    RowBox[{
+        RowBox[{"Msolar", "=", RowBox[{"1.989", "*^", "30"}]}], ";"}],
+    RowBox[{
+        RowBox[{"Rsolar", "=", RowBox[{"6.96", "*^", "8"}]}], ";"}],
+    "\n",
+    RowBox[{"(*", " Schwarzschild radius of the Sun ", "*)"}],
+    RowBox[{
+        RowBox[{"RsSun", "=", RowBox[{"2", " ", "Gnewton", " ", "Msolar", "/",
+            RowBox[{"cc", "^", "2"}]}]}], ";"}],
+    RowBox[{"Print", "[", RowBox[{"\"Rs(Sun) = \"", ",",
+        RowBox[{"NumberForm", "[", RowBox[{"RsSun", ",", "4"}], "]"}],
+        ",", "\" m\""}], "]"}]
+}], "Input"],
+
+(* ---- Exact deflection angle (numerical) ---- *)
+Cell[BoxData[{
+    RowBox[{"(*", " Exact Schwarzschild deflection angle ", "*)"}],
+    RowBox[{"(*", " In units where Rs = 1, beta = Rs/b ", "*)"}],
+    RowBox[{
+        RowBox[{
+            RowBox[{"exactDeflection", "[",
+                RowBox[{"beta_", "?", "NumericQ"}], "]"}],
+            ":=",
+            RowBox[{"Module", "[",
+                RowBox[{
+                    RowBox[{"{", RowBox[{"umax", ",", "result"}], "}"}], ",",
+                    "\n",
+                    RowBox[{
+                        RowBox[{"umax", "=",
+                            RowBox[{"u", "/.",
+                                RowBox[{"FindRoot", "[",
+                                    RowBox[{
+                                        RowBox[{RowBox[{"beta", "^", "2"}], "-",
+                                            RowBox[{RowBox[{"u", "^", "2"}], " ",
+                                                RowBox[{"(", RowBox[{"1", "-", "u"}], ")"}]}]}],
+                                        "==", "0"}, ",",
+                                    RowBox[{"{", RowBox[{"u", ",", "beta"}], "}"}]}],
+                                "]"}]}]}], ";", "\n",
+                        RowBox[{"result", "=",
+                            RowBox[{RowBox[{"2", " ",
+                                RowBox[{"NIntegrate", "[",
+                                    RowBox[{
+                                        RowBox[{"1", "/",
+                                            RowBox[{"Sqrt", "[",
+                                                RowBox[{RowBox[{"beta", "^", "2"}], "-",
+                                                    RowBox[{RowBox[{"uu", "^", "2"}], " ",
+                                                        RowBox[{"(", RowBox[{"1", "-", "uu"}], ")"}]}]}],
+                                            "]"}]}], ",",
+                                    RowBox[{"{", RowBox[{"uu", ",", "0", ",", "umax"}], "}"}]}],
+                                "]"}]}], "-", "Pi"}]}], ";", "\n",
+                        "result"}]}],
+            "]"}]}], ";"}]
+}], "Input"],
+
+(* ---- Interactive Manipulate: Deflection comparison ---- *)
+Cell[TextData["Interactive Deflection Angle Comparison"], "Subsection"],
+
+Cell[BoxData[
+    RowBox[{"Manipulate", "[",
+        RowBox[{
+            RowBox[{"Module", "[",
+                RowBox[{
+                    RowBox[{"{",
+                        RowBox[{"bValues", ",", "exactData", ",", "weakData", ",",
+                            "newtonData"}], "}"}], ",", "\n",
+                    RowBox[{
+                        RowBox[{"bValues", "=",
+                            RowBox[{"Range", "[",
+                                RowBox[{"3", ",", "bMax", ",", "1"}], "]"}]}], ";", "\n",
+                        RowBox[{"exactData", "=",
+                            RowBox[{"Table", "[",
+                                RowBox[{
+                                    RowBox[{"{",
+                                        RowBox[{"b0", ",",
+                                            RowBox[{"exactDeflection", "[",
+                                                RowBox[{"1.0", "/", "b0"}], "]"}]}], "}"}], ",",
+                                RowBox[{"{", RowBox[{"b0", ",", "bValues"}], "}"}]}],
+                            "]"}]}], ";", "\n",
+                        RowBox[{"weakData", "=",
+                            RowBox[{"Table", "[",
+                                RowBox[{
+                                    RowBox[{"{",
+                                        RowBox[{"b0", ",",
+                                            RowBox[{"2.0", "/", "b0"}]}], "}"}], ",",
+                                RowBox[{"{", RowBox[{"b0", ",", "bValues"}], "}"}]}],
+                            "]"}]}], ";", "\n",
+                        RowBox[{"newtonData", "=",
+                            RowBox[{"Table", "[",
+                                RowBox[{
+                                    RowBox[{"{",
+                                        RowBox[{"b0", ",",
+                                            RowBox[{"1.0", "/", "b0"}]}], "}"}], ",",
+                                RowBox[{"{", RowBox[{"b0", ",", "bValues"}], "}"}]}],
+                            "]"}]}], ";", "\n",
+                        RowBox[{"ListLogLogPlot", "[",
+                            RowBox[{
+                                RowBox[{"{",
+                                    RowBox[{"exactData", ",", "weakData", ",", "newtonData"}],
+                                "}"}], ",", "\n",
+                                RowBox[{"Joined", "->", "True"}], ",",
+                                RowBox[{"PlotStyle", "->",
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{"{", RowBox[{"Blue", ",",
+                                                RowBox[{"AbsoluteThickness", "[", "2.5", "]"}]}], "}"}], ",",
+                                            RowBox[{"{", RowBox[{"Red", ",",
+                                                RowBox[{"AbsoluteThickness", "[", "2", "]"}], ",", "Dashed"}], "}"}], ",",
+                                            RowBox[{"{", RowBox[{"Orange", ",",
+                                                RowBox[{"AbsoluteThickness", "[", "1.5", "]"}], ",", "Dotted"}], "}"}]}],
+                                    "}"}]}], ",",
+                                RowBox[{"PlotLegends", "->",
+                                    RowBox[{"{",
+                                        RowBox[{"\"Exact (Schwarzschild)\"", ",",
+                                            "\"GR weak-field (4GM/c^2 b)\"", ",",
+                                            "\"Newtonian (2GM/c^2 b)\""}],
+                                    "}"}]}], ",",
+                                RowBox[{"AxesLabel", "->",
+                                    RowBox[{"{", RowBox[{"\"b/Rs\"", ",", "\"Deflection (rad)\""}], "}"}]}], ",",
+                                RowBox[{"PlotLabel", "->", "\"Deflection Angle Comparison\""}], ",",
+                                RowBox[{"ImageSize", "->", "600"}]}],
+                        "]"}]}]}],
+            "]"}], ",", "\n",
+            RowBox[{"{",
+                RowBox[{
+                    RowBox[{"{", RowBox[{"bMax", ",", "100", ",", "\"Max b/Rs\""}], "}"}], ",",
+                    "5", ",", "500", ",", "5"}],
+            "}"}]}],
+    "]"}]
+], "Input"],
+
+(* ---- Interactive Manipulate: Refractive index 2D ---- *)
+Cell[TextData["Effective Refractive Index Around a Point Mass"], "Subsection"],
+
+Cell[BoxData[
+    RowBox[{"Manipulate", "[",
+        RowBox[{
+            RowBox[{"Module", "[",
+                RowBox[{
+                    RowBox[{"{", "nField", "}"}], ",", "\n",
+                    RowBox[{
+                        RowBox[{
+                            RowBox[{"nField", "[",
+                                RowBox[{"x_", ",", "y_"}], "]"}],
+                            ":=",
+                            RowBox[{"1", "+",
+                                RowBox[{"massFactor", "/",
+                                    RowBox[{"Sqrt", "[",
+                                        RowBox[{RowBox[{"x", "^", "2"}], "+",
+                                            RowBox[{"y", "^", "2"}]}],
+                                    "]"}]}]}]}], ";", "\n",
+                        RowBox[{"DensityPlot", "[",
+                            RowBox[{
+                                RowBox[{"nField", "[", RowBox[{"x", ",", "y"}], "]"}], ",",
+                                RowBox[{"{", RowBox[{"x", ",", RowBox[{"-", "rMax"}], ",", "rMax"}], "}"}], ",",
+                                RowBox[{"{", RowBox[{"y", ",", RowBox[{"-", "rMax"}], ",", "rMax"}], "}"}], ",",
+                                RowBox[{"PlotRange", "->",
+                                    RowBox[{"{",
+                                        RowBox[{"1", ",",
+                                            RowBox[{"1", "+",
+                                                RowBox[{"2", " ", "massFactor", "/", "2"}]}]}],
+                                    "}"}]}], ",",
+                                RowBox[{"ColorFunction", "->", "\"TemperatureMap\""}], ",",
+                                RowBox[{"PlotLabel", "->", "\"Refractive Index n(x,y)\""}], ",",
+                                RowBox[{"FrameLabel", "->",
+                                    RowBox[{"{", RowBox[{"\"x/Rs\"", ",", "\"y/Rs\""}], "}"}]}], ",",
+                                RowBox[{"PlotLegends", "->", "Automatic"}], ",",
+                                RowBox[{"ImageSize", "->", "500"}], ",",
+                                RowBox[{"RegionFunction", "->",
+                                    RowBox[{"Function", "[",
+                                        RowBox[{
+                                            RowBox[{"{", RowBox[{"x", ",", "y", ",", "z"}], "}"}], ",",
+                                            RowBox[{RowBox[{RowBox[{"x", "^", "2"}], "+",
+                                                RowBox[{"y", "^", "2"}]}], ">", "4"}]}],
+                                    "]"}]}]}],
+                        "]"}]}]}],
+            "]"}], ",", "\n",
+            RowBox[{"{",
+                RowBox[{
+                    RowBox[{"{", RowBox[{"massFactor", ",", "1", ",",
+                        "\"Mass (Rs units)\""}], "}"}], ",",
+                    "0.1", ",", "5", ",", "0.1"}],
+            "}"}], ",",
+            RowBox[{"{",
+                RowBox[{
+                    RowBox[{"{", RowBox[{"rMax", ",", "20", ",",
+                        "\"Plot range\""}], "}"}], ",",
+                    "5", ",", "100", ",", "5"}],
+            "}"}]}],
+    "]"}]
+], "Input"],
+
+(* ---- Where does the approximation break down? ---- *)
+Cell[TextData["Approximation Breakdown Analysis"], "Subsection"],
+
+Cell[BoxData[{
+    RowBox[{"(*", " Plot fractional error as function of b/Rs ", "*)"}],
+    RowBox[{
+        RowBox[{"bVals", "=",
+            RowBox[{"Range", "[", RowBox[{"3", ",", "200"}], "]"}]}], ";"}],
+    RowBox[{
+        RowBox[{"errorData", "=",
+            RowBox[{"Table", "[",
+                RowBox[{
+                    RowBox[{"Module", "[",
+                        RowBox[{
+                            RowBox[{"{",
+                                RowBox[{"aE", ",", "aW"}], "}"}], ",",
+                            RowBox[{
+                                RowBox[{"aE", "=",
+                                    RowBox[{"exactDeflection", "[",
+                                        RowBox[{"1.0", "/", "b0"}], "]"}]}], ";",
+                                RowBox[{"aW", "=",
+                                    RowBox[{"2.0", "/", "b0"}]}], ";",
+                                RowBox[{"{",
+                                    RowBox[{"b0", ",",
+                                        RowBox[{"Abs", "[",
+                                            RowBox[{RowBox[{"(",
+                                                RowBox[{"aE", "-", "aW"}], ")"}], "/", "aE"}],
+                                        "]"}]}], "}"}]}]}],
+                    "]"}], ",",
+                RowBox[{"{", RowBox[{"b0", ",", "bVals"}], "}"}]}],
+            "]"}]}], ";"}],
+    "\n",
+    RowBox[{"ListLogLogPlot", "[", RowBox[{"errorData", ",",
+        RowBox[{"Joined", "->", "True"}], ",",
+        RowBox[{"PlotStyle", "->",
+            RowBox[{"{", RowBox[{"Blue", ",",
+                RowBox[{"AbsoluteThickness", "[", "2", "]"}]}], "}"}]}], ",",
+        RowBox[{"AxesLabel", "->",
+            RowBox[{"{", RowBox[{"\"b/Rs\"", ",", "\"Fractional Error\""}], "}"}]}], ",",
+        RowBox[{"PlotLabel", "->", "\"Weak-Field Approximation Breakdown\""}], ",",
+        RowBox[{"Epilog", "->",
+            RowBox[{"{", RowBox[{
+                "Red", ",", "Dashed", ",",
+                RowBox[{"InfiniteLine", "[",
+                    RowBox[{"{",
+                        RowBox[{RowBox[{"{", RowBox[{"1", ",", "0.01"}], "}"}], ",",
+                            RowBox[{"{", RowBox[{"1000", ",", "0.01"}], "}"}]}],
+                    "}"}], "]"}], ",",
+                RowBox[{"Text", "[",
+                    RowBox[{"\"1% error level\"", ",",
+                        RowBox[{"{", RowBox[{"15", ",", "0.015"}], "}"}]}], "]"}]}],
+            "}"}]}], ",",
+        RowBox[{"ImageSize", "->", "500"}]}],
+    "]"}]
+}], "Input"]
+
+}, WindowSize -> {1200, 900},
+   WindowMargins -> {{Automatic, Automatic}, {Automatic, Automatic}},
+   WindowTitle -> "Module 1e: Deflection Comparison"]

@@ -1,0 +1,253 @@
+% =============================================================================
+% Module 1e: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:linearized_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{01e_Linearized_Gravity/problems\_01e.wl}{problems\_01e.wl},
+which verifies each answer symbolically.
+
+% ----- Exercise 1 -----
+\subsection*{Exercise~\ref{ex:newtonian_limit_prob}: Newtonian Limit from the Geodesic Equation}
+
+\textbf{(a)} The Christoffel symbols to first order in $h$ are
+(eq.~\eqref{eq:christoffel_linearized}):
+\[
+    \christoffel{\alpha}{\mu}{\nu}
+    = \half \eta^{\alpha\beta}\bigl(
+    \partial_\mu h_{\nu\beta} + \partial_\nu h_{\mu\beta}
+    - \partial_\beta h_{\mu\nu}\bigr) \,.
+\]
+For $\mu = \nu = 0$ and $\alpha = i$ (spatial):
+\[
+    \christoffel{i}{0}{0}
+    = \half \eta^{i\beta}\bigl(
+    \partial_0 h_{0\beta} + \partial_0 h_{0\beta}
+    - \partial_\beta h_{00}\bigr) \,.
+\]
+Using the static-field condition $\partial_0 h_{\mu\nu} = 0$,
+the first two terms vanish.  Since $\eta^{ij} = \delta^{ij}$ and
+$\eta^{i0} = 0$:
+\[
+    \boxed{\christoffel{i}{0}{0} = -\half \partial_i h_{00}}
+\]
+
+\textbf{(b)} The geodesic equation for spatial components is:
+\[
+    \frac{d^2 x^i}{d\tau^2}
+    + \christoffel{i}{\alpha}{\beta}\,
+    \frac{dx^\alpha}{d\tau}\, \frac{dx^\beta}{d\tau} = 0 \,.
+\]
+In the slow-motion limit, $|dx^j/d\tau| \ll c\,dt/d\tau$, so we keep
+only the $\alpha = \beta = 0$ term:
+\[
+    \frac{d^2 x^i}{d\tau^2}
+    + \christoffel{i}{0}{0}\left(\frac{dx^0}{d\tau}\right)^{\!2} = 0 \,.
+\]
+Substituting $\christoffel{i}{0}{0} = -\half \partial_i h_{00}$ and
+$dx^0/d\tau = c\, dt/d\tau$:
+\[
+    \frac{d^2 x^i}{d\tau^2}
+    = \half c^2 \partial_i h_{00}\left(\frac{dt}{d\tau}\right)^{\!2} .
+\]
+Since $d\tau \approx dt$ for slow motion ($\gamma \approx 1$):
+\[
+    \boxed{\frac{d^2 x^i}{dt^2} = \half c^2\, \partial_i h_{00}}
+\]
+
+\textbf{(c)} Comparing with Newton's law $d^2 x^i/dt^2 = -\partial_i \Phi$:
+\[
+    -\partial_i \Phi = \half c^2\, \partial_i h_{00}
+    \quad\Longrightarrow\quad
+    \boxed{h_{00} = -\frac{2\Phi}{c^2}}
+\]
+
+% ----- Exercise 2 -----
+\subsection*{Exercise~\ref{ex:weak_field_schwarzschild}: Weak-Field Schwarzschild}
+
+\textbf{(a)} The Schwarzschild metric has
+$g_{rr} = (1 - R_S/r)^{-1}$.  Expanding to first order in
+$\epsilon \equiv R_S/r \ll 1$:
+\[
+    (1 - \epsilon)^{-1} = 1 + \epsilon + \epsilon^2 + \cdots
+    \approx 1 + \frac{R_S}{r} \,.
+\]
+So the metric becomes:
+\[
+    ds^2 \approx -\left(1 - \frac{R_S}{r}\right) c^2 dt^2
+    + \left(1 + \frac{R_S}{r}\right) dr^2
+    + r^2\, d\Omega^2 \,.
+\]
+
+\textbf{(b)} In Cartesian-like coordinates ($dx^2 + dy^2 + dz^2 =
+dr^2 + r^2 d\Omega^2$ to zeroth order), and noting that the
+distinction between $dr^2 + r^2 d\Omega^2$ and $(1 + R_S/r)(dr^2 +
+r^2 d\Omega^2)$ versus $(1 + R_S/r) dr^2 + r^2 d\Omega^2$ only
+matters at second order in $R_S/r$:
+\[
+    ds^2 \approx -\left(1 - \frac{R_S}{r}\right) c^2 dt^2
+    + \left(1 + \frac{R_S}{r}\right)(dx^2 + dy^2 + dz^2) \,.
+\]
+With $\Phi = -GM/r$ and $R_S = 2GM/c^2$:
+\[
+    1 - \frac{R_S}{r} = 1 + \frac{2\Phi}{c^2} \,, \qquad
+    1 + \frac{R_S}{r} = 1 - \frac{2\Phi}{c^2} \,.
+\]
+This is exactly the weak-field metric~\eqref{eq:weak_field_metric}.
+
+\textbf{(c)} We identify $h_{00} = -2\Phi/c^2 = R_S/r$ and
+$h_{ij} = -2\Phi/c^2\, \delta_{ij} = (R_S/r)\, \delta_{ij}$.
+Indeed $h_{00} = h_{ij}/\delta_{ij}$, confirming that the time and
+space perturbations are equal in magnitude.  This equality is the
+origin of the factor-of-two in light bending.
+
+% ----- Exercise 3 -----
+\subsection*{Exercise~\ref{ex:refractive_index_prob}: Effective Refractive Index}
+
+The effective refractive index is $n - 1 = 2GM/(c^2 r)$.
+Using $G = 6.674 \times 10^{-11}$~m$^3$\,kg$^{-1}$\,s$^{-2}$,
+$M_\odot = 1.989 \times 10^{30}$~kg, $c = 2.998 \times 10^8$~m/s:
+
+\textbf{(a)} $r = R_\odot = 6.96 \times 10^8$~m:
+\[
+    n - 1 = \frac{2 \times 6.674\!\times\!10^{-11} \times 1.989\!\times\!10^{30}}
+    {(2.998\!\times\!10^{8})^2 \times 6.96\!\times\!10^{8}}
+    = \boxed{4.24 \times 10^{-6}}
+\]
+The weak-field approximation is excellent ($n - 1 \sim 10^{-6}$).
+
+\textbf{(b)} $r = 1$~AU $= 1.496 \times 10^{11}$~m:
+\[
+    n - 1 = \frac{2GM_\odot}{c^2 \times 1.496\!\times\!10^{11}}
+    = \boxed{1.97 \times 10^{-8}}
+\]
+Even weaker field; the Sun's effect at Earth's distance is tiny.
+
+\textbf{(c)} $r = 1$~kpc $= 3.086 \times 10^{19}$~m:
+\[
+    n - 1 = \frac{2GM_\odot}{c^2 \times 3.086\!\times\!10^{19}}
+    = \boxed{9.58 \times 10^{-17}}
+\]
+Completely negligible.  At kiloparsec scales, the gravitational
+potential of a single solar mass is immeasurably weak; only the
+cumulative effect of $\sim 10^{11}$--$10^{12}$ stars in a galaxy
+produces observable lensing.
+
+% ----- Exercise 4 -----
+\subsection*{Exercise~\ref{ex:deflection_angle_derivation}: Deflection Angle from Null Geodesics}
+
+The unperturbed photon path is $\mathbf{x}(l) = (l, b, 0)$, where
+$l$ is the coordinate along the path and $b$ is the impact parameter.
+
+\textbf{(a)} The Newtonian potential is $\Phi = -GM/r = -GM/\sqrt{l^2 + b^2}$.
+The perpendicular gradient (in the $y$-direction) is:
+\[
+    \nabla_\perp \Phi = \frac{\partial \Phi}{\partial b}
+    = \frac{GM\, b}{(l^2 + b^2)^{3/2}} \,.
+\]
+
+\textbf{(b)} The integral is:
+\[
+    \int_{-\infty}^{\infty} \frac{b\, dl}{(l^2 + b^2)^{3/2}}
+    = \frac{b}{b^2} \left[\frac{l}{\sqrt{l^2 + b^2}}\right]_{-\infty}^{+\infty}
+    = \frac{1}{b}(1 - (-1)) = \frac{2}{b} \,.
+\]
+
+\textbf{(c)} The deflection integral
+(eq.~\eqref{eq:deflection_integral}) uses $\nabla_\perp \Phi$ to denote
+the gradient of $|\Phi|$ perpendicular to the path.  The factor of~4
+already accounts for both the time ($h_{00}$) and space ($h_{ij}$)
+contributions.  The key subtlety is that the standard 3D line-of-sight
+integral relates to the 2D projected formula as follows.
+
+Using the projected (2D) lens-plane formulation
+(Schneider, Ehlers \& Falco 1992; Congdon \& Keeton eq.~3.78), the
+deflection by a surface mass density $\Sigma$ is:
+\[
+    \boldsymbol{\hat{\alpha}} = \frac{4G}{c^2}
+    \int \frac{(\vecxi - \vecxi')}{|\vecxi - \vecxi'|^2}\,
+    \Sigma(\vecxi')\, d^2\xi' \,.
+\]
+For a point mass projected at the origin,
+$\Sigma = M\,\delta^{(2)}(\vecxi')$, and the integral gives directly:
+\[
+    \boxed{\alphahat = \frac{4GM}{c^2 b}}
+\]
+This is verified symbolically in
+\mathlink{01e_Linearized_Gravity/weak_field_metric.wl}{weak\_field\_metric.wl}.
+
+Equivalently, using the PPN formalism (Weinberg 1972; Will 1993),
+the deflection is:
+\[
+    \alphahat = \frac{1 + \gamma_{\mathrm{PPN}}}{c^2}
+    \int_{-\infty}^{\infty} \nabla_\perp |\Phi|\, dl \,,
+\]
+where $\gamma_{\mathrm{PPN}} = 1$ in GR (the spatial curvature
+contribution).  With $\int \nabla_\perp |\Phi|\, dl = 2GM/b$ and
+$(1 + 1) = 2$, this gives $\alphahat = (2/c^2)(2GM/b) = 4GM/(c^2 b)$,
+confirming the result.
+
+\textbf{(d)} For the Sun at the solar limb:
+\begin{align*}
+    \alphahat &= \frac{4 \times 6.674\!\times\!10^{-11} \times
+    1.989\!\times\!10^{30}}{(2.998\!\times\!10^{8})^2 \times
+    6.96\!\times\!10^{8}} \\
+    &= 8.49 \times 10^{-6}~\text{rad}
+    = 8.49 \times 10^{-6} \times \frac{180 \times 3600}{\pi}
+    = \boxed{1.75''}
+\end{align*}
+This is the value confirmed by Eddington's 1919 expedition.
+
+\textbf{(Galaxy lens.)} For $M = 10^{12}\,\Msun$ at $b = 10$~kpc
+$= 3.086 \times 10^{20}$~m:
+\[
+    \alphahat = \frac{4 \times 6.674\!\times\!10^{-11} \times
+    10^{12} \times 1.989\!\times\!10^{30}}
+    {(2.998\!\times\!10^{8})^2 \times 3.086\!\times\!10^{20}}
+    = 1.91 \times 10^{-5}~\text{rad}
+    = \boxed{3.94''}
+\]
+
+% ----- Exercise 5 -----
+\subsection*{Exercise~\ref{ex:superposition_prob}: Superposition of Deflections}
+
+\textbf{(a)} Mass $M_1$ at $(-d/2, 0)$ and mass $M_2$ at $(+d/2, 0)$.
+The photon passes at $\vecxi = (0, b)$.  The displacement vectors are:
+\begin{align*}
+    \vecxi - \vecxi_1 &= (d/2,\, b) \,, &
+    |\vecxi - \vecxi_1|^2 &= d^2/4 + b^2 \,, \\
+    \vecxi - \vecxi_2 &= (-d/2,\, b) \,, &
+    |\vecxi - \vecxi_2|^2 &= d^2/4 + b^2 \,.
+\end{align*}
+The individual deflection angle vectors are:
+\begin{align*}
+    \boldsymbol{\hat{\alpha}}_1 &= \frac{4GM}{c^2}
+    \frac{(d/2, b)}{d^2/4 + b^2} \,, \\
+    \boldsymbol{\hat{\alpha}}_2 &= \frac{4GM}{c^2}
+    \frac{(-d/2, b)}{d^2/4 + b^2} \,.
+\end{align*}
+
+\textbf{(b)} Adding the vectors:
+\[
+    \hat{\alpha}_x = \frac{4GM}{c^2(d^2/4 + b^2)}
+    \left(\frac{d}{2} - \frac{d}{2}\right) = 0
+\]
+(the $x$-components cancel by symmetry).  The $y$-component:
+\[
+    \boxed{\hat{\alpha}_y = \frac{4GM}{c^2(d^2/4 + b^2)} \cdot 2b
+    = \frac{8GMb}{c^2(d^2/4 + b^2)}}
+\]
+
+\textbf{(c)} In the limit $d \to 0$:
+\[
+    \hat{\alpha}_y \to \frac{8GMb}{c^2 b^2}
+    = \frac{8GM}{c^2 b}
+    = \frac{4G(2M)}{c^2 b}
+\]
+This is the deflection angle for a single mass of $2M$, as expected
+from superposition when the two masses coincide.

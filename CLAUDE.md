@@ -37,6 +37,7 @@ Learning_to_Lens/
 | 1b | Differential Geometry & Metric Tensor | Christoffel symbols, covariant derivative, curvature tensors |
 | 1c | The Schwarzschild Solution | Schwarzschild metric, time dilation, redshift |
 | 1d | Geodesics & Orbits | Effective potential, ISCO, photon sphere, perihelion precession |
+| 1e | Linearized Gravity & Weak-Field Metric | Metric perturbation, Newtonian limit, effective refractive index |
 | 2 | Light Deflection | Newtonian & GR deflection, Shapiro delay |
 | 3 | Cosmological Distances | FRW cosmology, angular diameter distances |
 | 4 | The Lens Equation | Thin screen, Einstein radius, point mass imaging |

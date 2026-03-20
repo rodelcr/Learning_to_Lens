@@ -74,3 +74,18 @@ Timestamped record of major milestones and work completed.
 - **`geodesic_equation.wl`**: Symbolic ISCO (r=6, L=2√3 in G=c=M=1 units), photon sphere (r=3, unstable), Mercury precession (43.0"/century — exact match). 4 figures exported.
 - **Figures**: effective_potential_massive.pdf, effective_potential_photon.pdf, newtonian_vs_gr.pdf, precessing_orbit.pdf — all embedded in LaTeX.
 - **Figures for Modules 1a-1c**: 8 publication-quality figures added and embedded (light cones, Lorentz boost, γ factor, parallel transport, geodesics on sphere, time dilation, gravitational redshift, Flamm's paraboloid).
+
+---
+
+## 2026-03-19 — Module 1e: Linearized Gravity & Weak-Field Metric
+
+- **LaTeX notes**: 10 sections covering weak-field expansion (g = η + h), Newtonian limit (recovers Newton's law from geodesic equation), the full weak-field metric with equal time and space perturbations, null geodesics and deflection via Born approximation, PPN formalism (γ_PPN = 1 in GR), effective refractive index (n = 1 + 2|Φ|/c²), superposition principle, and preview of the lens equation. 5 exercises.
+- **`weak_field_metric.wl`**: Verified Newtonian limit, Schwarzschild weak-field expansion, deflection integral (∫b dl/(l²+b²)^{3/2} = 2/b), solar deflection = 1.75 arcsec. 4 figures exported.
+- **Solutions**: problems_01e.wl + 01e_Solutions.tex — all verified.
+
+## 2026-03-19 — Module 2: Light Deflection in Curved Spacetime
+
+- **LaTeX notes**: 8 sections covering Soldner's Newtonian calculation (α = 2GM/c²b), full GR derivation from null geodesic orbit equation (Congdon & Keeton eqs. 3.87-3.96), Shapiro time delay, deflection by the Sun (1.75"), Jupiter (16 mas), and galaxies (~4"), exact vs. weak-field comparison. 5 exercises.
+- **`deflection_angle.wl`**: Confirmed deflection integral symbolically, numerical values match textbooks, Shapiro delay = 240 μs. 3 figures exported.
+- **Synergy review**: Module 1e derives deflection via Born approximation (weak-field integral), Module 2 derives via exact null geodesic orbit equation. Both arrive at α = 4GM/(c²b). Cross-references added between modules.
+- **PDF**: Student 79 pages, Instructor 97 pages.

@@ -1,0 +1,172 @@
+% =============================================================================
+% Module 2: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:deflection_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{02_Light_Deflection/problems\_02.wl}{problems\_02.wl},
+which verifies each answer symbolically and numerically.
+
+% ----- Exercise 2.1 -----
+\subsection*{Exercise~\ref{ex:soldner_full}: Soldner's Newtonian Deflection}
+
+\textbf{(a)} For a particle with speed $v_\infty = \speedoflight$ and
+impact parameter~$b$, the angular momentum is $L = b\speedoflight$ and the
+energy per unit mass is $\mathcal{E} = \half \speedoflight^2$.  The
+Newtonian orbit parameters are:
+\begin{align*}
+    p &= \frac{L^2}{\Gnewton M} = \frac{b^2 \speedoflight^2}{\Gnewton M} \,, \\
+    e &= \sqrt{1 + \frac{2\mathcal{E} L^2}{(\Gnewton M)^2}}
+      = \sqrt{1 + \frac{b^2 \speedoflight^4}{(\Gnewton M)^2}} \,.
+\end{align*}
+
+\textbf{(b)} The orbit equation $r(\phi) = p/(1 + e\cos\phi)$ gives
+$r \to \infty$ when $\cos\phi = -1/e$.  The two asymptotic angles are
+$\phi_\pm = \pi \mp \delta$ where $\sin\delta = 1/e$.  The deflection
+angle is:
+\begin{equation*}
+    \alphahat_{\mathrm{Newton}} = 2\delta = 2\arcsin(1/e) \,.
+\end{equation*}
+For $b \gg \Gnewton M / \speedoflight^2$, we have $e \gg 1$, so
+$\delta \approx 1/e \approx \Gnewton M / (b \speedoflight^2)$ and:
+\begin{equation*}
+    \alphahat_{\mathrm{Newton}} \approx \frac{2\Gnewton M}{\speedoflight^2\, b} \,.
+\end{equation*}
+
+\textbf{(c)} For the Sun with $b = \Rsun$:
+\begin{equation*}
+    \alphahat_{\mathrm{Newton}} = \frac{2 \times 6.674 \times 10^{-11}
+    \times 1.989 \times 10^{30}}{(2.998 \times 10^{8})^2 \times
+    6.957 \times 10^{8}}
+    \approx 4.24 \times 10^{-6}~\text{rad}
+    = 0.875'' \,.
+\end{equation*}
+
+% ----- Exercise 2.2 -----
+\subsection*{Exercise~\ref{ex:factor_of_two}: The Factor of 2}
+
+\textbf{(a)} From $\Delta\phi = \pi + 4m/r_0$ with
+$m = \Gnewton M / \speedoflight^2$ and $r_0 \approx b$:
+\begin{equation*}
+    \alphahat = \Delta\phi - \pi = \frac{4m}{r_0}
+    \approx \frac{4\Gnewton M}{\speedoflight^2\, b} \,.
+\end{equation*}
+
+\textbf{(b)} In the weak-field limit, the Schwarzschild metric in
+isotropic coordinates takes the form:
+\begin{equation*}
+    ds^2 \approx -\!\left(1 - \frac{2\Gnewton M}{\speedoflight^2 r}\right)
+    \speedoflight^2\, dt^2
+    + \left(1 + \frac{2\Gnewton M}{\speedoflight^2 r}\right)
+    (dx^2 + dy^2 + dz^2) \,.
+\end{equation*}
+For a null geodesic ($ds^2 = 0$), the effective refractive index is:
+\begin{equation*}
+    n(r) \approx \frac{1 + 2\Gnewton M / (\speedoflight^2 r)}
+    {1 - 2\Gnewton M / (\speedoflight^2 r)}
+    \approx 1 + \frac{4\Gnewton M}{\speedoflight^2 r} \,.
+\end{equation*}
+The Newtonian calculation effectively uses $n = 1 + 2\Gnewton M /
+(\speedoflight^2 r)$ (only the $g_{tt}$ contribution), yielding half the
+deflection.  The spatial curvature ($g_{rr}$) contributes the other factor
+of~$2$.  Physically: in the Newtonian picture only time runs slower near a
+mass, but in GR space is also stretched, so the photon path through curved
+space is additionally bent.
+
+% ----- Exercise 2.3 -----
+\subsection*{Exercise~\ref{ex:deflections_numerical}: Numerical Deflections}
+
+Using $\alphahat = 4\Gnewton M / (\speedoflight^2 b)$:
+
+\textbf{(a) Sun:}
+$\alphahat = 4 \times 6.674 \times 10^{-11} \times 1.989 \times 10^{30}
+/ [(2.998 \times 10^{8})^2 \times 6.957 \times 10^{8}]
+= 8.49 \times 10^{-6}~\text{rad} = 1.75''$.
+
+\textbf{(b) Jupiter:}
+$\alphahat = 4 \times 6.674 \times 10^{-11} \times 1.898 \times 10^{27}
+/ [(2.998 \times 10^{8})^2 \times 7.149 \times 10^{7}]
+= 7.88 \times 10^{-8}~\text{rad} = 0.016'' = 16~\text{mas}$.
+
+\textbf{(c) Galaxy ($M = 10^{12}\,\Msun$, $b = 10$~kpc):}
+$b = 10 \times 3.086 \times 10^{19}~\text{m} = 3.086 \times 10^{20}$~m.
+$\alphahat = 4 \times 6.674 \times 10^{-11} \times 10^{12} \times
+1.989 \times 10^{30} / [(2.998 \times 10^{8})^2 \times
+3.086 \times 10^{20}] \approx 3.95''$.
+
+% ----- Exercise 2.4 -----
+\subsection*{Exercise~\ref{ex:shapiro_radar}: Shapiro Time Delay}
+
+\textbf{(a)} The round-trip time is $\Delta T_{\mathrm{round}} =
+2[T(R_\oplus) + T(R_{\mathrm{Merc}})] - 2(R_\oplus + R_{\mathrm{Merc}})/
+\speedoflight$.  Using eq.~(2.14) and keeping only the leading logarithmic
+term:
+\begin{equation*}
+    \Delta T \approx \frac{4\Gnewton \Msun}{\speedoflight^3}
+    \left[\ln\!\left(\frac{4\, R_\oplus\, R_{\mathrm{Merc}}}{r_0^2}\right)
+    + 1\right] .
+\end{equation*}
+The $+1$ comes from the non-logarithmic correction terms in the
+weak-field expansion.
+
+\textbf{(b)} Numerically:
+\begin{align*}
+    \frac{4\Gnewton \Msun}{\speedoflight^3}
+    &= \frac{4 \times 6.674 \times 10^{-11} \times 1.989 \times 10^{30}}
+    {(2.998 \times 10^{8})^3}
+    = 1.970 \times 10^{-5}~\text{s} = 19.7~\mu\text{s} \,.
+\end{align*}
+The logarithmic factor:
+\begin{equation*}
+    \ln\!\left(\frac{4 \times 1.496 \times 10^{11} \times
+    5.79 \times 10^{10}}{(6.957 \times 10^{8})^2}\right)
+    = \ln(7.15 \times 10^4) \approx 11.2 \,.
+\end{equation*}
+Therefore:
+$\Delta T \approx 19.7 \times (11.2 + 1) = 240~\mu$s.
+
+\textbf{(c)} Shapiro's 1964 measurement gave $200 \pm 20~\mu$s.  The
+small discrepancy with our idealized point-mass calculation is consistent
+given that: (i) Mercury is not exactly at inferior conjunction, (ii) the
+Sun's corona introduces additional delays, and (iii) later measurements
+with the Viking Mars lander confirmed the GR prediction to $\sim 0.1\%$
+accuracy.
+
+% ----- Exercise 2.5 -----
+\subsection*{Exercise~\ref{ex:strong_field}: Exact vs.\ Weak-Field Deflection}
+
+\textbf{(a)--(c)} Using numerical integration (in $G = c = M = 1$ units
+where $\RS = 2$, so $m = 1$ and $b = 2 \times b/\RS$):
+
+\begin{center}
+\begin{tabular}{rcccc}
+\toprule
+$b/\RS$ & $\alphahat_{\mathrm{exact}}$~(rad) &
+$\alphahat_1 = 4m/b$~(rad) &
+$\alphahat_2$~(rad) &
+Error($\alphahat_1$) \\
+\midrule
+5   & 0.5904  & 0.4000 & 0.5178 & $32\%$ \\
+10  & 0.2361  & 0.2000 & 0.2295 & $15\%$ \\
+20  & 0.1081  & 0.1000 & 0.1074 & $7.5\%$ \\
+50  & 0.04122 & 0.04000 & 0.04118 & $3.0\%$ \\
+100 & 0.02030 & 0.02000 & 0.02029 & $1.5\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The errors are substantial even at moderate $b/\RS$ because the expansion
+parameter is $\varepsilon = m/r_0$, and $r_0 < b$ due to gravitational
+attraction, so $\varepsilon > m/b$.  The second-order approximation
+$\alphahat_2 = 4m/b + (15\pi/4)(m/b)^2$ is significantly more accurate.
+
+\textbf{(d)} The first-order approximation achieves $1\%$ accuracy at
+approximately $b/\RS \approx 150$, as confirmed by numerical integration.
+The relatively slow convergence is because the expansion parameter
+$\varepsilon = m/r_0$ is larger than the naive estimate $m/b = 1/(2\,b/\RS)$
+due to the nonlinear relationship between $r_0$ and $b$.
