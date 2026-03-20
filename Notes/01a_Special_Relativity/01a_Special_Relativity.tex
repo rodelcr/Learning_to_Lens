@@ -206,8 +206,17 @@ A spatial rotation in the $x$--$y$ plane by angle $\theta$ is
 
 \subsection{Boosts}
 
-A \textbf{Lorentz boost} along the $x$-axis with rapidity parameter $\phi$
-is (Carroll eq.~1.32):
+Rotations mix two spatial directions using $\sin$ and $\cos$ (circular
+functions that preserve the positive-definite sum $x^2 + y^2$).
+A \textbf{Lorentz boost} mixes a space and a time direction, and must
+preserve the \textit{indefinite} form $-t^2 + x^2$ (the Minkowski
+interval).  The functions that do this are the hyperbolic functions
+$\sinh$ and $\cosh$, which satisfy the identity
+$\cosh^2\phi - \sinh^2\phi = 1$ --- exactly mirroring the Minkowski
+signature (Carroll Sec.~1.3, pp.~11--14).
+
+The boost along the $x$-axis with \textbf{rapidity} parameter $\phi$ is
+therefore (Carroll eq.~1.32):
 \begin{equation}
     \Lambda^{\mu'}{}_\nu =
     \begin{pmatrix}
@@ -218,8 +227,31 @@ is (Carroll eq.~1.32):
     \end{pmatrix} \,.
     \label{eq:boost_rapidity}
 \end{equation}
-Using $v = \tanh\phi$ and $\gamma = (1 - v^2)^{-1/2} = \cosh\phi$, we
-recover the familiar form (Carroll eq.~1.35):
+The rapidity $\phi$ parameterizes the boost in a way that is analogous
+to the rotation angle $\theta$: just as two successive rotations by
+$\theta_1$ and $\theta_2$ give a rotation by $\theta_1 + \theta_2$,
+two successive boosts with rapidities $\phi_1$ and $\phi_2$ compose
+to a single boost with rapidity $\phi_1 + \phi_2$ (Exercise~\ref{ex:boost_composition}).
+
+To connect to the more familiar velocity $v$ of the boosted frame
+(Carroll eqs.~1.33--1.35),
+note that a particle at rest in $S'$ has $x' = 0$, so from the boost
+matrix: $0 = -\sinh\phi \cdot t + \cosh\phi \cdot x$, giving
+$x/t = \tanh\phi$.  Since $x/t$ is the velocity $v$ of the $S'$
+frame as seen from $S$, we identify:
+\begin{equation}
+    v = \tanh\phi \,.
+    \label{eq:rapidity_velocity}
+\end{equation}
+The Lorentz factor $\gamma$ then follows from the hyperbolic identity
+$\cosh^2\phi - \sinh^2\phi = 1$:
+\begin{equation}
+    \gamma \equiv \frac{1}{\sqrt{1 - v^2}} = \cosh\phi \,, \qquad
+    \gamma v = \sinh\phi \,.
+    \label{eq:gamma_def}
+\end{equation}
+Substituting into the boost matrix, we recover the familiar form
+(Carroll eq.~1.35):
 \begin{align}
     t' &= \gamma(t - vx) \,, \nonumber \\
     x' &= \gamma(x - vt) \,.
@@ -256,14 +288,25 @@ Then confirm this symbolically using
 \subsection{Physical Consequences}
 
 The boost equations~\eqref{eq:boost_velocity} immediately lead to the
-classic relativistic effects:
+classic relativistic effects (Carroll Sec.~1.4; Congdon \& Keeton
+Sec.~3.2.3).  In each case the derivation is a single substitution:
 \begin{itemize}
-    \item \textbf{Time dilation:} A clock at rest in $S'$ (i.e., $\Delta x' = 0$)
-          ticks at intervals $\Delta t = \gamma\,\Delta t'$.
-    \item \textbf{Length contraction:} A rod at rest in $S'$ with proper
-          length $L_0$ has measured length $L = L_0/\gamma$ in $S$.
+    \item \textbf{Time dilation:} A clock at rest in $S'$ has
+          $\Delta x' = 0$.  The inverse boost gives
+          $\Delta t = \gamma(\Delta t' + v \cdot 0) = \gamma\,\Delta t'$,
+          so the moving clock appears to run \textit{slow} by a factor
+          $\gamma > 1$.
+    \item \textbf{Length contraction:} A rod at rest in $S'$ has proper
+          length $L_0 = \Delta x'$.  We measure it in $S$ by noting
+          the positions of both ends \textit{simultaneously}
+          ($\Delta t = 0$).  From $\Delta x' = \gamma(\Delta x - v\cdot 0)$
+          we get $L_0 = \gamma\,\Delta x$, hence
+          $L = \Delta x = L_0/\gamma$ --- the rod is shorter in the
+          frame where it moves.
     \item \textbf{Relativity of simultaneity:} Events simultaneous in $S'$
-          ($\Delta t' = 0$) satisfy $\Delta t = \gamma v \Delta x$ in $S$.
+          ($\Delta t' = 0$) satisfy $0 = \gamma(\Delta t - v\,\Delta x)$,
+          giving $\Delta t = v\,\Delta x$: events separated in space
+          are \textit{not} simultaneous in $S$.
 \end{itemize}
 
 \begin{exercise}
@@ -295,17 +338,37 @@ Key examples:
 \paragraph{Four-position:} $x^\mu = (t, x, y, z)$.
 
 \paragraph{Four-velocity:} For a massive particle with worldline
-$x^\mu(\tau)$, the four-velocity is
+$x^\mu(\tau)$, the four-velocity is defined as the derivative of the
+position with respect to \textit{proper time} $\tau$ (the time measured
+by a clock traveling with the particle):
 \begin{equation}
-    U^\mu = \frac{dx^\mu}{d\tau} = \gamma(1, v^x, v^y, v^z) \,.
+    U^\mu = \frac{dx^\mu}{d\tau} \,.
     \label{eq:four_velocity}
 \end{equation}
-Its norm is always $\eta_{\mu\nu} U^\mu U^\nu = -1$ (in units with $c = 1$).
+To express this in terms of coordinate time $t$, use
+$d\tau = dt/\gamma$ (from time dilation, eq.~\eqref{eq:proper_time};
+see also Carroll eq.~1.58), giving
+$U^\mu = \gamma\, dx^\mu/dt = \gamma(1, v^x, v^y, v^z)$
+where $v^i = dx^i/dt$ is the ordinary three-velocity.
 
-\paragraph{Four-momentum:} $p^\mu = m\, U^\mu = (E, p^x, p^y, p^z)$, where
-$E = \gamma m$ is the relativistic energy and $\mathbf{p} = \gamma m\,
-\mathbf{v}$ is the three-momentum.  The invariant norm gives the
-\textbf{energy--momentum relation}:
+The norm of the four-velocity is always
+$\eta_{\mu\nu} U^\mu U^\nu = -1$ (in units with $c = 1$;
+Carroll eq.~1.59).
+This follows directly from the definition:
+$U^\mu U_\mu = (dx^\mu/d\tau)(dx_\mu/d\tau)
+= ds^2/d\tau^2 = -d\tau^2/d\tau^2 = -1$,
+since $ds^2 = -d\tau^2$ along a timelike worldline.
+
+\paragraph{Four-momentum:} The four-momentum is defined as
+$p^\mu = m\, U^\mu$, where $m$ is the rest mass
+(Carroll eq.~1.60).
+Expanding: $p^\mu = m\gamma(1, v^x, v^y, v^z) = (E, p^x, p^y, p^z)$,
+where $E = \gamma m$ is the relativistic energy (which reduces to $m$
+at rest, i.e., $E = mc^2$ in conventional units) and
+$\mathbf{p} = \gamma m\,\mathbf{v}$ is the relativistic three-momentum
+(which reduces to $m\mathbf{v}$ for $v \ll c$;
+Congdon \& Keeton eqs.~3.18--3.23).
+The invariant norm gives the \textbf{energy--momentum relation}:
 \begin{equation}
     \boxed{
     \eta_{\mu\nu}\, p^\mu p^\nu = -E^2 + |\mathbf{p}|^2 = -m^2
