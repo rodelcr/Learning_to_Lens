@@ -132,7 +132,8 @@
 \renewcommand{\order}[1]{\mathcal{O}\!\left(#1\right)} % Order of magnitude (override physics pkg)
 
 % --- Cross-references to Mathematica files ---
+% Links point to the GitHub repository so they work from the published PDF.
 % Usage: \mathlink{01a_Special_Relativity/lorentz_transforms.wl}{Lorentz transform script}
-\newcommand{\mathlink}[2]{\href{../Mathematica/#1}{\texttt{#2}}}
-% Usage: \solnlink{01a_Special_Relativity/problems_01a.nb}{Solutions notebook}
-\newcommand{\solnlink}[2]{\href{../Solutions/#1}{\texttt{#2}}}
+\newcommand{\mathlink}[2]{\href{https://github.com/rodelcr/Learning_to_Lens/blob/main/Mathematica/#1}{\texttt{#2}}}
+% Usage: \solnlink{01a_Special_Relativity/problems_01a.wl}{Solutions notebook}
+\newcommand{\solnlink}[2]{\href{https://github.com/rodelcr/Learning_to_Lens/blob/main/Solutions/#1}{\texttt{#2}}}
