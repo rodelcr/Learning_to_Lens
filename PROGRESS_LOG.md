@@ -141,4 +141,26 @@ Timestamped record of major milestones and work completed.
   - Why giant arcs form along tangential critical curves
 - **`critical_curves_caustics.wl`**: SIS+shear and SIE critical curves/caustics computed, image solver verified to machine precision. 7 figures.
 - **`image_configurations.nb`**: Interactive source placement → image visualization, caustic crossing animation.
-- **PDF**: Student 166 pages, Instructor 205 pages. Only Modules 9 and 10 remain.
+- **PDF**: Student 166 pages, Instructor 205 pages.
+
+---
+
+## 2026-03-19 — Modules 9 & 10 (built in parallel) — TUTORIAL SUITE COMPLETE!
+
+### Module 9: Strong Lensing by Galaxies — Applications
+- **LaTeX notes**: Lens modeling overview (parametric vs free-form), Einstein radius as mass estimator, mass-sheet degeneracy (THE fundamental degeneracy), source position transformation, lensing + stellar kinematics (breaking MSD, power-law profiles, bulge-halo conspiracy), time-delay cosmography (H0LiCOW/TDCOSMO, H₀ tension), real lens systems (Q0957+561, Einstein Cross, B1608+656). 5 exercises.
+- **`galaxy_lensing.wl`**: Mass from θ_E, MSD demonstration, power-law profiles, H₀ from time delays. 5 figures.
+- **`mass_sheet_demo.nb`**: Interactive MSD visualizer, power-law explorer, H₀ estimator.
+
+### Module 10: Strong Lensing by Galaxy Clusters
+- **LaTeX notes**: NFW at cluster scale, giant arcs (formation, ray-tracing, Abell 370), multiple image systems, cluster mass estimation (strong + weak lensing + X-ray), cosmic telescope (magnification bias, HFF, JWST, Earendel), weak lensing introduction (reduced shear, tangential shear profiles), state of the field and future directions (Euclid, Rubin, Roman, SKA). "Where to Go From Here" with software packages and review articles. 5 exercises.
+- **`cluster_lensing.wl`**: NFW cluster lensing, Einstein radius vs mass, giant arc ray-tracing. 3 figures.
+- **`nfw_cluster.nb`**: Interactive cluster explorer with M₂₀₀, concentration, redshift sliders.
+
+### FINAL TOTALS
+- **Student edition: 199 pages**
+- **Instructor edition: 245 pages**
+- **100 exercises** with Mathematica-verified solutions
+- **~75 publication-quality figures**
+- **14 modules** spanning GR foundations through cluster lensing
+- **All derivations verified deterministically via Wolfram Mathematica**

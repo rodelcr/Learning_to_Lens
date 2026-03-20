@@ -1,0 +1,352 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* Created by Module 10: Strong Lensing by Galaxy Clusters *)
+
+Notebook[{
+
+(* --- Title --- *)
+Cell["Module 10: Strong Lensing by Galaxy Clusters \[Dash] Interactive Explorations", "Title"],
+
+Cell["This notebook provides interactive Manipulate widgets for exploring cluster-scale NFW lensing. Use the sliders to vary cluster mass, concentration, lens and source redshifts, and observe how critical curves, giant arcs, magnification maps, and weak lensing shear profiles change.", "Text"],
+
+Cell["Sources: Congdon & Keeton Ch. 7, Narayan & Bartelmann Sec. 4, Meneghetti 2021 Ch. 5", "Text"],
+
+
+(* ===================================================================== *)
+Cell["Setup: Physical Constants and NFW Functions", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"(*", " Physical constants ", "*)"}], "\n",
+  RowBox[{
+   RowBox[{"Gnewton", "=", RowBox[{"6.674", "*^",RowBox[{"-","11"}]}]}], ";",
+   RowBox[{"cc", "=", RowBox[{"2.998", "*^", "8"}]}], ";",
+   RowBox[{"Msolar", "=", RowBox[{"1.989", "*^", "30"}]}], ";",
+   RowBox[{"kpcToM", "=", RowBox[{"3.086", "*^", "19"}]}], ";",
+   RowBox[{"MpcToM", "=", RowBox[{"3.086", "*^", "22"}]}], ";",
+   RowBox[{"radToArcsec", "=", RowBox[{"180", "*", "3600", "/", "Pi"}]}], ";"}]
+ }], "Input"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"(*", " NFW f(x) function ", "*)"}], "\n",
+  RowBox[{
+   RowBox[{
+    RowBox[{"fNFW", "[", RowBox[{"x_", "?", "NumericQ"}], "]"}], ":=",
+    RowBox[{"Which", "[",
+     RowBox[{
+      RowBox[{"x", "<", RowBox[{"1", "-", RowBox[{"10", "^", RowBox[{"-", "6"}]}]}]}], ",",
+      RowBox[{RowBox[{"1", "/", RowBox[{"(", RowBox[{RowBox[{"x", "^", "2"}], "-", "1"}], ")"}]}],
+       RowBox[{"(", RowBox[{"1", "-", RowBox[{RowBox[{"ArcCosh", "[", RowBox[{"1", "/", "x"}], "]"}], "/",
+        RowBox[{"Sqrt", "[", RowBox[{"1", "-", RowBox[{"x", "^", "2"}]}], "]"}]}]}], ")"}]}], ",",
+      RowBox[{RowBox[{"Abs", "[", RowBox[{"x", "-", "1"}], "]"}], "<=", RowBox[{"10", "^", RowBox[{"-", "6"}]}]}], ",",
+      RowBox[{"1", "/", "3"}], ",",
+      RowBox[{"x", ">", RowBox[{"1", "+", RowBox[{"10", "^", RowBox[{"-", "6"}]}]}]}], ",",
+      RowBox[{RowBox[{"1", "/", RowBox[{"(", RowBox[{RowBox[{"x", "^", "2"}], "-", "1"}], ")"}]}],
+       RowBox[{"(", RowBox[{"1", "-", RowBox[{RowBox[{"ArcTan", "[", RowBox[{"Sqrt", "[", RowBox[{RowBox[{"x", "^", "2"}], "-", "1"}], "]"}], "]"}], "/",
+        RowBox[{"Sqrt", "[", RowBox[{RowBox[{"x", "^", "2"}], "-", "1"}], "]"}]}]}], ")"}]}]}],
+     "]"}]}], ";"}]
+ }], "Input"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"(*", " NFW g(x) function ", "*)"}], "\n",
+  RowBox[{
+   RowBox[{
+    RowBox[{"gNFW", "[", RowBox[{"x_", "?", "NumericQ"}], "]"}], ":=",
+    RowBox[{"Which", "[",
+     RowBox[{
+      RowBox[{"x", "<", RowBox[{"1", "-", RowBox[{"10", "^", RowBox[{"-", "6"}]}]}]}], ",",
+      RowBox[{RowBox[{"ArcCosh", "[", RowBox[{"1", "/", "x"}], "]"}], "/",
+       RowBox[{"Sqrt", "[", RowBox[{"1", "-", RowBox[{"x", "^", "2"}]}], "]"}]}], ",",
+      RowBox[{RowBox[{"Abs", "[", RowBox[{"x", "-", "1"}], "]"}], "<=", RowBox[{"10", "^", RowBox[{"-", "6"}]}]}], ",",
+      "1", ",",
+      RowBox[{"x", ">", RowBox[{"1", "+", RowBox[{"10", "^", RowBox[{"-", "6"}]}]}]}], ",",
+      RowBox[{RowBox[{"ArcTan", "[", RowBox[{"Sqrt", "[", RowBox[{RowBox[{"x", "^", "2"}], "-", "1"}], "]"}], "]"}], "/",
+       RowBox[{"Sqrt", "[", RowBox[{RowBox[{"x", "^", "2"}], "-", "1"}], "]"}]}]}],
+     "]"}]}], ";"}]
+ }], "Input"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"(*", " NFW lensing quantities ", "*)"}], "\n",
+  RowBox[{
+   RowBox[{
+    RowBox[{"kappaNFW", "[", RowBox[{"x_", ",", "ks_"}], "]"}], ":=",
+    RowBox[{"ks", " ", RowBox[{"fNFW", "[", "x", "]"}]}]}], ";"}]}, "\n",
+ RowBox[{
+  RowBox[{
+   RowBox[{"kbarNFW", "[", RowBox[{"x_", ",", "ks_"}], "]"}], ":=",
+   RowBox[{RowBox[{"4", " ", "ks", " ", "/", " ", RowBox[{"x", "^", "2"}]}], " ",
+    RowBox[{"(", RowBox[{RowBox[{"Log", "[", RowBox[{"x", "/", "2"}], "]"}], "+",
+     RowBox[{"gNFW", "[", "x", "]"}]}], ")"}]}]}], ";"}], "\n",
+ RowBox[{
+  RowBox[{
+   RowBox[{"gammaNFW", "[", RowBox[{"x_", ",", "ks_"}], "]"}], ":=",
+   RowBox[{RowBox[{"kbarNFW", "[", RowBox[{"x", ",", "ks"}], "]"}], "-",
+    RowBox[{"kappaNFW", "[", RowBox[{"x", ",", "ks"}], "]"}]}]}], ";"}], "\n",
+ RowBox[{
+  RowBox[{
+   RowBox[{"alphaNFWfunc", "[", RowBox[{"x_", ",", "ks_", ",", "thetas_"}], "]"}], ":=",
+   RowBox[{RowBox[{"4", " ", "ks", " ", "thetas", " ", "/", " ", "x"}], " ",
+    RowBox[{"(", RowBox[{RowBox[{"Log", "[", RowBox[{"x", "/", "2"}], "]"}], "+",
+     RowBox[{"gNFW", "[", "x", "]"}]}], ")"}]}]}], ";"}]
+ }], "Input"],
+
+
+(* ===================================================================== *)
+Cell["Section 1: NFW Cluster \[Dash] Vary Mass and Concentration", "Section"],
+
+Cell["Explore how the NFW convergence profile and Einstein radius change with cluster mass and concentration. The dashed horizontal line marks \[Kappa] = 1 (the strong lensing threshold).", "Text"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[",
+  RowBox[{
+   RowBox[{"Module", "[",
+    RowBox[{
+     RowBox[{"{", "H0val, Ezval, Hzval, rhoCritVal, DdM, DsM, DdsM, M200, r200, rs, rhoS, thetaS, sigCr, kappaS, xRange, xt, thetaEval", "}"}],
+     ",",
+     RowBox[{
+      RowBox[{"H0val", "=", RowBox[{"70", "*", "1000", "/", "MpcToM"}]}], ";",
+      RowBox[{"Ezval", "=", RowBox[{"Sqrt", "[", RowBox[{RowBox[{"0.3", "*", SuperscriptBox[RowBox[{"(", RowBox[{"1", "+", "zd"}], ")"}], "3"]}], "+", "0.7"}], "]"}]}], ";",
+      RowBox[{"Hzval", "=", RowBox[{"H0val", "*", "Ezval"}]}], ";",
+      RowBox[{"rhoCritVal", "=", RowBox[{"3", " ", SuperscriptBox["Hzval", "2"], "/", RowBox[{"(", RowBox[{"8", " ", "Pi", " ", "Gnewton"}], ")"}]}]}], ";",
+      RowBox[{"DdM", "=", RowBox[{"900", "*", "MpcToM"}]}], ";",
+      RowBox[{"DsM", "=", RowBox[{"1750", "*", "MpcToM"}]}], ";",
+      RowBox[{"DdsM", "=", RowBox[{"1400", "*", "MpcToM"}]}], ";",
+      RowBox[{"M200", "=", RowBox[{SuperscriptBox["10", "logM"], "*", "Msolar"}]}], ";",
+      RowBox[{"r200", "=", SuperscriptBox[RowBox[{"(", RowBox[{"3", " ", "M200", "/", RowBox[{"(", RowBox[{"800", " ", "Pi", " ", "rhoCritVal"}], ")"}]}], ")"}], RowBox[{"1", "/", "3"}]]}], ";",
+      RowBox[{"rs", "=", RowBox[{"r200", "/", "cVal"}]}], ";",
+      RowBox[{"rhoS", "=", RowBox[{RowBox[{"200", "/", "3"}], " ", "rhoCritVal", " ", RowBox[{SuperscriptBox["cVal", "3"], "/", RowBox[{"(", RowBox[{RowBox[{"Log", "[", RowBox[{"1", "+", "cVal"}], "]"}], "-", RowBox[{"cVal", "/", RowBox[{"(", RowBox[{"1", "+", "cVal"}], ")"}]}]}], ")"}]}]}]}], ";",
+      RowBox[{"thetaS", "=", RowBox[{"rs", "/", "DdM"}]}], ";",
+      RowBox[{"sigCr", "=", RowBox[{SuperscriptBox["cc", "2"], "/", RowBox[{"(", RowBox[{"4", " ", "Pi", " ", "Gnewton"}], ")"}], "*", "DsM", "/", RowBox[{"(", RowBox[{"DdM", "*", "DdsM"}], ")"}]}]}], ";",
+      RowBox[{"kappaS", "=", RowBox[{"2", " ", "rhoS", " ", "rs", "/", "sigCr"}]}], ";",
+      RowBox[{"xRange", "=", RowBox[{"Table", "[", RowBox[{SuperscriptBox["10", "lx"], ",", RowBox[{"{", RowBox[{"lx", ",", RowBox[{"-", "1.5"}], ",", "1.5", ",", "0.03"}], "}"}]}], "]"}]}], ";",
+      RowBox[{"xt", "=", RowBox[{"If", "[", RowBox[{RowBox[{RowBox[{"kbarNFW", "[", RowBox[{"0.01", ",", "kappaS"}], "]"}], ">", "1"}], ",",
+       RowBox[{"x", "/.", RowBox[{"FindRoot", "[", RowBox[{RowBox[{RowBox[{"kbarNFW", "[", RowBox[{"x", ",", "kappaS"}], "]"}], "==", "1"}], ",", RowBox[{"{", RowBox[{"x", ",", "0.3"}], "}"}]}], "]"}]}], ",", "None"}], "]"}]}], ";",
+      RowBox[{"thetaEval", "=", RowBox[{"If", "[", RowBox[{RowBox[{"xt", "=!=", "None"}], ",", RowBox[{"xt", "*", "thetaS", "*", "radToArcsec"}], ",", "None"}], "]"}]}], ";",
+      RowBox[{"Column", "[", RowBox[{"{",
+       RowBox[{
+        RowBox[{"Row", "[", RowBox[{"{",
+         RowBox[{
+          RowBox[{"Style", "[", RowBox[{RowBox[{"StringForm", "[", RowBox[{"\"\\!\\(\\*SubscriptBox[\\(\[Theta]\\), \\(E\\)]\\) = `` arcsec\"", ",",
+           RowBox[{"If", "[", RowBox[{RowBox[{"thetaEval", "=!=", "None"}], ",", RowBox[{"NumberForm", "[", RowBox[{"thetaEval", ",", RowBox[{"{", RowBox[{"4", ",", "1"}], "}"}]}], "]"}], ",", "\"N/A\""}], "]"}]}], "]"}], ",", "14"}], "]"}]}],
+        "}"}], "]"}], ",",
+        RowBox[{"Show", "[",
+         RowBox[{
+          RowBox[{"ListLogLogPlot", "[",
+           RowBox[{
+            RowBox[{"Table", "[", RowBox[{RowBox[{"{", RowBox[{RowBox[{"x", "*", "thetaS", "*", "radToArcsec"}], ",", RowBox[{"kappaNFW", "[", RowBox[{"x", ",", "kappaS"}], "]"}]}], "}"}], ",", RowBox[{"{", RowBox[{"x", ",", "xRange"}], "}"}]}], "]"}], ",",
+            RowBox[{"Joined", "->", "True"}], ",",
+            RowBox[{"PlotStyle", "->", RowBox[{"{", RowBox[{"Blue", ",", RowBox[{"AbsoluteThickness", "[", "2", "]"}]}], "}"}]}], ",",
+            RowBox[{"Frame", "->", "True"}], ",",
+            RowBox[{"FrameLabel", "->", RowBox[{"{", RowBox[{"Style", "[", RowBox[{"\"\[Theta] (arcsec)\"", ",", "13"}], "]"}], ",", RowBox[{"Style", "[", RowBox[{"\"\[Kappa](\[Theta])\"", ",", "13"}], "]"}], "}"}]}], ",",
+            RowBox[{"PlotRange", "->", RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{"0.5", ",", "500"}], "}"}], ",", RowBox[{"{", RowBox[{"0.005", ",", "10"}], "}"}]}], "}"}]}], ",",
+            RowBox[{"ImageSize", "->", "450"}]}],
+           "]"}], ",",
+          RowBox[{"LogLogPlot", "[", RowBox[{"1", ",", RowBox[{"{", RowBox[{"th", ",", "0.5", ",", "500"}], "}"}], ",", RowBox[{"PlotStyle", "->", RowBox[{"{", RowBox[{"Gray", ",", "Dashed"}], "}"}]}]}], "]"}], ",",
+          RowBox[{"If", "[", RowBox[{RowBox[{"thetaEval", "=!=", "None"}], ",",
+           RowBox[{"Graphics", "[", RowBox[{"{", RowBox[{"Red", ",", "Dashed", ",", RowBox[{"AbsoluteThickness", "[", "1.5", "]"}], ",",
+            RowBox[{"Line", "[", RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{RowBox[{"Log", "[", "thetaEval", "]"}], ",", RowBox[{"Log", "[", "0.005", "]"}]}], "}"}], ",", RowBox[{"{", RowBox[{RowBox[{"Log", "[", "thetaEval", "]"}], ",", RowBox[{"Log", "[", "10", "]"}]}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}], ",",
+           RowBox[{"Graphics", "[", RowBox[{"{", "}"}], "]"}]}], "]"}]}],
+         "]"}]}],
+      "}"}], "]"}]}]}],
+    "]"}], ",",
+   RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{"logM", ",", "15", ",", "\"log\\!\\(\\*SubscriptBox[\\(M\\), \\(200\\)]\\)/\\!\\(\\*SubscriptBox[\\(M\\), \\(\[CircleDot]\\)]\\)\""}], "}"}], ",", "13.5", ",", "15.5", ",", "0.1"}], "}"}], ",",
+   RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{"cVal", ",", "5", ",", "\"Concentration c\""}], "}"}], ",", "2", ",", "15", ",", "1"}], "}"}], ",",
+   RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{"zd", ",", "0.3", ",", "\"\\!\\(\\*SubscriptBox[\\(z\\), \\(d\\)]\\)\""}], "}"}], ",", "0.1", ",", "0.8", ",", "0.05"}], "}"}]}],
+  "]"}]
+], "Input"],
+
+
+(* ===================================================================== *)
+Cell["Section 2: Giant Arc Formation", "Section"],
+
+Cell["Visualize how a circular background source is distorted into a giant arc by an NFW cluster lens. Move the source position to see Einstein rings, arcs, and counter-images.", "Text"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[",
+  RowBox[{
+   RowBox[{"Module", "[",
+    RowBox[{
+     RowBox[{"{", "H0val, Ezval, Hzval, rhoCritVal, DdM, DsM, DdsM, M200, r200, rs, rhoS, thetaS, sigCr, kappaS, xt, thetaEval, gridR, step, imgPts, alphaR, thetaR, beta", "}"}],
+     ",",
+     RowBox[{
+      RowBox[{"H0val", "=", RowBox[{"70", "*", "1000", "/", "MpcToM"}]}], ";",
+      RowBox[{"Ezval", "=", RowBox[{"Sqrt", "[", RowBox[{RowBox[{"0.3", "*", SuperscriptBox[RowBox[{"(", "1.3", ")"}], "3"]}], "+", "0.7"}], "]"}]}], ";",
+      RowBox[{"Hzval", "=", RowBox[{"H0val", "*", "Ezval"}]}], ";",
+      RowBox[{"rhoCritVal", "=", RowBox[{"3", " ", SuperscriptBox["Hzval", "2"], "/", RowBox[{"(", RowBox[{"8", " ", "Pi", " ", "Gnewton"}], ")"}]}]}], ";",
+      RowBox[{"DdM", "=", RowBox[{"900", "*", "MpcToM"}]}], ";",
+      RowBox[{"DsM", "=", RowBox[{"1750", "*", "MpcToM"}]}], ";",
+      RowBox[{"DdsM", "=", RowBox[{"1400", "*", "MpcToM"}]}], ";",
+      RowBox[{"M200", "=", RowBox[{SuperscriptBox["10", "15"], "*", "Msolar"}]}], ";",
+      RowBox[{"r200", "=", SuperscriptBox[RowBox[{"(", RowBox[{"3", " ", "M200", "/", RowBox[{"(", RowBox[{"800", " ", "Pi", " ", "rhoCritVal"}], ")"}]}], ")"}], RowBox[{"1", "/", "3"}]]}], ";",
+      RowBox[{"rs", "=", RowBox[{"r200", "/", "5"}]}], ";",
+      RowBox[{"rhoS", "=", RowBox[{RowBox[{"200", "/", "3"}], " ", "rhoCritVal", " ", RowBox[{SuperscriptBox["5", "3"], "/", RowBox[{"(", RowBox[{RowBox[{"Log", "[", "6", "]"}], "-", RowBox[{"5", "/", "6"}]}], ")"}]}]}]}], ";",
+      RowBox[{"thetaS", "=", RowBox[{"rs", "/", "DdM"}]}], ";",
+      RowBox[{"sigCr", "=", RowBox[{SuperscriptBox["cc", "2"], "/", RowBox[{"(", RowBox[{"4", " ", "Pi", " ", "Gnewton"}], ")"}], "*", "DsM", "/", RowBox[{"(", RowBox[{"DdM", "*", "DdsM"}], ")"}]}]}], ";",
+      RowBox[{"kappaS", "=", RowBox[{"2", " ", "rhoS", " ", "rs", "/", "sigCr"}]}], ";",
+      RowBox[{"xt", "=", RowBox[{"x", "/.", RowBox[{"FindRoot", "[", RowBox[{RowBox[{RowBox[{"kbarNFW", "[", RowBox[{"x", ",", "kappaS"}], "]"}], "==", "1"}], ",", RowBox[{"{", RowBox[{"x", ",", "0.3"}], "}"}]}], "]"}]}]}], ";",
+      RowBox[{"thetaEval", "=", RowBox[{"xt", "*", "thetaS", "*", "radToArcsec"}]}], ";",
+      RowBox[{"gridR", "=", RowBox[{"1.5", "*", "thetaEval"}]}], ";",
+      RowBox[{"step", "=", RowBox[{"gridR", "/", "100"}]}], ";",
+      RowBox[{"imgPts", "=", RowBox[{"Reap", "[",
+       RowBox[{"Do", "[",
+        RowBox[{
+         RowBox[{"Module", "[", RowBox[{RowBox[{"{", RowBox[{"xNFW", ",", "aR", ",", "ratio", ",", "b1", ",", "b2"}], "}"}], ",",
+          RowBox[{
+           RowBox[{"thetaR", "=", RowBox[{"Sqrt", "[", RowBox[{RowBox[{"th1", "^", "2"}], "+", RowBox[{"th2", "^", "2"}]}], "]"}]}], ";",
+           RowBox[{"If", "[", RowBox[{RowBox[{"thetaR", ">", "0.1"}], ",",
+            RowBox[{
+             RowBox[{"xNFW", "=", RowBox[{"thetaR", "/", RowBox[{"(", RowBox[{"thetaS", "*", "radToArcsec"}], ")"}]}]}], ";",
+             RowBox[{"aR", "=", RowBox[{RowBox[{"4", "*", "kappaS", "*", "thetaS", "*", "radToArcsec", "/", "xNFW"}], "*",
+              RowBox[{"(", RowBox[{RowBox[{"Log", "[", RowBox[{"xNFW", "/", "2"}], "]"}], "+", RowBox[{"gNFW", "[", "xNFW", "]"}]}], ")"}]}]}], ";",
+             RowBox[{"ratio", "=", RowBox[{"aR", "/", "thetaR"}]}], ";",
+             RowBox[{"b1", "=", RowBox[{"th1", "*", RowBox[{"(", RowBox[{"1", "-", "ratio"}], ")"}]}]}], ";",
+             RowBox[{"b2", "=", RowBox[{"th2", "*", RowBox[{"(", RowBox[{"1", "-", "ratio"}], ")"}]}]}], ";",
+             RowBox[{"If", "[", RowBox[{RowBox[{RowBox[{"Sqrt", "[", RowBox[{SuperscriptBox[RowBox[{"(", RowBox[{"b1", "-", "betaPos"}], ")"}], "2"], "+", SuperscriptBox["b2", "2"]}], "]"}], "<=", "srcR"}], ",",
+              RowBox[{"Sow", "[", RowBox[{"{", RowBox[{"th1", ",", "th2"}], "}"}], "]"}]}], "]"}]}]}], "]"}]}]}],
+         "]"}], ",",
+         RowBox[{"{", RowBox[{"th1", ",", RowBox[{"-", "gridR"}], ",", "gridR", ",", "step"}], "}"}], ",",
+         RowBox[{"{", RowBox[{"th2", ",", RowBox[{"-", "gridR"}], ",", "gridR", ",", "step"}], "}"}]}],
+        "]"}],
+       "]"}]}], ";",
+      RowBox[{"imgPts", "=", RowBox[{"If", "[", RowBox[{RowBox[{RowBox[{"Length", "[", RowBox[{"imgPts", "[", RowBox[{"[", "2", "]"}], "]"}], "]"}], ">", "0"}], ",", RowBox[{"imgPts", "[", RowBox[{"[", RowBox[{"2", ",", "1"}], "]"}], "]"}], ",", RowBox[{"{", "}"}]}], "]"}]}], ";",
+      RowBox[{"Show", "[",
+       RowBox[{
+        RowBox[{"Graphics", "[", RowBox[{RowBox[{"{",
+         RowBox[{
+          RowBox[{"{", RowBox[{"Blue", ",", "Dashed", ",", RowBox[{"AbsoluteThickness", "[", "1.5", "]"}], ",",
+           RowBox[{"Circle", "[", RowBox[{RowBox[{"{", RowBox[{"0", ",", "0"}], "}"}], ",", "thetaEval"}], "]"}]}], "}"}], ",",
+          RowBox[{"{", RowBox[{"Black", ",", RowBox[{"Disk", "[", RowBox[{RowBox[{"{", RowBox[{"0", ",", "0"}], "}"}], ",", "0.5"}], "]"}]}], "}"}], ",",
+          RowBox[{"If", "[", RowBox[{RowBox[{RowBox[{"Length", "[", "imgPts", "]"}], ">", "0"}], ",",
+           RowBox[{"{", RowBox[{"Orange", ",", RowBox[{"PointSize", "[", "Small", "]"}], ",", RowBox[{"Point", "[", "imgPts", "]"}]}], "}"}], ",",
+           RowBox[{"{", "}"}]}], "]"}]}],
+        "}"}], ",",
+        RowBox[{"PlotRange", "->", RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{RowBox[{"-", "gridR"}], ",", "gridR"}], "}"}], ",", RowBox[{"{", RowBox[{RowBox[{"-", "gridR"}], ",", "gridR"}], "}"}]}], "}"}]}], ",",
+        RowBox[{"Frame", "->", "True"}], ",",
+        RowBox[{"FrameLabel", "->", RowBox[{"{", RowBox[{RowBox[{"Style", "[", RowBox[{"\"\!\(\*SubscriptBox[\(\[Theta]\), \(1\)]\) (arcsec)\"", ",", "13"}], "]"}], ",", RowBox[{"Style", "[", RowBox[{"\"\!\(\*SubscriptBox[\(\[Theta]\), \(2\)]\) (arcsec)\"", ",", "13"}], "]"}]}], "}"}]}], ",",
+        RowBox[{"AspectRatio", "->", "1"}], ",",
+        RowBox[{"ImageSize", "->", "450"}], ",",
+        RowBox[{"PlotLabel", "->", RowBox[{"Style", "[", RowBox[{RowBox[{"StringForm", "[", RowBox[{"\"\!\(\*SubscriptBox[\(\[Theta]\), \(E\)]\) = `` arcsec, \[Beta] = `` arcsec\"", ",", RowBox[{"NumberForm", "[", RowBox[{"thetaEval", ",", RowBox[{"{", RowBox[{"4", ",", "1"}], "}"}]}], "]"}], ",", RowBox[{"NumberForm", "[", RowBox[{"betaPos", ",", RowBox[{"{", RowBox[{"4", ",", "1"}], "}"}]}], "]"}]}], "]"}], ",", "13"}], "]"}]}]}],
+       "]"}], "]"}]}]}],
+    "]"}], ",",
+   RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{"betaPos", ",", "10", ",", "\"\[Beta] (arcsec)\""}], "}"}], ",", "0", ",", "40", ",", "0.5"}], "}"}], ",",
+   RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{"srcR", ",", "0.5", ",", "\"Source radius (arcsec)\""}], "}"}], ",", "0.1", ",", "3", ",", "0.1"}], "}"}]}],
+  "]"}]
+], "Input"],
+
+
+(* ===================================================================== *)
+Cell["Section 3: Magnification Map", "Section"],
+
+Cell["The magnification map shows |\[Mu]| as a function of position in the image plane. The critical curve (where |\[Mu]| \[Rule] \[Infinity]) is clearly visible as the bright ring.", "Text"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[",
+  RowBox[{
+   RowBox[{"Module", "[",
+    RowBox[{
+     RowBox[{"{", "H0val, Ezval, Hzval, rhoCritVal, DdM, DsM, DdsM, M200, r200, rs, rhoS, thetaS, sigCr, kappaS, gridR, magMap", "}"}],
+     ",",
+     RowBox[{
+      RowBox[{"H0val", "=", RowBox[{"70", "*", "1000", "/", "MpcToM"}]}], ";",
+      RowBox[{"Ezval", "=", RowBox[{"Sqrt", "[", RowBox[{RowBox[{"0.3", "*", SuperscriptBox[RowBox[{"(", "1.3", ")"}], "3"]}], "+", "0.7"}], "]"}]}], ";",
+      RowBox[{"Hzval", "=", RowBox[{"H0val", "*", "Ezval"}]}], ";",
+      RowBox[{"rhoCritVal", "=", RowBox[{"3", " ", SuperscriptBox["Hzval", "2"], "/", RowBox[{"(", RowBox[{"8", " ", "Pi", " ", "Gnewton"}], ")"}]}]}], ";",
+      RowBox[{"DdM", "=", RowBox[{"900", "*", "MpcToM"}]}], ";",
+      RowBox[{"DsM", "=", RowBox[{"1750", "*", "MpcToM"}]}], ";",
+      RowBox[{"DdsM", "=", RowBox[{"1400", "*", "MpcToM"}]}], ";",
+      RowBox[{"M200", "=", RowBox[{SuperscriptBox["10", "logMmag"], "*", "Msolar"}]}], ";",
+      RowBox[{"r200", "=", SuperscriptBox[RowBox[{"(", RowBox[{"3", " ", "M200", "/", RowBox[{"(", RowBox[{"800", " ", "Pi", " ", "rhoCritVal"}], ")"}]}], ")"}], RowBox[{"1", "/", "3"}]]}], ";",
+      RowBox[{"rs", "=", RowBox[{"r200", "/", "cMag"}]}], ";",
+      RowBox[{"rhoS", "=", RowBox[{RowBox[{"200", "/", "3"}], " ", "rhoCritVal", " ", RowBox[{SuperscriptBox["cMag", "3"], "/", RowBox[{"(", RowBox[{RowBox[{"Log", "[", RowBox[{"1", "+", "cMag"}], "]"}], "-", RowBox[{"cMag", "/", RowBox[{"(", RowBox[{"1", "+", "cMag"}], ")"}]}]}], ")"}]}]}]}], ";",
+      RowBox[{"thetaS", "=", RowBox[{"rs", "/", "DdM"}]}], ";",
+      RowBox[{"sigCr", "=", RowBox[{SuperscriptBox["cc", "2"], "/", RowBox[{"(", RowBox[{"4", " ", "Pi", " ", "Gnewton"}], ")"}], "*", "DsM", "/", RowBox[{"(", RowBox[{"DdM", "*", "DdsM"}], ")"}]}]}], ";",
+      RowBox[{"kappaS", "=", RowBox[{"2", " ", "rhoS", " ", "rs", "/", "sigCr"}]}], ";",
+      RowBox[{"gridR", "=", "80"}], ";",
+      RowBox[{"magMap", "=", RowBox[{"Table", "[",
+       RowBox[{
+        RowBox[{"Module", "[", RowBox[{RowBox[{"{", RowBox[{"thetaR", ",", "xNFW", ",", "kap", ",", "gam", ",", "mu"}], "}"}], ",",
+         RowBox[{
+          RowBox[{"thetaR", "=", RowBox[{"Sqrt", "[", RowBox[{RowBox[{"th1", "^", "2"}], "+", RowBox[{"th2", "^", "2"}]}], "]"}]}], ";",
+          RowBox[{"If", "[", RowBox[{RowBox[{"thetaR", "<", "0.5"}], ",", "0", ",",
+           RowBox[{
+            RowBox[{"xNFW", "=", RowBox[{"thetaR", "/", RowBox[{"(", RowBox[{"thetaS", "*", "radToArcsec"}], ")"}]}]}], ";",
+            RowBox[{"kap", "=", RowBox[{"kappaNFW", "[", RowBox[{"xNFW", ",", "kappaS"}], "]"}]}], ";",
+            RowBox[{"gam", "=", RowBox[{"Abs", "[", RowBox[{"gammaNFW", "[", RowBox[{"xNFW", ",", "kappaS"}], "]"}], "]"}]}], ";",
+            RowBox[{"mu", "=", RowBox[{"1", "/", RowBox[{"Abs", "[", RowBox[{RowBox[{SuperscriptBox[RowBox[{"(", RowBox[{"1", "-", "kap"}], ")"}], "2"]}], "-", SuperscriptBox["gam", "2"]}], "]"}]}]}], ";",
+            RowBox[{"Log10", "[", RowBox[{"Min", "[", RowBox[{"mu", ",", "1000"}], "]"}], "]"}]}]}], "]"}]}]}],
+        "]"}], ",",
+        RowBox[{"{", RowBox[{"th2", ",", RowBox[{"-", "gridR"}], ",", "gridR", ",", "1.5"}], "}"}], ",",
+        RowBox[{"{", RowBox[{"th1", ",", RowBox[{"-", "gridR"}], ",", "gridR", ",", "1.5"}], "}"}]}],
+       "]"}]}], ";",
+      RowBox[{"ArrayPlot", "[", RowBox[{"magMap", ",",
+       RowBox[{"ColorFunction", "->", "\"SunsetColors\""}], ",",
+       RowBox[{"Frame", "->", "True"}], ",",
+       RowBox[{"FrameLabel", "->", RowBox[{"{", RowBox[{RowBox[{"Style", "[", RowBox[{"\"\!\(\*SubscriptBox[\(\[Theta]\), \(2\)]\) (arcsec)\"", ",", "13"}], "]"}], ",", RowBox[{"Style", "[", RowBox[{"\"\!\(\*SubscriptBox[\(\[Theta]\), \(1\)]\) (arcsec)\"", ",", "13"}], "]"}]}], "}"}]}], ",",
+       RowBox[{"PlotLabel", "->", RowBox[{"Style", "[", RowBox[{"\"Magnification Map: log|\[Mu]|\"", ",", "14"}], "]"}]}], ",",
+       RowBox[{"ImageSize", "->", "450"}], ",",
+       RowBox[{"PlotLegends", "->", RowBox[{"BarLegend", "[", RowBox[{"{", RowBox[{"\"SunsetColors\"", ",", RowBox[{"{", RowBox[{"0", ",", "3"}], "}"}]}], "}"}], "]"}]}]}],
+      "]"}]}]}],
+    "]"}], ",",
+   RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{"logMmag", ",", "15", ",", "\"log\\!\\(\\*SubscriptBox[\\(M\\), \\(200\\)]\\)/\\!\\(\\*SubscriptBox[\\(M\\), \\(\[CircleDot]\\)]\\)\""}], "}"}], ",", "14", ",", "15.5", ",", "0.1"}], "}"}], ",",
+   RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{"cMag", ",", "5", ",", "\"Concentration c\""}], "}"}], ",", "3", ",", "10", ",", "1"}], "}"}]}],
+  "]"}]
+], "Input"],
+
+
+(* ===================================================================== *)
+Cell["Section 4: Weak Lensing Shear Profile", "Section"],
+
+Cell["The tangential shear profile \!\(\*SubscriptBox[\(\[Gamma]\), \(t\)]\)(\[Theta]) around an NFW cluster. At small radii the shear enters the strong lensing regime (\!\(\*SubscriptBox[\(\[Gamma]\), \(t\)]\) > 1); at large radii it falls off as a power law. This profile is the observable quantity in weak lensing analyses.", "Text"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[",
+  RowBox[{
+   RowBox[{"Module", "[",
+    RowBox[{
+     RowBox[{"{", "H0val, Ezval, Hzval, rhoCritVal, DdM, DsM, DdsM, M200, r200, rs, rhoS, thetaS, sigCr, kappaS, xRange, shearData", "}"}],
+     ",",
+     RowBox[{
+      RowBox[{"H0val", "=", RowBox[{"70", "*", "1000", "/", "MpcToM"}]}], ";",
+      RowBox[{"Ezval", "=", RowBox[{"Sqrt", "[", RowBox[{RowBox[{"0.3", "*", SuperscriptBox[RowBox[{"(", "1.3", ")"}], "3"]}], "+", "0.7"}], "]"}]}], ";",
+      RowBox[{"Hzval", "=", RowBox[{"H0val", "*", "Ezval"}]}], ";",
+      RowBox[{"rhoCritVal", "=", RowBox[{"3", " ", SuperscriptBox["Hzval", "2"], "/", RowBox[{"(", RowBox[{"8", " ", "Pi", " ", "Gnewton"}], ")"}]}]}], ";",
+      RowBox[{"DdM", "=", RowBox[{"900", "*", "MpcToM"}]}], ";",
+      RowBox[{"DsM", "=", RowBox[{"1750", "*", "MpcToM"}]}], ";",
+      RowBox[{"DdsM", "=", RowBox[{"1400", "*", "MpcToM"}]}], ";",
+      RowBox[{"M200", "=", RowBox[{SuperscriptBox["10", "logMwl"], "*", "Msolar"}]}], ";",
+      RowBox[{"r200", "=", SuperscriptBox[RowBox[{"(", RowBox[{"3", " ", "M200", "/", RowBox[{"(", RowBox[{"800", " ", "Pi", " ", "rhoCritVal"}], ")"}]}], ")"}], RowBox[{"1", "/", "3"}]]}], ";",
+      RowBox[{"rs", "=", RowBox[{"r200", "/", "cWL"}]}], ";",
+      RowBox[{"rhoS", "=", RowBox[{RowBox[{"200", "/", "3"}], " ", "rhoCritVal", " ", RowBox[{SuperscriptBox["cWL", "3"], "/", RowBox[{"(", RowBox[{RowBox[{"Log", "[", RowBox[{"1", "+", "cWL"}], "]"}], "-", RowBox[{"cWL", "/", RowBox[{"(", RowBox[{"1", "+", "cWL"}], ")"}]}]}], ")"}]}]}]}], ";",
+      RowBox[{"thetaS", "=", RowBox[{"rs", "/", "DdM"}]}], ";",
+      RowBox[{"sigCr", "=", RowBox[{SuperscriptBox["cc", "2"], "/", RowBox[{"(", RowBox[{"4", " ", "Pi", " ", "Gnewton"}], ")"}], "*", "DsM", "/", RowBox[{"(", RowBox[{"DdM", "*", "DdsM"}], ")"}]}]}], ";",
+      RowBox[{"kappaS", "=", RowBox[{"2", " ", "rhoS", " ", "rs", "/", "sigCr"}]}], ";",
+      RowBox[{"xRange", "=", RowBox[{"Table", "[", RowBox[{SuperscriptBox["10", "lx"], ",", RowBox[{"{", RowBox[{"lx", ",", RowBox[{"-", "1"}], ",", "2", ",", "0.03"}], "}"}]}], "]"}]}], ";",
+      RowBox[{"shearData", "=", RowBox[{"Table", "[",
+       RowBox[{RowBox[{"{", RowBox[{RowBox[{"x", "*", "thetaS", "*", "radToArcsec", "/", "60"}], ",", RowBox[{"Abs", "[", RowBox[{"gammaNFW", "[", RowBox[{"x", ",", "kappaS"}], "]"}], "]"}]}], "}"}], ",",
+        RowBox[{"{", RowBox[{"x", ",", "xRange"}], "}"}]}], "]"}]}], ";",
+      RowBox[{"ListLogLogPlot", "[", RowBox[{"shearData", ",",
+       RowBox[{"Joined", "->", "True"}], ",",
+       RowBox[{"PlotStyle", "->", RowBox[{"{", RowBox[{"Red", ",", RowBox[{"AbsoluteThickness", "[", "2", "]"}]}], "}"}]}], ",",
+       RowBox[{"Frame", "->", "True"}], ",",
+       RowBox[{"FrameLabel", "->", RowBox[{"{", RowBox[{RowBox[{"Style", "[", RowBox[{"\"\[Theta] (arcmin)\"", ",", "13"}], "]"}], ",", RowBox[{"Style", "[", RowBox[{"\"\!\(\*SubscriptBox[\(\[Gamma]\), \(t\)]\)(\[Theta])\"", ",", "13"}], "]"}]}], "}"}]}], ",",
+       RowBox[{"PlotLabel", "->", RowBox[{"Style", "[", RowBox[{"\"NFW Tangential Shear Profile\"", ",", "14"}], "]"}]}], ",",
+       RowBox[{"PlotRange", "->", RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{"0.1", ",", "30"}], "}"}], ",", RowBox[{"{", RowBox[{"0.001", ",", "10"}], "}"}]}], "}"}]}], ",",
+       RowBox[{"ImageSize", "->", "450"}], ",",
+       RowBox[{"GridLines", "->", "Automatic"}]}],
+      "]"}]}]}],
+    "]"}], ",",
+   RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{"logMwl", ",", "15", ",", "\"log\\!\\(\\*SubscriptBox[\\(M\\), \\(200\\)]\\)/\\!\\(\\*SubscriptBox[\\(M\\), \\(\[CircleDot]\\)]\\)\""}], "}"}], ",", "14", ",", "15.5", ",", "0.1"}], "}"}], ",",
+   RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{"cWL", ",", "5", ",", "\"Concentration c\""}], "}"}], ",", "3", ",", "10", ",", "1"}], "}"}]}],
+  "]"}]
+], "Input"]
+
+},
+WindowSize -> {900, 800},
+WindowMargins -> {{Automatic, Automatic}, {Automatic, Automatic}},
+FrontEndVersion -> "14.0",
+StyleDefinitions -> "Default.nb"
+]

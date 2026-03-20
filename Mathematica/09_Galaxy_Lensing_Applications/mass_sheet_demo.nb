@@ -1,0 +1,666 @@
+Notebook[{
+
+(* =========================================================================
+   mass_sheet_demo.nb
+   Module 9: Strong Lensing by Galaxies: Applications
+   =========================================================================
+   Purpose: Interactive visualizations for:
+            1. Mass-sheet degeneracy: slider for lambda, show how images
+               stay fixed but magnifications change
+            2. Power-law profile explorer: vary gamma', show kappa, gamma,
+               critical curves
+            3. H0 estimator from time delay + model
+
+   Sources: Congdon & Keeton Ch. 6.5-6.6
+            Narayan & Bartelmann Sec. 3.6-3.7
+            Schneider & Sluse (2014)
+
+   Units:   Angular positions in arcsec, thetaE = 1
+   ========================================================================= *)
+
+Cell[TextData[{"Module 9: Mass-Sheet Degeneracy & Applications --- Interactive Visualizations"}], "Title"],
+
+Cell[TextData[{"This notebook provides interactive tools for exploring the \
+mass-sheet degeneracy, power-law density profiles, and time-delay \
+cosmography. Use the sliders to vary parameters and observe how lensing \
+observables change."}], "Text"],
+
+(* =====================================================================
+   Setup: SIS/SIE Functions and Cosmological Distances
+   ===================================================================== *)
+
+Cell[TextData[{"0. Setup: Common Functions"}], "Section"],
+
+Cell[BoxData[RowBox[{
+    "(* SIS convergence and deflection *)\n",
+    RowBox[{"kappaSIS", "[", RowBox[{"theta_", ",", " ", "tE_"}], "]"}],
+    " ", ":=", " ",
+    RowBox[{"tE", " ", "/", " ", RowBox[{"(", RowBox[{"2", " ", "theta"}], ")"}]}]
+}]], "Input"],
+
+Cell[BoxData[RowBox[{
+    RowBox[{"alphaSIS", "[", RowBox[{"theta_", ",", " ", "tE_"}], "]"}],
+    " ", ":=", " ", "tE"
+}]], "Input"],
+
+Cell[BoxData[RowBox[{
+    "(* SIE deflection angle - Kormann et al. 1994 *)\n",
+    RowBox[{"alphaSIE1", "[",
+        RowBox[{"th1_", ",", " ", "th2_", ",", " ", "tE_", ",", " ", "q_"}],
+    "]"}], " ", ":=", " ",
+    RowBox[{"Module", "[",
+        RowBox[{
+            RowBox[{"{", "ep", "}"}], ",", "\n",
+            RowBox[{
+                RowBox[{"ep", " ", "=", " ",
+                    RowBox[{"Sqrt", "[",
+                        RowBox[{"1", " ", "-", " ",
+                            RowBox[{"q", "^", "2"}]}],
+                    "]"}]
+                }], ";", "\n",
+                RowBox[{"tE", " ", "*", " ",
+                    RowBox[{"Sqrt", "[", "q", "]"}], " ", "/", " ", "ep",
+                    " ", "*", " ",
+                    RowBox[{"ArcTan", "[",
+                        RowBox[{
+                            RowBox[{"th1", " ", "*", " ", "ep"}], " ", "/", " ",
+                            RowBox[{"Sqrt", "[",
+                                RowBox[{
+                                    RowBox[{"q", "^", "2", " ", "*", " ",
+                                        RowBox[{"th1", "^", "2"}]},
+                                    " ", "+", " ",
+                                    RowBox[{"th2", "^", "2"}]}
+                                ],
+                            "]"}]
+                        }],
+                    "]"}]
+                }]
+            }]
+        },
+    "]"}]
+}]], "Input"],
+
+Cell[BoxData[RowBox[{
+    RowBox[{"alphaSIE2", "[",
+        RowBox[{"th1_", ",", " ", "th2_", ",", " ", "tE_", ",", " ", "q_"}],
+    "]"}], " ", ":=", " ",
+    RowBox[{"Module", "[",
+        RowBox[{
+            RowBox[{"{", "ep", "}"}], ",", "\n",
+            RowBox[{
+                RowBox[{"ep", " ", "=", " ",
+                    RowBox[{"Sqrt", "[",
+                        RowBox[{"1", " ", "-", " ",
+                            RowBox[{"q", "^", "2"}]}],
+                    "]"}]
+                }], ";", "\n",
+                RowBox[{"tE", " ", "*", " ",
+                    RowBox[{"Sqrt", "[", "q", "]"}], " ", "/", " ", "ep",
+                    " ", "*", " ",
+                    RowBox[{"ArcTanh", "[",
+                        RowBox[{
+                            RowBox[{"th2", " ", "*", " ", "ep"}], " ", "/", " ",
+                            RowBox[{"Sqrt", "[",
+                                RowBox[{
+                                    RowBox[{"q", "^", "2", " ", "*", " ",
+                                        RowBox[{"th1", "^", "2"}]},
+                                    " ", "+", " ",
+                                    RowBox[{"th2", "^", "2"}]}
+                                ],
+                            "]"}]
+                        }],
+                    "]"}]
+                }]
+            }]
+        },
+    "]"}]
+}]], "Input"],
+
+Cell[BoxData[RowBox[{
+    "(* Numerical Jacobian for SIE *)\n",
+    RowBox[{"JacSIENum", "[",
+        RowBox[{"th1_", ",", " ", "th2_", ",", " ", "tE_", ",", " ", "q_"}],
+    "]"}], " ", ":=", " ",
+    RowBox[{"Module", "[",
+        RowBox[{
+            RowBox[{"{", RowBox[{"h", " ", "=", " ", RowBox[{"1.0", "*^", "-6"}]}], "}"}],
+            ",", "\n",
+            RowBox[{"{",
+                RowBox[{
+                    RowBox[{"{",
+                        RowBox[{
+                            RowBox[{"(", RowBox[{
+                                RowBox[{"alphaSIE1", "[", RowBox[{RowBox[{"th1", "+", "h"}], ",", "th2", ",", "tE", ",", "q"}], "]"}],
+                                " ", "-", " ",
+                                RowBox[{"alphaSIE1", "[", RowBox[{RowBox[{"th1", "-", "h"}], ",", "th2", ",", "tE", ",", "q"}], "]"}]
+                            }], ")"}], "/", RowBox[{"(", RowBox[{"2", " ", "h"}], ")"}]},
+                            ",",
+                            RowBox[{"(", RowBox[{
+                                RowBox[{"alphaSIE1", "[", RowBox[{"th1", ",", RowBox[{"th2", "+", "h"}], ",", "tE", ",", "q"}], "]"}],
+                                " ", "-", " ",
+                                RowBox[{"alphaSIE1", "[", RowBox[{"th1", ",", RowBox[{"th2", "-", "h"}], ",", "tE", ",", "q"}], "]"}]
+                            }], ")"}], "/", RowBox[{"(", RowBox[{"2", " ", "h"}], ")"}]]
+                        },
+                    "}"}],
+                    ",",
+                    RowBox[{"{",
+                        RowBox[{
+                            RowBox[{"(", RowBox[{
+                                RowBox[{"alphaSIE2", "[", RowBox[{RowBox[{"th1", "+", "h"}], ",", "th2", ",", "tE", ",", "q"}], "]"}],
+                                " ", "-", " ",
+                                RowBox[{"alphaSIE2", "[", RowBox[{RowBox[{"th1", "-", "h"}], ",", "th2", ",", "tE", ",", "q"}], "]"}]
+                            }], ")"}], "/", RowBox[{"(", RowBox[{"2", " ", "h"}], ")"}]},
+                            ",",
+                            RowBox[{"(", RowBox[{
+                                RowBox[{"alphaSIE2", "[", RowBox[{"th1", ",", RowBox[{"th2", "+", "h"}], ",", "tE", ",", "q"}], "]"}],
+                                " ", "-", " ",
+                                RowBox[{"alphaSIE2", "[", RowBox[{"th1", ",", RowBox[{"th2", "-", "h"}], ",", "tE", ",", "q"}], "]"}]
+                            }], ")"}], "/", RowBox[{"(", RowBox[{"2", " ", "h"}], ")"}]]
+                        },
+                    "}"}]
+                },
+            "}"}]
+        },
+    "]"}]
+}]], "Input"],
+
+Cell[BoxData[RowBox[{
+    RowBox[{"detJacSIENum", "[",
+        RowBox[{"th1_", ",", " ", "th2_", ",", " ", "tE_", ",", " ", "q_"}],
+    "]"}], " ", ":=", " ",
+    RowBox[{"Module", "[",
+        RowBox[{
+            RowBox[{"{", RowBox[{"J", ",", " ", "Amat"}], "}"}], ",", "\n",
+            RowBox[{
+                RowBox[{"J", " ", "=", " ",
+                    RowBox[{"JacSIENum", "[", "th1, th2, tE, q", "]"}]},
+                ";", "\n",
+                RowBox[{"Amat", " ", "=", " ",
+                    RowBox[{RowBox[{"IdentityMatrix", "[", "2", "]"}],
+                        " ", "-", " ", "J"}]},
+                ";", "\n",
+                RowBox[{"Det", "[", "Amat", "]"}]
+            }]
+        },
+    "]"}]
+}]], "Input"],
+
+Cell[BoxData[RowBox[{
+    RowBox[{"magnificationSIE", "[",
+        RowBox[{"th1_", ",", " ", "th2_", ",", " ", "tE_", ",", " ", "q_"}],
+    "]"}], " ", ":=", " ",
+    RowBox[{"1.0", " ", "/", " ",
+        RowBox[{"detJacSIENum", "[", "th1, th2, tE, q", "]"}]}
+}]], "Input"],
+
+(* =====================================================================
+   Visualization 1: Mass-Sheet Degeneracy Visualizer
+   ===================================================================== *)
+
+Cell[TextData[{"1. Mass-Sheet Degeneracy Visualizer"}], "Section"],
+
+Cell[TextData[{"The mass-sheet transform replaces \[Kappa](\[Theta]) with \
+\[Lambda]\[Kappa](\[Theta]) + (1 - \[Lambda]) and rescales the source plane \
+by \[Lambda]. Image positions are preserved, but magnifications change \
+by 1/\[Lambda]" <> Superscript["x", "2"] <> "."}], "Text"],
+
+Cell[BoxData[RowBox[{
+    "Manipulate", "[", "\n",
+    RowBox[{
+        RowBox[{"Module", "[",
+            RowBox[{
+                RowBox[{"{", RowBox[{"tE", " ", "=", " ", "1.0"}], "}"}], ",", "\n",
+                RowBox[{"GraphicsRow", "[",
+                    RowBox[{"{", "\n",
+                        RowBox[{
+                            "(* Left: Convergence profiles *)\n",
+                            RowBox[{"Plot", "[",
+                                RowBox[{
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{"tE", "/", RowBox[{"(", RowBox[{"2", " ", "theta"}], ")"}]}],
+                                            ",",
+                                            RowBox[{RowBox[{"lambda", " ", "*", " ", "tE", "/", RowBox[{"(", RowBox[{"2", " ", "theta"}], ")"}]}],
+                                                " ", "+", " ", RowBox[{"(", RowBox[{"1", " ", "-", " ", "lambda"}], ")"}]}]
+                                        },
+                                    "}"}],
+                                    ",",
+                                    RowBox[{"{", RowBox[{"theta", ",", " ", "0.3", ",", " ", "3.0"}], "}"}],
+                                    ",",
+                                    RowBox[{"PlotStyle", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"Black", ",", " ", RowBox[{"AbsoluteThickness", "[", "2", "]"}]}], "}"}],
+                                                ",",
+                                                RowBox[{"{", RowBox[{"Red", ",", " ", RowBox[{"AbsoluteThickness", "[", "2", "]"}], ",", " ", "Dashed"}], "}"}]
+                                            },
+                                        "}"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"Frame", " ", "->", " ", "True"}],
+                                    ",",
+                                    RowBox[{"FrameLabel", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"Style", "[", RowBox[{"\"\\[Theta] (arcsec)\"", ",", " ", "13"}], "]"}],
+                                                ",",
+                                                RowBox[{"Style", "[", RowBox[{"\"\\[Kappa](\\[Theta])\"", ",", " ", "13"}], "]"}]
+                                            },
+                                        "}"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"PlotLabel", " ", "->", " ",
+                                        RowBox[{"Style", "[",
+                                            RowBox[{
+                                                RowBox[{"StringJoin", "[",
+                                                    RowBox[{"\"\\[Lambda] = \"", ",", " ",
+                                                        RowBox[{"ToString", "[", "lambda", "]"}]}],
+                                                "]"}],
+                                                ",", " ", "13"
+                                            },
+                                        "]"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"PlotRange", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"0.3", ",", " ", "3.0"}], "}"}],
+                                                ",",
+                                                RowBox[{"{", RowBox[{"-0.5", ",", " ", "2.5"}], "}"}]
+                                            },
+                                        "}"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"ImageSize", " ", "->", " ", "300"}]
+                                },
+                            "]"}],
+                            ",", "\n",
+                            "(* Right: Magnification vs lambda *)\n",
+                            RowBox[{"Graphics", "[",
+                                RowBox[{
+                                    RowBox[{"{", "\n",
+                                        RowBox[{
+                                            RowBox[{"{", RowBox[{"Blue", ",", " ",
+                                                RowBox[{"AbsoluteThickness", "[", "2", "]"}], ",", " ",
+                                                RowBox[{"Line", "[",
+                                                    RowBox[{"Table", "[",
+                                                        RowBox[{
+                                                            RowBox[{"{", RowBox[{"l", ",", " ",
+                                                                RowBox[{"5.0", " ", "/", " ",
+                                                                    RowBox[{"l", "^", "2"}]}]}], "}"}],
+                                                            ",", " ",
+                                                            RowBox[{"{", RowBox[{"l", ",", " ", "0.5", ",", " ", "1.5", ",", " ", "0.01"}], "}"}]
+                                                        },
+                                                    "]"}],
+                                                "]"}]
+                                            }], "}"}],
+                                            ",", "\n",
+                                            RowBox[{"{", RowBox[{"Red", ",", " ",
+                                                RowBox[{"PointSize", "[", "0.03", "]"}], ",", " ",
+                                                RowBox[{"Point", "[",
+                                                    RowBox[{"{", RowBox[{"lambda", ",", " ",
+                                                        RowBox[{"5.0", "/",
+                                                            RowBox[{"lambda", "^", "2"}]}]}], "}"}],
+                                                "]"}]
+                                            }], "}"}]
+                                        },
+                                    "}"}],
+                                    ",", "\n",
+                                    RowBox[{"Frame", " ", "->", " ", "True"}],
+                                    ",",
+                                    RowBox[{"FrameLabel", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"Style", "[", RowBox[{"\"\\[Lambda]\"", ",", " ", "13"}], "]"}],
+                                                ",",
+                                                RowBox[{"Style", "[", RowBox[{"\"\\[Mu]\"", ",", " ", "13"}], "]"}]
+                                            },
+                                        "}"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"PlotLabel", " ", "->", " ",
+                                        RowBox[{"Style", "[", RowBox[{"\"\\[Mu] = 5/\\[Lambda]\\[Superscript][x,2]\"", ",", " ", "13"}], "]"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"PlotRange", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"0.5", ",", " ", "1.5"}], "}"}],
+                                                ",",
+                                                RowBox[{"{", RowBox[{"0", ",", " ", "25"}], "}"}]
+                                            },
+                                        "}"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"ImageSize", " ", "->", " ", "300"}]
+                                },
+                            "]"}]
+                        },
+                    "}"}],
+                "]"}]
+            },
+        "]"}],
+        ",", "\n",
+        RowBox[{"{",
+            RowBox[{
+                RowBox[{"{", RowBox[{"lambda", ",", " ", "1.0", ",", " ", "\"\\[Lambda]\""}], "}"}],
+                ",", " ", "0.5", ",", " ", "1.5", ",", " ", "0.05"
+            },
+        "}"}]
+    },
+"]"}]], "Input"],
+
+(* =====================================================================
+   Visualization 2: Power-Law Profile Explorer
+   ===================================================================== *)
+
+Cell[TextData[{"2. Power-Law Profile Explorer"}], "Section"],
+
+Cell[TextData[{"Vary the density slope \[Gamma]' to see how the convergence \
+profile and enclosed mass change. The isothermal case (\[Gamma]' = 2) is \
+highlighted."}], "Text"],
+
+Cell[BoxData[RowBox[{
+    "Manipulate", "[", "\n",
+    RowBox[{
+        RowBox[{"Module", "[",
+            RowBox[{
+                RowBox[{"{", "tE = 1.0", "}"}], ",", "\n",
+                RowBox[{"GraphicsRow", "[",
+                    RowBox[{"{", "\n",
+                        RowBox[{
+                            "(* Left: Convergence profile *)\n",
+                            RowBox[{"Plot", "[",
+                                RowBox[{
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{RowBox[{"(", RowBox[{"3", " ", "-", " ", "gammaP"}], ")"}],
+                                                "/", "2", " ", "*", " ",
+                                                RowBox[{"(", RowBox[{"tE", "/", "theta"}], ")"}],
+                                                "^", RowBox[{"(", RowBox[{"gammaP", " ", "-", " ", "1"}], ")"}]}],
+                                            ",",
+                                            RowBox[{"tE", " ", "/", " ", RowBox[{"(", RowBox[{"2", " ", "theta"}], ")"}]}]
+                                        },
+                                    "}"}],
+                                    ",",
+                                    RowBox[{"{", RowBox[{"theta", ",", " ", "0.1", ",", " ", "5.0"}], "}"}],
+                                    ",",
+                                    RowBox[{"PlotStyle", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"Blue", ",", " ", RowBox[{"AbsoluteThickness", "[", "2", "]"}]}], "}"}],
+                                                ",",
+                                                RowBox[{"{", RowBox[{"Gray", ",", " ", RowBox[{"AbsoluteThickness", "[", "1", "]"}], ",", " ", "Dashed"}], "}"}]
+                                            },
+                                        "}"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"Frame", " ", "->", " ", "True"}],
+                                    ",",
+                                    RowBox[{"FrameLabel", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"Style", "[", RowBox[{"\"\\[Theta] (arcsec)\"", ",", " ", "13"}], "]"}],
+                                                ",",
+                                                RowBox[{"Style", "[", RowBox[{"\"\\[Kappa](\\[Theta])\"", ",", " ", "13"}], "]"}]
+                                            },
+                                        "}"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"PlotLabel", " ", "->", " ",
+                                        RowBox[{"Style", "[",
+                                            RowBox[{
+                                                RowBox[{"StringJoin", "[",
+                                                    RowBox[{"\"\\[Gamma]' = \"", ",", " ",
+                                                        RowBox[{"ToString", "[", RowBox[{"NumberForm", "[", RowBox[{"gammaP", ",", " ", RowBox[{"{", RowBox[{"2", ",", "1"}], "}"}]}], "]"}], "]"}]}],
+                                                "]"}],
+                                                ",", " ", "14", ",", " ", "Bold"
+                                            },
+                                        "]"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"PlotRange", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"0.1", ",", " ", "5.0"}], "}"}],
+                                                ",",
+                                                RowBox[{"{", RowBox[{"0", ",", " ", "3"}], "}"}]
+                                            },
+                                        "}"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"ImageSize", " ", "->", " ", "300"}]
+                                },
+                            "]"}],
+                            ",", "\n",
+                            "(* Right: Enclosed mass M(<r) ~ r^(3-gamma') *)\n",
+                            RowBox[{"Plot", "[",
+                                RowBox[{
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{"r", "^", RowBox[{"(", RowBox[{"3", " ", "-", " ", "gammaP"}], ")"}]}],
+                                            ",",
+                                            "r"
+                                        },
+                                    "}"}],
+                                    ",",
+                                    RowBox[{"{", RowBox[{"r", ",", " ", "0.1", ",", " ", "3.0"}], "}"}],
+                                    ",",
+                                    RowBox[{"PlotStyle", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"Blue", ",", " ", RowBox[{"AbsoluteThickness", "[", "2", "]"}]}], "}"}],
+                                                ",",
+                                                RowBox[{"{", RowBox[{"Gray", ",", " ", RowBox[{"AbsoluteThickness", "[", "1", "]"}], ",", " ", "Dashed"}], "}"}]
+                                            },
+                                        "}"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"Frame", " ", "->", " ", "True"}],
+                                    ",",
+                                    RowBox[{"FrameLabel", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"Style", "[", RowBox[{"\"r/r0\"", ",", " ", "13"}], "]"}],
+                                                ",",
+                                                RowBox[{"Style", "[", RowBox[{"\"M(<r)/M0\"", ",", " ", "13"}], "]"}]
+                                            },
+                                        "}"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"PlotRange", " ", "->", " ",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"{", RowBox[{"0.1", ",", " ", "3.0"}], "}"}],
+                                                ",",
+                                                RowBox[{"{", RowBox[{"0", ",", " ", "5"}], "}"}]
+                                            },
+                                        "}"}]
+                                    }],
+                                    ",",
+                                    RowBox[{"ImageSize", " ", "->", " ", "300"}]
+                                },
+                            "]"}]
+                        },
+                    "}"}],
+                "]"}]
+            },
+        "]"}],
+        ",", "\n",
+        RowBox[{"{",
+            RowBox[{
+                RowBox[{"{", RowBox[{"gammaP", ",", " ", "2.0", ",", " ", "\"\\[Gamma]'\""}], "}"}],
+                ",", " ", "1.2", ",", " ", "2.8", ",", " ", "0.1"
+            },
+        "}"}]
+    },
+"]"}]], "Input"],
+
+(* =====================================================================
+   Visualization 3: H0 Estimator from Time Delay
+   ===================================================================== *)
+
+Cell[TextData[{"3. H0 from Time Delays"}], "Section"],
+
+Cell[TextData[{"Adjust the measured time delay and the model-predicted Fermat \
+potential difference to estimate H0. The effect of the mass-sheet \
+degeneracy (lambda) is shown."}], "Text"],
+
+Cell[BoxData[RowBox[{
+    "Manipulate", "[", "\n",
+    RowBox[{
+        RowBox[{"Module", "[",
+            RowBox[{
+                RowBox[{"{", RowBox[{"h0Est", ",", " ", "h0Lambda"}], "}"}], ",", "\n",
+                RowBox[{
+                    "(* Simple H0 estimate: H0 ~ D_Dt * Delta_tau / (c * Delta_t) *)\n",
+                    "(* Using reference D_Dt for H0=70 at z_d=0.6, z_s=1.5: ~5600 Mpc *)\n",
+                    RowBox[{"h0Est", " ", "=", " ",
+                        RowBox[{"70.0", " ", "*", " ", "80.0", " ", "/", " ", "deltaTDays"}]
+                    }], ";", "\n",
+                    RowBox[{"h0Lambda", " ", "=", " ", RowBox[{"lambda", " ", "*", " ", "h0Est"}]}], ";", "\n",
+                    RowBox[{"Column", "[",
+                        RowBox[{"{", "\n",
+                            RowBox[{
+                                RowBox[{"Style", "[",
+                                    RowBox[{
+                                        RowBox[{"StringJoin", "[",
+                                            RowBox[{
+                                                "\"Measured time delay: \\[CapitalDelta]t = \"",
+                                                ",", RowBox[{"ToString", "[", "deltaTDays", "]"}],
+                                                ",", "\" days\""
+                                            }],
+                                        "]"}],
+                                        ",", " ", "14"
+                                    },
+                                "]"}],
+                                ",", "\n",
+                                RowBox[{"Style", "[",
+                                    RowBox[{
+                                        RowBox[{"StringJoin", "[",
+                                            RowBox[{
+                                                "\"H0 estimate (\\[Lambda]=1): \"",
+                                                ",", RowBox[{"ToString", "[",
+                                                    RowBox[{"NumberForm", "[",
+                                                        RowBox[{"h0Est", ",", " ", RowBox[{"{", RowBox[{"4", ",", "1"}], "}"}]}],
+                                                    "]"}],
+                                                "]"}],
+                                                ",", "\" km/s/Mpc\""
+                                            }],
+                                        "]"}],
+                                        ",", " ", "14", ",", " ", "Blue"
+                                    },
+                                "]"}],
+                                ",", "\n",
+                                RowBox[{"Style", "[",
+                                    RowBox[{
+                                        RowBox[{"StringJoin", "[",
+                                            RowBox[{
+                                                "\"H0 with MSD (\\[Lambda]=\"",
+                                                ",", RowBox[{"ToString", "[", "lambda", "]"}],
+                                                ",", "\"): \"",
+                                                ",", RowBox[{"ToString", "[",
+                                                    RowBox[{"NumberForm", "[",
+                                                        RowBox[{"h0Lambda", ",", " ", RowBox[{"{", RowBox[{"4", ",", "1"}], "}"}]}],
+                                                    "]"}],
+                                                "]"}],
+                                                ",", "\" km/s/Mpc\""
+                                            }],
+                                        "]"}],
+                                        ",", " ", "14", ",", " ", "Red"
+                                    },
+                                "]"}],
+                                ",", "\n",
+                                RowBox[{"Plot", "[",
+                                    RowBox[{
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"70.0", " ", "*", " ", "80.0", " ", "/", " ", "dt"}],
+                                                ",",
+                                                RowBox[{"lambda", " ", "*", " ", "70.0", " ", "*", " ", "80.0", " ", "/", " ", "dt"}]
+                                            },
+                                        "}"}],
+                                        ",",
+                                        RowBox[{"{", RowBox[{"dt", ",", " ", "30", ",", " ", "200"}], "}"}],
+                                        ",",
+                                        RowBox[{"PlotStyle", " ", "->", " ",
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    RowBox[{"{", RowBox[{"Blue", ",", " ", RowBox[{"AbsoluteThickness", "[", "2", "]"}]}], "}"}],
+                                                    ",",
+                                                    RowBox[{"{", RowBox[{"Red", ",", " ", RowBox[{"AbsoluteThickness", "[", "2", "]"}], ",", " ", "Dashed"}], "}"}]
+                                                },
+                                            "}"}]
+                                        }],
+                                        ",",
+                                        RowBox[{"Frame", " ", "->", " ", "True"}],
+                                        ",",
+                                        RowBox[{"FrameLabel", " ", "->", " ",
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    RowBox[{"Style", "[", RowBox[{"\"\\[CapitalDelta]t (days)\"", ",", " ", "13"}], "]"}],
+                                                    ",",
+                                                    RowBox[{"Style", "[", RowBox[{"\"H0 (km/s/Mpc)\"", ",", " ", "13"}], "]"}]
+                                                },
+                                            "}"}]
+                                        }],
+                                        ",",
+                                        RowBox[{"PlotRange", " ", "->", " ",
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    RowBox[{"{", RowBox[{"30", ",", " ", "200"}], "}"}],
+                                                    ",",
+                                                    RowBox[{"{", RowBox[{"20", ",", " ", "150"}], "}"}]
+                                                },
+                                            "}"}]
+                                        }],
+                                        ",",
+                                        RowBox[{"ImageSize", " ", "->", " ", "500"}],
+                                        ",",
+                                        RowBox[{"Epilog", " ", "->", " ",
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    RowBox[{"{", RowBox[{
+                                                        "Red", ",", " ",
+                                                        RowBox[{"PointSize", "[", "0.02", "]"}], ",", " ",
+                                                        RowBox[{"Point", "[",
+                                                            RowBox[{"{", RowBox[{"deltaTDays", ",", " ", "h0Lambda"}], "}"}],
+                                                        "]"}]
+                                                    }], "}"}],
+                                                    ",",
+                                                    RowBox[{"{", RowBox[{
+                                                        "Blue", ",", " ",
+                                                        RowBox[{"PointSize", "[", "0.02", "]"}], ",", " ",
+                                                        RowBox[{"Point", "[",
+                                                            RowBox[{"{", RowBox[{"deltaTDays", ",", " ", "h0Est"}], "}"}],
+                                                        "]"}]
+                                                    }], "}"}]
+                                                },
+                                            "}"}]
+                                        }]
+                                    },
+                                "]"}]
+                            },
+                        "}"}],
+                    "]"}]
+                }]
+            },
+        "]"}],
+        ",", "\n",
+        RowBox[{"{",
+            RowBox[{
+                RowBox[{"{", RowBox[{"deltaTDays", ",", " ", "80", ",", " ", "\"\\[CapitalDelta]t (days)\""}], "}"}],
+                ",", " ", "30", ",", " ", "200", ",", " ", "1"
+            },
+        "}"}],
+        ",", "\n",
+        RowBox[{"{",
+            RowBox[{
+                RowBox[{"{", RowBox[{"lambda", ",", " ", "1.0", ",", " ", "\"\\[Lambda] (MSD)\""}], "}"}],
+                ",", " ", "0.8", ",", " ", "1.2", ",", " ", "0.01"
+            },
+        "}"}]
+    },
+"]"}]], "Input"]
+
+}, WindowSize -> {900, 750}, WindowTitle -> "Module 9: Mass-Sheet Degeneracy & Applications"]

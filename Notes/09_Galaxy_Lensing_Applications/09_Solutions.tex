@@ -1,0 +1,270 @@
+% =============================================================================
+% Module 9: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:galaxy_lensing_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{09_Galaxy_Lensing_Applications/problems\_09.wl}{problems\_09.wl},
+which verifies each answer symbolically and numerically.
+
+% ----- Exercise 9.1 -----
+\subsection*{Exercise~\ref{ex:sie_mass}: Enclosed Mass for an SIE Lens}
+
+\textbf{(a)} For a flat $\Lambda$CDM cosmology with $\Hubble = 70$~km/s/Mpc
+and $\Omegam = 0.3$, the angular diameter distances are computed via:
+\begin{equation*}
+    D(z_1, z_2) = \frac{\speedoflight}{(1+z_2)\,\Hubble}
+    \int_{z_1}^{z_2} \frac{dz'}{E(z')}
+\end{equation*}
+where $E(z) = \sqrt{\Omegam(1+z)^3 + \OmegaL}$.  Numerical
+evaluation gives:
+\begin{align*}
+    \Dd &\approx 770~\mathrm{Mpc} \,, \\
+    \Ds &\approx 1640~\mathrm{Mpc} \,, \\
+    \Dds &\approx 1180~\mathrm{Mpc} \,.
+\end{align*}
+(Exact values depend on the cosmological parameters and the
+integration method; see \texttt{problems\_09.wl} for precise values.)
+
+\textbf{(b)} The critical surface mass density is:
+\begin{equation*}
+    \Sigmacr = \frac{\speedoflight^2}{4\pi \Gnewton}
+    \,\frac{\Ds}{\Dd\,\Dds}
+    \approx 3.2 \times 10^9\;\Msun\,\mathrm{kpc}^{-2} \,.
+\end{equation*}
+
+\textbf{(c)} The enclosed projected mass is:
+\begin{equation*}
+    M_{\mathrm{E}} = \pi\,\thetaE^2\,\Dd^2\,\Sigmacr
+    = \frac{\speedoflight^2}{4\Gnewton}\,\thetaE^2\,
+    \frac{\Dd\,\Ds}{\Dds} \,.
+\end{equation*}
+Converting $\thetaE = 1.5'' = 7.27 \times 10^{-6}$~rad:
+\begin{equation*}
+    M_{\mathrm{E}} \approx 4.2 \times 10^{11}\;\Msun \,.
+\end{equation*}
+This is larger than the typical stellar mass of a massive elliptical
+($\sim 10^{11}\;\Msun$), indicating significant dark matter within
+the Einstein radius. \checkmark
+
+\textbf{(d)} From $\thetaE = 4\pi\sigma_v^2\Dds/(\speedoflight^2\Ds)$:
+\begin{equation*}
+    \sigma_v = \speedoflight\,\sqrt{\frac{\thetaE\,\Ds}{4\pi\,\Dds}}
+    \approx 270~\mathrm{km/s} \,.
+\end{equation*}
+This is typical of a massive early-type galaxy. \checkmark
+
+% ----- Exercise 9.2 -----
+\subsection*{Exercise~\ref{ex:msd_derivation}: Mass-Sheet Degeneracy}
+
+\textbf{(a)} The original deflection satisfies
+$\nabla \cdot \vecalpha = 2\kappab$.  Under the MST:
+\begin{equation*}
+    \kappab_\lambda = \lambda\kappab + (1-\lambda)
+    \implies
+    \vecalpha_\lambda = \lambda\vecalpha + (1-\lambda)\vectheta \,.
+\end{equation*}
+The transformed lens equation:
+\begin{align*}
+    \vecbeta_\lambda
+    &= \vectheta - \vecalpha_\lambda(\vectheta) \\
+    &= \vectheta - \lambda\vecalpha(\vectheta)
+       - (1-\lambda)\vectheta \\
+    &= \lambda[\vectheta - \vecalpha(\vectheta)] \\
+    &= \lambda\vecbeta \,.
+\end{align*}
+So the same image positions $\vectheta$ satisfy the transformed lens
+equation for source position $\lambda\vecbeta$. \checkmark
+
+\textbf{(b)} The Jacobian is
+$\Amat = \mathbb{I} - \partial\vecalpha/\partial\vectheta$.
+Under the MST:
+\begin{align*}
+    \Amat_\lambda
+    &= \mathbb{I}
+       - \frac{\partial\vecalpha_\lambda}{\partial\vectheta} \\
+    &= \mathbb{I} - \lambda\frac{\partial\vecalpha}{\partial\vectheta}
+       - (1-\lambda)\mathbb{I} \\
+    &= \lambda\left(\mathbb{I}
+       - \frac{\partial\vecalpha}{\partial\vectheta}\right)
+    = \lambda\,\Amat \,.
+\end{align*}
+Therefore $\det\Amat_\lambda = \lambda^2\det\Amat$, and
+$\mu_\lambda = 1/\det\Amat_\lambda = \mu/\lambda^2$. \checkmark
+
+\textbf{(c)} Since $\mu_{\lambda,i} = \mu_i/\lambda^2$ for every
+image $i$, the ratio:
+\begin{equation*}
+    \frac{\mu_{\lambda,i}}{\mu_{\lambda,j}}
+    = \frac{\mu_i/\lambda^2}{\mu_j/\lambda^2}
+    = \frac{\mu_i}{\mu_j} \,.
+\end{equation*}
+The $\lambda^2$ factors cancel.  Flux ratios are invariant. \checkmark
+
+\textbf{(d)} The Fermat potential is
+$\phi(\vectheta, \vecbeta) = \frac{1}{2}|\vectheta - \vecbeta|^2
+- \psiL(\vectheta)$.  Under the MST, the lensing potential
+transforms as $\psiL_\lambda = \lambda\psiL +
+\frac{1}{2}(1-\lambda)|\vectheta|^2$.  The time delay between
+images $A$ and $B$ is:
+\begin{align*}
+    \Delta t_\lambda
+    &= \frac{(1+z_d)\Dd\Ds}{\speedoflight\,\Dds}
+       [\phi_\lambda(\vectheta_A, \vecbeta_\lambda)
+        - \phi_\lambda(\vectheta_B, \vecbeta_\lambda)] \\
+    &= \lambda\,\Delta t \,.
+\end{align*}
+The derivation proceeds by substituting $\vecbeta_\lambda =
+\lambda\vecbeta$ and $\psiL_\lambda = \lambda\psiL +
+\frac{1}{2}(1-\lambda)|\vectheta|^2$ and simplifying.  The
+uniform $|\vectheta|^2$ term cancels between the two images
+because they are at the same image positions, leaving a factor
+of $\lambda$ multiplying the original Fermat potential
+difference. \checkmark
+
+% ----- Exercise 9.3 -----
+\subsection*{Exercise~\ref{ex:H0_time_delay}: $\Hubble$ from a Time-Delay Lens}
+
+\textbf{(a)} The time-delay equation is:
+\begin{equation*}
+    \Delta t = \frac{(1+z_d)}{\speedoflight}
+    \,\frac{\Dd\,\Ds}{\Dds}\,\Delta\tau \,.
+\end{equation*}
+Solving for $\Hubble$: since $\Dd\Ds/\Dds \propto 1/\Hubble$,
+we can write
+$\Dd\Ds/\Dds = d(z_d, z_s, \Omegam)/\Hubble$ where $d$ is a
+dimensionless function of redshifts and cosmological parameters.
+Then:
+\begin{equation*}
+    \Hubble = \frac{(1+z_d)\,\Delta\tau}{\speedoflight\,\Delta t}
+    \times d(z_d, z_s, \Omegam) \,.
+\end{equation*}
+
+\textbf{(b)} For $z_d = 0.6$, $z_s = 1.5$, $\Omegam = 0.3$
+(flat $\Lambda$CDM), the dimensionless distance ratio
+$d = \Hubble\Dd\Ds/\Dds$ is computed from the cosmological
+integrals.  Converting $\Delta\tau = 0.64~\mathrm{arcsec}^2
+= 0.64 \times (4.848 \times 10^{-6})^2~\mathrm{rad}^2
+= 1.50 \times 10^{-11}~\mathrm{rad}^2$ and
+$\Delta t = 80~\mathrm{days} = 6.91 \times 10^6~\mathrm{s}$:
+
+Numerical evaluation gives $\Hubble \approx 70$~km/s/Mpc
+(the exact value depends on the precise cosmological distances;
+see \texttt{problems\_09.wl} for the detailed calculation). \checkmark
+
+\textbf{(c)} If the true lens has an unmodeled mass sheet with
+$\kappab_s = 0.05$, then $\lambda = 1 - \kappab_s = 0.95$.  The
+inferred $\Hubble$ is biased:
+\begin{equation*}
+    \Hubble^{\mathrm{inferred}} = \lambda\,\Hubble^{\mathrm{true}}
+    = 0.95\,\Hubble^{\mathrm{true}} \,.
+\end{equation*}
+The inferred $\Hubble$ would be 5\% too low.  For a true value of
+$\sim$73~km/s/Mpc, the inferred value would be $\sim$69~km/s/Mpc
+--- close to the Planck value.  This illustrates why the MSD is
+central to the Hubble tension discussion. \checkmark
+
+% ----- Exercise 9.4 -----
+\subsection*{Exercise~\ref{ex:power_law_profile}: Power-Law Profile}
+
+\textbf{(a)} For $\rho(r) = \rho_0(r/r_0)^{-\gamma'}$, the projected
+surface mass density is:
+\begin{equation*}
+    \Sigma(R) = \int_{-\infty}^{\infty} \rho(\sqrt{R^2 + z^2})\,dz
+    = \rho_0\,r_0^{\gamma'}\,\frac{\sqrt{\pi}\,\Gamma[(\gamma'-1)/2]}
+    {\Gamma[\gamma'/2]}\,R^{1-\gamma'}
+\end{equation*}
+where $R = \Dd\theta$ is the projected physical radius.  The
+convergence is $\kappab = \Sigma/\Sigmacr$, so:
+\begin{equation*}
+    \kappab(\theta) \propto \theta^{1-\gamma'} \,.
+\end{equation*}
+More precisely, $\kappab(\theta) = \frac{3-\gamma'}{2}
+(\thetaE/\theta)^{\gamma'-1}$, where $\thetaE$ is defined as the
+radius where the mean convergence equals unity. \checkmark
+
+\textbf{(b)} For $\gamma' = 2$:
+$\kappab \propto \theta^{1-2} = \theta^{-1} = 1/\theta$, which
+is the SIS convergence $\kappab = \thetaE/(2\theta)$. \checkmark
+
+\textbf{(c)} The enclosed mass within radius $R$ scales as
+$M(\le R) \propto R^{3-\gamma'}$.  The Einstein mass is
+$M_{\mathrm{E}} = M(\le R_{\mathrm{E}})$, fixed by lensing.
+The velocity dispersion scales as:
+\begin{equation*}
+    \sigma_v^2 \propto \frac{M(\le R_{\mathrm{ap}})}{R_{\mathrm{ap}}}
+    \propto R_{\mathrm{ap}}^{2-\gamma'} \,.
+\end{equation*}
+Since $R_{\mathrm{ap}} \neq R_{\mathrm{E}}$ in general, the ratio
+$\sigma_v^2/M_{\mathrm{E}}$ depends on $\gamma'$, breaking the
+degeneracy between mass normalization and profile slope. \checkmark
+
+\textbf{(d)} For a given $\thetaE$ and $\sigma_v$, the self-consistent
+$\gamma'$ can be found from the relation linking both.  For
+$\thetaE = 1.2''$ and $\sigma_v = 230$~km/s, numerical evaluation
+(see \texttt{problems\_09.wl}) gives $\gamma' \approx 2.0$--$2.1$,
+fully consistent with the bulge-halo conspiracy value
+$\gamma' \approx 2.0 \pm 0.2$. \checkmark
+
+% ----- Exercise 9.5 -----
+\subsection*{Exercise~\ref{ex:compare_lenses}: Comparing Real Lens Systems}
+
+\textbf{(a)} Angular diameter distances (flat $\Lambda$CDM,
+$\Hubble = 70$~km/s/Mpc, $\Omegam = 0.3$):
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+\textbf{System} & $\Dd$ (Mpc) & $\Ds$ (Mpc) & $\Dds$ (Mpc) \\
+\midrule
+Q0957+561  & $\sim$1040 & $\sim$1740 & $\sim$1155 \\
+Q2237+0305 & $\sim$163  & $\sim$1747 & $\sim$1683 \\
+B1608+656  & $\sim$1410 & $\sim$1739 & $\sim$777  \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(b)} Enclosed projected masses
+($M_{\mathrm{E}} = \speedoflight^2\thetaE^2\Dd\Ds/(4\Gnewton\Dds)$):
+
+\begin{center}
+\begin{tabular}{lc}
+\toprule
+\textbf{System} & $M_{\mathrm{E}}$ ($10^{11}\,\Msun$) \\
+\midrule
+Q0957+561  & $\sim 1.9$ \\
+Q2237+0305 & $\sim 0.2$ \\
+B1608+656  & $\sim 3.9$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(c)} Physical Einstein radii ($R_{\mathrm{E}} = \Dd\,\thetaE$):
+
+\begin{center}
+\begin{tabular}{lc}
+\toprule
+\textbf{System} & $R_{\mathrm{E}}$ (kpc) \\
+\midrule
+Q0957+561  & $\sim 5.0$ \\
+Q2237+0305 & $\sim 0.7$ \\
+B1608+656  & $\sim 6.8$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(d)} B1608+656 has both the largest enclosed mass ($\sim 3.9 \times
+10^{11}\,\Msun$) and the largest physical Einstein radius
+($\sim 6.8$~kpc), despite having a similar angular Einstein
+radius to Q0957+561.  This is because B1608+656 is at higher
+redshift ($z_d = 0.63$), so the same angular size corresponds to
+a larger physical size and a larger mass.  Q2237+0305 has the
+smallest mass and physical radius because its lens is so nearby
+($z_d = 0.04$) --- the angular diameter distance $\Dd$ is small,
+so the physical Einstein radius is only $\sim 0.7$~kpc even though
+$\thetaE \approx 0.9''$. \checkmark

@@ -1,0 +1,206 @@
+% =============================================================================
+% Module 10: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:cluster_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{10_Cluster_Lensing/problems\_10.wl}{problems\_10.wl},
+which verifies each answer symbolically and numerically.
+
+% ----- Exercise 10.1 -----
+\subsection*{Exercise~\ref{ex:nfw_cluster_einstein}: NFW Cluster Einstein Radius and Enclosed Mass}
+
+\textbf{(a)} First, compute the virial radius from $M_{200}$:
+\begin{equation*}
+    M_{200} = \frac{4\pi}{3}\, 200\,\rho_{\mathrm{crit}}(z_d)\, r_{200}^3
+    \quad\Rightarrow\quad
+    r_{200} = \left(\frac{3\, M_{200}}{800\pi\,\rho_{\mathrm{crit}}}
+    \right)^{1/3} \,.
+\end{equation*}
+Using $\rho_{\mathrm{crit}}(z = 0.3) \approx 5.3\ee{-27}$~kg\,m$^{-3}$
+(including the $E^2(z)$ factor):
+\begin{align*}
+    r_{200} &\approx 1.53~\text{Mpc} \,, \\
+    r_s &= r_{200}/c = 1.53/5 \approx 306~\text{kpc} \,, \\
+    \rho_s &= \frac{200}{3}\,\rho_{\mathrm{crit}}\,
+    \frac{c^3}{\ln(1+c) - c/(1+c)}
+    \approx 6.2\ee{-25}~\text{kg\,m}^{-3} \,.
+\end{align*}
+The angular scale radius and characteristic convergence:
+\begin{align*}
+    \theta_s &= r_s / \Dd = 306~\text{kpc} / 900~\text{Mpc}
+    \approx 3.4\ee{-4}~\text{rad} \approx 70'' \,, \\
+    \kappa_s &= 2\rho_s\, r_s / \Sigmacr \approx 0.35 \,.
+\end{align*}
+
+\textbf{(b)} The tangential critical curve radius satisfies
+$\bar{\kappa}(x_t) = 1$, i.e.,
+$(4\kappa_s / x_t^2)[\ln(x_t/2) + g(x_t)] = 1$.
+Solving numerically gives $x_t \approx 0.38$, so:
+\begin{equation*}
+    \thetaE = x_t\, \theta_s \approx 0.38 \times 70'' \approx 27'' \,.
+\end{equation*}
+
+\textbf{(c)} The enclosed projected mass:
+\begin{equation*}
+    M(\thetaE) = \pi\,(\Dd\,\thetaE)^2\,\Sigmacr
+    \approx \pi\,(900 \times 1.3\ee{-4})^2\,\text{Mpc}^2 \times \Sigmacr
+    \approx 1.4\ee{14}\,\Msun \,.
+\end{equation*}
+
+\textbf{(d)} The fraction of the total mass within $\thetaE$:
+\begin{equation*}
+    \frac{M(\thetaE)}{M_{200}}
+    = \frac{1.4\ee{14}}{5\ee{14}} \approx 0.28 \,.
+\end{equation*}
+About 28\% of the virial mass is enclosed within the Einstein
+radius.  This is expected: the Einstein radius corresponds to
+$r \approx 120$~kpc, which is only $\sim$8\% of $r_{200}$, but the
+NFW profile is centrally concentrated.  \checkmark
+
+
+% ----- Exercise 10.2 -----
+\subsection*{Exercise~\ref{ex:ray_trace_arc}: Ray-Tracing Through a Cluster}
+
+\textbf{(a)--(c)} This exercise is computational and best done in
+Mathematica.  The inverse ray-tracing procedure maps each image-plane
+pixel through $\vecbeta = \vectheta - \vecalpha(\vectheta)$, using
+the NFW deflection angle.  Pixels whose mapped source positions fall
+within the circular source disk are colored.
+
+For a source at $\beta = 0$: a complete \textbf{Einstein ring} forms
+at $\theta \approx \thetaE$.  For $\beta = 0.5\,\thetaE$: two arcs
+form, one bright (on the same side as the source) and one fainter
+(the counter-image).  For $\beta = \thetaE$ (at the tangential
+caustic): a highly stretched \textbf{giant arc} forms near the
+critical curve, with extreme tangential magnification.
+
+See \solnlink{10_Cluster_Lensing/problems\_10.wl}{problems\_10.wl}
+for the complete ray-tracing code and generated plots.
+
+\textbf{(d)} For the source at $\beta = \thetaE$, the arc
+length-to-width ratio depends on the source size relative to the
+caustic curvature.  For a $0.5''$ source near the critical curve of
+$\thetaE \approx 27''$, the tangential magnification is large
+($\mu_t \sim 5$--$10$), giving $L/W \sim 5$--$10$.  \checkmark
+
+
+% ----- Exercise 10.3 -----
+\subsection*{Exercise~\ref{ex:magnification_high_z}: Magnification of a High-Redshift Galaxy}
+
+\textbf{(a)} For an SIS with $\thetaE = 30''$, the magnification of a
+point source at position $\beta$ (for $\beta < \thetaE$) is:
+\begin{equation*}
+    \mu_{\mathrm{tot}} = |\mu_+| + |\mu_-|
+    = \frac{2\thetaE}{\beta} \,.
+\end{equation*}
+\begin{itemize}[nosep]
+    \item $\beta = 3''$: $\mu = 2 \times 30/3 = 20$.
+    \item $\beta = 1''$: $\mu = 2 \times 30/1 = 60$.
+    \item $\beta = 0.1''$: $\mu = 2 \times 30/0.1 = 600$.
+\end{itemize}
+
+\textbf{(b)} The magnitude boost for $\mu = 600$:
+\begin{equation*}
+    \Delta m = -2.5\,\log_{10}(600) \approx -6.9~\text{mag} \,.
+\end{equation*}
+
+\textbf{(c)} Detection requires $m - \Delta m \leq 29$, i.e.,
+$31 + \Delta m \leq 29$, so $\Delta m \leq -2$, requiring
+$\mu \geq 10^{0.8} \approx 6.3$.  From the SIS formula:
+\begin{equation*}
+    \beta \leq \frac{2\thetaE}{\mu_{\min}}
+    = \frac{60}{6.3} \approx 9.5'' \,.
+\end{equation*}
+Sources within $\sim 9.5''$ of the cluster center are sufficiently
+magnified.
+
+\textbf{(d)} Cluster lensing enables the detection of galaxies at
+$z \sim 9$ that are $\sim 2$ magnitudes below the JWST detection
+limit.  The price is a reduced survey area (by factor $\mu$), but
+the steep faint-end slope of the high-$z$ luminosity function means
+the net effect is a significant increase in detected galaxies.
+\checkmark
+
+
+% ----- Exercise 10.4 -----
+\subsection*{Exercise~\ref{ex:einstein_radius_comparison}: Einstein Radii Across Mass Scales}
+
+\textbf{(a)--(c)} Using $\thetaE = 4\pi(\sigma_v/c)^2\,\Dds/\Ds$
+with $\Dds/\Ds = 1400/1750 = 0.8$:
+\begin{align*}
+    \text{Galaxy: } \sigma_v &= 250~\text{km/s}, \quad
+    \thetaE = 4\pi(250/3\ee{5})^2 \times 0.8
+    \approx 2.2\ee{-5}~\text{rad} \approx 1.6'' \,. \\
+    \text{Group: } \sigma_v &= 500~\text{km/s}, \quad
+    \thetaE = 4\pi(500/3\ee{5})^2 \times 0.8
+    \approx 8.7\ee{-5}~\text{rad} \approx 6.2'' \,. \\
+    \text{Cluster: } \sigma_v &= 1200~\text{km/s}, \quad
+    \thetaE = 4\pi(1200/3\ee{5})^2 \times 0.8
+    \approx 5.0\ee{-4}~\text{rad} \approx 36'' \,.
+\end{align*}
+
+\textbf{(d)} The ratio $\thetaE^{\text{cluster}}/\thetaE^{\text{galaxy}}
+= (1200/250)^2 = 23$.  The Einstein radius increases by a factor of
+$\sim$23 from galaxy to cluster.
+
+\textbf{(e)} The enclosed mass within $\thetaE$:
+$M(\thetaE) = \pi(\Dd\,\thetaE)^2\,\Sigmacr$.  Since
+$\thetaE \propto \sigma_v^2$, we have
+$M(\thetaE) \propto \thetaE^2 \propto \sigma_v^4$.  Computing:
+\begin{align*}
+    M(\thetaE)^{\text{galaxy}} &\approx 3\ee{11}\,\Msun \,, \\
+    M(\thetaE)^{\text{group}} &\approx 5\ee{12}\,\Msun \,, \\
+    M(\thetaE)^{\text{cluster}} &\approx 2\ee{14}\,\Msun \,.
+\end{align*}
+
+\textbf{(f)} Since $\thetaE \propto \sigma_v^2$, the angular scale
+of lensing grows \textit{quadratically} with velocity dispersion.
+This means cluster lensing is not just a scaled-up version of
+galaxy lensing --- the arcs subtend tens of arcseconds (easily
+resolvable with ground-based telescopes), producing qualitatively
+different observational signatures.  \checkmark
+
+
+% ----- Exercise 10.5 -----
+\subsection*{Exercise~\ref{ex:weak_lensing_mass}: Weak Lensing Mass Estimate}
+
+\textbf{(a)} With the approximation
+$\gamma_t \approx \bar{\kappa}$:
+\begin{align*}
+    \bar{\kappa}(1') &\approx 0.1 \times (1)^{-0.8} = 0.1 \,, \\
+    \bar{\kappa}(3') &\approx 0.1 \times (3)^{-0.8}
+    = 0.1 / 2.41 \approx 0.041 \,, \\
+    \bar{\kappa}(5') &\approx 0.1 \times (5)^{-0.8}
+    = 0.1 / 3.62 \approx 0.028 \,.
+\end{align*}
+
+\textbf{(b)} The enclosed mass within angle $\theta$:
+\begin{equation*}
+    M(\theta) = \pi\,(\Dd\,\theta)^2\,\Sigmacr\,\bar{\kappa}(\theta) \,.
+\end{equation*}
+Converting angles to radians:
+$1' = 2.91\ee{-4}$~rad, $3' = 8.73\ee{-4}$~rad,
+$5' = 1.45\ee{-3}$~rad.
+
+\textbf{(c)} At $\theta = 5'$:
+\begin{equation*}
+    M(5') = \pi \times (900 \times 1.45\ee{-3})^2
+    \times 3.5\ee{15} \times 0.028
+    \approx 5.2\ee{14}\,\Msun \,.
+\end{equation*}
+
+\textbf{(d)} This is consistent with a typical cluster virial mass
+of $5\ee{14}\,\Msun$.  At $\theta = 5'$ ($r \approx 1.3$~Mpc),
+we are probing close to $r_{200}$, so we expect to recover
+$\sim M_{200}$.  The main assumptions affecting accuracy are:
+(i)~the approximation $\gamma_t \approx \bar{\kappa}$ (valid at
+large radii where $\kappab \ll \bar{\kappa}$);
+(ii)~the power-law shear profile (which may not hold at all radii);
+(iii)~the assumed $\Sigmacr$ (which depends on the source redshift
+distribution).  \checkmark

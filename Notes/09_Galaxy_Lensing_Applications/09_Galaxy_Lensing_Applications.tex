@@ -2,17 +2,1000 @@
 % Module 9: Strong Lensing by Galaxies: Applications
 % =============================================================================
 % Sources: Congdon & Keeton Ch. 6.5-6.6, Narayan & Bartelmann Sec. 3.6-3.7,
-%          Saha et al.
+%          Saha et al. (2024), Schneider & Sluse (2014), Treu (2010),
+%          Birrer et al. (2020), Wong et al. (2020)
 % Mathematica: ../Mathematica/09_Galaxy_Lensing_Applications/
 % =============================================================================
 
 \chapter{Strong Lensing by Galaxies: Applications}
-\label{ch:galaxy_lensing_applications}
+\label{ch:galaxy_lensing}
 
-% TODO: Module content to be written
-% Topics:
-% - Lens modeling and parameter estimation
-% - Mass determination from lensing observables
-% - Dark matter substructure
-% - Flux ratio anomalies
-% - H0 measurement from time delay cosmography
+\begin{quote}
+\textit{Strong gravitational lensing is one of the few methods in
+astrophysics that directly measures mass --- not light.  The Einstein
+radius of a galaxy-scale lens provides a model-independent measurement
+of the enclosed projected mass, independent of the dynamical state of
+the system or the nature of the matter (dark or luminous).}
+\hfill --- adapted from Treu (2010)
+\end{quote}
+
+\noindent
+In Modules~\ref{ch:axisymmetric_models} and~\ref{ch:elliptical_models}
+we developed the theory and the lens models: the SIS, SIE, critical
+curves, caustics, and image configurations.  These are the
+\textit{tools}.  Now we apply them.
+
+Galaxy-scale strong lensing is one of the most powerful techniques in
+modern astrophysics.  It addresses fundamental questions:
+\begin{itemize}[nosep]
+    \item \textbf{What is the total mass of a galaxy?}  Lensing
+          measures the projected mass within the Einstein radius,
+          including dark matter.
+    \item \textbf{How is mass distributed?}  Combining lensing with
+          stellar kinematics constrains the density profile slope.
+    \item \textbf{What is the expansion rate of the universe?}
+          Time delays between multiple images, combined with a lens
+          model, yield $\Hubble$ --- independent of the cosmic
+          distance ladder.
+    \item \textbf{What are the limits of what lensing can tell us?}
+          Fundamental degeneracies --- most notably the
+          \textit{mass-sheet degeneracy} --- limit the information
+          that lensing alone can provide.
+\end{itemize}
+
+This module connects the lens modeling formalism to these real
+astrophysical applications.  Understanding the degeneracies is as
+important as understanding the models themselves.
+
+\medskip
+\noindent
+\textbf{Companion Mathematica files:}
+\begin{itemize}[nosep]
+    \item \mathlink{09_Galaxy_Lensing_Applications/galaxy\_lensing.wl}{galaxy\_lensing.wl}
+          --- mass from Einstein radius, mass-sheet degeneracy
+          demonstration, power-law profile analysis, $\Hubble$ from
+          time delays; figure generation for all module figures
+    \item \mathlink{09_Galaxy_Lensing_Applications/mass\_sheet\_demo.nb}{mass\_sheet\_demo.nb}
+          --- interactive notebook: MSD visualizer with slider for
+          $\lambda$, power-law profile explorer, $\Hubble$ estimator
+          from time delays
+\end{itemize}
+
+
+% =====================================================================
+\section{Lens Modeling Overview}
+\label{sec:lens_modeling_overview}
+
+Before applying lensing to astrophysics, we must understand what goes
+into building a lens model and what data constrain it.
+
+\subsection{Parametric Models: SIE + External Shear}
+
+The standard approach to modeling galaxy-scale strong lenses uses a
+\textbf{parametric} mass model.  The workhorse is the singular
+isothermal ellipsoid (SIE, Module~\ref{ch:elliptical_models}) plus
+external shear:
+\begin{equation}
+    \kappab(\vectheta) = \frac{\thetaE\,\sqrt{q}}{
+    2\sqrt{q^2\theta_1^2 + \theta_2^2}}
+    \label{eq:sie_kappa_recap}
+\end{equation}
+with an external shear $\gamma_{\mathrm{ext}}$ at position angle
+$\phi_\gamma$.  The model parameters are:
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parameter} & \textbf{Physical meaning} \\
+\midrule
+$\thetaE$ & Einstein radius (sets the mass scale) \\
+$q$ & Axis ratio ($b/a$, sets the ellipticity) \\
+$\theta_{1,c}$, $\theta_{2,c}$ & Lens center position \\
+$\phi_q$ & Position angle of the mass distribution \\
+$\gamma_{\mathrm{ext}}$ & External shear magnitude \\
+$\phi_\gamma$ & External shear position angle \\
+\bottomrule
+\end{tabular}
+\end{center}
+This gives 7 lens parameters (or 5 if the center is fixed to the
+observed galaxy light).  The source position $\vecbeta =
+(\beta_1, \beta_2)$ adds 2 more unknowns, for a total of 9 (or 7)
+free parameters.
+
+\subsection{What Data Constrain the Model}
+
+The observational constraints for a strong lens system are:
+\begin{itemize}
+    \item \textbf{Image positions:} Each image gives 2 constraints
+          ($\theta_{1,i}$, $\theta_{2,i}$).  A quad system with 4
+          images gives 8 constraints.
+    \item \textbf{Flux ratios:} Each flux ratio gives 1 constraint
+          (the ratio of magnifications).  Three independent flux ratios
+          for a quad.
+    \item \textbf{Time delays:} Each time delay gives 1 constraint.
+          Three independent delays for a quad.
+    \item \textbf{Extended arcs:} If the source is extended (a galaxy
+          rather than a quasar), the arc morphology provides many more
+          constraints (effectively constraining the lens potential on a
+          grid).
+\end{itemize}
+
+\subsection{Degrees of Freedom}
+
+For a quad lens modeled with SIE + shear:
+\begin{itemize}
+    \item Constraints from image positions alone: $4 \times 2 = 8$.
+    \item Free parameters (with center fixed): 7.
+    \item Degrees of freedom: $8 - 7 = 1$ (marginally constrained).
+\end{itemize}
+This is why quad lenses are so valuable: they provide just enough
+constraints to determine the SIE + shear model from astrometry alone.
+Double lenses ($2 \times 2 = 4$ constraints) are under-constrained
+for SIE + shear.  Extended arcs provide many more constraints and can
+support more complex models.
+
+\subsection{Free-Form Models}
+
+An alternative to parametric models is \textbf{free-form} or
+\textbf{pixelated} modeling, where the lens potential is
+reconstructed on a grid without assuming a specific functional form.
+Programs like \texttt{PixeLens} (Saha \& Williams 2004) and
+\texttt{GLASS} (Coles et al.\ 2014) take this approach.  Free-form
+models are less biased by the assumed mass profile but have more
+degrees of freedom and thus require regularization or priors.
+
+
+% =====================================================================
+\section{The Einstein Radius as a Mass Estimator}
+\label{sec:einstein_mass}
+
+\subsection{The Model-Independent Mass Measurement}
+
+The single most important result in galaxy-scale strong lensing is
+that the Einstein radius directly gives the enclosed projected mass.
+For \textit{any} circularly symmetric lens, the projected mass
+enclosed within the Einstein radius is (Congdon \& Keeton
+eq.~6.35):
+\begin{equation}
+    \boxed{
+    M(\le \thetaE) = \pi\,\thetaE^2\,\Dd^2\,\Sigmacr
+    }
+    \label{eq:mass_einstein}
+\end{equation}
+
+This follows from the definition of the Einstein radius as the
+angular radius where $\kappab_{\mathrm{mean}} = 1$, i.e., where
+the mean convergence within that radius equals unity.  Recall that
+$\kappab = \Sigma/\Sigmacr$, so $\kappab_{\mathrm{mean}} = 1$
+means the mean surface mass density within $\thetaE$ equals the
+critical surface mass density.  The enclosed mass is then the
+critical density times the area:
+\begin{equation}
+    M_{\mathrm{E}} = \Sigmacr \times \pi (\Dd\,\thetaE)^2
+    = \pi\,\thetaE^2\,\Dd^2\,\Sigmacr \,.
+    \label{eq:mass_einstein_derivation}
+\end{equation}
+
+The critical surface mass density is
+(Module~\ref{ch:lens_equation}):
+\begin{equation}
+    \Sigmacr = \frac{\speedoflight^2}{4\pi \Gnewton}
+    \,\frac{\Ds}{\Dd\,\Dds} \,.
+    \label{eq:sigma_cr_recap}
+\end{equation}
+Substituting:
+\begin{equation}
+    \boxed{
+    M_{\mathrm{E}} = \frac{\speedoflight^2}{4\Gnewton}
+    \,\thetaE^2\,\frac{\Dd\,\Ds}{\Dds}
+    }
+    \label{eq:mass_from_thetaE}
+\end{equation}
+
+\begin{remark}
+Equation~\eqref{eq:mass_from_thetaE} is \textbf{model-independent}
+for any circularly symmetric lens.  It depends only on the observed
+Einstein radius $\thetaE$ and the angular diameter distances
+(which require knowing the redshifts $z_d$ and $z_s$ and adopting
+a cosmology).  It does not depend on the radial mass profile.  This
+is the great power of strong lensing as a mass measurement tool.
+\end{remark}
+
+\subsection{The SIE Einstein Radius and Velocity Dispersion}
+
+For the SIE model, the Einstein radius is related to the velocity
+dispersion by (Module~\ref{ch:axisymmetric_models}):
+\begin{equation}
+    \boxed{
+    \thetaE = 4\pi\,\frac{\sigma_v^2}{\speedoflight^2}
+    \,\frac{\Dds}{\Ds}
+    }
+    \label{eq:thetaE_sie}
+\end{equation}
+For a typical massive elliptical galaxy with $\sigma_v = 250$~km/s
+at $z_d = 0.3$ lensing a source at $z_s = 1.0$:
+\begin{equation}
+    \thetaE \approx 4\pi \left(\frac{250}{3 \times 10^5}\right)^2
+    \frac{\Dds}{\Ds}
+    \approx 1.4'' \,.
+    \label{eq:thetaE_numerical}
+\end{equation}
+The enclosed mass is then $M_{\mathrm{E}} \sim 2$--$4 \times
+10^{11}\,\Msun$, comparable to the total stellar mass of the
+galaxy.  The fact that $M_{\mathrm{E}}$ typically exceeds the
+stellar mass is direct evidence for dark matter within the Einstein
+radius.
+
+\subsection{Numerical Examples with Real Systems}
+
+Figure~\ref{fig:einstein_mass} shows the enclosed mass as a function
+of Einstein radius for different lens--source redshift configurations.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../Figures/09_Galaxy_Lensing_Applications/einstein_mass_vs_radius.pdf}
+    \caption{Enclosed Einstein mass $M_{\mathrm{E}}$ as a function of
+    Einstein radius $\thetaE$ for three lens--source redshift
+    configurations (flat $\Lambda$CDM, $\Hubble = 70$~km/s/Mpc,
+    $\Omegam = 0.3$).  Higher redshift lenses enclose more mass for
+    the same angular Einstein radius.
+    Generated by \texttt{galaxy\_lensing.wl}.}
+    \label{fig:einstein_mass}
+\end{figure}
+
+Table~\ref{tab:lens_masses} lists the Einstein radii and enclosed
+masses for several well-known lens systems:
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lccccc}
+\toprule
+\textbf{System} & $z_d$ & $z_s$ & $\thetaE$ (arcsec) &
+$M_{\mathrm{E}}$ ($10^{11}\,\Msun$) & \textbf{Type} \\
+\midrule
+Q0957+561  & 0.36 & 1.41 & 1.0  & $\sim 1.9$ & Double \\
+Q2237+0305 & 0.04 & 1.69 & 0.9  & $\sim 0.2$ & Quad \\
+B1608+656  & 0.63 & 1.39 & 1.0  & $\sim 3.9$ & Quad \\
+\bottomrule
+\end{tabular}
+\caption{Einstein radii and enclosed masses for three well-known
+lens systems.  Masses computed using
+eq.~\eqref{eq:mass_from_thetaE} with a flat $\Lambda$CDM
+cosmology ($\Hubble = 70$~km/s/Mpc, $\Omegam = 0.3$).
+Computed by \texttt{galaxy\_lensing.wl}.}
+\label{tab:lens_masses}
+\end{table}
+
+\begin{remark}
+Q2237+0305 (the Einstein Cross) has an unusually small enclosed
+mass because the lens galaxy is very nearby ($z_d = 0.04$), so the
+physical Einstein radius is small even though the angular Einstein
+radius is nearly $1''$.
+\end{remark}
+
+
+% =====================================================================
+\section{The Mass-Sheet Degeneracy}
+\label{sec:msd}
+
+The \textbf{mass-sheet degeneracy} (MSD) is the most important
+systematic limitation of strong gravitational lensing.  It is a
+fundamental degeneracy that cannot be broken by lensing data alone
+(image positions, flux ratios, or arc morphology).
+
+\subsection{The Mass-Sheet Transform}
+
+Consider a lens with convergence $\kappab(\vectheta)$.  The
+\textbf{mass-sheet transform} (MST) replaces this convergence with:
+\begin{equation}
+    \boxed{
+    \kappab_\lambda(\vectheta) = \lambda\,\kappab(\vectheta)
+    + (1 - \lambda)
+    }
+    \label{eq:mst_kappa}
+\end{equation}
+and simultaneously rescales the source plane:
+\begin{equation}
+    \boxed{
+    \vecbeta_\lambda = \lambda\,\vecbeta
+    }
+    \label{eq:mst_beta}
+\end{equation}
+where $\lambda$ is a free parameter.
+
+Physically, the MST adds a \textbf{uniform sheet of convergence}
+$(1 - \lambda)$ to the lens (hence the name ``mass sheet'') and
+rescales both the original convergence and the source plane by
+$\lambda$.
+
+\subsection{Image Positions Are Invariant}
+
+The key property of the MST is that it \textbf{preserves all image
+positions}.  To see this, recall the lens equation
+$\vecbeta = \vectheta - \vecalpha(\vectheta)$.  For the original
+lens, the deflection angle is related to the convergence via
+$\nabla \cdot \vecalpha = 2\kappab$.  Under the MST:
+\begin{equation}
+    \vecalpha_\lambda(\vectheta) = \lambda\,\vecalpha(\vectheta)
+    + (1 - \lambda)\,\vectheta \,.
+    \label{eq:mst_alpha}
+\end{equation}
+The new lens equation becomes:
+\begin{align}
+    \vecbeta_\lambda
+    &= \vectheta - \vecalpha_\lambda(\vectheta) \notag \\
+    &= \vectheta - \lambda\,\vecalpha(\vectheta)
+       - (1 - \lambda)\,\vectheta \notag \\
+    &= \lambda\,[\vectheta - \vecalpha(\vectheta)] \notag \\
+    &= \lambda\,\vecbeta \,.
+    \label{eq:mst_lens_eq}
+\end{align}
+So if $\vectheta$ satisfies the original lens equation for source
+position $\vecbeta$, it also satisfies the transformed lens
+equation for source position $\vecbeta_\lambda = \lambda\vecbeta$.
+\textbf{The image positions are unchanged.}
+
+\subsection{What the MST Changes}
+
+Although image positions are preserved, the MST changes other
+observables:
+
+\paragraph{Magnifications.}
+The Jacobian transforms as:
+\begin{equation}
+    \Amat_\lambda = \lambda\,\Amat
+    \label{eq:mst_jacobian}
+\end{equation}
+so the magnification changes as:
+\begin{equation}
+    \boxed{
+    \mu_\lambda = \frac{1}{\lambda^2}\,\mu
+    }
+    \label{eq:mst_magnification}
+\end{equation}
+Individual magnifications change, but \textbf{magnification ratios}
+$\mu_i/\mu_j = \mu_{\lambda,i}/\mu_{\lambda,j}$ are preserved.
+This means flux \textit{ratios} cannot distinguish between the
+original model and the MST-transformed model.
+
+\paragraph{Time delays.}
+The time delay between images scales as:
+\begin{equation}
+    \boxed{
+    \Delta t_\lambda = \lambda\,\Delta t
+    }
+    \label{eq:mst_time_delay}
+\end{equation}
+Time delays are \textit{not} invariant under the MST.  Since
+$\Delta t \propto 1/\Hubble$ (Module~\ref{ch:fermat_time_delays}),
+a mass-sheet transform changes the inferred Hubble constant:
+\begin{equation}
+    \boxed{
+    \Hubble^{\mathrm{inferred}} = \lambda\,\Hubble^{\mathrm{true}}
+    }
+    \label{eq:mst_H0}
+\end{equation}
+
+\begin{remark}
+The MSD is devastating for time-delay cosmography.  If we model a
+lens and infer $\Hubble$ from the time delay, the answer is
+degenerate with $\lambda$: we could add a mass sheet (or any
+equivalent line-of-sight structure) and get a different $\Hubble$.
+Breaking this degeneracy is the central challenge of modern
+time-delay cosmography.
+\end{remark}
+
+\subsection{Physical Interpretation}
+
+The mass-sheet transform can be interpreted in two ways:
+\begin{enumerate}
+    \item \textbf{Literal mass sheet:} A uniform sheet of matter
+          between the observer and the source (or at the lens
+          redshift) adds convergence without changing image positions.
+          In practice, line-of-sight structure (voids, filaments,
+          galaxy groups along the line of sight) acts as an
+          approximate mass sheet.
+    \item \textbf{Profile degeneracy:} Even without an actual mass
+          sheet, the MST reflects the fact that different radial mass
+          profiles can produce the same image positions.  Steeper
+          profiles can mimic shallower profiles plus a mass sheet.
+\end{enumerate}
+
+Figure~\ref{fig:msd} illustrates the mass-sheet degeneracy: the
+left panel shows how the convergence profile changes for different
+$\lambda$, and the right panel shows how absolute magnifications
+scale as $1/\lambda^2$.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\textwidth]{../Figures/09_Galaxy_Lensing_Applications/mass_sheet_degeneracy.pdf}
+    \caption{The mass-sheet degeneracy.  \textbf{Left:}~Convergence
+    profiles for an SIS lens ($\thetaE = 1''$) under the MST with
+    different $\lambda$ values.  The solid curve is the original
+    profile ($\lambda = 1$); dashed curves show the transformed
+    profiles.  \textbf{Right:}~Magnification scaling
+    $\mu_\lambda = \mu/\lambda^2$ for three different original
+    magnifications.
+    Generated by \texttt{galaxy\_lensing.wl}.}
+    \label{fig:msd}
+\end{figure}
+
+\subsection{How to Break the MSD}
+
+Several methods can break or constrain the mass-sheet degeneracy:
+\begin{enumerate}
+    \item \textbf{Stellar kinematics:} The velocity dispersion
+          $\sigma_v$ of the lens galaxy depends on the mass profile
+          slope, not just the enclosed mass.  A mass-sheet transform
+          changes the predicted $\sigma_v$, so a kinematic measurement
+          constrains $\lambda$ (Section~\ref{sec:lensing_kinematics}).
+    \item \textbf{Standardizable magnifications:} If the source has a
+          known intrinsic luminosity (e.g., a Type Ia supernova),
+          the absolute magnification can be measured, breaking the
+          MSD.
+    \item \textbf{Multiple source planes:} If the same lens produces
+          images of sources at different redshifts, the different
+          $\Sigmacr$ values for each source plane break the
+          degeneracy.
+    \item \textbf{Extended source reconstruction:} Detailed modeling
+          of extended arcs constrains the lens potential more tightly,
+          partially breaking the degeneracy (though not completely).
+\end{enumerate}
+
+
+% =====================================================================
+\section{The Source Position Transformation}
+\label{sec:spt}
+
+The mass-sheet degeneracy is a special case of a more general class
+of transformations that preserve image positions.
+
+\subsection{Definition}
+
+The \textbf{source position transformation} (SPT), introduced by
+Schneider \& Sluse (2014), is any invertible mapping of the source
+plane:
+\begin{equation}
+    \vecbeta \to \hat{\vecbeta}(\vecbeta)
+    \label{eq:spt_def}
+\end{equation}
+that, when combined with a suitably modified lens equation, preserves
+all image positions.  The modified lens equation is:
+\begin{equation}
+    \hat{\vecbeta}(\vecbeta)
+    = \vectheta - \hat{\vecalpha}(\vectheta)
+    \label{eq:spt_lens_eq}
+\end{equation}
+where the new deflection field $\hat{\vecalpha}$ is defined by the
+requirement that all observed image positions map to the transformed
+source position $\hat{\vecbeta}$.
+
+The MST is the special case where $\hat{\vecbeta} = \lambda\vecbeta$
+(a linear scaling).  The SPT generalizes this to arbitrary nonlinear
+remappings of the source plane.
+
+\subsection{Implications}
+
+The SPT is an active area of research because it defines the
+\textit{full} class of degeneracies in strong lensing.  Key results
+include:
+\begin{itemize}
+    \item Not all SPTs correspond to physically valid lens models
+          (i.e., the transformed deflection field may not come from a
+          non-negative mass distribution).
+    \item The SPT preserves image positions and flux \textit{ratios}
+          (just as the MST does) but generically changes absolute
+          magnifications and time delays.
+    \item Breaking the SPT generally requires external information
+          (kinematics, multiple source planes, or standardizable
+          sources), just as for the MST.
+\end{itemize}
+
+\begin{remark}
+The SPT shows that the mass-sheet degeneracy is not a peculiarity of
+a specific transform but rather the simplest member of a broad family
+of degeneracies inherent in the lensing inverse problem.  Any attempt
+to measure $\Hubble$ from time delays must confront this fundamental
+limitation.
+\end{remark}
+
+
+% =====================================================================
+\section{Strong Lensing and Stellar Kinematics}
+\label{sec:lensing_kinematics}
+
+Combining strong lensing with stellar kinematics is one of the most
+powerful approaches to studying galaxy mass distributions.  The two
+techniques are complementary in a fundamental way.
+
+\subsection{What Each Technique Measures}
+
+\paragraph{Strong lensing:}
+Measures the \textbf{total projected mass} (dark matter + stars +
+gas) within the Einstein radius $\thetaE$.  The measurement is
+model-independent for a circularly symmetric lens
+(eq.~\ref{eq:mass_from_thetaE}).  For an elliptical model, the
+enclosed mass depends weakly on the assumed axis ratio but is still
+robust.
+
+\paragraph{Stellar kinematics:}
+The stellar velocity dispersion $\sigma_v$ of the lens galaxy,
+measured from absorption line broadening, probes the gravitational
+potential.  Specifically, under the assumption of dynamical
+equilibrium (the Jeans equation), the luminosity-weighted line-of-sight
+velocity dispersion within an aperture $R_{\mathrm{ap}}$ depends on:
+\begin{itemize}[nosep]
+    \item The \textbf{mass profile slope} (how mass is distributed
+          radially).
+    \item The \textbf{total mass normalization}.
+    \item The \textbf{orbital anisotropy} of the stellar orbits.
+\end{itemize}
+
+\subsection{The Power-Law Mass Profile}
+\label{sec:power_law_profile}
+
+The simplest model that captures the essential physics is a
+\textbf{spherical power-law} density profile:
+\begin{equation}
+    \boxed{
+    \rho(r) = \rho_0 \left(\frac{r}{r_0}\right)^{-\gamma'}
+    }
+    \label{eq:power_law_rho}
+\end{equation}
+where $\gamma'$ is the power-law slope.  The isothermal case is
+$\gamma' = 2$ (i.e., $\rho \propto r^{-2}$).
+
+Figure~\ref{fig:power_law} shows convergence profiles and enclosed
+mass scalings for power-law density profiles with different slopes.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\textwidth]{../Figures/09_Galaxy_Lensing_Applications/power_law_profiles.pdf}
+    \caption{Power-law density profiles $\rho \propto r^{-\gamma'}$.
+    \textbf{Left:}~Convergence profiles for different slopes (the
+    solid curve is the isothermal case $\gamma' = 2$).
+    \textbf{Right:}~Enclosed 3D mass $M(\le r) \propto
+    r^{3-\gamma'}$ for the same slopes.
+    Generated by \texttt{galaxy\_lensing.wl}.}
+    \label{fig:power_law}
+\end{figure}
+
+For this profile, the convergence is:
+\begin{equation}
+    \kappab(\theta) = \frac{3 - \gamma'}{2}
+    \left(\frac{\thetaE}{\theta}\right)^{\gamma' - 1}
+    \label{eq:kappa_power_law}
+\end{equation}
+and the Einstein radius is:
+\begin{equation}
+    \thetaE = 4\pi\,\frac{\sigma_{\mathrm{SIE}}^2}{\speedoflight^2}
+    \,\frac{\Dds}{\Ds}\,f(\gamma')
+    \label{eq:thetaE_power_law}
+\end{equation}
+where $f(\gamma')$ is a function of the slope that equals unity for
+$\gamma' = 2$ (recovering the SIE result) and $\sigma_{\mathrm{SIE}}$
+is the SIE-equivalent velocity dispersion.
+
+\subsection{Breaking the Degeneracy}
+
+The key insight is that lensing and kinematics respond differently to
+the mass profile slope $\gamma'$:
+
+\begin{itemize}
+    \item \textbf{Lensing} constrains the projected mass within
+          $\thetaE$.  For a power-law profile, the enclosed mass
+          $M_{\mathrm{E}}$ depends on the normalization $\rho_0$ and
+          the slope $\gamma'$ in a specific way.
+    \item \textbf{Kinematics} constrains the mass within the
+          spectroscopic aperture (typically a different physical
+          radius than $R_{\mathrm{E}}$).  The predicted
+          $\sigma_v^2$ depends on $\gamma'$ \textit{differently}
+          from how $M_{\mathrm{E}}$ does.
+\end{itemize}
+
+By measuring both $M_{\mathrm{E}}$ (from lensing) and $\sigma_v$
+(from spectroscopy), one can solve for \textit{both} the mass
+normalization and the slope $\gamma'$.  This breaks the mass-sheet
+degeneracy because the MST changes the effective $\gamma'$:
+steepening or shallowing the profile to compensate for the added
+mass sheet.
+
+\subsection{The Bulge-Halo Conspiracy}
+\label{sec:conspiracy}
+
+One of the most remarkable results from combining lensing and
+kinematics is the \textbf{bulge-halo conspiracy}: the total (dark
+matter + stellar) density profiles of massive elliptical galaxies
+are remarkably close to isothermal over a wide range of radii:
+\begin{equation}
+    \gamma' \approx 2.0 \pm 0.2
+    \label{eq:conspiracy}
+\end{equation}
+This result, established by the SLACS survey (Auger et al.\ 2010)
+and confirmed by subsequent studies, means that the combined
+contribution of the stellar bulge (which has a steeper profile,
+$\gamma' \sim 3$) and the dark matter halo (which has a shallower
+inner profile, $\gamma' \sim 1$ for NFW) conspire to produce an
+approximately $r^{-2}$ total density profile.
+
+Figure~\ref{fig:lensing_kinematics} shows how the predicted
+velocity dispersion varies with $\gamma'$ for a fixed Einstein
+mass, illustrating how kinematics breaks the degeneracy.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.65\textwidth]{../Figures/09_Galaxy_Lensing_Applications/lensing_kinematics.pdf}
+    \caption{Predicted $\sigma_v^2$ (normalized to the isothermal
+    value) as a function of the density slope $\gamma'$, for fixed
+    Einstein mass.  The green band shows the range found by the
+    SLACS survey ($\gamma' \approx 2.0 \pm 0.2$).  Measuring
+    $\sigma_v$ constrains $\gamma'$ and breaks the mass-sheet
+    degeneracy.
+    Generated by \texttt{galaxy\_lensing.wl}.}
+    \label{fig:lensing_kinematics}
+\end{figure}
+
+This ``conspiracy'' is not fully understood theoretically and
+remains an active area of research.  It has important implications:
+\begin{enumerate}
+    \item The SIE ($\gamma' = 2$) is a good approximation for most
+          galaxy-scale lenses.
+    \item The small scatter in $\gamma'$ suggests a universal mass
+          assembly process for massive ellipticals.
+    \item It connects directly to the flat rotation curves observed
+          in spiral galaxies (both are consequences of
+          $\rho \propto r^{-2}$).
+\end{enumerate}
+
+
+% =====================================================================
+\section{Time-Delay Cosmography}
+\label{sec:time_delay_cosmography}
+
+Strong lens time delays offer a one-step measurement of $\Hubble$,
+independent of the cosmic distance ladder.
+
+\subsection{Recap: Time Delays and $\Hubble$}
+
+From Module~\ref{ch:fermat_time_delays}, the time delay between
+images $A$ and $B$ of a strongly lensed variable source is:
+\begin{equation}
+    \Delta t_{AB} = \frac{1 + z_d}{\speedoflight}
+    \,\frac{\Dd\,\Ds}{\Dds}
+    \,\left[\Delta\tau_{AB}\right]
+    \label{eq:time_delay_recap}
+\end{equation}
+where $\Delta\tau_{AB}$ is the Fermat potential difference (computed
+from the lens model) and the prefactor $\Dd\Ds/\Dds$ is called the
+\textbf{time-delay distance} $D_{\Delta t}$.  Crucially:
+\begin{equation}
+    D_{\Delta t} \propto \frac{1}{\Hubble}
+    \label{eq:Ddt_H0}
+\end{equation}
+so measuring $\Delta t$ (from monitoring the variable source) and
+modeling $\Delta\tau$ (from the lens model) gives $\Hubble$.
+
+\subsection{The H0LiCOW / TDCOSMO Program}
+
+The most extensive application of this method is the
+\textbf{H0LiCOW} (H0 Lenses in COSMOGRAIL's Wellspring) program
+and its successor \textbf{TDCOSMO}, which have analyzed six
+well-studied time-delay lenses.
+
+The headline result from Wong et al.\ (2020), assuming power-law
+mass profiles:
+\begin{equation}
+    \boxed{
+    \Hubble = 73.3^{+1.7}_{-1.8}
+    \;\mathrm{km\,s^{-1}\,Mpc^{-1}}
+    }
+    \label{eq:H0LiCOW}
+\end{equation}
+at 2.4\% precision.  This value is in $3.1\sigma$ tension with the
+Planck CMB measurement (Planck Collaboration 2020):
+\begin{equation}
+    \Hubble^{\mathrm{Planck}} = 67.4 \pm 0.5
+    \;\mathrm{km\,s^{-1}\,Mpc^{-1}}
+    \label{eq:H0_Planck}
+\end{equation}
+and agrees well with the local distance ladder value from SH0ES
+(Riess et al.\ 2022):
+\begin{equation}
+    \Hubble^{\mathrm{SH0ES}} = 73.0 \pm 1.0
+    \;\mathrm{km\,s^{-1}\,Mpc^{-1}} \,.
+    \label{eq:H0_SH0ES}
+\end{equation}
+
+Figure~\ref{fig:h0_time_delay} illustrates the effect of the
+mass-sheet degeneracy on the inferred $\Hubble$.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\textwidth]{../Figures/09_Galaxy_Lensing_Applications/h0_time_delay.pdf}
+    \caption{Time-delay cosmography and the mass-sheet degeneracy.
+    \textbf{Left:}~Inferred $\Hubble$ as a function of the MST
+    parameter $\lambda$, showing the H0LiCOW measurement (red
+    point) and the Planck and SH0ES bands.
+    \textbf{Right:}~Time delay vs.\ $\Hubble$ for $\lambda = 1$
+    (solid) and $\lambda = 0.95$ (dashed).
+    Generated by \texttt{galaxy\_lensing.wl}.}
+    \label{fig:h0_time_delay}
+\end{figure}
+
+\subsection{The Role of the Mass-Sheet Degeneracy}
+
+The mass-sheet degeneracy is the dominant systematic uncertainty in
+time-delay cosmography.  From eq.~\eqref{eq:mst_H0}:
+\begin{equation}
+    \Hubble^{\mathrm{inferred}} = \lambda\,\Hubble^{\mathrm{true}}
+\end{equation}
+A 10\% mass sheet ($\lambda = 0.9$, i.e., adding $\kappab_s = 0.1$
+to the convergence) shifts $\Hubble$ by 10\%.
+
+The TDCOSMO collaboration (Birrer et al.\ 2020) showed that relaxing
+the assumption of a power-law mass profile (which partially encodes
+$\lambda$) broadens the uncertainty to:
+\begin{equation}
+    \Hubble = 74.5^{+5.6}_{-6.1}
+    \;\mathrm{km\,s^{-1}\,Mpc^{-1}}
+    \label{eq:TDCOSMO_relaxed}
+\end{equation}
+--- still consistent with the local value but with much larger
+uncertainty.  The increased uncertainty is almost entirely due to
+the mass-sheet degeneracy.
+
+Constraining $\lambda$ requires external information, primarily
+\textbf{stellar kinematics} of the lens galaxies
+(Section~\ref{sec:lensing_kinematics}).
+
+\subsection{Current State and Future Prospects}
+
+The time-delay cosmography method is a key player in the Hubble
+tension debate.  Upcoming surveys (Rubin Observatory/LSST, Euclid)
+will discover thousands of new lensed quasars, enabling a
+statistical approach that can average over individual modeling
+uncertainties.  Combined with improved stellar kinematics from
+next-generation spectrographs, the method has the potential to
+reach $\sim$1\% precision on $\Hubble$.
+
+
+% =====================================================================
+\section{Real Lens Systems: Case Studies}
+\label{sec:case_studies}
+
+\subsection{Q0957+561: The First Gravitational Lens}
+
+Discovered by Walsh, Carswell \& Weymann in 1979, Q0957+561 was
+the first confirmed strong gravitational lens.  Key properties:
+\begin{itemize}[nosep]
+    \item \textbf{Configuration:} Double (two images of a $z_s = 1.41$
+          quasar).
+    \item \textbf{Lens:} Giant elliptical galaxy at $z_d = 0.36$,
+          in a galaxy cluster.
+    \item \textbf{Einstein radius:} $\thetaE \approx 1.0''$.
+    \item \textbf{Time delay:} $\Delta t = 417 \pm 3$ days (measured
+          from optical and radio monitoring over many years).
+    \item \textbf{Historical significance:} Confirmation of Einstein's
+          prediction of multiple imaging by galaxies.  The long time
+          delay was the first used for $\Hubble$ estimation (Refsdal's
+          method).
+\end{itemize}
+
+\subsection{Q2237+0305: The Einstein Cross}
+
+Q2237+0305 is one of the most photogenic gravitational lenses:
+\begin{itemize}[nosep]
+    \item \textbf{Configuration:} Quad --- four images of a
+          $z_s = 1.69$ quasar arranged in a near-perfect Einstein
+          cross around the nucleus of a nearby barred spiral galaxy.
+    \item \textbf{Lens:} A face-on barred spiral galaxy at
+          $z_d = 0.04$ (Huchra's Lens).  This is the nearest known
+          strong lens galaxy.
+    \item \textbf{Einstein radius:} $\thetaE \approx 0.9''$.
+    \item \textbf{Special feature:} Because the lens is so nearby,
+          the Einstein radius corresponds to a very small physical
+          radius ($\sim 0.7$~kpc), probing deep into the bulge of
+          the spiral galaxy.  The system shows dramatic
+          \textbf{microlensing} variability as individual stars in
+          the lens galaxy cross the lines of sight to the quasar
+          images.
+    \item \textbf{Time delays:} Very short ($\lesssim 1$ day) due
+          to the symmetric geometry, making this system unsuitable
+          for $\Hubble$ measurement but ideal for microlensing
+          studies.
+\end{itemize}
+
+\subsection{B1608+656: Time-Delay Cosmography}
+
+B1608+656 is one of the best-studied time-delay lenses:
+\begin{itemize}[nosep]
+    \item \textbf{Configuration:} Quad --- four images of a
+          $z_s = 1.39$ radio source.
+    \item \textbf{Lens:} Two interacting galaxies at $z_d = 0.63$.
+    \item \textbf{Einstein radius:} $\thetaE \approx 1.0''$.
+    \item \textbf{Time delays:} Three independent delays measured
+          with $\sim$1--2\% precision from radio monitoring.
+    \item \textbf{Cosmographic result:} One of the six TDCOSMO/H0LiCOW
+          lenses used to constrain $\Hubble$.  The lens modeling is
+          more complex than usual due to the two-galaxy lens
+          configuration.
+    \item \textbf{Key insight:} Deep HST imaging resolves the
+          lensed host galaxy of the radio source, providing extended
+          arc constraints that significantly tighten the lens model.
+\end{itemize}
+
+
+% =====================================================================
+\section{Summary}
+\label{sec:galaxy_lensing_summary}
+
+\begin{itemize}
+    \item The \textbf{Einstein radius} provides a model-independent
+          measurement of the enclosed projected mass:
+          $M_{\mathrm{E}} = \pi\thetaE^2 \Dd^2 \Sigmacr$.  For
+          typical galaxy-scale lenses, this mass is
+          $10^{11}$--$10^{12}\,\Msun$.
+
+    \item The standard parametric lens model is \textbf{SIE +
+          external shear}, with 7 parameters.  Quad lenses provide
+          8 positional constraints, marginally determining the model.
+
+    \item The \textbf{mass-sheet degeneracy} (MST:
+          $\kappab \to \lambda\kappab + (1-\lambda)$,
+          $\vecbeta \to \lambda\vecbeta$) preserves all image
+          positions but changes magnifications by $1/\lambda^2$ and
+          time delays by $\lambda$.  It is the dominant systematic
+          for time-delay cosmography.
+
+    \item The \textbf{source position transformation} (Schneider \&
+          Sluse 2014) generalizes the MST to arbitrary remappings
+          $\vecbeta \to \hat{\vecbeta}(\vecbeta)$ of the source
+          plane.
+
+    \item \textbf{Lensing + kinematics} breaks the MSD by
+          constraining the density profile slope $\gamma'$.  The
+          SLACS survey found $\gamma' \approx 2.0 \pm 0.2$ (the
+          ``bulge-halo conspiracy'').
+
+    \item \textbf{Time-delay cosmography} measures $\Hubble$ via
+          $\Delta t \propto D_{\Delta t} \propto 1/\Hubble$.  The
+          H0LiCOW/TDCOSMO result is $\Hubble = 73.3^{+1.7}_{-1.8}$
+          km/s/Mpc, in tension with Planck.
+
+    \item \textbf{Case studies:} Q0957+561 (first lens, 1979),
+          Q2237+0305 (Einstein Cross, microlensing laboratory),
+          B1608+656 (time-delay cosmography).
+\end{itemize}
+
+
+% =====================================================================
+\section{Problems}
+\label{sec:galaxy_lensing_problems}
+
+\begin{exercise}
+\label{ex:sie_mass}
+\textbf{(Enclosed mass for an SIE lens.)}
+Consider an SIE lens with $\thetaE = 1.5''$, axis ratio $q = 0.8$,
+lens redshift $z_d = 0.3$, and source redshift $z_s = 1.0$.
+Assume a flat $\Lambda$CDM cosmology with $\Hubble = 70$~km/s/Mpc
+and $\Omegam = 0.3$.
+\begin{enumerate}[label=(\alph*)]
+    \item Compute the angular diameter distances $\Dd$, $\Ds$, and
+          $\Dds$.
+    \item Compute the critical surface mass density $\Sigmacr$.
+    \item Compute the enclosed projected mass $M_{\mathrm{E}}$ using
+          eq.~\eqref{eq:mass_from_thetaE}.  Express the result in
+          solar masses.
+    \item Estimate the velocity dispersion $\sigma_v$ that would
+          correspond to this Einstein radius using
+          eq.~\eqref{eq:thetaE_sie}.
+\end{enumerate}
+Verify with
+\solnlink{09_Galaxy_Lensing_Applications/problems\_09.wl}{problems\_09.wl}.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:msd_derivation}
+\textbf{(Mass-sheet degeneracy: invariance and observables.)}
+Consider a general lens with convergence $\kappab(\vectheta)$ and a
+source at $\vecbeta$.
+\begin{enumerate}[label=(\alph*)]
+    \item Apply the mass-sheet transform
+          $\kappab_\lambda = \lambda\kappab + (1-\lambda)$ and
+          $\vecbeta_\lambda = \lambda\vecbeta$.  Show explicitly that
+          the lens equation
+          $\vecbeta_\lambda = \vectheta -
+          \vecalpha_\lambda(\vectheta)$ is satisfied at the same image
+          positions $\vectheta$.
+    \item Show that the Jacobian matrix transforms as
+          $\Amat_\lambda = \lambda\,\Amat$ and hence the
+          magnification transforms as
+          $\mu_\lambda = \mu/\lambda^2$.
+    \item Show that magnification \textit{ratios}
+          $\mu_i/\mu_j$ are invariant under the MST.
+    \item Using the Fermat potential, show that time delays
+          transform as $\Delta t_\lambda = \lambda\,\Delta t$.
+\end{enumerate}
+Verify with
+\solnlink{09_Galaxy_Lensing_Applications/problems\_09.wl}{problems\_09.wl}.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:H0_time_delay}
+\textbf{($\Hubble$ from a time-delay lens.)}
+A quad lens at $z_d = 0.6$, $z_s = 1.5$ has a measured time delay
+$\Delta t = 80$ days between two images.  The lens model predicts
+a Fermat potential difference $\Delta\tau = 0.64$~arcsec$^2$.
+\begin{enumerate}[label=(\alph*)]
+    \item Write the time-delay equation
+          (eq.~\ref{eq:time_delay_recap}) and solve for $\Hubble$.
+    \item Compute $\Hubble$ numerically, assuming a flat $\Lambda$CDM
+          cosmology with $\Omegam = 0.3$ and using the angular
+          diameter distances at the given redshifts.  \textit{(Hint:
+          the time-delay distance $D_{\Delta t} = (1+z_d)\Dd\Ds/\Dds$
+          depends on $\Hubble$, so you will need to solve
+          self-consistently or use $\Hubble$-independent distance
+          ratios.)}
+    \item Discuss: if the true lens includes a mass sheet with
+          $\kappab_s = 0.05$ (i.e., $\lambda = 0.95$) that was not
+          accounted for in the model, how would the inferred $\Hubble$
+          change?
+\end{enumerate}
+Verify with
+\solnlink{09_Galaxy_Lensing_Applications/problems\_09.wl}{problems\_09.wl}.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:power_law_profile}
+\textbf{(Power-law profile: lensing and kinematics.)}
+Consider a spherical power-law density profile
+$\rho(r) = \rho_0 (r/r_0)^{-\gamma'}$.
+\begin{enumerate}[label=(\alph*)]
+    \item Compute the projected surface mass density
+          $\Sigma(\theta)$ by integrating $\rho$ along the line of
+          sight.  Show that
+          $\kappab(\theta) \propto \theta^{1-\gamma'}$.
+    \item For $\gamma' = 2$ (isothermal), verify that you recover
+          $\kappab \propto 1/\theta$ (the SIS).
+    \item The luminosity-weighted line-of-sight velocity dispersion
+          for an isotropic power-law profile is (Treu \& Koopmans
+          2004):
+          \[
+              \sigma_v^2 \propto M(\le R_{\mathrm{ap}}) \cdot
+              R_{\mathrm{ap}}^{-1} \cdot g(\gamma')
+          \]
+          where $g(\gamma')$ is a known function of the slope.
+          Argue that $\sigma_v$ depends on $\gamma'$ differently
+          from $M_{\mathrm{E}}$, so combining the two measurements
+          constrains $\gamma'$.
+    \item For a lens with $\thetaE = 1.2''$ and
+          $\sigma_v = 230$~km/s, compute $\gamma'$ assuming the
+          relation holds.  Discuss whether the result is consistent
+          with the ``bulge-halo conspiracy''
+          ($\gamma' \approx 2.0$).
+\end{enumerate}
+Verify with
+\solnlink{09_Galaxy_Lensing_Applications/problems\_09.wl}{problems\_09.wl}.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:compare_lenses}
+\textbf{(Comparing real lens systems.)}
+Consider the three lens systems in Table~\ref{tab:lens_masses}:
+Q0957+561 ($z_d = 0.36$, $z_s = 1.41$, $\thetaE = 1.0''$),
+Q2237+0305 ($z_d = 0.04$, $z_s = 1.69$, $\thetaE = 0.9''$), and
+B1608+656 ($z_d = 0.63$, $z_s = 1.39$, $\thetaE = 1.0''$).
+\begin{enumerate}[label=(\alph*)]
+    \item For each system, compute the angular diameter distances
+          $\Dd$, $\Ds$, $\Dds$ and the critical surface mass
+          density $\Sigmacr$.
+    \item Compute the enclosed projected mass $M_{\mathrm{E}}$ for
+          each system.
+    \item Compute the physical Einstein radius $R_{\mathrm{E}} =
+          \Dd\,\thetaE$ in kpc for each system.
+    \item Which system has the largest enclosed mass?  Which has the
+          largest physical Einstein radius?  Discuss why the rankings
+          are different.
+\end{enumerate}
+Verify with
+\solnlink{09_Galaxy_Lensing_Applications/problems\_09.wl}{problems\_09.wl}.
+\end{exercise}
