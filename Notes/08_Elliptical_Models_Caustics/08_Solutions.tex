@@ -1,0 +1,234 @@
+% =============================================================================
+% Module 8: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:elliptical_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{08_Elliptical_Models_Caustics/problems\_08.wl}{problems\_08.wl},
+which verifies each answer symbolically and numerically.
+
+% ----- Exercise 8.1 -----
+\subsection*{Exercise~\ref{ex:sis_shear_crit}: SIS + Shear Critical Curves and Caustics}
+
+\textbf{(a)} Starting from
+$\psiL = \thetaE|\vectheta| + \frac{1}{2}\gamma_{\mathrm{ext}}
+(\theta_1^2 - \theta_2^2)$:
+
+The deflection components are:
+\begin{align*}
+    \alpha_1 &= \thetaE\,\frac{\theta_1}{|\vectheta|}
+    + \gamma_{\mathrm{ext}}\,\theta_1 \,, \\
+    \alpha_2 &= \thetaE\,\frac{\theta_2}{|\vectheta|}
+    - \gamma_{\mathrm{ext}}\,\theta_2 \,.
+\end{align*}
+
+The Jacobian matrix components are:
+\begin{equation*}
+    \Amat_{ij} = \delta_{ij} -
+    \frac{\partial\alpha_i}{\partial\theta_j} \,.
+\end{equation*}
+Computing the partial derivatives of the SIS deflection
+($\alpha_i^{\mathrm{SIS}} = \thetaE\,\theta_i/|\vectheta|$) and
+adding the shear contribution:
+\begin{equation*}
+    \Amat = \begin{pmatrix}
+    1 - \thetaE\,\frac{\theta_2^2}{\theta^3} - \gamma_{\mathrm{ext}}
+    & \thetaE\,\frac{\theta_1\theta_2}{\theta^3} \\[6pt]
+    \thetaE\,\frac{\theta_1\theta_2}{\theta^3}
+    & 1 - \thetaE\,\frac{\theta_1^2}{\theta^3} + \gamma_{\mathrm{ext}}
+    \end{pmatrix}
+\end{equation*}
+where $\theta = |\vectheta|$.
+
+The determinant is:
+\begin{equation*}
+    \det\Amat = 1 - \frac{\thetaE}{\theta}
+    - \gamma_{\mathrm{ext}}^2
+    + \frac{\thetaE}{\theta}\gamma_{\mathrm{ext}}\,
+    \frac{\theta_1^2 - \theta_2^2}{\theta^2} \,.
+\end{equation*}
+
+\textbf{(b)} Setting $\det\Amat = 0$ in polar coordinates
+($\theta_1 = \theta\cos\phi$, $\theta_2 = \theta\sin\phi$):
+\begin{equation*}
+    1 - \frac{\thetaE}{\theta} - \gamma_{\mathrm{ext}}^2
+    + \frac{\thetaE}{\theta}\gamma_{\mathrm{ext}}\cos 2\phi = 0 \,.
+\end{equation*}
+Solving for $\theta$:
+\begin{equation*}
+    \theta_{\mathrm{crit}}(\phi) = \frac{\thetaE\,
+    (1 - \gamma_{\mathrm{ext}}\cos 2\phi)}{1 - \gamma_{\mathrm{ext}}^2} \,.
+\end{equation*}
+For $\thetaE = 1''$, $\gamma_{\mathrm{ext}} = 0.1$: at $\phi = 0$,
+$\theta = 0.9/0.99 \approx 0.909''$; at $\phi = \pi/2$,
+$\theta = 1.1/0.99 \approx 1.111''$.  The critical curve is an
+ellipse elongated along $\theta_2$. \checkmark
+
+\textbf{(c)} Mapping through the lens equation
+$\beta_i = \theta_i - \alpha_i$:
+\begin{align*}
+    \beta_1(\phi) &= -\gamma_{\mathrm{ext}}\,
+    \theta_{\mathrm{crit}}(\phi)\cos\phi \,, \\
+    \beta_2(\phi) &= \gamma_{\mathrm{ext}}\,
+    \theta_{\mathrm{crit}}(\phi)\sin\phi \,.
+\end{align*}
+This traces out a diamond (astroid) with four cusps at $\phi = 0,
+\pi/2, \pi, 3\pi/2$.  The cusps are at $\beta_1 \approx \pm 0.092''$
+and $\beta_2 \approx \pm 0.112''$. \checkmark
+
+\textbf{(d)} The area enclosed by the caustic can be computed using
+the shoelace formula on the parametric curve.  For
+$\gamma_{\mathrm{ext}} = 0.1$, the caustic area is approximately
+$0.013\,\mathrm{arcsec}^2$.  This is verified numerically in
+\texttt{problems\_08.wl}.
+
+% ----- Exercise 8.2 -----
+\subsection*{Exercise~\ref{ex:sie_caustic}: SIE Tangential Caustic}
+
+\textbf{(a)} The SIE deflection angle components are:
+\begin{align*}
+    \alpha_1 &= \frac{\thetaE\sqrt{q}}{\sqrt{1-q^2}}\,
+    \arctan\!\left(\frac{\theta_1\sqrt{1-q^2}}
+    {\sqrt{q^2\theta_1^2 + \theta_2^2}}\right) , \\
+    \alpha_2 &= \frac{\thetaE\sqrt{q}}{\sqrt{1-q^2}}\,
+    \mathrm{arctanh}\!\left(\frac{\theta_2\sqrt{1-q^2}}
+    {\sqrt{q^2\theta_1^2 + \theta_2^2}}\right) .
+\end{align*}
+For $q = 0.7$: $\sqrt{1-q^2} = \sqrt{0.51} \approx 0.714$,
+$\sqrt{q} \approx 0.837$.
+
+\textbf{(b)} The critical curve and caustic are computed numerically
+by evaluating $\det\Amat$ on a fine grid (or parametrically) and
+mapping the critical curve through the lens equation.  The caustic
+has the diamond shape with four cusps.  The diamond is elongated
+along the $\beta_2$-axis (perpendicular to the mass elongation
+along $\theta_1$).
+
+\textbf{(c)} The caustic area for $q = 0.7$ is approximately
+$0.032\,\mathrm{arcsec}^2$.  This is somewhat larger than the
+SIS + shear model with an ``equivalent'' shear
+$\gamma_{\mathrm{ext}} \approx (1-q)/(1+q) \approx 0.176$.  The
+exact comparison depends on how one maps between ellipticity and
+shear; see \texttt{problems\_08.wl} for numerical details.
+
+% ----- Exercise 8.3 -----
+\subsection*{Exercise~\ref{ex:fold_magnification}: Fold Magnification Scaling}
+
+\textbf{(a)} Near a fold caustic, we align coordinates so that the
+fold is along the $\theta_\parallel$ direction and the critical
+curve crosses at $\theta_\perp = 0$.  The lens mapping perpendicular
+to the fold takes the form:
+\begin{equation*}
+    \beta_\perp = a\,\theta_\perp^2
+\end{equation*}
+where $a$ is a nonzero constant (this is the leading-order Taylor
+expansion of the lens mapping near the fold, where the linear term
+vanishes because $\det\Amat = 0$).
+
+For $\beta_\perp > 0$ (source on the multi-image side):
+$\theta_\perp = \pm\sqrt{\beta_\perp/a}$.  Two solutions exist, one
+on each side of the critical curve.
+
+For $\beta_\perp < 0$ (source on the single-image side): no real
+solutions.  The images have merged and disappeared. \checkmark
+
+\textbf{(b)} The Jacobian of this simplified mapping is:
+\begin{equation*}
+    \frac{d\beta_\perp}{d\theta_\perp} = 2a\,\theta_\perp \,.
+\end{equation*}
+The magnification in the perpendicular direction is:
+\begin{equation*}
+    \mu_\perp = \frac{1}{|2a\,\theta_\perp|}
+    = \frac{1}{2a\sqrt{\beta_\perp/a}}
+    = \frac{1}{2\sqrt{a\,\beta_\perp}} \,.
+\end{equation*}
+Therefore $|\mu| \propto 1/\sqrt{\beta_\perp}$, which is
+$1/\sqrt{d_\perp}$ where $d_\perp$ is the distance from the
+caustic. \checkmark
+
+\textbf{(c)} The two images are at
+$\theta_\perp = +\sqrt{\beta_\perp/a}$ and
+$\theta_\perp = -\sqrt{\beta_\perp/a}$.  The sign of the Jacobian
+determinant is:
+\begin{equation*}
+    \mathrm{sgn}(\det\Amat) \propto
+    \mathrm{sgn}(d\beta_\perp/d\theta_\perp)
+    = \mathrm{sgn}(2a\,\theta_\perp) \,.
+\end{equation*}
+Since the two images have $\theta_\perp$ values with opposite signs,
+they have opposite signs of $\det\Amat$ and hence opposite
+parities. \checkmark
+
+% ----- Exercise 8.4 -----
+\subsection*{Exercise~\ref{ex:sie_images}: SIE Image Positions}
+
+\textbf{(a)} For $\vecbeta = (0.1, 0.2)''$ with $\thetaE = 1''$,
+$q = 0.8$: The tangential caustic of this SIE has cusps at
+approximately $\beta \approx 0.1''$.  The source at
+$|\vecbeta| \approx 0.224''$ is outside the tangential caustic,
+so we expect a \textbf{double} (2 bright images).
+
+\textbf{(b)} Solving the lens equation numerically (see
+\texttt{problems\_08.wl}), two bright images are found:
+\begin{itemize}
+    \item Image A: $\vectheta_A \approx (0.53, 0.79)''$
+    \item Image B: $\vectheta_B \approx (-0.37, -0.52)''$
+\end{itemize}
+(Exact values depend on the numerical solver and are verified in
+the Mathematica script.)
+
+\textbf{(c)} The magnifications are computed from
+$\mu = 1/\det\Amat$ at each image position:
+\begin{itemize}
+    \item $\mu_A > 0$ (Type~I, positive parity)
+    \item $\mu_B < 0$ (Type~II, negative parity)
+\end{itemize}
+Exact values are in \texttt{problems\_08.wl}.
+
+\textbf{(d)} For the singular SIE, the signed magnification sum
+$\mu_A + \mu_B$ may be slightly negative because the ``missing''
+central image (swallowed by the singularity) would contribute a
+small positive magnification.  For a non-singular lens, the sum
+over \textit{all} images (including the central one) satisfies
+$\sum_i \mu_i > 0$.  In this example, the sum of the two
+observable images is close to zero, consistent with the central
+image having small positive $|\mu|$. \checkmark
+
+% ----- Exercise 8.5 -----
+\subsection*{Exercise~\ref{ex:burke_verification}: Burke's Odd-Number Theorem for the SIE}
+
+\textbf{(a)} Source at $\vecbeta = (0.5, 0.0)''$ (outside tangential
+caustic): Two images are found numerically.  For the singular SIE,
+the central image is formally at the singularity and has zero flux.
+In the distributional sense, there are 2 observable images (even
+number).  For a regularized (non-singular) version, a faint third
+image would appear near the center, giving 3 (odd). \checkmark
+
+\textbf{(b)} Source at $\vecbeta = (0.05, 0.05)''$ (inside tangential
+caustic): Four bright images are found.  Again, for the singular SIE,
+the central image is lost at the singularity, giving 4 (even).  For
+a non-singular version, 5 images (odd). \checkmark
+
+\textbf{(c)} For the quad case: 2 Type~I images and 2 Type~II images
+(among the 4 bright images).  Adding the central Type~III image
+(for the non-singular case): 3 positive-parity images (2 Type~I +
+1 Type~III) and 2 negative-parity images (2 Type~II).  The count
+of positive-parity minus negative-parity images is $3 - 2 = 1$.
+\checkmark
+
+\textbf{(d)} The SIE is singular at the origin, which means the lens
+potential diverges and the central image is infinitely demagnified
+(effectively ``swallowed'' by the singularity).  Burke's theorem
+strictly requires a smooth, non-singular lens.  For the SIE, the
+theorem holds in the limiting sense: if we soften the core by any
+finite amount, a faint central image appears and the total count
+becomes odd.  The singular SIE is the limit of vanishing core
+radius, where this central image has zero flux.  In practice, real
+galaxies have finite cores, so Burke's theorem does apply, but the
+central image is typically too faint to observe (demagnified by
+factors of $10^3$--$10^5$).

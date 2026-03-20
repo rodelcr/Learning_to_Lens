@@ -1,0 +1,816 @@
+Notebook[{
+
+(* =========================================================================
+   image_configurations.nb
+   Module 8: Non-Axisymmetric Models and Critical Curves
+   =========================================================================
+   Purpose: Interactive visualizations for critical curves, caustics, and
+            image configurations:
+            1. Place source on source plane, show resulting images colored
+               by parity
+            2. Slider for ellipticity q and shear gamma
+            3. Animate source crossing a caustic: watch images appear/disappear
+            4. Critical curve / caustic overlay
+
+   Sources: Congdon & Keeton Ch. 4.5 & 6.1
+            Kormann, Schneider & Bartelmann (1994)
+
+   Units:   Angular positions in arcsec, thetaE = 1
+   ========================================================================= *)
+
+Cell[TextData[{"Module 8: Image Configurations --- Interactive Visualizations"}], "Title"],
+
+Cell[TextData[{"This notebook provides interactive tools for exploring how \
+image configurations depend on source position relative to the caustic \
+structure. Use the sliders to move the source and change the lens \
+ellipticity. Images are colored by parity: blue = Type I (positive \
+parity, minimum), red = Type II (negative parity, saddle point)."}], "Text"],
+
+(* =====================================================================
+   Setup: SIE Deflection and Solver Functions
+   ===================================================================== *)
+
+Cell[TextData[{"0. Setup: SIE Model Functions"}], "Section"],
+
+Cell[BoxData[RowBox[{
+    "(* SIE deflection angle - Kormann et al. 1994 *)\n",
+    RowBox[{"alphaSIE1", "[",
+        RowBox[{"th1_", ",", " ", "th2_", ",", " ", "tE_", ",", " ", "q_"}],
+    "]"}], " ", ":=", " ",
+    RowBox[{"Module", "[",
+        RowBox[{
+            RowBox[{"{", "ep", "}"}], ",", "\n",
+            RowBox[{
+                RowBox[{"ep", " ", "=", " ",
+                    RowBox[{"Sqrt", "[",
+                        RowBox[{"1", " ", "-", " ",
+                            RowBox[{"q", "^", "2"}]}],
+                    "]"}]
+                }], ";", "\n",
+                RowBox[{"tE", " ", "*", " ",
+                    RowBox[{"Sqrt", "[", "q", "]"}], " ", "/", " ", "ep",
+                    " ", "*", " ",
+                    RowBox[{"ArcTan", "[",
+                        RowBox[{
+                            RowBox[{"th1", " ", "*", " ", "ep"}], " ", "/", " ",
+                            RowBox[{"Sqrt", "[",
+                                RowBox[{
+                                    RowBox[{"q", "^", "2", " ", "*", " ",
+                                        RowBox[{"th1", "^", "2"}]},
+                                    " ", "+", " ",
+                                    RowBox[{"th2", "^", "2"}]}
+                                ],
+                            "]"}]
+                        }],
+                    "]"}]
+                }]
+            }]
+        },
+    "]"}]
+}]], "Input"],
+
+Cell[BoxData[RowBox[{
+    RowBox[{"alphaSIE2", "[",
+        RowBox[{"th1_", ",", " ", "th2_", ",", " ", "tE_", ",", " ", "q_"}],
+    "]"}], " ", ":=", " ",
+    RowBox[{"Module", "[",
+        RowBox[{
+            RowBox[{"{", "ep", "}"}], ",", "\n",
+            RowBox[{
+                RowBox[{"ep", " ", "=", " ",
+                    RowBox[{"Sqrt", "[",
+                        RowBox[{"1", " ", "-", " ",
+                            RowBox[{"q", "^", "2"}]}],
+                    "]"}]
+                }], ";", "\n",
+                RowBox[{"tE", " ", "*", " ",
+                    RowBox[{"Sqrt", "[", "q", "]"}], " ", "/", " ", "ep",
+                    " ", "*", " ",
+                    RowBox[{"ArcTanh", "[",
+                        RowBox[{
+                            RowBox[{"th2", " ", "*", " ", "ep"}], " ", "/", " ",
+                            RowBox[{"Sqrt", "[",
+                                RowBox[{
+                                    RowBox[{"q", "^", "2", " ", "*", " ",
+                                        RowBox[{"th1", "^", "2"}]},
+                                    " ", "+", " ",
+                                    RowBox[{"th2", "^", "2"}]}
+                                ],
+                            "]"}]
+                        }],
+                    "]"}]
+                }]
+            }]
+        },
+    "]"}]
+}]], "Input"],
+
+Cell[BoxData[RowBox[{
+    "(* Numerical Jacobian and magnification *)\n",
+    RowBox[{"detJacSIENum", "[",
+        RowBox[{"th1_", ",", " ", "th2_", ",", " ", "tE_", ",", " ", "q_"}],
+    "]"}], " ", ":=", " ",
+    RowBox[{"Module", "[",
+        RowBox[{
+            RowBox[{"{",
+                RowBox[{"h", " ", "=", " ", RowBox[{"1.0", "*^", "-6"}]},
+                ",", " ", "J", ",", " ", "Amat"}],
+            "}"}], ",", "\n",
+            RowBox[{
+                RowBox[{"J", " ", "=", " ",
+                    RowBox[{"{",
+                        RowBox[{
+                            RowBox[{"{",
+                                RowBox[{
+                                    RowBox[{"(",
+                                        RowBox[{
+                                            RowBox[{"alphaSIE1", "[",
+                                                RowBox[{"th1", "+", "h"}], ",", "th2", ",", "tE", ",", "q", "]"}],
+                                            "-",
+                                            RowBox[{"alphaSIE1", "[",
+                                                RowBox[{"th1", "-", "h"}], ",", "th2", ",", "tE", ",", "q", "]"}]
+                                        }],
+                                    ")"}], "/", RowBox[{"(", RowBox[{"2", "h"}], ")"}]
+                                }, ",",
+                                    RowBox[{
+                                        RowBox[{"(",
+                                            RowBox[{
+                                                RowBox[{"alphaSIE1", "[", "th1", ",",
+                                                    RowBox[{"th2", "+", "h"}], ",", "tE", ",", "q", "]"}],
+                                                "-",
+                                                RowBox[{"alphaSIE1", "[", "th1", ",",
+                                                    RowBox[{"th2", "-", "h"}], ",", "tE", ",", "q", "]"}]
+                                            }],
+                                        ")"}], "/", RowBox[{"(", RowBox[{"2", "h"}], ")"}]
+                                    }],
+                            "}"}], ",",
+                            RowBox[{"{",
+                                RowBox[{
+                                    RowBox[{
+                                        RowBox[{"(",
+                                            RowBox[{
+                                                RowBox[{"alphaSIE2", "[",
+                                                    RowBox[{"th1", "+", "h"}], ",", "th2", ",", "tE", ",", "q", "]"}],
+                                                "-",
+                                                RowBox[{"alphaSIE2", "[",
+                                                    RowBox[{"th1", "-", "h"}], ",", "th2", ",", "tE", ",", "q", "]"}]
+                                            }],
+                                        ")"}], "/", RowBox[{"(", RowBox[{"2", "h"}], ")"}]
+                                    }, ",",
+                                    RowBox[{
+                                        RowBox[{"(",
+                                            RowBox[{
+                                                RowBox[{"alphaSIE2", "[", "th1", ",",
+                                                    RowBox[{"th2", "+", "h"}], ",", "tE", ",", "q", "]"}],
+                                                "-",
+                                                RowBox[{"alphaSIE2", "[", "th1", ",",
+                                                    RowBox[{"th2", "-", "h"}], ",", "tE", ",", "q", "]"}]
+                                            }],
+                                        ")"}], "/", RowBox[{"(", RowBox[{"2", "h"}], ")"}]
+                                    }],
+                            "}"}]
+                        },
+                    "}"}]
+                }], ";", "\n",
+                RowBox[{"Amat", " ", "=", " ",
+                    RowBox[{
+                        RowBox[{"IdentityMatrix", "[", "2", "]"}],
+                        " ", "-", " ", "J"}]
+                }], ";", "\n",
+                RowBox[{"Det", "[", "Amat", "]"}]
+            }]
+        },
+    "]"}]
+}]], "Input"],
+
+Cell[BoxData[RowBox[{
+    "(* Image solver *)\n",
+    RowBox[{"solveSIEImages", "[",
+        RowBox[{"beta1_", ",", " ", "beta2_", ",", " ", "tE_", ",", " ", "q_"}],
+    "]"}], " ", ":=", " ",
+    RowBox[{"Module", "[",
+        RowBox[{
+            RowBox[{"{", RowBox[{"solutions", " ", "=", " ", RowBox[{"{", "}"}]}, ",",
+                " ", "sol", ",", " ", "th1s", ",", " ", "th2s", ",", " ", "resid"}], "}"}],
+            ",", "\n",
+            RowBox[{
+                RowBox[{"Do", "[",
+                    RowBox[{
+                        RowBox[{
+                            RowBox[{"sol", " ", "=", " ",
+                                RowBox[{"Quiet", "[",
+                                    RowBox[{"FindRoot", "[",
+                                        RowBox[{
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    RowBox[{"th1", "-",
+                                                        RowBox[{"alphaSIE1", "[", "th1", ",", "th2", ",", "tE", ",", "q", "]"}],
+                                                        "-", "beta1"}], ",",
+                                                    RowBox[{"th2", "-",
+                                                        RowBox[{"alphaSIE2", "[", "th1", ",", "th2", ",", "tE", ",", "q", "]"}],
+                                                        "-", "beta2"}]
+                                                }], "}"}], ",",
+                                            RowBox[{"{", RowBox[{"{", RowBox[{"th1", ",", "x"}], "}"}, ",",
+                                                RowBox[{"{", RowBox[{"th2", ",", "y"}], "}"}], "}"}], ",",
+                                            RowBox[{"MaxIterations", "->", "200"}]
+                                        }],
+                                    "]"}],
+                                "]"}]
+                            }], ";", "\n",
+                            RowBox[{"If", "[",
+                                RowBox[{
+                                    RowBox[{"Head", "[", "sol", "]"}], "===", "List"}], ",", "\n",
+                                RowBox[{
+                                    RowBox[{
+                                        RowBox[{"{", RowBox[{"th1s", ",", "th2s"}], "}"}],
+                                        "=",
+                                        RowBox[{
+                                            RowBox[{"{", RowBox[{"th1", ",", "th2"}], "}"}],
+                                            "/.", "sol"}]
+                                    }], ";", "\n",
+                                    RowBox[{"resid", "=",
+                                        RowBox[{"Sqrt", "[",
+                                            RowBox[{
+                                                RowBox[{"(", RowBox[{"th1s", "-",
+                                                    RowBox[{"alphaSIE1", "[", "th1s", ",", "th2s", ",", "tE", ",", "q", "]"}],
+                                                    "-", "beta1"}], ")"}], "^", "2", "+",
+                                                RowBox[{"(", RowBox[{"th2s", "-",
+                                                    RowBox[{"alphaSIE2", "[", "th1s", ",", "th2s", ",", "tE", ",", "q", "]"}],
+                                                    "-", "beta2"}], ")"}], "^", "2"
+                                            }],
+                                        "]"}]
+                                    }], ";", "\n",
+                                    RowBox[{"If", "[",
+                                        RowBox[{
+                                            RowBox[{"resid", "<", RowBox[{"1.0", "*^", "-7"}]}], ",", "\n",
+                                            RowBox[{"If", "[",
+                                                RowBox[{
+                                                    RowBox[{"!", RowBox[{"AnyTrue", "[", "solutions", ",",
+                                                        RowBox[{
+                                                            RowBox[{"Sqrt", "[",
+                                                                RowBox[{
+                                                                    RowBox[{"(", RowBox[{
+                                                                        RowBox[{"#", "[[", "1", "]]"}], "-", "th1s"}], ")"}], "^", "2", "+",
+                                                                    RowBox[{"(", RowBox[{
+                                                                        RowBox[{"#", "[[", "2", "]]"}], "-", "th2s"}], ")"}], "^", "2"
+                                                                }],
+                                                            "]"}], "<", "0.01"
+                                                        }], "&",
+                                                    "]"}]},
+                                                    ",", "\n",
+                                                    RowBox[{"AppendTo", "[", "solutions", ",",
+                                                        RowBox[{"{", "th1s", ",", "th2s", "}"}], "]"}]
+                                                }],
+                                            "]"}]
+                                        }],
+                                    "]"}]
+                                }],
+                            "]"}]
+                        }], ",", "\n",
+                        RowBox[{"{", RowBox[{"x", ",", RowBox[{"-", "2"}], ",", "2", ",", "0.4"}], "}"}], ",",
+                        RowBox[{"{", RowBox[{"y", ",", RowBox[{"-", "2"}], ",", "2", ",", "0.4"}], "}"}]
+                    }],
+                "]"}], ";", "\n",
+                "solutions"
+            }]
+        },
+    "]"}]
+}]], "Input"],
+
+(* =====================================================================
+   Section 1: Interactive Source Placement
+   =====================================================================
+   Click/slide to place source, see images appear in real time.
+   ===================================================================== *)
+
+Cell[TextData[{"1. Interactive Image Configuration Explorer"}], "Section"],
+
+Cell[TextData[{"Use the sliders to position the source (\[Beta]1, \[Beta]2) and \
+set the lens ellipticity (axis ratio q). The left panel shows the source \
+plane with the caustic; the right panel shows the image plane with the \
+critical curve. Blue dots = Type I images (positive parity), red dots = \
+Type II images (negative parity). Watch images appear and disappear as \
+the source crosses the caustic!"}], "Text"],
+
+Cell[BoxData[RowBox[{"Manipulate", "[",
+    RowBox[{
+        RowBox[{"Module", "[",
+            RowBox[{
+                RowBox[{"{",
+                    RowBox[{"imgs", ",", " ", "cc", ",", " ", "ca", ",",
+                        " ", "srcPanel", ",", " ", "imgPanel"}],
+                "}"}], ",", "\n",
+
+                RowBox[{
+                    (* Compute critical curve and caustic *)
+                    RowBox[{"cc", " ", "=", " ",
+                        RowBox[{"Module", "[",
+                            RowBox[{
+                                RowBox[{"{", RowBox[{"phis", ",", "result", "=", RowBox[{"{", "}"}]}], "}"}],
+                                ",", "\n",
+                                RowBox[{
+                                    RowBox[{"phis", "=",
+                                        RowBox[{"Table", "[", RowBox[{"phi", ",",
+                                            RowBox[{"{", RowBox[{"phi", ",", "0", ",",
+                                                RowBox[{"2", "Pi"}], ",",
+                                                RowBox[{"2", "Pi", "/", "200"}]}], "}"}]
+                                        }], "]"}]
+                                    }], ";", "\n",
+                                    RowBox[{"Do", "[",
+                                        RowBox[{
+                                            RowBox[{"Module", "[", RowBox[{
+                                                RowBox[{"{", "thR", "}"}], ",",
+                                                RowBox[{
+                                                    RowBox[{"thR", "=", RowBox[{"th", "/.",
+                                                        RowBox[{"Quiet", "[",
+                                                            RowBox[{"FindRoot", "[",
+                                                                RowBox[{
+                                                                    RowBox[{"detJacSIENum", "[",
+                                                                        RowBox[{"th", "*", RowBox[{"Cos", "[", "phi", "]"}]}], ",",
+                                                                        RowBox[{"th", "*", RowBox[{"Sin", "[", "phi", "]"}]}], ",",
+                                                                        "1.0", ",", "qVal", "]"}], ",",
+                                                                    RowBox[{"{", RowBox[{"th", ",", "1.0", ",", "0.3", ",", "2.5"}], "}"}], ",",
+                                                                    RowBox[{"Method", "->", RowBox[{"\"", "Brent", "\""]}]}]
+                                                                }],
+                                                            "]"}],
+                                                        "]"}]
+                                                    }]}], ";", "\n",
+                                                    RowBox[{"If", "[",
+                                                        RowBox[{
+                                                            RowBox[{RowBox[{"NumericQ", "[", "thR", "]"}], "&&",
+                                                                RowBox[{"thR", ">", "0"}]}], ",",
+                                                            RowBox[{"AppendTo", "[", "result", ",",
+                                                                RowBox[{"{",
+                                                                    RowBox[{RowBox[{"thR", "*", RowBox[{"Cos", "[", "phi", "]"}]}], ",",
+                                                                            RowBox[{"thR", "*", RowBox[{"Sin", "[", "phi", "]"}]}]}],
+                                                                "}"}], "]"}]
+                                                        }],
+                                                    "]"}]
+                                                }],
+                                            "]"}], ",",
+                                            RowBox[{"{", RowBox[{"phi", ",", "phis"}], "}"}]
+                                        }],
+                                    "]"}], ";", "\n",
+                                    "result"
+                                }]
+                            },
+                        "]"}]
+                    }], ";", "\n",
+
+                    RowBox[{"ca", " ", "=", " ",
+                        RowBox[{"Map", "[",
+                            RowBox[{
+                                RowBox[{
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{RowBox[{"#", "[[", "1", "]]"}], "-",
+                                                RowBox[{"alphaSIE1", "[",
+                                                    RowBox[{"#", "[[", "1", "]]"}], ",",
+                                                    RowBox[{"#", "[[", "2", "]]"}], ",",
+                                                    "1.0", ",", "qVal", "]"}]}], ",",
+                                            RowBox[{RowBox[{"#", "[[", "2", "]]"}], "-",
+                                                RowBox[{"alphaSIE2", "[",
+                                                    RowBox[{"#", "[[", "1", "]]"}], ",",
+                                                    RowBox[{"#", "[[", "2", "]]"}], ",",
+                                                    "1.0", ",", "qVal", "]"}]}]
+                                        }],
+                                    "}"}], "&"
+                                }, ",", "cc"
+                            }],
+                        "]"}]
+                    }], ";", "\n",
+
+                    (* Solve for images *)
+                    RowBox[{"imgs", " ", "=", " ",
+                        RowBox[{"solveSIEImages", "[",
+                            "b1", ",", "b2", ",", "1.0", ",", "qVal", "]"}]
+                    }], ";", "\n",
+
+                    (* Source plane panel *)
+                    RowBox[{"srcPanel", " ", "=", " ",
+                        RowBox[{"Graphics", "[",
+                            RowBox[{
+                                RowBox[{"{",
+                                    RowBox[{
+                                        RowBox[{"{", RowBox[{"Gray", ",",
+                                            RowBox[{"AbsoluteThickness", "[", "1.5", "]"}], ",",
+                                            RowBox[{"If", "[",
+                                                RowBox[{RowBox[{"Length", "[", "ca", "]"}], ">", "1"}], ",",
+                                                RowBox[{"Line", "[",
+                                                    RowBox[{"Append", "[", "ca", ",",
+                                                        RowBox[{"ca", "[[", "1", "]]"}], "]"}],
+                                                "]"}], ",",
+                                                RowBox[{"{", "}"}]
+                                            "]"}]
+                                        }], "}"}], ",",
+                                        RowBox[{"{",
+                                            RowBox[{
+                                                RowBox[{"Red"}], ",",
+                                                RowBox[{"PointSize", "[", "0.03", "]"}], ",",
+                                                RowBox[{"Point", "[",
+                                                    RowBox[{"{", "b1", ",", "b2", "}"}],
+                                                "]"}]
+                                            }],
+                                        "}"}], ",",
+                                        RowBox[{"{",
+                                            RowBox[{"Black", ",",
+                                                RowBox[{"PointSize", "[", "0.02", "]"}], ",",
+                                                RowBox[{"Point", "[",
+                                                    RowBox[{"{", "0", ",", "0", "}"}],
+                                                "]"}]
+                                            }],
+                                        "}"}]
+                                    }],
+                                "}"}], ",", "\n",
+                                RowBox[{"PlotRange", "->",
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{"{", RowBox[{"-0.5", ",", "0.5"}], "}"}], ",",
+                                            RowBox[{"{", RowBox[{"-0.5", ",", "0.5"}], "}"}]
+                                        }],
+                                    "}"}]
+                                }], ",",
+                                RowBox[{"Frame", "->", "True"}], ",",
+                                RowBox[{"AspectRatio", "->", "1"}], ",",
+                                RowBox[{"ImageSize", "->", "300"}], ",",
+                                RowBox[{"PlotLabel", "->",
+                                    RowBox[{"Style", "[", RowBox[{"\"Source Plane\"", ",", "13"}], "]"}]}]
+                            }],
+                        "]"}]
+                    }], ";", "\n",
+
+                    (* Image plane panel *)
+                    RowBox[{"imgPanel", " ", "=", " ",
+                        RowBox[{"Graphics", "[",
+                            RowBox[{
+                                RowBox[{"Flatten", "[",
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{"{", RowBox[{"LightGray", ",",
+                                                RowBox[{"AbsoluteThickness", "[", "1.5", "]"}], ",",
+                                                RowBox[{"If", "[",
+                                                    RowBox[{RowBox[{"Length", "[", "cc", "]"}], ">", "1"}], ",",
+                                                    RowBox[{"Line", "[",
+                                                        RowBox[{"Append", "[", "cc", ",",
+                                                            RowBox[{"cc", "[[", "1", "]]"}], "]"}],
+                                                    "]"}], ",",
+                                                    RowBox[{"{", "}"}]
+                                                "]"}]
+                                            }], "}"}], ",",
+                                            RowBox[{"{", RowBox[{"Black", ",",
+                                                RowBox[{"PointSize", "[", "0.02", "]"}], ",",
+                                                RowBox[{"Point", "[",
+                                                    RowBox[{"{", "0", ",", "0", "}"}],
+                                                "]"}]
+                                            }], "}"}], ",",
+                                            RowBox[{"Table", "[",
+                                                RowBox[{
+                                                    RowBox[{"Module", "[",
+                                                        RowBox[{
+                                                            RowBox[{"{",
+                                                                RowBox[{"mu", " ", "=", " ",
+                                                                    RowBox[{"1.0", "/",
+                                                                        RowBox[{"detJacSIENum", "[",
+                                                                            RowBox[{"img", "[[", "1", "]]"}], ",",
+                                                                            RowBox[{"img", "[[", "2", "]]"}], ",",
+                                                                            "1.0", ",", "qVal",
+                                                                        "]"}]
+                                                                    }]
+                                                                }],
+                                                            "}"}], ",", "\n",
+                                                            RowBox[{"If", "[",
+                                                                RowBox[{
+                                                                    RowBox[{"mu", ">", "0"}], ",",
+                                                                    RowBox[{"{", RowBox[{"Blue", ",",
+                                                                        RowBox[{"PointSize", "[", "0.025", "]"}], ",",
+                                                                        RowBox[{"Point", "[", "img", "]"}]
+                                                                    }], "}"}], ",",
+                                                                    RowBox[{"{", RowBox[{"Red", ",",
+                                                                        RowBox[{"PointSize", "[", "0.025", "]"}], ",",
+                                                                        RowBox[{"Point", "[", "img", "]"}]
+                                                                    }], "}"}]
+                                                                }],
+                                                            "]"}]
+                                                        }],
+                                                    "]"}], ",",
+                                                    RowBox[{"{", RowBox[{"img", ",", "imgs"}], "}"}]
+                                                }],
+                                            "]"}]
+                                        }],
+                                    "}"}],
+                                "]"}], ",", "\n",
+                                RowBox[{"PlotRange", "->",
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{"{", RowBox[{"-2", ",", "2"}], "}"}], ",",
+                                            RowBox[{"{", RowBox[{"-2", ",", "2"}], "}"}]
+                                        }],
+                                    "}"}]
+                                }], ",",
+                                RowBox[{"Frame", "->", "True"}], ",",
+                                RowBox[{"AspectRatio", "->", "1"}], ",",
+                                RowBox[{"ImageSize", "->", "300"}], ",",
+                                RowBox[{"PlotLabel", "->",
+                                    RowBox[{"Style", "[",
+                                        RowBox[{
+                                            RowBox[{"StringJoin", "[",
+                                                RowBox[{"\"Image Plane (\"", ",",
+                                                    RowBox[{"ToString", "[",
+                                                        RowBox[{"Length", "[", "imgs", "]"}],
+                                                    "]"}], ",",
+                                                    "\" images)\""}],
+                                            "]"}], ",", "13"
+                                        }],
+                                    "]"}]
+                                }]
+                            }],
+                        "]"}]
+                    }], ";", "\n",
+
+                    RowBox[{"GraphicsRow", "[",
+                        RowBox[{
+                            RowBox[{"{", RowBox[{"srcPanel", ",", "imgPanel"}], "}"}], ",",
+                            RowBox[{"Spacings", "->", "1"}]
+                        }],
+                    "]"}]
+                }]
+            },
+        "]"}], ",", "\n",
+
+        (* Sliders *)
+        RowBox[{"{",
+            RowBox[{
+                RowBox[{"{", RowBox[{"b1", ",", "0.2", ",",
+                    RowBox[{"Style", "[",
+                        RowBox[{"\"\\!\\(\\*SubscriptBox[\\(\\[Beta]\\), \\(1\\)]\\)\"", ",", "12"}],
+                    "]"}]
+                }], "}"}], ",",
+                RowBox[{"-", "0.5"}], ",", "0.5", ",", "0.01"
+            }],
+        "}"}], ",", "\n",
+        RowBox[{"{",
+            RowBox[{
+                RowBox[{"{", RowBox[{"b2", ",", "0.0", ",",
+                    RowBox[{"Style", "[",
+                        RowBox[{"\"\\!\\(\\*SubscriptBox[\\(\\[Beta]\\), \\(2\\)]\\)\"", ",", "12"}],
+                    "]"}]
+                }], "}"}], ",",
+                RowBox[{"-", "0.5"}], ",", "0.5", ",", "0.01"
+            }],
+        "}"}], ",", "\n",
+        RowBox[{"{",
+            RowBox[{
+                RowBox[{"{", RowBox[{"qVal", ",", "0.7", ",",
+                    RowBox[{"Style", "[", RowBox[{"\"q (axis ratio)\"", ",", "12"}], "]"}]
+                }], "}"}], ",",
+                "0.3", ",", "0.99", ",", "0.01"
+            }],
+        "}"}], ",", "\n",
+        RowBox[{"TrackedSymbols", " ", ":>", " ",
+            RowBox[{"{", RowBox[{"b1", ",", " ", "b2", ",", " ", "qVal"}], "}"}]}]
+    },
+"]"}]], "Input"],
+
+(* =====================================================================
+   Section 2: Caustic Crossing Animation
+   ===================================================================== *)
+
+Cell[TextData[{"2. Caustic Crossing Animation"}], "Section"],
+
+Cell[TextData[{"Animate a source moving from outside to inside the caustic. \
+Use the slider t to control the source position along a straight line \
+that crosses the caustic. Watch as image pairs appear and disappear."}], "Text"],
+
+Cell[BoxData[RowBox[{"Manipulate", "[",
+    RowBox[{
+        RowBox[{"Module", "[",
+            RowBox[{
+                RowBox[{"{",
+                    RowBox[{"srcB", ",", " ", "imgs", ",", " ", "cc", ",", " ", "ca"}],
+                "}"}], ",", "\n",
+                RowBox[{
+                    (* Source moves along a line *)
+                    RowBox[{"srcB", " ", "=", " ",
+                        RowBox[{"{",
+                            RowBox[{
+                                RowBox[{"0.5", " ", "*", " ",
+                                    RowBox[{"(", RowBox[{"1", " ", "-", " ", "t"}], ")"}]
+                                }], ",", " ", "0.0"
+                            }],
+                        "}"}]
+                    }], ";", "\n",
+
+                    RowBox[{"cc", " ", "=", " ",
+                        RowBox[{"Module", "[",
+                            RowBox[{
+                                RowBox[{"{", RowBox[{"phis", ",", "result", "=", RowBox[{"{", "}"}]}], "}"}],
+                                ",",
+                                RowBox[{
+                                    RowBox[{"phis", "=",
+                                        RowBox[{"Table", "[", RowBox[{"phi", ",",
+                                            RowBox[{"{", RowBox[{"phi", ",", "0", ",",
+                                                RowBox[{"2", "Pi"}], ",",
+                                                RowBox[{"2", "Pi", "/", "150"}]}], "}"}]
+                                        }], "]"}]
+                                    }], ";",
+                                    RowBox[{"Do", "[",
+                                        RowBox[{
+                                            RowBox[{"Module", "[", RowBox[{
+                                                RowBox[{"{", "thR", "}"}], ",",
+                                                RowBox[{
+                                                    RowBox[{"thR", "=", RowBox[{"th", "/.",
+                                                        RowBox[{"Quiet", "[",
+                                                            RowBox[{"FindRoot", "[",
+                                                                RowBox[{
+                                                                    RowBox[{"detJacSIENum", "[",
+                                                                        RowBox[{"th", "*", RowBox[{"Cos", "[", "phi", "]"}]}], ",",
+                                                                        RowBox[{"th", "*", RowBox[{"Sin", "[", "phi", "]"}]}], ",",
+                                                                        "1.0", ",", "0.7", "]"}], ",",
+                                                                    RowBox[{"{", RowBox[{"th", ",", "1.0", ",", "0.3", ",", "2.5"}], "}"}], ",",
+                                                                    RowBox[{"Method", "->", RowBox[{"\"", "Brent", "\""]}]}]
+                                                                }],
+                                                            "]"}],
+                                                        "]"}]
+                                                    }]}], ";",
+                                                    RowBox[{"If", "[",
+                                                        RowBox[{
+                                                            RowBox[{RowBox[{"NumericQ", "[", "thR", "]"}], "&&",
+                                                                RowBox[{"thR", ">", "0"}]}], ",",
+                                                            RowBox[{"AppendTo", "[", "result", ",",
+                                                                RowBox[{"{",
+                                                                    RowBox[{RowBox[{"thR", "*", RowBox[{"Cos", "[", "phi", "]"}]}], ",",
+                                                                            RowBox[{"thR", "*", RowBox[{"Sin", "[", "phi", "]"}]}]}],
+                                                                "}"}], "]"}]
+                                                        }],
+                                                    "]"}]
+                                                }],
+                                            "]"}], ",",
+                                            RowBox[{"{", RowBox[{"phi", ",", "phis"}], "}"}]
+                                        }],
+                                    "]"}], ";",
+                                    "result"
+                                }]
+                            },
+                        "]"}]
+                    }], ";", "\n",
+
+                    RowBox[{"ca", " ", "=", " ",
+                        RowBox[{"Map", "[",
+                            RowBox[{
+                                RowBox[{
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{RowBox[{"#", "[[", "1", "]]"}], "-",
+                                                RowBox[{"alphaSIE1", "[",
+                                                    RowBox[{"#", "[[", "1", "]]"}], ",",
+                                                    RowBox[{"#", "[[", "2", "]]"}], ",",
+                                                    "1.0", ",", "0.7", "]"}]}], ",",
+                                            RowBox[{RowBox[{"#", "[[", "2", "]]"}], "-",
+                                                RowBox[{"alphaSIE2", "[",
+                                                    RowBox[{"#", "[[", "1", "]]"}], ",",
+                                                    RowBox[{"#", "[[", "2", "]]"}], ",",
+                                                    "1.0", ",", "0.7", "]"}]}]
+                                        }],
+                                    "}"}], "&"
+                                }, ",", "cc"
+                            }],
+                        "]"}]
+                    }], ";", "\n",
+
+                    RowBox[{"imgs", " ", "=", " ",
+                        RowBox[{"solveSIEImages", "[",
+                            RowBox[{"srcB", "[[", "1", "]]"}], ",",
+                            RowBox[{"srcB", "[[", "2", "]]"}], ",",
+                            "1.0", ",", "0.7", "]"}]
+                    }], ";", "\n",
+
+                    RowBox[{"GraphicsRow", "[",
+                        RowBox[{
+                            RowBox[{"{",
+                                RowBox[{
+                                    RowBox[{"Graphics", "[",
+                                        RowBox[{
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    RowBox[{"{", RowBox[{"Gray", ",",
+                                                        RowBox[{"AbsoluteThickness", "[", "1.5", "]"}], ",",
+                                                        RowBox[{"Line", "[",
+                                                            RowBox[{"Append", "[", "ca", ",",
+                                                                RowBox[{"ca", "[[", "1", "]]"}], "]"}],
+                                                        "]"}]
+                                                    }], "}"}], ",",
+                                                    RowBox[{"{", RowBox[{"Red", ",",
+                                                        RowBox[{"PointSize", "[", "0.03", "]"}], ",",
+                                                        RowBox[{"Point", "[", "srcB", "]"}]
+                                                    }], "}"}]
+                                                }],
+                                            "}"}], ",",
+                                            RowBox[{"PlotRange", "->",
+                                                RowBox[{"{",
+                                                    RowBox[{
+                                                        RowBox[{"{", RowBox[{"-0.5", ",", "0.5"}], "}"}], ",",
+                                                        RowBox[{"{", RowBox[{"-0.5", ",", "0.5"}], "}"}]
+                                                    }],
+                                                "}"}]
+                                            }], ",",
+                                            RowBox[{"Frame", "->", "True"}], ",",
+                                            RowBox[{"AspectRatio", "->", "1"}], ",",
+                                            RowBox[{"ImageSize", "->", "280"}], ",",
+                                            RowBox[{"PlotLabel", "->",
+                                                RowBox[{"Style", "[", RowBox[{"\"Source Plane\"", ",", "13"}], "]"}]}]
+                                        }],
+                                    "]"}], ",",
+                                    RowBox[{"Graphics", "[",
+                                        RowBox[{
+                                            RowBox[{"Flatten", "[",
+                                                RowBox[{"{",
+                                                    RowBox[{
+                                                        RowBox[{"{", RowBox[{"LightGray", ",",
+                                                            RowBox[{"AbsoluteThickness", "[", "1.5", "]"}], ",",
+                                                            RowBox[{"Line", "[",
+                                                                RowBox[{"Append", "[", "cc", ",",
+                                                                    RowBox[{"cc", "[[", "1", "]]"}], "]"}],
+                                                            "]"}]
+                                                        }], "}"}], ",",
+                                                        RowBox[{"Table", "[",
+                                                            RowBox[{
+                                                                RowBox[{"Module", "[",
+                                                                    RowBox[{
+                                                                        RowBox[{"{", RowBox[{"mu", "=",
+                                                                            RowBox[{"1.0", "/",
+                                                                                RowBox[{"detJacSIENum", "[",
+                                                                                    RowBox[{"img", "[[", "1", "]]"}], ",",
+                                                                                    RowBox[{"img", "[[", "2", "]]"}], ",",
+                                                                                    "1.0", ",", "0.7",
+                                                                                "]"}]
+                                                                            }]
+                                                                        }], "}"}], ",",
+                                                                        RowBox[{"If", "[",
+                                                                            RowBox[{
+                                                                                RowBox[{"mu", ">", "0"}], ",",
+                                                                                RowBox[{"{", RowBox[{"Blue", ",",
+                                                                                    RowBox[{"PointSize", "[", "0.025", "]"}], ",",
+                                                                                    RowBox[{"Point", "[", "img", "]"}]
+                                                                                }], "}"}], ",",
+                                                                                RowBox[{"{", RowBox[{"Red", ",",
+                                                                                    RowBox[{"PointSize", "[", "0.025", "]"}], ",",
+                                                                                    RowBox[{"Point", "[", "img", "]"}]
+                                                                                }], "}"}]
+                                                                            }],
+                                                                        "]"}]
+                                                                    }],
+                                                                "]"}], ",",
+                                                                RowBox[{"{", RowBox[{"img", ",", "imgs"}], "}"}]
+                                                            }],
+                                                        "]"}]
+                                                    }],
+                                                "}"}],
+                                            "]"}], ",",
+                                            RowBox[{"PlotRange", "->",
+                                                RowBox[{"{",
+                                                    RowBox[{
+                                                        RowBox[{"{", RowBox[{"-2", ",", "2"}], "}"}], ",",
+                                                        RowBox[{"{", RowBox[{"-2", ",", "2"}], "}"}]
+                                                    }],
+                                                "}"}]
+                                            }], ",",
+                                            RowBox[{"Frame", "->", "True"}], ",",
+                                            RowBox[{"AspectRatio", "->", "1"}], ",",
+                                            RowBox[{"ImageSize", "->", "280"}], ",",
+                                            RowBox[{"PlotLabel", "->",
+                                                RowBox[{"Style", "[",
+                                                    RowBox[{
+                                                        RowBox[{"StringJoin", "[",
+                                                            RowBox[{"\"Image Plane (\"", ",",
+                                                                RowBox[{"ToString", "[",
+                                                                    RowBox[{"Length", "[", "imgs", "]"}],
+                                                                "]"}], ",",
+                                                                "\" images)\""}],
+                                                        "]"}], ",", "13"
+                                                    }],
+                                                "]"}]
+                                            }]
+                                        }],
+                                    "]"}]
+                                }],
+                            "}"}], ",",
+                            RowBox[{"Spacings", "->", "1"}]
+                        }],
+                    "]"}]
+                }]
+            },
+        "]"}], ",", "\n",
+        RowBox[{"{",
+            RowBox[{
+                RowBox[{"{", RowBox[{"t", ",", "0", ",",
+                    RowBox[{"Style", "[", RowBox[{"\"t (0 = outside, 1 = center)\"", ",", "12"}], "]"}]
+                }], "}"}], ",",
+                "0", ",", "1", ",", "0.02"
+            }],
+        "}"}], ",",
+        RowBox[{"TrackedSymbols", " ", ":>", " ",
+            RowBox[{"{", "t", "}"}]}]
+    },
+"]"}]], "Input"]
+
+}, WindowSize -> {900, 750}, WindowTitle -> "Module 8: Image Configurations"]

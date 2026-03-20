@@ -1,0 +1,244 @@
+% =============================================================================
+% Module 7: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:axi_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{07_Axisymmetric_Models/problems\_07.wl}{problems\_07.wl},
+which verifies each answer symbolically and numerically.
+
+% ----- Exercise 7.1 -----
+\subsection*{Exercise~\ref{ex:sis_deflection_derivation}: Derivation of the SIS Deflection Angle}
+
+\textbf{(a)} Starting from $\rho(r) = \sigma_v^2 / (2\pi\Gnewton r^2)$
+with $r = \sqrt{\xi^2 + z^2}$:
+\begin{align*}
+    \Sigma(\xi) &= \int_{-\infty}^{+\infty}
+    \frac{\sigma_v^2}{2\pi\Gnewton\,(\xi^2 + z^2)}\, dz \,.
+\end{align*}
+Substituting $z = \xi\tan\phi$, $dz = \xi\sec^2\phi\,d\phi$,
+$\xi^2 + z^2 = \xi^2\sec^2\phi$:
+\begin{align*}
+    \Sigma(\xi) &= \frac{\sigma_v^2}{2\pi\Gnewton}
+    \int_{-\pi/2}^{\pi/2}
+    \frac{\xi\sec^2\phi}{\xi^2\sec^2\phi}\, d\phi
+    = \frac{\sigma_v^2}{2\pi\Gnewton\,\xi}
+    \int_{-\pi/2}^{\pi/2} d\phi
+    = \frac{\sigma_v^2}{2\Gnewton\,\xi} \,. \quad \checkmark
+\end{align*}
+
+\textbf{(b)} The enclosed projected mass:
+\begin{equation*}
+    M(\xi) = 2\pi \int_0^\xi \frac{\sigma_v^2}{2\Gnewton\,\xi'}\,
+    \xi'\, d\xi'
+    = \frac{\pi\sigma_v^2}{\Gnewton} \int_0^\xi d\xi'
+    = \frac{\pi\sigma_v^2\,\xi}{\Gnewton} \,.
+\end{equation*}
+
+\textbf{(c)} The physical deflection angle:
+\begin{equation*}
+    \alphahat(\xi) = \frac{4\Gnewton M(\xi)}{\speedoflight^2\,\xi}
+    = \frac{4\Gnewton}{\speedoflight^2\,\xi}\,
+    \frac{\pi\sigma_v^2\,\xi}{\Gnewton}
+    = \frac{4\pi\sigma_v^2}{\speedoflight^2} \,.
+\end{equation*}
+This is independent of $\xi$. \checkmark
+
+\textbf{(d)} The reduced deflection angle is
+$\alpha = (\Dds/\Ds)\,\alphahat = 4\pi(\sigma_v/\speedoflight)^2\,
+\Dds/\Ds$.  Setting $\alpha = \thetaE$ (the constant deflection equals
+the Einstein radius):
+\begin{equation*}
+    \thetaE = 4\pi\left(\frac{\sigma_v}{\speedoflight}\right)^2
+    \frac{\Dds}{\Ds} \,. \quad \checkmark
+\end{equation*}
+
+
+% ----- Exercise 7.2 -----
+\subsection*{Exercise~\ref{ex:sis_kappa_equals_gamma}: SIS --- $\kappab = |\gammaL|$ Everywhere}
+
+\textbf{(a)} The mean convergence within $\theta$:
+\begin{equation*}
+    \bar{\kappa}(\theta) = \frac{2}{\theta^2}
+    \int_0^\theta \frac{\thetaE}{2\theta'}\, \theta'\, d\theta'
+    = \frac{2}{\theta^2}\, \frac{\thetaE}{2}\, \theta
+    = \frac{\thetaE}{\theta} \,.
+\end{equation*}
+
+\textbf{(b)} The shear magnitude:
+\begin{equation*}
+    |\gammaL(\theta)| = \bar{\kappa}(\theta) - \kappab(\theta)
+    = \frac{\thetaE}{\theta} - \frac{\thetaE}{2\theta}
+    = \frac{\thetaE}{2\theta}
+    = \kappab(\theta) \,. \quad \checkmark
+\end{equation*}
+
+\textbf{(c)} For the point mass, all the mass is concentrated at the
+origin (a delta function), so $\kappab = 0$ everywhere except at
+$\theta = 0$.  The shear $|\gammaL| = \thetaE^2/\theta^2 \neq 0$
+arises from the tidal field of the central point mass.  For the SIS,
+mass is distributed continuously (with $\Sigma \propto 1/\xi$), so
+there is a nonzero convergence at every point.  The $1/r^2$ density
+profile of the SIS is precisely the profile for which the local
+convergence equals the shear at every radius.
+
+\textbf{(d)} For $\kappab(\theta) = A\,\theta^{-n}$ with $A$ constant:
+\begin{equation*}
+    \bar{\kappa}(\theta) = \frac{2}{\theta^2}
+    \int_0^\theta A\,\theta'^{-n}\, \theta'\, d\theta'
+    = \frac{2A}{\theta^2}\, \frac{\theta^{2-n}}{2-n}
+    = \frac{2A}{(2-n)\,\theta^n}
+    = \frac{2}{2-n}\, \kappab(\theta) \,.
+\end{equation*}
+(Valid for $n < 2$; for $n \geq 2$ the integral diverges.)
+The shear is:
+\begin{equation*}
+    |\gammaL| = \bar{\kappa} - \kappab
+    = \left(\frac{2}{2-n} - 1\right) \kappab
+    = \frac{n}{2-n}\, \kappab \,.
+\end{equation*}
+Setting $|\gammaL| = \kappab$: $n/(2-n) = 1$, so $n = 1$.
+This is precisely the SIS exponent ($\kappab \propto \theta^{-1}$).
+\checkmark
+
+
+% ----- Exercise 7.3 -----
+\subsection*{Exercise~\ref{ex:sis_numerical}: SIS Numerical Example}
+
+\textbf{(a)} With $\sigma_v = 250$~km\,s$^{-1} = 2.5 \times 10^5$~m\,s$^{-1}$:
+\begin{equation*}
+    \thetaE = 4\pi\left(\frac{2.5 \times 10^5}{3 \times 10^8}\right)^2
+    \times \frac{1200}{1700}
+    \approx 4\pi \times 6.944 \times 10^{-7} \times 0.706
+    \approx 6.16 \times 10^{-6}~\text{rad}
+    \approx 1.27'' \,.
+\end{equation*}
+
+\textbf{(b)} For $\beta = 0.5''$:
+
+(i) Since $\beta = 0.5'' < \thetaE \approx 1.27''$, the source is
+\textit{inside} the caustic. Two images form.
+
+(ii) Image positions:
+\begin{equation*}
+    \theta_+ = \beta + \thetaE = 0.5'' + 1.27'' = 1.77'' \,, \qquad
+    \theta_- = \beta - \thetaE = 0.5'' - 1.27'' = -0.77'' \,.
+\end{equation*}
+
+(iii) Magnifications:
+\begin{equation*}
+    \mu_+ = 1 + \frac{\thetaE}{\beta}
+    = 1 + \frac{1.27}{0.5} = 3.54 \,, \qquad
+    \mu_- = 1 - \frac{\thetaE}{\beta}
+    = 1 - \frac{1.27}{0.5} = -1.54 \,.
+\end{equation*}
+
+(iv) Total magnification:
+$|\mu_+| + |\mu_-| = 3.54 + 1.54 = 5.08 = 2\thetaE/\beta$.
+
+\textbf{(c)} Equal absolute magnification requires
+$|1 + \thetaE/\beta| = |1 - \thetaE/\beta|$.  For $\beta < \thetaE$
+(doubly imaged), $\mu_+ = 1 + \thetaE/\beta > 0$ and
+$|\mu_-| = \thetaE/\beta - 1$.  Setting these equal:
+$1 + \thetaE/\beta = \thetaE/\beta - 1$, giving $1 = -1$, which is
+impossible.  Equal magnification is never achieved for the SIS ---
+the primary image is always brighter than the secondary. \checkmark
+
+\textbf{(d)} The point mass Einstein radius for $M = 10^{12}\,\Msun$
+at $z_d = 0.3$, $z_s = 1$ is $\thetaE \approx 1.1''$ (from Module~4).
+The SIS Einstein radius depends on $\sigma_v$ rather than total mass.
+For $\sigma_v = 250$~km\,s$^{-1}$, $\thetaE \approx 1.27''$, comparable
+but slightly larger.  The SIS is a more realistic model because it
+accounts for the extended mass distribution, whereas the point mass
+concentrates all mass at a single point.
+
+
+% ----- Exercise 7.4 -----
+\subsection*{Exercise~\ref{ex:nis_convergence}: NIS Convergence and SIS Limit}
+
+\textbf{(a)} Using $\kappab(\theta) = \Sigma(\theta)/\Sigmacr$ with
+$\Sigmacr = \speedoflight^2 \Ds / (4\pi\Gnewton \Dd \Dds)$:
+\begin{equation*}
+    \kappab(\theta) = \frac{\sigma_v^2}{2\Gnewton\,\Dd\,
+    \sqrt{\theta^2 + \theta_c^2}}\,
+    \frac{4\pi\Gnewton\,\Dd\,\Dds}{\speedoflight^2\,\Ds}
+    = \frac{2\pi\sigma_v^2\,\Dds}{\speedoflight^2\,\Ds}\,
+    \frac{1}{\sqrt{\theta^2 + \theta_c^2}} \,.
+\end{equation*}
+Since $\thetaE = 4\pi(\sigma_v/\speedoflight)^2\,\Dds/\Ds$, we get
+$2\pi\sigma_v^2 \Dds/(\speedoflight^2 \Ds) = \thetaE/2$, and:
+\begin{equation*}
+    \kappab(\theta) = \frac{\thetaE}{2\sqrt{\theta^2 + \theta_c^2}}
+    \,. \quad \checkmark
+\end{equation*}
+
+\textbf{(b)} As $\theta_c \to 0$:
+$\sqrt{\theta^2 + \theta_c^2} \to \sqrt{\theta^2} = \theta$ (for
+$\theta > 0$), so $\kappab \to \thetaE/(2\theta)$, the SIS result.
+\checkmark
+
+\textbf{(c)} Multiple images require $\kappab(0) \geq 1$:
+\begin{equation*}
+    \kappab(0) = \frac{\thetaE}{2\theta_c} \geq 1
+    \qquad \Longrightarrow \qquad
+    \theta_c \leq \frac{\thetaE}{2} \,.
+\end{equation*}
+
+\textbf{(d)} For $\theta_c = 0.1\,\thetaE$:
+\begin{align*}
+    \kappab(0) &= \frac{\thetaE}{2 \times 0.1\,\thetaE} = 5.0 \,, \\
+    \kappab(\thetaE) &= \frac{\thetaE}{2\sqrt{\thetaE^2 + 0.01\,\thetaE^2}}
+    = \frac{1}{2\sqrt{1.01}} \approx 0.498 \,, \\
+    \kappab(2\thetaE) &= \frac{1}{2\sqrt{4.01}} \approx 0.250 \,.
+\end{align*}
+
+\textbf{(e)} See the plot generated by
+\texttt{problems\_07.wl}. As $\theta_c$ increases, the central
+convergence decreases and the profile flattens in the core region,
+while all profiles converge to the SIS behavior $\kappab = \thetaE/(2\theta)$
+at large $\theta$.
+
+
+% ----- Exercise 7.5 -----
+\subsection*{Exercise~\ref{ex:nfw_concentration}: NFW Concentration and Lensing Strength}
+
+\textbf{(a)} The function $f(x)$ has a logarithmic divergence as
+$x \to 0$ (with $f(x) \sim (1/x)\ln(2/x)$), peaks near $x \sim 0.5$
+in terms of the product $x\,f(x)$, and falls off as $f(x) \sim 1/x^2$
+for $x \gg 1$.  See the plot generated by \texttt{problems\_07.wl}.
+
+\textbf{(b)} For a cluster at $z_d = 0.3$ with $M_{200} = 10^{15}\,\Msun$
+and $z_s = 1$: the virial radius is $r_{200} \approx 2.1$~Mpc, so
+$r_s = r_{200}/c$, $\theta_s = r_s/\Dd$.
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+$c$ & $r_s$ (Mpc) & $\theta_s$ (arcsec) & $\kappa_s$ \\
+\midrule
+5 & 0.42 & 96 & 0.18 \\
+10 & 0.21 & 48 & 0.50 \\
+20 & 0.105 & 24 & 1.50 \\
+\bottomrule
+\end{tabular}
+\end{center}
+(Exact values depend on the cosmological parameters used; see
+\texttt{problems\_07.wl}.)
+
+\textbf{(c)} See the plot generated by \texttt{problems\_07.wl}.
+Higher concentration pushes the $\kappab = 1$ crossing to larger
+angular radii, increasing the Einstein radius and the strong-lensing
+cross-section.
+
+\textbf{(d)} (i)~The Einstein radius increases with $c$ because
+$\kappa_s$ increases faster than $\theta_s$ decreases.
+(ii)~The region where $\kappab > 1$ grows with $c$.
+(iii)~The lensing cross-section for giant arcs (proportional to the
+area enclosed by the tangential caustic) increases strongly with $c$,
+roughly as $c^2$ for moderate concentrations.  This means that
+concentration is a key parameter for predicting cluster arc
+statistics. \checkmark

@@ -120,3 +120,25 @@ Timestamped record of major milestones and work completed.
 - **`arrival_time_surface.nb`**: Interactive 3D arrival-time surface with source position slider.
 - **PDF**: Student 133 pages, Instructor 165 pages.
 - **Part II (Gravitational Lensing Theory) is now COMPLETE.**
+
+---
+
+## 2026-03-19 — Modules 7 & 8 (built in parallel)
+
+### Module 7: Axisymmetric Lens Models
+- **LaTeX notes** (948 lines): General circular formalism, point mass recap, SIS (constant deflection angle!), NIS (core radius effects), NFW (dark matter halo profile). Model comparison table and figures. 5 exercises.
+- **`axisymmetric_models.wl`**: SIS/NIS/NFW κ, γ, α derived and verified. 6 figures.
+- **`sis_nis_nfw.nb`**: Interactive model explorer with σ_v, core radius, concentration sliders.
+
+### Module 8: Non-Axisymmetric Models and Critical Curves
+- **LaTeX notes** (1194 lines — largest module): SIS+shear, SIE (Kormann et al. 1994), critical curves, caustics, and the comprehensive **Image Topology** section covering:
+  - Critical curves as parity boundaries (det(A) sign change)
+  - Caustic crossings: image creation/destruction in ±2 pairs
+  - Full "walk a source across caustics" walkthrough (1→3→5→3→1 images)
+  - Fold catastrophe (μ ∝ 1/√d, arc formation)
+  - Cusp catastrophe (three-image merger, cusp relation)
+  - Image configuration taxonomy (doubles, quads, Einstein crosses, naked cusps)
+  - Why giant arcs form along tangential critical curves
+- **`critical_curves_caustics.wl`**: SIS+shear and SIE critical curves/caustics computed, image solver verified to machine precision. 7 figures.
+- **`image_configurations.nb`**: Interactive source placement → image visualization, caustic crossing animation.
+- **PDF**: Student 166 pages, Instructor 205 pages. Only Modules 9 and 10 remain.
