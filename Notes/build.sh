@@ -1,13 +1,17 @@
 #!/bin/bash
 # =============================================================================
-# build.sh — Compile Learning to Lens LaTeX notes (two versions)
+# build.sh — Compile Learning to Lens LaTeX notes
 # =============================================================================
-# Produces two PDFs in the Output/ directory:
-#   1. Learning_to_Lens.pdf           — Student edition (no solutions)
-#   2. Learning_to_Lens_Solutions.pdf  — Instructor edition (with solutions)
+# Produces PDFs in the Output/ directory:
+#   1. Learning_to_Lens.pdf           — Student, local file:// links
+#   2. Learning_to_Lens_Solutions.pdf  — Instructor, local file:// links
+#   3. Learning_to_Lens_Web.pdf            — Student, GitHub links (for website)
+#   4. Learning_to_Lens_Solutions_Web.pdf  — Instructor, GitHub links
 #
-# All Mathematica file links point to the GitHub repository so they work
-# from any context (local, website, email, etc.).
+# Local links open .nb/.wl files directly in Mathematica on this machine.
+# GitHub links work from the website or anywhere else.
+#
+# To change the local repo path, edit \localrepo in preamble.tex.
 #
 # Usage: cd Notes && bash build.sh
 # Or:    bash Notes/build.sh (from repo root)
@@ -15,34 +19,44 @@
 
 set -e
 
-# Navigate to Notes directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
 OUTDIR="../Output"
 mkdir -p "$OUTDIR"
 
-# Check for pdflatex
 if ! command -v pdflatex &> /dev/null; then
     echo "Error: pdflatex not found. Install a TeX distribution (e.g., MacTeX)."
     exit 1
 fi
 
-# ---- Version 1: Student Edition (no solutions) ----
-echo "=== Building Student Edition (no solutions) ==="
+# ---- Local links (file:// — opens files on this machine) ----
+echo "=== Building Student Edition (local links) ==="
 pdflatex -interaction=nonstopmode main.tex > /dev/null 2>&1
 pdflatex -interaction=nonstopmode main.tex > /dev/null 2>&1
 cp main.pdf "$OUTDIR/Learning_to_Lens.pdf"
 echo "  -> $OUTDIR/Learning_to_Lens.pdf"
 
-# ---- Version 2: Instructor Edition (with solutions) ----
-echo "=== Building Instructor Edition (with solutions) ==="
+echo "=== Building Instructor Edition (local links) ==="
 pdflatex -interaction=nonstopmode "\def\showsolutions{}\input{main.tex}" > /dev/null 2>&1
 pdflatex -interaction=nonstopmode "\def\showsolutions{}\input{main.tex}" > /dev/null 2>&1
 cp main.pdf "$OUTDIR/Learning_to_Lens_Solutions.pdf"
 echo "  -> $OUTDIR/Learning_to_Lens_Solutions.pdf"
 
-# ---- Cleanup: also keep main.pdf as the student version ----
+# ---- GitHub links (for website / sharing) ----
+echo "=== Building Student Edition (GitHub links) ==="
+pdflatex -interaction=nonstopmode "\def\githublinks{}\input{main.tex}" > /dev/null 2>&1
+pdflatex -interaction=nonstopmode "\def\githublinks{}\input{main.tex}" > /dev/null 2>&1
+cp main.pdf "$OUTDIR/Learning_to_Lens_Web.pdf"
+echo "  -> $OUTDIR/Learning_to_Lens_Web.pdf"
+
+echo "=== Building Instructor Edition (GitHub links) ==="
+pdflatex -interaction=nonstopmode "\def\showsolutions{}\def\githublinks{}\input{main.tex}" > /dev/null 2>&1
+pdflatex -interaction=nonstopmode "\def\showsolutions{}\def\githublinks{}\input{main.tex}" > /dev/null 2>&1
+cp main.pdf "$OUTDIR/Learning_to_Lens_Solutions_Web.pdf"
+echo "  -> $OUTDIR/Learning_to_Lens_Solutions_Web.pdf"
+
+# ---- Keep main.pdf as the local student version ----
 cp "$OUTDIR/Learning_to_Lens.pdf" main.pdf
 
 # ---- Report ----
@@ -51,5 +65,10 @@ INSTRUCTOR_PAGES=$(pdfinfo "$OUTDIR/Learning_to_Lens_Solutions.pdf" 2>/dev/null 
 
 echo ""
 echo "=== Build complete ==="
-echo "  Student edition:    $OUTDIR/Learning_to_Lens.pdf ($STUDENT_PAGES pages)"
-echo "  Instructor edition: $OUTDIR/Learning_to_Lens_Solutions.pdf ($INSTRUCTOR_PAGES pages)"
+echo "  Student (local):      $OUTDIR/Learning_to_Lens.pdf ($STUDENT_PAGES pages)"
+echo "  Instructor (local):   $OUTDIR/Learning_to_Lens_Solutions.pdf ($INSTRUCTOR_PAGES pages)"
+echo "  Student (web):        $OUTDIR/Learning_to_Lens_Web.pdf"
+echo "  Instructor (web):     $OUTDIR/Learning_to_Lens_Solutions_Web.pdf"
+echo ""
+echo "  Local: click links to open .nb/.wl files in Mathematica"
+echo "  Web:   links go to GitHub (for rodelcr.github.io)"
