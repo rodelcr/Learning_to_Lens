@@ -691,6 +691,77 @@ Gaussian curvature $K = 1/R^2$, and in 2D the Ricci scalar equals $2K$.
 
 
 % =====================================================================
+\section{Standard Computational Tools}
+\label{sec:dg_standard_tools}
+
+The hand-rolled functions defined in
+\mathlink{01b_Differential_Geometry/christoffel_symbols.wl}{christoffel\_symbols.wl}
+are pedagogically valuable --- they make the connection between the
+textbook formula and the computation explicit.  However, Mathematica
+also provides built-in tools for GR calculations that you should know
+about.
+
+\paragraph{Wolfram Function Repository.}
+The \texttt{ResourceFunction} interface provides one-liner access to
+several GR computations:
+\begin{itemize}[nosep]
+    \item \texttt{ResourceFunction["ChristoffelSymbol"][g, coords]} ---
+          returns the Christoffel symbols as a plain $n \times n \times n$
+          array, identical in format to our custom function.  We have
+          verified that this matches our code exactly for both the 2-sphere
+          and Schwarzschild metrics (see
+          \texttt{verify\_against\_textbooks.wl}).
+    \item \texttt{ResourceFunction["RicciScalar"][g, coords]} ---
+          returns the Ricci scalar.  Works for simple metrics (e.g.,
+          the 2-sphere) but may not fully evaluate for more complex ones.
+    \item \texttt{ResourceFunction["RiemannTensor"]} and
+          \texttt{ResourceFunction["RicciTensor"]} --- these exist but
+          return opaque tensor objects rather than plain arrays, making
+          them difficult to use for further computation.
+\end{itemize}
+
+\begin{remark}
+For this reason, we use \texttt{ResourceFunction["ChristoffelSymbol"]}
+as a cross-check throughout the tutorial, but maintain our custom
+functions for the full Christoffel $\to$ Riemann $\to$ Ricci $\to$
+scalar pipeline, since the built-in ResourceFunction versions of the
+higher-order tensors do not return plain arrays.  All results have been
+cross-validated against textbook equations; see
+\texttt{Mathematica/verify\_against\_textbooks.wl} for the complete
+test suite.
+\end{remark}
+
+\paragraph{The xAct Package.}
+For professional-level tensor algebra in Mathematica, the
+\textbf{xAct} suite (available at \url{http://www.xact.es/}) is the
+gold standard.  Its component packages include:
+\begin{itemize}[nosep]
+    \item \textbf{xTensor}: abstract tensor algebra (index
+          manipulation, symmetry, canonicalization)
+    \item \textbf{xCoba}: component computations in coordinate bases
+    \item \textbf{xPert}: perturbation theory (useful for linearized
+          gravity, Module~1e)
+\end{itemize}
+xAct excels at abstract manipulations --- e.g., proving tensor
+identities, computing perturbation expansions, and working with
+complicated index symmetries.  It is less convenient for the simple
+``plug in a metric, get numbers out'' workflow used in this tutorial,
+which is why we do not use it as our primary tool.  However, if your
+research involves heavy tensor algebra (e.g., higher-order perturbation
+theory, non-trivial spacetimes, or abstract index calculations), xAct
+is the right tool.
+
+Installation:
+\begin{lstlisting}[style=mathematica]
+(* Download from http://www.xact.es/download.html *)
+(* Unpack into ~/Library/Wolfram/Applications/ (macOS) *)
+(* Then: *)
+Needs["xAct`xTensor`"]
+Needs["xAct`xCoba`"]
+\end{lstlisting}
+
+
+% =====================================================================
 \section{Summary}
 \label{sec:dg_summary}
 
