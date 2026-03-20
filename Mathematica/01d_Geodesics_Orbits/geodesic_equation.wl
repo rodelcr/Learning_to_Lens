@@ -145,7 +145,7 @@ fig1 = Show[
             {Blue, AbsoluteThickness[1.5]},
             {Blue, AbsoluteThickness[1.5]}
         },
-        AxesLabel -> {Style["r / (GM/c\[TwoSuperior])", 13],
+        AxesLabel -> {Style[Row[{"r / (GM/", Superscript["c", "2"], ")"}], 13],
                       Style[Subscript["V", "eff"], 14]},
         PlotLabel -> Style["Effective Potential (Massive Particles, GR)", 13],
         PlotLegends -> Placed[
@@ -172,12 +172,12 @@ fig2 = Plot[Evaluate[Table[Veff[r, LL, 0], {LL, {2, 3, 4, 5}}]],
         {Blue, AbsoluteThickness[1.5]},
         {Darker[Green], AbsoluteThickness[1.5]}
     },
-    AxesLabel -> {Style["r / (GM/c\[TwoSuperior])", 13],
+    AxesLabel -> {Style[Row[{"r / (GM/", Superscript["c", "2"], ")"}], 13],
                   Style[Subscript["V", "eff"], 14]},
     PlotLabel -> Style["Effective Potential (Photons, GR)", 13],
     Epilog -> {
         Red, PointSize[0.015], Point[{3, Veff[3, 3, 0]}],
-        Text[Style["Photon sphere\nr = 3GM/c\[TwoSuperior]", 10, Red], {6, Veff[3, 3, 0] + 0.008}]
+        Text[Style["Photon sphere\nr = 3GM/c\[CapitalTwo]", 10, Red], {6, Veff[3, 3, 0] + 0.008}]
     },
     PlotLegends -> Placed[
         LineLegend[{"L = 2", "L = 3", "L = 4", "L = 5"}, LegendMarkerSize -> 15],
@@ -196,14 +196,14 @@ fig3 = Plot[{VeffNewton[r, 4], Veff[r, 4, 1]}, {r, 2, 40},
         {Gray, AbsoluteThickness[2], Dashed},
         {Blue, AbsoluteThickness[2]}
     },
-    AxesLabel -> {Style["r / (GM/c\[TwoSuperior])", 13],
+    AxesLabel -> {Style[Row[{"r / (GM/", Superscript["c", "2"], ")"}], 13],
                   Style[Subscript["V", "eff"], 14]},
     PlotLabel -> Style["Newtonian vs. GR Effective Potential (L = 4)", 13],
     PlotLegends -> Placed[
         LineLegend[{"Newtonian", "General Relativity"}, LegendMarkerSize -> 15],
         {0.7, 0.7}],
     Epilog -> {
-        Text[Style["GR correction\n-GML\[TwoSuperior]/(c\[TwoSuperior]r\[ThreeSuperior])", 9,
+        Text[Style[Column[{"GR correction", Row[{"-GM", Superscript["L","2"], "/(", Superscript["c","2"], Superscript["r","3"], ")"}]}, Alignment->Center], 9,
             Blue], {8, -0.06}]
     },
     ImageSize -> 500

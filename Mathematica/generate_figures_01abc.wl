@@ -231,7 +231,7 @@ fig1c2 = Plot[1/Sqrt[1 - 1/x] - 1, {x, 1.01, 20},
         Text[Style["Neutron star\nz \[TildeTilde] 0.3", 9, Black],
             {4, 1/Sqrt[1 - 1/2.42] - 1 + 0.3}],
         (* Sun: off the chart on the right *)
-        Text[Style["Sun: z \[TildeTilde] 2\[Times]10\[Superscript]-6", 9, Gray],
+        Text[Style[Row[{"Sun: z ~ 2\[Times]", Superscript["10","-6"]}], 9, Gray],
             {12, 0.3}]
     },
     ImageSize -> 450
