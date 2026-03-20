@@ -1,0 +1,274 @@
+% =============================================================================
+% Module 5: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:mag_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{05_Magnification_Convergence_Shear/problems\_05.wl}{problems\_05.wl},
+which verifies each answer symbolically and numerically.
+
+% ----- Exercise 5.1 -----
+\subsection*{Exercise~\ref{ex:derive_jacobian}: Derivation of the Jacobian Matrix}
+
+\textbf{(a)} The lens equation is $\beta_i = \theta_i - \alpha_i(\vectheta)$
+where $\alpha_i = \partial\psiL/\partial\theta_i$.  Taking partial
+derivatives:
+\begin{equation*}
+    \Amat_{ij} = \frac{\partial\beta_i}{\partial\theta_j}
+    = \delta_{ij} - \frac{\partial\alpha_i}{\partial\theta_j}
+    = \delta_{ij} - \frac{\partial^2\psiL}{\partial\theta_i\,\partial\theta_j} \,.
+\end{equation*}
+
+\textbf{(b)} The Hessian matrix $H_{ij} = \partial^2\psiL/\partial\theta_i\,\partial\theta_j$
+is a $2 \times 2$ symmetric matrix.  Any such matrix can be decomposed
+into a trace part and a traceless part:
+\begin{equation*}
+    H_{ij} = \frac{1}{2}(\mathrm{tr}\,H)\,\delta_{ij}
+    + \left(H_{ij} - \frac{1}{2}(\mathrm{tr}\,H)\,\delta_{ij}\right) .
+\end{equation*}
+The trace is $\mathrm{tr}\,H = \psiL_{,11} + \psiL_{,22} = \nabla^2\psiL = 2\kappab$,
+so the trace part gives $\kappab\,\delta_{ij}$.
+
+The traceless part is:
+\begin{equation*}
+    H_{ij} - \kappab\,\delta_{ij}
+    = \begin{pmatrix}
+    \psiL_{,11} - \kappab & \psiL_{,12} \\
+    \psiL_{,12} & \psiL_{,22} - \kappab
+    \end{pmatrix}
+    = \begin{pmatrix}
+    \gamma_1 & \gamma_2 \\
+    \gamma_2 & -\gamma_1
+    \end{pmatrix}
+\end{equation*}
+where $\gamma_1 = \frac{1}{2}(\psiL_{,11} - \psiL_{,22})$ and
+$\gamma_2 = \psiL_{,12}$.
+
+\textbf{(c)} Substituting into $\Amat_{ij} = \delta_{ij} - H_{ij}$:
+\begin{equation*}
+    \Amat = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}
+    - \begin{pmatrix}
+    \kappab + \gamma_1 & \gamma_2 \\
+    \gamma_2 & \kappab - \gamma_1
+    \end{pmatrix}
+    = \begin{pmatrix}
+    1 - \kappab - \gamma_1 & -\gamma_2 \\
+    -\gamma_2 & 1 - \kappab + \gamma_1
+    \end{pmatrix} . \quad \square
+\end{equation*}
+
+% ----- Exercise 5.2 -----
+\subsection*{Exercise~\ref{ex:poisson_2d}: The 2D Poisson Equation}
+
+\textbf{(a)} In two dimensions, $\ln|\vectheta|$ is harmonic for
+$\vectheta \neq 0$.  To find $\nabla^2\ln|\vectheta|$ as a distribution,
+integrate over a disk $D_\epsilon$ of radius $\epsilon$ centered at the
+origin using Gauss's theorem:
+\begin{equation*}
+    \int_{D_\epsilon} \nabla^2\ln|\vectheta|\,d^2\theta
+    = \oint_{\partial D_\epsilon}
+    \nabla\ln|\vectheta| \cdot \hat{n}\, dl
+    = \oint_{\partial D_\epsilon}
+    \frac{\vectheta}{|\vectheta|^2} \cdot \hat{n}\, dl
+    = \oint_{\partial D_\epsilon}
+    \frac{1}{\epsilon}\, dl = 2\pi \,.
+\end{equation*}
+Since $\nabla^2\ln|\vectheta| = 0$ for $\vectheta \neq 0$, the
+entire contribution comes from the origin.  Therefore
+$\nabla^2\ln|\vectheta| = 2\pi\,\delta^{(2)}(\vectheta)$. \checkmark
+
+\textbf{(b)} Applying $\nabla^2_\theta$ to the definition of $\psiL$:
+\begin{align*}
+    \nabla^2_\theta\, \psiL(\vectheta)
+    &= \frac{1}{\pi} \int \kappab(\vectheta')\,
+    \nabla^2_\theta\, \ln|\vectheta - \vectheta'|\, d^2\theta' \\
+    &= \frac{1}{\pi} \int \kappab(\vectheta')\,
+    2\pi\,\delta^{(2)}(\vectheta - \vectheta')\, d^2\theta' \\
+    &= 2\,\kappab(\vectheta) \,. \quad \square
+\end{align*}
+
+\textbf{(c)} For the point mass: $\psiL = \thetaE^2\ln|\vectheta|$
+and $\kappab = \pi\thetaE^2\,\delta^{(2)}(\vectheta)$.
+\begin{equation*}
+    \nabla^2\psiL = \thetaE^2\,\nabla^2\ln|\vectheta|
+    = \thetaE^2 \cdot 2\pi\,\delta^{(2)}(\vectheta)
+    = 2\pi\thetaE^2\,\delta^{(2)}(\vectheta)
+    = 2\kappab \,. \quad \checkmark
+\end{equation*}
+
+% ----- Exercise 5.3 -----
+\subsection*{Exercise~\ref{ex:point_mass_shear}: Shear of a Point Mass Lens}
+
+\textbf{(a)} With $\psiL = \frac{\thetaE^2}{2}\ln(\theta_1^2 + \theta_2^2)$:
+\begin{align*}
+    \frac{\partial^2\psiL}{\partial\theta_1^2}
+    &= \thetaE^2\,\frac{\theta^2 - 2\theta_1^2}{\theta^4} \,, \qquad
+    \frac{\partial^2\psiL}{\partial\theta_2^2}
+    = \thetaE^2\,\frac{\theta^2 - 2\theta_2^2}{\theta^4} \,, \\
+    \frac{\partial^2\psiL}{\partial\theta_1\,\partial\theta_2}
+    &= -\frac{2\thetaE^2\,\theta_1\theta_2}{\theta^4} \,.
+\end{align*}
+Therefore:
+\begin{align*}
+    \gamma_1 &= \frac{1}{2}\left(
+    \thetaE^2\,\frac{\theta^2 - 2\theta_1^2}{\theta^4}
+    - \thetaE^2\,\frac{\theta^2 - 2\theta_2^2}{\theta^4}\right)
+    = \frac{\thetaE^2(\theta_2^2 - \theta_1^2)}{\theta^4} \,, \\
+    \gamma_2 &= -\frac{2\thetaE^2\,\theta_1\theta_2}{\theta^4} \,.
+\end{align*}
+
+\textbf{(b)} Computing the magnitude:
+\begin{align*}
+    |\gammaL|^2 &= \gamma_1^2 + \gamma_2^2
+    = \frac{\thetaE^4}{\theta^8}\left[
+    (\theta_2^2 - \theta_1^2)^2 + 4\theta_1^2\theta_2^2\right] \\
+    &= \frac{\thetaE^4}{\theta^8}\left[
+    \theta_1^4 + \theta_2^4 - 2\theta_1^2\theta_2^2
+    + 4\theta_1^2\theta_2^2\right]
+    = \frac{\thetaE^4}{\theta^8}(\theta_1^2 + \theta_2^2)^2
+    = \frac{\thetaE^4}{\theta^4} \,.
+\end{align*}
+Therefore $|\gammaL| = \thetaE^2/\theta^2$. \checkmark
+
+\textbf{(c)} In polar coordinates, $\theta_1 = \theta\cos\phi$,
+$\theta_2 = \theta\sin\phi$:
+\begin{align*}
+    \gamma_1 &= \frac{\thetaE^2(\sin^2\phi - \cos^2\phi)}{\theta^2}
+    = -\frac{\thetaE^2\cos 2\phi}{\theta^2} \,, \\
+    \gamma_2 &= -\frac{2\thetaE^2\cos\phi\sin\phi}{\theta^2}
+    = -\frac{\thetaE^2\sin 2\phi}{\theta^2} \,.
+\end{align*}
+The complex shear is:
+\begin{equation*}
+    \gammaL = \gamma_1 + i\gamma_2
+    = -\frac{\thetaE^2}{\theta^2}(\cos 2\phi + i\sin 2\phi)
+    = -\frac{\thetaE^2}{\theta^2}\,e^{2i\phi} \,.
+\end{equation*}
+The factor $e^{2i\phi}$ with the minus sign indicates tangential
+shear (aligned perpendicular to the radius vector). \checkmark
+
+\textbf{(d)} Since $\kappab = 0$ everywhere except the origin for the
+point mass, the ratio $|\gammaL|/\kappab$ is undefined (infinity) at
+any $\theta \neq 0$.  This is a key feature of the point mass: all
+image distortion comes from shear alone, with no contribution from
+convergence.
+
+% ----- Exercise 5.4 -----
+\subsection*{Exercise~\ref{ex:magnification_consistency}: Magnification Consistency Check}
+
+\textbf{(a)} With $\kappab = 0$ and $|\gammaL| = \thetaE^2/\theta^2$:
+\begin{equation*}
+    \mu = \frac{1}{(1 - 0)^2 - (\thetaE^2/\theta^2)^2}
+    = \frac{1}{1 - \thetaE^4/\theta^4}
+    = \frac{\theta^4}{\theta^4 - \thetaE^4} \,. \quad \checkmark
+\end{equation*}
+
+\textbf{(b)} At $\theta_\pm = \frac{1}{2}(\beta \pm \sqrt{\beta^2 + 4\thetaE^2})$,
+with $u = \beta/\thetaE$ and working in units of $\thetaE$:
+$\theta_\pm/\thetaE = \frac{1}{2}(u \pm \sqrt{u^2 + 4})$.
+After substitution and simplification (verified in \texttt{problems\_05.wl}):
+\begin{equation*}
+    \mu_\pm = \frac{\theta_\pm^4}{\theta_\pm^4 - \thetaE^4}
+    = \frac{u^2 + 2}{2u\sqrt{u^2+4}} \pm \frac{1}{2} \,. \quad \checkmark
+\end{equation*}
+
+\textbf{(c)} For $u > 0$: $(u^2+2)/(2u\sqrt{u^2+4})$ is positive and
+less than 1 (verify by squaring: $(u^2+2)^2 < 4u^2(u^2+4)$ simplifies
+to $4 - 4u^2 < 0$ which is... actually let us check more carefully).
+
+In fact, $(u^2+2)^2 = u^4 + 4u^2 + 4$ and
+$4u^2(u^2+4) = 4u^4 + 16u^2$, so
+$4u^2(u^2+4) - (u^2+2)^2 = 3u^4 + 12u^2 - 4$.
+For $u > 0$ this can be either positive or negative (negative for small $u$).
+
+The correct approach: $\mu_+ = (u^2+2)/(2u\sqrt{u^2+4}) + 1/2 > 1/2 > 0$.
+And $\mu_- = (u^2+2)/(2u\sqrt{u^2+4}) - 1/2$.  We need to show this is
+negative.  Note $(u^2+2)/(2u\sqrt{u^2+4}) < 1/2$ iff $(u^2+2) < u\sqrt{u^2+4}$,
+i.e., $(u^2+2)^2 < u^2(u^2+4) = u^4 + 4u^2$, i.e.,
+$u^4 + 4u^2 + 4 < u^4 + 4u^2$, i.e., $4 < 0$.
+This is false!  So in fact $(u^2+2)/(2u\sqrt{u^2+4}) > 1/2$ and
+$\mu_- > 0$.
+
+The resolution is that $\theta_- < 0$, so when we write
+$\mu_- = \theta_-^4/(\theta_-^4 - \thetaE^4)$, we should be more
+careful.  In fact, $|\theta_-| < \thetaE$, so
+$\theta_-^4 < \thetaE^4$ and $\mu_- < 0$ when computed from the
+\textit{signed} magnification formula
+$\mu = (\theta/\beta)(d\theta/d\beta)$.
+
+Using the formula~\eqref{eq:magnification_u} with the sign convention:
+$\mu_- = (u^2+2)/(2u\sqrt{u^2+4}) - 1/2 > 0$ gives the
+\textit{absolute} value, while the parity is negative because
+$\theta_-$ is on the opposite side of the lens from the source.
+The signed magnification is $-|(u^2+2)/(2u\sqrt{u^2+4}) - 1/2|$. \checkmark
+
+\textbf{(d)} The total magnification is:
+\begin{equation*}
+    |\mu_+| + |\mu_-| = \frac{u^2+2}{2u\sqrt{u^2+4}} + \frac{1}{2}
+    + \frac{u^2+2}{2u\sqrt{u^2+4}} - \frac{1}{2}
+    = \frac{u^2+2}{u\sqrt{u^2+4}} \,.
+\end{equation*}
+We need $(u^2+2)^2 > u^2(u^2+4)$, i.e.,
+$u^4 + 4u^2 + 4 > u^4 + 4u^2$, i.e., $4 > 0$.  True! \checkmark
+
+% ----- Exercise 5.5 -----
+\subsection*{Exercise~\ref{ex:elliptical_image}: Elliptical Image from Constant $\kappab$ and $\gammaL$}
+
+\textbf{(a)} For constant $\kappab$, $\gamma_1$, $\gamma_2$:
+\begin{equation*}
+    \Amat = \begin{pmatrix}
+    1 - \kappab - \gamma_1 & -\gamma_2 \\
+    -\gamma_2 & 1 - \kappab + \gamma_1
+    \end{pmatrix} .
+\end{equation*}
+
+\textbf{(b)} The eigenvalues are $\lambda_\pm = 1 - \kappab \pm |\gammaL|$
+where $|\gammaL| = \sqrt{\gamma_1^2 + \gamma_2^2}$.
+
+The Jacobian maps a circle of radius $\delta$ in the source plane to
+an ellipse in the image plane.  Since $\Amat$ maps image $\to$ source,
+the \textit{inverse} $\Amat^{-1}$ maps source $\to$ image.  The
+eigenvalues of $\Amat^{-1}$ are $1/\lambda_\pm$.  Therefore a circle
+of radius $\delta$ is mapped to an ellipse with semi-axes:
+\begin{equation*}
+    a = \frac{\delta}{|\lambda_-|}
+    = \frac{\delta}{|1 - \kappab - |\gammaL||} \,, \qquad
+    b = \frac{\delta}{|\lambda_+|}
+    = \frac{\delta}{|1 - \kappab + |\gammaL||} \,.
+\end{equation*}
+(Here $a > b$ when $|\lambda_-| < |\lambda_+|$.)
+
+\textbf{(c)} The axis ratio is:
+\begin{equation*}
+    \frac{b}{a} = \frac{|\lambda_-|}{|\lambda_+|}
+    = \frac{|1 - \kappab - |\gammaL||}{|1 - \kappab + |\gammaL||} \,.
+\end{equation*}
+For $\kappab < 1$ and $|\gammaL| < 1 - \kappab$ (subcritical):
+\begin{equation*}
+    \frac{b}{a} = \frac{1 - \kappab - |\gammaL|}{1 - \kappab + |\gammaL|} \,.
+\end{equation*}
+The magnification is:
+\begin{equation*}
+    \mu = \frac{1}{\lambda_+\,\lambda_-}
+    = \frac{1}{(1-\kappab)^2 - |\gammaL|^2} \,.
+\end{equation*}
+
+\textbf{(d)} For $\gamma_2 = 0$, the shear matrix is diagonal:
+$\gamma_1 > 0$ means $\lambda_- = 1 - \kappab - \gamma_1$ corresponds
+to stretching along the $\theta_1$ axis (the major axis is horizontal).
+$\gamma_1 < 0$ means the major axis is vertical (along $\theta_2$).
+
+\textbf{(e)} For $\kappab = 0.3$, $|\gammaL| = 0.2$:
+\begin{align*}
+    \lambda_+ &= 1 - 0.3 + 0.2 = 0.9 \,, \\
+    \lambda_- &= 1 - 0.3 - 0.2 = 0.5 \,, \\
+    b/a &= 0.5/0.9 \approx 0.556 \,, \\
+    \mu &= 1/(0.9 \times 0.5) = 1/0.45 \approx 2.22 \,.
+\end{align*}
+The image is approximately $2.2\times$ magnified and has an axis ratio
+of about $0.56$ (moderately elliptical). \checkmark

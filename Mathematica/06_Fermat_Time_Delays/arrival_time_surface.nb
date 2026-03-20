@@ -1,0 +1,652 @@
+Notebook[{
+
+(* =========================================================================
+   arrival_time_surface.nb
+   Module 6: Fermat's Principle and Time Delays
+   =========================================================================
+   Purpose: Interactive visualizations for the arrival-time surface:
+            1. 3D surface plot of tau(theta1, theta2) with slider for beta
+            2. Saddle points and minima marked as images
+            3. Contour plot with critical curve (Einstein ring) overlaid
+            4. Time delay vs beta slider
+
+   Sources: Narayan & Bartelmann Sec. 3.3
+            Congdon & Keeton Ch. 4.3-4.4
+            Saha et al. Sec. 1.2-1.3
+
+   Units:   All angular positions in units of thetaE
+   ========================================================================= *)
+
+Cell[TextData[{"Module 6: Arrival-Time Surface --- Interactive Visualizations"}], "Title"],
+
+Cell[TextData[{"This notebook provides interactive visualizations of the Fermat potential \
+(arrival-time surface) for a point mass gravitational lens. The Fermat \
+potential \[Tau](\[Theta], \[Beta]) = (1/2)|\[Theta] - \[Beta]|\[Superscript]2 - \[Psi](\[Theta]) \
+combines the geometric delay and the Shapiro (gravitational) delay. \
+Images form at stationary points of \[Tau]: minima (Type I), saddle points \
+(Type II), and maxima (Type III). Use the sliders to explore how the \
+arrival-time surface and image positions change with source position."}], "Text"],
+
+(* =====================================================================
+   Section 1: 3D Arrival-Time Surface with Source Position Slider
+   =====================================================================
+   Manipulate with slider for source position beta.
+   Shows the 3D surface tau(theta1, theta2) with stationary points
+   marked as colored dots.
+   ===================================================================== *)
+
+Cell[TextData[{"1. Interactive 3D Arrival-Time Surface"}], "Section"],
+
+Cell[TextData[{"Use the slider to vary the source position \[Beta] (in units of \
+\!\(\*SubscriptBox[\(\[Theta]\), \(E\)]\)). The two stationary points \
+--- minimum (blue, Type I image) and saddle (red, Type II image) --- \
+are marked. The minimum always has a lower \[Tau] value (earlier arrival time)."}], "Text"],
+
+Cell[BoxData[
+    RowBox[{"Manipulate", "[",
+        RowBox[{
+            RowBox[{"Module", "[",
+                RowBox[{
+                    RowBox[{"{",
+                        RowBox[{"tauSurf", ",", " ", "xp", ",", " ", "xm",
+                            ",", " ", "tauP", ",", " ", "tauM"},
+                    "}"}], ",", "\n",
+                    RowBox[{
+                        RowBox[{"tauSurf", "[",
+                            RowBox[{"t1_", ",", " ", "t2_"}], "]",
+                            " ", ":=", " ",
+                            RowBox[{
+                                RowBox[{
+                                    RowBox[{"(", RowBox[{"t1", " ", "-", " ", "beta"}], ")"}],
+                                    "^", "2"}], "/", "2"}],
+                            " ", "+", " ",
+                            RowBox[{"t2", "^", "2", "/", "2"}],
+                            " ", "-", " ",
+                            RowBox[{"Log", "[",
+                                RowBox[{"Sqrt", "[",
+                                    RowBox[{
+                                        RowBox[{"t1", "^", "2"}], " ", "+", " ",
+                                        RowBox[{"t2", "^", "2"}]
+                                    }],
+                                "]"}],
+                            "]"}]
+                        }], ";", "\n",
+                        RowBox[{"xp", " ", "=", " ",
+                            RowBox[{"(", RowBox[{"beta", " ", "+", " ",
+                                RowBox[{"Sqrt", "[",
+                                    RowBox[{"beta", "^", "2", " ", "+", " ", "4"}],
+                                "]"}]
+                            }], ")", "/", "2"}]
+                        }], ";", "\n",
+                        RowBox[{"xm", " ", "=", " ",
+                            RowBox[{"(", RowBox[{"beta", " ", "-", " ",
+                                RowBox[{"Sqrt", "[",
+                                    RowBox[{"beta", "^", "2", " ", "+", " ", "4"}],
+                                "]"}]
+                            }], ")", "/", "2"}]
+                        }], ";", "\n",
+                        RowBox[{"tauP", " ", "=", " ",
+                            RowBox[{
+                                RowBox[{
+                                    RowBox[{"(", RowBox[{"xp", " ", "-", " ", "beta"}], ")"}],
+                                    "^", "2"}], "/", "2"}],
+                            " ", "-", " ",
+                            RowBox[{"Log", "[", "xp", "]"}]
+                        }], ";", "\n",
+                        RowBox[{"tauM", " ", "=", " ",
+                            RowBox[{
+                                RowBox[{
+                                    RowBox[{"(", RowBox[{"xm", " ", "-", " ", "beta"}], ")"}],
+                                    "^", "2"}], "/", "2"}],
+                            " ", "-", " ",
+                            RowBox[{"Log", "[",
+                                RowBox[{"Abs", "[", "xm", "]"}],
+                            "]"}]
+                        }], ";", "\n",
+                        RowBox[{"Show", "[",
+                            RowBox[{
+                                RowBox[{"Plot3D", "[",
+                                    RowBox[{
+                                        RowBox[{"tauSurf", "[", RowBox[{"t1", ",", " ", "t2"}], "]"}],
+                                        ",", "\n",
+                                        RowBox[{"{", RowBox[{"t1", ",", " ", RowBox[{"-", "2.5"}], ",", " ", "2.5"}], "}"}], ",", " ",
+                                        RowBox[{"{", RowBox[{"t2", ",", " ", RowBox[{"-", "2.5"}], ",", " ", "2.5"}], "}"}], ",", "\n",
+                                        RowBox[{"PlotRange", " ", "->", " ",
+                                            RowBox[{"{", RowBox[{RowBox[{"-", "1"}], ",", " ", "4"}], "}"}]
+                                        }], ",", "\n",
+                                        RowBox[{"ClippingStyle", " ", "->", " ", "None"}], ",", "\n",
+                                        RowBox[{"RegionFunction", " ", "->", " ",
+                                            RowBox[{"Function", "[",
+                                                RowBox[{
+                                                    RowBox[{"{", RowBox[{"t1", ",", " ", "t2", ",", " ", "z"}], "}"}],
+                                                    ",", " ",
+                                                    RowBox[{
+                                                        RowBox[{"t1", "^", "2"}], " ", "+", " ",
+                                                        RowBox[{"t2", "^", "2"}],
+                                                        " ", ">", " ", "0.08"
+                                                    }]
+                                                }],
+                                            "]"}]
+                                        }], ",", "\n",
+                                        RowBox[{"ColorFunction", " ", "->", " ", "\"TemperatureMap\""}], ",", "\n",
+                                        RowBox[{"MeshFunctions", " ", "->", " ",
+                                            RowBox[{"{",
+                                                RowBox[{"#3", " ", "&"}],
+                                            "}"}]
+                                        }], ",", "\n",
+                                        RowBox[{"Mesh", " ", "->", " ", "20"}], ",", "\n",
+                                        RowBox[{"MeshStyle", " ", "->", " ",
+                                            RowBox[{"{",
+                                                RowBox[{"{", RowBox[{"Gray", ",", " ", "Thin"}], "}"}],
+                                            "}"}]
+                                        }], ",", "\n",
+                                        RowBox[{"AxesLabel", " ", "->", " ",
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    RowBox[{"Style", "[",
+                                                        RowBox[{"\"\\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(1\\)]\\)/\\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\)\"", ",", " ", "12"}],
+                                                    "]"}], ",", " ",
+                                                    RowBox[{"Style", "[",
+                                                        RowBox[{"\"\\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(2\\)]\\)/\\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\)\"", ",", " ", "12"}],
+                                                    "]"}], ",", " ",
+                                                    RowBox[{"Style", "[",
+                                                        RowBox[{"\"\\[Tau]\"", ",", " ", "14"}],
+                                                    "]"}]
+                                                }],
+                                            "}"}]
+                                        }], ",", "\n",
+                                        RowBox[{"ImageSize", " ", "->", " ", "500"}], ",", "\n",
+                                        RowBox[{"ViewPoint", " ", "->", " ",
+                                            RowBox[{"{", RowBox[{"2.5", ",", " ", RowBox[{"-", "2"}], ",", " ", "1.5"}], "}"}]
+                                        }], ",", "\n",
+                                        RowBox[{"BoxRatios", " ", "->", " ",
+                                            RowBox[{"{", RowBox[{"1", ",", " ", "1", ",", " ", "0.6"}], "}"}]
+                                        }]
+                                    }],
+                                "]"}], ",", "\n",
+                                RowBox[{"Graphics3D", "[",
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{"{", RowBox[{"Blue", ",", " ",
+                                                RowBox[{"PointSize", "[", "0.025", "]"}], ",", " ",
+                                                RowBox[{"Point", "[",
+                                                    RowBox[{"{", RowBox[{"xp", ",", " ", "0", ",", " ", "tauP"}], "}"}],
+                                                "]"}]
+                                            }], "}"}], ",", "\n",
+                                            RowBox[{"{", RowBox[{"Red", ",", " ",
+                                                RowBox[{"PointSize", "[", "0.025", "]"}], ",", " ",
+                                                RowBox[{"Point", "[",
+                                                    RowBox[{"{", RowBox[{"xm", ",", " ", "0", ",", " ", "tauM"}], "}"}],
+                                                "]"}]
+                                            }], "}"}]
+                                        }],
+                                    "}"}],
+                                "]"}]
+                            }],
+                        "]"}]
+                    }]
+                }],
+            "]"}], ",", "\n",
+            RowBox[{"{",
+                RowBox[{
+                    RowBox[{"{", RowBox[{"beta", ",", " ", "0.5", ",", " ",
+                        "\"\\[Beta] / \\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\)\""}], "}"}],
+                    ",", " ", "0.05", ",", " ", "3", ",", " ", "0.05"
+                }],
+            "}"}]
+        }],
+    "]"}]
+], "Input"],
+
+(* =====================================================================
+   Section 2: Contour Plot with Critical Curve
+   =====================================================================
+   Contour plot of tau(theta1, theta2) with Einstein ring overlaid
+   and stationary points marked.
+   ===================================================================== *)
+
+Cell[TextData[{"2. Contour Plot of Fermat Potential"}], "Section"],
+
+Cell[TextData[{"The contour plot shows level curves of constant \[Tau]. The Einstein ring \
+(critical curve, dashed circle) is overlaid. The minimum (blue dot) lies \
+outside the Einstein ring, while the saddle point (red dot) lies inside --- \
+consistent with the image position analysis from Module 4."}], "Text"],
+
+Cell[BoxData[
+    RowBox[{"Manipulate", "[",
+        RowBox[{
+            RowBox[{"Module", "[",
+                RowBox[{
+                    RowBox[{"{",
+                        RowBox[{"tauSurf", ",", " ", "xp", ",", " ", "xm"},
+                    "}"}], ",", "\n",
+                    RowBox[{
+                        RowBox[{"tauSurf", "[",
+                            RowBox[{"t1_", ",", " ", "t2_"}], "]",
+                            " ", ":=", " ",
+                            RowBox[{
+                                RowBox[{
+                                    RowBox[{"(", RowBox[{"t1", " ", "-", " ", "beta"}], ")"}],
+                                    "^", "2"}], "/", "2"}],
+                            " ", "+", " ",
+                            RowBox[{"t2", "^", "2", "/", "2"}],
+                            " ", "-", " ",
+                            RowBox[{"Log", "[",
+                                RowBox[{"Sqrt", "[",
+                                    RowBox[{
+                                        RowBox[{"t1", "^", "2"}], " ", "+", " ",
+                                        RowBox[{"t2", "^", "2"}]
+                                    }],
+                                "]"}],
+                            "]"}]
+                        }], ";", "\n",
+                        RowBox[{"xp", " ", "=", " ",
+                            RowBox[{"(", RowBox[{"beta", " ", "+", " ",
+                                RowBox[{"Sqrt", "[",
+                                    RowBox[{"beta", "^", "2", " ", "+", " ", "4"}],
+                                "]"}]
+                            }], ")", "/", "2"}]
+                        }], ";", "\n",
+                        RowBox[{"xm", " ", "=", " ",
+                            RowBox[{"(", RowBox[{"beta", " ", "-", " ",
+                                RowBox[{"Sqrt", "[",
+                                    RowBox[{"beta", "^", "2", " ", "+", " ", "4"}],
+                                "]"}]
+                            }], ")", "/", "2"}]
+                        }], ";", "\n",
+                        RowBox[{"Show", "[",
+                            RowBox[{
+                                RowBox[{"ContourPlot", "[",
+                                    RowBox[{
+                                        RowBox[{"tauSurf", "[", RowBox[{"t1", ",", " ", "t2"}], "]"}],
+                                        ",", "\n",
+                                        RowBox[{"{", RowBox[{"t1", ",", " ", RowBox[{"-", "2.5"}], ",", " ", "2.5"}], "}"}], ",", " ",
+                                        RowBox[{"{", RowBox[{"t2", ",", " ", RowBox[{"-", "2.5"}], ",", " ", "2.5"}], "}"}], ",", "\n",
+                                        RowBox[{"Contours", " ", "->", " ", "25"}], ",", "\n",
+                                        RowBox[{"ColorFunction", " ", "->", " ", "\"TemperatureMap\""}], ",", "\n",
+                                        RowBox[{"PlotRange", " ", "->", " ",
+                                            RowBox[{"{", RowBox[{RowBox[{"-", "1"}], ",", " ", "4"}], "}"}]
+                                        }], ",", "\n",
+                                        RowBox[{"RegionFunction", " ", "->", " ",
+                                            RowBox[{"Function", "[",
+                                                RowBox[{
+                                                    RowBox[{"{", RowBox[{"t1", ",", " ", "t2"}], "}"}],
+                                                    ",", " ",
+                                                    RowBox[{
+                                                        RowBox[{"t1", "^", "2"}], " ", "+", " ",
+                                                        RowBox[{"t2", "^", "2"}],
+                                                        " ", ">", " ", "0.05"
+                                                    }]
+                                                }],
+                                            "]"}]
+                                        }], ",", "\n",
+                                        RowBox[{"FrameLabel", " ", "->", " ",
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    RowBox[{"Style", "[",
+                                                        RowBox[{"\"\\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(1\\)]\\)/\\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\)\"", ",", " ", "13"}],
+                                                    "]"}], ",", " ",
+                                                    RowBox[{"Style", "[",
+                                                        RowBox[{"\"\\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(2\\)]\\)/\\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\)\"", ",", " ", "13"}],
+                                                    "]"}]
+                                                }],
+                                            "}"}]
+                                        }], ",", "\n",
+                                        RowBox[{"ImageSize", " ", "->", " ", "500"}], ",", "\n",
+                                        RowBox[{"AspectRatio", " ", "->", " ", "1"}]
+                                    }],
+                                "]"}], ",", "\n",
+                                RowBox[{"Graphics", "[",
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{"{", RowBox[{"Black", ",", " ", "Dashed", ",", " ",
+                                                RowBox[{"AbsoluteThickness", "[", "2", "]"}], ",", " ",
+                                                RowBox[{"Circle", "[",
+                                                    RowBox[{
+                                                        RowBox[{"{", RowBox[{"0", ",", " ", "0"}], "}"}],
+                                                        ",", " ", "1"
+                                                    }],
+                                                "]"}]
+                                            }], "}"}], ",", "\n",
+                                            RowBox[{"{", RowBox[{"Blue", ",", " ",
+                                                RowBox[{"PointSize", "[", "0.02", "]"}], ",", " ",
+                                                RowBox[{"Point", "[",
+                                                    RowBox[{"{", RowBox[{"xp", ",", " ", "0"}], "}"}],
+                                                "]"}]
+                                            }], "}"}], ",", "\n",
+                                            RowBox[{"{", RowBox[{"Red", ",", " ",
+                                                RowBox[{"PointSize", "[", "0.02", "]"}], ",", " ",
+                                                RowBox[{"Point", "[",
+                                                    RowBox[{"{", RowBox[{"xm", ",", " ", "0"}], "}"}],
+                                                "]"}]
+                                            }], "}"}], ",", "\n",
+                                            RowBox[{"{",
+                                                RowBox[{
+                                                    RowBox[{"Darker", "[", "Green", "]"}], ",", " ",
+                                                    RowBox[{"PointSize", "[", "0.015", "]"}], ",", " ",
+                                                    RowBox[{"Point", "[",
+                                                        RowBox[{"{", RowBox[{"beta", ",", " ", "0"}], "}"}],
+                                                    "]"}]
+                                                }],
+                                            "}"}]
+                                        }],
+                                    "}"}],
+                                "]"}]
+                            }],
+                        "]"}]
+                    }]
+                }],
+            "]"}], ",", "\n",
+            RowBox[{"{",
+                RowBox[{
+                    RowBox[{"{", RowBox[{"beta", ",", " ", "0.5", ",", " ",
+                        "\"\\[Beta] / \\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\)\""}], "}"}],
+                    ",", " ", "0.05", ",", " ", "3", ",", " ", "0.05"
+                }],
+            "}"}]
+        }],
+    "]"}]
+], "Input"],
+
+(* =====================================================================
+   Section 3: Time Delay vs Source Position
+   =====================================================================
+   Interactive plot showing how the time delay changes with beta.
+   A slider controls beta and a vertical line marks the current value.
+   ===================================================================== *)
+
+Cell[TextData[{"3. Time Delay vs. Source Position"}], "Section"],
+
+Cell[TextData[{"The dimensionless time delay \[CapitalDelta]\[Tau] between the two images \
+increases with source offset. When \[Beta] = 0 (Einstein ring), both images \
+arrive simultaneously (\[CapitalDelta]\[Tau] = 0)."}], "Text"],
+
+Cell[BoxData[
+    RowBox[{"Manipulate", "[",
+        RowBox[{
+            RowBox[{"Module", "[",
+                RowBox[{
+                    RowBox[{"{", "deltaTau", "}"}], ",", "\n",
+                    RowBox[{
+                        RowBox[{"deltaTau", "[", "y_", "]", " ", ":=", " ",
+                            RowBox[{
+                                RowBox[{"y", " ", "*", " ",
+                                    RowBox[{"Sqrt", "[",
+                                        RowBox[{
+                                            RowBox[{"y", "^", "2"}], " ", "+", " ", "4"
+                                        }],
+                                    "]"}]
+                                }], " ", "/", " ", "2"}],
+                            " ", "+", " ",
+                            RowBox[{"Log", "[",
+                                RowBox[{
+                                    RowBox[{"(", RowBox[{
+                                        RowBox[{"Sqrt", "[",
+                                            RowBox[{
+                                                RowBox[{"y", "^", "2"}], " ", "+", " ", "4"
+                                            }],
+                                        "]"}],
+                                        " ", "+", " ", "y"
+                                    }], ")"}],
+                                    " ", "/", " ",
+                                    RowBox[{"(", RowBox[{
+                                        RowBox[{"Sqrt", "[",
+                                            RowBox[{
+                                                RowBox[{"y", "^", "2"}], " ", "+", " ", "4"
+                                            }],
+                                        "]"}],
+                                        " ", "-", " ", "y"
+                                    }], ")"}]
+                                }],
+                            "]"}]
+                        }], ";", "\n",
+                        RowBox[{"Plot", "[",
+                            RowBox[{
+                                RowBox[{"deltaTau", "[", "y", "]"}], ",", " ",
+                                RowBox[{"{", RowBox[{"y", ",", " ", "0.01", ",", " ", "5"}], "}"}], ",", "\n",
+                                RowBox[{"PlotStyle", " ", "->", " ",
+                                    RowBox[{"{", RowBox[{"Purple", ",", " ",
+                                        RowBox[{"AbsoluteThickness", "[", "2", "]"}]
+                                    }], "}"}]
+                                }], ",", "\n",
+                                RowBox[{"PlotRange", " ", "->", " ",
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{"{", RowBox[{"0", ",", " ", "5"}], "}"}], ",", " ",
+                                            RowBox[{"{", RowBox[{"0", ",", " ", "30"}], "}"}]
+                                        }],
+                                    "}"}]
+                                }], ",", "\n",
+                                RowBox[{"AxesLabel", " ", "->", " ",
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{"Style", "[",
+                                                RowBox[{"\"y = \\[Beta] / \\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\)\"", ",", " ", "13"}],
+                                            "]"}], ",", " ",
+                                            RowBox[{"Style", "[",
+                                                RowBox[{"\"\\[CapitalDelta]\\[Tau]\"", ",", " ", "14"}],
+                                            "]"}]
+                                        }],
+                                    "}"}]
+                                }], ",", "\n",
+                                RowBox[{"Epilog", " ", "->", " ",
+                                    RowBox[{"{",
+                                        RowBox[{
+                                            RowBox[{"{", RowBox[{"Red", ",", " ", "Dashed", ",", " ",
+                                                RowBox[{"AbsoluteThickness", "[", "1.5", "]"}], ",", " ",
+                                                RowBox[{"InfiniteLine", "[",
+                                                    RowBox[{
+                                                        RowBox[{"{", RowBox[{"beta", ",", " ", "0"}], "}"}],
+                                                        ",", " ",
+                                                        RowBox[{"{", RowBox[{"0", ",", " ", "1"}], "}"}]
+                                                    }],
+                                                "]"}]
+                                            }], "}"}], ",", "\n",
+                                            RowBox[{"{", RowBox[{"Red", ",", " ",
+                                                RowBox[{"PointSize", "[", "0.015", "]"}], ",", " ",
+                                                RowBox[{"Point", "[",
+                                                    RowBox[{"{",
+                                                        RowBox[{"beta", ",", " ",
+                                                            RowBox[{"deltaTau", "[", "beta", "]"}]
+                                                        }],
+                                                    "}"}],
+                                                "]"}]
+                                            }], "}"}], ",", "\n",
+                                            RowBox[{"Text", "[",
+                                                RowBox[{
+                                                    RowBox[{"Style", "[",
+                                                        RowBox[{
+                                                            RowBox[{"StringForm", "[",
+                                                                RowBox[{"\"\\[CapitalDelta]\\[Tau] = ``\"", ",", " ",
+                                                                    RowBox[{"NumberForm", "[",
+                                                                        RowBox[{
+                                                                            RowBox[{"deltaTau", "[", "beta", "]"}],
+                                                                            ",", " ",
+                                                                            RowBox[{"{", RowBox[{"4", ",", " ", "2"}], "}"}]
+                                                                        }],
+                                                                    "]"}]
+                                                                }],
+                                                            "]"}], ",", " ",
+                                                            "12", ",", " ", "Red"
+                                                        }],
+                                                    "]"}], ",", " ",
+                                                    RowBox[{"{",
+                                                        RowBox[{
+                                                            RowBox[{"beta", " ", "+", " ", "0.5"}], ",", " ",
+                                                            RowBox[{
+                                                                RowBox[{"deltaTau", "[", "beta", "]"}],
+                                                                " ", "+", " ", "1.5"
+                                                            }]
+                                                        }],
+                                                    "}"}]
+                                                }],
+                                            "]"}]
+                                        }],
+                                    "}"}]
+                                }], ",", "\n",
+                                RowBox[{"ImageSize", " ", "->", " ", "500"}]
+                            }],
+                        "]"}]
+                    }]
+                }],
+            "]"}], ",", "\n",
+            RowBox[{"{",
+                RowBox[{
+                    RowBox[{"{", RowBox[{"beta", ",", " ", "0.5", ",", " ",
+                        "\"\\[Beta] / \\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\)\""}], "}"}],
+                    ",", " ", "0.05", ",", " ", "5", ",", " ", "0.05"
+                }],
+            "}"}]
+        }],
+    "]"}]
+], "Input"],
+
+(* =====================================================================
+   Section 4: Physical Time Delay Calculator
+   =====================================================================
+   Enter lens mass and redshift to compute physical time delay in days.
+   ===================================================================== *)
+
+Cell[TextData[{"4. Physical Time Delay Calculator"}], "Section"],
+
+Cell[TextData[{"Enter the lens mass (in solar masses), lens redshift, and source position \
+to compute the physical time delay in days. This demonstrates how time \
+delays scale with lens mass and source offset."}], "Text"],
+
+Cell[BoxData[
+    RowBox[{"Manipulate", "[",
+        RowBox[{
+            RowBox[{"Module", "[",
+                RowBox[{
+                    RowBox[{"{",
+                        RowBox[{"Gnewton", ",", " ", "cc", ",", " ", "Msolar",
+                            ",", " ", "RS", ",", " ", "deltaTau",
+                            ",", " ", "deltaT", ",", " ", "dayToSec"},
+                    "}"}], ",", "\n",
+                    RowBox[{
+                        RowBox[{"Gnewton", " ", "=", " ", RowBox[{"6.674", "*^", RowBox[{"-", "11"}]}]}], ";", "\n",
+                        RowBox[{"cc", " ", "=", " ", RowBox[{"2.998", "*^", "8"}]}], ";", "\n",
+                        RowBox[{"Msolar", " ", "=", " ", RowBox[{"1.989", "*^", "30"}]}], ";", "\n",
+                        RowBox[{"dayToSec", " ", "=", " ", "86400"}], ";", "\n",
+                        RowBox[{"RS", " ", "=", " ",
+                            RowBox[{"2", " ", "Gnewton", " ",
+                                RowBox[{"10", "^", "logM"}], " ", "Msolar",
+                                " ", "/", " ",
+                                RowBox[{"cc", "^", "2"}]
+                            }]
+                        }], ";", "\n",
+                        RowBox[{"deltaTau", " ", "=", " ",
+                            RowBox[{
+                                RowBox[{"y", " ", "*", " ",
+                                    RowBox[{"Sqrt", "[",
+                                        RowBox[{
+                                            RowBox[{"y", "^", "2"}], " ", "+", " ", "4"
+                                        }],
+                                    "]"}]
+                                }], " ", "/", " ", "2"}],
+                            " ", "+", " ",
+                            RowBox[{"Log", "[",
+                                RowBox[{
+                                    RowBox[{"(", RowBox[{
+                                        RowBox[{"Sqrt", "[",
+                                            RowBox[{
+                                                RowBox[{"y", "^", "2"}], " ", "+", " ", "4"
+                                            }],
+                                        "]"}],
+                                        " ", "+", " ", "y"
+                                    }], ")"}],
+                                    " ", "/", " ",
+                                    RowBox[{"(", RowBox[{
+                                        RowBox[{"Sqrt", "[",
+                                            RowBox[{
+                                                RowBox[{"y", "^", "2"}], " ", "+", " ", "4"
+                                            }],
+                                        "]"}],
+                                        " ", "-", " ", "y"
+                                    }], ")"}]
+                                }],
+                            "]"}]
+                        }], ";", "\n",
+                        RowBox[{"deltaT", " ", "=", " ",
+                            RowBox[{"RS", " ", "/", " ", "cc", " ", "*", " ",
+                                RowBox[{"(", RowBox[{"1", " ", "+", " ", "zd"}], ")"}],
+                                " ", "*", " ", "deltaTau"
+                            }]
+                        }], ";", "\n",
+                        RowBox[{"Column", "[",
+                            RowBox[{"{",
+                                RowBox[{
+                                    RowBox[{"Style", "[",
+                                        RowBox[{"\"Point Mass Time Delay\"", ",", " ", "Bold", ",", " ", "14"}],
+                                    "]"}], ",", "\n",
+                                    RowBox[{"StringForm", "[",
+                                        RowBox[{"\"M = 10^`` M\\[CircleDot]\"", ",", " ", "logM"}],
+                                    "]"}], ",", "\n",
+                                    RowBox[{"StringForm", "[",
+                                        RowBox[{"\"z_d = ``\"", ",", " ", "zd"}],
+                                    "]"}], ",", "\n",
+                                    RowBox[{"StringForm", "[",
+                                        RowBox[{"\"y = \\[Beta]/\\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\) = ``\"", ",", " ", "y"}],
+                                    "]"}], ",", "\n",
+                                    "\"\"", ",", "\n",
+                                    RowBox[{"StringForm", "[",
+                                        RowBox[{"\"R_S = `` m\"", ",", " ",
+                                            RowBox[{"ScientificForm", "[", RowBox[{"RS", ",", " ", "3"}], "]"}]
+                                        }],
+                                    "]"}], ",", "\n",
+                                    RowBox[{"StringForm", "[",
+                                        RowBox[{"\"\\[CapitalDelta]\\[Tau] = ``\"", ",", " ",
+                                            RowBox[{"NumberForm", "[", RowBox[{"deltaTau", ",", " ",
+                                                RowBox[{"{", RowBox[{"5", ",", " ", "3"}], "}"}]
+                                            }], "]"}]
+                                        }],
+                                    "]"}], ",", "\n",
+                                    RowBox[{"Style", "[",
+                                        RowBox[{
+                                            RowBox[{"StringForm", "[",
+                                                RowBox[{"\"\\[CapitalDelta]t = `` days\"", ",", " ",
+                                                    RowBox[{"NumberForm", "[",
+                                                        RowBox[{
+                                                            RowBox[{"deltaT", " ", "/", " ", "dayToSec"}],
+                                                            ",", " ",
+                                                            RowBox[{"{", RowBox[{"6", ",", " ", "1"}], "}"}]
+                                                        }],
+                                                    "]"}]
+                                                }],
+                                            "]"}], ",", " ",
+                                            "Bold", ",", " ", "14", ",", " ", "Blue"
+                                        }],
+                                    "]"}]
+                                }],
+                            "}"}], ",", " ",
+                            RowBox[{"Spacings", " ", "->", " ", "1"}]
+                        "]"}]
+                    }]
+                }],
+            "]"}], ",", "\n",
+            RowBox[{"{",
+                RowBox[{
+                    RowBox[{"{", RowBox[{"logM", ",", " ", "12", ",", " ",
+                        "\"log\\!\\(\\*SubscriptBox[\\(10\\), \\(\\)\\)\\)(M/M\\[CircleDot])\""}], "}"}],
+                    ",", " ", "8", ",", " ", "15", ",", " ", "0.5"
+                }],
+            "}"}], ",", "\n",
+            RowBox[{"{",
+                RowBox[{
+                    RowBox[{"{", RowBox[{"zd", ",", " ", "0.3", ",", " ",
+                        "\"\\!\\(\\*SubscriptBox[\\(z\\), \\(d\\)]\\)\""}], "}"}],
+                    ",", " ", "0.05", ",", " ", "2", ",", " ", "0.05"
+                }],
+            "}"}], ",", "\n",
+            RowBox[{"{",
+                RowBox[{
+                    RowBox[{"{", RowBox[{"y", ",", " ", "0.5", ",", " ",
+                        "\"\\[Beta] / \\!\\(\\*SubscriptBox[\\(\\[Theta]\\), \\(E\\)]\\)\""}], "}"}],
+                    ",", " ", "0.05", ",", " ", "5", ",", " ", "0.05"
+                }],
+            "}"}]
+        }],
+    "]"}]
+], "Input"]
+
+}, WindowSize -> {900, 750}, WindowTitle -> "Module 6: Arrival-Time Surface"]

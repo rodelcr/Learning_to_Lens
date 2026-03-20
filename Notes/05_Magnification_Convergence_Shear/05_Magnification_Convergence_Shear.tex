@@ -2,17 +2,888 @@
 % Module 5: Magnification, Convergence, and Shear
 % =============================================================================
 % Sources: Narayan & Bartelmann Sec. 3.2, Congdon & Keeton Ch. 2.6 & 4,
-%          Saha et al.
+%          Saha et al. Sec. 1
 % Mathematica: ../Mathematica/05_Magnification_Convergence_Shear/
 % =============================================================================
 
 \chapter{Magnification, Convergence, and Shear}
-\label{ch:magnification_convergence_shear}
+\label{ch:magnification}
 
-% TODO: Module content to be written
-% Topics:
-% - Jacobian of the lens mapping
-% - Convergence (kappa) and surface mass density
-% - Shear (gamma) components
-% - Magnification tensor and magnification factor
-% - Critical curves and caustics introduction
+\begin{quote}
+\textit{The convergence and shear are the two fundamental quantities that
+describe the local properties of a gravitational lens.  The convergence
+causes isotropic focusing; the shear causes anisotropic distortion.
+Together they determine the magnification and shape distortion of lensed
+images.}
+\hfill --- Narayan \& Bartelmann (1997)
+\end{quote}
+
+\noindent
+In Module~\ref{ch:lens_equation} we derived the lens equation
+$\vecbeta = \vectheta - \vecalpha(\vectheta)$ and used it to find
+image positions for a point mass lens.  We also previewed the
+magnification formula for the point mass case.  Now we develop the
+\textit{general} formalism that describes how lensing distorts images:
+their size, shape, and brightness relative to the unlensed source.
+
+The key players are:
+\begin{itemize}[nosep]
+    \item The \textbf{lensing potential} $\psiL(\vectheta)$, from
+          which the deflection angle derives as a gradient.
+    \item The \textbf{convergence} $\kappab(\vectheta)$, the
+          dimensionless surface mass density, which causes isotropic
+          focusing.
+    \item The \textbf{shear} $\gammaL(\vectheta)$, a spin-2 field
+          that causes anisotropic stretching.
+    \item The \textbf{Jacobian matrix} $\Amat$, which encodes
+          all local lensing distortions.
+    \item The \textbf{magnification} $\mu$, the ratio of image
+          area to source area.
+\end{itemize}
+
+\medskip
+\noindent
+\textbf{Companion Mathematica files:}
+\begin{itemize}[nosep]
+    \item \mathlink{05_Magnification_Convergence_Shear/lensing_potential.wl}{lensing\_potential.wl}
+          --- symbolic derivation of $\psiL$, convergence, shear,
+          Jacobian, and magnification for the point mass lens;
+          verification of the 2D Poisson equation; publication-quality
+          figure generation
+    \item \mathlink{05_Magnification_Convergence_Shear/convergence_shear_demo.nb}{convergence\_shear\_demo.nb}
+          --- interactive notebook: Manipulate for convergence and
+          shear effects on circular sources, magnification map for
+          point mass lens
+\end{itemize}
+
+
+% =====================================================================
+\section{Introduction: From Image Positions to Image Properties}
+\label{sec:mag_intro}
+
+The lens equation tells us \textit{where} images form.  But
+observations reveal much more than positions: lensed images are
+\textit{stretched}, \textit{magnified}, and sometimes
+\textit{mirror-reflected} relative to the unlensed source.  Giant arcs
+in galaxy clusters are dramatic examples --- background galaxies
+stretched into elongated curves by the cluster's gravity.
+
+To describe these distortions quantitatively, we need to understand the
+\textit{local} properties of the lens mapping
+$\vecbeta(\vectheta)$.  Since the lens mapping is a smooth function
+(except at isolated singularities), its local behavior is captured by
+its \textbf{Jacobian matrix} --- the matrix of first partial
+derivatives.  This matrix encodes all information about magnification,
+stretching, and parity of each image.
+
+We begin by introducing the \textbf{effective lensing potential}
+$\psiL(\vectheta)$, a scalar field from which the deflection angle
+can be derived as a gradient.  This potential provides a unified
+framework: its first derivatives give the deflection, and its second
+derivatives give the convergence and shear.
+
+
+% =====================================================================
+\section{The Effective Lensing Potential}
+\label{sec:lensing_potential}
+
+In Module~\ref{ch:lens_equation} (eq.~\ref{eq:alpha_angular}) we
+expressed the reduced deflection angle as an integral over the
+convergence.  Remarkably, this deflection can be written as the
+gradient of a scalar potential.
+
+\begin{definition}
+The \textbf{effective lensing potential} (or simply the lensing
+potential) is defined as
+(Narayan \& Bartelmann eq.~15; Congdon \& Keeton eq.~4.15):
+\begin{equation}
+    \boxed{
+    \psiL(\vectheta) = \frac{1}{\pi}
+    \int \kappab(\vectheta')\,
+    \ln|\vectheta - \vectheta'|\, d^2\theta'
+    }
+    \label{eq:lensing_potential}
+\end{equation}
+where $\kappab(\vectheta') = \Sigma(\Dd\,\vectheta')/\Sigmacr$ is
+the convergence (eq.~\ref{eq:convergence_def}) and the integral
+extends over the entire lens plane.
+\end{definition}
+
+This is the two-dimensional analog of the Newtonian gravitational
+potential: just as the three-dimensional gravitational potential
+$\Phi(\mathbf{r}) = -\Gnewton \int \rho(\mathbf{r}')/|\mathbf{r} -
+\mathbf{r}'|\, d^3r'$ satisfies Poisson's equation
+$\nabla^2\Phi = 4\pi\Gnewton\rho$, the lensing potential satisfies
+the two-dimensional Poisson equation.
+
+\begin{remark}
+The lensing potential $\psiL$ is dimensionless when $\vectheta$ is
+measured in radians.  It is related to the physical (Shapiro) time
+delay through the Fermat potential, which we will encounter in
+Module~6.
+\end{remark}
+
+\subsection{Key Properties of the Lensing Potential}
+
+The lensing potential has two crucial properties:
+
+\paragraph{(1) Its gradient gives the deflection angle.}
+Taking the gradient of eq.~\eqref{eq:lensing_potential}:
+\begin{equation}
+    \boxed{
+    \vecalpha(\vectheta) = \nabla_\theta\, \psiL(\vectheta)
+    }
+    \label{eq:alpha_grad_psi}
+\end{equation}
+where $\nabla_\theta = (\partial/\partial\theta_1,\,
+\partial/\partial\theta_2)$ is the two-dimensional gradient with
+respect to the angular coordinates.  This can be verified by
+differentiating eq.~\eqref{eq:lensing_potential} under the integral
+sign and using $\nabla_\theta \ln|\vectheta - \vectheta'| =
+(\vectheta - \vectheta')/|\vectheta - \vectheta'|^2$.
+
+\paragraph{(2) Its Laplacian gives twice the convergence (2D Poisson equation).}
+\begin{equation}
+    \boxed{
+    \nabla^2_\theta\, \psiL(\vectheta) = 2\,\kappab(\vectheta)
+    }
+    \label{eq:poisson_2d}
+\end{equation}
+This follows from $\nabla^2_\theta \ln|\vectheta - \vectheta'| =
+2\pi\,\delta^{(2)}(\vectheta - \vectheta')$ (the Green's function of
+the two-dimensional Laplacian), so that:
+\begin{equation}
+    \nabla^2_\theta\, \psiL = \frac{1}{\pi}
+    \int \kappab(\vectheta')\, 2\pi\,
+    \delta^{(2)}(\vectheta - \vectheta')\, d^2\theta'
+    = 2\,\kappab(\vectheta) \,.
+    \label{eq:poisson_derivation}
+\end{equation}
+Equation~\eqref{eq:poisson_2d} is a fundamental relation: it connects
+the lensing potential (a ``smooth'' quantity that can be differentiated)
+to the convergence (a ``physical'' quantity related to the surface mass
+density).  This is the lensing analog of Poisson's equation in
+Newtonian gravity.
+
+
+% =====================================================================
+\section{Convergence}
+\label{sec:convergence}
+
+The convergence was already introduced in
+Module~\ref{ch:lens_equation} (eq.~\ref{eq:convergence_def}):
+
+\begin{equation}
+    \kappab(\vectheta) = \frac{\Sigma(\Dd\,\vectheta)}{\Sigmacr}
+    \label{eq:kappa_def_review}
+\end{equation}
+
+It is the \textbf{dimensionless surface mass density} --- the ratio of
+the actual surface mass density to the critical value.  We now explore
+its role in image distortion.
+
+\subsection{Physical Meaning}
+
+The convergence measures the \textit{isotropic focusing} caused by
+the lens:
+\begin{itemize}
+    \item A region with $\kappab > 0$ acts as a converging lens,
+          focusing light rays and magnifying images isotropically
+          (without changing their shape).
+    \item $\kappab = 1$ means $\Sigma = \Sigmacr$: this is the
+          threshold for strong lensing.  Regions where $\kappab \geq 1$
+          are \textbf{supercritical} and can produce multiple images.
+    \item $\kappab < 1$ everywhere means the lens is subcritical:
+          it can still distort images (via shear), but a single
+          mass concentration cannot produce multiple images of a
+          generic source.
+\end{itemize}
+
+\subsection{Convergence from the Lensing Potential}
+
+From the 2D Poisson equation~\eqref{eq:poisson_2d}:
+\begin{equation}
+    \kappab(\vectheta) = \frac{1}{2}\,\nabla^2_\theta\, \psiL
+    = \frac{1}{2}\left(
+    \frac{\partial^2 \psiL}{\partial\theta_1^2}
+    + \frac{\partial^2 \psiL}{\partial\theta_2^2}\right) .
+    \label{eq:kappa_from_psi}
+\end{equation}
+Thus the convergence is the \textit{trace} of the Hessian of the
+lensing potential (up to a factor of $1/2$).
+
+
+% =====================================================================
+\section{Shear}
+\label{sec:shear}
+
+The shear describes the \textit{anisotropic distortion} of images ---
+the stretching in one direction and compression in the perpendicular
+direction.
+
+\begin{definition}
+The two components of the \textbf{shear} are defined in terms of
+the second derivatives of the lensing potential
+(Narayan \& Bartelmann eq.~17; Congdon \& Keeton eq.~4.21):
+\begin{equation}
+    \boxed{
+    \gamma_1(\vectheta) = \frac{1}{2}\left(
+    \frac{\partial^2 \psiL}{\partial\theta_1^2}
+    - \frac{\partial^2 \psiL}{\partial\theta_2^2}\right) ,
+    \qquad
+    \gamma_2(\vectheta)
+    = \frac{\partial^2 \psiL}{\partial\theta_1\,\partial\theta_2}
+    }
+    \label{eq:shear_components}
+\end{equation}
+\end{definition}
+
+The shear magnitude and the complex shear are:
+\begin{equation}
+    |\gammaL| = \sqrt{\gamma_1^2 + \gamma_2^2} \,,
+    \qquad
+    \gammaL = \gamma_1 + i\,\gamma_2 = |\gammaL|\, e^{2i\phi_\gamma}
+    \label{eq:shear_magnitude}
+\end{equation}
+where $\phi_\gamma$ is the orientation angle of the shear.
+
+\subsection{Physical Meaning}
+
+The shear is a \textbf{spin-2 field}: it is invariant under rotations
+by $180°$ (not $360°$), reflecting the fact that an ellipse looks
+the same after a half-turn.  The two components have specific geometric
+meanings:
+\begin{itemize}
+    \item $\gamma_1 > 0$: stretching along the $\theta_1$-axis,
+          compression along $\theta_2$.
+    \item $\gamma_1 < 0$: stretching along the $\theta_2$-axis,
+          compression along $\theta_1$.
+    \item $\gamma_2 > 0$: stretching along the direction at $45°$
+          to the $\theta_1$-axis.
+    \item $\gamma_2 < 0$: stretching along the direction at $135°$
+          to the $\theta_1$-axis.
+\end{itemize}
+
+\begin{remark}
+The convergence and shear together account for all four independent
+second derivatives of the lensing potential (the Hessian is a
+symmetric $2 \times 2$ matrix with three independent components;
+$\kappab$ captures the trace, and $\gamma_1$, $\gamma_2$ capture
+the traceless part):
+\begin{equation}
+    \frac{\partial^2 \psiL}{\partial\theta_i\,\partial\theta_j}
+    = \begin{pmatrix}
+    \kappab + \gamma_1 & \gamma_2 \\
+    \gamma_2 & \kappab - \gamma_1
+    \end{pmatrix} .
+    \label{eq:hessian_decomposition}
+\end{equation}
+\end{remark}
+
+
+% =====================================================================
+\section{The Jacobian Matrix (Inverse Magnification Tensor)}
+\label{sec:jacobian}
+
+The lens equation $\vecbeta = \vectheta - \vecalpha(\vectheta)$
+defines a mapping from the image plane to the source plane.  The
+local properties of this mapping are encoded in its
+\textbf{Jacobian matrix}:
+\begin{equation}
+    \Amat_{ij} = \frac{\partial \beta_i}{\partial \theta_j}
+    = \delta_{ij} - \frac{\partial \alpha_i}{\partial \theta_j}
+    = \delta_{ij}
+    - \frac{\partial^2 \psiL}{\partial\theta_i\,\partial\theta_j}
+    \label{eq:jacobian_def}
+\end{equation}
+where in the last step we used
+$\alpha_i = \partial\psiL/\partial\theta_i$
+(eq.~\ref{eq:alpha_grad_psi}).
+
+Using the decomposition of the Hessian into convergence and shear
+(eq.~\ref{eq:hessian_decomposition}), the Jacobian takes the elegant
+form (Narayan \& Bartelmann eq.~16; Congdon \& Keeton eq.~4.22):
+\begin{equation}
+    \boxed{
+    \Amat = \begin{pmatrix}
+    1 - \kappab - \gamma_1 & -\gamma_2 \\
+    -\gamma_2 & 1 - \kappab + \gamma_1
+    \end{pmatrix}
+    }
+    \label{eq:jacobian_matrix}
+\end{equation}
+
+\begin{remark}
+The matrix $\Amat$ is sometimes called the \textbf{inverse
+magnification tensor} because its inverse $\Amat^{-1}$ gives the
+magnification tensor $\Mmat$:
+\begin{equation}
+    \Mmat = \Amat^{-1}
+    = \frac{\partial\vectheta}{\partial\vecbeta} \,.
+    \label{eq:magnification_tensor}
+\end{equation}
+$\Mmat$ maps source-plane displacements to image-plane displacements.
+\end{remark}
+
+\subsection{Decomposition of the Jacobian}
+
+The Jacobian can be decomposed into a convergence (isotropic) part
+and a shear (anisotropic) part:
+\begin{equation}
+    \Amat = (1 - \kappab)\,
+    \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}
+    - \begin{pmatrix}
+    \gamma_1 & \gamma_2 \\
+    \gamma_2 & -\gamma_1
+    \end{pmatrix}
+    \label{eq:jacobian_decomposition}
+\end{equation}
+
+The first term is proportional to the identity matrix and represents
+isotropic focusing (convergence).  The second term is a traceless,
+symmetric matrix (the shear matrix) that represents anisotropic
+distortion.
+
+\subsection{Eigenvalues of the Jacobian}
+
+The eigenvalues of $\Amat$ are
+(Congdon \& Keeton eq.~4.23):
+\begin{equation}
+    \lambda_\pm = 1 - \kappab \pm |\gammaL|
+    = (1 - \kappab) \pm \sqrt{\gamma_1^2 + \gamma_2^2} \,.
+    \label{eq:eigenvalues}
+\end{equation}
+These eigenvalues give the inverse magnification along the two
+principal axes of the distortion.  The corresponding eigenvectors
+define the directions of maximum and minimum stretching.
+
+
+% =====================================================================
+\section{Magnification}
+\label{sec:magnification}
+
+Gravitational lensing conserves surface brightness (a consequence of
+Liouville's theorem --- the photon phase space density is preserved
+along geodesics).  Therefore, the magnification is simply the ratio of
+the \textit{solid angle} of the image to that of the source:
+\begin{equation}
+    \mu = \frac{\text{(image area)}}{\text{(source area)}}
+    = \frac{1}{\det \Amat} \,.
+    \label{eq:magnification_def}
+\end{equation}
+
+Computing the determinant of eq.~\eqref{eq:jacobian_matrix}:
+\begin{equation}
+    \det \Amat = (1 - \kappab - \gamma_1)(1 - \kappab + \gamma_1)
+    - \gamma_2^2
+    = (1 - \kappab)^2 - (\gamma_1^2 + \gamma_2^2)
+\end{equation}
+and therefore:
+\begin{equation}
+    \boxed{
+    \mu = \frac{1}{\det \Amat}
+    = \frac{1}{(1 - \kappab)^2 - |\gammaL|^2}
+    }
+    \label{eq:magnification_formula}
+\end{equation}
+
+This is the \textbf{general magnification formula} for gravitational
+lensing.  Note that $\mu$ depends on position through
+$\kappab(\vectheta)$ and $\gammaL(\vectheta)$.
+
+\subsection{Properties of the Magnification}
+
+\begin{enumerate}
+    \item \textbf{Positive parity ($\mu > 0$):} The image has the
+          same orientation (handedness) as the source.  This occurs
+          when $\det \Amat > 0$.
+
+    \item \textbf{Negative parity ($\mu < 0$):} The image is
+          mirror-reflected relative to the source.  This occurs when
+          $\det \Amat < 0$.  The \textit{absolute} magnification is
+          $|\mu|$.
+
+    \item \textbf{Magnified images ($|\mu| > 1$):} The image
+          subtends a larger solid angle than the source.  The
+          condition is $(1 - \kappab)^2 - |\gammaL|^2 < 1$.
+
+    \item \textbf{Demagnified images ($|\mu| < 1$):} The image is
+          smaller than the source.
+
+    \item \textbf{Critical curves ($\det \Amat = 0$, $\mu \to \infty$):}
+          Points where the magnification formally diverges.  In
+          practice, images near critical curves are very highly
+          magnified (factors of 10--100), but finite source sizes
+          prevent true divergences.  These curves are the subject
+          of Module~8.
+\end{enumerate}
+
+\subsection{Magnification in Terms of Eigenvalues}
+
+Using the eigenvalues of $\Amat$ (eq.~\ref{eq:eigenvalues}):
+\begin{equation}
+    \mu = \frac{1}{\lambda_+\,\lambda_-}
+    = \frac{1}{(1 - \kappab - |\gammaL|)(1 - \kappab + |\gammaL|)} \,.
+    \label{eq:mu_eigenvalues}
+\end{equation}
+The magnification diverges when either eigenvalue vanishes, i.e.,
+when $1 - \kappab = \pm|\gammaL|$.  These conditions define the two
+families of critical curves:
+\begin{itemize}
+    \item $\lambda_+ = 0$: the \textbf{tangential critical curve}
+          ($1 - \kappab = |\gammaL|$), where images are stretched
+          tangentially.
+    \item $\lambda_- = 0$: the \textbf{radial critical curve}
+          ($1 - \kappab = -|\gammaL|$), where images are stretched
+          radially.
+\end{itemize}
+
+
+% =====================================================================
+\section{Convergence vs.\ Shear: Physical Effects}
+\label{sec:kappa_vs_gamma}
+
+To build intuition for the roles of convergence and shear, consider
+how a small circular source is distorted in three limiting cases.
+
+\subsection{Pure Convergence ($\kappab > 0$, $\gammaL = 0$)}
+
+The Jacobian reduces to $\Amat = (1 - \kappab)\,\mathbf{I}$, a
+uniform scaling.  A circular source remains circular, but its angular
+size is scaled by $1/(1 - \kappab)$.  The magnification is:
+\begin{equation}
+    \mu = \frac{1}{(1 - \kappab)^2} \,.
+    \label{eq:mu_pure_convergence}
+\end{equation}
+For $\kappab < 1$, the image is magnified and has the same parity.
+For $\kappab > 1$, the image is still magnified but has \textit{negative}
+parity (the mapping ``folds over'').
+
+\subsection{Pure Shear ($\kappab = 0$, $\gammaL > 0$)}
+
+The Jacobian becomes:
+\begin{equation}
+    \Amat = \begin{pmatrix}
+    1 - \gamma_1 & -\gamma_2 \\
+    -\gamma_2 & 1 + \gamma_1
+    \end{pmatrix} .
+\end{equation}
+A circular source is distorted into an \textbf{ellipse}.  The
+magnification is:
+\begin{equation}
+    \mu = \frac{1}{1 - |\gammaL|^2} \,.
+    \label{eq:mu_pure_shear}
+\end{equation}
+The semi-axes of the elliptical image are proportional to
+$1/(1 - |\gammaL|)$ and $1/(1 + |\gammaL|)$, so the axis ratio is:
+\begin{equation}
+    \frac{b}{a} = \frac{1 - |\gammaL|}{1 + |\gammaL|} \,.
+    \label{eq:axis_ratio_pure_shear}
+\end{equation}
+The orientation of the ellipse is determined by the shear angle
+$\phi_\gamma = \frac{1}{2}\arctan(\gamma_2/\gamma_1)$.
+
+\subsection{Both Convergence and Shear}
+
+In general, both $\kappab$ and $\gammaL$ are nonzero.  A circular
+source is mapped to a \textit{larger ellipse}:
+\begin{itemize}
+    \item The convergence sets the overall magnification (size change).
+    \item The shear sets the ellipticity (shape change).
+\end{itemize}
+The semi-axes of the image are $\delta/(1 - \kappab - |\gammaL|)$ and
+$\delta/(1 - \kappab + |\gammaL|)$ for a circular source of angular
+radius $\delta$.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\textwidth]{../Figures/05_Magnification_Convergence_Shear/convergence_shear_effects.pdf}
+    \caption{Effect of convergence and shear on a circular source.
+    \textbf{Left:} Pure convergence ($\kappab = 0.3$, $\gammaL = 0$)
+    produces a larger circle (isotropic magnification).
+    \textbf{Center:} Pure shear ($\kappab = 0$, $|\gammaL| = 0.3$)
+    produces an ellipse (anisotropic distortion without magnification
+    change to first order).
+    \textbf{Right:} Both ($\kappab = 0.3$, $|\gammaL| = 0.3$) produces
+    a larger ellipse.
+    The dashed circle shows the original source in each panel.
+    Generated by \texttt{lensing\_potential.wl}.}
+    \label{fig:convergence_shear_effects}
+\end{figure}
+
+
+% =====================================================================
+\section{Example: Point Mass Lens}
+\label{sec:point_mass_example}
+
+We now compute $\kappab$, $\gammaL$, and $\mu$ for the point mass
+lens, verifying consistency with the results of
+Module~\ref{ch:lens_equation}.
+
+\subsection{Lensing Potential for a Point Mass}
+
+For a point mass $M$ at the origin, the convergence is a Dirac
+delta function:
+\begin{equation}
+    \kappab(\vectheta)
+    = \frac{\Sigma(\Dd\vectheta)}{\Sigmacr}
+    = \frac{M\,\delta^{(2)}(\Dd\vectheta)}{\Sigmacr}
+    = \frac{\pi\thetaE^2}{1}\,\delta^{(2)}(\vectheta) \,.
+    \label{eq:kappa_point_mass}
+\end{equation}
+The mass is concentrated entirely at the origin; away from the origin,
+$\kappab = 0$.
+
+Substituting into eq.~\eqref{eq:lensing_potential}, the lensing
+potential is:
+\begin{equation}
+    \psiL(\vectheta) = \thetaE^2 \ln|\vectheta|
+    \label{eq:psi_point_mass}
+\end{equation}
+which satisfies $\nabla\psiL = \thetaE^2\, \vectheta/|\vectheta|^2$,
+giving the deflection $\vecalpha = \thetaE^2\,\vectheta/|\vectheta|^2$
+as expected.
+
+\subsection{Shear for a Point Mass}
+
+Using polar coordinates on the lens plane, we can write
+$\theta_1 = \theta\cos\phi$ and $\theta_2 = \theta\sin\phi$,
+where $\theta = |\vectheta|$.  Computing the second derivatives of
+$\psiL = \thetaE^2 \ln\theta$:
+\begin{align}
+    \frac{\partial^2 \psiL}{\partial\theta_1^2}
+    &= \thetaE^2\,\frac{\theta_2^2 - \theta_1^2}{\theta^4}
+    + \frac{\thetaE^2}{\theta^2}\,, \nonumber \\[4pt]
+    \frac{\partial^2 \psiL}{\partial\theta_2^2}
+    &= \thetaE^2\,\frac{\theta_1^2 - \theta_2^2}{\theta^4}
+    + \frac{\thetaE^2}{\theta^2}\,, \nonumber \\[4pt]
+    \frac{\partial^2 \psiL}{\partial\theta_1\,\partial\theta_2}
+    &= -\thetaE^2\,\frac{2\theta_1\theta_2}{\theta^4} \,.
+    \label{eq:psi_second_derivs_point}
+\end{align}
+The shear components are (for $\theta \neq 0$):
+\begin{align}
+    \gamma_1 &= \frac{1}{2}\left(
+    \frac{\partial^2\psiL}{\partial\theta_1^2}
+    - \frac{\partial^2\psiL}{\partial\theta_2^2}\right)
+    = -\frac{\thetaE^2(\theta_1^2 - \theta_2^2)}{\theta^4}
+    = -\frac{\thetaE^2}{\theta^2}\cos 2\phi \,,
+    \label{eq:gamma1_point} \\[4pt]
+    \gamma_2 &= \frac{\partial^2\psiL}{\partial\theta_1\,\partial\theta_2}
+    = -\frac{2\thetaE^2\,\theta_1\theta_2}{\theta^4}
+    = -\frac{\thetaE^2}{\theta^2}\sin 2\phi \,.
+    \label{eq:gamma2_point}
+\end{align}
+The shear magnitude is:
+\begin{equation}
+    \boxed{
+    |\gammaL| = \sqrt{\gamma_1^2 + \gamma_2^2}
+    = \frac{\thetaE^2}{\theta^2}
+    }
+    \label{eq:gamma_magnitude_point}
+\end{equation}
+The shear falls off as $\theta^{-2}$ and is aligned tangentially
+(the factor $e^{2i\phi}$ in the complex shear).
+
+\subsection{Convergence for a Point Mass (away from origin)}
+
+To compute the convergence correctly, we must be careful with the
+form of $\psiL$.  Writing
+$\psiL = \frac{\thetaE^2}{2}\ln(\theta_1^2 + \theta_2^2)$ in
+Cartesian coordinates:
+\begin{align}
+    \frac{\partial\psiL}{\partial\theta_1}
+    &= \frac{\thetaE^2\,\theta_1}{\theta^2} \,, \qquad
+    \frac{\partial^2\psiL}{\partial\theta_1^2}
+    = \thetaE^2\,\frac{\theta^2 - 2\theta_1^2}{\theta^4} \,.
+\end{align}
+Similarly, $\partial^2\psiL/\partial\theta_2^2
+= \thetaE^2\,(\theta^2 - 2\theta_2^2)/\theta^4$.
+Summing:
+\begin{equation}
+    \nabla^2\psiL = \thetaE^2\,
+    \frac{2\theta^2 - 2(\theta_1^2 + \theta_2^2)}{\theta^4}
+    = 0 \qquad (\theta \neq 0) \,.
+    \label{eq:laplacian_psi_point}
+\end{equation}
+Therefore $\kappab = 0$ for $\theta \neq 0$, confirming that the
+convergence of a point mass is indeed a delta function concentrated
+entirely at the origin.  In the distributional sense,
+$\nabla^2\ln|\vectheta| = 2\pi\,\delta^{(2)}(\vectheta)$, which
+recovers $\kappab = \pi\thetaE^2\,\delta^{(2)}(\vectheta)$ via
+the Poisson equation.
+
+\subsection{Magnification for a Point Mass}
+
+With $\kappab = 0$ and $|\gammaL| = \thetaE^2/\theta^2$ (for
+$\theta \neq 0$), the magnification formula~\eqref{eq:magnification_formula}
+gives:
+\begin{equation}
+    \mu = \frac{1}{1 - \thetaE^4/\theta^4}
+    = \frac{\theta^4}{\theta^4 - \thetaE^4} \,.
+    \label{eq:mu_point_mass}
+\end{equation}
+This is precisely eq.~\eqref{eq:magnification_pm} from
+Module~\ref{ch:lens_equation}!  Evaluating at the image positions
+$\theta_\pm$:
+\begin{equation}
+    \mu_\pm = \frac{u^2 + 2}{2u\sqrt{u^2 + 4}} \pm \frac{1}{2}
+    \label{eq:mu_pm_recovered}
+\end{equation}
+where $u = \beta/\thetaE$, recovering eq.~\eqref{eq:magnification_u}
+exactly.  The consistency is verified symbolically in
+\mathlink{05_Magnification_Convergence_Shear/lensing_potential.wl}{lensing\_potential.wl}.
+
+
+% =====================================================================
+\section{Example: Singular Isothermal Sphere (Preview)}
+\label{sec:sis_preview}
+
+The singular isothermal sphere (SIS) is the simplest realistic model
+for a galaxy lens.  Its surface mass density profile is
+(Congdon \& Keeton Sec.~4.3):
+\begin{equation}
+    \Sigma(\xi) = \frac{\sigma_v^2}{2\Gnewton\,\xi}
+    \label{eq:sis_sigma}
+\end{equation}
+where $\sigma_v$ is the one-dimensional velocity dispersion and
+$\xi = |\vecxi|$ is the physical radius in the lens plane.
+
+\subsection{Convergence and Shear of the SIS}
+
+The convergence is:
+\begin{equation}
+    \kappab(\theta) = \frac{\Sigma(\Dd\theta)}{\Sigmacr}
+    = \frac{\thetaE}{2\theta}
+    \label{eq:kappa_sis}
+\end{equation}
+where $\thetaE = 4\pi\sigma_v^2\Dds/(\speedoflight^2\Ds)$ is the
+Einstein radius of the SIS\@.  Note that $\kappab$ diverges at
+$\theta = 0$ (the ``singular'' in the name) and that
+$\kappab(\thetaE) = 1/2$.
+
+The shear magnitude for the SIS is:
+\begin{equation}
+    |\gammaL(\theta)| = \frac{\thetaE}{2\theta}
+    = \kappab(\theta) \,.
+    \label{eq:gamma_sis}
+\end{equation}
+Remarkably, $|\gammaL| = \kappab$ at every point for the SIS\@.  This
+equality does \textit{not} hold for general lens models --- it is a
+special property of the isothermal profile.
+
+\subsection{Magnification of the SIS}
+
+The magnification is:
+\begin{equation}
+    \mu = \frac{1}{(1 - \kappab)^2 - |\gammaL|^2}
+    = \frac{1}{1 - 2\kappab}
+    = \frac{1}{1 - \thetaE/\theta}
+    = \frac{\theta}{\theta - \thetaE} \,.
+    \label{eq:mu_sis}
+\end{equation}
+The magnification diverges at $\theta = \thetaE$ --- this is the
+(tangential) critical curve of the SIS\@.  We will treat the SIS model
+in full detail in Module~7.
+
+
+% =====================================================================
+\section{Critical Curves and Caustics (Preview)}
+\label{sec:critical_curves_preview}
+
+\begin{definition}
+The \textbf{critical curves} are the loci in the image plane where
+the magnification diverges:
+\begin{equation}
+    \det \Amat(\vectheta) = 0
+    \qquad \Longleftrightarrow \qquad
+    (1 - \kappab)^2 = |\gammaL|^2 \,.
+    \label{eq:critical_curve_condition}
+\end{equation}
+The \textbf{caustics} are the images of the critical curves under the
+lens mapping, i.e., the corresponding curves in the source plane:
+\begin{equation}
+    \vecbeta_{\mathrm{caustic}} = \vectheta_{\mathrm{crit}}
+    - \vecalpha(\vectheta_{\mathrm{crit}}) \,.
+    \label{eq:caustic_def}
+\end{equation}
+\end{definition}
+
+Critical curves and caustics play a central role in strong lensing:
+\begin{itemize}
+    \item When a source crosses a caustic, the number of images
+          changes by two (a pair of highly magnified images appears
+          or disappears).
+    \item Sources near caustics are very highly magnified --- this is
+          exploited in studies of distant, faint galaxies.
+    \item The topology of critical curves and caustics determines the
+          image configuration (doubly, quadruply, or multiply imaged
+          sources).
+\end{itemize}
+
+For the point mass lens, the critical curve is the Einstein ring
+($\theta = \thetaE$), and the caustic degenerates to a single point
+($\beta = 0$).  For more complex lens models, both critical curves
+and caustics have richer structures.  We will develop the full theory
+in Module~8.
+
+
+% =====================================================================
+\section{Summary}
+\label{sec:mag_summary}
+
+\begin{itemize}
+    \item The \textbf{lensing potential}
+          $\psiL(\vectheta) = (1/\pi)\int\kappab(\vectheta')\,
+          \ln|\vectheta - \vectheta'|\,d^2\theta'$ is a scalar
+          field whose gradient gives the deflection angle
+          ($\vecalpha = \nabla\psiL$) and whose Laplacian gives
+          twice the convergence ($\nabla^2\psiL = 2\kappab$).
+
+    \item The \textbf{convergence}
+          $\kappab = \Sigma/\Sigmacr$ causes isotropic focusing:
+          a circular source remains circular but changes size.
+
+    \item The \textbf{shear} $\gammaL = \gamma_1 + i\gamma_2$
+          causes anisotropic distortion: a circular source is
+          stretched into an ellipse.
+
+    \item The \textbf{Jacobian matrix}
+          $\Amat = \bigl(\begin{smallmatrix}
+          1-\kappab-\gamma_1 & -\gamma_2 \\
+          -\gamma_2 & 1-\kappab+\gamma_1
+          \end{smallmatrix}\bigr)$
+          encodes all local lensing properties.  Its eigenvalues
+          $\lambda_\pm = 1 - \kappab \pm |\gammaL|$ give the
+          inverse magnifications along the principal axes.
+
+    \item The \textbf{magnification}
+          $\mu = 1/\det\Amat = 1/[(1-\kappab)^2 - |\gammaL|^2]$.
+          The sign of $\mu$ determines the image parity.
+
+    \item For a \textbf{point mass lens}: $\kappab = 0$ (away from
+          the origin), $|\gammaL| = \thetaE^2/\theta^2$, and the
+          general magnification formula recovers the result
+          $\mu_\pm = (u^2+2)/(2u\sqrt{u^2+4}) \pm 1/2$ from Module~4.
+
+    \item \textbf{Critical curves} ($\det\Amat = 0$) and their
+          mappings, \textbf{caustics}, govern the image multiplicity
+          and are the sites of maximum magnification.
+\end{itemize}
+
+
+% =====================================================================
+\section{Problems}
+\label{sec:mag_problems}
+
+\begin{exercise}
+\label{ex:derive_jacobian}
+\textbf{(Derivation of the Jacobian matrix.)}
+Starting from the lens equation $\vecbeta = \vectheta -
+\vecalpha(\vectheta)$ with $\vecalpha = \nabla\psiL$:
+\begin{enumerate}[label=(\alph*)]
+    \item Compute $\Amat_{ij} = \partial\beta_i/\partial\theta_j$
+          and express it in terms of second derivatives of $\psiL$.
+    \item Decompose the Hessian matrix $\partial^2\psiL/\partial\theta_i
+          \partial\theta_j$ into a trace part (proportional to
+          $\delta_{ij}$) and a traceless part.  Identify the trace
+          part with $\kappab$ and the traceless part with the shear.
+    \item Write $\Amat$ in the form
+          $\bigl(\begin{smallmatrix}
+          1-\kappab-\gamma_1 & -\gamma_2 \\
+          -\gamma_2 & 1-\kappab+\gamma_1
+          \end{smallmatrix}\bigr)$.
+\end{enumerate}
+Verify with
+\solnlink{05_Magnification_Convergence_Shear/problems\_05.wl}{problems\_05.wl}.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:poisson_2d}
+\textbf{(The 2D Poisson equation.)}
+\begin{enumerate}[label=(\alph*)]
+    \item Show that the two-dimensional Green's function of the
+          Laplacian is $(1/2\pi)\ln|\vectheta|$, i.e.,
+          $\nabla^2 \ln|\vectheta| =
+          2\pi\,\delta^{(2)}(\vectheta)$.
+          \textit{Hint:} Use the fact that $\ln|\vectheta|$ is
+          harmonic for $\vectheta \neq 0$ and apply Gauss's theorem
+          to a small circle around the origin.
+    \item Starting from the definition of $\psiL$
+          (eq.~\ref{eq:lensing_potential}), apply the Laplacian to
+          derive $\nabla^2\psiL = 2\kappab$.
+    \item Verify the 2D Poisson equation for the point mass lens:
+          $\psiL = \thetaE^2\ln|\vectheta|$ and
+          $\kappab = \pi\thetaE^2\,\delta^{(2)}(\vectheta)$.
+\end{enumerate}
+Verify with
+\solnlink{05_Magnification_Convergence_Shear/problems\_05.wl}{problems\_05.wl}.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:point_mass_shear}
+\textbf{(Shear of a point mass lens.)}
+For the point mass lensing potential
+$\psiL = \thetaE^2\ln|\vectheta|$:
+\begin{enumerate}[label=(\alph*)]
+    \item Compute $\gamma_1$ and $\gamma_2$ as functions of
+          $\theta_1$, $\theta_2$.
+    \item Show that $|\gammaL| = \thetaE^2/\theta^2$.
+    \item Express $\gamma_1$ and $\gamma_2$ in polar coordinates
+          $(\theta, \phi)$ and show that the complex shear is
+          $\gammaL = -(\thetaE^2/\theta^2)\,e^{2i\phi}$
+          (tangential shear).
+    \item Compute the ratio $|\gammaL|/\kappab$ at the image
+          positions $\theta_\pm$ of the point mass lens.  What
+          happens for sources far from the Einstein radius?
+\end{enumerate}
+Verify with
+\solnlink{05_Magnification_Convergence_Shear/problems\_05.wl}{problems\_05.wl}.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:magnification_consistency}
+\textbf{(Magnification consistency check.)}
+\begin{enumerate}[label=(\alph*)]
+    \item Using $\kappab = 0$ and $|\gammaL| = \thetaE^2/\theta^2$
+          for the point mass lens, show that
+          $\mu = \theta^4/(\theta^4 - \thetaE^4)$.
+    \item Evaluate $\mu$ at the image positions $\theta_\pm =
+          (\beta \pm \sqrt{\beta^2 + 4\thetaE^2})/2$.  Using
+          $u = \beta/\thetaE$, show that the result reduces to
+          $\mu_\pm = (u^2+2)/(2u\sqrt{u^2+4}) \pm 1/2$.
+    \item Verify that $\mu_+ > 0$ (positive parity) and
+          $\mu_- < 0$ (negative parity) for all $u > 0$.
+    \item Show that $|\mu_+| + |\mu_-| > 1$ for all $u > 0$
+          (gravitational lensing always increases the total flux).
+\end{enumerate}
+Verify with
+\solnlink{05_Magnification_Convergence_Shear/problems\_05.wl}{problems\_05.wl}.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:elliptical_image}
+\textbf{(Elliptical image from constant $\kappab$ and $\gammaL$.)}
+A small circular source of angular radius $\delta$ is lensed by a
+region with constant convergence $\kappab$ and constant shear
+$\gammaL = |\gammaL|\,e^{2i\phi_\gamma}$ (with $\gamma_1 =
+|\gammaL|\cos 2\phi_\gamma$ and $\gamma_2 = |\gammaL|\sin 2\phi_\gamma$).
+\begin{enumerate}[label=(\alph*)]
+    \item Write the Jacobian matrix $\Amat$ for constant $\kappab$,
+          $\gamma_1$, $\gamma_2$.
+    \item Find the eigenvalues $\lambda_\pm$ of $\Amat$ and show
+          that the image is an ellipse with semi-axes
+          $a = \delta/|\lambda_-|$ and $b = \delta/|\lambda_+|$
+          (assuming $|\lambda_-| < |\lambda_+|$).
+    \item Compute the axis ratio $b/a$ and the magnification $\mu$
+          in terms of $\kappab$ and $|\gammaL|$.
+    \item The orientation of the ellipse is along the eigenvector
+          corresponding to $\lambda_-$.  For $\gamma_2 = 0$
+          (shear aligned with the coordinate axes), what is the
+          orientation of the major axis?
+    \item Evaluate the axis ratio and magnification for
+          $\kappab = 0.3$, $|\gammaL| = 0.2$.
+\end{enumerate}
+Verify with
+\solnlink{05_Magnification_Convergence_Shear/problems\_05.wl}{problems\_05.wl}.
+\end{exercise}

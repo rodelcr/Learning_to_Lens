@@ -104,3 +104,19 @@ Timestamped record of major milestones and work completed.
 - **`lens_equation.wl`**: Point mass lens equation solved, θ_E computed for stellar/galaxy/cluster scales, Σ_cr numerical values. 7 figures (geometry, image positions, Einstein ring, magnification).
 - **`einstein_ring.nb`**: Interactive image position visualization.
 - **PDF**: Student 108 pages, Instructor 133 pages.
+
+---
+
+## 2026-03-19 — Modules 5 & 6 (built in parallel) — Part II Complete!
+
+### Module 5: Magnification, Convergence, and Shear
+- **LaTeX notes**: Lensing potential ψ (2D Poisson equation ∇²ψ = 2κ), convergence κ (isotropic focusing), shear γ₁,γ₂ (anisotropic distortion), Jacobian matrix A, magnification μ = 1/det(A), convergence vs shear effects on image shape, point mass example, SIS preview, critical curves/caustics preview. 5 exercises.
+- **`lensing_potential.wl`**: Symbolic derivation of ψ, κ, γ for point mass. 5 figures (convergence/shear effects, magnification map, shear field, κ/γ profiles, point mass magnification).
+- **`convergence_shear_demo.nb`**: Interactive distortion visualization.
+
+### Module 6: Fermat's Principle and Time Delays
+- **LaTeX notes**: Time delay function, Fermat potential τ(θ,β) = ½|θ-β|² - ψ(θ), Fermat's principle (∇τ = 0 gives lens equation), Morse theory image classification (Type I/II/III = min/saddle/max), Burke's odd-number theorem, observable time delays, H₀ from time-delay cosmography (H0LiCOW/TDCOSMO), point mass and SIS examples. 5 exercises.
+- **`time_delay_function.wl`**: Fermat potential verified, time delay formula confirmed. 6 figures (arrival-time surface, contours, time delay vs β, H₀ constraint).
+- **`arrival_time_surface.nb`**: Interactive 3D arrival-time surface with source position slider.
+- **PDF**: Student 133 pages, Instructor 165 pages.
+- **Part II (Gravitational Lensing Theory) is now COMPLETE.**

@@ -1,0 +1,224 @@
+% =============================================================================
+% Module 6: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:fermat_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{06_Fermat_Time_Delays/problems\_06.wl}{problems\_06.wl},
+which verifies each answer symbolically and numerically.
+
+% ----- Exercise 6.1 -----
+\subsection*{Exercise~\ref{ex:fermat_lens_eq}: Deriving the Lens Equation from Fermat's Principle}
+
+\textbf{(a)} The Fermat potential is
+$\tau(\vectheta, \vecbeta) = \half|\vectheta - \vecbeta|^2
+- \psiL(\vectheta)$.  Taking the gradient with respect to $\vectheta$:
+\begin{equation*}
+    \nabla_{\vectheta}\,\tau
+    = \nabla_{\vectheta}\!\left[\half|\vectheta - \vecbeta|^2\right]
+    - \nabla_{\vectheta}\,\psiL(\vectheta)
+    = (\vectheta - \vecbeta) - \nabla\psiL(\vectheta) \,.
+\end{equation*}
+The first term follows from
+$\nabla_{\vectheta}|\vectheta - \vecbeta|^2 = 2(\vectheta - \vecbeta)$.
+
+\textbf{(b)} Setting $\nabla_{\vectheta}\,\tau = 0$:
+\begin{equation*}
+    (\vectheta - \vecbeta) - \nabla\psiL(\vectheta) = 0
+    \qquad \Longrightarrow \qquad
+    \vecbeta = \vectheta - \nabla\psiL(\vectheta) \,.
+\end{equation*}
+Since $\nabla\psiL(\vectheta) = \vecalpha(\vectheta)$ (the reduced
+deflection angle), this is the lens equation
+$\vecbeta = \vectheta - \vecalpha(\vectheta)$.  \hfill $\square$
+
+\textbf{(c)} Physically, Fermat's principle states that light follows
+paths of stationary travel time.  Among all possible positions
+$\vectheta$ in the lens plane through which a photon could pass, only
+those for which the arrival time is stationary (not changing to first
+order under small displacements $\delta\vectheta$) correspond to actual
+light paths.  These are the image positions.  The geometric delay
+(longer path) and gravitational delay (Shapiro effect) compete, and
+images form where their combined effect is stationary.
+
+% ----- Exercise 6.2 -----
+\subsection*{Exercise~\ref{ex:point_mass_arrival}: Arrival Times for a Point Mass Lens}
+
+\textbf{(a)} With $\thetaE = 1''$ and $\beta = 0.5''$, the image
+positions are:
+\begin{align*}
+    \theta_+ &= \frac{0.5 + \sqrt{0.25 + 4}}{2}
+    = \frac{0.5 + 2.0616}{2} = 1.2808'' \,, \\
+    \theta_- &= \frac{0.5 - 2.0616}{2} = -0.7808'' \,.
+\end{align*}
+
+\textbf{(b)} In units of $\thetaE$ ($x = \theta/\thetaE$, $y = 0.5$):
+$x_+ = 1.2808$, $x_- = -0.7808$.
+\begin{align*}
+    \tau(x_+) &= \half(1.2808 - 0.5)^2 - \ln(1.2808) \\
+    &= \half(0.7808)^2 - 0.2474
+    = 0.3048 - 0.2474 = 0.0574 \,, \\
+    \tau(x_-) &= \half(-0.7808 - 0.5)^2 - \ln(0.7808) \\
+    &= \half(1.2808)^2 - (-0.2474)
+    = 0.8202 + 0.2474 = 1.0676 \,.
+\end{align*}
+
+\textbf{(c)} The dimensionless time delay is:
+\begin{equation*}
+    \Delta\tau = \tau(x_-) - \tau(x_+) = 1.0676 - 0.0574 = 1.0101 \,.
+\end{equation*}
+This matches the analytic formula:
+$\Delta\tau = y\sqrt{y^2+4}/2 + \ln[(\sqrt{y^2+4}+y)/(\sqrt{y^2+4}-y)]
+= 0.5154 + 0.4947 = 1.0101$.  \checkmark
+
+\textbf{(d)} For $M = 10^{12}\,\Msun$, $z_d = 0.3$:
+\begin{align*}
+    \RS &= \frac{2\Gnewton M}{\speedoflight^2}
+    = \frac{2 \times 6.674 \times 10^{-11} \times
+    1.989 \times 10^{42}}{(2.998 \times 10^8)^2}
+    \approx 2.953 \times 10^{15}~\text{m} \,, \\
+    \Delta t &= \frac{\RS}{\speedoflight}\,(1 + z_d)\,\Delta\tau
+    = \frac{2.953 \times 10^{15}}{2.998 \times 10^8}
+    \times 1.3 \times 1.0101 \\
+    &\approx 1.293 \times 10^{7}~\text{s}
+    \approx 149.7~\text{days} \,.
+\end{align*}
+
+% ----- Exercise 6.3 -----
+\subsection*{Exercise~\ref{ex:typeI_first}: Type~I Image Arrives First}
+
+\textbf{(a)} For a point mass lens, $\tau(x) = \half(x - y)^2 - \ln|x|$.
+The image at $x_+$ is the primary image (minimum of $\tau$), and
+$x_-$ is the secondary image (saddle point).  Since $x_+$ is a minimum
+and $x_-$ is a saddle point, by definition
+$\tau(x_+) \leq \tau(x_-)$ for any source position.
+
+More explicitly: $\Delta\tau = y\sqrt{y^2+4}/2 +
+\ln[(\sqrt{y^2+4}+y)/(\sqrt{y^2+4}-y)]$.  Both terms are positive for
+$y > 0$: the first term is manifestly positive, and the argument of the
+logarithm exceeds 1 since $\sqrt{y^2+4} + y > \sqrt{y^2+4} - y > 0$.
+Therefore $\Delta\tau > 0$, i.e., $\tau(x_-) > \tau(x_+)$.
+\hfill $\square$
+
+\textbf{(b)} Numerical verification:
+
+\begin{center}
+\begin{tabular}{rcccc}
+\toprule
+$y = \beta/\thetaE$ & $\tau(x_+)$ & $\tau(x_-)$ & $\Delta\tau$ \\
+\midrule
+0.1  & $-0.0024$ & $0.0076$  & $0.0100$ \\
+0.5  & $0.0574$  & $1.0676$  & $1.0101$ \\
+1.0  & $0.1903$  & $2.6180$  & $2.4277$ \\
+2.0  & $0.3508$  & $5.3573$  & $5.0065$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+In all cases $\tau(x_+) < \tau(x_-)$.  \checkmark
+
+\textbf{(c)} Since $t(\vectheta) \propto \tau(\vectheta)$ (with a
+positive proportionality constant), a smaller $\tau$ means a smaller
+arrival time.  Therefore the Type~I image (minimum of $\tau$) arrives
+before the Type~II image (saddle point of $\tau$).  The time delay
+between them is $\Delta t \propto \Delta\tau > 0$.
+
+% ----- Exercise 6.4 -----
+\subsection*{Exercise~\ref{ex:H0_from_time_delay}: Measuring $\Hubble$ from Time Delays}
+
+\textbf{(a)} From the time delay formula:
+\begin{equation*}
+    \Delta t = \frac{(1 + z_d)}{\speedoflight}\,
+    \frac{\Dd\,\Ds}{\Dds}\, (\tau_1 - \tau_2) \,.
+\end{equation*}
+Converting $\tau_1 - \tau_2 = 25~\text{arcsec}^2$ to radians:
+$25 \times (1/206265)^2 = 5.876 \times 10^{-10}~\text{rad}^2$.
+Converting $\Delta t = 420$~days $= 3.629 \times 10^7$~s.
+With $z_d = 0.3$:
+\begin{equation*}
+    \frac{\Dd\,\Ds}{\Dds}
+    = \frac{\Delta t \cdot \speedoflight}{(1 + z_d) \cdot (\tau_1 - \tau_2)}
+    = \frac{3.629 \times 10^7 \times 2.998 \times 10^8}
+    {1.3 \times 5.876 \times 10^{-10}}
+    \approx 1.424 \times 10^{25}~\text{m} \,.
+\end{equation*}
+Converting to Mpc: $1.424 \times 10^{25} / 3.086 \times 10^{22}
+\approx 4614$~Mpc.
+
+\textbf{(b)} For a flat $\Lambda$CDM cosmology with $\Omegam = 0.3$, the
+angular diameter distances scale as $D \propto \speedoflight / \Hubble$.
+The dimensionless comoving distances (from Module~3) are $d_d(z_d=0.3)$,
+$d_s(z_s=1.0)$, and $d_{ds}$.  Using numerical integration:
+\begin{align*}
+    d_d &\approx 0.291 \,, \quad d_s \approx 0.480 \,, \quad d_{ds} \approx 0.274 \,, \\
+    \frac{\Dd\,\Ds}{\Dds} &= \frac{\speedoflight}{\Hubble}\,
+    \frac{d_d\,d_s / [(1+z_d)(1+z_s)]}{d_{ds} / (1+z_s)}
+    = \frac{\speedoflight}{\Hubble}\,
+    \frac{d_d\,d_s}{(1+z_d)\,d_{ds}} \\
+    &= \frac{\speedoflight}{\Hubble}\,
+    \frac{0.291 \times 0.480}{1.3 \times 0.274}
+    = \frac{\speedoflight}{\Hubble} \times 0.3923 \,.
+\end{align*}
+
+\textbf{(c)} Combining:
+\begin{equation*}
+    \Hubble = \frac{\speedoflight \times 0.3923}
+    {\Dd\,\Ds/\Dds}
+    = \frac{2.998 \times 10^8 \times 0.3923}{1.424 \times 10^{25}}
+    \approx 8.25 \times 10^{-18}~\text{s}^{-1} \,.
+\end{equation*}
+Converting to km\,s$^{-1}$\,Mpc$^{-1}$: multiply by $3.086 \times 10^{22}$
+(m per Mpc) and divide by $10^3$ (m per km):
+\begin{equation*}
+    \Hubble \approx 8.25 \times 10^{-18} \times 3.086 \times 10^{19}
+    \approx 254.6~\text{km\,s}^{-1}\,\text{Mpc}^{-1} \,.
+\end{equation*}
+
+\begin{remark}
+The high value reflects the simplified setup (the ``$\tau_1 - \tau_2$''
+and distance model are illustrative).  In a more detailed treatment with
+self-consistent lens modeling and precise distance ratios, the H0LiCOW
+program obtains $\Hubble = 73.3^{+1.7}_{-1.8}$~km\,s$^{-1}$\,Mpc$^{-1}$,
+which is consistent with local distance ladder measurements but in
+tension with the Planck CMB value of $\Hubble \approx 67.4$~km\,s$^{-1}$\,Mpc$^{-1}$.
+\end{remark}
+
+% ----- Exercise 6.5 -----
+\subsection*{Exercise~\ref{ex:arrival_surface_plot}: Plotting the Arrival-Time Surface}
+
+\textbf{(a)--(b)} The arrival-time surface
+$\tau(\theta_1, \theta_2)$ for a point mass lens with
+$\vecbeta = (0.3, 0)\,\thetaE$ and $\thetaE = 1$ is:
+\begin{equation*}
+    \tau(\theta_1, \theta_2) = \half\left[(\theta_1 - 0.3)^2 + \theta_2^2\right]
+    - \ln\sqrt{\theta_1^2 + \theta_2^2} \,.
+\end{equation*}
+The two stationary points are the image positions:
+\begin{align*}
+    \theta_+ &= \frac{0.3 + \sqrt{0.09 + 4}}{2} = 1.1612 \quad
+    \text{(minimum of $\tau$)} \,, \\
+    \theta_- &= \frac{0.3 - \sqrt{0.09 + 4}}{2} = -0.8612 \quad
+    \text{(saddle point of $\tau$)} \,.
+\end{align*}
+
+\textbf{(c)} The contour plot shows nested contours around the minimum
+at $(\theta_+, 0) = (1.1612, 0)$, and a saddle pattern at
+$(\theta_-, 0) = (-0.8612, 0)$.  The Einstein ring
+$|\vectheta| = \thetaE = 1$ passes between the two stationary points,
+as expected (the primary image is outside $\thetaE$, the secondary
+inside).
+
+\textbf{(d)} These match the analytical predictions from the lens
+equation $\theta_\pm = (\beta \pm \sqrt{\beta^2 + 4\thetaE^2})/2$
+exactly.  \checkmark
+
+\noindent
+The plots are generated in
+\mathlink{06_Fermat_Time_Delays/time_delay_function.wl}{time\_delay\_function.wl}
+and the interactive version is in
+\mathlink{06_Fermat_Time_Delays/arrival_time_surface.nb}{arrival\_time\_surface.nb}.
