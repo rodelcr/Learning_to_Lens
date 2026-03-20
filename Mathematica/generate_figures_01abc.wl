@@ -9,6 +9,7 @@
 Print["=== Generating Figures for Modules 1a, 1b, 1c ===\n"];
 
 baseDir = "/Users/rosador/Documents/Learning_to_Lens/Figures";
+If[!DirectoryQ[baseDir], CreateDirectory[baseDir, CreateIntermediateDirectories -> True]];
 
 (* =====================================================================
    MODULE 1a FIGURES

@@ -18,6 +18,7 @@
 Print["=== Module 1d: Geodesics and Orbits ===\n"];
 
 baseDir = "/Users/rosador/Documents/Learning_to_Lens/Figures/01d_Geodesics_Orbits";
+If[!DirectoryQ[baseDir], CreateDirectory[baseDir, CreateIntermediateDirectories -> True]];
 
 (* =========================================================================
    Section 1: Effective Potential

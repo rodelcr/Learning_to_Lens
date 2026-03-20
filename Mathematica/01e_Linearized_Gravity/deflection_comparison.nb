@@ -22,6 +22,8 @@ Cell[TextData[{
     "and the effective refractive index."
 }], "Text"],
 
+Cell[TextData[{"1. Setup and Physical Constants"}], "Section"],
+
 (* ---- Setup ---- *)
 Cell[BoxData[{
     RowBox[{"(*", " Physical constants ", "*)"}],
@@ -42,6 +44,8 @@ Cell[BoxData[{
         RowBox[{"NumberForm", "[", RowBox[{"RsSun", ",", "4"}], "]"}],
         ",", "\" m\""}], "]"}]
 }], "Input"],
+
+Cell[TextData[{"2. Exact Deflection Angle (Numerical)"}], "Section"],
 
 (* ---- Exact deflection angle (numerical) ---- *)
 Cell[BoxData[{
@@ -82,6 +86,8 @@ Cell[BoxData[{
                         "result"}]}],
             "]"}]}], ";"}]
 }], "Input"],
+
+Cell[TextData[{"3. Interactive Deflection Angle Comparison"}], "Section"],
 
 (* ---- Interactive Manipulate: Deflection comparison ---- *)
 Cell[TextData["Interactive Deflection Angle Comparison"], "Subsection"],
@@ -159,6 +165,8 @@ Cell[BoxData[
     "]"}]
 ], "Input"],
 
+Cell[TextData[{"4. Effective Refractive Index"}], "Section"],
+
 (* ---- Interactive Manipulate: Refractive index 2D ---- *)
 Cell[TextData["Effective Refractive Index Around a Point Mass"], "Subsection"],
 
@@ -219,6 +227,8 @@ Cell[BoxData[
             "}"}]}],
     "]"}]
 ], "Input"],
+
+Cell[TextData[{"5. Approximation Breakdown Analysis"}], "Section"],
 
 (* ---- Where does the approximation break down? ---- *)
 Cell[TextData["Approximation Breakdown Analysis"], "Subsection"],

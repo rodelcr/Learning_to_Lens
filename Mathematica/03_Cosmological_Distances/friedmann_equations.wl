@@ -102,6 +102,10 @@ printChristoffel[gamma_, coords_] := Module[{n, count = 0},
 
 Print["General GR computation functions loaded.\n"];
 
+(* NOTE: These functions are redefined here (originally from Module 1b's
+   christoffel_symbols.wl) so that this script is fully self-contained
+   and can be run independently via wolframscript without loading other files. *)
+
 
 (* =========================================================================
    Section 1: FRW Metric - Christoffel Symbols

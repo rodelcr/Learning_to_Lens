@@ -61,6 +61,10 @@ computeRicciScalar[metric_, ricci_] := Module[{inv},
         {mu, Length[metric]}, {nu, Length[metric]}]]
 ];
 
+(* NOTE: These functions are redefined here (originally from Module 1b's
+   christoffel_symbols.wl) so that this script is fully self-contained
+   and can be run independently via wolframscript without loading other files. *)
+
 (* =========================================================================
    Section 1: Define the Schwarzschild Metric
 
