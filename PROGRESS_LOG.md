@@ -164,3 +164,57 @@ Timestamped record of major milestones and work completed.
 - **~75 publication-quality figures**
 - **14 modules** spanning GR foundations through cluster lensing
 - **All derivations verified deterministically via Wolfram Mathematica**
+
+---
+
+## 2026-04-23 — Tier 1: Careful Step-by-Step Derivations (Chapters 8–13)
+
+Expanded the lensing half of the tutorial with fully step-by-step
+derivations, each accompanied by symbolic Mathematica verification.
+
+### Module 7 (Axisymmetric Models)
+- **Full derivation of the NFW surface mass density** (Sec. 7.4).
+  Line-of-sight projection → change of variable w = √(x² + u²) →
+  integration-by-parts identity → evaluation of K(x) via the
+  substitution w = x cosh τ → branch split into arccosh (x < 1) and
+  arctan (x > 1). Continuity at x = 1 verified.
+- **Full derivation of the NFW convergence and deflection** (Secs. 7.5–7.6)
+  from the axisymmetric relation α(θ) = θ κ̄(θ), including explicit
+  evaluation of h(x) = ∫₀ˣ f(x′)x′ dx′ = ln(x/2) + g(x).
+
+### Module 8 (Elliptical Models)
+- **Full derivation of the SIE deflection formulas** (Kormann, Schneider
+  & Bartelmann 1994), using scale-invariance (Euler's theorem) to
+  obtain ψ = θ₁α₁ + θ₂α₂ and direct verification of grad ψ = α and
+  ∇²ψ = 2κ.
+
+### Bugs fixed along the way (verification-driven)
+- **Factor-of-2 inconsistency in the NFW α and κ̄ equations** (Module 7
+  eq:nfw_alpha, eq:nfw_gamma; Module 10 eq:cl_nfw_alpha,
+  eq:cl_tangential_crit, eq:cl_radial_crit). With κ_s = 2ρ_s r_s/Σ_cr
+  (the convention used for κ in the text and in the Mathematica files),
+  the correct coefficient is 2, not 4. Fixed in the LaTeX and in
+  `axisymmetric_models.wl` and `cluster_lensing.wl`. Einstein radius
+  for the cluster example recomputed: θ_E ≈ 16″ for (M_200=10¹⁵M☉,
+  c=5, z_d=0.3, z_s=2), not 35–40″. (Observed clusters show 30–50″
+  because of ellipticity, substructure, and mergers on top of the
+  spherical NFW.)
+- **SIE Σ formula typo in Module 8**: denominator had √(ξ₁² + q²ξ₂²)
+  instead of √(q²ξ₁² + ξ₂²). The α formulas were already correct
+  (matching Kormann et al.); fixing Σ restores internal consistency.
+
+### New/modified computational artifacts
+- **NEW** `Mathematica/07_Axisymmetric_Models/nfw_projection.wl` —
+  8-step symbolic + numerical verification of the NFW projection,
+  K(x) evaluation, antiderivative identity, and the factor-2 check
+  for κ̄.
+- **NEW** `Mathematica/08_Elliptical_Models_Caustics/sie_deflection.wl` —
+  4-check verification of the SIE formulas: grad ψ = α, ∇²ψ = 2κ,
+  SIS limit q → 1, and a finite-difference cross-check of κ from α.
+- **UPDATED** `Mathematica/07_Axisymmetric_Models/axisymmetric_models.wl`
+  and `Mathematica/10_Cluster_Lensing/cluster_lensing.wl` (factor-2 fix).
+
+### Page counts after Tier 1
+- **Student edition: 208 pages** (+9)
+- **Instructor edition: 254 pages** (+9)
+- All 12 master-verification tests still pass; both PDFs build clean.

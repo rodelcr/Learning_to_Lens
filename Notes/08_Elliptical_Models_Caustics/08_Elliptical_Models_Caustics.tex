@@ -269,54 +269,153 @@ The SIE surface mass density is
     \boxed{
     \Sigma(\xi_1, \xi_2)
     = \frac{\sigma_v^2}{2\Gnewton}
-    \,\frac{\sqrt{q}}{\sqrt{\xi_1^2 + q^2\,\xi_2^2}}
+    \,\frac{\sqrt{q}}{\sqrt{q^2\,\xi_1^2 + \xi_2^2}}
     }
     \label{eq:sie_sigma}
 \end{equation}
 where $q \leq 1$ is the axis ratio ($q = b/a$, with $a$ the
 semi-major axis aligned along $\xi_1$), $\sigma_v$ is the velocity
 dispersion, and $(\xi_1, \xi_2)$ are physical coordinates in the
-lens plane.  For $q = 1$ this reduces to the SIS surface mass
+lens plane.  The iso-density contours $q^2\xi_1^2 + \xi_2^2 =
+\mathrm{const}$ are ellipses of axis ratio $q$ with the major axis
+along $\xi_1$.  For $q = 1$ this reduces to the SIS surface mass
 density $\Sigma = \sigma_v^2/(2\Gnewton\xi)$.
 
-The iso-density contours are ellipses with axis ratio $q$.  The
-factor $\sqrt{q}$ ensures that the total mass enclosed within a
+The factor $\sqrt{q}$ ensures that the total mass enclosed within a
 given elliptical radius is consistent with the isothermal profile.
 
-\subsection{Deflection Angle}
+Converting to angular coordinates via $\vecxi = \Dd\vectheta$ and
+dividing by the critical surface density gives the dimensionless
+convergence
+\begin{equation}
+    \kappab(\theta_1, \theta_2)
+    \;=\; \frac{\Sigma}{\Sigmacr}
+    \;=\; \frac{\thetaE\sqrt{q}}{2\sqrt{q^2\theta_1^2 + \theta_2^2}} \,,
+    \label{eq:sie_kappa}
+\end{equation}
+where $\thetaE = 4\pi\sigma_v^2\Dds/(\speedoflight^2\Ds)$ is the
+SIS-equivalent Einstein radius (the Einstein radius of the circular
+isothermal sphere with the same $\sigma_v$).
 
-The deflection angle for the SIE was derived by Kormann et al.\ (1994)
-and involves inverse trigonometric/hyperbolic functions:
+\subsection{Deflection Angle}
+\label{sec:sie_deflection}
+
+The deflection angle for the SIE, first given in closed form by
+Kormann, Schneider \& Bartelmann (1994, hereafter KSB94), is
 \begin{equation}
     \boxed{
     \alpha_1 = \frac{\thetaE\,\sqrt{q}}{\sqrt{1 - q^2}}
-    \,\mathrm{arctan}\!\left(
+    \,\arctan\!\!\left(
     \frac{\theta_1\,\sqrt{1 - q^2}}
-    {\sqrt{q^2\theta_1^2 + \theta_2^2}}\right)
-    }
-    \label{eq:sie_alpha1}
-\end{equation}
-\begin{equation}
-    \boxed{
+         {\sqrt{q^2\theta_1^2 + \theta_2^2}}\right),
+    \qquad
     \alpha_2 = \frac{\thetaE\,\sqrt{q}}{\sqrt{1 - q^2}}
-    \,\mathrm{arctanh}\!\left(
+    \,\operatorname{arctanh}\!\!\left(
     \frac{\theta_2\,\sqrt{1 - q^2}}
-    {\sqrt{q^2\theta_1^2 + \theta_2^2}}\right)
-    }
-    \label{eq:sie_alpha2}
+         {\sqrt{q^2\theta_1^2 + \theta_2^2}}\right).}
+    \label{eq:sie_alpha}
 \end{equation}
-where $\thetaE = 4\pi\sigma_v^2\Dds/(\speedoflight^2\Ds)$ is the
-Einstein radius of the corresponding SIS\@.  Note the asymmetry:
-$\alpha_1$ involves $\mathrm{arctan}$ while $\alpha_2$ involves
-$\mathrm{arctanh}$.  This asymmetry reflects the elliptical geometry.
+The asymmetry --- $\arctan$ along the major axis, $\operatorname{arctanh}$
+along the minor --- is intrinsic to the elliptical geometry.  Rather
+than reproducing the long convolution integral that leads to these
+forms (a contour-integral computation spanning several pages of
+KSB94), we give a shorter derivation that shows eq.~\eqref{eq:sie_alpha}
+is consistent with the SIE convergence \eqref{eq:sie_kappa} by using
+the scale-invariance of the lens.  Every step is verified symbolically
+in
+\mathlink{08_Elliptical_Models_Caustics/sie\_deflection.wl}{sie\_deflection.wl}.
 
-\begin{remark}
-For $q \to 1$ (circular limit), both deflection components reduce to
-$\alpha_i \to \thetaE\,\theta_i/|\vectheta|$, recovering the SIS
-result.  This can be verified by taking the limit
-$\sqrt{1-q^2} \to 0$ and using $\mathrm{arctan}(x)/x \to 1$ and
-$\mathrm{arctanh}(x)/x \to 1$ as $x \to 0$.
-\end{remark}
+\paragraph{Step 1: scale invariance and the lensing potential.}
+The SIE convergence \eqref{eq:sie_kappa} is homogeneous of degree
+$-1$ in $\vectheta$,
+\begin{equation*}
+    \kappab(\lambda\vectheta) = \lambda^{-1}\kappab(\vectheta)
+    \qquad (\lambda > 0).
+\end{equation*}
+Since $\alpha_i = \partial\psiL/\partial\theta_i$ and
+$\vecalpha = \kappab * \vectheta/\pi$ is a convolution with a
+homogeneous-of-degree-$-1$ kernel, the deflection is homogeneous of
+degree $0$ and the potential $\psiL$ is homogeneous of degree $1$.
+Euler's theorem for homogeneous functions then gives
+\begin{equation}
+    \psiL(\theta_1, \theta_2)
+    \;=\; \theta_1\,\alpha_1(\theta_1,\theta_2)
+        + \theta_2\,\alpha_2(\theta_1,\theta_2) \,.
+    \label{eq:sie_euler}
+\end{equation}
+
+\paragraph{Step 2: ansatz and its structure.}
+For the SIE, any deflection consistent with the elliptical symmetry
+must involve only $\theta_1$, $\theta_2$, and the elliptical radius
+$F(\vectheta) \equiv \sqrt{q^2\theta_1^2 + \theta_2^2}$.
+Dimensional and homogeneity requirements force the argument of the
+inverse trig/hyperbolic function to be dimensionless and of degree
+$0$.  Natural choices are
+$\theta_1\sqrt{1-q^2}/F$ and $\theta_2\sqrt{1-q^2}/F$ --- the
+coefficients $\sqrt{1-q^2}$ are fixed uniquely (up to sign) by the
+requirement that $\alpha_i \to \thetaE\theta_i/|\vectheta|$ in the
+SIS limit $q\to 1$.  This motivates the KSB94 ansatz
+\eqref{eq:sie_alpha}.
+
+\paragraph{Step 3: verify the gradient condition $\alpha_i = \partial_i\psiL$.}
+Combining \eqref{eq:sie_euler} and \eqref{eq:sie_alpha} and
+differentiating gives
+\begin{equation*}
+    \frac{\partial\psiL}{\partial\theta_i}
+    \;=\; \alpha_i
+        + \theta_j\,\frac{\partial\alpha_j}{\partial\theta_i} \,,
+\end{equation*}
+so the gradient condition is equivalent to
+$\theta_j(\partial\alpha_j/\partial\theta_i) = 0$.  Direct
+differentiation of \eqref{eq:sie_alpha} shows that all cross terms
+cancel after using the identity
+$\partial_i(1/F) = -q^{2(1-\delta_{i2})}\theta_i/F^3$ and the
+derivative of $\arctan$/$\operatorname{arctanh}$.  The detailed
+cancellation is carried out symbolically in
+\texttt{sie\_deflection.wl}; the result is
+\begin{equation}
+    \frac{\partial\psiL}{\partial\theta_1} = \alpha_1,
+    \qquad
+    \frac{\partial\psiL}{\partial\theta_2} = \alpha_2.
+    \label{eq:sie_gradient_check}
+\end{equation}
+
+\paragraph{Step 4: verify $\nabla^2\psiL = 2\kappab$.}
+Computing
+$\nabla^2\psiL = \partial_1\alpha_1 + \partial_2\alpha_2$ from
+\eqref{eq:sie_alpha}:
+\begin{align*}
+    \partial_1\alpha_1
+    &= \frac{\thetaE\sqrt{q}}{\sqrt{1-q^2}}\;
+       \frac{\partial}{\partial\theta_1}\!
+            \arctan\!\!\left(\frac{\theta_1\sqrt{1-q^2}}{F}\right)
+     = \frac{\thetaE\sqrt{q}}{\sqrt{1-q^2}}
+       \cdot \frac{\sqrt{1-q^2}}{F}\cdot \frac{\theta_2^2}{q^2\theta_1^2+\theta_2^2} \\
+    &= \frac{\thetaE\sqrt{q}\,\theta_2^2}{F^{3}},
+    \\[2pt]
+    \partial_2\alpha_2
+    &= \frac{\thetaE\sqrt{q}\,q^2\theta_1^2}{F^{3}},
+\end{align*}
+after applying the chain rule to $\partial_i F = q^{2(1-\delta_{i2})}\theta_i/F$
+and simplifying.  Adding:
+\begin{equation}
+    \nabla^2\psiL \;=\;
+        \frac{\thetaE\sqrt{q}\,(q^2\theta_1^2 + \theta_2^2)}{F^{3}}
+    \;=\; \frac{\thetaE\sqrt{q}}{F}
+    \;=\; 2\,\kappab(\vectheta),
+    \label{eq:sie_poisson_check}
+\end{equation}
+matching \eqref{eq:sie_kappa}.  This completes the verification.
+
+\paragraph{Step 5: the SIS limit $q \to 1$.}
+As $q\to 1^-$, $\sqrt{1-q^2}\to 0$ and the arguments of the inverse
+functions vanish; using $\arctan x / x \to 1$ and $\operatorname{arctanh} x/x \to 1$,
+\begin{equation*}
+    \alpha_i \;\to\; \thetaE\,\sqrt{q}\,\frac{\theta_i}{\sqrt{q^2\theta_1^2+\theta_2^2}}
+          \;\to\; \thetaE\,\frac{\theta_i}{|\vectheta|}\,,
+\end{equation*}
+which is the SIS deflection.  The limit is taken symbolically in
+\texttt{sie\_deflection.wl}.
 
 \subsection{Critical Curves and Caustics of the SIE}
 

@@ -140,10 +140,13 @@ radius.  Then:
 \begin{align}
     \kappab(x) &= \kappa_s\, f(x) \,,
     \label{eq:cl_nfw_kappa} \\
-    \alpha(x) &= \frac{4\kappa_s\,\theta_s}{x}
+    \alpha(x) &= \frac{2\kappa_s\,\theta_s}{x}
     \left[\ln\frac{x}{2} + g(x)\right] \,,
     \label{eq:cl_nfw_alpha} \\
-    |\gammaL(x)| &= \bar{\kappa}(x) - \kappab(x) \,,
+    \bar\kappa(x) &= \frac{2\kappa_s}{x^2}
+    \left[\ln\frac{x}{2} + g(x)\right] \,,
+    \qquad
+    |\gammaL(x)| = \bar{\kappa}(x) - \kappab(x) \,,
     \label{eq:cl_nfw_gamma}
 \end{align}
 with the functions $f(x)$ and $g(x)$ defined in
@@ -161,14 +164,14 @@ $z_d = 0.3$ lensing a source at $z_s = 2$
 ($\Dd \approx 900$~Mpc, $\Ds \approx 1750$~Mpc,
 $\Dds \approx 1400$~Mpc):
 \begin{itemize}[nosep]
-    \item $r_{200} \approx 2.0$~Mpc, $r_s = r_{200}/c \approx 400$~kpc,
-    \item $\theta_s = r_s / \Dd \approx 92''$,
-    \item $\kappa_s \approx 0.46$.
+    \item $r_{200} \approx 1.86$~Mpc, $r_s = r_{200}/c \approx 372$~kpc,
+    \item $\theta_s = r_s / \Dd \approx 85''$,
+    \item $\kappa_s \approx 0.52$.
 \end{itemize}
 Since $\kappa_s \times f(x)$ can exceed unity for $x \lesssim 0.5$
-(i.e., $\theta \lesssim 46''$), the cluster is a strong lens ---
-it has a region where $\kappab > 1$.  These values are computed and
-verified in
+(i.e., $\theta \lesssim 43''$), the cluster has a central region of
+super-critical convergence and is therefore a strong lens.
+These values are computed and verified in
 \mathlink{10_Cluster_Lensing/cluster\_lensing.wl}{cluster\_lensing.wl}.
 \end{example}
 
@@ -179,28 +182,34 @@ For the circularly symmetric NFW profile, the tangential and radial
 critical curves are circles.  The tangential critical curve occurs
 where $\bar{\kappa}(x) = 1$, i.e.:
 \begin{equation}
-    \frac{4\kappa_s}{x_t^2}\left[\ln\frac{x_t}{2} + g(x_t)\right] = 1 \,,
+    \frac{2\kappa_s}{x_t^2}\left[\ln\frac{x_t}{2} + g(x_t)\right] = 1 \,,
     \label{eq:cl_tangential_crit}
 \end{equation}
 and the radial critical curve where
 $2\kappab(x_r) - \bar{\kappa}(x_r) = 1$, i.e.:
 \begin{equation}
     2\kappa_s\, f(x_r)
-    - \frac{4\kappa_s}{x_r^2}\left[\ln\frac{x_r}{2} + g(x_r)\right] = 1 \,.
+    - \frac{2\kappa_s}{x_r^2}\left[\ln\frac{x_r}{2} + g(x_r)\right] = 1 \,.
     \label{eq:cl_radial_crit}
 \end{equation}
 Both equations must be solved numerically.  For the cluster parameters
 above ($M_{200} = 10^{15}\,\Msun$, $c = 5$, $z_d = 0.3$, $z_s = 2$),
-the tangential critical curve has a radius of
-$\theta_t \approx 35''$--$40''$, which corresponds to a physical
-radius of $\sim 150$~kpc at the cluster redshift.
+the tangential critical curve lies at $x_t \approx 0.19$, giving
+$\theta_t \approx 16''$ --- a physical radius of $\sim 70$~kpc at the
+cluster redshift.
 
 \begin{remark}
 The tangential critical curve radius is often called the
-\textbf{Einstein radius} of the cluster, $\thetaE$.  For a cluster,
-$\thetaE \sim 10''$--$50''$, compared to $\sim 1''$ for a galaxy
-lens.  The enclosed projected mass within $\thetaE$ is of order
-$10^{13}$--$10^{14}\,\Msun$ --- the mass of a large galaxy group.
+\textbf{Einstein radius} of the cluster, $\thetaE$.  A \emph{spherical}
+NFW halo with $M_{200} \sim 10^{15}\,\Msun$ and $c \sim 5$ typically has
+$\thetaE \sim 10''$--$20''$ at these redshifts.  Observed clusters
+(Abell~1689, MACSJ~0717, etc.) frequently display $\thetaE \sim
+30''$--$50''$; this additional lensing strength comes from
+ellipticity, substructure, merger boosts, and departures of the true
+mass distribution from a smooth spherical NFW.  For a galaxy lens the
+Einstein radius is instead $\sim 1''$, and the enclosed projected
+mass within $\thetaE$ ranges from $\sim 10^{11}\,\Msun$ (galaxies) to
+$\sim 10^{13}$--$10^{14}\,\Msun$ (clusters).
 \end{remark}
 
 \subsection{Einstein Radius Scaling with Cluster Mass}

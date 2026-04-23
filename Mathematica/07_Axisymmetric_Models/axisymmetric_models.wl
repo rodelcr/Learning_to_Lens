@@ -320,9 +320,10 @@ Module[{},
 
 (* ---- Figure 2: NFW Convergence and Shear Profiles ---- *)
 Module[{},
-    (* Plot kappa/kappa_s = f(x) and shear for different concentrations *)
-    (* For the NFW, the mean convergence is kbar(x) = (4*kappa_s/x^2)*(ln(x/2) + g(x)) *)
-    kbarNFW[x_] := (4/x^2) (Log[x/2] + gNFW[x]);
+    (* Plot kappa/kappa_s = f(x) and shear/kappa_s for different concentrations.
+       Mean convergence (see Notes/07 eq:nfw_alpha and nfw_projection.wl):
+         kbar(x) / kappa_s = (2 / x^2) * [ln(x/2) + g(x)]. *)
+    kbarNFW[x_] := (2/x^2) (Log[x/2] + gNFW[x]);
     gammaNFWfunc[x_] := kbarNFW[x] - fNFW[x];
 
     fig2 = Plot[
@@ -371,7 +372,7 @@ Module[{},
     alphaPM[th_] := 1/th;  (* thetaE^2/theta in units of thetaE *)
     alphaSISfunc[th_] := 1.0;  (* constant *)
     alphaNISplot[th_] := (Sqrt[th^2 + 0.04] - 0.2) / th;  (* thetac = 0.2 *)
-    alphaNFWplot[th_] := 0.5 * 4 * 0.3 / th * (Log[th/(2*0.3)] + gNFW[th/0.3]);
+    alphaNFWplot[th_] := 0.5 * 2 * 0.3 / th * (Log[th/(2*0.3)] + gNFW[th/0.3]);
 
     fig3 = GraphicsRow[{
         (* Left: Convergence profiles *)

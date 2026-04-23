@@ -65,11 +65,15 @@ gNFW[x_?NumericQ] := Which[
 (* NFW convergence: kappa(x) = kappa_s * f(x) *)
 kappaNFW[x_, ks_] := ks * fNFW[x];
 
-(* NFW mean convergence: kbar(x) *)
-kbarNFW[x_, ks_] := 4 ks / x^2 * (Log[x/2] + gNFW[x]);
+(* NFW mean convergence: kbar(x) = (2 kappa_s / x^2) [ln(x/2) + g(x)]
+   Factor of 2 (not 4): with kappa_s = 2 rho_s r_s / Sigma_cr, the axisymmetric
+   relation kbar = (2/theta^2) * int_0^theta kappa theta' dtheta' gives this
+   coefficient.  See Notes/07_Axisymmetric_Models eq:nfw_alpha; symbolically
+   verified in Mathematica/07_Axisymmetric_Models/nfw_projection.wl. *)
+kbarNFW[x_, ks_] := 2 ks / x^2 * (Log[x/2] + gNFW[x]);
 
-(* NFW deflection angle: alpha(x) = 4*kappa_s*theta_s/x * [ln(x/2)+g(x)] *)
-alphaNFW[x_, ks_, thetas_] := 4 ks * thetas / x * (Log[x/2] + gNFW[x]);
+(* NFW deflection angle: alpha(x) = (2 kappa_s theta_s / x) [ln(x/2)+g(x)] *)
+alphaNFW[x_, ks_, thetas_] := 2 ks * thetas / x * (Log[x/2] + gNFW[x]);
 
 (* NFW shear: |gamma(x)| = kbar(x) - kappa(x) *)
 gammaNFW[x_, ks_] := kbarNFW[x, ks] - kappaNFW[x, ks];

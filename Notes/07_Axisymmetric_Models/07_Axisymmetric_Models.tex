@@ -625,77 +625,242 @@ The characteristic density is related to $c$ by:
 \end{equation}
 
 \subsection{Surface Mass Density of the NFW}
+\label{sec:nfw_sigma}
 
-Projecting the NFW density along the line of sight yields
-(Bartelmann 1996; Wright \& Brainerd 2000):
+The line-of-sight projection of the NFW density gives the surface mass
+density
 \begin{equation}
-    \Sigma(x) = 2\,\rho_s\,r_s\, f(x) \,,
+    \Sigma(\xi) \;=\; \int_{-\infty}^{\infty}
+        \rho\!\left(\sqrt{\xi^2 + z^2}\right)\,dz \,,
+    \label{eq:nfw_sigma_setup}
+\end{equation}
+where $\xi$ is the physical impact parameter in the lens plane and $z$
+is the line-of-sight coordinate.  We now evaluate this integral
+explicitly; the computation separates cleanly into three steps and is
+the first place where the distinctive NFW branch structure
+(arccosh vs.\ arctan) appears.  The full derivation is verified
+symbolically in
+\mathlink{07_Axisymmetric_Models/nfw\_projection.wl}{nfw\_projection.wl}.
+
+\paragraph{Step 1: dimensionless variables.}
+Let $x = \xi/r_s$ and $u = z/r_s$, so that $r/r_s = \sqrt{x^2+u^2}$ and
+$dz = r_s\,du$.  The NFW density (eq.~\ref{eq:nfw_rho}) becomes
+\begin{equation*}
+    \rho = \frac{\rho_s}{\sqrt{x^2+u^2}\,\bigl(1 + \sqrt{x^2+u^2}\bigr)^2}\,.
+\end{equation*}
+Using the symmetry $z \leftrightarrow -z$,
+\begin{equation}
+    \Sigma(\xi) \;=\; 2\,\rho_s\,r_s\,I(x) \,,
+    \qquad
+    I(x) = \int_0^{\infty}\!
+        \frac{du}{\sqrt{x^2+u^2}\,\bigl(1 + \sqrt{x^2+u^2}\bigr)^2}\,.
+    \label{eq:nfw_I_definition}
+\end{equation}
+
+\paragraph{Step 2: change of variable $w = \sqrt{x^2+u^2}$.}
+Then $u\,du = w\,dw$ and $du = w\,dw/\sqrt{w^2-x^2}$.  The limits
+$u\!:\!0\to\infty$ map to $w\!:\!x\to\infty$, and
+\begin{equation}
+    I(x) \;=\; \int_{x}^{\infty}\!
+        \frac{dw}{(1+w)^2\,\sqrt{w^2 - x^2}} \,.
+    \label{eq:nfw_I_wform}
+\end{equation}
+
+\paragraph{Step 3: reduce to a simpler integral.}
+A short calculation gives the identity
+\begin{equation}
+    \frac{d}{dw}\!\left[\frac{\sqrt{w^2-x^2}}{1+w}\right]
+    \;=\;
+    \frac{w + x^2}{(1+w)^2\sqrt{w^2-x^2}}\,.
+    \label{eq:nfw_parts_identity}
+\end{equation}
+Writing $w + x^2 = (1+w) + (x^2 - 1)$ splits the right side into a
+piece involving one power of $(1+w)$ in the denominator and the
+target integrand $\bigl[(1+w)^2\sqrt{w^2-x^2}\bigr]^{-1}$ multiplied by
+$(x^2-1)$.  Integrating eq.~\eqref{eq:nfw_parts_identity} from $w=x$ to
+$w=\infty$ and using $\sqrt{w^2-x^2}/(1+w)\to 1$ at infinity and $0$ at
+$w=x$:
+\begin{equation}
+    1 \;=\; K(x) \;+\; (x^2 - 1)\,I(x) \,,
+    \qquad
+    K(x) \equiv \int_x^{\infty}\!\frac{dw}{(1+w)\sqrt{w^2-x^2}}\,,
+    \label{eq:nfw_IbK}
+\end{equation}
+so
+\begin{equation}
+    I(x) \;=\; \frac{1 - K(x)}{x^2 - 1}\,.
+    \label{eq:nfw_I_as_K}
+\end{equation}
+
+\paragraph{Step 4: evaluate $K(x)$.}
+The substitution $w = x\cosh\tau$ (with $\sqrt{w^2-x^2} = x\sinh\tau$,
+$dw = x\sinh\tau\,d\tau$) turns $K$ into
+\begin{equation}
+    K(x) \;=\; \int_0^{\infty} \frac{d\tau}{1 + x\cosh\tau} \,,
+    \label{eq:nfw_Ktau}
+\end{equation}
+which is elementary.  Using the Weierstrass half-angle substitution
+$t = \tanh(\tau/2)$ and the standard result
+$\int_0^1\! 2\,dt/(a-b\,t^2)
+= (2/\sqrt{ab})\,\operatorname{arctanh}\!\sqrt{b/a}$
+(and its arctan analog when the signs flip), one finds
+\begin{equation}
+    \boxed{
+    K(x) = \begin{cases}
+        \dfrac{\operatorname{arccosh}(1/x)}{\sqrt{1-x^2}},
+            & 0 < x < 1, \\[8pt]
+        1, & x = 1, \\[4pt]
+        \dfrac{\arctan\!\sqrt{x^2-1}}{\sqrt{x^2-1}},
+            & x > 1.
+    \end{cases}}
+    \label{eq:nfw_K_branches}
+\end{equation}
+The two branches are related by the identity
+$\operatorname{arccosh}(1/x) \leftrightarrow \arccos(1/x)$ (analytic
+continuation through $x=1$), and the $x=1$ value follows from a
+Taylor expansion of either branch.
+
+\paragraph{Collected result.}
+Substituting eq.~\eqref{eq:nfw_K_branches} into
+eq.~\eqref{eq:nfw_I_as_K}, and then eq.~\eqref{eq:nfw_I_definition},
+\begin{equation}
+    \boxed{
+    \Sigma(x) = 2\,\rho_s\,r_s\, f(x)\,,
+    \qquad
+    f(x) = \frac{1 - K(x)}{x^2 - 1}\,,}
     \label{eq:nfw_sigma}
 \end{equation}
-where $x = \xi / r_s = \theta / \theta_s$ is the dimensionless radius
-(with $\theta_s = r_s / \Dd$ the angular scale radius), and:
+where $x = \xi / r_s = \theta / \theta_s$ and $\theta_s = r_s / \Dd$.
+Writing out the three branches explicitly,
 \begin{equation}
     f(x) = \begin{cases}
-    \dfrac{1}{x^2 - 1}\left(1 - \dfrac{1}{\sqrt{1-x^2}}\,
-    \mathrm{arccosh}\,\dfrac{1}{x}\right) & x < 1 \\[8pt]
-    \dfrac{1}{3} & x = 1 \\[8pt]
-    \dfrac{1}{x^2 - 1}\left(1 - \dfrac{1}{\sqrt{x^2-1}}\,
-    \arctan\dfrac{\sqrt{x^2-1}}{1}\right) & x > 1
+    \dfrac{1}{x^2 - 1}\!\left(1 - \dfrac{\operatorname{arccosh}(1/x)}{\sqrt{1-x^2}}\right)
+            & 0 < x < 1, \\[8pt]
+    \dfrac{1}{3} & x = 1, \\[8pt]
+    \dfrac{1}{x^2 - 1}\!\left(1 - \dfrac{\arctan\!\sqrt{x^2-1}}{\sqrt{x^2-1}}\right)
+            & x > 1.
     \end{cases}
     \label{eq:nfw_f}
 \end{equation}
+This recovers the standard result of Bartelmann (1996) and
+Wright \& Brainerd (2000).
+
+\begin{remark}
+The apparent singularity at $x = 1$ in eq.~\eqref{eq:nfw_f} cancels
+between numerator and denominator.  A Taylor expansion of $1 - K(x)$
+about $x = 1$ (for either branch) gives
+$1 - K(x) = \tfrac{1}{3}(x^2 - 1) + \order{(x^2-1)^2}$, leaving
+$f(1) = 1/3$ --- a smooth function of $x$.
+\end{remark}
 
 \subsection{Convergence of the NFW}
 
-The convergence is:
+Dividing eq.~\eqref{eq:nfw_sigma} by the critical surface density,
 \begin{equation}
     \boxed{
-    \kappab(x) = \frac{2\,\rho_s\,r_s}{\Sigmacr}\, f(x)
-    \equiv \kappa_s\, f(x)
-    }
+    \kappab(x) \;=\; \frac{\Sigma(x)}{\Sigmacr}
+    \;=\; \frac{2\,\rho_s\,r_s}{\Sigmacr}\, f(x)
+    \;\equiv\; \kappa_s\, f(x) \,,
+    \qquad
+    \kappa_s \equiv \frac{2\rho_s r_s}{\Sigmacr}.}
     \label{eq:nfw_kappa}
 \end{equation}
-where $\kappa_s = 2\rho_s r_s / \Sigmacr$ is a characteristic
-convergence scale.
+The characteristic convergence $\kappa_s$ collects every
+dimensionful quantity from the density profile and the distance
+configuration, leaving $f(x)$ purely dimensionless.
 
 \begin{remark}
 Unlike the SIS (where $\kappab \propto \theta^{-1}$), the NFW
-convergence has a \textit{logarithmic} divergence as $x \to 0$
-(since $f(x) \sim (1/x)\ln(2/x)$ for $x \ll 1$).  The NFW cusp
-($\rho \propto r^{-1}$) is shallower than the isothermal cusp
-($\rho \propto r^{-2}$), which has important consequences for
-central image formation.
+convergence has a \textit{logarithmic} divergence as $x \to 0$.  This
+follows from the small-$x$ expansion of eq.~\eqref{eq:nfw_K_branches},
+$\operatorname{arccosh}(1/x) = \ln(2/x) + \order{x^2}$, which gives
+$K(x)\to \ln(2/x)$ and hence $f(x) \sim \ln(2/x)$ as $x\to 0$.  The
+NFW cusp ($\rho \propto r^{-1}$) is shallower than the isothermal cusp
+($\rho \propto r^{-2}$), which has important consequences for central
+image formation.
 \end{remark}
 
 \subsection{Deflection Angle and Shear of the NFW}
 
-The enclosed projected mass within radius $x$ yields the deflection
-angle (Bartelmann 1996):
+For any axisymmetric profile, the reduced deflection angle satisfies
+eqs.~\eqref{eq:mean_kappa} and~\eqref{eq:alpha_mean_kappa},
 \begin{equation}
-    \alpha(x) = \frac{4\kappa_s\, \theta_s}{x}\,
-    \left[\ln\frac{x}{2} + g(x)\right]
-    \label{eq:nfw_alpha}
+    \alpha(\theta) \;=\; \theta\,\bar\kappa(\theta) \,,
+    \qquad
+    \bar\kappa(\theta) = \frac{2}{\theta^2}\int_0^\theta
+        \kappab(\theta')\,\theta'\,d\theta'.
+    \label{eq:nfw_alpha_setup}
 \end{equation}
-where:
+Switching to $x = \theta/\theta_s$ and using
+$\kappab = \kappa_s f(x)$ (eq.~\ref{eq:nfw_kappa}) turns the integral
+into
+\begin{equation}
+    \bar\kappa(x) = \frac{2\kappa_s}{x^2}\,h(x) \,,
+    \qquad
+    h(x) \equiv \int_0^x f(x')\,x'\,dx'.
+    \label{eq:nfw_hdef}
+\end{equation}
+
+\paragraph{Evaluation of $h(x)$.}
+From eq.~\eqref{eq:nfw_I_as_K},
+$f(x) = [1 - K(x)]/(x^2-1)$, where $K(x)$ is given by
+eq.~\eqref{eq:nfw_K_branches}.  A direct calculation shows
+\begin{equation}
+    \frac{d}{dx}\!\left[\ln\!\tfrac{x}{2} + K(x)\right]
+    \;=\; x\,f(x)
+    \quad\text{for } 0 < x \neq 1,
+    \label{eq:nfw_antiderivative}
+\end{equation}
+and, using
+$\operatorname{arccosh}(1/x) = \ln(2/x) + \order{x^2}$ as $x \to 0$,
+\begin{equation*}
+    \lim_{x\to 0^+}\bigl[\ln(x/2) + K(x)\bigr] = 0 \,.
+\end{equation*}
+Hence
+\begin{equation}
+    h(x) \;=\; \ln\!\frac{x}{2} + g(x) \,,
+    \qquad
+    g(x) \equiv K(x),
+    \label{eq:nfw_h_evaluated}
+\end{equation}
+with
 \begin{equation}
     g(x) = \begin{cases}
-    \dfrac{1}{\sqrt{1-x^2}}\,
-    \mathrm{arccosh}\,\dfrac{1}{x} & x < 1 \\[6pt]
-    1 & x = 1 \\[6pt]
-    \dfrac{1}{\sqrt{x^2-1}}\,\arctan\dfrac{\sqrt{x^2-1}}{1} & x > 1
+        \dfrac{\operatorname{arccosh}(1/x)}{\sqrt{1-x^2}}, & 0 < x < 1, \\[6pt]
+        1, & x = 1, \\[4pt]
+        \dfrac{\arctan\!\sqrt{x^2-1}}{\sqrt{x^2-1}}, & x > 1.
     \end{cases}
     \label{eq:nfw_g}
 \end{equation}
 
-The mean convergence and shear follow from
-eqs.~\eqref{eq:mean_kappa} and~\eqref{eq:gamma_circular}:
+\paragraph{Deflection angle and shear.}
+Substituting eq.~\eqref{eq:nfw_h_evaluated} into
+eqs.~\eqref{eq:nfw_alpha_setup}--\eqref{eq:nfw_hdef} and using
+$\theta = x\,\theta_s$:
 \begin{equation}
-    \bar{\kappa}(x) = \frac{4\kappa_s}{x^2}
-    \left[\ln\frac{x}{2} + g(x)\right] \,,
+    \boxed{
+    \alpha(x) = \frac{2\kappa_s\,\theta_s}{x}\,
+    \left[\ln\frac{x}{2} + g(x)\right],
     \qquad
-    |\gammaL(x)| = \bar{\kappa}(x) - \kappab(x) \,.
+    \bar\kappa(x) = \frac{2\kappa_s}{x^2}\,
+    \left[\ln\frac{x}{2} + g(x)\right].}
+    \label{eq:nfw_alpha}
+\end{equation}
+The tangential shear of any axisymmetric profile is
+$|\gammaL(x)| = \bar\kappa(x) - \kappab(x)$
+(cf.\ eq.~\ref{eq:gamma_circular}):
+\begin{equation}
+    |\gammaL(x)| \;=\; \frac{2\kappa_s}{x^2}
+        \left[\ln\frac{x}{2} + g(x)\right]
+        \;-\; \kappa_s\,f(x) \,.
     \label{eq:nfw_gamma}
 \end{equation}
+Every identity in this subsection --- the antiderivative
+eq.~\eqref{eq:nfw_antiderivative}, the $x \to 0$ limit, and the
+numerical consistency of eq.~\eqref{eq:nfw_alpha} with direct
+integration of $\kappab$ --- is verified symbolically and numerically
+in
+\mathlink{07_Axisymmetric_Models/nfw\_projection.wl}{nfw\_projection.wl}.
 
 \subsection{Role of Concentration in NFW Lensing}
 
