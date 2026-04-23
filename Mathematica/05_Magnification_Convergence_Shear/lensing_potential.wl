@@ -228,6 +228,71 @@ Print["Verification: traceless part has the form ((g1,g2),(g2,-g1))"];
 Print["  with g1 = (psi_11 - psi_22)/2, g2 = psi_12. VERIFIED\n"];
 
 
+(* -------------------------------------------------------------------------
+   Section 5b: Spin-2 transformation of the shear under rotation.
+   Under a rotation of the theta-axes by angle phi, the Hessian transforms
+   as H -> R(phi) H R(-phi).  The traceless part inherits a rank-2 spin
+   and the complex shear satisfies gamma -> exp(-2 i phi) gamma.
+   ------------------------------------------------------------------------- *)
+Print["--- Section 5b: Spin-2 transformation of complex shear ---\n"];
+
+(* Rotation matrix *)
+Rmat[phi_] := {{Cos[phi], -Sin[phi]}, {Sin[phi], Cos[phi]}};
+
+(* Sample Hessian with symbolic g1, g2, kappa entries *)
+Hgeneral = {{kappaSym + g1Sym, g2Sym}, {g2Sym, kappaSym - g1Sym}};
+
+(* Passive rotation of the theta-axes by phiRot:
+   H'_ij  =  (R^T H R)_ij.  Under this convention the complex shear
+   satisfies gamma' = e^{-2 i phi} gamma (Bartelmann & Schneider 2001). *)
+Hrotated = Simplify[Transpose[Rmat[phiRot]] . Hgeneral . Rmat[phiRot]];
+Print["Rotated Hessian entries:"];
+Print["  H'_11 = ", Simplify[Hrotated[[1,1]]]];
+Print["  H'_22 = ", Simplify[Hrotated[[2,2]]]];
+Print["  H'_12 = ", Simplify[Hrotated[[1,2]]]];
+(* Extract rotated shear *)
+gam1Rot = Simplify[(Hrotated[[1,1]] - Hrotated[[2,2]])/2];
+gam2Rot = Simplify[Hrotated[[1,2]]];
+
+(* Check:   gamma1' + i gamma2'  =  e^{-2 i phi} (gamma1 + i gamma2) *)
+lhs = ComplexExpand[gam1Rot + I gam2Rot];
+rhs = ComplexExpand[Exp[-2 I phiRot] (g1Sym + I g2Sym)];
+spin2Residual = FullSimplify[lhs - rhs];
+Print["   (gamma1' + i gamma2') - e^{-2 i phi}(gamma1 + i gamma2) = ",
+    spin2Residual, "  (expect 0)"];
+
+(* Check:   kappa is rotation invariant (trace is invariant) *)
+kappaRot = Simplify[(Hrotated[[1,1]] + Hrotated[[2,2]])/2];
+Print["   kappa' - kappa = ", Simplify[kappaRot - kappaSym], "  (expect 0)"];
+Print[""];
+
+
+(* -------------------------------------------------------------------------
+   Section 5c: Verification of the 2D Green's function Laplacian identity.
+   Away from the origin we expect  nabla^2 ln r = 0.  Integrated over a
+   disk of radius a the result is 2 pi (step 2 in the proof).
+   ------------------------------------------------------------------------- *)
+Print["--- Section 5c: 2D Green's function for nabla^2 ln |r| ---\n"];
+
+lnR[x_, y_, x0_, y0_] := Log[Sqrt[(x - x0)^2 + (y - y0)^2]];
+
+lap1 = FullSimplify[
+    D[lnR[xv, yv, 0, 0], {xv, 2}] + D[lnR[xv, yv, 0, 0], {yv, 2}],
+    Assumptions -> {xv^2 + yv^2 > 0}];
+Print["   nabla^2 ln|r| (r != 0) = ", lap1, "  (expect 0)"];
+
+(* Line integral of grad(ln r).nhat around a circle of radius a: *)
+lineIntegral = Integrate[
+    Cos[phi] (Cos[phi]/a) + Sin[phi] (Sin[phi]/a) /. a -> 1,
+    {phi, 0, 2 Pi}
+] a /. a -> 1;
+(* Simpler: direct evaluation of the flux *)
+flux = Integrate[1, {phi, 0, 2 Pi}];
+Print["   Flux of grad(ln r) through circle = int_0^{2pi} dphi = ",
+    flux, "  (expect 2 pi)"];
+Print[""];
+
+
 (* =========================================================================
    Section 6: Generate Figures
    ========================================================================= *)

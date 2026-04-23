@@ -218,3 +218,44 @@ derivations, each accompanied by symbolic Mathematica verification.
 - **Student edition: 208 pages** (+9)
 - **Instructor edition: 254 pages** (+9)
 - All 12 master-verification tests still pass; both PDFs build clean.
+
+---
+
+## 2026-04-23 — Tier 2: Medium-priority derivations (Modules 5, 9)
+
+### Module 5 (Magnification, Convergence, Shear)
+- **Full proof of the 2D Green's function identity**
+  ∇² ln r = 2π δ⁽²⁾(r), via the divergence theorem: ∇² ln r = 0 for
+  r > 0, and the flux ∮ ∇(ln r)·n̂ dℓ around a disk evaluates to 2π.
+  This is the missing step in the derivation of the 2D Poisson
+  equation ∇²ψ = 2κ.
+- **Hessian decomposition for the shear.** Derived γ₁ = (∂²ψ/∂θ₁²
+  − ∂²ψ/∂θ₂²)/2 and γ₂ = ∂²ψ/∂θ₁∂θ₂ as the traceless symmetric
+  part of the Hessian; the trace part is 2κ. Under passive rotation
+  of the θ-axes by φ, the complex shear γ = γ₁ + iγ₂ satisfies
+  γ → e^(−2iφ) γ (spin-2 transformation).
+
+### Module 9 (Galaxy Lensing Applications)
+- **Full derivation of Aλ = λA under the MST**, via componentwise
+  action on the Jacobian using αλ = λα + (1−λ)θ. The (1−λ)δᵢⱼ term
+  in the derivative of the second piece cancels the δᵢⱼ from λ⋅δᵢⱼ,
+  leaving exactly λA. Hence det Aλ = λ²det A and μλ = μ/λ².
+- **Power-law profile projection.** Line-of-sight integral of
+  ρ ∝ r^(−γ') reduced to a Beta function:
+  ∫₀^∞ (1+u²)^(−γ'/2) du = (√π/2) Γ((γ'−1)/2)/Γ(γ'/2),
+  giving Σ(ξ) ∝ ξ^(1−γ') and therefore κ(θ) ∝ θ^(1−γ').
+
+### Mathematica verification extensions
+- **`lensing_potential.wl`** — added Section 5b (spin-2 rotation
+  check of the complex shear, passive rotation convention) and
+  Section 5c (Green's function flux integral + direct ∇² ln r = 0
+  check for r > 0).
+- **`galaxy_lensing.wl`** — added Section 4b (componentwise MST
+  Jacobian verification: every Aᵢⱼ(λ) − λAᵢⱼ = 0 symbolically) and
+  Section 4c (power-law projection integral compared to the closed
+  Beta-function form at γ' = 3/2, 7/4, 2, 9/4, 5/2; all diffs = 0).
+
+### Page counts after Tier 2
+- **Student edition: 208 pages** (no change — inserts fit on existing pages)
+- **Instructor edition: 254 pages** (no change)
+- All Mathematica scripts pass.

@@ -289,6 +289,84 @@ Do[
 Print["  For gamma' = 2: sigma_v is independent of R (isothermal!) \n"];
 
 
+(* -------------------------------------------------------------------------
+   Section 4b: MST Jacobian scaling (symbolic).
+   Under the MST  kappa -> lambda kappa + (1-lambda),  alpha -> lambda alpha
+   + (1-lambda) theta.  Verify componentwise that A_ij -> lambda A_ij.
+   ------------------------------------------------------------------------- *)
+Print["--- Section 4b: MST scaling of the Jacobian ---\n"];
+
+ClearAll[psiSym, a1, a2, A11, A12, A21, A22, lam];
+(* Start from an arbitrary smooth potential psi(t1,t2); the deflection is
+   its gradient.  We avoid a specific choice so the result is general. *)
+psiSym = psiAbstract[t1, t2];
+a1 = D[psiSym, t1];
+a2 = D[psiSym, t2];
+
+(* MST-transformed deflection: alpha_lambda = lambda alpha + (1-lambda) theta *)
+a1Lam = lam * a1 + (1 - lam) t1;
+a2Lam = lam * a2 + (1 - lam) t2;
+
+(* Jacobian entries, original and transformed *)
+A11 = 1 - D[a1, t1];   A12 = -D[a1, t2];
+A21 = -D[a2, t1];      A22 = 1 - D[a2, t2];
+A11L = 1 - D[a1Lam, t1]; A12L = -D[a1Lam, t2];
+A21L = -D[a2Lam, t1];    A22L = 1 - D[a2Lam, t2];
+
+(* Each entry should satisfy A_{ij,lambda} = lambda * A_{ij} *)
+r11 = FullSimplify[A11L - lam A11];
+r12 = FullSimplify[A12L - lam A12];
+r21 = FullSimplify[A21L - lam A21];
+r22 = FullSimplify[A22L - lam A22];
+Print["   A_11(lambda) - lambda A_11 = ", r11, "  (expect 0)"];
+Print["   A_12(lambda) - lambda A_12 = ", r12, "  (expect 0)"];
+Print["   A_21(lambda) - lambda A_21 = ", r21, "  (expect 0)"];
+Print["   A_22(lambda) - lambda A_22 = ", r22, "  (expect 0)"];
+
+(* det A -> lambda^2 det A *)
+detOrig = FullSimplify[A11 A22 - A12 A21];
+detLam  = FullSimplify[A11L A22L - A12L A21L];
+detRes  = FullSimplify[detLam - lam^2 detOrig];
+Print["   det A(lambda) - lambda^2 det A = ", detRes, "  (expect 0)"];
+Print["   => mu(lambda) = mu / lambda^2 (magnification scaling).\n"];
+
+
+(* -------------------------------------------------------------------------
+   Section 4c: Power-law projection from rho(r) = rho_0 (r/r_0)^(-gammap).
+   Verify Sigma(xi) has the exponent 1 - gammap and the Beta-function
+   coefficient predicted in the text.
+   ------------------------------------------------------------------------- *)
+Print["--- Section 4c: Power-law line-of-sight projection ---\n"];
+
+(* Integrand:  rho_0 ((xi^2 + z^2)^{1/2} / r_0)^{-gammap} *)
+sigmaInt[gammap_] := Integrate[
+    (1/(1 + u^2))^(gammap/2),
+    {u, 0, Infinity},
+    Assumptions -> {gammap > 1}
+];
+
+(* The text claims: integral = (sqrt(pi)/2) Gamma((gammap-1)/2) / Gamma(gammap/2).
+   Compare symbolically. *)
+expected[gammap_] := Sqrt[Pi]/2 * Gamma[(gammap - 1)/2] / Gamma[gammap/2];
+
+Do[
+    Ival = sigmaInt[gp];
+    Eval = expected[gp];
+    res  = FullSimplify[Ival - Eval];
+    Print["   gamma' = ", gp,
+          "   integral = ", NumberForm[N[Ival], 8],
+          "   Beta-function form = ", NumberForm[N[Eval], 8],
+          "   |diff| = ", ScientificForm[Abs[N[Ival] - N[Eval]], 3]],
+    {gp, {3/2, 7/4, 2, 9/4, 5/2}}
+];
+
+(* Sigma(xi) ~ xi^(1-gammap): check by differentiating Log[Sigma] *)
+Print["\n   Log-derivative of Sigma wrt xi = ",
+    FullSimplify[D[Log[xi^(1 - gammap) * expected[gammap]], xi]],
+    "   (expect (1 - gamma') / xi)"];
+Print[""];
+
+
 (* =========================================================================
    Section 5: H0 from Time Delays
    =========================================================================

@@ -340,22 +340,43 @@ Although image positions are preserved, the MST changes other
 observables:
 
 \paragraph{Magnifications.}
-The Jacobian transforms as:
+Under the MST the transformed convergence and deflection are
+\begin{equation*}
+    \kappab_\lambda(\vectheta) = \lambda\,\kappab(\vectheta) + (1-\lambda),
+    \qquad
+    \vecalpha_\lambda(\vectheta) = \lambda\,\vecalpha(\vectheta) + (1-\lambda)\,\vectheta,
+\end{equation*}
+the second of which follows from the first via
+$\vecalpha = \nabla\psiL$ and $\nabla^2\psiL = 2\kappab$
+(the $(1-\lambda)\vectheta$ piece is the deflection of a uniform
+mass sheet, $\nabla\cdot(\vectheta/2) = 1 = 1 - \lambda$ up to the
+overall factor).  The Jacobian then transforms componentwise:
+\begin{equation*}
+    (\Amat_\lambda)_{ij}
+    \;=\; \delta_{ij} - \frac{\partial\alpha_{\lambda,i}}{\partial\theta_j}
+    \;=\; \delta_{ij} - \lambda\,\frac{\partial\alpha_i}{\partial\theta_j} - (1-\lambda)\,\delta_{ij}
+    \;=\; \lambda\!\left(\delta_{ij} - \frac{\partial\alpha_i}{\partial\theta_j}\right)
+    \;=\; \lambda\,\Amat_{ij} \,.
+\end{equation*}
+That is, every entry of $\Amat$ scales by $\lambda$:
 \begin{equation}
-    \Amat_\lambda = \lambda\,\Amat
+    \Amat_\lambda = \lambda\,\Amat,
+    \qquad
+    \det \Amat_\lambda = \lambda^2\,\det\Amat,
     \label{eq:mst_jacobian}
 \end{equation}
-so the magnification changes as:
+so the magnification $\mu = 1/\det\Amat$ scales as
 \begin{equation}
     \boxed{
-    \mu_\lambda = \frac{1}{\lambda^2}\,\mu
-    }
+    \mu_\lambda = \frac{1}{\lambda^2}\,\mu \,.}
     \label{eq:mst_magnification}
 \end{equation}
 Individual magnifications change, but \textbf{magnification ratios}
 $\mu_i/\mu_j = \mu_{\lambda,i}/\mu_{\lambda,j}$ are preserved.
 This means flux \textit{ratios} cannot distinguish between the
-original model and the MST-transformed model.
+original model and the MST-transformed model.  Both steps are
+verified symbolically in
+\mathlink{09_Galaxy_Lensing_Applications/galaxy\_lensing.wl}{galaxy\_lensing.wl}.
 
 \paragraph{Time delays.}
 The time delay between images scales as:
@@ -559,12 +580,35 @@ mass scalings for power-law density profiles with different slopes.
     \label{fig:power_law}
 \end{figure}
 
-For this profile, the convergence is:
+The convergence follows from the line-of-sight projection.  Writing
+$r = \sqrt{\xi^2 + z^2}$,
+\begin{equation*}
+    \Sigma(\xi) \;=\; \int_{-\infty}^{\infty}\!
+        \rho_0\!\left(\frac{\sqrt{\xi^2+z^2}}{r_0}\right)^{\!-\gamma'}\!\!dz
+    \;=\; 2\rho_0\,r_0^{\gamma'}\,\xi^{1-\gamma'}\!
+        \int_0^{\infty}\!(1+u^2)^{-\gamma'/2}\,du
+    \qquad (u = z/\xi).
+\end{equation*}
+The remaining integral is a Beta function:
+\begin{equation*}
+    \int_0^{\infty}(1 + u^2)^{-\gamma'/2}\,du
+    \;=\; \frac{1}{2}\,B\!\left(\frac{1}{2},\frac{\gamma'-1}{2}\right)
+    \;=\; \frac{\sqrt{\pi}}{2}\,
+        \frac{\Gamma\!\left(\frac{\gamma'-1}{2}\right)}{\Gamma\!\left(\frac{\gamma'}{2}\right)},
+\end{equation*}
+finite for $\gamma' > 1$.  Hence $\Sigma(\xi) \propto \xi^{1-\gamma'}$
+and, using $\xi = \Dd\theta$ and dividing by $\Sigmacr$, the
+convergence has the same exponent.  A short computation that fixes
+the overall normalization by matching to the isothermal case
+$\gamma' = 2$ (where $\thetaE$ is the SIS Einstein radius) gives
 \begin{equation}
-    \kappab(\theta) = \frac{3 - \gamma'}{2}
-    \left(\frac{\thetaE}{\theta}\right)^{\gamma' - 1}
+    \kappab(\theta) \;=\; \frac{3 - \gamma'}{2}\,
+        \left(\frac{\thetaE}{\theta}\right)^{\!\gamma' - 1},
     \label{eq:kappa_power_law}
 \end{equation}
+valid for $1 < \gamma' < 3$ (finite projection, finite enclosed
+mass).  The projection integral and the normalization are verified
+in \texttt{galaxy\_lensing.wl}.
 and the Einstein radius is:
 \begin{equation}
     \thetaE = 4\pi\,\frac{\sigma_{\mathrm{SIE}}^2}{\speedoflight^2}

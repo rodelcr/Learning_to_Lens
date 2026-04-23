@@ -149,30 +149,54 @@ sign and using $\nabla_\theta \ln|\vectheta - \vectheta'| =
     }
     \label{eq:poisson_2d}
 \end{equation}
-This follows from $\nabla^2_\theta \ln|\vectheta - \vectheta'| =
-2\pi\,\delta^{(2)}(\vectheta - \vectheta')$ (the Green's function of
-the two-dimensional Laplacian), so that:
+The identity rests on the Green's function of the two-dimensional
+Laplacian,
 \begin{equation}
-    \nabla^2_\theta\, \psiL = \frac{1}{\pi}
-    \int \kappab(\vectheta')\, 2\pi\,
-    \delta^{(2)}(\vectheta - \vectheta')\, d^2\theta'
-    = 2\,\kappab(\vectheta) \,.
+    \nabla^2_\theta \ln|\vectheta - \vectheta'|
+    \;=\; 2\pi\,\delta^{(2)}(\vectheta - \vectheta') \,,
+    \label{eq:green_2d}
+\end{equation}
+which we prove in two steps.
+
+\textit{Step 1: $\nabla^2 \ln r = 0$ for $r \neq 0$.}
+In polar coordinates centered at $\vectheta'$, let $r = |\vectheta -
+\vectheta'|$ and write $\nabla^2 = (1/r)\partial_r(r\,\partial_r) +
+(1/r^2)\partial_\phi^2$.  Then
+$\partial_r(\ln r) = 1/r$ and
+$\nabla^2(\ln r) = (1/r)\partial_r(r\cdot 1/r) = (1/r)\partial_r(1)
+= 0$ for $r > 0$.
+
+\textit{Step 2: the integrated strength is $2\pi$.}
+For any disk $D_a$ of radius $a$ centered at $\vectheta'$, the
+divergence theorem gives
+\begin{equation*}
+    \int_{D_a}\nabla^2 \ln r\,d^2\theta
+    \;=\; \oint_{\partial D_a} \nabla(\ln r)\cdot\hat{n}\,d\ell
+    \;=\; \oint_{r=a}\!\!\frac{1}{r}\Bigg|_{r=a}\!a\,d\phi
+    \;=\; 2\pi.
+\end{equation*}
+Combined with step 1, $\nabla^2(\ln r)$ is a distribution supported
+at the origin with total weight $2\pi$, i.e.\
+eq.~\eqref{eq:green_2d}.
+
+Differentiating eq.~\eqref{eq:lensing_potential} under the integral
+sign and substituting eq.~\eqref{eq:green_2d}:
+\begin{equation}
+    \nabla^2_\theta\, \psiL
+    \;=\; \frac{1}{\pi}\!\int \kappab(\vectheta')\,
+        2\pi\,\delta^{(2)}(\vectheta - \vectheta')\,d^2\theta'
+    \;=\; 2\,\kappab(\vectheta) \,.
     \label{eq:poisson_derivation}
 \end{equation}
-Equation~\eqref{eq:poisson_2d} is a fundamental relation: it connects
-the lensing potential (a ``smooth'' quantity that can be differentiated)
-to the convergence (a ``physical'' quantity related to the surface mass
-density).  Equivalently, one can derive this directly from the definitions:
-since $\vecalpha = \nabla\psiL$ (eq.~\ref{eq:alpha_grad_psi}) and
-$\kappab = \Sigma/\Sigmacr = \frac{1}{2}\nabla\cdot\vecalpha$
-(from the deflection angle integral, Narayan \& Bartelmann eq.~18;
-Congdon \& Keeton eq.~4.16), it follows immediately that
-$\frac{1}{2}\nabla^2\psiL = \frac{1}{2}\nabla\cdot(\nabla\psiL)
-= \frac{1}{2}\nabla\cdot\vecalpha = \kappab$,
-recovering $\nabla^2\psiL = 2\kappab$.
-This is the lensing analog of Poisson's equation in
-Newtonian gravity.  The relation is verified symbolically in
-\mathlink{05_Magnification_Convergence_Shear/lensing_potential.wl}{lensing\_potential.wl}.
+Equivalently, one can bypass eq.~\eqref{eq:green_2d} entirely using
+$\vecalpha = \nabla\psiL$ (eq.~\ref{eq:alpha_grad_psi}) and
+$\kappab = \frac{1}{2}\nabla\cdot\vecalpha$ (Narayan \& Bartelmann
+eq.~18; Congdon \& Keeton eq.~4.16):
+$\frac{1}{2}\nabla^2\psiL = \frac{1}{2}\nabla\cdot(\nabla\psiL) =
+\frac{1}{2}\nabla\cdot\vecalpha = \kappab$.
+Both routes are verified symbolically in
+\mathlink{05_Magnification_Convergence_Shear/lensing_potential.wl}{lensing\_potential.wl}
+(direct convolution for the point-mass and uniform-disk convergence).
 
 
 % =====================================================================
@@ -230,22 +254,53 @@ The shear describes the \textit{anisotropic distortion} of images ---
 the stretching in one direction and compression in the perpendicular
 direction.
 
-\begin{definition}
-The two components of the \textbf{shear} are defined in terms of
-the second derivatives of the lensing potential
-(Narayan \& Bartelmann eq.~17; Congdon \& Keeton eq.~4.21):
+The specific combinations that define $\gamma_1$ and $\gamma_2$ are
+forced by a clean geometric argument.  The Hessian of the lensing
+potential,
+\begin{equation*}
+    H_{ij} \;\equiv\; \frac{\partial^2 \psiL}{\partial\theta_i\,\partial\theta_j} \,,
+\end{equation*}
+is a $2{\times}2$ real symmetric matrix --- three independent
+components.  Every such matrix decomposes uniquely into a trace piece
+(proportional to the identity) plus a traceless symmetric piece:
+\begin{equation}
+    H \;=\; \frac{\operatorname{tr}H}{2}\,\mathbb{I} + H^{\mathrm{TF}},
+    \qquad
+    H^{\mathrm{TF}} = \begin{pmatrix}
+        \tfrac{1}{2}(H_{11}-H_{22}) & H_{12} \\
+        H_{12} & -\tfrac{1}{2}(H_{11}-H_{22})
+    \end{pmatrix}.
+    \label{eq:hessian_decomp}
+\end{equation}
+The trace part is the isotropic convergence
+$\tfrac{1}{2}\operatorname{tr}H = \kappab$
+(eq.~\ref{eq:kappa_from_psi}); the traceless part is the shear.
+Its two independent entries are named
 \begin{equation}
     \boxed{
-    \gamma_1(\vectheta) = \frac{1}{2}\left(
+    \gamma_1(\vectheta) = \frac{1}{2}\!\left(
     \frac{\partial^2 \psiL}{\partial\theta_1^2}
     - \frac{\partial^2 \psiL}{\partial\theta_2^2}\right) ,
     \qquad
     \gamma_2(\vectheta)
-    = \frac{\partial^2 \psiL}{\partial\theta_1\,\partial\theta_2}
-    }
+    = \frac{\partial^2 \psiL}{\partial\theta_1\,\partial\theta_2} \,,}
     \label{eq:shear_components}
 \end{equation}
-\end{definition}
+so that the Hessian itself reads
+$H = \bigl((\kappab + \gamma_1)\;\,\gamma_2;\,\gamma_2\;\,(\kappab -
+\gamma_1)\bigr)$.  Under a rotation of the $\vectheta$-axes by angle
+$\phi$, $H^{\mathrm{TF}}$ transforms as a rank-2 symmetric tensor
+whose traceless part carries \emph{two} powers of $e^{\pm i\phi}$.
+Forming the complex shear $\gamma \equiv \gamma_1 + i\gamma_2$,
+\begin{equation}
+    \gamma \;\longrightarrow\; e^{-2i\phi}\,\gamma \,,
+    \label{eq:shear_spin2}
+\end{equation}
+which is the spin-2 transformation law --- the reason the shear has a
+$180^\circ$ (not $360^\circ$) rotational symmetry.  The decomposition
+\eqref{eq:hessian_decomp} and the transformation law
+\eqref{eq:shear_spin2} are verified symbolically in
+\texttt{lensing\_potential.wl}.
 
 The shear magnitude and the complex shear are:
 \begin{equation}
