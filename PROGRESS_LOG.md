@@ -259,3 +259,39 @@ derivations, each accompanied by symbolic Mathematica verification.
 - **Student edition: 208 pages** (no change — inserts fit on existing pages)
 - **Instructor edition: 254 pages** (no change)
 - All Mathematica scripts pass.
+
+---
+
+## 2026-04-23 — Tier 3: Polish derivations (Modules 4, 7, 8)
+
+### Module 4 (Lens Equation)
+- **Σ_cr derivation.** Short physical argument: a uniform disk of
+  constant Σ has α(θ) = θ precisely when Σ = Σ_cr = c² D_s /
+  (4π G D_d D_ds), derived from α̂ = 4G M_{2D}/(c² ξ) with
+  M_{2D} = π ξ² Σ.
+
+### Module 7 (Axisymmetric Models)
+- **SIS enclosed-mass integral made explicit.** Showed
+  ∫₀^ξ Σ(ξ′)ξ′ dξ′ = πσ_v²ξ/G in one step from Σ(ξ) =
+  σ_v²/(2Gξ), and backed up Σ with its one-line projection from
+  the 3D isothermal ρ.
+- **NIS deflection integral.** Derived α(θ) = θ_E[√(θ² + θ_c²) −
+  θ_c]/θ directly from (2/θ) ∫₀^θ κ(θ′)θ′ dθ′ using the
+  antiderivative d/dθ′√(θ′² + θ_c²) = θ′/√(θ′² + θ_c²).
+
+### Module 8 (Elliptical Models)
+- **SIS + external-shear critical curve from det A = 0.** Derivation
+  in polar coordinates gives det A = (1 − γ²) − u(1 − γ cos 2φ) with
+  u = θ_E/|θ|, hence θ_crit(φ) = θ_E(1 − γ cos 2φ)/(1 − γ²).
+
+### Bug fixed along the way
+- The LaTeX boxed formula for θ_crit(φ) had an erroneous
+  "−2 γ cos 2φ" in the denominator (the Mathematica script
+  `critical_curves_caustics.wl` was already correct). Mathematica
+  substitution of the book formula into det A returned
+  2γ cos 2φ ≠ 0, confirming the typo. Fixed.
+
+### Page counts after Tier 3
+- **Student edition: 208 pages**
+- **Instructor edition: 254 pages**
+- All 12 master-verification tests still pass.

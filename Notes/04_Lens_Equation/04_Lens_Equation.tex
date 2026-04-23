@@ -287,24 +287,40 @@ total deflection as the integral over the lens plane.
 \section{Critical Surface Mass Density}
 \label{sec:critical_density}
 
-The lens equation~\eqref{eq:lens_equation} contains the combination
-$(\Dds / \Ds)\, (4\Gnewton / \speedoflight^2)\, \Dd$, which defines a
-natural scale for the surface mass density.  We define the
-\textbf{critical surface mass density}
+There is a natural surface mass density at which the lens is just
+strong enough to bend a ray from the source back to the optical
+axis.  Consider a uniform disk of constant surface mass density
+$\Sigma$, and ask what $\Sigma$ is required for the disk to act as
+a perfect focusing lens for a source at infinity, i.e., $\alpha(\theta)
+= \theta$ for every $\theta$ inside the disk.
+
+For a uniform disk the two-dimensional enclosed mass within
+$\xi = \Dd\theta$ is $M_{\mathrm{2D}}(\xi) = \pi\xi^2\Sigma$, so
+the physical deflection
+$\alphahat = 4\Gnewton M_{\mathrm{2D}}/(\speedoflight^2\xi)
+= 4\pi\Gnewton\Sigma\,\xi/\speedoflight^2$.
+Converting to the reduced deflection via
+$\vecalpha = (\Dds/\Ds)\,\alphahat$ and $\xi = \Dd\theta$:
+\begin{equation*}
+    \alpha(\theta) \;=\; \frac{\Dds}{\Ds}\cdot
+        \frac{4\pi\Gnewton\Sigma\,\Dd\,\theta}{\speedoflight^2}.
+\end{equation*}
+The focusing condition $\alpha(\theta) = \theta$ removes the factor
+of $\theta$ and gives $\Sigma = \Sigmacr$ with
 (Congdon \& Keeton eq.~4.10; Narayan \& Bartelmann eq.~13):
 \begin{equation}
     \boxed{
     \Sigmacr = \frac{\speedoflight^2}{4\pi \Gnewton}
-    \frac{\Ds}{\Dd\, \Dds}
-    }
+    \,\frac{\Ds}{\Dd\, \Dds} \,.}
     \label{eq:sigma_cr}
 \end{equation}
 
 \begin{remark}
-The factor of $\pi$ in $\Sigmacr$ is conventional and arises from
-the two-dimensional Poisson equation $\nabla^2 \psiL = 2\kappab$
-(which we will encounter in Module~5), where the Laplacian of the
-lensing potential equals twice the convergence.
+The factor of $4\pi$ traces to the 2D Poisson equation
+$\nabla^2\psiL = 2\kappab$ (Module~5): the $4\pi$ in
+eq.~\eqref{eq:sigma_cr} is the product of $4G/c^2$ (from the deflection
+formula) and the $\pi$ that converts the uniform-disk enclosed mass to
+the line-averaged surface density.
 \end{remark}
 
 The \textbf{convergence} is then the dimensionless ratio of the actual

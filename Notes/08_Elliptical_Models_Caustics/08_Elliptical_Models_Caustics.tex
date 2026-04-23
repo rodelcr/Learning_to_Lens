@@ -160,19 +160,34 @@ position-dependent.
 
 \subsection{Critical Curves}
 
-The critical curves are defined by $\det\Amat = 0$.  For the
-SIS + shear model, the condition becomes (working in polar
-coordinates $\theta_1 = \theta\cos\phi$,
-$\theta_2 = \theta\sin\phi$):
+The critical curves are defined by $\det\Amat = 0$.  Start from the
+Hessian of the SIS$+$shear potential
+$\psiL = \thetaE|\vectheta| + \tfrac{1}{2}\gamma_{\mathrm{ext}}(\theta_1^2 - \theta_2^2)$
+and let $u = \thetaE/|\vectheta|$, $g = \gamma_{\mathrm{ext}}$.  In
+polar coordinates $(\theta_1,\theta_2) = (|\vectheta|\cos\phi,
+|\vectheta|\sin\phi)$ the Jacobian entries are
+\begin{equation*}
+    \Amat_{11} = 1 - g - u\sin^2\phi,
+    \quad
+    \Amat_{22} = 1 + g - u\cos^2\phi,
+    \quad
+    \Amat_{12} = \Amat_{21} = u\sin\phi\cos\phi,
+\end{equation*}
+and a short expansion gives
+\begin{equation*}
+    \det\Amat \;=\; (1-g^2) - u\,(1 - g\cos 2\phi).
+\end{equation*}
+Setting $\det\Amat = 0$ yields the critical curve:
 \begin{equation}
     \boxed{
     \theta_{\mathrm{crit}}(\phi)
-    = \frac{\thetaE}{1 - \gamma_{\mathrm{ext}}^2
-    - 2\,\gamma_{\mathrm{ext}}\cos 2\phi}
-    \cdot (1 - \gamma_{\mathrm{ext}}\cos 2\phi)
+    \;=\; \thetaE\,
+        \frac{1 - \gamma_{\mathrm{ext}}\cos 2\phi}{1 - \gamma_{\mathrm{ext}}^2} \,.
     }
     \label{eq:crit_sis_shear}
 \end{equation}
+The derivation is verified symbolically in
+\mathlink{08_Elliptical_Models_Caustics/critical\_curves\_caustics.wl}{critical\_curves\_caustics.wl}.
 For $\gamma_{\mathrm{ext}} = 0$ this reduces to $\theta = \thetaE$
 (the SIS critical circle).  For $\gamma_{\mathrm{ext}} > 0$, the
 critical curve is an \textbf{ellipse}: elongated along the

@@ -280,9 +280,20 @@ $\xi^{-1}$.
 \subsection{Einstein Radius of the SIS}
 
 The physical deflection angle of the SIS is one of its most remarkable
-properties.  Using the deflection integral
-(eq.~\ref{eq:deflection_integral} from Module~4), or equivalently from
-the enclosed mass $M(\xi) = \pi \sigma_v^2 \xi / \Gnewton$:
+properties.  The enclosed projected mass
+$M_{\mathrm{2D}}(\xi) = \pi\sigma_v^2\xi/\Gnewton$ follows from the
+SIS surface density $\Sigma(\xi) = \sigma_v^2/(2\Gnewton\xi)$ by a
+one-line integral,
+\begin{equation*}
+    M_{\mathrm{2D}}(\xi)
+    \;=\; 2\pi\!\int_0^\xi\!\Sigma(\xi')\,\xi'\,d\xi'
+    \;=\; 2\pi\cdot\frac{\sigma_v^2}{2\Gnewton}\!\int_0^\xi\!d\xi'
+    \;=\; \frac{\pi\sigma_v^2\xi}{\Gnewton}\,,
+\end{equation*}
+and $\Sigma(\xi)$ itself follows from
+$\int_{-\infty}^{\infty}\!(\sigma_v^2/(2\pi\Gnewton))/(\xi^2+z^2)\,dz
+= \sigma_v^2/(2\Gnewton\xi)$.  Substituting into the axisymmetric
+deflection formula (eq.~\ref{eq:deflection_integral} from Module~4):
 \begin{equation}
     \boxed{
     \alphahat = \frac{4\pi\sigma_v^2}{\speedoflight^2}
@@ -502,7 +513,18 @@ $\theta_c < \thetaE / 2$.
 
 \subsection{Deflection Angle of the NIS}
 
-The enclosed mass integral gives:
+The axisymmetric formula $\alpha(\theta) = (2/\theta)\int_0^\theta
+\kappab(\theta')\,\theta'\,d\theta'$ reduces to an elementary
+integral once we substitute eq.~\eqref{eq:nis_kappa}:
+\begin{equation*}
+    \alpha(\theta)
+    \;=\; \frac{2}{\theta}\int_0^\theta
+        \frac{\thetaE}{2\sqrt{{\theta'}^2+\theta_c^2}}\,\theta'\,d\theta'
+    \;=\; \frac{\thetaE}{\theta}\bigl[\sqrt{{\theta'}^2+\theta_c^2}\bigr]_0^\theta,
+\end{equation*}
+where the antiderivative follows from
+$d/d\theta'\sqrt{{\theta'}^2+\theta_c^2} = \theta'/\sqrt{{\theta'}^2+\theta_c^2}$.
+Evaluating the limits,
 \begin{equation}
     \alpha(\theta) = \thetaE\,
     \frac{\sqrt{\theta^2 + \theta_c^2} - \theta_c}{\theta} \,.
@@ -510,11 +532,13 @@ The enclosed mass integral gives:
 \end{equation}
 In the limit $\theta_c \to 0$:
 \begin{equation}
-    \alpha(\theta) \to \thetaE\,
-    \frac{\theta - 0}{\theta} = \thetaE \,,
+    \alpha(\theta) \;\to\; \thetaE\,\frac{\theta - 0}{\theta}
+    \;=\; \thetaE \,,
     \label{eq:nis_alpha_limit}
 \end{equation}
-recovering the constant SIS deflection angle.
+recovering the constant SIS deflection angle.  The integral and the
+SIS limit are checked symbolically in
+\mathlink{07_Axisymmetric_Models/axisymmetric\_models.wl}{axisymmetric\_models.wl}.
 
 \subsection{Effect of the Core Radius on Image Multiplicity}
 
