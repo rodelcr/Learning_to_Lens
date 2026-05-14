@@ -69,8 +69,11 @@ gNFW[x_?NumericQ] := Which[
 ];
 
 kappaNFW[x_, ks_] := ks * fNFW[x];
-kbarNFW[x_, ks_] := 4 ks / x^2 * (Log[x/2] + gNFW[x]);
-alphaNFW[x_, ks_, thetas_] := 4 ks * thetas / x * (Log[x/2] + gNFW[x]);
+(* Factor-of-2 (not 4) matches the kappa_s = 2 rho_s r_s/Sigma_cr convention used
+   in Notes/10/eq:cl_nfw_alpha and Notes/07/eq:nfw_alpha (Module 7 NFW projection).
+   With this convention the cluster_lensing.wl Section 1 definitions agree. *)
+kbarNFW[x_, ks_] := 2 ks / x^2 * (Log[x/2] + gNFW[x]);
+alphaNFW[x_, ks_, thetas_] := 2 ks * thetas / x * (Log[x/2] + gNFW[x]);
 gammaNFW[x_, ks_] := kbarNFW[x, ks] - kappaNFW[x, ks];
 
 (* NFW parameter computation *)
@@ -155,7 +158,8 @@ Do[
             thetaR = Sqrt[th1^2 + th2^2];
             If[thetaR > 0.1,
                 xVal = thetaR / ts1arcsec;
-                alphaR = 4 ks1 * ts1arcsec / xVal * (Log[xVal/2] + gNFW[xVal]);
+                (* Factor 2 (not 4) — see kappa_s convention note above. *)
+                alphaR = 2 ks1 * ts1arcsec / xVal * (Log[xVal/2] + gNFW[xVal]);
                 ratio = alphaR / thetaR;
                 b1 = th1 * (1 - ratio);
                 b2 = th2 * (1 - ratio);

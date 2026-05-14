@@ -193,12 +193,12 @@ Print["  i.e., r = 3GM/c^2 = 3Rs/2\n"];
 (* Check stability: second derivative at r = 3 *)
 d2Vphoton = D[Veff[r, L, 0], {r, 2}] /. r -> 3 // Simplify;
 Print["  d^2V/dr^2 at r = 3: ", d2Vphoton];
-Print["  For L > 0: d^2V/dr^2 = -2L^2/81 < 0"];
+Print["  For L > 0: d^2V/dr^2 = -L^2/81 < 0"];
 Print["  => V_eff has a MAXIMUM at r = 3 => UNSTABLE circular orbit\n"];
 
 Print["Physical interpretation:"];
 Print["  A photon placed exactly at r = 3GM/c^2 will orbit the black hole,"];
-Print["  but any perturbation will cause it to either:");
+Print["  but any perturbation will cause it to either:"];
 Print["    - spiral inward and fall into the black hole, or"];
 Print["    - escape to infinity."];
 Print["  This is the 'photon sphere' observed by the Event Horizon Telescope."];

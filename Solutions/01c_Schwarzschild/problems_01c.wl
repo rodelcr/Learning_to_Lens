@@ -11,7 +11,7 @@
 
    Exercises solved:
      1.1 — Verify R_{mu nu} = 0 for Schwarzschild metric
-     1.2 — Kretschner scalar K = 12 Rs^2/r^6
+     1.2 — Kretschmann scalar K = 12 Rs^2/r^6
      1.3 — Schwarzschild radii for Earth, Sun, galaxy lens
      1.4 — Gravitational redshift from a neutron star surface
      1.5 — Flamm's paraboloid embedding derivation
@@ -146,16 +146,16 @@ Print["-> Schwarzschild is a vacuum solution: VERIFIED\n"];
 
 
 (* =========================================================================
-   Exercise 1.2: Kretschner Scalar
+   Exercise 1.2: Kretschmann Scalar
    =========================================================================
-   The Kretschner scalar is the full contraction of the Riemann tensor:
+   The Kretschmann scalar is the full contraction of the Riemann tensor:
        K = R^{alpha beta gamma delta} R_{alpha beta gamma delta}
    For the Schwarzschild metric: K = 48 M^2 / r^6 = 12 Rs^2 / r^6.
    Key point: K is finite at r = Rs (coordinate singularity) but
    diverges at r = 0 (true curvature singularity).
    ========================================================================= *)
 
-Print["--- Exercise 1.2: Kretschner Scalar ---\n"];
+Print["--- Exercise 1.2: Kretschmann Scalar ---\n"];
 
 (* Lower the first index of Riemann to get R_{alpha beta gamma delta} *)
 (* R_{alpha beta mu nu} = g_{alpha rho} R^rho_{beta mu nu} *)
@@ -182,30 +182,30 @@ riemannUp = Table[
 ];
 
 (* Contract: K = R^{abcd} R_{abcd} *)
-Print["Computing Kretschner scalar K = R^{abcd} R_{abcd}..."];
-kretschner = Simplify[
+Print["Computing Kretschmann scalar K = R^{abcd} R_{abcd}..."];
+kretschmann = Simplify[
     Sum[riemannUp[[a, b, c, d]] riemannDown[[a, b, c, d]],
         {a, 4}, {b, 4}, {c, 4}, {d, 4}]
 ];
 
-Print["  K = ", kretschner];
+Print["  K = ", kretschmann];
 Print[""];
 
 (* Verify against the known result K = 12 Rs^2 / r^6 *)
 kExpected = 12 Rs^2 / r^6;
-kMatch = Simplify[kretschner - kExpected] === 0;
+kMatch = Simplify[kretschmann - kExpected] === 0;
 Print["Expected: K = 12 Rs^2 / r^6"];
 Print["Match? ", kMatch];
 Print[""];
 
 (* Check behavior at r = Rs (should be finite) *)
-kAtHorizon = kretschner /. r -> Rs;
+kAtHorizon = kretschmann /. r -> Rs;
 Print["At the horizon (r = Rs):"];
 Print["  K(r=Rs) = ", Simplify[kAtHorizon]];
 Print["  = 12/Rs^4 (FINITE — the horizon is a coordinate singularity, not physical)\n"];
 
 (* Check behavior at r -> 0 (should diverge) *)
-kLimit0 = Limit[kretschner, r -> 0, Direction -> "FromAbove"];
+kLimit0 = Limit[kretschmann, r -> 0, Direction -> "FromAbove"];
 Print["As r -> 0:"];
 Print["  K -> ", kLimit0];
 Print["  (DIVERGENT — r = 0 is a true curvature singularity)\n"];

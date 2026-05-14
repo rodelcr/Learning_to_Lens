@@ -157,17 +157,26 @@ Numerical evaluation gives $\Hubble \approx 70$~km/s/Mpc
 (the exact value depends on the precise cosmological distances;
 see \texttt{problems\_09.wl} for the detailed calculation). \checkmark
 
-\textbf{(c)} If the true lens has an unmodeled mass sheet with
-$\kappab_s = 0.05$, then $\lambda = 1 - \kappab_s = 0.95$.  The
-inferred $\Hubble$ is biased:
+\textbf{(c)} If the true lens has an unmodeled positive mass sheet
+with $\kappab_s = 0.05$, then the true MST parameter is
+$\lambda = 1 - \kappab_s = 0.95$.  Recall (Section~9.2,
+eq.~\ref{eq:mst_H0}) that under the MST the model-predicted time
+delay scales as $\Delta t_\lambda = \lambda\,\Delta t$ at fixed
+$\Hubble$, so at \emph{fixed observed} $\Delta t$ the inferred
+$\Hubble$ scales the opposite way:
 \begin{equation*}
-    \Hubble^{\mathrm{inferred}} = \lambda\,\Hubble^{\mathrm{true}}
-    = 0.95\,\Hubble^{\mathrm{true}} \,.
+    \Hubble^{\mathrm{true}} = \lambda\,\Hubble^{\mathrm{naive}}
+    \quad\Longleftrightarrow\quad
+    \Hubble^{\mathrm{naive}} = \Hubble^{\mathrm{true}} / \lambda \,.
 \end{equation*}
-The inferred $\Hubble$ would be 5\% too low.  For a true value of
-$\sim$73~km/s/Mpc, the inferred value would be $\sim$69~km/s/Mpc
---- close to the Planck value.  This illustrates why the MSD is
-central to the Hubble tension discussion. \checkmark
+A naive ($\lambda = 1$) analysis therefore \emph{overestimates}
+$\Hubble$ by $1/\lambda - 1 \approx 5\%$ when the lens actually has a
+$5\%$ positive mass sheet.  For
+$\Hubble^{\mathrm{naive}} \approx 73$~km/s/Mpc, this gives
+$\Hubble^{\mathrm{true}} \approx 69$~km/s/Mpc --- closer to the Planck
+CMB value.  This is the direction in which TDCOSMO has pulled the
+time-delay $\Hubble$ relative to the original H0LiCOW result, and it
+sits squarely in the modern $\Hubble$-tension discussion. \checkmark
 
 % ----- Exercise 9.4 -----
 \subsection*{Exercise~\ref{ex:power_law_profile}: Power-Law Profile}

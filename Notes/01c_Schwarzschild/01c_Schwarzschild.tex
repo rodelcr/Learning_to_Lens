@@ -31,7 +31,7 @@ lensing.
     \item \mathlink{01c_Schwarzschild/schwarzschild_metric.wl}{schwarzschild\_metric.wl}
           --- derive and verify the Schwarzschild metric: compute
           Christoffel symbols, Riemann tensor, verify $R_{\mu\nu} = 0$,
-          and compute the Kretschner scalar
+          and compute the Kretschmann scalar
     \item \mathlink{01c_Schwarzschild/gravitational_redshift.nb}{gravitational\_redshift.nb}
           --- interactive plots of gravitational redshift, time dilation,
           and Flamm's paraboloid embedding diagram
@@ -136,7 +136,7 @@ framework developed in Module~1b.  A freely falling object
 experiences no forces in its local (freely falling) frame --- it
 follows a ``straight line'' through its local Minkowski patch of
 spacetime.  But a straight line in a curved manifold is precisely a
-\textbf{geodesic} (Module~1b, Section~\ref{sec:geodesics}).
+\textbf{geodesic} (Module~1b, Section~\ref{sec:geodesic_equation}).
 
 Therefore, the equivalence principle implies that \textit{freely
 falling particles follow geodesics of the spacetime metric}.  This
@@ -376,15 +376,15 @@ the metric is regular at $r = R_S$.  However, $r = R_S$ is the
 \paragraph{$r = 0$ (true singularity).}
 This is a genuine physical singularity where the curvature becomes infinite.
 We can confirm this with a curvature invariant: the
-\textbf{Kretschner scalar}:
+\textbf{Kretschmann scalar}:
 \begin{equation}
     K = R_{\mu\nu\rho\sigma}\, R^{\mu\nu\rho\sigma}
     = \frac{12\, R_S^2}{r^6}
     = \frac{48\, G^2 M^2}{c^4\, r^6} \,.
-    \label{eq:kretschner}
+    \label{eq:kretschmann}
 \end{equation}
 This diverges as $r \to 0$ but is finite at $r = R_S$, confirming that
-only $r = 0$ is a true singularity.  We verify eq.~\eqref{eq:kretschner}
+only $r = 0$ is a true singularity.  We verify eq.~\eqref{eq:kretschmann}
 in \mathlink{01c_Schwarzschild/schwarzschild_metric.wl}{schwarzschild\_metric.wl}.
 
 
@@ -591,13 +591,13 @@ directions equally, hence the name ``isotropic.''
 To first order in $R_S/\rho$ (the weak-field regime $\rho \gg R_S$),
 the isotropic metric reduces to:
 \begin{equation}
-    ds^2 \approx -\left(1 - \frac{R_S}{2\rho}\right) c^2\, dt^2
-    + \left(1 + \frac{R_S}{2\rho}\right)
+    ds^2 \approx -\left(1 - \frac{R_S}{\rho}\right) c^2\, dt^2
+    + \left(1 + \frac{R_S}{\rho}\right)
     \bigl(d\rho^2 + \rho^2\, d\Omega^2\bigr) .
     \label{eq:isotropic_weak_field}
 \end{equation}
-Since $R_S = 2GM/c^2$, we have $R_S/(2\rho) = GM/(\rho\, c^2) =
--\Phi/c^2$ where $\Phi = -GM/\rho$ is the Newtonian potential.
+Since $R_S = 2GM/c^2$, we have $R_S/\rho = 2GM/(\rho\, c^2) =
+-2\Phi/c^2$ where $\Phi = -GM/\rho$ is the Newtonian potential.
 Equation~\eqref{eq:isotropic_weak_field} is therefore:
 \begin{equation}
     ds^2 \approx -\left(1 + \frac{2\Phi}{c^2}\right) c^2\, dt^2
@@ -728,8 +728,8 @@ satisfies $R_{\mu\nu} = 0$.
 \end{exercise}
 
 \begin{exercise}
-\label{ex:kretschner}
-Compute the Kretschner scalar $K = R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma}$
+\label{ex:kretschmann}
+Compute the Kretschmann scalar $K = R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma}$
 for the Schwarzschild metric and show that $K = 12\,R_S^2/r^6$.
 Verify that $K$ is finite at $r = R_S$ but diverges at $r = 0$.
 \end{exercise}

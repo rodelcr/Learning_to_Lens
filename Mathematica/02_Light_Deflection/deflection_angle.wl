@@ -277,16 +277,21 @@ Module[{bval = 6, mval = 1, rmin, phivals, raypath, deflAngle},
         Black, Disk[{0, 0}, 0.3],
         Text[Style["M", 14, Bold], {0, -0.7}],
 
-        (* Incoming ray (from right) *)
+        (* Incoming ray (from right) -- straight, along undeflected
+           trajectory at height y = bval, ending at the start of the
+           curved deflection region near the mass. *)
         {Blue, AbsoluteThickness[2],
-         Arrow[{{15, bval}, {3, bval - 3 * deflAngle}}]},
+         Arrow[{{15, bval}, {3, bval}}]},
 
-        (* Curved path near mass *)
+        (* Curved path near mass.  The Bezier control points sweep
+           monotonically: ray enters at (3, bval), is attracted toward
+           the mass passing closest at ~(1, bval*0.3), then exits at
+           lower right. *)
         {Blue, AbsoluteThickness[2],
-         BezierCurve[{{3, bval - 3 * deflAngle},
-                      {1.5, bval * 0.7},
-                      {1, bval * 0.55},
-                      {1.5, bval * 0.35},
+         BezierCurve[{{3, bval},
+                      {1.8, bval * 0.55},
+                      {1, bval * 0.30},
+                      {1.8, bval * 0.05},
                       {3, bval * 0.1 - 2 * deflAngle}}]},
 
         (* Outgoing ray *)

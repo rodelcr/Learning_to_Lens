@@ -220,7 +220,7 @@ The \textbf{nonvanishing Christoffel symbols} of the RW metric are
     \christoffel{0}{3}{3} = \frac{a\dot{a}\, r^2 \sin^2\!\theta}{\speedoflight^2}
     \label{eq:christoffel_0ij}
 \end{equation}
-and their transposes $\christoffel{i}{0}{i} = \dot{a}/(a\speedoflight^2) \cdot \speedoflight^2 = \dot{a}/a$:
+and their counterparts (mixed time--space, related by the symmetry $\christoffel{\rho}{\mu}{\nu} = \christoffel{\rho}{\nu}{\mu}$):
 \begin{equation}
     \christoffel{1}{0}{1} = \christoffel{2}{0}{2}
     = \christoffel{3}{0}{3} = \frac{\dot{a}}{a}
@@ -829,17 +829,21 @@ distance is:
     }
     \label{eq:Dds_flat}
 \end{equation}
-For a general (non-flat) universe, one uses
-(Congdon \& Keeton eq.~3.127):
+For a general (non-flat) universe one uses the Hogg~(1999) form
+(eq.~19; equivalently Congdon \& Keeton 2018):
 \begin{equation}
-    \Dds = \frac{1}{1+z_s}\left[
-    S_k(\chi_s)\sqrt{1 - k\,S_k^2(\chi_d)/(S_k(\chi_d))^2}
-    - \text{(symmetric term)}
-    \right]
+    \Dds = \frac{1}{1+z_s}\!\left[
+    D_M(z_s)\sqrt{1 + \Omega_k\,D_M^2(z_d)/D_H^2}
+    - D_M(z_d)\sqrt{1 + \Omega_k\,D_M^2(z_s)/D_H^2}
+    \right]\!,
     \label{eq:Dds_general}
 \end{equation}
-but for the spatially flat case ($k = 0$), eq.~\eqref{eq:Dds_flat} is
-exact and sufficient.
+where $D_M(z) = (1+z)\,D_A(z)$ is the transverse comoving distance,
+$D_H = \speedoflight/\Hubble$ is the Hubble distance, and
+$\Omega_k = -k\,(\speedoflight/(\Hubble R_0))^2$ is the curvature density
+parameter.  For the spatially flat case ($\Omega_k = 0$),
+eq.~\eqref{eq:Dds_general} reduces to eq.~\eqref{eq:Dds_flat}, which is
+exact and sufficient for the rest of these notes.
 
 \begin{remark}
 A common mistake is to write $\Dds = \Ds - \Dd$.  This is \textbf{wrong}
@@ -847,8 +851,8 @@ in general.  Even in a flat universe, $\Dds \neq \Ds - \Dd$ because the
 factors of $(1+z)$ are different.  One must always compute $\Dds$ using
 eq.~\eqref{eq:Dds_flat} (or its curved-space generalization).  To
 illustrate: for $z_d = 0.5$ and $z_s = 2.0$ in the concordance
-cosmology, $\Dd = 1260$~Mpc, $\Ds = 1740$~Mpc, but $\Dds = 1450$~Mpc
-$\neq \Ds - \Dd = 480$~Mpc.
+cosmology, $\Dd \approx 1259$~Mpc, $\Ds \approx 1727$~Mpc, but
+$\Dds \approx 1097$~Mpc $\neq \Ds - \Dd \approx 468$~Mpc.
 \end{remark}
 
 

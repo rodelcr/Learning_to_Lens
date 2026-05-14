@@ -297,7 +297,10 @@ arcImages = Table[
                 thetaR = Sqrt[th1^2 + th2^2];
                 If[thetaR > 0.1,
                     xVal = thetaR / ts1arcsec;
-                    alphaR = 4 ks1 * ts1arcsec / xVal * (Log[xVal/2] + gNFW[xVal]);
+                    (* Factor-of-2 (not 4) is consistent with the kappa_s = 2 rho_s r_s/Sigma_cr
+                       convention used elsewhere in this file (alphaNFW defined in Section 1)
+                       and with Notes/10/eq:cl_nfw_alpha and Module 7 (eq:nfw_alpha). *)
+                    alphaR = 2 ks1 * ts1arcsec / xVal * (Log[xVal/2] + gNFW[xVal]);
                     ratio = alphaR / thetaR;
                     b1 = th1 * (1 - ratio);
                     b2 = th2 * (1 - ratio);

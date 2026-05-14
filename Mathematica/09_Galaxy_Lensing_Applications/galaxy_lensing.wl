@@ -230,10 +230,12 @@ Print[""];
 
 (* Time delay scaling *)
 Print["Time delay scaling under MST:"];
-Print["  Delta_t_lambda = lambda * Delta_t"];
-Print["  H0_inferred = lambda * H0_true"];
+Print["  Delta_t_lambda(model) = lambda * Delta_t(no-sheet)  (at fixed H0)"];
+Print["  At fixed observed Delta_t, H0_true = lambda * H0_naive,"];
+Print["  i.e. H0_naive = H0_true / lambda.  Unmodeled positive sheet"];
+Print["  (lambda < 1) makes the naive analysis OVERESTIMATE H0."];
 Print["  For lambda = 0.95 (kappa_s = 0.05):"];
-Print["    H0_inferred/H0_true = 0.95 => 5% bias\n"];
+Print["    H0_true / H0_naive = 0.95 => naive H0 is ~5% too high\n"];
 
 
 (* =========================================================================
@@ -621,20 +623,25 @@ Module[{gammaVals, colors, fig3},
 ];
 
 
-(* ---- Figure 4: H0 from Time Delays --- Effect of MSD ---- *)
+(* ---- Figure 4: H0 from Time Delays --- Effect of MSD ----
+   Left panel: with the H0LiCOW (no-sheet) naive value fixed at 73.3,
+   the true H0 under an MST of parameter lambda is H0_true = lambda * 73.3.
+   For lambda < 1 (unmodeled positive sheet), H0_true shifts DOWN toward
+   the Planck value. *)
 Module[{fig4},
     fig4 = GraphicsRow[{
-        (* Left: H0 inferred vs lambda *)
+        (* Left: true H0 vs lambda, holding naive H0 = 73.3 *)
         Plot[lambda * 73.3, {lambda, 0.8, 1.2},
             PlotStyle -> {Blue, AbsoluteThickness[2]},
             Frame -> True,
             FrameLabel -> {
                 Style["\[Lambda]", 13],
-                Style[Row[{Subscript["H", "0"],
+                Style[Row[{Subscript["H", "0"]^"true",
                     " (km/s/Mpc)"}], 13]
             },
-            PlotLabel -> Style[Row[{Superscript["H", "inferred"], " = \[Lambda] ",
-                Superscript["H", "true"]}], 13],
+            PlotLabel -> Style[Row[{Subscript["H", "0"]^"true",
+                " = \[Lambda] \[CenterDot] ",
+                Subscript["H", "0"]^"naive"}], 13],
             PlotRange -> {{0.8, 1.2}, {55, 95}},
             ImageSize -> 300,
             Epilog -> {
@@ -644,23 +651,25 @@ Module[{fig4},
                 (* SH0ES band *)
                 {LightRed, Opacity[0.5],
                  Rectangle[{0.75, 72.0}, {1.25, 74.0}]},
-                (* H0LiCOW point *)
+                (* H0LiCOW naive point (lambda = 1) *)
                 {Red, PointSize[0.02], Point[{1.0, 73.3}]},
                 (* Labels *)
                 Text[Style["Planck", 9, Blue],
                     {1.15, 67.4}],
-                Text[Style["H0LiCOW", 9, Red],
-                    {1.12, 73.3}],
+                Text[Style["H0LiCOW (naive)", 9, Red],
+                    {1.05, 75.5}],
                 (* Lambda = 1 line *)
                 {Gray, Dashed, AbsoluteThickness[1],
                  InfiniteLine[{{1, 0}, {1, 100}}]}
             }
         ],
 
-        (* Right: Time delay vs H0 *)
+        (* Right: Time delay vs H0 — at a fixed lambda, Delta_t at given H0
+           scales as lambda (model-predicted), so the lambda=0.95 curve sits
+           BELOW the lambda=1 curve. *)
         Plot[{
-            80.0 * (70.0 / h0),    (* Delta_t scales as 1/H0 *)
-            80.0 * (70.0 / h0) * 0.95  (* with lambda = 0.95 *)
+            80.0 * (70.0 / h0),         (* lambda = 1 *)
+            0.95 * 80.0 * (70.0 / h0)   (* lambda = 0.95 (with sheet) *)
         }, {h0, 60, 85},
             PlotStyle -> {
                 {Blue, AbsoluteThickness[2]},

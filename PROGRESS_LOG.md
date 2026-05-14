@@ -4,6 +4,63 @@ Timestamped record of major milestones and work completed.
 
 ---
 
+## 2026-05-14 — Pre-expert-review audit pass
+
+Triggered by spotting that Fig 8.1 (`lensing_geometry.pdf`) had its θ-arc on
+the wrong side of the optical axis. Expanded into a full audit of all 14
+modules — figures + prose + solutions — using 5 parallel agents (one per
+module cluster).
+
+**Outcome:** 17 trivial fixes applied directly, ~20 substantive findings
+flagged for review. Full per-finding catalog with file:line locations in
+`HANDOFF_audit_2026-05-14.md`. Master verification still passes 12/12.
+
+Headline corrections (all clear-cut, no judgment calls):
+
+- **Fig 8.1 / Module 4** — θ-arc range in `lens_equation.wl` was
+  `{Pi/2-0.01, Pi/2+ArcTan[1.5/5]}` (drew left of optical axis). Now
+  `{Pi/2-ArcTan[1.5/5], Pi/2}` (opens right toward the image).
+- **Modules 3 ↔ 4 canonical example inconsistency**: same M=10¹²M☉,
+  z_d=0.3, z_s=1 gave 2.4″ in Mod 3 (correct) and 1.1″ in Mod 4 (wrong,
+  used inflated distances 900/1700/1200). Now uniformly 2.4″ everywhere
+  with 919/1652/1055 Mpc.
+- **Module 9 MST H₀ sign reversed** vs Birrer+2020 standard. Was
+  $H_0^{\rm inferred} = \lambda H_0^{\rm true}$; correct is
+  $H_0^{\rm true} = \lambda H_0^{\rm naive}$, so unmodeled positive
+  sheet (λ<1) makes the *naive* analysis *overestimate* H₀. Fixed in
+  `09.tex`, `09_Solutions.tex`, `galaxy_lensing.wl` (incl. figure
+  labels), `problems_09.wl`.
+- **Module 10 Ex 10.1 was internally wrong throughout**: ρ_crit value
+  below ρ_crit,0 (impossible), kbar equation had factor 4 not 2, θ_E
+  ≈ 27″ instead of 7.4″, M(θ_E) ≈ 1.4e14 instead of 7.5e12. Recomputed
+  from corrected `problems_10.wl`.
+- **Module 8 SIE orientation text WRONG**: claimed critical curve /
+  caustic perpendicular to mass major axis; both math and figures show
+  *along*. Fixed in three places.
+- **Module 6 Burke's theorem claim about point mass WRONG**: theorem
+  needs smooth Σ, doesn't apply to a δ-function point mass. Rewrote to
+  say so explicitly.
+- **Module 6 Exercise 6.4 numerics gave unphysical H₀ ≈ 220 km/s/Mpc**.
+  Changed Δt = 420 d → 100 d, τ_diff = 25 → 2 arcsec². Now H₀ ≈ 73
+  consistent with H0LiCOW.
+- **Modules 1c, 1d** — Kretschmann spelling, isotropic weak-field
+  factor-of-2, perihelion-precession 1/c², ISCO V_eff numerics.
+- **Module 5** — shear field figure was drawing radial sticks instead
+  of tangential (a stray `+ Pi/2`).
+- **Module 8** — "cusp configuration" example moved from β=(0.15,0) to
+  β=(0.25,0) so the figure actually shows a cusp triplet (cusp on
+  β_1-axis for q=0.7 is at 0.265, so 0.15 was inside the caustic = a
+  quad).
+
+All affected figures regenerated; both PDFs rebuilt. Substantive findings
+needing physics judgment (Module 5 Sol 5.4(c) signed-magnification
+argument; Module 8 SIS+shear caustic formula in solutions; Module 8
+`magnification_map_sie.pdf` orientation; widespread `<>` rendering
+artifacts; Kerr ergosphere inner bound; Module 3 Ex 3.5(d)
+self-contradiction; etc.) catalogued in HANDOFF for Rodrigo's review.
+
+---
+
 ## 2026-03-19 — Project Initialization
 
 - Created repository structure: `Notes/`, `Mathematica/`, `Solutions/`, `Figures/` with subdirectories for all 13 modules (1a–1d, 2–10)

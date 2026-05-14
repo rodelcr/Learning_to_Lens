@@ -282,21 +282,23 @@ Module[{zd = 0.6, zs = 1.5, deltaTDays = 80.0, deltaTauAs2 = 0.64,
     ];
 
     (* Part (c): Effect of mass sheet *)
-    Print["(c) Effect of unmodeled mass sheet:"];
-    Print["    kappa_s = 0.05 => lambda = 1 - kappa_s = 0.95"];
-    Print["    H0_inferred = lambda * H0_true = 0.95 * H0_true"];
-    Module[{H0true, H0inferred},
-        (* Recompute *)
+    Print["(c) Effect of an unmodeled positive mass sheet:"];
+    Print["    Suppose the lens actually has an extra kappa_s = 0.05 sheet"];
+    Print["    so the true model has lambda = 1 - kappa_s = 0.95."];
+    Print["    Relation: H0_true = lambda * H0_naive  (equivalently"];
+    Print["    H0_naive = H0_true / lambda).  An unmodeled positive sheet"];
+    Print["    therefore makes the naive analysis OVERESTIMATE H0."];
+    Module[{H0naive, H0true},
         Module[{dtPredicted},
             dtPredicted = (Ddt * MpcToCm / cLight) * deltaTauRad2;
-            H0true = H0std * dtPredicted / deltaTSec;
-            H0inferred = 0.95 * H0true;
-            Print["    If H0_true = ", NumberForm[H0true, {4, 1}],
-                " km/s/Mpc"];
-            Print["    Then H0_inferred = ", NumberForm[H0inferred, {4, 1}],
-                " km/s/Mpc"];
-            Print["    Bias = ", NumberForm[(1-0.95)*100, {2,0}], "%"];
-            Print["    This shifts H0 toward the Planck value!\n"];
+            H0naive = H0std * dtPredicted / deltaTSec;
+            H0true = 0.95 * H0naive;
+            Print["    H0_naive (from no-sheet fit) = ",
+                NumberForm[H0naive, {4, 1}], " km/s/Mpc"];
+            Print["    H0_true  (with lambda = 0.95)  = ",
+                NumberForm[H0true, {4, 1}], " km/s/Mpc"];
+            Print["    Shift = ", NumberForm[(1-0.95)*100, {2,0}],
+                "% downward -- toward the Planck value.\n"];
         ];
     ];
 ];

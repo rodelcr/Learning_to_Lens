@@ -110,7 +110,7 @@ gammaPL = kbarPowerLaw - A theta^(-n) // Simplify;
 Print["  |gamma| = kbar - kappa = ", gammaPL];
 ratioGL = Simplify[gammaPL / (A theta^(-n)), Assumptions -> 0 < n < 2];
 Print["  |gamma|/kappa = ", ratioGL];
-Print["  Setting |gamma| = kappa: n/(2-n) = 1 => n = 1.");
+Print["  Setting |gamma| = kappa: n/(2-n) = 1 => n = 1."];
 Print["  This is precisely the SIS exponent! VERIFIED\n"];
 
 

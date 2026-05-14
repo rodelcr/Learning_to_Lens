@@ -349,18 +349,20 @@ strong lensing:
 For a typical galaxy lens at $z_d = 0.3$ with a source at $z_s = 1$
 in a flat $\Lambda$CDM cosmology ($\Hubble = 70$~km\,s$^{-1}$\,Mpc$^{-1}$,
 $\Omegam = 0.3$, $\OmegaL = 0.7$), the angular diameter distances are
-approximately $\Dd \approx 900$~Mpc, $\Ds \approx 1700$~Mpc,
-$\Dds \approx 1200$~Mpc.  Substituting into eq.~\eqref{eq:sigma_cr}:
+$\Dd \approx 919$~Mpc, $\Ds \approx 1652$~Mpc,
+$\Dds \approx 1055$~Mpc (computed in
+\mathlink{03_Cosmological_Distances/friedmann_equations.wl}{friedmann\_equations.wl}).
+Substituting into eq.~\eqref{eq:sigma_cr}:
 \begin{equation}
     \Sigmacr \approx \frac{(3 \times 10^{8})^2}{4\pi \times
     6.674 \times 10^{-11}} \times
-    \frac{1700}{900 \times 1200}~\text{Mpc}^{-1}
-    \approx 0.35~\text{g\,cm}^{-2}
-    \approx 1700~\Msun\,\text{pc}^{-2} \,.
+    \frac{1652}{919 \times 1055}~\text{Mpc}^{-1}
+    \approx 0.59~\text{g\,cm}^{-2}
+    \approx 2840~\Msun\,\text{pc}^{-2} \,.
     \label{eq:sigma_cr_numerical}
 \end{equation}
 This is a remarkably low surface mass density --- only about
-$3.5$~kg\,m$^{-2}$.  Nevertheless, typical galaxy and cluster lenses
+$5.9$~kg\,m$^{-2}$.  Nevertheless, typical galaxy and cluster lenses
 can achieve $\Sigma \geq \Sigmacr$ in their central regions, making
 strong lensing possible.  The exact value is computed and verified in
 \mathlink{04_Lens_Equation/lens_equation.wl}{lens\_equation.wl}.
@@ -495,10 +497,10 @@ images, but the magnification is detectable photometrically.
 \medskip
 \noindent\textbf{(b) Galaxy-scale lensing} ($M = 10^{12}\,\Msun$,
 $z_d = 0.3$, $z_s = 1$):
-With $\Dd \approx 900$~Mpc, $\Ds \approx 1700$~Mpc,
-$\Dds \approx 1200$~Mpc:
+With $\Dd \approx 919$~Mpc, $\Ds \approx 1652$~Mpc,
+$\Dds \approx 1055$~Mpc:
 \begin{equation}
-    \thetaE \approx 1.1'' \,.
+    \thetaE \approx 2.4'' \,.
     \label{eq:thetaE_galaxy}
 \end{equation}
 Galaxy-scale Einstein radii are of order \textit{arcseconds} ---
@@ -506,17 +508,23 @@ easily resolved with ground-based telescopes.  This is the regime
 of strong lensing that produces multiple images and arcs.
 
 \medskip
-\noindent\textbf{(c) Cluster-scale lensing} ($M = 10^{15}\,\Msun$,
+\noindent\textbf{(c) Cluster-scale lensing} ($M_{\mathrm{E}} \sim
+2 \times 10^{14}\,\Msun$ inside the Einstein radius,
 $z_d = 0.3$, $z_s = 2$):
-With $\Dd \approx 900$~Mpc, $\Ds \approx 1800$~Mpc,
-$\Dds \approx 1400$~Mpc:
+With $\Dd \approx 919$~Mpc, $\Ds \approx 1727$~Mpc,
+$\Dds \approx 1329$~Mpc, the point-mass formula gives:
 \begin{equation}
-    \thetaE \approx 35'' \,.
+    \thetaE \approx 37'' \,.
     \label{eq:thetaE_cluster}
 \end{equation}
 Cluster-scale Einstein radii are of order \textit{tens of arcseconds},
 producing the spectacular giant arcs observed in massive galaxy
-clusters.
+clusters.  Note that for an extended cluster only the mass
+\emph{within} the Einstein radius enters the point-mass-equivalent
+estimate above; the total virial mass $M_{200} \sim 10^{15}\,\Msun$
+of a typical massive cluster is much larger, but most of it lies
+outside $\thetaE$.  An NFW treatment (Module~10) yields the same
+answer self-consistently.
 
 \medskip
 \noindent

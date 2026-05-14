@@ -217,22 +217,22 @@ Print["    The time delay between them is Delta_t = const * Delta_tau > 0.\n"];
 (* =========================================================================
    Exercise 6.4: Measuring H0 from Time Delays
 
-   Delta_t = 420 days, tau_1 - tau_2 = 25 arcsec^2
+   Delta_t = 100 days, tau_1 - tau_2 = 2.0 arcsec^2
    z_d = 0.3, z_s = 1.0
    ========================================================================= *)
 
 Print["--- Exercise 6.4: Measuring H0 from Time Delays ---\n"];
 
 (* (a) Solve for Dd*Ds/Dds *)
-deltaTobs = 420 * dayToSec;  (* seconds *)
-tauDiff = 25.0;  (* arcsec^2 *)
+deltaTobs = 100 * dayToSec;  (* seconds *)
+tauDiff = 2.0;  (* arcsec^2 *)
 tauDiffRad = tauDiff / radToArcsec^2;  (* convert to rad^2 *)
 zdLens = 0.3;
 zsSource = 1.0;
 
 Print["(a) Given:"];
-Print["    Delta_t = 420 days = ", ScientificForm[deltaTobs, 4], " s"];
-Print["    tau_1 - tau_2 = 25 arcsec^2 = ", ScientificForm[tauDiffRad, 4], " rad^2"];
+Print["    Delta_t = 100 days = ", ScientificForm[deltaTobs, 4], " s"];
+Print["    tau_1 - tau_2 = 2.0 arcsec^2 = ", ScientificForm[tauDiffRad, 4], " rad^2"];
 Print["    z_d = ", zdLens];
 Print[""];
 

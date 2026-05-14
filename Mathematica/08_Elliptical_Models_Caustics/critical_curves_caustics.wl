@@ -494,11 +494,13 @@ Module[{q0 = 0.7, tE0 = 1.0, cc, ca, configs, fig5},
     cc = criticalCurveSIE[tE0, q0];
     ca = causticFromCritical[cc, tE0, q0];
 
-    (* Three configurations *)
+    (* Three configurations.  For q = 0.7 the SIE caustic cusp on the
+       beta_1 axis sits at |beta_1| ~= 0.265 thetaE, so the "Cusp"
+       configuration places the source just inside that cusp. *)
     configs = {
         {"Double", {0.4, 0.0}},
         {"Quad", {0.05, 0.05}},
-        {"Cusp", {0.15, 0.0}}
+        {"Cusp", {0.25, 0.0}}
     };
 
     fig5 = GraphicsRow[

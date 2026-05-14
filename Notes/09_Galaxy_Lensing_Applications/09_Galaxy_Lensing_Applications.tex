@@ -379,30 +379,46 @@ verified symbolically in
 \mathlink{09_Galaxy_Lensing_Applications/galaxy\_lensing.wl}{galaxy\_lensing.wl}.
 
 \paragraph{Time delays.}
-The time delay between images scales as:
+The Fermat-potential difference between images, and therefore the
+model-predicted time delay for a given $\Hubble$, scales as:
 \begin{equation}
     \boxed{
     \Delta t_\lambda = \lambda\,\Delta t
     }
     \label{eq:mst_time_delay}
 \end{equation}
-Time delays are \textit{not} invariant under the MST.  Since
-$\Delta t \propto 1/\Hubble$ (Module~\ref{ch:fermat_time_delays}),
-a mass-sheet transform changes the inferred Hubble constant:
+That is, an MST-transformed model with parameter $\lambda$ produces a
+time delay $\lambda$ times that of the original ($\lambda = 1$) model at
+the same $\Hubble$.  But the observed $\Delta t$ is fixed; to match
+that observation under the transformed model, the inferred
+$\Hubble^{\mathrm{naive}}$ that one computes from a $\lambda = 1$
+(no-sheet) fit and the underlying ``true'' $\Hubble^{\mathrm{true}}$
+that accounts for an actual sheet of parameter $\lambda$ differ by:
 \begin{equation}
     \boxed{
-    \Hubble^{\mathrm{inferred}} = \lambda\,\Hubble^{\mathrm{true}}
+    \Hubble^{\mathrm{true}} \;=\; \lambda\,\Hubble^{\mathrm{naive}}
+    \quad\Longleftrightarrow\quad
+    \Hubble^{\mathrm{naive}} \;=\; \Hubble^{\mathrm{true}} / \lambda \,.
     }
     \label{eq:mst_H0}
 \end{equation}
+With an unmodeled positive mass sheet ($\lambda < 1$), the naive
+analysis therefore \emph{overestimates} $\Hubble$, and including the
+sheet brings the inferred value \emph{downward}.  This is the direction
+in which TDCOSMO has explored \citep{Birrer2020}: relaxing the lens
+profile (equivalently, allowing $\lambda < 1$) shifts the time-delay
+$\Hubble$ from the H0LiCOW value
+$\Hubble \approx 73.3$~km\,s$^{-1}$\,Mpc$^{-1}$ toward the Planck CMB
+value $\Hubble \approx 67.4$~km\,s$^{-1}$\,Mpc$^{-1}$.
 
 \begin{remark}
 The MSD is devastating for time-delay cosmography.  If we model a
 lens and infer $\Hubble$ from the time delay, the answer is
-degenerate with $\lambda$: we could add a mass sheet (or any
-equivalent line-of-sight structure) and get a different $\Hubble$.
-Breaking this degeneracy is the central challenge of modern
-time-delay cosmography.
+degenerate with $\lambda$: any extra convergence (a true mass sheet, or
+unmodeled line-of-sight structure, or a profile that is steeper than
+assumed) reduces $\Hubble^{\mathrm{true}}$ below
+$\Hubble^{\mathrm{naive}}$.  Breaking this degeneracy is the central
+challenge of modern time-delay cosmography.
 \end{remark}
 
 \subsection{Physical Interpretation}

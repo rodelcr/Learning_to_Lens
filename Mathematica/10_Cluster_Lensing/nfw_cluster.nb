@@ -78,7 +78,7 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{"kbarNFW", "[", RowBox[{"x_", ",", "ks_"}], "]"}], ":=",
-   RowBox[{RowBox[{"4", " ", "ks", " ", "/", " ", RowBox[{"x", "^", "2"}]}], " ",
+   RowBox[{RowBox[{"2", " ", "ks", " ", "/", " ", RowBox[{"x", "^", "2"}]}], " ",
     RowBox[{"(", RowBox[{RowBox[{"Log", "[", RowBox[{"x", "/", "2"}], "]"}], "+",
      RowBox[{"gNFW", "[", "x", "]"}]}], ")"}]}]}], ";"}], "\n",
  RowBox[{
@@ -89,7 +89,7 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{"alphaNFWfunc", "[", RowBox[{"x_", ",", "ks_", ",", "thetas_"}], "]"}], ":=",
-   RowBox[{RowBox[{"4", " ", "ks", " ", "thetas", " ", "/", " ", "x"}], " ",
+   RowBox[{RowBox[{"2", " ", "ks", " ", "thetas", " ", "/", " ", "x"}], " ",
     RowBox[{"(", RowBox[{RowBox[{"Log", "[", RowBox[{"x", "/", "2"}], "]"}], "+",
      RowBox[{"gNFW", "[", "x", "]"}]}], ")"}]}]}], ";"}]
  }], "Input"],

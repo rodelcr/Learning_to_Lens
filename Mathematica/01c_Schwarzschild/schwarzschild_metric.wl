@@ -7,7 +7,7 @@
             1. Christoffel symbols for the Schwarzschild metric
             2. Ricci tensor components (verify R_{mu nu} = 0)
             3. Full Riemann tensor
-            4. Kretschner scalar K = R_{abcd} R^{abcd} = 12 Rs^2 / r^6
+            4. Kretschmann scalar K = R_{abcd} R^{abcd} = 12 Rs^2 / r^6
 
    Sources: Carroll Ch. 5 (eqs. 5.1, 5.12--5.14, 5.21)
             Congdon & Keeton Ch. 3.3
@@ -148,7 +148,7 @@ Print["Ricci scalar R = ", ricciScalar];
 Print["  (Should be 0 for a vacuum solution.)\n"];
 
 (* =========================================================================
-   Section 5: Kretschner Scalar K = R_{abcd} R^{abcd}
+   Section 5: Kretschmann Scalar K = R_{abcd} R^{abcd}
 
    This is the simplest curvature invariant that is nonzero for
    Schwarzschild. We expect K = 12 Rs^2 / r^6.
@@ -157,7 +157,7 @@ Print["  (Should be 0 for a vacuum solution.)\n"];
    R^{abcd} = g^{ae} g^{bf} g^{cg} g^{dh} R_{efgh}
    ========================================================================= *)
 
-Print["--- Kretschner Scalar ---\n"];
+Print["--- Kretschmann Scalar ---\n"];
 
 invMetric = Simplify[Inverse[metricSchwarzschild]];
 
@@ -182,18 +182,18 @@ riemannUp = Table[
     {a, 4}, {b, 4}, {c, 4}, {d, 4}
 ];
 
-(* Kretschner scalar: K = R_{abcd} R^{abcd} *)
-kretschner = Simplify[
+(* Kretschmann scalar: K = R_{abcd} R^{abcd} *)
+kretschmann = Simplify[
     Sum[riemannDown[[a, b, c, d]] riemannUp[[a, b, c, d]],
         {a, 4}, {b, 4}, {c, 4}, {d, 4}],
     Assumptions -> {r > Rs, Rs > 0}
 ];
 
-Print["K = R_{abcd} R^{abcd} = ", kretschner];
+Print["K = R_{abcd} R^{abcd} = ", kretschmann];
 Print["Expected: 12 Rs^2 / r^6"];
-Print["Match? ", Simplify[kretschner == 12 Rs^2/r^6, Assumptions -> {r > 0, Rs > 0}]];
+Print["Match? ", Simplify[kretschmann == 12 Rs^2/r^6, Assumptions -> {r > 0, Rs > 0}]];
 Print[""];
-Print["At r = Rs: K = ", Simplify[kretschner /. r -> Rs], "  (finite)"];
+Print["At r = Rs: K = ", Simplify[kretschmann /. r -> Rs], "  (finite)"];
 Print["As r -> 0: K -> infinity  (true singularity)"];
 Print["As r -> inf: K -> 0  (flat spacetime)\n"];
 

@@ -411,7 +411,12 @@ Module[{nGrid = 8, arrows, scale = 0.35},
                 g1 = -(x^2 - y^2)/th^4;
                 g2 = -2 x y / th^4;
                 gMag = Min[1/th^2, 2];
-                gAngle = ArcTan[g1, g2]/2 + Pi/2;
+                (* Shear stick is drawn along the principal stretch
+                   direction phi_gamma, where gamma_1 + i gamma_2 =
+                   |gamma| exp(2 i phi_gamma).  For a point-mass shear
+                   this is perpendicular to the radius, giving the
+                   familiar tangential pattern. *)
+                gAngle = ArcTan[g1, g2]/2;
                 dx = scale * gMag * Cos[gAngle];
                 dy = scale * gMag * Sin[gAngle];
                 {AbsoluteThickness[1.5], Red,

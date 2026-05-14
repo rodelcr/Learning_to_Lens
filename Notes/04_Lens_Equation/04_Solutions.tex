@@ -121,26 +121,27 @@ $\approx 6.6 \times 10^{-5}$~pc $\approx 14$~AU.
 
 \medskip
 \noindent\textbf{(b) Galaxy lensing:}
-$M = 10^{12} \times 1.989 \times 10^{30}$~kg, $\Dd = 900$~Mpc,
-$\Ds = 1700$~Mpc, $\Dds = 1200$~Mpc.
+$M = 10^{12} \times 1.989 \times 10^{30}$~kg, $\Dd = 919$~Mpc,
+$\Ds = 1652$~Mpc, $\Dds = 1055$~Mpc.
 Converting to meters ($1~\text{Mpc} = 3.086 \times 10^{22}$~m):
 \begin{align*}
     \thetaE &= \sqrt{\frac{4 \times 6.674 \times 10^{-11} \times
     1.989 \times 10^{42}}{(2.998 \times 10^8)^2} \times
-    \frac{1200}{900 \times 1700}~\text{Mpc}^{-1}} \\
-    &\approx 5.3 \times 10^{-6}~\text{rad} \approx 1.1'' \,.
+    \frac{1055}{919 \times 1652}~\text{Mpc}^{-1}} \\
+    &\approx 1.15 \times 10^{-5}~\text{rad} \approx 2.4'' \,.
 \end{align*}
-Physical Einstein radius: $\RE = 900 \times 5.3 \times 10^{-6}~\text{Mpc}
-\approx 4.8 \times 10^{-3}$~Mpc $\approx 4.8$~kpc.
+Physical Einstein radius: $\RE = 919 \times 1.15 \times 10^{-5}~\text{Mpc}
+\approx 1.06 \times 10^{-2}$~Mpc $\approx 10.6$~kpc.
 
 \medskip
 \noindent\textbf{(c) Cluster lensing:}
-$M = 10^{15} \times 1.989 \times 10^{30}$~kg, $\Dd = 900$~Mpc,
-$\Ds = 1800$~Mpc, $\Dds = 1400$~Mpc.
+$M_{\mathrm{E}} \sim 2 \times 10^{14} \times 1.989 \times 10^{30}$~kg
+(mass within the Einstein radius for a typical massive cluster),
+$\Dd = 919$~Mpc, $\Ds = 1727$~Mpc, $\Dds = 1329$~Mpc.
 \begin{equation*}
-    \thetaE \approx 1.7 \times 10^{-4}~\text{rad} \approx 35'' \,.
+    \thetaE \approx 1.8 \times 10^{-4}~\text{rad} \approx 37'' \,.
 \end{equation*}
-Physical Einstein radius: $\RE \approx 150$~kpc.
+Physical Einstein radius: $\RE \approx 165$~kpc.
 
 % ----- Exercise 4.4 -----
 \subsection*{Exercise~\ref{ex:sigma_cr_compute}: Critical Surface Mass Density}
@@ -156,28 +157,28 @@ Physical Einstein radius: $\RE \approx 150$~kpc.
 \end{equation*}
 So $\Sigmacr$ has units of mass per area, as required. \checkmark
 
-\textbf{(b)} For the galaxy lens ($\Dd = 900$~Mpc, $\Ds = 1700$~Mpc,
-$\Dds = 1200$~Mpc):
+\textbf{(b)} For the galaxy lens ($\Dd = 919$~Mpc, $\Ds = 1652$~Mpc,
+$\Dds = 1055$~Mpc):
 \begin{equation*}
     \Sigmacr = \frac{(2.998 \times 10^{8})^2}{4\pi \times
     6.674 \times 10^{-11}} \times
-    \frac{1700 \times 3.086 \times 10^{22}}{900 \times 3.086 \times 10^{22}
-    \times 1200 \times 3.086 \times 10^{22}}
-    \approx 3.5~\text{kg\,m}^{-2} \,.
+    \frac{1652 \times 3.086 \times 10^{22}}{919 \times 3.086 \times 10^{22}
+    \times 1055 \times 3.086 \times 10^{22}}
+    \approx 5.9~\text{kg\,m}^{-2} \,.
 \end{equation*}
-Converting: $3.5~\text{kg\,m}^{-2} = 0.35~\text{g\,cm}^{-2}
-\approx 1700~\Msun\,\text{pc}^{-2}$.
+Converting: $5.9~\text{kg\,m}^{-2} = 0.59~\text{g\,cm}^{-2}
+\approx 2840~\Msun\,\text{pc}^{-2}$.
 
-\textbf{(c)} For the cluster lens ($\Dd = 900$~Mpc, $\Ds = 1800$~Mpc,
-$\Dds = 1400$~Mpc):
+\textbf{(c)} For the cluster lens ($\Dd = 919$~Mpc, $\Ds = 1727$~Mpc,
+$\Dds = 1329$~Mpc):
 \begin{equation*}
-    \Sigmacr \approx 3.0~\text{kg\,m}^{-2} = 0.30~\text{g\,cm}^{-2}
-    \approx 1500~\Msun\,\text{pc}^{-2} \,.
+    \Sigmacr \approx 4.9~\text{kg\,m}^{-2} = 0.49~\text{g\,cm}^{-2}
+    \approx 2360~\Msun\,\text{pc}^{-2} \,.
 \end{equation*}
 
 \textbf{(d)} A typical elliptical galaxy with
 $\Sigma_0 \approx 5000~\Msun\,\text{pc}^{-2}$ has
-$\kappab = \Sigma_0/\Sigmacr \approx 5000/1700 \approx 3 > 1$.
+$\kappab = \Sigma_0/\Sigmacr \approx 5000/2840 \approx 1.8 > 1$.
 Yes, it is a strong lens --- the central surface mass density exceeds
 the critical value, enabling the formation of multiple images.
 
@@ -185,7 +186,9 @@ the critical value, enabling the formation of multiple images.
 \subsection*{Exercise~\ref{ex:image_positions_plot}: Image Positions for a Point Mass Lens}
 
 \textbf{(a)} For $\thetaE = 1''$ and $\theta_\pm = (\beta \pm
-\sqrt{\beta^2 + 4})/2$ (in arcseconds):
+\sqrt{\beta^2 + 4})/2$, with $|\mu_\pm| = \tfrac{1}{2}\!\left[\frac{u^2+2}{u\sqrt{u^2+4}}\pm 1\right]$
+and $u = \beta/\thetaE$ (so that $|\mu_+|-|\mu_-|=1$ is exact for all
+$u>0$):
 
 \begin{center}
 \begin{tabular}{rccccc}
@@ -193,11 +196,11 @@ the critical value, enabling the formation of multiple images.
 $\beta$ (arcsec) & $\theta_+$ (arcsec) & $\theta_-$ (arcsec)
 & $\Delta\theta$ (arcsec) & $|\mu_+|$ & $|\mu_-|$ \\
 \midrule
-0.1  & $+1.025$ & $-0.975$ & 2.000 & 5.13 & 4.63 \\
-0.5  & $+1.281$ & $-0.781$ & 2.062 & 1.64 & 0.64 \\
-1.0  & $+1.618$ & $-0.618$ & 2.236 & 1.17 & 0.17 \\
-2.0  & $+2.414$ & $-0.414$ & 2.828 & 1.06 & 0.06 \\
-5.0  & $+5.193$ & $-0.193$ & 5.385 & 1.01 & 0.01 \\
+0.1  & $+1.025$ & $-0.975$ & 2.000 & 5.519 & 4.519 \\
+0.5  & $+1.281$ & $-0.781$ & 2.062 & 1.591 & 0.591 \\
+1.0  & $+1.618$ & $-0.618$ & 2.236 & 1.171 & 0.171 \\
+2.0  & $+2.414$ & $-0.414$ & 2.828 & 1.030 & 0.030 \\
+5.0  & $+5.193$ & $-0.193$ & 5.385 & 1.001 & 0.001 \\
 \bottomrule
 \end{tabular}
 \end{center}

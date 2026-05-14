@@ -313,8 +313,9 @@ Print["Hubble distance: d_H = c/H0 = ", NumberForm[dH, {4, 0}], " Mpc"];
 tH = 1 / H0si / (3.156*^7 * 1*^9);
 Print["Hubble time: t_H = 1/H0 = ", NumberForm[tH, {4, 1}], " Gyr\n"];
 
-(* E(z) = H(z)/H0 for flat LCDM *)
-Efunc[z_, Om_, OL_] := Sqrt[Om (1 + z)^3 + OL];
+(* E(z) = H(z)/H0 -- includes curvature term Ok = 1 - Om - OL *)
+(* (For flat universes Om + OL = 1, the curvature term vanishes.) *)
+Efunc[z_, Om_, OL_] := Sqrt[Om (1 + z)^3 + OL + (1 - Om - OL) (1 + z)^2];
 
 (* Comoving distance (in Mpc) *)
 chiFunc[z_, Om_, OL_] := NIntegrate[
@@ -458,7 +459,7 @@ thetaEStd = Sqrt[4 GN (1*^12 Msolar) / clight^2 *
 thetaEStdArcsec = thetaEStd * 180 * 3600 / Pi;
 Print["  Einstein radius for M = 10^12 Msun:"];
 Print["  theta_E = ", NumberForm[thetaEStdArcsec, {3, 2}], " arcsec"];
-Print["  Expected: ~1 arcsec  -- VERIFIED\n"];
+Print["  Expected: ~2.4 arcsec\n"];
 
 
 (* =========================================================================

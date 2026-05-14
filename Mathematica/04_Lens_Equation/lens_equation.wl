@@ -107,11 +107,12 @@ REstar = DdStar * thetaEStar;
 Print["  RE = ", ScientificForm[REstar, 3], " m"];
 Print["     = ", NumberForm[REstar / (1.496*^11), {3, 1}], " AU\n"];
 
-(* --- (b) Galaxy lensing --- *)
+(* --- (b) Galaxy lensing — distances from Module 3 / friedmann_equations.wl
+   for flat LCDM (Om=0.3, OL=0.7, H0=70) at zd=0.3, zs=1. --- *)
 Mgal = 1*^12 * Msolar;
-DdGal = 900 * MpcToM;
-DsGal = 1700 * MpcToM;
-DdsGal = 1200 * MpcToM;
+DdGal = 919 * MpcToM;
+DsGal = 1652 * MpcToM;
+DdsGal = 1055 * MpcToM;
 thetaEGal = thetaEfunc[Mgal, DdGal, DsGal, DdsGal];
 Print["(b) Galaxy lensing (M = 10^12 Msun, zd = 0.3, zs = 1):"];
 Print["  thetaE = ", ScientificForm[thetaEGal, 4], " rad"];
@@ -119,13 +120,15 @@ Print["  = ", NumberForm[thetaEGal * radToArcsec, {3, 2}], " arcsec"];
 REgal = DdGal * thetaEGal;
 Print["  RE = ", NumberForm[REgal / kpcToM, {3, 1}], " kpc\n"];
 
-(* --- (c) Cluster lensing --- *)
-Mclus = 1*^15 * Msolar;
-DdClus = 900 * MpcToM;
-DsClus = 1800 * MpcToM;
-DdsClus = 1400 * MpcToM;
+(* --- (c) Cluster lensing — point-mass-equivalent mass within the
+   Einstein radius (M_E ~ 2e14 Msun is realistic for a massive cluster).
+   Distances at zd=0.3, zs=2 from Module 3. --- *)
+Mclus = 2*^14 * Msolar;
+DdClus = 919 * MpcToM;
+DsClus = 1727 * MpcToM;
+DdsClus = 1329 * MpcToM;
 thetaEClus = thetaEfunc[Mclus, DdClus, DsClus, DdsClus];
-Print["(c) Cluster lensing (M = 10^15 Msun, zd = 0.3, zs = 2):"];
+Print["(c) Cluster lensing (M_E = 2e14 Msun within thetaE, zd = 0.3, zs = 2):"];
 Print["  thetaE = ", ScientificForm[thetaEClus, 4], " rad"];
 Print["  = ", NumberForm[thetaEClus * radToArcsec, {3, 1}], " arcsec"];
 REclus = DdClus * thetaEClus;
@@ -274,9 +277,11 @@ Module[{},
         {Red, Dashed, AbsoluteThickness[1],
          Line[{{-1, 10}, {0, 0}}]},
 
-        (* Angle theta *)
+        (* Angle theta — image I is at {1.5, 5} (right of optical axis),
+           so the arc must sweep from the image-direction ray (right of axis)
+           to the optical axis, i.e., be drawn entirely on the +x side. *)
         {Blue, AbsoluteThickness[1.5],
-         Circle[{0, 0}, 1.5, {Pi/2 - 0.01, Pi/2 + ArcTan[1.5/5]}],
+         Circle[{0, 0}, 1.5, {Pi/2 - ArcTan[1.5/5], Pi/2}],
          Text[Style["\[Theta]", 14, Blue], {1.0, 1.8}]},
 
         (* Angle beta *)

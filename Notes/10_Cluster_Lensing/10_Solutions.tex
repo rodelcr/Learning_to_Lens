@@ -22,46 +22,56 @@ which verifies each answer symbolically and numerically.
     r_{200} = \left(\frac{3\, M_{200}}{800\pi\,\rho_{\mathrm{crit}}}
     \right)^{1/3} \,.
 \end{equation*}
-Using $\rho_{\mathrm{crit}}(z = 0.3) \approx 5.3\ee{-27}$~kg\,m$^{-3}$
-(including the $E^2(z)$ factor):
+The critical density at $z_d = 0.3$ is
+$\rho_{\mathrm{crit}}(z_d) = \rho_{\mathrm{crit},0}\, E^2(z_d)
+\approx 9.20\ee{-27} \times 1.359 \approx 1.25\ee{-26}$~kg\,m$^{-3}$.
+For $M_{200} = 5\ee{14}\,\Msun$ and $c = 5$:
 \begin{align*}
-    r_{200} &\approx 1.53~\text{Mpc} \,, \\
-    r_s &= r_{200}/c = 1.53/5 \approx 306~\text{kpc} \,, \\
+    r_{200} &\approx 1.48~\text{Mpc} \,, \\
+    r_s &= r_{200}/c \approx 296~\text{kpc} \,, \\
     \rho_s &= \frac{200}{3}\,\rho_{\mathrm{crit}}\,
     \frac{c^3}{\ln(1+c) - c/(1+c)}
-    \approx 6.2\ee{-25}~\text{kg\,m}^{-3} \,.
+    \approx 1.09\ee{-22}~\text{kg\,m}^{-3} \,.
 \end{align*}
-The angular scale radius and characteristic convergence:
+The angular scale radius and characteristic convergence (using
+$\Sigmacr \approx 4.82$~kg\,m$^{-2}$ for these distances):
 \begin{align*}
-    \theta_s &= r_s / \Dd = 306~\text{kpc} / 900~\text{Mpc}
-    \approx 3.4\ee{-4}~\text{rad} \approx 70'' \,, \\
-    \kappa_s &= 2\rho_s\, r_s / \Sigmacr \approx 0.35 \,.
+    \theta_s &= r_s / \Dd \approx 67.8'' \,, \\
+    \kappa_s &= 2\rho_s\, r_s / \Sigmacr \approx 0.41 \,.
 \end{align*}
 
 \textbf{(b)} The tangential critical curve radius satisfies
 $\bar{\kappa}(x_t) = 1$, i.e.,
-$(4\kappa_s / x_t^2)[\ln(x_t/2) + g(x_t)] = 1$.
-Solving numerically gives $x_t \approx 0.38$, so:
+$(2\kappa_s / x_t^2)[\ln(x_t/2) + g(x_t)] = 1$
+(see eq.~\eqref{eq:nfw_alpha} in Module~7).
+Solving numerically (see \texttt{problems\_10.wl}) gives
+$x_t \approx 0.109$, so:
 \begin{equation*}
-    \thetaE = x_t\, \theta_s \approx 0.38 \times 70'' \approx 27'' \,.
+    \thetaE = x_t\, \theta_s \approx 0.109 \times 67.8'' \approx 7.4'' \,.
 \end{equation*}
 
-\textbf{(c)} The enclosed projected mass:
+\textbf{(c)} The projected mass enclosed within $\thetaE$ is
+$M(\thetaE) = \pi\,(\Dd\,\thetaE)^2\,\Sigmacr\,\bar\kappa(\thetaE)
+= \pi\,(\Dd\,\thetaE)^2\,\Sigmacr$ (since $\bar\kappa(\thetaE)=1$ by
+definition):
 \begin{equation*}
-    M(\thetaE) = \pi\,(\Dd\,\thetaE)^2\,\Sigmacr
-    \approx \pi\,(900 \times 1.3\ee{-4})^2\,\text{Mpc}^2 \times \Sigmacr
-    \approx 1.4\ee{14}\,\Msun \,.
+    M(\thetaE) \approx \pi\,(900~\text{Mpc} \times 7.4'' \times
+    4.848\ee{-6})^2 \times 4.82~\text{kg\,m}^{-2}
+    \approx 7.5\ee{12}\,\Msun \,.
 \end{equation*}
 
-\textbf{(d)} The fraction of the total mass within $\thetaE$:
+\textbf{(d)} The fraction of the total virial mass within $\thetaE$:
 \begin{equation*}
     \frac{M(\thetaE)}{M_{200}}
-    = \frac{1.4\ee{14}}{5\ee{14}} \approx 0.28 \,.
+    \approx \frac{7.5\ee{12}}{5\ee{14}} \approx 0.015 \,.
 \end{equation*}
-About 28\% of the virial mass is enclosed within the Einstein
-radius.  This is expected: the Einstein radius corresponds to
-$r \approx 120$~kpc, which is only $\sim$8\% of $r_{200}$, but the
-NFW profile is centrally concentrated.  \checkmark
+About $1.5\%$ of the virial mass lies inside the Einstein radius.
+The Einstein radius corresponds to a physical radius
+$R_E = \Dd \thetaE \approx 32$~kpc, which is only $\sim 2\%$ of
+$r_{200}$.  Despite the NFW profile being centrally concentrated, the
+$1/r$ inner-density slope means $M(<r) \propto r$ at small $r$, so
+only a small fraction of the virial mass is enclosed at $R_E$.
+\checkmark
 
 
 % ----- Exercise 10.2 -----
@@ -86,8 +96,8 @@ for the complete ray-tracing code and generated plots.
 \textbf{(d)} For the source at $\beta = \thetaE$, the arc
 length-to-width ratio depends on the source size relative to the
 caustic curvature.  For a $0.5''$ source near the critical curve of
-$\thetaE \approx 27''$, the tangential magnification is large
-($\mu_t \sim 5$--$10$), giving $L/W \sim 5$--$10$.  \checkmark
+$\thetaE \approx 7.4''$ (this cluster), the tangential magnification is
+large ($\mu_t \sim 5$--$10$), giving $L/W \sim 5$--$10$.  \checkmark
 
 
 % ----- Exercise 10.3 -----
@@ -132,17 +142,19 @@ the net effect is a significant increase in detected galaxies.
 \subsection*{Exercise~\ref{ex:einstein_radius_comparison}: Einstein Radii Across Mass Scales}
 
 \textbf{(a)--(c)} Using $\thetaE = 4\pi(\sigma_v/c)^2\,\Dds/\Ds$
-with $\Dds/\Ds = 1400/1750 = 0.8$:
+with $\Dds/\Ds = 1400/1750 = 0.8$ (using
+$\speedoflight = 2.998 \times 10^5$~km/s for the conversion to radians;
+see \texttt{problems\_10.wl} for the exact computation):
 \begin{align*}
     \text{Galaxy: } \sigma_v &= 250~\text{km/s}, \quad
-    \thetaE = 4\pi(250/3\ee{5})^2 \times 0.8
-    \approx 2.2\ee{-5}~\text{rad} \approx 1.6'' \,. \\
+    \thetaE = 4\pi(250/2.998\ee{5})^2 \times 0.8
+    \approx 6.99\ee{-6}~\text{rad} \approx 1.44'' \,. \\
     \text{Group: } \sigma_v &= 500~\text{km/s}, \quad
-    \thetaE = 4\pi(500/3\ee{5})^2 \times 0.8
-    \approx 8.7\ee{-5}~\text{rad} \approx 6.2'' \,. \\
+    \thetaE = 4\pi(500/2.998\ee{5})^2 \times 0.8
+    \approx 2.80\ee{-5}~\text{rad} \approx 5.77'' \,. \\
     \text{Cluster: } \sigma_v &= 1200~\text{km/s}, \quad
-    \thetaE = 4\pi(1200/3\ee{5})^2 \times 0.8
-    \approx 5.0\ee{-4}~\text{rad} \approx 36'' \,.
+    \thetaE = 4\pi(1200/2.998\ee{5})^2 \times 0.8
+    \approx 1.61\ee{-4}~\text{rad} \approx 33.2'' \,.
 \end{align*}
 
 \textbf{(d)} The ratio $\thetaE^{\text{cluster}}/\thetaE^{\text{galaxy}}
@@ -152,11 +164,12 @@ $\sim$23 from galaxy to cluster.
 \textbf{(e)} The enclosed mass within $\thetaE$:
 $M(\thetaE) = \pi(\Dd\,\thetaE)^2\,\Sigmacr$.  Since
 $\thetaE \propto \sigma_v^2$, we have
-$M(\thetaE) \propto \thetaE^2 \propto \sigma_v^4$.  Computing:
+$M(\thetaE) \propto \thetaE^2 \propto \sigma_v^4$.  From
+\texttt{problems\_10.wl}:
 \begin{align*}
-    M(\thetaE)^{\text{galaxy}} &\approx 3\ee{11}\,\Msun \,, \\
-    M(\thetaE)^{\text{group}} &\approx 5\ee{12}\,\Msun \,, \\
-    M(\thetaE)^{\text{cluster}} &\approx 2\ee{14}\,\Msun \,.
+    M(\thetaE)^{\text{galaxy}} &\approx 2.9\ee{11}\,\Msun \,, \\
+    M(\thetaE)^{\text{group}} &\approx 4.6\ee{12}\,\Msun \,, \\
+    M(\thetaE)^{\text{cluster}} &\approx 1.5\ee{14}\,\Msun \,.
 \end{align*}
 
 \textbf{(f)} Since $\thetaE \propto \sigma_v^2$, the angular scale

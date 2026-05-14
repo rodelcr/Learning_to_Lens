@@ -320,15 +320,19 @@ This is a topological result from Morse theory.
 \end{theorem}
 
 \begin{remark}
-The odd-number theorem explains why a point mass lens produces two
-bright images plus one highly demagnified image at the center (which is
-a maximum of $\tau$).  In practice, the central image is so faint that
-it is unobservable, and we see only the two images $\theta_\pm$ from
-Module~\ref{ch:lens_equation}.  For an extended galaxy lens (such as the
-SIS model, Module~7), strong lensing typically produces either one image
-(when the source is outside the caustic) or three images (when the
-source is inside the caustic, with one image usually highly
-demagnified).
+The smoothness hypothesis is essential.  Burke's theorem does
+\emph{not} apply to a point mass lens: $\Sigma$ is a Dirac
+delta function and $\psiL = \thetaE^2\ln|\vectheta|$ diverges at the
+origin, so the origin is a singularity of $\tau$ rather than a true
+stationary point.  A point mass therefore produces exactly two images
+($\theta_\pm$ from Module~\ref{ch:lens_equation}), not three.  For an
+extended lens with a smooth core (such as a non-singular isothermal
+sphere, Module~7), the central singularity is replaced by a genuine
+maximum of $\tau$ and a corresponding third image appears, typically
+highly demagnified.  The singular isothermal sphere itself is
+intermediate: $\Sigma\!\propto\!1/\theta$ is finite at every $\theta>0$
+but diverges at the origin, again removing the central image while
+keeping the two outer images.
 \end{remark}
 
 
@@ -373,9 +377,12 @@ in the region $|\vectheta| > 0$:
           secondary image.  This image arrives \textit{second}.
 \end{itemize}
 
-In addition, there is a formal maximum at $\vectheta = \mathbf{0}$ (the
-lens position), but $\psiL$ diverges logarithmically there, so this
-image has zero magnification and is unobservable.
+The point $\vectheta = \mathbf{0}$ is a \emph{singularity} of $\psiL$,
+not a true stationary point of $\tau$, so the point-mass lens has only
+the two images $\theta_\pm$ above.  A softened mass profile
+(Module~\ref{ch:axisymmetric_models}) replaces this singularity with a
+smooth maximum and produces a corresponding (highly demagnified) third
+image.
 
 \begin{figure}[ht]
     \centering
@@ -784,9 +791,9 @@ Verify with
 \begin{exercise}
 \label{ex:H0_from_time_delay}
 \textbf{(Measuring $\Hubble$ from time delays.)}
-A multiply-imaged quasar has a measured time delay $\Delta t = 420$~days
+A multiply-imaged quasar has a measured time delay $\Delta t = 100$~days
 between two images.  The lens model gives a dimensionless Fermat
-potential difference of $\tau_1 - \tau_2 = 25~\text{arcsec}^2$.  The
+potential difference of $\tau_1 - \tau_2 = 2.0~\text{arcsec}^2$.  The
 lens is at $z_d = 0.3$ and the source is at $z_s = 1.0$.
 \begin{enumerate}[label=(\alph*)]
     \item Using the relation

@@ -123,11 +123,10 @@ For photons ($\epsilon = 0$), the effective potential is (in $G = c = M = 1$ uni
 \textbf{Stability:}  Evaluating the second derivative at $r = 3$:
 \begin{equation*}
     \frac{d^2 V_{\mathrm{eff}}}{dr^2}\bigg|_{r=3}
-    = \frac{3L^2}{r^4} - \frac{12L^2}{r^5}\bigg|_{r=3}
+    = \left(\frac{3L^2}{r^4} - \frac{12L^2}{r^5}\right)\bigg|_{r=3}
     = \frac{3L^2}{81} - \frac{12L^2}{243}
-    = \frac{L^2}{81}\left(3 - \frac{12}{3}\right)
-    = -\frac{L^2}{81}\left(1\right)
-    = -\frac{2L^2}{81} < 0 \,.
+    = \frac{L^2}{243}(9 - 12)
+    = -\frac{L^2}{81} < 0 \,.
 \end{equation*}
 Since $d^2V/dr^2 < 0$, the effective potential has a \textbf{maximum}
 at $r = 3$, confirming that the photon orbit is \textbf{unstable}.
@@ -188,11 +187,9 @@ orbit radii are found by solving $dV_{\mathrm{eff}}/dr = 0$:
 Therefore:
 \begin{itemize}
     \item \textbf{Stable circular orbit} (minimum of $V_{\mathrm{eff}}$):
-          $r_+ = 12$,\quad $V_{\mathrm{eff}}(12) = -1/24 \approx -0.0417$
+          $r_+ = 12$,\quad $V_{\mathrm{eff}}(12) = -1/12 + 16/288 - 16/1728 = -1/27 \approx -0.0370$
     \item \textbf{Unstable circular orbit} (maximum of $V_{\mathrm{eff}}$):
-          $r_- = 4$,\quad $V_{\mathrm{eff}}(4) = -1/8 + 1/2 - 1 = -0.0625 + \ldots$
-
-          More precisely: $V_{\mathrm{eff}}(4) = -1/4 + 16/32 - 16/64 = -0.25 + 0.5 - 0.25 = 0$
+          $r_- = 4$,\quad $V_{\mathrm{eff}}(4) = -1/4 + 16/32 - 16/64 = -0.25 + 0.5 - 0.25 = 0$
     \item \textbf{ISCO} (for reference): $r_{\mathrm{ISCO}} = 6$ occurs at
           $L = 2\sqrt{3} \approx 3.464$, which is below $L = 4$, so the two
           circular orbits are well separated.

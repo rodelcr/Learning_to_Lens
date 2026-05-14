@@ -153,27 +153,28 @@ REstar = DdStar * thetaEStar;
 Print["  RE = ", NumberForm[REstar / (1.496*^11), {4, 1}], " AU"];
 Print["     = ", ScientificForm[REstar / kpcToM, 3], " kpc\n"];
 
-(* (b) Galaxy lensing *)
+(* (b) Galaxy lensing — distances from Module 3 friedmann_equations.wl *)
 Print["(b) Galaxy lensing: M = 10^12 Msun, zd = 0.3, zs = 1"];
 Mgal = 1*^12 Msolar;
-DdGal = 900 MpcToM;
-DsGal = 1700 MpcToM;
-DdsGal = 1200 MpcToM;
+DdGal = 919 MpcToM;
+DsGal = 1652 MpcToM;
+DdsGal = 1055 MpcToM;
 thetaEGal = thetaEfunc[Mgal, DdGal, DsGal, DdsGal];
-Print["  Dd = 900 Mpc, Ds = 1700 Mpc, Dds = 1200 Mpc"];
+Print["  Dd = 919 Mpc, Ds = 1652 Mpc, Dds = 1055 Mpc"];
 Print["  thetaE = ", ScientificForm[thetaEGal, 4], " rad"];
 Print["         = ", NumberForm[thetaEGal * radToArcsec, {4, 2}], " arcsec"];
 REgal = DdGal * thetaEGal;
 Print["  RE = ", NumberForm[REgal / kpcToM, {4, 1}], " kpc\n"];
 
-(* (c) Cluster lensing *)
-Print["(c) Cluster lensing: M = 10^15 Msun, zd = 0.3, zs = 2"];
-Mclus = 1*^15 Msolar;
-DdClus = 900 MpcToM;
-DsClus = 1800 MpcToM;
-DdsClus = 1400 MpcToM;
+(* (c) Cluster lensing — M_E ~ 2e14 inside Einstein radius (realistic
+   massive cluster); distances at zd=0.3, zs=2 from Module 3. *)
+Print["(c) Cluster lensing: M_E = 2e14 Msun within thetaE, zd = 0.3, zs = 2"];
+Mclus = 2*^14 Msolar;
+DdClus = 919 MpcToM;
+DsClus = 1727 MpcToM;
+DdsClus = 1329 MpcToM;
 thetaEClus = thetaEfunc[Mclus, DdClus, DsClus, DdsClus];
-Print["  Dd = 900 Mpc, Ds = 1800 Mpc, Dds = 1400 Mpc"];
+Print["  Dd = 919 Mpc, Ds = 1727 Mpc, Dds = 1329 Mpc"];
 Print["  thetaE = ", ScientificForm[thetaEClus, 4], " rad"];
 Print["         = ", NumberForm[thetaEClus * radToArcsec, {4, 1}], " arcsec"];
 REclus = DdClus * thetaEClus;
