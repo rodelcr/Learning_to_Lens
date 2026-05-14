@@ -413,7 +413,7 @@ Module[{bRsRange, exactData, approx1Data, approx2Data},
         Epilog -> {
             Gray, Dashed,
             InfiniteLine[{{0, 1}, {200, 1}}],
-            Text[Style["1% error", 9, Gray], {80, 1.5}]
+            Text[Style["1% error", 9, Gray], {15, 1.5}]
         },
         ImageSize -> {550, 200}
     ];

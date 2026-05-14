@@ -339,8 +339,10 @@ Module[{},
                 Style["\!\(\*SubscriptBox[\(\[Theta]\), \(-\)]\) (secondary)", 11],
                 Style["\[Theta] = \[Beta] (unlensed)", 11],
                 Style["\[Theta] = \[PlusMinus]\!\(\*SubscriptBox[\(\[Theta]\), \(E\)]\)", 11]
-            }, LegendMarkerSize -> 15],
-            {0.65, 0.65}],
+            }, LegendMarkerSize -> 15,
+               Background -> Directive[White, Opacity[0.9]],
+               Frame -> True, FrameStyle -> Gray],
+            {0.85, 0.85}],
         ImageSize -> 600,
         GridLines -> {None, {0}},
         GridLinesStyle -> Directive[Gray, Thin]

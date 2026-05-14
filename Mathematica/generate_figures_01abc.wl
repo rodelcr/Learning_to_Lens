@@ -153,7 +153,7 @@ fig1b1 = Module[{sphere, path1, path2, path3, vectors},
          Arrow[{{1, 0, 0}, {1, 0.4 Cos[Pi/3], 0.4 Sin[Pi/3]}}]},
         (* Labels *)
         Text[Style["Initial V", 11, Blue], {1, 0.5, -0.1}],
-        Text[Style["Final V", 11, Darker[Green]], {1.1, 0.15, 0.35}],
+        Text[Style["Final V", 11, Darker[Green]], {1.15, 0.05, 0.5}],
         Text[Style["\[Alpha] = 60\[Degree]", 12, Red], {0.5, 0.5, -0.3}]
     }];
     Show[sphere, path1, path2, path3, vectors,
@@ -209,7 +209,7 @@ fig1c1 = Plot[Sqrt[1 - 1/x], {x, 1.01, 20},
     Epilog -> {
         {Red, Dashed, AbsoluteThickness[1.5],
          InfiniteLine[{{1, 0}, {1, 1}}]},
-        Text[Style["Event\nhorizon\nr = Rs", 10, Red], {1.8, 0.15}],
+        Text[Style["Event\nhorizon\nr = Rs", 10, Red], {2.6, 0.2}],
         {Gray, Dashed, InfiniteLine[{{0, 1}, {20, 1}}]},
         Text[Style["Flat spacetime limit", 10, Gray], {12, 1.03}]
     },

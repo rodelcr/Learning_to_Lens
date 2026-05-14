@@ -378,12 +378,18 @@ Module[{tauSurf, betaVal = 0.5},
             ViewPoint -> {2.5, -2, 1.5},
             BoxRatios -> {1, 1, 0.6}
         ],
-        (* Mark the stationary points *)
+        (* Mark the stationary points.  The "min" label is drawn over the
+           dark-blue side of the arrival-time surface, so we add a white
+           background so the blue text is readable. *)
         Graphics3D[{
             {Blue, PointSize[0.025], Point[{xp, 0, tauP}]},
             {Red, PointSize[0.025], Point[{xm, 0, tauM}]},
-            Text[Style["min", 11, Bold, Blue], {xp + 0.3, 0, tauP + 0.3}],
-            Text[Style["saddle", 11, Bold, Red], {xm - 0.5, 0, tauM + 0.3}]
+            Text[Style["min", 11, Bold, Blue,
+                    Background -> Directive[White, Opacity[0.85]]],
+                {xp + 0.3, 0, tauP + 0.3}],
+            Text[Style["saddle", 11, Bold, Red,
+                    Background -> Directive[White, Opacity[0.85]]],
+                {xm - 0.5, 0, tauM + 0.3}]
         }]
     ];
     Export[FileNameJoin[{baseDir, "arrival_time_surface.pdf"}], fig1];
@@ -421,15 +427,23 @@ Module[{tauSurf, betaVal = 0.5},
             Text[Style["\!\(\*SubscriptBox[\(\[Theta]\), \(E\)]\)", 12, Black],
                 {0.7, 0.85}]
         }],
-        (* Stationary points *)
+        (* Stationary points.  The "min" label sits on the dark-blue side
+           of the diverging TemperatureMap colormap, so we give the bold
+           text labels a white background for legibility. *)
         Graphics[{
             {Blue, PointSize[0.02], Point[{xp, 0}]},
             {Red, PointSize[0.02], Point[{xm, 0}]},
-            Text[Style["min (Type I)", 10, Bold, Blue], {xp, 0.25}],
-            Text[Style["saddle (Type II)", 10, Bold, Red], {xm, -0.25}],
+            Text[Style["min (Type I)", 10, Bold, Blue,
+                    Background -> Directive[White, Opacity[0.85]]],
+                {xp, 0.25}],
+            Text[Style["saddle (Type II)", 10, Bold, Red,
+                    Background -> Directive[White, Opacity[0.85]]],
+                {xm, -0.25}],
             (* Source position *)
             {Darker[Green], PointSize[0.015], Point[{betaVal, 0}]},
-            Text[Style["\[Beta]", 11, Darker[Green]], {betaVal + 0.15, 0.15}]
+            Text[Style["\[Beta]", 11, Darker[Green],
+                    Background -> Directive[White, Opacity[0.85]]],
+                {betaVal + 0.15, 0.15}]
         }]
     ];
     Export[FileNameJoin[{baseDir, "arrival_time_contours.pdf"}], fig2];
@@ -449,10 +463,15 @@ Module[{},
         },
         PlotLabel -> Style["Dimensionless Time Delay vs. Source Position (Point Mass)", 13],
         Epilog -> {
-            (* Mark the numerical example *)
+            (* Mark the numerical example.  The annotation is lifted well
+               above the curve and given a white background so it does not
+               overlap the purple Delta_tau curve, which at y ~ 1.2 has
+               climbed only to Delta_tau ~ 2.5 -- leaving the row at y = 4
+               comfortably clear of the curve. *)
             {Red, PointSize[0.015], Point[{0.5, deltaTauAnalytic[0.5]}]},
-            Text[Style["y = 0.5, \[CapitalDelta]\[Tau] = 1.01", 10, Red],
-                {1.2, deltaTauAnalytic[0.5] + 1}]
+            Text[Style["y = 0.5, \[CapitalDelta]\[Tau] = 1.01", 10, Red,
+                    Background -> Directive[White, Opacity[0.85]]],
+                {1.3, 4.0}]
         },
         ImageSize -> 600,
         GridLines -> Automatic,

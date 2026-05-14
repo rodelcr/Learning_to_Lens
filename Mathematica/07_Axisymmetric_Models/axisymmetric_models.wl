@@ -473,10 +473,16 @@ Module[{},
                 InfiniteLine[{{0, 1}, {10, 1}}],
                 InfiniteLine[{{0, -1}, {10, -1}}],
                 Text[Style[Subscript["\[Theta]", "E"], 10, Orange], {2.7, 1.2}],
-                (* Mark where theta_- disappears *)
+                (* Mark where theta_- disappears.  The annotation is lifted
+                   into the empty wedge above the dashed theta = beta line
+                   (~y = 1.7 at beta = 1.5) so it does not collide with the
+                   x-axis tick labels at y = 0.  Row[] avoids the literal
+                   "<>" string-concat rendering bug. *)
                 Black, PointSize[0.02], Point[{1, 0}],
-                Text[Style["\[Beta] = " <> Subscript["\[Theta]", "E"], 9, Black],
-                    {1.3, -0.3}]
+                Text[Style[Row[{"\[Beta] = ", Subscript["\[Theta]", "E"]}],
+                        9, Black,
+                        Background -> Directive[White, Opacity[0.85]]],
+                    {1.35, 1.7}]
             },
             GridLines -> {None, {0}},
             GridLinesStyle -> Directive[Gray, Thin],

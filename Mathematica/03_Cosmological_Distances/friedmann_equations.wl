@@ -491,8 +491,10 @@ fig1 = ListLinePlot[
             "Om=0.3, OL=0.7 (concordance)",
             "Om=1.0, OL=0 (EdS)",
             "Om=0.3, OL=0 (Open)"
-        }, LegendMarkerSize -> 15],
-        {0.65, 0.75}
+        }, LegendMarkerSize -> 15,
+           Background -> Directive[White, Opacity[0.9]],
+           Frame -> True, FrameStyle -> Gray],
+        {0.75, 0.25}
     ],
     Epilog -> {
         PointSize[0.015], Blue,
@@ -530,8 +532,10 @@ fig2 = ListLinePlot[
             "Comoving chi(z)",
             "Angular diameter D_A(z)",
             "Luminosity D_L(z)"
-        }, LegendMarkerSize -> 15],
-        {0.35, 0.75}
+        }, LegendMarkerSize -> 15,
+           Background -> Directive[White, Opacity[0.9]],
+           Frame -> True, FrameStyle -> Gray],
+        {0.75, 0.25}
     ],
     ImageSize -> 600,
     GridLines -> Automatic,
@@ -623,7 +627,7 @@ fig4 = ListLinePlot[thetaEData,
     Epilog -> {
         Red, Dashed, AbsoluteThickness[1.5],
         InfiniteLine[{{0, 1}, {1, 1}}],
-        Text[Style["1 arcsec", 11, Red], {0.8, 1.1}]
+        Text[Style["1 arcsec", 11, Red], {0.15, 1.1}]
     },
     ImageSize -> 550,
     GridLines -> Automatic,

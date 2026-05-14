@@ -153,7 +153,7 @@ fig1 = Show[
             LineLegend[{"L = 3.5", "L = 2\[Sqrt]3 (ISCO)",
                         "L = 4", "L = 4.5", "L = 5"},
                 LegendMarkerSize -> 15],
-            {0.75, 0.7}],
+            {0.82, 0.85}],
         ImageSize -> 550
     ],
     (* Horizon line *)
@@ -182,7 +182,7 @@ fig2 = Plot[Evaluate[Table[Veff[r, LL, 0], {LL, {2, 3, 4, 5}}]],
     },
     PlotLegends -> Placed[
         LineLegend[{"L = 2", "L = 3", "L = 4", "L = 5"}, LegendMarkerSize -> 15],
-        {0.75, 0.7}],
+        {0.88, 0.8}],
     ImageSize -> 500
 ];
 Export[FileNameJoin[{baseDir, "effective_potential_photon.pdf"}], fig2];
@@ -202,7 +202,7 @@ fig3 = Plot[{VeffNewton[r, 4], Veff[r, 4, 1]}, {r, 2, 40},
     PlotLabel -> Style["Newtonian vs. GR Effective Potential (L = 4)", 13],
     PlotLegends -> Placed[
         LineLegend[{"Newtonian", "General Relativity"}, LegendMarkerSize -> 15],
-        {0.7, 0.7}],
+        {0.78, 0.85}],
     Epilog -> {
         Text[Style[Column[{"GR correction", Row[{"-GM", Superscript["L","2"], "/(", Superscript["c","2"], Superscript["r","3"], ")"}]}, Alignment->Center], 9,
             Blue], {8, -0.06}]

@@ -323,7 +323,7 @@ Module[{srcCircle, kappaOnly, shearOnly, both, nPts = 100,
             {Blue, AbsoluteThickness[2], Line[kappaOnlyCircle]},
             {Black, PointSize[0.015], Point[{0, 0}]}
         },
-        PlotRange -> {{-2.2, 2.2}, {-2.2, 2.2}},
+        PlotRange -> {{-2.8, 2.8}, {-2.8, 2.8}},
         ImageSize -> 200,
         Frame -> True,
         FrameLabel -> {None, None},
@@ -337,7 +337,7 @@ Module[{srcCircle, kappaOnly, shearOnly, both, nPts = 100,
             {Red, AbsoluteThickness[2], Line[shearOnlyEllipse]},
             {Black, PointSize[0.015], Point[{0, 0}]}
         },
-        PlotRange -> {{-2.2, 2.2}, {-2.2, 2.2}},
+        PlotRange -> {{-2.8, 2.8}, {-2.8, 2.8}},
         ImageSize -> 200,
         Frame -> True,
         FrameLabel -> {None, None},
@@ -345,13 +345,16 @@ Module[{srcCircle, kappaOnly, shearOnly, both, nPts = 100,
         AspectRatio -> 1
         ],
 
-        (* Panel 3: Both *)
+        (* Panel 3: Both.  For kappa = gamma = 0.3 the principal stretch
+           factor is 1/(1-kappa-|gamma|) = 1/0.4 = 2.5, so the major axis
+           of the image ellipse reaches +/- 2.5 — pad the PlotRange so the
+           ellipse is not clipped by the frame. *)
         Graphics[{
             {Gray, Dashed, AbsoluteThickness[1], Line[srcCircle]},
             {Purple, AbsoluteThickness[2], Line[bothEllipse]},
             {Black, PointSize[0.015], Point[{0, 0}]}
         },
-        PlotRange -> {{-2.2, 2.2}, {-2.2, 2.2}},
+        PlotRange -> {{-2.8, 2.8}, {-2.8, 2.8}},
         ImageSize -> 200,
         Frame -> True,
         FrameLabel -> {None, None},
@@ -429,8 +432,12 @@ Module[{nGrid = 8, arrows, scale = 0.35},
     fig3 = Graphics[{
         (* Einstein ring *)
         {Blue, AbsoluteThickness[2], Dashed, Circle[{0, 0}, 1]},
-        Text[Style["\!\(\*SubscriptBox[\(\[Theta]\), \(E\)]\)", 12, Blue],
-            {1.25, -0.15}],
+        (* Place the theta_E label just outside the ring in a corner with
+           sparse shear sticks, on a white background so it is not obscured
+           by the surrounding tangential shear pattern. *)
+        Text[Style["\!\(\*SubscriptBox[\(\[Theta]\), \(E\)]\)", 12, Blue,
+                Background -> Directive[White, Opacity[0.85]]],
+            {0.78, 0.78}],
 
         (* Lens *)
         {Black, Disk[{0, 0}, 0.08]},

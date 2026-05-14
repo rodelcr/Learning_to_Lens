@@ -301,8 +301,10 @@ fig1 = Plot[
             Style["\!\(\*SubscriptBox[\(\[Theta]\), \(-\)]\)", 11],
             Style["\[Theta] = \[Beta]", 11],
             Style["\[Theta] = \[PlusMinus]\!\(\*SubscriptBox[\(\[Theta]\), \(E\)]\)", 11]
-        }, LegendMarkerSize -> 15],
-        {0.65, 0.65}],
+        }, LegendMarkerSize -> 15,
+           Background -> Directive[White, Opacity[0.9]],
+           Frame -> True, FrameStyle -> Gray],
+        {0.85, 0.85}],
     ImageSize -> 550,
     GridLines -> {None, {0}},
     GridLinesStyle -> Directive[Gray, Thin]
@@ -325,7 +327,7 @@ fig2 = Plot[
         Orange, Dashed, AbsoluteThickness[1.5],
         InfiniteLine[{{0, 2}, {10, 2}}],
         Text[Style["min = 2\!\(\*SubscriptBox[\(\[Theta]\), \(E\)]\)", 10, Orange],
-            {1, 2.15}]
+            {3.5, 1.85}]
     },
     ImageSize -> 550
 ];

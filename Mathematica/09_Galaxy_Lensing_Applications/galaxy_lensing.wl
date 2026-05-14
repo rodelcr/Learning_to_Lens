@@ -517,11 +517,22 @@ Module[{lambdaVals, colors, fig2},
             PlotLabel -> Style["Convergence profiles", 13],
             PlotRange -> {{0.3, 3.0}, {-0.5, 2.5}},
             ImageSize -> 300,
+            PlotLegends -> Placed[
+                LineLegend[colors,
+                    {Style["\[Lambda] = 0.8", 10],
+                     Style["\[Lambda] = 0.9", 10],
+                     Style["\[Lambda] = 1.0 (orig.)", 10],
+                     Style["\[Lambda] = 1.1", 10],
+                     Style["\[Lambda] = 1.2", 10]},
+                    LegendMarkerSize -> 12,
+                    Background -> Directive[White, Opacity[0.85]]],
+                {0.82, 0.72}
+            ],
             Epilog -> {
                 Gray, Dashed, AbsoluteThickness[1],
                 InfiniteLine[{{0, 1}, {10, 1}}],
                 Text[Style["\[Kappa] = 1", 10, Gray],
-                    Scaled[{0.85, 0.42}]]
+                    Scaled[{0.15, 0.78}]]
             }
         ],
 

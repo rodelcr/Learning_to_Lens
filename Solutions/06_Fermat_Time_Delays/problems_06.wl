@@ -378,12 +378,16 @@ fig1 = Show[
         ViewPoint -> {2.5, -2, 1.5},
         BoxRatios -> {1, 1, 0.6}
     ],
+    (* Stationary-point labels: white-backed so the blue "min" text is
+       readable against the dark-blue side of the arrival-time surface. *)
     Graphics3D[{
         {Blue, PointSize[0.025], Point[{xpPlot, 0, tauSurf[xpPlot, 0]}]},
         {Red, PointSize[0.025], Point[{xmPlot, 0, tauSurf[xmPlot, 0]}]},
-        Text[Style["min (Type I)", 10, Bold, Blue],
+        Text[Style["min (Type I)", 10, Bold, Blue,
+                Background -> Directive[White, Opacity[0.85]]],
             {xpPlot + 0.3, 0, tauSurf[xpPlot, 0] + 0.3}],
-        Text[Style["saddle (Type II)", 10, Bold, Red],
+        Text[Style["saddle (Type II)", 10, Bold, Red,
+                Background -> Directive[White, Opacity[0.85]]],
             {xmPlot - 0.5, 0, tauSurf[xmPlot, 0] + 0.3}]
     }]
 ];
@@ -407,6 +411,8 @@ fig2 = Show[
         ImageSize -> 500,
         AspectRatio -> 1
     ],
+    (* Stationary-point labels: white-backed so blue "min" text and the
+       green beta label remain readable on the dark-blue/contour region. *)
     Graphics[{
         (* Einstein ring *)
         {Black, Dashed, AbsoluteThickness[2], Circle[{0, 0}, 1]},
@@ -415,11 +421,17 @@ fig2 = Show[
         (* Stationary points *)
         {Blue, PointSize[0.02], Point[{xpPlot, 0}]},
         {Red, PointSize[0.02], Point[{xmPlot, 0}]},
-        Text[Style["min", 10, Bold, Blue], {xpPlot, 0.2}],
-        Text[Style["saddle", 10, Bold, Red], {xmPlot, -0.2}],
+        Text[Style["min", 10, Bold, Blue,
+                Background -> Directive[White, Opacity[0.85]]],
+            {xpPlot, 0.2}],
+        Text[Style["saddle", 10, Bold, Red,
+                Background -> Directive[White, Opacity[0.85]]],
+            {xmPlot, -0.2}],
         (* Source *)
         {Darker[Green], PointSize[0.015], Point[{betaPlot, 0}]},
-        Text[Style["\[Beta]", 11, Darker[Green]], {betaPlot + 0.15, 0.15}]
+        Text[Style["\[Beta]", 11, Darker[Green],
+                Background -> Directive[White, Opacity[0.85]]],
+            {betaPlot + 0.15, 0.15}]
     }]
 ];
 Export[FileNameJoin[{baseDir, "ex65_contour.pdf"}], fig2];

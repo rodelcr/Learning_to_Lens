@@ -283,7 +283,7 @@ fig1 = Show[
             LineLegend[
                 {"Exact (Schwarzschild)", "Weak-field 4GM/(c^2 b)"},
                 LegendMarkerSize -> 15],
-            {0.65, 0.75}
+            {0.3, 0.25}
         ],
         ImageSize -> 550,
         GridLines -> Automatic,
@@ -388,7 +388,7 @@ fig4 = ListLogLogPlot[{timeContrib, totalContrib, exactAngles},
             "Time + Space: 4GM/(c^2 b)",
             "Exact (Schwarzschild)"
         }, LegendMarkerSize -> 15],
-        {0.65, 0.75}
+        {0.3, 0.25}
     ],
     ImageSize -> 550,
     GridLines -> Automatic,
