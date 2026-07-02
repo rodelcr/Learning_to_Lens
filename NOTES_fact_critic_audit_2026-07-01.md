@@ -10,9 +10,16 @@ via `wolframscript`. Citations were checked against Zotero + CrossRef and agains
 the source-text PDFs in `Reference_Texts/`.
 
 - **19 numeric/symbolic fixes applied** across 8 chapters (all independently verified).
-- **Two systematic problems** found: (1) ~47 wrong source **equation-number citations**;
-  (2) **cosmological distance/parameter errors** clustered in the lensing chapters.
+- **42 equation-number/reference citation fixes applied** across 10 chapters in a
+  follow-up pass — each RE-VERIFIED against the source PDF (page + quote) before
+  editing; 23 items left flagged (no standalone numbered equation / physics-judgment /
+  unconfirmable citation). Also repaired a broken `\eqref` in ch08.
+- **Two systematic problems** found & largely fixed: (1) ~65 wrong source
+  **equation-number citations** (42 fixed, 23 flagged); (2) **cosmological
+  distance/parameter errors** clustered in the lensing chapters.
 - **14 reports** written: `Notes/<ch>/FACT_CRITIC_<ch>_2026-07-01.md`.
+- **Document recompiles clean** (210 pp, 2 passes); only pre-existing undefined
+  citation is the lone stray `\citep{Birrer2020}` (repo has no `.bib`).
 - **Two controller self-corrections** (ch07, ch08) — documented below; both traced to
   not consulting the chapter's own ground truth (its Mathematica notebook / astropy)
   before touching a convention- or cosmology-dependent number.
@@ -109,11 +116,18 @@ Bartelmann & Schneider 2001, Kilbinger 2015, Bartelmann et al. 1998.
 
 ## Outstanding / recommended next steps
 
-1. **Equation-number cleanup pass** — systematic, PDF-verified, per the per-chapter reports.
-2. **Cosmology audit** — regenerate all worked-example distances from astropy; resolve the
-   ch04/ch09 factor-of-2 θ_E items and the ch10 mass (~2e14 → ~1.3e14).
-3. Review the ~10 flagged physics/consistency items.
-4. Recompile the 8 edited chapters (`Notes/build.sh`) to confirm the LaTeX still builds.
+1. ~~Equation-number cleanup pass~~ **DONE** (2026-07-01): 42 applied / 23 flagged,
+   PDF-verified. Remaining 23 flagged items need author judgment (per-chapter reports,
+   "Equation-number cleanup" sections).
+2. ~~Recompile~~ **DONE**: builds clean, 210 pp.
+3. **Cosmology audit** — regenerate all worked-example distances from astropy; resolve the
+   ch04/ch09 factor-of-2 θ_E items and the ch10 mass (~2e14 → ~1.3e14). (ch03/07 done.)
+4. Review the flagged physics/consistency items (κ>1 parity, Shapiro sign, T⁰⁰/T₀₀ index,
+   Kerr ergosphere r₊, image-count-sequence framing, etc.).
+5. Add the lone `\citep{Birrer2020}` to a `.bib` (or convert to prose) — the doc's only
+   undefined citation.
+6. Verify Kormann, Schneider & Bartelmann (1994) via NASA ADS and add to Zotero (the one
+   recurring citation the adapters couldn't confirm).
 
 ## Artifacts
 
