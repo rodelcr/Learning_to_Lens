@@ -201,3 +201,26 @@ Flag-only — multiple experiments named; not auto-fixable.
 - 3.64 (p.60): general spherical metric ✓
 - 3.65 (p.60): proper time relation ✓
 - 3.71 (p.61): weak-field isotropic metric ✓
+
+---
+
+## Equation-number cleanup (2026-07-01)
+
+### APPLIED
+
+| id | change | PDF evidence |
+|----|--------|-------------|
+| C1 | `Carroll eq.~5.5` → `Carroll eq.~5.11` (§ "Most General Spherically Symmetric Metric", line 172) | Carroll p.194 (PDF p.207): eq. 5.5 = 3-function metric with γ(r). Carroll p.195 (PDF p.208): eq. 5.11 = 2-function metric without γ (γ absorbed into radial coordinate) — matches the form written in the tex. |
+| C13 | `Carroll eq.~5.58` → `Carroll eq.~5.108` (§ EF Coordinates, line 478) | Carroll p.207 (PDF p.219): eq. 5.58 = `R^μ = (∂_φ)^μ = (0,0,0,1)` (Killing vector, unrelated). Carroll p.220 (PDF p.232): eq. 5.108 = `r* = r + 2GM ln(r/(2GM) − 1)` — the tortoise coordinate. Formula in tex is equivalent (SI form with R_S). |
+| C14 | `Carroll eq.~5.60` → `Carroll eq.~5.111` (§ EF Coordinates, line 480) | Carroll p.207 (PDF p.219): eq. 5.60 = `R_μ = (0,0,0,r²sin²θ)` (covariant Killing covector, unrelated). Carroll p.221 (PDF p.233): eq. 5.111 = `ds² = −(1−2GM/r)dv² + (dv dr + dr dv) + r²dΩ²` — the ingoing EF metric (c=1); tex form is correct SI restoration. |
+
+### STILL-FLAGGED (not touched)
+
+| id | reason |
+|----|--------|
+| N5 | WEP precision `10^{-13}` vs MICROSCOPE `~10^{-15}` — numeric content, ambiguous multi-experiment target, not an equation-number citation error. |
+| N8 | Solar redshift `z ~ 10^{-6}` (actual ~2.1×10^{-6}) — numeric content. |
+| X1 | Earth mass inconsistency between table and exercise — numeric/consistency issue. |
+| X2 | Dimensional inconsistency in tortoise/EF coordinate definition — physics/notation issue. |
+
+File edited: `01c_Schwarzschild.tex` only.

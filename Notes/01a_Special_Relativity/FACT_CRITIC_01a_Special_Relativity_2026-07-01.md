@@ -153,3 +153,24 @@ Sections verified and all returned the expected symbolic results:
 7. **§7 Four-velocity norm** — U^μ U_μ = **−1**: confirmed symbolically for arbitrary (vx,vy,vz) with vx²+vy²+vz² < 1
 
 All chapter formulas involving these quantities agree with the notebook output.
+
+---
+
+## Equation-number cleanup (2026-07-01)
+
+All six flagged citations were independently re-verified against the Carroll and C&K source PDFs before editing. Only `01a_Special_Relativity.tex` was modified.
+
+### APPLIED
+
+| id | old | new | PDF evidence |
+|----|-----|-----|--------------|
+| C9 | `pp.~11--14` | `pp.~12--14` | Carroll PDF page 25 = print p. 12: "**1.3 LORENTZ TRANSFORMATIONS**" heading. Print p. 11 (PDF p. 24) = end of Sec. 1.2, eqs. 1.20–1.22 (line element). |
+| C16 | `Carroll Sec.~1.4` | `Carroll Sec.~1.3` | Carroll PDF page 28 = print p. 15: "**1.4 VECTORS**" heading (tangent spaces, basis vectors). Carroll PDF page 27 = print p. 14: after eq. 1.35 reads "Applying these formulae leads to time dilation, length contraction, and so forth" — confirmed still in Sec. 1.3. |
+| C31 | `Congdon \& Keeton Sec.~3.2.3` | `Congdon \& Keeton Sec.~3.1.2` | C&K TOC (PDF pp. 9–10): Sec. 3.1.2 = "Lorentz Transformations" (p. 46); Sec. 3.2.3 = "Principle of Stationary Interval" (p. 55). C&K PDF p. 57 = print p. 46: "**3.1.2 Lorentz Transformations**" with eqs. 3.3–3.5 (Lorentz boost, γ). C&K PDF p. 67 = print p. 55: "**3.2.3 Principle of Stationary Interval**" with Twin Paradox (eq. 3.50) and Equivalence Principle — no boost-consequence derivations. |
+| C19 | `Carroll eq.~1.58` | `Carroll eq.~1.17` | Carroll PDF p. 34 = print p. 21: eq. 1.58 = tensor product T⊗S (completely unrelated to proper time). Carroll PDF p. 22 = print p. 9: eq. 1.17 = (Δτ)² = −(Δs)² = −η_μν Δx^μ Δx^ν (proper time definition). |
+| C20 | `Carroll eq.~1.59` | `Carroll eq.~1.100` | Carroll PDF p. 34 = print p. 21: eq. 1.59 = basis tensors ê_{(μ₁)} ⊗ ··· ⊗ θ̂^{(ν₁)} ⊗ ···. Carroll PDF p. 44 = print p. 31: eq. 1.100 = η_μν U^μ U^ν = −1. |
+| C21 | `Carroll eq.~1.60` | `Carroll eq.~1.101` | Carroll PDF p. 34 = print p. 21: eq. 1.60 = T = T^{μ₁…}_{ν₁…} ê ⊗ ··· ⊗ θ̂ ···. Carroll PDF p. 44 = print p. 31: eq. 1.101 = p^μ = mU^μ (boxed). |
+
+### STILL-FLAGGED
+
+None. All six flagged items were confirmed and corrected.

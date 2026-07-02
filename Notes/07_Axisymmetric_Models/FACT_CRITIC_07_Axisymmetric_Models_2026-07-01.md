@@ -128,3 +128,27 @@ All core physics formulas in the chapter were independently verified:
 - NFW antiderivative identity d/dx[ln(x/2)+K(x)] = xf(x): confirmed numerically.
 - NFW ρ_s formula: correct (from M₂₀₀ = (4π/3)r₂₀₀³·200ρ_crit).
 - Point mass magnification: matches N&B eq. (27) exactly.
+
+---
+
+## Equation-number cleanup (2026-07-01)
+
+Re-verified every C1–C5 flag against source PDFs via `pdftotext` + grep/awk before editing.
+Only edits with PDF-confirmed evidence applied. File edited: `07_Axisymmetric_Models.tex` only.
+
+### APPLIED
+
+| id | old citation | new citation | PDF evidence |
+|----|-------------|-------------|-------------|
+| C1 | N\&B eq.~24 | N\&B eq.~14 | nb97.txt line 446: eq.(14) = `β⃗ = θ⃗ − α⃗(θ⃗)` (general lens equation); eq.(24) confirmed = point-mass image positions `θ± = ½(β ± √(β²+4θ_E²))` at line 610 |
+| C2 | N\&B eq.~25 | N\&B Sec.~3.4 | nb97.txt line 633: eq.(25) = "magnification = image area / source area" (confirmed NOT the shear formula); |γ|=κ̄−κ for circular symmetry has no single labeled N&B eq. number — removed equation pointer, replaced with Sec.~3.4 citation |
+| C3 | C\&K eq.~2.40 | C\&K eq.~2.42 | ck18.txt line 1955: eq.(2.40) = Poisson ODE form `−4πGρ/σ² = (1/r²)d/dr(r² d lnρ/dr)`; line 1975: eq.(2.42) = `ρ(r) = σ²/(2πGr²)` — the SIS density profile |
+| C4 | C\&K eq.~4.12 | C\&K Sec.~2.2.1 | ck18.txt line 6527: eq.(4.12) = `α(θ) ≡ (D_ls/D_s) α̂(D_l θ)` (definition of reduced deflection vector, NOT the enclosed-mass formula); the enclosed-mass formula derives from C&K eqs.(2.11)+(2.12) in Sec.~2.2.1 |
+| C5 | C\&K Sec.~6.1 | C\&K Sec.~2.3.3 | ck18.txt TOC lines 396+206: Sec.~6.1 = "Singular Isothermal Lens Models" (SIS); Sec.~2.3.3 = "Nonsingular Isothermal Sphere" — NIS surface density eq.(2.54) first defined there |
+
+### STILL-FLAGGED (not edited)
+
+| id | status | reason |
+|----|--------|--------|
+| N8 | ⚠ SUSPECT | NFW concentration ranges c∼3–5/c∼10–20: no citation in text; values consistent with literature but cosmology/redshift-dependent; add Bullock et al. 2001 or soften claim |
+| C9 | ⚠ SUSPECT | Bartelmann (1996) A&A 313, 697 — existence confirmed via CrossRef but not in Zotero; equation-level text not extracted; add to Zotero and verify DOI |

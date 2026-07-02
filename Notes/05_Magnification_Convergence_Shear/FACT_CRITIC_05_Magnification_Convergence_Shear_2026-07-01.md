@@ -167,3 +167,33 @@ The "folds over" description is misleading here; negative parity requires one ei
 ## Summary of equation-number pattern
 
 All five cited N&B and C&K equation numbers in this chapter are wrong — by factors of 3–4× in N&B (e.g., citing eq. 15 for eq. 51, eq. 16 for eq. 58) and by ≥1 in C&K (citing 4.15 for 4.14, 4.16 for 4.22, 4.22 for 4.51, 4.23 for 4.54, Sec. 4.3 for Sec. 2.3.2). These appear to have been written from memory rather than checked against the source PDFs. All five require manual correction (citations are never auto-edited per skill policy).
+
+---
+
+## Equation-number cleanup (2026-07-01)
+
+Independent re-verification performed against PDFs via `pdftotext` + line reads before any edit.
+
+### APPLIED (5 / 5 confirmed)
+
+| id | change | PDF confirmation |
+|----|--------|-----------------|
+| C2-NB | N&B eq.~15 → eq.~51 (line 98) | nb97.txt line 1325: ψ(θ)=(1/π)∫κ ln\|θ−θ'\|d²θ'; eq. 15 (line 455) confirmed = "separation=angle×distance" |
+| C2-CK | C&K eq.~4.15 → eq.~4.14 (line 98) | ck18.txt line 6566: eq. 4.14 = lensing potential integral; line 6575: eq. 4.15 = κ=Σ/Σ_crit |
+| C3-NB | N&B eq.~18 → eq.~56 (lines 193–194) | nb97.txt line 503: eq. 18 = D=D_d D_ds/D_s; line 1406: eq. 56 = κ=(1/2)(ψ₁₁+ψ₂₂) |
+| C3-CK | C&K eq.~4.16 → eq.~4.22 (lines 193–194) | ck18.txt line 6612: eq. 4.16 = ψ_PM explicit; line 6684: eq. 4.22 = ∇²ψ=2κ |
+| C4-NB | N&B eq.~16 → eq.~58 (lines 369–370) | nb97.txt line 474: eq. 16 = deflection for uniform-density lens; line 1445: eq. 58 = A=[[1−κ−γ,−γ],[…]] |
+| C4-CK | C&K eq.~4.22 → eq.~4.51 (lines 369–370) | ck18.txt line 7200: eq. 4.51 = A⁻¹=[[1−ψ_xx,−ψ_xy],[…]] (inverse amplification tensor = Jacobian) |
+| C5 | C&K eq.~4.23 → eq.~4.54 (line 414) | ck18.txt line 6734: eq. 4.23 = time delay ΔT_PM; line 7264: eq. 4.54 = characteristic equation → λ±=(1−κ)±γ |
+| C6 | C&K Sec.~4.3 → Sec.~2.3.2 (line 706) | ck18.txt line 291 (TOC): Sec. 4.3="Time Delay and Parity"; line 205 (TOC) + line 1832: Sec. 2.3.2="Singular Isothermal Sphere", Σ(R)=σ²/(2GR) eq. 2.44 |
+
+Note on C6: the proposed fix in the report also suggested adding N&B Sec. 3.1 eq. 43. The existing .tex cited only C&K, so only the C&K reference was corrected (Sec. 4.3 → Sec. 2.3.2). The N&B addition is optional and left to the author.
+
+### STILL-FLAGGED (require author judgment)
+
+| id | issue |
+|----|-------|
+| N3 | "κ>1 → negative parity" claim (lines 521–525): mathematically wrong for pure convergence (det A=(1−κ)²>0 always), but the corrected prose is a judgment call for the author. |
+| C1 | Epigraph attribution as verbatim quote of N&B (1997): no exact match found in PDF; "after N&B" or an original epigraph is recommended. |
+
+File edited: `05_Magnification_Convergence_Shear.tex` only.

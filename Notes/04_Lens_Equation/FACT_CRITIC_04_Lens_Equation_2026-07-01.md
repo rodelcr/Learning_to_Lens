@@ -152,3 +152,26 @@ Summary §8 states `~30''`; worked Example 4.3(c) gives `~37''` for the stated c
 | ⚠ SUSPECT | 3 (N9, N10, C1) + .wl companion bug |
 
 **Core equations all correct** (β = θ − α, Einstein radius, image positions θ±, magnification μ±, Σ_cr formula). The physics is sound. The issues are: one wrong distance factor in a displayed formula (auto-fixed), systematic misattribution of N&B and C&K equation numbers throughout (5 of 5 N&B eq-numbers wrong, 3 of 3 C&K eq-numbers wrong), and a factor-of-100 unit conversion bug in the companion .wl.
+
+---
+
+## Equation-number cleanup (2026-07-01)
+
+Each citation below was independently re-verified against the source PDFs before the edit was applied. File edited: `Notes/04_Lens_Equation/04_Lens_Equation.tex` only.
+
+### APPLIED (4 corrections)
+
+| id | location (line) | old citation | new citation | PDF evidence |
+|----|-----------------|--------------|--------------|--------------|
+| C4 | line 251 (deflection integral) | `Congdon \& Keeton eq.~4.5` | `Congdon \& Keeton eq.~4.9` | C&K book p. 88 eq. 4.5 = ψ̂_PM(R) ≈ −(2GM/c²)[ln(2D_l/R)+ln(2D_ls/R)] (point-mass projected potential approximation, not deflection integral); C&K book p. 89 eq. 4.9 = α̂(ξ) = (4G/c²)∫Σ(ξ')(ξ−ξ')/\|ξ−ξ'\|² d²ξ' (IS the deflection integral). |
+| C5 | line 310 (Σ_cr definition) | `Congdon \& Keeton eq.~4.10; Narayan \& Bartelmann eq.~13` | `Narayan \& Bartelmann eq.~17; Congdon \& Keeton eq.~2.68` | N&B p. 9 eq. 13 = α⃗ = (D_ds/D_s)α̂ (reduced deflection angle, not Σ_cr); N&B p. 9 eq. 17 = Σ_cr = (c²/4πG)(D_s/D_d D_ds) = 0.35 g cm⁻² (D/1 Gpc)⁻¹ (IS Σ_cr). C&K p. 89 eq. 4.10 = ∇_ξ ln(\|ξ−ξ'\|) = (ξ−ξ')/\|ξ−ξ'\|² (gradient identity, not Σ_cr); C&K p. 90 eq. 4.15 text states "Σ_crit is defined by Eq. (2.68)" confirming eq. 2.68 = Σ_crit. |
+| C6 | line 633 (circular magnification) | `Narayan \& Bartelmann eq.~19` | `Narayan \& Bartelmann eq.~26` | N&B p. 9 eq. 19 = β(θ) = θ − (D_ds/D_d D_s)(4GM(θ)/c²θ) (circular lens equation, not magnification); N&B p. 11 eq. 26 = μ = (θ/β)(dθ/dβ) (IS the circular magnification formula). |
+| C7 | line 653 (μ± formula) | `Narayan \& Bartelmann eq.~20` | `Narayan \& Bartelmann eq.~27` | N&B p. 10 eq. 20 = θ_E = [4GM(θ_E)/c² × D_ds/(D_d D_s)]^{1/2} (Einstein radius for general circular lens, not μ±); N&B p. 11 eq. 27 = μ± = (u²+2)/(2u√(u²+4)) ± ½ (IS the μ± formula). |
+
+### STILL-FLAGGED (3 items — author judgment required)
+
+| id | location | issue | reason not changed |
+|----|----------|-------|--------------------|
+| C2 | line 155 (position relations ξ=D_d θ, η=D_s β) | `Congdon \& Keeton eq.~4.1; Narayan \& Bartelmann eq.~5` both wrong | C&K eq. 4.1 (p. 87) = α̂(ξ) = ∇_ξψ̂(ξ); N&B eq. 5 (p. 7) = Φ(b,z) = −GM/(b²+z²)^{1/2}. Neither is the position relations. No standalone numbered equation for ξ=D_d θ in either source — fix requires author decision (remove eq-numbers, or cite N&B §2.1.3 / C&K §4.1 as section refs). |
+| C3 | line 183 (physical displacement η=(D_s/D_d)ξ−D_ds α̂) | `Narayan \& Bartelmann eq.~6; Congdon \& Keeton eq.~4.2` both wrong | N&B eq. 6 (p. 7) = ∇⊥Φ(b,z) = GMb̂/(b²+z²)^{3/2}; C&K eq. 4.2 (p. 88) = ψ̂(ξ) = (2/c²)∫Φ(ξ,z)dz. Neither is the displacement relation. Displacement derived in N&B geometrically just before eq. 14 (text, unnumbered); C&K via eq. 4.26 derivation. Fix requires author decision (remove or replace). |
+| C1 | epigraph | Quoted sentence not found verbatim in N&B pp. 1–12 | May be paraphrase presented as direct quote. Cannot be resolved without full-text search of the paper; not a numbered-equation error. |

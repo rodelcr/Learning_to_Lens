@@ -157,3 +157,48 @@ Python verification: at a/M = 0.5, r_+ = 1.866 GM/c² vs R_S/2 = 1.0 GM/c² — 
 | Citation | 17 | 3 (C6, C21, C24) | 3 | 1 (C7) |
 | Consistency | 5 | 0 | 0 | 0 |
 | Formula (Kerr ergosphere) | — | — | 1 | — |
+
+---
+
+## Equation-number cleanup (2026-07-01)
+
+### APPLIED
+
+- **C6**: `Carroll eq.~5.64` → `Carroll eq.~5.65`
+  PDF evidence (Carroll p. 208, PDF p. 221): eq. 5.64 = intermediate form
+  `−E² + (dr/dλ)² + (1−2GM/r)(L²/r² + ε) = 0`; eq. 5.65 = the clean
+  form `½(dr/dλ)² + V(r) = ε` that the tex describes. Confirmed off-by-one.
+  [line 96 of 01d_Geodesics_Orbits.tex]
+
+- **C21**: Removed `Congdon \& Keeton eq.~3.84 with $\ell_{\mathrm{crit}}$`
+  from photon sphere citation; replaced with `Congdon \& Keeton Sec.~3.3.3,
+  prose after eq.~3.86`.
+  PDF evidence (C&K p. 64, PDF p. 75): eq. 3.84 reads
+  `r_+ = ℓ²_crit/(2GM) = 6GM/c²` — this is the ISCO, not the photon
+  sphere. The photon sphere r = 3GM/c² appears in the prose of the
+  Massless Case section: "In fact, there is only one such radius:
+  r = 3GM/c²." No numbered equation exists for it in C&K.
+  [line 195 of 01d_Geodesics_Orbits.tex]
+
+- **C24**: Removed `Congdon \& Keeton eq.~3.95` from perihelion precession
+  citation; citation now reads `(Carroll eq.~5.92)` only.
+  PDF evidence (C&K p. 67, PDF p. 78): eq. 3.95 reads
+  `Δφ = π + 4m/r₀ + O(m/r₀)²` — this is the light deflection azimuthal
+  change (Sec. 3.4.1), not the perihelion precession formula. C&K Ch. 3
+  does not derive perihelion precession at all.
+  [line 267 of 01d_Geodesics_Orbits.tex]
+
+### STILL-FLAGGED
+
+- **C7** (SUSPECT): Carroll eq.~5.66 convention discrepancy. The tex's
+  V_eff drops the additive +½ε constant (absorbed into effective energy
+  E). Physically equivalent; reader comparing to Carroll eq. 5.66 will
+  see a mismatch. Requires editorial judgement on notation — not a wrong
+  equation number. Left for author to resolve (add parenthetical or
+  change to cite C&K eq. 3.80 only).
+
+- **Kerr ergosphere inner boundary** (formula error): Tex writes
+  `R_S/2 < r < (R_S + √(R_S²−4a²cos²θ))/2` but the correct inner
+  boundary is the outer horizon r_+ = (R_S + √(R_S²−4a²))/2, which
+  equals R_S/2 only at maximum spin. Physics/formula issue, not a
+  citation error. Left for author.

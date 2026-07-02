@@ -97,3 +97,29 @@ The remark in §2.4 states "the critical curve is an **ellipse**: elongated alon
 ## Notes on unverified observation claims
 
 N8 (quad fraction 20–30%), N15 (double fraction 70–80%), N18 (arc magnifications μ∼20–50), N19 (arc L/W >10:1), N20 (cluster critical curve radius ~10–30 arcsec): all capped at ⚠ SUSPECT with no Observation adapter. All are broadly consistent with the literature as known from domain context but have not been independently verified this run.
+
+---
+
+## Equation-number cleanup (2026-07-01)
+
+Re-verified each flagged citation against source PDFs (pdftotext + grep) before editing. All four independently confirmed and applied. Only `08_Elliptical_Models_Caustics.tex` was edited.
+
+### APPLIED
+
+- **C1** `eq.~6.7` → `eqs.~6.1--6.2` (SIS+shear lensing potential, line ~114).
+  PDF confirmation: C&K eq. 6.7 (p.148) = A⁻¹ matrix in polar form (confirmed by grep: "b sin φ cos φ / R ... (6.7)"). The combined potential is explicitly stated in C&K as "the sum ψ = ψ_SIS + ψ_γ", i.e., eq. 6.2 (SIS: `b√(x²+y²)`) + eq. 6.1 (shear: `-γ/2(x²-y²)`).
+
+- **C2** `eq.~6.15` → `eq.~6.13` (SIE surface mass density / convergence, line ~282).
+  PDF confirmation: C&K eq. 6.13 (p.151) = `κ_SIEMD = b/(2R√(q²cos²φ+sin²φ))` — the SIEMD convergence. C&K eq. 6.15 (p.152) = `κ_SIEP = q²b/(2R(q²cos²φ+sin²φ)^{3/2})` — the SIEP convergence (different model). Chapter presents SIEMD deflection angles (arctan/arctanh) consistent with KSB94; eq. 6.13 is the correct reference.
+
+- **C5** `Ch.~5--6` → `Ch.~7, Sec.~7.5` (Whitney's theorem, Petters et al. 2001, line ~965).
+  PDF confirmation: Petters 2001 ToC confirms Ch. 5 = "Observations of Gravitational Lensing" (p.~143); Whitney Singularity Theory = Sec. 7.5 (grep: "7.5.1 Definition of Folds and Cusps", "7.5.3 Stability of Maps between 2-Manifolds", line ~362 in extracted text).
+
+- **X2** `eqs.~\eqref{eq:sie_alpha1}--\eqref{eq:sie_alpha2}` → `eq.~\eqref{eq:sie_alpha}` (exercise cross-reference, line ~1243).
+  Repo-grep confirmation: labels `eq:sie_alpha1` and `eq:sie_alpha2` are absent from the .tex; `eq:sie_alpha` (single boxed display for both α₁ and α₂ components) exists at line 331. Also changed "eqs." to "eq." to match singular label.
+
+### STILL-FLAGGED (author judgment required)
+
+- **X1**: Image-count sequence in §5.3 Stages 2 and 4 says "1→3" and "3→1"; correct for SIE is "2→4" and "4→2". Requires author decision on SIE vs. non-singular framing — not a simple number substitution.
+- **X3**: SIS+shear critical curve called an "ellipse" in §2.4 remark; r(φ) is a limaçon-type curve (~1.5–3% deviation from true ellipse at γ=0.1). Softening to "oval" or "approximately elliptical for small γ" is author's call.
+- **C3**: Kormann, Schneider & Bartelmann (1994) not confirmable by available adapters; verify via NASA ADS.

@@ -149,3 +149,29 @@ The claim IS correct for smooth extended profiles (SIS: ψ = θ_E|θ| > 0 everyw
 delay. For a point mass, ψ changes sign at the Einstein radius: inside the ring ψ < 0,
 and the Shapiro term −ψ adds to the arrival time." Alternatively, restrict the statement
 to the general extended-lens context before specializing to the point mass.
+
+---
+
+## Equation-number cleanup (2026-07-01)
+
+Independent re-verification performed against pdftotext output of the source PDFs before any edit.
+
+### APPLIED
+
+**C2 — N&B eq. 21 → eq. 63**
+- Cited in .tex (line 116): `Narayan \& Bartelmann eq.~21`
+- Re-verified N&B PDF: eq. (21) = Einstein radius `θ_E = [4GM D_ds/(c² D_d D_s)]^½` (PDF text: "For a point mass M, the Einstein radius is given by … (21)").
+- Re-verified N&B PDF: eq. (63) = time-delay function `t(θ) = (1+z_d)/c · D_d D_s/D_ds · [½|θ−β|² − ψ(θ)]` (PDF text: "the time-delay function, t(θ) = … (63)").
+- Edit applied: `eq.~21` → `eq.~63`
+
+**C3 — C&K eq. 4.46 → eqs. 4.23–4.25**
+- Cited in .tex (line 116): `Congdon \& Keeton eq.~4.46`
+- Re-verified C&K PDF: eq. (4.46) = magnification `μ = (1−κ)^{−2}` for constant-convergence lens (PDF text: "The magnification will be given by μ = (ε′/ε)² = (1−κ)^{−2} > 0 (4.46)").
+- Re-verified C&K PDF: eq. (4.23) = time delay `ΔT = T_* [½(θ−β)² − ψ_PM(θ)]`; eq. (4.24) = prefactor `T_* = (1+z_l)/c · D_l D_s/D_ls`; eq. (4.25) = Fermat potential `τ(θ|β) = ½|θ−β|² − ψ(θ)` (PDF text: "τ is known as the Fermat potential").
+- Edit applied: `eq.~4.46` → `eqs.~4.23--4.25`
+
+### STILL-FLAGGED (not equation-number fixes — unchanged)
+
+- **C4** (SEF §4.4 section number): source PDF not read in this pass; flag remains for author.
+- **C6** (H0LiCOW/TDCOSMO conflation): physics/attribution judgment — no .tex edit.
+- **P1** (Shapiro sign for point mass): physics judgment — no .tex edit.

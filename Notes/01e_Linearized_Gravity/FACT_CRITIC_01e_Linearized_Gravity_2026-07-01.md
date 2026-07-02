@@ -159,3 +159,22 @@ as 2GM/(c²b). The wl comment should be corrected to
 | `C&K eq.~4.1` (line 622) | equation number wrong | flag: 4.1=deflection gradient; lens eq = C&K 4.26 |
 | galaxy `\|Φ\|/c² ~ 10⁻⁵–10⁻⁴` (line 70) | value mismatch for stated M,r | flag: python gives ~5×10⁻⁶; adjust range or adjust parameters |
 | `b/R_S ~ 2×10⁵` (fig caption, ~line 424) | value low by 18% | flag: actual ~2.4×10⁵ |
+
+---
+
+## Equation-number cleanup (2026-07-01)
+
+Each citation independently re-verified against the source PDF before editing. Only `01e_Linearized_Gravity.tex` was modified.
+
+| citation (old) | status | new citation | PDF evidence |
+|---|---|---|---|
+| `Carroll eq.~4.12` (line 205) | **APPLIED** | `Carroll eq.~4.19` | Carroll p. 153: eq. 4.12 = `g_{μν} = η_{μν} + h_{μν}` (metric decomposition). Carroll p. 154: eq. 4.19 = `h_{00} = −2Φ` (c=1; the h₀₀ identification). |
+| `C&K eq.~3.68` (line 93) | **APPLIED** | `C&K Sec.~3.3.2` | C&K p. 60: eq. 3.68 = full Schwarzschild interval in standard coords. No C&K equation states the linearised perturbation g=η+h; the weak-field limit is derived in §3.3.2 leading to eq. 3.71. |
+| `Carroll eq.~7.8` (line 250) | **APPLIED** | `Carroll eq.~7.59` | Carroll p. 275: eq. 7.8 = linearised Einstein tensor G_{μν}^{(1)}. Carroll p. 287: eq. 7.59 = `ds²=−(1+2Φ)dt²+(1−2Φ)(dx²+dy²+dz²)` (weak-field isotropic metric). |
+| `C&K eq.~3.77` (line 347) | **APPLIED** | `C&K Sec.~3.4.1` | C&K p. 62: eq. 3.77 = `c²=(1−R_S/r)c²ṫ²−(1−R_S/r)⁻¹ṙ²−r²φ̇²` (massive-particle geodesic constraint). No C&K equation gives the temporal-piece deflection integral; argument is narrative in §3.4.1. |
+| `C&K eq.~3.78` (line 361) | **APPLIED** (removed) | `(Will 1993)` only | C&K p. 62: eq. 3.78 = `ṙ²=ε²/c²−(1−R_S/r)(ℓ²/r²+c²)` (energy conservation for massive particles). C&K never state a PPN split; cite Will 1993 alone for the PPN formula. |
+| `Carroll eq.~7.47` (line 520) | **APPLIED** | `Carroll eq.~7.85` | Carroll p. 285: eq. 7.47 = `w^i = w^i_⊥ + w^i_∥` (vector field decomposition). Carroll p. 293: eq. 7.85 = `n = 1 − 2Φ` (effective refractive index). |
+| `C&K eq.~6.1` (line 521) | **APPLIED** | `C&K eq.~4.25` | C&K p. 146: eq. 6.1 = `ψ_γ(x,y)=−(γ/2)(x²−y²)` (external-shear lens potential, Ch. 6). C&K p. 92: eq. 4.25 = `τ(θ\|β)=½\|θ−β\|²−ψ(θ)` (Fermat potential). |
+| `C&K eq.~4.5` (line 574) | **APPLIED** | `C&K eq.~4.9` | C&K p. 88: eq. 4.5 = approximate point-mass projected potential `ψ̂_{PM}≈−(2GM/c²)[ln(2D_l/R)+ln(2D_{ls}/R)]`. C&K p. 89: eq. 4.9 = `α̂(ξ)=(4G/c²)∫Σ(ξ')(ξ−ξ')/\|ξ−ξ'\|² d²ξ'` (continuous-distribution deflection). |
+| `C&K eq.~4.1` (line 622) | **APPLIED** | `C&K eq.~4.26` | C&K p. 87: eq. 4.1 = `α̂(ξ)=(2/c²)∫∇_ξΦ(ξ,z)dz ≡ ∇_ξψ̂(ξ)` (deflection as gradient of scalar potential). C&K p. 92: eq. 4.26 = `β=θ−∇ψ(θ)≡θ−α(θ)` (lens equation). |
+| `Carroll eq.~4.11` (line 61) | **STILL-FLAGGED** | — | Carroll p. 153: eq. 4.11 = `Γ^μ_{00}=−½g^{μλ}∂_λg_{00}` (Christoffel symbol). No single Carroll equation states `\|Φ\|/c²=GM/rc²`; the identification follows from context in §4.1 prose. Citation left unchanged pending author decision on whether to cite §4.1 prose or remove. |

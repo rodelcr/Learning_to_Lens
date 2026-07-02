@@ -120,3 +120,22 @@ D_d(z=0.04) × 0.9''/206265 = 0.71 kpc  [text ~0.7 kpc → ✓]
 --- Tension H0LiCOW vs Planck ---
 (73.3−67.4)/√(1.8²+0.5²) = 3.16σ  [text says 3.1σ → ✓ consistent]
 ```
+
+---
+
+## Equation-number cleanup (2026-07-01)
+
+### APPLIED
+
+**C4 — Congdon & Keeton equation number for Einstein-mass formula**
+- **Change:** `eq.~6.35` → `eq.~7.9` (line 157 of `09_Galaxy_Lensing_Applications.tex`)
+- **PDF verification (independent re-check):**
+  - C&K eq. (6.35), p. 160 of extracted text: `Γ = √[(κ − α_NIS/R)² − 2γ(κ − α_NIS/R)cos(2φ) + γ²]` — NIS+shear amplitude; **not** the Einstein-mass formula.
+  - C&K eq. (7.9), p. 190 of extracted text: `M_2D(D_l θ_E) = c² D_l D_s θ_E² / (4G D_ls)` — **is** the enclosed Einstein mass formula cited in the text.
+- Fix applied only after independent PDF confirmation. Equation number 6.35 was incorrect; 7.9 is correct.
+
+### STILL-FLAGGED (not citation-number fixes; left to author)
+
+- **X1** — H0 label swap between §3.3 (eq. mst_H0) and §5.3 — notation/prose issue, author judgment required.
+- **N2** — θ_E numerical example ≈1.4'' vs computed 1.15'' for z_s=1.0 — value correction, not an equation-number fix.
+- **C2**, **N10**, **C7/N6** — suspect citations/missing citation (PixeLens year, Kundić et al. time delay, Planck DOI) — verification tasks for author.
