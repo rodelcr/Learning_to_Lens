@@ -149,7 +149,7 @@ sigmaCr[Dd_, Ds_, Dds_] := cc^2 / (4 Pi Gnewton) * Ds / (Dd * Dds);
 sCrGal = sigmaCr[DdGal, DsGal, DdsGal];
 Print["Galaxy lens (zd=0.3, zs=1):"];
 Print["  Sigma_cr = ", ScientificForm[sCrGal, 4], " kg/m^2"];
-Print["           = ", NumberForm[sCrGal * 10, {3, 2}], " g/cm^2"];
+Print["           = ", NumberForm[sCrGal * 0.1, {3, 2}], " g/cm^2"];
 (* Convert to Msun/pc^2: 1 pc = 3.086e16 m *)
 sCrGalSunPc2 = sCrGal * (3.086*^16)^2 / Msolar;
 Print["           = ", NumberForm[sCrGalSunPc2, {4, 0}], " Msun/pc^2\n"];

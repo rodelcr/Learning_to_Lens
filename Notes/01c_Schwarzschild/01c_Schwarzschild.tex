@@ -64,11 +64,12 @@ $F = m_i\, a$) is equal to the \textbf{gravitational mass} $m_g$
 \end{equation}
 This equality has no explanation within Newtonian mechanics --- it is
 simply an empirical fact.  Yet it has been tested to extraordinary
-precision: the E\"otv\"os experiments and their modern successors
-(Dicke, Braginsky, and the MICROSCOPE satellite mission) have verified
-eq.~\eqref{eq:wep} to better than one part in $10^{13}$:
+precision: E\"otv\"os-type torsion-balance experiments (Dicke,
+Braginsky, and the E\"ot-Wash group) verified this to better than one
+part in $10^{13}$, and the MICROSCOPE satellite mission (2022) extended
+the limit by two orders of magnitude:
 \begin{equation}
-    \frac{|m_i - m_g|}{m_g} < 10^{-13} \,.
+    \frac{|m_i - m_g|}{m_g} < 10^{-15} \,.
     \label{eq:wep_precision}
 \end{equation}
 The universality of free fall is not an accident --- Einstein elevated
@@ -346,7 +347,7 @@ In the weak-field limit ($R_S/r \ll 1$): $z_{\mathrm{grav}} \approx GM/(rc^2)$
     \caption{Gravitational redshift $z_{\mathrm{grav}}$ as a function of
     emission radius $r/R_S$.  The redshift diverges at the horizon.  The
     black dot marks a typical neutron star ($r/R_S \approx 2.4$,
-    $z \approx 0.3$).  For the Sun, $z \sim 10^{-6}$.}
+    $z \approx 0.3$).  For the Sun, $z \approx 2.1 \times 10^{-6}$.}
     \label{fig:grav_redshift}
 \end{figure}
 
@@ -471,11 +472,13 @@ is a coordinate artifact.  We can remove it by switching to
 \textbf{ingoing Eddington--Finkelstein coordinates}.  Define the
 advanced time coordinate:
 \begin{equation}
-    v = t + r_* \,, \qquad
+    v = t + \frac{r_*}{c} \,, \qquad
     r_* = r + R_S \ln\!\left|\frac{r}{R_S} - 1\right| ,
     \label{eq:tortoise_and_v}
 \end{equation}
-where $r_*$ is the \textbf{tortoise coordinate} (Carroll eq.~5.108).
+where $r_*$ (units of length) is the \textbf{tortoise coordinate}
+(Carroll eq.~5.108), and dividing by $c$ makes $r_*/c$ a time shift
+so that $v$ is a well-defined time coordinate in SI units.
 In terms of $(v, r, \theta, \phi)$, the Schwarzschild line element
 becomes (Carroll eq.~5.111):
 \begin{equation}

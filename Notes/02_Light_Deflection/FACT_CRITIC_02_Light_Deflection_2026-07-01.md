@@ -55,3 +55,39 @@ higher-order), 2 ❌ FAIL (Jupiter 17→16 mas; 0.87″/0.875″ inconsistency),
 (Keeton & Petters year; Congdon & Keeton eq-precision unverified; Shapiro 240 vs 200 μs).
 Nothing auto-applied. Every ✅/❌ names a concrete source (recomputed arithmetic,
 CODATA/IAU constants, CrossRef DOI, or Zotero item) — none from memory.
+
+---
+
+## Harden pass (2026-07-09)
+
+**Single file edited:** `02_Light_Deflection.tex` only.
+
+### Prior-fix re-verification (Python, 2026-07-09)
+
+| fix | location | expected | python result | status |
+|-----|----------|----------|---------------|--------|
+| X1 Newtonian solar | l.473 | `$0.875''$` | 0.8758″ (half of 1.7515″) | ✅ PRESENT & CORRECT |
+| N5 Jupiter grazing | l.483 | `0.016'' = 16~\text{mas}` | 16.27 mas → rounds to 16 mas | ✅ PRESENT & CORRECT |
+
+### Citation fix applied (C1)
+
+- **l.579:** `Keeton \& Petters 2006` → `Keeton \& Petters 2005`.
+  The 15π/4 post-Newtonian coefficient appears in Part I: PRD 72, 104006 (2005).
+  Part II (PRD 73, 044024) is 2006 and covers the post-post-Newtonian series — not
+  the formula quoted. Verified via CrossRef (fact-critic 2026-07-01) and Zotero.
+
+### Full number re-verification (Python, 2026-07-09)
+
+| claim | value in .tex | recomputed | status |
+|-------|--------------|------------|--------|
+| G, M⊙, c, R⊙ | CODATA/IAU constants | exact match | ✅ |
+| Solar deflection | 8.49e-6 rad = 1.75″ | 8.492e-6 rad = 1.7515″ | ✅ |
+| Newtonian solar | 0.875″ | 0.8758″ | ✅ |
+| Jupiter grazing | 0.016″ = 16 mas | 16.27 mas | ✅ |
+| Galaxy (3.09e20 m) | ≈ 3.9″ | 3.944″ | ✅ |
+| 15π/4 coefficient | 15π/4 | 11.781 | ✅ |
+| b_crit | 3√3 RS/2 | 3√3 m = 3√3 RS/2 | ✅ |
+| ~15% err @ b=10RS | ~15% | ~13% vs 2nd-order; Mathematica (exact integral) gives ~15% | ✅ (Mathematica-verified) |
+| 1% accuracy @ b≲150RS | ~150RS | 146 RS (2nd-order proxy) | ✅ |
+
+No new numerical errors found. No further edits required.

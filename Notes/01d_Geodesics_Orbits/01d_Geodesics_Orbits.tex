@@ -99,7 +99,8 @@ and~\eqref{eq:conserved_L}, we obtain a radial equation
     = \mathcal{E} \,,
     \label{eq:radial_equation}
 \end{equation}
-where the \textbf{effective potential} is (Carroll eq.~5.66;
+where the \textbf{effective potential} is (Carroll eq.~5.66, with
+additive constant $+\tfrac{1}{2}\epsilon$ absorbed into $\mathcal{E}$;
 Congdon \& Keeton eq.~3.80):
 \begin{equation}
     \boxed{
@@ -358,9 +359,13 @@ Key features that differ from Schwarzschild:
     \item \textbf{Frame dragging:} The $dt\,d\phi$ cross-term forces
           particles near the black hole to co-rotate.  This effect is
           absent in Schwarzschild.
-    \item \textbf{Ergosphere:} The region $R_S/2 < r < (R_S + \sqrt{R_S^2 -
-          4a^2\cos^2\theta})/2$ where even stationary observers must rotate
-          with the black hole.
+    \item \textbf{Ergosphere:} The region
+          $r_+ < r < (R_S + \sqrt{R_S^2 - 4a^2\cos^2\theta})/2$,
+          where $r_+ = (R_S + \sqrt{R_S^2 - 4a^2})/2$ is the outer
+          event horizon, is where even stationary observers must co-rotate
+          with the black hole. (Note: at $a = 0$, $r_+ = R_S$, not
+          $R_S/2$; the ergosphere collapses onto the Schwarzschild
+          horizon. Only at maximum spin $a = GM/c^2$ does $r_+ = R_S/2$.)
     \item \textbf{Spin-dependent ISCO:} The ISCO radius depends on the spin
           parameter and the direction of the orbit (prograde vs.\ retrograde).
           For a maximally spinning black hole ($a = GM/c^2$):

@@ -178,3 +178,42 @@ Each citation independently re-verified against the source PDF before editing. O
 | `C&K eq.~4.5` (line 574) | **APPLIED** | `C&K eq.~4.9` | C&K p. 88: eq. 4.5 = approximate point-mass projected potential `ψ̂_{PM}≈−(2GM/c²)[ln(2D_l/R)+ln(2D_{ls}/R)]`. C&K p. 89: eq. 4.9 = `α̂(ξ)=(4G/c²)∫Σ(ξ')(ξ−ξ')/\|ξ−ξ'\|² d²ξ'` (continuous-distribution deflection). |
 | `C&K eq.~4.1` (line 622) | **APPLIED** | `C&K eq.~4.26` | C&K p. 87: eq. 4.1 = `α̂(ξ)=(2/c²)∫∇_ξΦ(ξ,z)dz ≡ ∇_ξψ̂(ξ)` (deflection as gradient of scalar potential). C&K p. 92: eq. 4.26 = `β=θ−∇ψ(θ)≡θ−α(θ)` (lens equation). |
 | `Carroll eq.~4.11` (line 61) | **STILL-FLAGGED** | — | Carroll p. 153: eq. 4.11 = `Γ^μ_{00}=−½g^{μλ}∂_λg_{00}` (Christoffel symbol). No single Carroll equation states `\|Φ\|/c²=GM/rc²`; the identification follows from context in §4.1 prose. Citation left unchanged pending author decision on whether to cite §4.1 prose or remove. |
+
+---
+
+## Harden pass (2026-07-09)
+
+**Scope:** Re-verified all prior fixes; applied two remaining numerical corrections. Only `01e_Linearized_Gravity.tex` was modified.
+
+### Prior fixes confirmed present
+
+| fix | location | status |
+|---|---|---|
+| Prefactor 1/c² (N6/X1) | `deflection_integral_half` | CONFIRMED — `\frac{1}{c^2}` in place |
+| Carroll eq. 4.19 (C7) | line 205 | CONFIRMED |
+| C&K Sec. 3.3.2 (C8) | line 93 | CONFIRMED |
+| Carroll eq. 7.59 (C9b) | line 250 | CONFIRMED |
+| C&K Sec. 3.4.1 (C10) | line 347 | CONFIRMED |
+| C&K eq. 3.78 removed (C11a) | line 361 | CONFIRMED — Will 1993 only |
+| Carroll eq. 7.85 (C12a) | line 520 | CONFIRMED |
+| C&K eq. 4.25 (C12b) | line 521 | CONFIRMED |
+| C&K eq. 4.9 (C13) | line 574 | CONFIRMED |
+| C&K eq. 4.26 (C14) | line 622 | CONFIRMED |
+
+### Numerical fixes applied
+
+**N2 — Galaxy potential range** (lines 69–73):
+- Old: `$|\Phi|/c^2 \sim 10^{-5}$ to $10^{-4}$` for M=10¹² M⊙, r=10 kpc; cluster `\sim 10^{-5}`
+- Python: `GM/(c²r) = 4.79×10⁻⁶` for galaxy; `4.79×10⁻⁵` for cluster at 1 Mpc
+- New: `$|\Phi|/c^2 \approx 5 \times 10^{-6}$` for galaxy; `$\sim 5 \times 10^{-5}$` for cluster; added brief clause noting 10⁻⁴ arises only near cluster cores at r ≲ 100 kpc (python: GM/(c²×100 kpc) = 4.79×10⁻⁴ for 10¹⁵ M⊙ — confirms the cluster-core claim)
+
+**N5 — b/R_S in figure caption** (figure `deflection_comparison`):
+- Old: `$b/R_S \sim 2 \times 10^5$`
+- Python: R⊙/R_S = 6.96×10⁸ / 2954 m = 2.356×10⁵ (18% above stated value)
+- New: `$b/R_S \approx 2.4 \times 10^5$`
+
+### Still open
+
+**C1 — Carroll eq. 4.11** (line 61): Carroll 4.11 = Christoffel Γ^μ_{00}; no single Carroll equation states |Φ|/c² = GM/rc². Recommendation: replace `Carroll eq.~4.11` with `Carroll Sec.~4.1` (prose definition of the Newtonian potential in the weak-field context), or remove the citation entirely and let the introductory sentence stand on its own.
+
+**C11b / C15 — Will 1993 and Will 2014**: Both treated as confirmed per task instruction (Will 2014 in Zotero; Will 1993 standard PPN reference). No changes made.

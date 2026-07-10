@@ -175,3 +175,60 @@ Independent re-verification performed against pdftotext output of the source PDF
 - **C4** (SEF §4.4 section number): source PDF not read in this pass; flag remains for author.
 - **C6** (H0LiCOW/TDCOSMO conflation): physics/attribution judgment — no .tex edit.
 - **P1** (Shapiro sign for point mass): physics judgment — no .tex edit.
+
+---
+
+## Harden pass (2026-07-09)
+
+### NUMBERS (triple-check against Mathematica + Python)
+
+Wolfram license not activated in this environment (wolframscript exits with "not activated"); all numerical claims verified independently with python3 against the exact constants used in `time_delay_function.wl`.
+
+| id | quantity | .tex states | python3 result | verdict |
+|----|----------|-------------|----------------|---------|
+| N1 | R_S (M=10¹² M☉) | 2.95×10¹⁵ m, 0.096 pc | 2.9538×10¹⁵ m, 0.0957 pc | ✅ PASS |
+| N2 | sqrt(y²+4) for y=0.5 | 2.0616 | 2.061553 | ✅ PASS |
+| N3 | y·sqrt/2 (first term) | 0.5154 | 0.515388 | ✅ PASS |
+| N4 | ratio (2.0616+0.5)/(2.0616−0.5) | 1.6401 | 1.640388 | ⚠ 3 in 4th decimal; no physics impact |
+| N5 | ln(ratio) | 0.4947 | 0.494933 | ⚠ 2 in 4th decimal; no physics impact |
+| N6 | Δτ = term1 + ln | 1.0101 | 1.010321 | ⚠ 2 in 4th decimal; no physics impact |
+| N7 | Δt = R_S/c·(1+z_d)·Δτ | ≈149 days | 149.8 days | ✅ PASS |
+
+N4–N6 carry a small rounding-chain error (< 0.02%) with zero effect on the stated 149 days conclusion. Unchanged per original assessment.
+
+### APPLIED-FIX RE-VERIFICATION
+
+**C2 — N&B eq.~21 → eq.~63** (applied 2026-07-01):
+- Checked .tex line 116: `Narayan \& Bartelmann eq.~63` — **confirmed applied** ✅
+
+**C3 — C&K eq.~4.46 → eqs.~4.23--4.25** (applied 2026-07-01):
+- Checked .tex line 116: `Congdon \& Keeton eqs.~4.23--4.25` — **confirmed applied** ✅
+
+### PROSE FIXES (this pass)
+
+**P1 — Shapiro-delay sign for point mass (FIXED)**
+
+Old (§2 remark, second bullet):
+> "the lensing potential $\psiL > 0$ in the vicinity of the lens, so this term \textit{reduces} the arrival time"
+
+Justification: For a point mass ψ = θ_E² ln|θ|. At θ = 0.5 θ_E: ψ = –0.6931 < 0, so −ψ = +0.6931 > 0 — the Shapiro term *increases* arrival time inside the Einstein radius. The original claim is correct only for smooth extended profiles (e.g., SIS: ψ = θ_E|θ| > 0 everywhere). Python confirms sign flip at θ = θ_E for the point mass.
+
+New (brief clause added to same bullet):
+> "for smooth extended profiles (such as the SIS), the lensing potential $\psiL > 0$ everywhere in the vicinity of the lens, so this term \textit{reduces} the arrival time … For a point mass, however, $\psiL = \thetaE^2\ln|\vectheta| < 0$ inside the Einstein radius ($|\vectheta| < \thetaE$), so $-\psiL > 0$ there and the Shapiro term \textit{increases} the arrival time in that region."
+
+---
+
+**C6 — H0LiCOW XIII attribution (FIXED)**
+
+Old:
+> "\textbf{H0LiCOW/TDCOSMO} … Their combined result gives H0 = 73.3⁺¹·⁷₋₁·₈ km s⁻¹ Mpc⁻¹"
+
+Justification: H0 = 73.3+1.7/−1.8 is the **H0LiCOW XIII** result (Wong et al. 2020, MNRAS 498, 1420; Zotero NDZSGMLR), not a combined H0LiCOW+TDCOSMO value. TDCOSMO (Birrer et al. 2020, A&A 643, A165) is a separate programme whose independent analysis gives H0 = 74.5+5.6/−6.1 km/s/Mpc with explicit marginalisation over the mass-sheet degeneracy.
+
+New:
+> "\textbf{H0LiCOW} … The H0LiCOW XIII result (Wong et al.\ 2020; six lenses) gives H0 = 73.3⁺¹·⁷₋₁·₈ km s⁻¹ Mpc⁻¹ … The successor \textbf{TDCOSMO} programme (Birrer et al.\ 2020) performed an independent analysis that explicitly marginalises over the mass-sheet degeneracy and obtained a less precise but consistent result (H0 = 74.5⁺⁵·⁶₋⁶·¹ km s⁻¹ Mpc⁻¹)."
+
+### STILL-OPEN
+
+- **C4** (SEF 1992 §4.4 section number): not directly read in either pass; remains unverified. Support is plausible from C&K cross-reference, but needs a direct check of SEF table of contents.
+- **N4–N6** (minor 4th-decimal rounding chain): retained as-is. Final answer (149 days) is unaffected.

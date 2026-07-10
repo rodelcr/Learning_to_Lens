@@ -519,9 +519,15 @@ size is scaled by $1/(1 - \kappab)$.  The magnification is:
     \mu = \frac{1}{(1 - \kappab)^2} \,.
     \label{eq:mu_pure_convergence}
 \end{equation}
-For $\kappab < 1$, the image is magnified and has the same parity.
-For $\kappab > 1$, the image is still magnified but has \textit{negative}
-parity (the mapping ``folds over'').
+For $\kappab < 1$, the image is magnified and has positive parity.
+For $\kappab > 1$, the image is still magnified and \textit{retains
+positive parity}: $\det\Amat = (1-\kappab)^2 > 0$ for all
+$\kappab \neq 1$.  Although both eigenvalues $(1-\kappab)$ are
+negative when $\kappab > 1$, their product is positive --- a uniform
+negative scaling is equivalent to a $180^\circ$ rotation, which
+preserves handedness.  A genuine parity flip ($\det\Amat < 0$,
+$\mu < 0$) requires shear, so that the eigenvalues
+$\lambda_\pm = (1-\kappab) \pm |\gammaL|$ have opposite signs.
 
 \subsection{Pure Shear ($\kappab = 0$, $\gammaL > 0$)}
 

@@ -224,3 +224,45 @@ Flag-only — multiple experiments named; not auto-fixable.
 | X2 | Dimensional inconsistency in tortoise/EF coordinate definition — physics/notation issue. |
 
 File edited: `01c_Schwarzschild.tex` only.
+
+---
+
+## Harden pass (2026-07-09)
+
+### NUMBERS — triple-check results
+
+| id | claim | verification method | result |
+|----|-------|---------------------|--------|
+| N1 | R_S = 2GM/c² | Python: algebraic identity | ✅ confirmed |
+| N2 | K = 12R_S²/r⁶ = 48G²M²/(c⁴r⁶) | Python: 12·(2GM/c²)² = 48G²M²/c⁴ — identity holds; wolframscript output (2026-07-01 pass): `Match? True` | ✅ confirmed |
+| N8 | Sun z | Python (G=6.674e-11, c=2.998e8, M=1.989e30, R=6.96e8): z = 2.1220×10⁻⁶ | ✅ value fixed (see below) |
+| N9–N14 | all table R_S values | Python recompute: Earth 8.91 mm, Sun 2.97 km, NS 4.14 km, SgrA* 1.18×10⁷ km, Galaxy 2.95×10¹² km ≈ 0.096 pc | ✅ all match .tex |
+| NS z, r/Rs | z ≈ 0.3, r/Rs ≈ 2.4 | Python: z = 0.3058, r/Rs = 2.418 | ✅ confirmed |
+
+Note: wolframscript exited with a license activation warning on 2026-07-09 (WolframKernel not activated); all values were re-verified independently with Python using constants matching those in the .wl file (G=6.674e-11, c=2.998e8, Msun=1.989e30).  The 2026-07-01 wolframscript output (logged above) confirms K, Rs values, z_NS, z_Sun — all consistent.
+
+### APPLIED-FIX re-verification (Carroll equation numbers, 2026-07-01 pass)
+
+| id | change applied | .tex state 2026-07-09 | verdict |
+|----|----------------|-----------------------|---------|
+| C1 | `5.5` → `5.11` | line 173: `Carroll eq.~5.11` | ✅ confirmed present |
+| C13 | `5.58` → `5.108` | line 480: `Carroll eq.~5.108` | ✅ confirmed present |
+| C14 | `5.60` → `5.111` | line 483: `Carroll eq.~5.111` | ✅ confirmed present |
+
+All three Carroll equation-number fixes from the 2026-07-01 pass are verified in place.
+
+### PROSE FIXES applied this pass
+
+| id | location | old text | new text | justification |
+|----|----------|----------|----------|---------------|
+| N8 | fig. caption (§ Gravitational Redshift, line 349) | `$z \sim 10^{-6}$` | `$z \approx 2.1 \times 10^{-6}$` | Python: z = 2.1220×10⁻⁶. "~10⁻⁶" is a factor-of-2 understatement in a pedagogical figure caption; ≈2.1×10⁻⁶ is the correct significant value and distinguishes it clearly from ~10⁻⁶. |
+| N5 | §WEP (lines 65–74) | "the Eötvös experiments and their modern successors (Dicke, Braginsky, and the MICROSCOPE satellite mission) have verified eq. to better than one part in 10¹³ … `< 10^{-13}`" | Restructured to separate Eöt-Wash torsion-balance claim (~10⁻¹³) from MICROSCOPE (2022, ~10⁻¹⁵); displayed equation updated to `< 10^{-15}` | Touboul et al. 2022 (MICROSCOPE final): η = (−1.5 ± 2.3)×10⁻¹⁵, i.e. ~10⁻¹⁵. Attributing 10⁻¹³ to MICROSCOPE understates its achievement by two orders of magnitude. Ground-based Eöt-Wash result (~10⁻¹³, Schlamminger et al. 2008) is now correctly separated in the prose. |
+| X2 | §EF Coordinates (lines 474–480) | `v = t + r_*` (dimensionally inconsistent in SI: r* in length, t in time) | `v = t + r_*/c`; added note "where r* (units of length) is the tortoise coordinate … and dividing by c makes r*/c a time shift so that v is a well-defined time coordinate in SI units" | In SI units r* = r + R_S ln\|r/R_S − 1\| has dimensions of length; v = t + r* mixes time and length. The correct SI form is v = t + r*/c. Verification: substituting dv = dt + dr/(c(1−R_S/r)) into −(1−R_S/r)c²dv² + 2c dv dr recovers −(1−R_S/r)c²dt² + (1−R_S/r)⁻¹dr² exactly, confirming the EF metric formula is unchanged and correct. |
+
+### STILL-OPEN
+
+| id | issue | status |
+|----|-------|--------|
+| X1 | Earth mass inconsistency: table uses 6×10²⁴ kg, exercise uses 5.97×10²⁴ kg; both give R_S = 8.9 mm so no numerical error in the table. | Left as-is — likely intentional rounding. |
+
+File edited: `01c_Schwarzschild.tex` only.

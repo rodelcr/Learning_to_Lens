@@ -216,7 +216,8 @@ at $z_d = 0.3$ lensing a source at $z_s = 1.0$:
 \begin{equation}
     \thetaE \approx 4\pi \left(\frac{250}{3 \times 10^5}\right)^2
     \frac{\Dds}{\Ds}
-    \approx 1.4'' \,.
+    \approx 4\pi \left(\frac{250}{3 \times 10^5}\right)^2 \times 0.64
+    \approx 1.15'' \,.
     \label{eq:thetaE_numerical}
 \end{equation}
 The enclosed mass is then $M_{\mathrm{E}} \sim 2$--$4 \times
@@ -786,10 +787,15 @@ mass-sheet degeneracy on the inferred $\Hubble$.
 The mass-sheet degeneracy is the dominant systematic uncertainty in
 time-delay cosmography.  From eq.~\eqref{eq:mst_H0}:
 \begin{equation}
-    \Hubble^{\mathrm{inferred}} = \lambda\,\Hubble^{\mathrm{true}}
+    \Hubble^{\mathrm{true}} = \lambda\,\Hubble^{\mathrm{naive}}
 \end{equation}
+where $\Hubble^{\mathrm{naive}}$ is the $\Hubble$ inferred from a
+no-sheet ($\lambda = 1$) power-law fit and $\Hubble^{\mathrm{true}}$
+is the actual cosmological value; since $\lambda < 1$ for an
+unmodeled positive mass sheet, $\Hubble^{\mathrm{true}} <
+\Hubble^{\mathrm{naive}}$.
 A 10\% mass sheet ($\lambda = 0.9$, i.e., adding $\kappab_s = 0.1$
-to the convergence) shifts $\Hubble$ by 10\%.
+to the convergence) shifts $\Hubble^{\mathrm{naive}}$ downward by 10\%.
 
 The TDCOSMO collaboration (Birrer et al.\ 2020) showed that relaxing
 the assumption of a power-law mass profile (which partially encodes

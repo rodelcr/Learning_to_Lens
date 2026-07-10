@@ -139,3 +139,49 @@ D_d(z=0.04) × 0.9''/206265 = 0.71 kpc  [text ~0.7 kpc → ✓]
 - **X1** — H0 label swap between §3.3 (eq. mst_H0) and §5.3 — notation/prose issue, author judgment required.
 - **N2** — θ_E numerical example ≈1.4'' vs computed 1.15'' for z_s=1.0 — value correction, not an equation-number fix.
 - **C2**, **N10**, **C7/N6** — suspect citations/missing citation (PixeLens year, Kundić et al. time delay, Planck DOI) — verification tasks for author.
+
+---
+
+## Harden pass (2026-07-09)
+
+### Scope
+Single-file edit pass on `09_Galaxy_Lensing_Applications.tex` only (no other file touched).
+Instruction: resolve N2 (θ_E numerical), fix X1 (H0 label swap), re-verify C4 + table masses + H0 values.
+
+### C4 re-verification — CONFIRMED PRESENT
+`eq.~7.9` is at line 157 of the file (applied in the 2026-07-01 cleanup pass). No further action needed.
+
+### N2 — θ_E numerical example: FIXED
+**Decision:** The chapter explicitly states z_d=0.3, z_s=1.0 (line 215) and quoted θ_E ≈ 1.4''. Python (astropy FlatLambdaCDM H0=70, Ω_m=0.3) gives D_ds/D_s = 0.6385 → θ_E = 1.151 arcsec for z_s=1.0. The 1.4'' value only reproduces at z_s≈2.0 (D_ds/D_s=0.769 → θ_E=1.387''). The stated z_s=1.0 is the correct redshift for this example (a typical H0LiCOW-like system); the numerical result was wrong.
+
+**Fix applied (lines 217–221):** Added intermediate step `× 0.64` and corrected final value:
+```
+\approx 4\pi \left(\frac{250}{3 \times 10^5}\right)^2 \times 0.64
+\approx 1.15'' \,.
+```
+
+### X1 — H0 label swap: FIXED
+**Decision:** §3.3 (eq. mst_H0, lines 399–402) defines H^{true} = λ H^{naive} (naive = no-sheet value, ~73.3; true = actual cosmological value, lower). §5.3 (line 789) had `H^{inferred} = λ H^{true}` — different variable names with effectively swapped meanings. Surrounding prose in both sections was physically correct (MSD with λ<1 lowers the true H0 below the naive estimate), but the algebraic labels were contradictory.
+
+**Fix applied (lines 788–798):** Changed formula to `H^{true} = λ H^{naive}` (identical notation to §3.3) and added a clarifying clause defining both variables and the direction of the shift. `H^{inferred}` removed; terminology now consistent throughout.
+
+**Physics verified:** λ=0.9 → H^{true} = 0.9 × 73.3 = 66.0 km/s/Mpc — 10% downward shift toward the Planck value, consistent with the TDCOSMO narrative.
+
+### Table masses and H0 values — CONFIRMED
+All re-verified with Python (astropy, same cosmology as table caption):
+
+| Quantity | Computed | Table/text | Status |
+|---|---|---|---|
+| Q0957+561 M_E | 1.92 × 10¹¹ M☉ | ~1.9 | ✅ |
+| Q2237+0305 M_E | 0.17 × 10¹¹ M☉ | ~0.2 | ✅ |
+| B1608+656 M_E | 3.87 × 10¹¹ M☉ | ~3.9 | ✅ |
+| Wong 2020 H0 | 73.3 +1.7/−1.8 | 73.3 +1.7/−1.8 | ✅ |
+| Birrer 2020 H0 | 74.5 +5.6/−6.1 | 74.5 +5.6/−6.1 | ✅ |
+| Riess 2022 H0 | 73.0 ± 1.0 | 73.0 ± 1.0 | ✅ |
+| H0LiCOW–Planck tension | 3.16σ | 3.1σ | ✅ (rounding) |
+
+### Citations in Zotero — PASS (inherited from 2026-07-01)
+Tran 2022, Saha & Williams 2004, Treu & Koopmans 2004 and other citations confirmed present in Zotero per prior run.
+
+### Files modified
+- `09_Galaxy_Lensing_Applications.tex` — two edits (N2 + X1). No other file was touched.

@@ -93,9 +93,9 @@ Print["  thetaE = (Dds/Ds) * alphahat = 4*Pi*(sigma_v/c)^2 * Dds/Ds\n"];
 
 (* Numerical example *)
 sigmaV = 250 * 1000;  (* m/s *)
-DdVal = 900 * MpcToM;
-DsVal = 1700 * MpcToM;
-DdsVal = 1200 * MpcToM;
+DdVal = 920 * MpcToM;   (* astropy FlatLambdaCDM H0=70, Om=0.3: D_A(0.3) *)
+DsVal = 1652 * MpcToM;  (* D_A(1.0) *)
+DdsVal = 1055 * MpcToM; (* D_A(0.3,1.0); D_ds/D_s = 0.638 *)
 
 thetaESIS = 4 Pi (sigmaV/cc)^2 * DdsVal/DsVal;
 Print["Numerical example: sigma_v = 250 km/s, zd = 0.3, zs = 1"];

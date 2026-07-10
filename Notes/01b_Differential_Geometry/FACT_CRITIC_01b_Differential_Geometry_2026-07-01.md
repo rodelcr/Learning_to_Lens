@@ -83,3 +83,37 @@ None. All claims verify PASS.
 **Diagonal shortcut formulas** (eqs. diag\_type1–diag\_type3): Hand-verified from the Christoffel formula applied to diagonal g. All three types are algebraically correct.
 
 **Riemann tensor in §8 attributed to "Carroll eq. 3.4"**: This is confirmed. Carroll places the Riemann tensor formula in the Chapter 3 overview (p. 94) as eq. 3.4 before Section 3.2 begins — an unusual placement for such an important formula, but the attribution is correct.
+
+---
+
+## Harden pass (2026-07-09)
+
+**Method**: Independent Python/sympy recompute of all key symbolic claims; pdfplumber spot-check of 4 citations (Carroll image-PDF returns empty via pdfplumber — verified against first-pass findings; C&K extracted cleanly).
+
+**Symbolic re-verification (sympy, all returned True):**
+
+| claim | sympy result | match |
+|-------|-------------|-------|
+| `Γ^θ_{φφ} = −sinθ cosθ` (2-sphere) | `−sin(2θ)/2` ≡ `−sinθcosθ` | ✅ |
+| `Γ^φ_{θφ} = cotθ` (2-sphere) | `1/tan(θ)` ≡ `cotθ` | ✅ |
+| `R^θ_{φθφ} = sin²θ` | `sin(2θ)/(2tanθ) − cos(2θ)` simplifies to `sin²θ` | ✅ |
+| `R_{θθ} = 1` | 1 | ✅ |
+| `R_{φφ} = sin²θ` | confirmed | ✅ |
+| Ricci scalar `R = 2/R²` | `2/R**2` | ✅ |
+| `Γ^r_{φφ} = −r`, `Γ^φ_{rφ} = 1/r` (polar) | confirmed | ✅ |
+| Holonomy 60°: spherical excess (90+90+60−180)=60° | 60.0° | ✅ |
+| Riemann indep components: 1/6/20 (n=2/3/4) | 1/6/20 | ✅ |
+| Christoffel independent components: 6/40 (n=2/4) | 6/18/40 | ✅ |
+
+**Citation spot-checks:**
+
+| id | claim | harden result |
+|----|-------|--------------|
+| C21 | C&K eq. 3.60 = geodesic equation | ✅ confirmed: pdfplumber extracted C&K PDF page 69 (= book p. 58); eq. 3.60 is exactly `d²xλ/dτ² = −Γλ_{μν}(dx^μ/dτ)(dx^ν/dτ)`, boxed. C&K eq. 3.61 = Christoffel definition. Both consistent with .tex. |
+| C12 | Carroll eq. 3.27 = Christoffel formula | ✅ image PDF; first-pass confirmed p. 99. No new evidence contradicts. |
+| C17 | Carroll eq. 3.44 = geodesic equation | ✅ image PDF; first-pass confirmed p. 106. No new evidence contradicts. |
+| C7  | Carroll eq. 3.4 = Riemann tensor definition | ✅ image PDF; first-pass confirmed p. 94 (chapter overview). No new evidence contradicts. |
+
+**Note on first-pass C21 wording**: The first-pass report wrote "C&K PDF p. 58" but this refers to *book* page 58, which is PDF page 69. The citation content is correct; the notation in the report was ambiguous (book page vs. PDF page). No error in the .tex.
+
+**Verdict: chapter confirmed clean. No edits made to 01b_Differential_Geometry.tex.**

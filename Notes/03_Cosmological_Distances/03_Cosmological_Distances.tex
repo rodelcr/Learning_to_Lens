@@ -326,15 +326,19 @@ is (Carroll eq.~8.8):
 \end{equation}
 where $\rho$ is the \textbf{mass-energy density} (energy density
 $/\speedoflight^2$), $p$ is the \textbf{pressure}, and
-$U^\mu = (\speedoflight, 0, 0, 0)$ is the four-velocity of comoving
-observers.  The components in the comoving frame are:
+$U^\mu = (1, 0, 0, 0)$ is the four-velocity of comoving
+observers [with $g_{00} = -\speedoflight^2$, the standard
+normalisation $g_{\mu\nu}U^\mu U^\nu = -\speedoflight^2$ gives
+$g_{00}(U^0)^2 = -\speedoflight^2$, so $U^0 = 1$].
+The components in the comoving frame are:
 \begin{equation}
-    T^{00} = \rho\speedoflight^2 \,, \qquad
+    T^{00} = \rho \,, \qquad
     T^{ij} = p\, g^{ij} \,, \qquad
     T^{0i} = 0 \,.
     \label{eq:Tmunu_components}
 \end{equation}
-With indices lowered: $T_{00} = \rho\speedoflight^4$ and
+With indices lowered using $T_{\mu\nu} = g_{\mu\alpha}g_{\nu\beta}T^{\alpha\beta}$:
+$T_{00} = (g_{00})^2\,T^{00} = \speedoflight^4\rho$ and
 $T_{ij} = p\, g_{ij}$.
 
 \begin{remark}

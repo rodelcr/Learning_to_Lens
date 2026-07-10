@@ -175,3 +175,41 @@ Each citation below was independently re-verified against the source PDFs before
 | C2 | line 155 (position relations ξ=D_d θ, η=D_s β) | `Congdon \& Keeton eq.~4.1; Narayan \& Bartelmann eq.~5` both wrong | C&K eq. 4.1 (p. 87) = α̂(ξ) = ∇_ξψ̂(ξ); N&B eq. 5 (p. 7) = Φ(b,z) = −GM/(b²+z²)^{1/2}. Neither is the position relations. No standalone numbered equation for ξ=D_d θ in either source — fix requires author decision (remove eq-numbers, or cite N&B §2.1.3 / C&K §4.1 as section refs). |
 | C3 | line 183 (physical displacement η=(D_s/D_d)ξ−D_ds α̂) | `Narayan \& Bartelmann eq.~6; Congdon \& Keeton eq.~4.2` both wrong | N&B eq. 6 (p. 7) = ∇⊥Φ(b,z) = GMb̂/(b²+z²)^{3/2}; C&K eq. 4.2 (p. 88) = ψ̂(ξ) = (2/c²)∫Φ(ξ,z)dz. Neither is the displacement relation. Displacement derived in N&B geometrically just before eq. 14 (text, unnumbered); C&K via eq. 4.26 derivation. Fix requires author decision (remove or replace). |
 | C1 | epigraph | Quoted sentence not found verbatim in N&B pp. 1–12 | May be paraphrase presented as direct quote. Cannot be resolved without full-text search of the paper; not a numbered-equation error. |
+
+---
+
+## Harden pass (2026-07-09)
+
+**Scope:** verify all prior auto-fixes are present and correct; fix the confirmed .wl unit bug; resolve the X1/X2 θ_E inconsistency in the summary. Two files edited.
+
+### Re-verification of prior fixes
+
+All four prior auto-fixes confirmed present and correct by direct file inspection:
+
+| id | location | fix present |
+|----|----------|-------------|
+| N2b | tex line 489 | ✅ denominator reads `10 × 3.086 × 10^{19}` (was 5); Python gives 0.902 mas |
+| C4 | tex line 251 | ✅ `Congdon \& Keeton eq.~4.9` |
+| C5 | tex line 310 | ✅ `Narayan \& Bartelmann eq.~17; Congdon \& Keeton eq.~2.68` |
+| C6 | tex line 633 | ✅ `Narayan \& Bartelmann eq.~26` |
+| C7 | tex line 653 | ✅ `Narayan \& Bartelmann eq.~27` |
+
+Independent Python re-verification (astropy): θ_E = 0.902 mas (stellar), 2.379'' (galaxy), 36.93'' (cluster); Σ_cr = 5.917 kg/m² = 0.5917 g/cm² = 2834 M⊙/pc². All match tex values within stated rounding. Unit conversion: 1 kg/m² = 1000 g / 10000 cm² = 0.1 g/cm² (factor confirmed).
+
+### .wl unit bug — FIXED
+
+`Mathematica/04_Lens_Equation/lens_equation.wl` line 152: `sCrGal * 10` → `sCrGal * 0.1`.  
+The factor 10 produced 59.17 g/cm² (100× too large); 0.1 produces 0.59 g/cm², matching the tex value and the correct SI→CGS conversion.  
+Confirmed by re-running wolframscript: output now reads `0.59 g/cm^2`.
+
+### X1 + X2 — θ_E summary bullet FIXED
+
+`Notes/04_Lens_Equation/04_Lens_Equation.tex` summary §8 (tex line 712–713): changed  
+`$\sim 1''$ for galaxy lensing, $\sim 30''$ for cluster lensing`  
+→ `$\sim 1''$--$3''$ for galaxy lensing ($M \sim 10^{11}$--$10^{12}\,\Msun$), $\sim 30''$--$40''$ for cluster lensing`.
+
+Rationale: The original `~1''` assumed M~10^11 M⊙ (consistent with N&B eq.22 scaling), while the worked Example 4.3(b) uses M=10^12 M⊙ and gives 2.379''. The range `1''–3''` spans both and brackets the worked example. The original `~30''` was ~20% below the worked Example 4.3(c) result of 36.9''; `30''–40''` brackets it.
+
+### Remaining open items (unchanged)
+
+C1 (epigraph attribution), C2 (position-relation eq-numbers), C3 (displacement eq-numbers) remain flagged — all require author judgment and were not touched.

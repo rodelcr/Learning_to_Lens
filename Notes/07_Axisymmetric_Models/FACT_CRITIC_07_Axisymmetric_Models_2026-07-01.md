@@ -152,3 +152,77 @@ Only edits with PDF-confirmed evidence applied. File edited: `07_Axisymmetric_Mo
 |----|--------|--------|
 | N8 | ⚠ SUSPECT | NFW concentration ranges c∼3–5/c∼10–20: no citation in text; values consistent with literature but cosmology/redshift-dependent; add Bullock et al. 2001 or soften claim |
 | C9 | ⚠ SUSPECT | Bartelmann (1996) A&A 313, 697 — existence confirmed via CrossRef but not in Zotero; equation-level text not extracted; add to Zotero and verify DOI |
+
+---
+
+## Harden pass (2026-07-09)
+
+> Instruments: python3 + astropy (FlatLambdaCDM H0=70, Om0=0.3); Wolfram license
+> not activatable from CLI (wolframscript returned license error on both .wl files —
+> not merely a benign exit code); all Mathematica-side checks re-derived in python3.
+> Only `07_Axisymmetric_Models.tex` edited.
+
+### NUMBERS — triple-check
+
+All core physics formulas re-verified numerically in python3:
+
+| claim | result |
+|-------|--------|
+| SIS κ = γ = θ_E/(2θ) everywhere | ✅ PASS — κ̄ − κ = θ_E/θ − θ_E/(2θ) = θ_E/(2θ) = κ confirmed at θ = 0.5, 1, 2 θ_E |
+| SIS total mag = 2θ_E/β | ✅ PASS — \|μ+\| + \|μ−\| = 4.6 = 2×1.15/0.5 ✓ |
+| NIS κ(0) = 1 at θ_c = θ_E/2 | ✅ PASS — κ(0) = 1.000 exactly |
+| NIS strong-lensing condition θ_c < θ_E/2 | ✅ PASS |
+| NIS γ ≠ κ (general) | ✅ PASS — checked at multiple (θ, θ_c) |
+| NFW f(1) = 1/3 | ✅ PASS — f(0.9999)=0.333373, f(1.0001)=0.333293, continuous |
+| NFW antiderivative d/dx[ln(x/2)+g(x)] = x f(x) | ✅ PASS — numerical diff at x=0.3,0.5,0.8,1.5,2.0,4.0 all agree to ≤ 1.3×10⁻⁹ |
+| arccosh(1/x) = ln(2/x) + O(x²) | ✅ PASS — diff at x=0.1 is 2.5×10⁻³ ∝ x² ✓ |
+| NFW ρ_s formula from M_200 definition | ✅ PASS — algebraic derivation confirmed |
+| λ_r = 1 − 2κ + κ̄ (eigenvalue formula) | ✅ PASS — follows from dα/dθ = 2κ − κ̄ (derived by differentiating α = κ̄θ) |
+
+### APPLIED-FIX re-verification
+
+**5 citation fixes (C1–C5) — confirmed in .tex:**
+
+| id | citation now in .tex | status |
+|----|---------------------|--------|
+| C1 | `N\&B eq.~14` (1D lens eq.) | ✅ confirmed — eq. (14) is the vector lens eq. β⃗ = θ⃗ − α⃗(θ⃗); applied correctly |
+| C2 | `N\&B Sec.~3.4` (shear |γ|=κ̄−κ) | ✅ confirmed — eq. (25) was magnification area ratio; section pointer is the right fix |
+| C3 | `C\&K eq.~2.42` (SIS density) | ✅ confirmed — eq. (2.40) was Poisson ODE; eq. (2.42) = ρ = σ²/(2πGr²) ✓ |
+| C4 | `C\&K Sec.~2.2.1` (enclosed-mass deflection) | ✅ confirmed — eq. (4.12) was definition of reduced α⃗; Sec. 2.2.1 is the correct locus |
+| C5 | `C\&K Sec.~2.3.3` (NIS surface density) | ✅ confirmed — Sec. 6.1 was SIS; Sec. 2.3.3 = "Nonsingular Isothermal Sphere" |
+
+**SIS θ_E re-verification (astropy, H0=70, Ω_m=0.3):**
+
+```
+D_d  = 918.77 Mpc
+D_s  = 1651.91 Mpc
+D_ds = 1054.72 Mpc
+D_ds/D_s = 0.63848   (chapter claims 1055/1652 ≈ 0.638 ✓)
+θ_E  = 5.572×10⁻⁶ rad  (chapter claims 5.6×10⁻⁶ ✓)
+θ_E  = 1.149″           (chapter claims 1.15″ ✓)
+```
+
+**Verdict: 0.638 and 1.15″ are CORRECT.** Both are confirmed by independent astropy
+computation. The controller re-correction is verified.
+
+### NEW FIX APPLIED (harden pass)
+
+**Exercise distances (ex:sis_numerical, lines 1097–1099):** The exercise `Use
+Dd ≈ 900 Mpc, Ds ≈ 1700 Mpc, Dds ≈ 1200 Mpc` carried over the OLD (pre-correction)
+distances that originally anchored the wrong worked example. With those values
+Dds/Ds = 0.706, giving θ_E ≈ 1.27″ — inconsistent with the now-correct worked
+example (0.638 / 1.15″).
+
+Fixed in .tex to: `Dd ≈ 920 Mpc, Ds ≈ 1650 Mpc, Dds ≈ 1055 Mpc`
+(rounds of the astropy-exact values 918.8, 1651.9, 1054.7 Mpc; ratio = 0.639 ≈ 0.638 ✓).
+
+Note: `axisymmetric_models.wl` (lines 96–98) still uses the stale 900/1700/1200 values
+and should be updated separately — outside scope of this harden pass (.tex only).
+
+### STILL-OPEN
+
+| id | status | reason |
+|----|--------|--------|
+| N8 | ⚠ SUSPECT | Bullock et al. 2001 (ApJ 555, 240) not found in Zotero; cannot confirm concentration ranges c∼3–5/c∼10–20 from full text; leave flagged until paper is added to library |
+| C9 | ⚠ SUSPECT | Bartelmann (1996) A&A 313, 697 — header of nfw_projection.wl cites it as "Bartelmann 1996 (A&A 313, 697)" confirming existence, but paper not in Zotero and equation-level text unverified |
+| wl stale | INFO | axisymmetric_models.wl lines 96–98 use DsVal=1700, DdsVal=1200 (old distances); Mathematica output will give θ_E ≈ 1.27″ inconsistent with the corrected .tex example |

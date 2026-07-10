@@ -101,3 +101,65 @@ None. Per skill rules: citations are never auto-edited; number fixes are flag-on
 **Notable SUSPECTs:** D_A max overstated by ~22 Mpc (1.3%); Q0957+561 z_s=1.41 vs 1.405 in Walsh+1979; Hogg (1999) Ω_k≥0 restriction not noted; H₀=70 vs Planck-2018 67.4 not distinguished.
 
 **All final cosmological formulas and most numerical worked examples are correct** (Dds example, θ_E, t₀, Hubble timescale/distance). The errors cluster in: a unit/convention mistake in the critical density, a high-z table entry, a figure caption lensing peak redshift, and an internal inconsistency in the perfect-fluid stress-energy tensor components.
+
+---
+
+## Harden pass (2026-07-09)
+
+### NUMBERS re-verified (astropy; Mathematica license inactive — .wl values cross-checked via Python)
+
+| claim | .tex value | astropy result | status |
+|-------|-----------|----------------|--------|
+| ρ_cr,0 | 9.2×10⁻²⁷ kg m⁻³ | 9.204×10⁻²⁷ | ✅ confirmed |
+| χ(z=0.1) | 420 Mpc | 418.5 Mpc | ✅ within rounding |
+| χ(z=0.5) | 1880 Mpc | 1888.6 Mpc | ✅ within rounding |
+| χ(z=1.0) | 3300 Mpc | 3303.8 Mpc | ✅ confirmed |
+| χ(z=2.0) | 5200 Mpc | 5179.9 Mpc | ⚠ 20 Mpc off (unchanged; ⚠ from prior pass) |
+| χ(z=5.0) | 7775 Mpc | 7775.4 Mpc | ✅ confirmed |
+| D_A max | 1748 Mpc at z≈1.6 | 1747.6 Mpc at z=1.606 | ✅ confirmed |
+| Lensing peak z_s=1 | z_d≈0.35 | z_d=0.3504 | ✅ confirmed |
+| Lensing peak z_s=2 | z_d≈0.5 | z_d=0.519 | ✅ confirmed |
+| t_H | ≈14 Gyr | 13.97 Gyr | ✅ confirmed |
+| d_H | 4.28 Gpc | 4.283 Gpc | ✅ confirmed |
+| D_d(0.5), D_s(2.0), D_ds | 1259, 1727, 1097 Mpc | 1259.1, 1726.6, 1097.1 | ✅ confirmed |
+| t₀ | ≈13.5 Gyr | 13.47 Gyr | ✅ confirmed |
+| θ_E (M=10¹² M⊙, z_d=0.3, z_s=1) | ≈2.4″ | 2.379″ | ✅ confirmed |
+
+**Mathematica notebook (.wl) verification:** wolframscript license inactive on this machine (produces license error at launch rather than at exit). Numbers verified entirely via astropy (FlatLambdaCDM H0=70, Om0=0.3). The .wl script is structurally correct (Section 3 comment explicitly uses `T_{00} = rho*c^4`, consistent with the fix applied below).
+
+### APPLIED-FIX re-verification (prior controller pass, 2026-07-01)
+
+All four controller-applied fixes confirmed present and numerically correct in the .tex:
+1. **N3** ρ_cr,0 `9.5→9.2×10⁻²⁷ kg m⁻³` — line 499: `9.2 \times 10^{-27}` ✅
+2. **N4e** χ(z=5) `7950→7775 Mpc` — line 683: `7775` ✅
+3. **N5** D_A max `1770→1748 Mpc` — line 755: `1748~Mpc` ✅
+4. **N9** Lensing peak `z_d≈0.3→z_d≈0.35` — line 915: `z_d \approx 0.35` ✅
+
+### PROSE FIX applied this pass
+
+**X1 — T^{00} / T_{00} index inconsistency (❌ FAIL → ✅ FIXED)**
+
+*Diagnosis:* With g_{00} = −c² and the prior text's U^μ = (c, 0, 0, 0), the formula gives T^{00} = ρc². Index-lowering via T_{00} = (g_{00})²T^{00} then yields ρc⁶, not the ρc⁴ stated — a factor-of-c² internal contradiction. The Friedmann (0,0) derivation (eq:rhs_00) requires (8πG/c⁴)·T_{00} = 8πGρ, which fixes T_{00} = ρc⁴; the Mathematica notebook Section 3 header also states `T_{00} = rho*c^4`. This requires T^{00} = ρ (not ρc²), which follows from U^0 = 1: the standard normalisation g_{μν}U^μU^ν = −c² with g_{00} = −c² gives (U^0)² = 1.
+
+*Old (lines 329–338):*
+```
+U^\mu = (\speedoflight, 0, 0, 0) … T^{00} = \rho\speedoflight^2 …
+With indices lowered: T_{00} = \rho\speedoflight^4 …
+```
+
+*New:*
+```
+U^\mu = (1, 0, 0, 0) [with g_{00}=-c², normalisation g_{μν}U^μU^ν=-c² gives U^0=1]
+T^{00} = \rho …
+T_{00} = (g_{00})^2 T^{00} = c^4\rho
+```
+
+T_{00} = ρc⁴ (already correct) retained unchanged. The lowering relation is now made explicit — (g_{00})²T^{00} = c⁴ρ — so the reader can verify it.
+
+### STILL-OPEN
+
+- **N4d** χ(z=2.0) = 5200 vs astropy 5180 Mpc (⚠ 20 Mpc, 0.4%) — author judgment; within rounding of "5200" but borderline.
+- **C2b** Q0957+561 z_s = 1.41: Walsh+1979 gives 1.405; modern value 1.413. "1.41" is intermediate — author should cite a modern redshift measurement.
+- **C3-note** Hogg (1999) eq. 19 valid only for Ω_k ≥ 0 — caveat not added.
+- **C5** Carroll/Congdon & Keeton equation-number attributions — manual spot-check against physical texts still recommended.
+- **X2** H₀ = 70 vs Planck 2018 (67.4) — footnote clarifying this is a pre-Planck round working value not yet added.

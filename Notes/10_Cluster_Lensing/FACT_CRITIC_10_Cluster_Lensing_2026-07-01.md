@@ -47,3 +47,31 @@ Bartelmann 1998 + 4 reviews unverified this run). Highlight: the worked NFW
 numbers are exactly right, but the one "quick estimate" headline mass is ~1.6×
 high. Every ✅/❌ names a concrete source (recomputed arithmetic or CrossRef DOI) —
 none from memory; unverifiable citations were flagged, not passed.
+
+## Harden pass (2026-07-09)
+
+Two edits applied to `10_Cluster_Lensing.tex`; no edits to `.wl` (notebook
+verified correct by controller and Python re-check):
+
+**Fix 1 — N2 (mass within θ_E, §Cluster Mass Estimation, eq. label
+`eq:mass_numerical`).**
+Python recompute with chapter's own inputs (D_d=900 Mpc, θ_E=30″,
+Σ_cr=2.309×10¹⁵ M⊙/Mpc²) gives M=1.243×10¹⁴ M⊙; astropy distances
+(D_d=918.8 Mpc) give 1.320×10¹⁴ M⊙.  Both are ≈1.3×10¹⁴, not 2×10¹⁴
+(the stated value was ~1.6× too high).  Corrected:
+`≈ 2 \times 10^{14}` → `≈ 1.3 \times 10^{14}`.
+Cylinder radius "~130 kpc" was correct and untouched.
+
+**Fix 2 — X1 (giant-arc discovery priority, §Introduction, item 1).**
+§1 previously credited "Soucail et al. (1987)" alone; §Giant Arcs already
+credited both Lynds & Petrosian (1986) and Soucail et al. (1987).
+§1 reworded to credit both, with the spectroscopic confirmation by
+Soucail et al. (1988) noted — matching the Giant Arcs section and the
+historical record.
+
+**Other checks re-verified (no changes needed):**
+NFW example numbers (r200, r_s, θ_s, θ_t≈16″) confirmed exact via Python.
+Earendel Δm = −2.5 log₁₀(4000) = −9.01 mag ✅.
+Cluster redshifts (A370, A1689, HFF list) ✅ standard catalog values.
+C3/C4 citation concerns (Bartelmann 1998, review articles) noted as
+⚠ — not changed, flagged for Zotero confirmation in a separate pass.

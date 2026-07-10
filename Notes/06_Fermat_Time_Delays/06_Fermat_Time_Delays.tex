@@ -169,11 +169,16 @@ The Fermat potential has a simple physical interpretation:
           lens plane ($\vectheta$) is far from the straight-line direction
           ($\vecbeta$).
     \item The second term $-\psiL(\vectheta)$ is the
-          \textbf{gravitational (Shapiro) delay}: the lensing potential
-          $\psiL > 0$ in the vicinity of the lens, so this term
+          \textbf{gravitational (Shapiro) delay}: for smooth extended
+          profiles (such as the SIS), the lensing potential $\psiL > 0$
+          everywhere in the vicinity of the lens, so this term
           \textit{reduces} the arrival time --- photons passing through a
           deeper potential arrive earlier due to the Shapiro effect
-          (recall Module~\ref{ch:light_deflection}).
+          (recall Module~\ref{ch:light_deflection}).  For a point mass,
+          however, $\psiL = \thetaE^2\ln|\vectheta| < 0$ inside the
+          Einstein radius ($|\vectheta| < \thetaE$), so $-\psiL > 0$
+          there and the Shapiro term \textit{increases} the arrival time
+          in that region.
 \end{itemize}
 The competition between geometric and gravitational delay determines the
 structure of the arrival-time surface and hence the number and types of
@@ -522,13 +527,18 @@ multiply-imaged quasars:
           417$~days) was measured after years of photometric monitoring.
     \item \textbf{B1608+656}: a four-image lens system with three
           independent time delays, providing strong constraints.
-    \item \textbf{H0LiCOW/TDCOSMO} (2017--present): a systematic program
+    \item \textbf{H0LiCOW} (2017--present): a systematic program
           combining precise time delays from COSMOGRAIL monitoring with
           detailed lens models and line-of-sight structure analysis.
-          Their combined result gives $\Hubble = 73.3^{+1.7}_{-1.8}$~km\,s$^{-1}$\,Mpc$^{-1}$,
+          The H0LiCOW~XIII result (Wong et al.\ 2020; six lenses) gives
+          $\Hubble = 73.3^{+1.7}_{-1.8}$~km\,s$^{-1}$\,Mpc$^{-1}$,
           in agreement with local distance ladder measurements and in
           some tension with the CMB value ($\Hubble \approx 67$~km\,s$^{-1}$\,Mpc$^{-1}$
-          from Planck).
+          from Planck).  The successor \textbf{TDCOSMO} programme
+          (Birrer et al.\ 2020) performed an independent analysis that
+          explicitly marginalises over the mass-sheet degeneracy and
+          obtained a less precise but consistent result
+          ($\Hubble = 74.5^{+5.6}_{-6.1}$~km\,s$^{-1}$\,Mpc$^{-1}$).
 \end{itemize}
 
 

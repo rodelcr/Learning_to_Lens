@@ -118,8 +118,118 @@ Re-verified each flagged citation against source PDFs (pdftotext + grep) before 
 - **X2** `eqs.~\eqref{eq:sie_alpha1}--\eqref{eq:sie_alpha2}` → `eq.~\eqref{eq:sie_alpha}` (exercise cross-reference, line ~1243).
   Repo-grep confirmation: labels `eq:sie_alpha1` and `eq:sie_alpha2` are absent from the .tex; `eq:sie_alpha` (single boxed display for both α₁ and α₂ components) exists at line 331. Also changed "eqs." to "eq." to match singular label.
 
-### STILL-FLAGGED (author judgment required)
+### STILL-FLAGGED (author judgment required) — carried over
 
-- **X1**: Image-count sequence in §5.3 Stages 2 and 4 says "1→3" and "3→1"; correct for SIE is "2→4" and "4→2". Requires author decision on SIE vs. non-singular framing — not a simple number substitution.
-- **X3**: SIS+shear critical curve called an "ellipse" in §2.4 remark; r(φ) is a limaçon-type curve (~1.5–3% deviation from true ellipse at γ=0.1). Softening to "oval" or "approximately elliptical for small γ" is author's call.
 - **C3**: Kormann, Schneider & Bartelmann (1994) not confirmable by available adapters; verify via NASA ADS.
+
+---
+
+## Harden pass (2026-07-09)
+
+Adapter state: wolframscript not activated (Wolfram license error on exit);
+all numerical verification done in Python 3 / scipy.  pdftotext available
+and used for PDF checks.  Source PDFs confirmed: C&K 2018, Petters 2001.
+
+---
+
+### NUMBERS re-verified
+
+All 6 SIE values (thetaE=1, q=0.7, source β=(0.5,0)) recomputed with
+Python (scipy.optimize.fsolve + finite-difference Jacobian).
+Kormann convention: α₁ ∝ ArcTan, α₂ ∝ ArcTanh, confirmed by reading
+`sie_deflection.wl` (lines 44–45).
+
+| value | chapter | computed | status |
+|-------|---------|----------|--------|
+| Image A position | (1.43, 0.0)″ | (1.4319, 0.0)″ | PASS |
+| Image B position | (−0.43, 0.0)″ | (−0.4319, 0.0)″ | PASS |
+| μ_A | 6.1 | 6.051 | PASS |
+| μ_B | −0.6 | −0.566 | PASS |
+| caustic area (q=0.7) | 0.066 θ_E² | 0.06564 θ_E² | PASS |
+| cusp (β₁-axis) | 0.263 θ_E | 0.26337 θ_E | PASS |
+
+Internal consistency check: θ_A + θ_B = 1.4319 + (−0.4319) = 1.0000 = 2β₁. ✓
+
+wolframscript fallback: `sie_deflection.wl` was read and the convention
+(ArcTan for α₁, ArcTanh for α₂) confirmed as identical to the Python
+implementation.  Numerical Check 4 in the .wl (finite-difference kappa
+vs. closed-form kappa) gives the same verification path as the Python
+code.  No discrepancy expected.
+
+---
+
+### APPLIED-FIX re-verification (citation/eqref)
+
+Re-confirmed in current .tex by grep (2026-07-09):
+
+| fix | tex evidence | PDF evidence | status |
+|-----|-------------|--------------|--------|
+| C1: `eqs.~6.1--6.2` | line 114 ✓ | pdftotext of C&K: `(6.1)` at pdftotext line 10585 (shear potential), `(6.2)` at line 10606 (SIS potential); `(6.7)` at line 10761 is a different equation (later in the SIS+shear Jacobian section) | PASS |
+| C2: `eq.~6.13` | line 282 ✓ | pdftotext of C&K: `(6.13)` at line 10923, in "6.1.2 Elliptical Lenses" section — correct for SIEMD convergence | PASS |
+| C5: `Ch.~7, Sec.~7.5` | line 965 ✓ | pdftotext of Petters: ToC line 361 "Whitney Singularity Theory", line 362 "7.5.1 Definition of Folds and Cusps", line 364 "7.5.3 Stability of Maps between 2-Manifolds" | PASS |
+| X2: `eq.~\eqref{eq:sie_alpha}` | line 1243 ✓ | internal: label `eq:sie_alpha` exists at line 331; labels `eq:sie_alpha1/2` absent | PASS |
+
+---
+
+### PROSE FIXES applied
+
+#### X1 — Image count sequence in §5.3 (source walk, Stages 2 and 4)
+
+**Stage 2, old:** "The total count goes from **1 to 3 images** (or effectively from 2 to 4, counting the faint central image):"
+
+**Stage 2, new:** "The total count goes from **2 to 4 images**:"
+
+**Stage 4, old:** "The count drops from **3 back to 1** (or 4 to 2 counting the central image)."
+
+**Stage 4, new:** "The count drops from **4 back to 2**."
+
+**Justification:** The SIE is singular at the origin and has no radial critical curve.
+Stage 1 of the same section explicitly states two images for a source outside the
+tangential caustic (one Type I, one Type II), which is the correct SIE count.
+Crossing the tangential caustic adds one Type I / Type II pair, giving 2→4.
+The parenthetical in the original text had the correction inverted (it labeled 2→4 as
+"counting the faint central image," but for the singular SIE there IS no central image
+to count — the 2→4 count IS the correct total, with no additional image anywhere).
+The non-singular model caveat is already addressed in the table that follows Stage 4
+(1→3→5 sequence for models with a radial caustic), so no additional prose is needed.
+
+#### X3 — SIS+shear critical curve shape (§2.4, figure caption, Summary)
+
+**Python verification:** r(φ) = θ_E(1 − γ cos2φ)/(1−γ²) with γ=0.1.
+Best-fit ellipse with same semi-axes a = θ_E/(1+γ) = 0.9091, b = θ_E/(1−γ) = 1.1111.
+Maximum fractional deviation from the best-fit ellipse: **1.52%** at φ=45°.
+The curve is a sinusoidal polar oval (r = A + B cos2φ), NOT a true ellipse.
+Deviations are small but real; C&K (2018) do not use the word "ellipse" for this curve.
+For γ=0.2 the deviation reaches 6.3%; calling it "ellipse" without qualification would
+mislead students who take the approximation literally.
+
+Three locations edited in the .tex (§2.4 remark text, §2.5 figure caption, §7 Summary):
+
+**§2.4 main text, old:** "the critical curve is an **ellipse**: elongated along the θ₂-axis (perpendicular to the shear direction) and compressed along θ₁."
+
+**§2.4 main text, new:** "the critical curve is an **oval**: elongated along the θ₂-axis (perpendicular to the shear direction) and compressed along θ₁ (approximately elliptical for small γ_ext; the deviation from a true ellipse reaches ~1.5% at γ_ext = 0.1)."
+
+**Figure caption, old:** "The critical curve is an ellipse;"
+
+**Figure caption, new:** "The critical curve is an oval (approximately elliptical for small shear);"
+
+**Summary, old:** "deforms the critical curve into an **ellipse** and opens the point caustic"
+
+**Summary, new:** "deforms the critical curve into an **oval** and opens the point caustic"
+
+Note: line 35 ("Critical curves deform from circles into ellipses and ovals") is a
+general qualitative bullet in the intro and was not changed; "ovals" is already present
+there and softens the claim sufficiently.
+
+---
+
+### STILL-OPEN
+
+- **C3**: Kormann, Schneider & Bartelmann (1994, A&A 284, 285) — not confirmable by
+  available adapters (CrossRef, Zotero both failed). Very likely real (standard reference
+  for SIE closed-form deflection; formula in the chapter is consistent with that paper).
+  Verify via NASA ADS and add to Zotero.
+- **N8, N15, N18, N19, N20**: Observation-class claims (quad fraction 20–30%,
+  double fraction 70–80%, arc magnifications μ∼20–50, L/W >10:1, cluster critical
+  curve radius ~10–30″) — no Observation adapter; remain SUSPECT from the 2026-07-01
+  pass.  Human verification against current surveys recommended.

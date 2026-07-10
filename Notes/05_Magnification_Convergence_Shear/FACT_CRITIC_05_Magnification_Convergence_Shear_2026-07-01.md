@@ -197,3 +197,76 @@ Note on C6: the proposed fix in the report also suggested adding N&B Sec. 3.1 eq
 | C1 | Epigraph attribution as verbatim quote of N&B (1997): no exact match found in PDF; "after N&B" or an original epigraph is recommended. |
 
 File edited: `05_Magnification_Convergence_Shear.tex` only.
+
+---
+
+## Harden pass (2026-07-09)
+
+### NUMBERS RE-VERIFIED (sympy; wolframscript licence unavailable on this machine)
+
+All symbolic results independently re-verified with Python/sympy (`diff`, `simplify`, `trigsimp`).
+Every residual is exact zero.
+
+| result | sympy verdict |
+|--------|--------------|
+| ∇ψ = α (point mass) | α₁ = tE²·th1/(th1²+th2²), α₂ = tE²·th2/(th1²+th2²) ✅ |
+| ψ₁₁ = tE²(th2²−th1²)/θ⁴ | residual 0 ✅ |
+| ψ₂₂ = tE²(th1²−th2²)/θ⁴ | residual 0 ✅ |
+| ψ₁₂ = −2tE²·th1·th2/θ⁴ | residual 0 ✅ |
+| ∇²ψ = 0 (θ≠0) | 0 ✅ |
+| γ₁ = −(tE²/θ²)cos 2φ | residual 0 ✅ |
+| γ₂ = −(tE²/θ²)sin 2φ | residual 0 ✅ |
+| \|γ\| = tE²/θ² | residual 0 ✅ |
+| det A = (1−κ)²−\|γ\|² | residual 0 ✅ |
+| eigenvalues {1−κ−\|γ\|, 1−κ+\|γ\|} | exact match ✅ |
+| det A for γ=0: (1−κ)² | at κ=1.5 gives 0.25 > 0 ✅ |
+| μ_SIS = θ/(θ−θ_E) | residual 0 ✅ |
+| κ_SIS(θ_E) = 1/2 | exact ✅ |
+| μ_PM = θ⁴/(θ⁴−θ_E⁴) | residual 0 ✅ |
+
+### APPLIED-FIX RE-VERIFICATION
+
+All 7 fixes from the 2026-07-01 pass independently confirmed present in the current .tex:
+
+| id | fix | re-verification |
+|----|-----|----------------|
+| N1 | ψ₁₁ = tE²(th2²−th1²)/θ⁴ (no spurious +tE²/θ²) | ✅ present at line 619 |
+| N1b | ψ₂₂ = tE²(th1²−th2²)/θ⁴ (no spurious +tE²/θ²) | ✅ present at line 621 |
+| N2 | λ₋=0→tangential (1−κ=\|γ\|); λ₊=0→radial (1−κ=−\|γ\|) | ✅ present at lines 497–502; sympy eigenvalues confirm λ₋=1−κ−\|γ\|, λ₊=1−κ+\|γ\| |
+| C2 | N&B eq.~51; C&K eq.~4.14 (lensing potential) | ✅ present at line 98 |
+| C3 | N&B eq.~56; C&K eq.~4.22 (Poisson / κ=(1/2)∇·α) | ✅ present at lines 193–194 |
+| C4 | N&B eq.~58; C&K eq.~4.51 (Jacobian matrix) | ✅ present at lines 369–370 |
+| C5 | C&K eq.~4.54 (eigenvalues λ±) | ✅ present at line 414 |
+| C6 | C&K Sec.~2.3.2 (SIS surface mass density) | ✅ present at line 706 |
+
+No applied fix was found to be incorrect or missing.
+
+### PROSE FIX (N3) — old → new + justification
+
+**Subsection "Pure Convergence (κ>0, γ=0)", end of prose block (formerly lines 521–525):**
+
+Old:
+> For $\kappab < 1$, the image is magnified and has the same parity.
+> For $\kappab > 1$, the image is still magnified but has \textit{negative}
+> parity (the mapping ``folds over'').
+
+New:
+> For $\kappab < 1$, the image is magnified and has positive parity.
+> For $\kappab > 1$, the image is still magnified and \textit{retains
+> positive parity}: $\det\Amat = (1-\kappab)^2 > 0$ for all
+> $\kappab \neq 1$.  Although both eigenvalues $(1-\kappab)$ are
+> negative when $\kappab > 1$, their product is positive --- a uniform
+> negative scaling is equivalent to a $180^\circ$ rotation, which
+> preserves handedness.  A genuine parity flip ($\det\Amat < 0$,
+> $\mu < 0$) requires shear, so that the eigenvalues
+> $\lambda_\pm = (1-\kappab) \pm |\gammaL|$ have opposite signs.
+
+**Justification:** For pure convergence γ=0, A=(1−κ)I, so det A=(1−κ)²≥0 always. Sympy confirms det A at κ=1.5 equals 0.25>0. The original claim "negative parity" is a 1-D intuition (a single axis flipping) incorrectly transferred to the 2-D case: when both eigenvalues flip sign simultaneously the determinant (their product) remains positive. The new text states the correct result, explains why (uniform negative scaling ≡ 180° rotation preserves orientation), and locates the actual source of negative parity in the eigenvalue structure (requires shear to make λ₊ and λ₋ straddle zero).
+
+### STILL-OPEN
+
+| id | issue |
+|----|-------|
+| C1 | Epigraph "The convergence and shear are the two fundamental quantities…" attributed as verbatim N&B (1997): exact sentence not found in N&B PDF. Recommend rephrasing to "after Narayan & Bartelmann (1997)" or replacing with an original epigraph. No .tex edit made (author judgment required). |
+
+File edited this pass: `05_Magnification_Convergence_Shear.tex` only (N3 prose fix).

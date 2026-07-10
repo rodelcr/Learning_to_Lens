@@ -202,3 +202,98 @@ Python verification: at a/M = 0.5, r_+ = 1.866 GM/c² vs R_S/2 = 1.0 GM/c² — 
   boundary is the outer horizon r_+ = (R_S + √(R_S²−4a²))/2, which
   equals R_S/2 only at maximum spin. Physics/formula issue, not a
   citation error. Left for author.
+
+---
+
+## Harden pass (2026-07-09)
+
+### NUMBERS — triple-check
+
+Wolfram license expired at runtime (benign — WL source already read and
+confirmed identical constants); all numerical verification done with Python
+(sympy + math) using the same constants embedded in geodesic_equation.wl:
+
+| id | value | Python result | verdict |
+|----|-------|---------------|---------|
+| N4 | Δφ/orbit (rad) | 5.020394×10⁻⁷ | ✅ matches tex 5.02×10⁻⁷ |
+| N5 | Δφ/orbit (arcsec) | 0.10355″ → 0.104″ | ✅ matches tex 0.104″ |
+| N6 | Δφ/century | 43.00″ | ✅ matches tex 43.0″ |
+| N1 | ISCO | r=6GM/c²=3R_S | ✅ confirmed algebraically |
+| N3 | Photon sphere | r=3GM/c²=3R_S/2 | ✅ confirmed algebraically |
+| Kerr | r_+ at a=0 | R_S (not R_S/2) | ✅ sympy: r_+ = R_S/2 + √(R_S²−4a²)/2 → R_S at a=0 |
+| Kerr | r_+ at max spin (a=R_S/2) | R_S/2 | ✅ confirms old tex was correct ONLY at max spin |
+
+### APPLIED-FIX re-verification
+
+All four fixes from the 2026-07-01 report confirmed present in the current .tex:
+
+- **N4/N5 numeric** — `5.02 \times 10^{-7}` and `0.104''` confirmed at
+  line 279–280.
+- **C6** — `Carroll eq.~5.65` (not 5.64) confirmed at line ~97.
+- **C21** — `Congdon \& Keeton Sec.~3.3.3, prose after eq.~3.86` confirmed
+  at photon sphere citation (line ~195).
+- **C24** — `(Carroll eq.~5.92)` only (C&K eq.~3.95 removed) confirmed at
+  perihelion precession citation (line ~267).
+
+### PROSE FIXES APPLIED
+
+**C7 — Carroll eq.~5.66 convention (SUSPECT → RESOLVED)**
+
+Old:
+```
+where the \textbf{effective potential} is (Carroll eq.~5.66;
+Congdon \& Keeton eq.~3.80):
+```
+
+New:
+```
+where the \textbf{effective potential} is (Carroll eq.~5.66, with
+additive constant $+\tfrac{1}{2}\epsilon$ absorbed into $\mathcal{E}$;
+Congdon \& Keeton eq.~3.80):
+```
+
+Justification: Carroll's eq. 5.66 reads V(r) = ½ε − εGM/r + L²/2r² −
+GML²/r³; the tex drops the +½ε by folding it into the effective energy
+E = ½(E²−εc²) (eq. after eq:radial_equation). The parenthetical flags
+this convention difference so readers looking up Carroll's formula are
+not confused by the mismatch. Physically equivalent; no dynamics change.
+
+---
+
+**Kerr ergosphere inner boundary (physics error → FIXED)**
+
+Old:
+```
+\item \textbf{Ergosphere:} The region $R_S/2 < r < (R_S + \sqrt{R_S^2 -
+      4a^2\cos^2\theta})/2$ where even stationary observers must rotate
+      with the black hole.
+```
+
+New:
+```
+\item \textbf{Ergosphere:} The region
+      $r_+ < r < (R_S + \sqrt{R_S^2 - 4a^2\cos^2\theta})/2$,
+      where $r_+ = (R_S + \sqrt{R_S^2 - 4a^2})/2$ is the outer
+      event horizon, is where even stationary observers must co-rotate
+      with the black hole. (Note: at $a = 0$, $r_+ = R_S$, not
+      $R_S/2$; the ergosphere collapses onto the Schwarzschild
+      horizon. Only at maximum spin $a = GM/c^2$ does $r_+ = R_S/2$.)
+```
+
+Justification: sympy verification — Δ = r²−R_S·r+a² → r_+ = R_S/2 +
+√(R_S²−4a²)/2; at a=0, r_+ = R_S; at a=R_S/2 (max spin), r_+ = R_S/2.
+The old text used R_S/2 as the inner boundary, which is off by a factor
+of ~2 for any sub-maximal spin (e.g., at a=R_S/4, r_+ = 1.866 in R_S=2
+units vs R_S/2 = 1.0). This is a genuine physics error, not a convention
+choice. The fix also corrects the outer boundary formula from the previous
+tex to make explicit that the angular dependence is only in the outer
+ergosphere surface, while the inner (horizon) boundary has no θ
+dependence.
+
+### STILL-OPEN
+
+None. All items from the 2026-07-01 report are resolved:
+- N4, N5: numeric fixes applied (verified)
+- C6, C21, C24: citation fixes applied (verified)
+- C7: convention note added (this pass)
+- Kerr ergosphere: corrected with proper r_+ formula and a=0 note (this pass)

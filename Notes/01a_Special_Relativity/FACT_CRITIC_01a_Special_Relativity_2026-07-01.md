@@ -174,3 +174,20 @@ All six flagged citations were independently re-verified against the Carroll and
 ### STILL-FLAGGED
 
 None. All six flagged items were confirmed and corrected.
+
+---
+
+## Harden pass (2026-07-09)
+
+Re-verified all six applied citation fixes against Carroll_SG.pdf by direct page inspection.
+
+| id | fix applied in .tex | PDF evidence (this pass) |
+|----|---------------------|--------------------------|
+| C9 | `pp.~11--14` → `pp.~12--14` | PDF p. 25 = print p. 12: heading "1.3 ■ LORENTZ TRANSFORMATIONS" confirmed. PDF p. 24 = print p. 11: still Sec. 1.2 (eqs. 1.20–1.22). pp. 12–14 is correct. |
+| C16 | `Carroll Sec.~1.4` → `Carroll Sec.~1.3` | PDF p. 27 = print p. 14: end of Sec. 1.3 reads "Applying these formulae leads to time dilation, length contraction, and so forth." PDF p. 28 = print p. 15: heading "1.4 ■ VECTORS" begins. Sec. 1.3 is correct. |
+| C19 | `Carroll eq.~1.58` → `Carroll eq.~1.17` | PDF p. 22 = print p. 9: eq. 1.17 = (Δτ)² = −(Δs)² = −η_μν Δx^μ Δx^ν (proper time definition). Correct. |
+| C20 | `Carroll eq.~1.59` → `Carroll eq.~1.100` | PDF p. 44 = print p. 31: eq. 1.100 = η_μν U^μ U^ν = −1 (four-velocity normalization). Correct. |
+| C21 | `Carroll eq.~1.60` → `Carroll eq.~1.101` | PDF p. 44 = print p. 31: eq. 1.101 = p^μ = mU^μ (boxed; four-momentum definition). Correct. |
+| C31 | `Congdon \& Keeton Sec.~3.2.3` → `Sec.~3.1.2` | Verified in prior pass from C&K PDF (Sec. 3.1.2 = "Lorentz Transformations", p. 46; Sec. 3.2.3 = "Principle of Stationary Interval", p. 55). No new Carroll check needed. |
+
+**Conclusion:** All six citation fixes are present in `01a_Special_Relativity.tex` and confirmed correct against the source PDFs. No further edits required. `01a_Special_Relativity.tex` was not modified in this pass.
