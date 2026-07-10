@@ -24,6 +24,36 @@ the source-text PDFs in `Reference_Texts/`.
   not consulting the chapter's own ground truth (its Mathematica notebook / astropy)
   before touching a convention- or cosmology-dependent number.
 
+## Harden pass (2026-07-09) — toward error-free
+
+A second, deeper pass after the initial audit:
+
+- **All 14 companion Mathematica notebooks engine-executed** (Wolfram) — their own
+  self-checks pass (R_μν=0, Riemann=0 on the 2-sphere, ∇ψ=α & ∇²ψ=2κ, Fermat→lens
+  eq, deflection 1.75″, ISCO r=3, 43″/century, Σ_cr=2.309×10¹⁵, …). Executing them
+  caught 2 notebook-vs-text disagreements where the notebook was right and confirmed
+  our fix (ch03 D_A-max=1748; ch07 was outputting the stale 1.272″).
+- **2 notebook (`.wl`) bugs fixed:** `axisymmetric_models.wl` stale distances
+  (1700/1200 → 1652/1055, now outputs 1.15″); `lens_equation.wl` g/cm² unit
+  (`*10`→`*0.1`, 59.17→0.59 g/cm²).
+- **Every prior fix independently re-verified** (my ch07 θ_E re-correction confirmed
+  by astropy; ch08's 6 SIE numbers re-confirmed; the ch07 triple-check caught a
+  *second* stale-distance occurrence in an exercise I'd missed).
+- **Flagged physics fixed with explanatory prose:** κ>1 parity (05), Shapiro sign +
+  H0LiCOW attribution (06), Kerr ergosphere r₊ (01d), Sun-redshift 2× + WEP
+  precision + EF-coordinate units (01c), T⁰⁰/T₀₀ index (03), SIE image-count 2→4 &
+  oval-not-ellipse (08), H0/MSD label swap (09), cluster mass 2e14→1.3e14 & giant-arc
+  priority (10), θ_E 1.4→1.15 (09), galaxy potential & b/R_S (01e), factor-2 θ_E
+  ranges (04), Keeton & Petters year (02).
+- **7 more citations verified (ADS/CrossRef/arXiv) and added to Zotero:** Kormann+94
+  (ADS, no DOI), Bartelmann 96, Saha & Williams 04 (year confirmed), Kundić 97,
+  Will 14, Planck 18, Treu & Koopmans 04. Library now holds 15 `learning_to_lens` refs.
+- **Recompiles clean (212 pp).** ch01b re-confirmed genuinely error-free.
+
+Remaining honest caveat: notebook *execution* now done; the residual open items are
+subjective (epigraph verbatim-quote attributions; a handful of eq-numbers with no
+standalone numbered equation; a few observation-class survey statistics).
+
 ## Method (adapters used)
 
 - **Numbers:** Python recompute (+ `astropy` for cosmological distances); `wolframscript`
