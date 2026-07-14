@@ -39,7 +39,12 @@ and verifies the key results for that module:
 | 7 | `axisymmetric_models.wl` | SIS constant deflection, κ = γ for SIS, NIS → SIS limit, NFW profiles |
 | 8 | `critical_curves_caustics.wl` | SIE critical curves, image solver to machine precision, Burke's theorem |
 | 9 | `galaxy_lensing.wl` | Mass-sheet degeneracy preserves image positions, H₀ from time delays |
+| 8 | `multipole_expansion.wl` | Angular-structure multipoles: κ_m = a_m(1−m²)/(2θ)cos[m(φ−φ_m)], monopole→SIS, external shear κ=0, SIE internal-quadrupole fraction 1/4 (7/7) |
+| 9 | `substructure_and_rings.wl` | Isothermal ring κ=(b/2r)(F+F″), fold-caustic flux relation μ₊=−μ₋, surface-brightness conservation μ=1/detA (6/6) |
 | 10 | `cluster_lensing.wl` | NFW cluster-scale lensing, Einstein radius vs mass scaling |
+| 11 | `lensing_statistics.wl` | Point-mass cross-section σ(μ)=πθ_E²y²(μ) with σ∝μ⁻² (⇒ p(μ)∝μ⁻³), SIS μ=2/y & r=(1+y)/(1−y), β=1 magnification-bias null (9/9) |
+| 12 | `weak_lensing.wl` | Kaiser–Squires inversion recovers κ, tangential shear γ_t=θ_E/(2θ) [SIS], reduced-shear invariance under the mass-sheet transform (10/10) |
+| 13 | `microlensing.wl` | Point-lens A(u)=(u²+2)/(u√(u²+4)) from summed image magnifications, limits A→1/u, 1; Paczynski light-curve symmetry; astrometric centroid shift peaks at u=√2 (16/16) |
 
 To run all per-module verifications:
 ```bash
@@ -157,6 +162,11 @@ done
 
 ---
 
-*Last verified: 2026-03-20*
+*Last verified: 2026-07-14*
 *Verification script: `Mathematica/verify_against_textbooks.wl`*
-*All 12/12 tests passing*
+*Master cross-checks: 12/12 passing. Per-module extension scripts added
+2026-07-14 (Schneider, Kochanek & Wambsganss 2006 gap-fill): Module 8
+multipole (7/7), Module 9 substructure/rings (6/6), Module 11 statistics
+(9/9 + 8/8 solutions), Module 12 weak lensing (10/10 + solutions),
+Module 13 microlensing (16/16 + solutions). A BibTeX bibliography
+(`Notes/references.bib`, natbib) now backs all citations.*

@@ -45,7 +45,8 @@
     {\small S.~Carroll, \textit{Spacetime and Geometry} (2004)} \\
     {\small A.~B.~Congdon \& C.~R.~Keeton, \textit{Principles of Gravitational Lensing} (2018)} \\
     {\small M.~Meneghetti, \textit{Introduction to Gravitational Lensing} (2021)} \\
-    {\small P.~Saha, D.~Sluse, J.~Wagner \& L.~L.~R.~Williams, \textit{Essentials of Strong Gravitational Lensing} (2024)}
+    {\small P.~Saha, D.~Sluse, J.~Wagner \& L.~L.~R.~Williams, \textit{Essentials of Strong Gravitational Lensing} (2024)} \\
+    {\small P.~Schneider, C.~S.~Kochanek \& J.~Wambsganss, \textit{Gravitational Lensing: Strong, Weak and Micro} (2006)}
     \\[0.5cm]
     \ifsolutions
         {\normalsize\color{BrickRed}\textbf{--- Instructor Edition (with Solutions) ---}}
@@ -104,7 +105,15 @@ textbooks and review articles:
           Lenses} (Springer, 1992)
     \item A.~O.~Petters, H.~Levine \& J.~Wambsganss, \textit{Singularity
           Theory and Gravitational Lensing} (Birkh\"{a}user, 2001)
+    \item P.~Schneider, C.~S.~Kochanek \& J.~Wambsganss, \textit{Gravitational
+          Lensing: Strong, Weak and Micro}, Saas-Fee Advanced Course~33
+          (Springer, 2006)
 \end{itemize}
+
+\medskip
+\noindent
+Full bibliographic details for these and all works cited in the text appear
+in the \textbf{References} at the end of this document.
 
 \medskip
 \noindent
@@ -261,9 +270,27 @@ and scripts in the \texttt{Mathematica/} directory of this repository.
 \ifsolutions\input{10_Cluster_Lensing/10_Solutions}\fi
 
 % =============================================================================
+% Part IV: Statistical, Weak, and Micro Lensing
+% =============================================================================
+\part{Statistical, Weak, and Micro Lensing}
+
+\include{11_Lensing_Statistics/11_Lensing_Statistics}
+\ifsolutions\input{11_Lensing_Statistics/11_Solutions}\fi
+
+\include{12_Weak_Lensing/12_Weak_Lensing}
+\ifsolutions\input{12_Weak_Lensing/12_Solutions}\fi
+
+\include{13_Microlensing/13_Microlensing}
+\ifsolutions\input{13_Microlensing/13_Solutions}\fi
+
+% =============================================================================
 % Bibliography
 % =============================================================================
-% \bibliographystyle{unsrtnat}
-% \bibliography{references}
+\clearpage
+\renewcommand{\bibname}{References}
+\addcontentsline{toc}{chapter}{References}
+\nocite{*}
+\bibliographystyle{plainnat}
+\bibliography{references}
 
 \end{document}

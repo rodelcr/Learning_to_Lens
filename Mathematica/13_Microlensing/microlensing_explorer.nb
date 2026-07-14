@@ -1,0 +1,165 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      7086,        156]
+NotebookOptionsPosition[      6300,        138]
+NotebookOutlinePosition[      6666,        153]
+CellTagsIndexPosition[      6623,        150]
+WindowTitle->Module 13: Microlensing Explorer
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["\<\
+Module 13: Gravitational Microlensing --- Interactive Explorer\
+\>", "Title",ExpressionUUID->"2a54fce6-c1f1-4f3c-a0db-810b9164f5d4"],
+
+Cell["\<\
+Companion to microlensing.wl. Open in the Mathematica GUI and evaluate the \
+Manipulate cells below. Source: Schneider, Kochanek & Wambsganss (2006), Part \
+4 (J. Wambsganss).\
+\>", "Text",ExpressionUUID->"2ed5b18b-ea64-4612-94e9-5a78f954b6d7"],
+
+Cell["Paczynski light curve A(u(t))", "Section",ExpressionUUID->"f8492805-863c-4045-894c-6d3571a5f465"],
+
+Cell[BoxData[
+ RowBox[{"Hold", "[", 
+  TagBox[
+   StyleBox[
+    DynamicModuleBox[{$CellContext`t0$$ = 0, $CellContext`tE$$ = 
+     1, $CellContext`u0$$ = 0.3, Typeset`show$$ = True, 
+     Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+     Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+     "\"untitled\"", Typeset`specs$$ = {{{
+        Hold[$CellContext`u0$$], 0.3, "impact parameter u0"}, 0.05, 1.5, 
+       ControlType -> Manipulator}, {{
+        Hold[$CellContext`t0$$], 0, "peak time t0"}, -2, 2, ControlType -> 
+       Manipulator}, {{
+        Hold[$CellContext`tE$$], 1, "Einstein time tE"}, 0.3, 3, ControlType -> 
+       Manipulator}}, Typeset`size$$ = Automatic, Typeset`update$$ = 0, 
+     Typeset`initDone$$, Typeset`skipInitDone$$ = True, 
+     Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
+     DynamicBox[Manipulate`ManipulateBoxes[
+      1, StandardForm, 
+       "Variables" :> {$CellContext`t0$$ = 0, $CellContext`tE$$ = 
+         1, $CellContext`u0$$ = 0.3}, "ControllerVariables" :> {}, 
+       "OtherVariables" :> {
+        Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+         Typeset`specs$$, Typeset`size$$, Typeset`update$$, 
+         Typeset`initDone$$, Typeset`skipInitDone$$, 
+         Typeset`keyframeActionsQ$$, Typeset`keyframeList$$}, "Body" :> 
+       Module[{$CellContext`amag$}, $CellContext`amag$[
+            Pattern[$CellContext`uu, 
+             Blank[]]] := ($CellContext`uu^2 + 2)/($CellContext`uu 
+           Sqrt[$CellContext`uu^2 + 4]); Plot[
+           $CellContext`amag$[
+            
+            Sqrt[$CellContext`u0$$^2 + (($CellContext`t - \
+$CellContext`t0$$)/$CellContext`tE$$)^2]], {$CellContext`t, $CellContext`t0$$ - 
+            3 $CellContext`tE$$, $CellContext`t0$$ + 3 $CellContext`tE$$}, 
+           PlotRange -> {0, 12}, Frame -> True, 
+           FrameLabel -> {"time t", "magnification A"}, PlotLabel -> 
+           "Paczynski light curve"]], 
+       "Specifications" :> {{{$CellContext`u0$$, 0.3, "impact parameter u0"}, 
+          0.05, 1.5}, {{$CellContext`t0$$, 0, "peak time t0"}, -2, 
+          2}, {{$CellContext`tE$$, 1, "Einstein time tE"}, 0.3, 3}}, 
+       "Options" :> {}, "DefaultOptions" :> {}],
+      SingleEvaluation->True],
+     Deinitialization:>None,
+     DynamicModuleValues:>{},
+     SynchronousInitialization->True,
+     UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+     UnsavedVariables:>{Typeset`initDone$$},
+     UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+    Deployed->True,
+    StripOnInput->False],
+   Manipulate`InterpretManipulate[1]], "]"}]], "Input",ExpressionUUID->\
+"40dcb367-2a15-4bd5-afbf-c73d40a9079e"],
+
+Cell["Point-lens magnification A(u)", "Section",ExpressionUUID->"9f3ae1a4-d6fa-4ab3-a8d3-06056545bcc8"],
+
+Cell[BoxData[
+ RowBox[{"Hold", "[", 
+  TagBox[
+   StyleBox[
+    DynamicModuleBox[{$CellContext`u$$ = 0.3, Typeset`show$$ = True, 
+     Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+     Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+     "\"untitled\"", Typeset`specs$$ = {{{
+        Hold[$CellContext`u$$], 0.3, "source position u"}, 0.05, 3, 
+       ControlType -> Manipulator}}, Typeset`size$$ = Automatic, 
+     Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True, 
+     Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
+     DynamicBox[Manipulate`ManipulateBoxes[
+      1, StandardForm, "Variables" :> {$CellContext`u$$ = 0.3}, 
+       "ControllerVariables" :> {}, 
+       "OtherVariables" :> {
+        Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+         Typeset`specs$$, Typeset`size$$, Typeset`update$$, 
+         Typeset`initDone$$, Typeset`skipInitDone$$, 
+         Typeset`keyframeActionsQ$$, Typeset`keyframeList$$}, "Body" :> 
+       Module[{$CellContext`amag$}, $CellContext`amag$[
+            Pattern[$CellContext`uu, 
+             Blank[]]] := ($CellContext`uu^2 + 2)/($CellContext`uu 
+           Sqrt[$CellContext`uu^2 + 4]); Show[
+           Plot[
+            $CellContext`amag$[$CellContext`uu], {$CellContext`uu, 0.02, 3}, 
+            PlotRange -> {0, 12}, Frame -> True, 
+            FrameLabel -> {"u = beta/thetaE", "A(u)"}, PlotLabel -> 
+            "Point-lens magnification"], 
+           Graphics[{Red, 
+             PointSize[0.02], 
+             Point[{$CellContext`u$$, 
+               $CellContext`amag$[$CellContext`u$$]}]}]]], 
+       "Specifications" :> {{{$CellContext`u$$, 0.3, "source position u"}, 
+          0.05, 3}}, "Options" :> {}, "DefaultOptions" :> {}],
+      SingleEvaluation->True],
+     Deinitialization:>None,
+     DynamicModuleValues:>{},
+     SynchronousInitialization->True,
+     UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+     UnsavedVariables:>{Typeset`initDone$$},
+     UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+    Deployed->True,
+    StripOnInput->False],
+   Manipulate`InterpretManipulate[1]], "]"}]], "Input",ExpressionUUID->\
+"a6d2624e-7fa9-4edd-b5b1-6e408bd42056"]
+},
+WindowTitle->"Module 13: Microlensing Explorer",
+FrontEndVersion->"14.3 for Mac OS X ARM (64-bit) (July 8, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"20306815-7434-4f47-9576-5f1695e71918"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[600, 21, 142, 2, 70, "Title",ExpressionUUID->"2a54fce6-c1f1-4f3c-a0db-810b9164f5d4"],
+Cell[745, 25, 254, 4, 70, "Text",ExpressionUUID->"2ed5b18b-ea64-4612-94e9-5a78f954b6d7"],
+Cell[1002, 31, 103, 0, 70, "Section",ExpressionUUID->"f8492805-863c-4045-894c-6d3571a5f465"],
+Cell[1108, 33, 2766, 53, 70, "Input",ExpressionUUID->"40dcb367-2a15-4bd5-afbf-c73d40a9079e"],
+Cell[3877, 88, 103, 0, 70, "Section",ExpressionUUID->"9f3ae1a4-d6fa-4ab3-a8d3-06056545bcc8"],
+Cell[3983, 90, 2313, 46, 70, "Input",ExpressionUUID->"a6d2624e-7fa9-4edd-b5b1-6e408bd42056"]
+}
+]
+*)
+
+(* End of internal cache information *)

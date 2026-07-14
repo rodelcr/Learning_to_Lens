@@ -1,0 +1,86 @@
+% =============================================================================
+% Module 11: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:statistics_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{11_Lensing_Statistics/problems\_11.wl}{problems\_11.wl},
+which verifies each answer symbolically.
+
+% ----- Exercise 11.1 -----
+\subsection*{Exercise~\ref{ex:point_cross}: Point-Mass Magnification Cross-Section}
+
+\textbf{(a)} The total magnification of a point-mass lens is
+$\mu_p(y) = (y^2+2)/\big(y\sqrt{y^2+4}\big)$, a monotonically decreasing
+function of $y$.  Solving $\mu_p(y) = \mu$ for $y^2$: square both sides,
+\[
+    \mu^2 = \frac{(y^2+2)^2}{y^2(y^2+4)}
+    \;\Longrightarrow\;
+    \mu^2\,y^2(y^2+4) = (y^2+2)^2 .
+\]
+Writing $u = y^2$ and expanding gives
+$\mu^2 u^2 + 4\mu^2 u = u^2 + 4u + 4$, i.e.
+$(\mu^2-1)u^2 + 4(\mu^2-1)u - 4 = 0$.  The positive root is
+\[
+    u = y^2 = -2 + \frac{2\mu}{\sqrt{\mu^2-1}}
+    = 2\left(\frac{\mu}{\sqrt{\mu^2-1}} - 1\right),
+\]
+which is Eq.~\eqref{eq:point_ymu}.  Since $\mu_p$ decreases with $y$, the
+condition $\mu_p > \mu$ is $y < y(\mu)$, so the cross-section is
+$\sigma(\mu) = \pi\thetaE^2\,y^2(\mu)$. \checkmark
+
+\textbf{(b)} For $\mu \gg 1$, expand
+$\mu/\sqrt{\mu^2-1} = (1-\mu^{-2})^{-1/2} = 1 + \tfrac12\mu^{-2} + \cdots$,
+so $y^2(\mu) = 2(\mu/\sqrt{\mu^2-1} - 1) \to \mu^{-2}$.  Equivalently
+$\lim_{\mu\to\infty}\mu^2\,y^2(\mu) = 1$, hence $y^2 \sim 1/\mu^2$ and
+$\sigma \propto \mu^{-2}$. \checkmark  Since the differential probability
+is $p(\mu)\,d\mu \propto -\,(d\sigma/d\mu)\,d\mu$, this cross-section is
+the integral form of the universal $p(\mu)\propto\mu^{-3}$ tail.
+
+% ----- Exercise 11.2 -----
+\subsection*{Exercise~\ref{ex:sis_stats}: SIS Flux Ratio and Magnification}
+
+For an SIS with $y = \beta/\thetaE < 1$ the two images have signed
+magnifications $\mu_\pm = 1 \pm \thetaE/\beta = 1 \pm 1/y$.  The trailing
+image ($\mu_-$) has $|\mu_-| = 1/y - 1$ (it is a saddle, negative parity).
+The total magnification is
+\[
+    \mu = |\mu_+| + |\mu_-| = \left(1+\tfrac1y\right)
+    + \left(\tfrac1y-1\right) = \frac{2}{y},
+\]
+and the flux ratio is
+\[
+    r = \frac{|\mu_+|}{|\mu_-|}
+    = \frac{1+1/y}{1/y-1} = \frac{1+y}{1-y}. \quad\checkmark
+\]
+Since $r$ increases from $1$ (at $y=0$) to $\infty$ (at $y=1$), requiring a
+flux ratio smaller than $r$ restricts the source to $y < (r-1)/(r+1) < 1$,
+so the cross-section is bounded by the full multiple-imaging disk,
+$\sigma \le \pi\thetaE^2$. \checkmark
+
+% ----- Exercise 11.3 -----
+\subsection*{Exercise~\ref{ex:bias_null}: The $\beta=1$ Null of Magnification Bias}
+
+With $N_0(>S) = A\,S^{-\beta}$, Eq.~\eqref{eq:mag_bias} gives
+\[
+    N(>S) = \frac{1}{\langle\mu\rangle}\int d\mu\; p(\mu)\,
+    A\left(\frac{S}{\mu}\right)^{-\beta}
+    = \frac{A\,S^{-\beta}}{\langle\mu\rangle}
+      \int d\mu\; p(\mu)\,\mu^{\beta}
+    = N_0(>S)\,\frac{\langle\mu^{\beta}\rangle}{\langle\mu\rangle}.
+\]
+At $\beta = 1$ the numerator is
+$\int \mu\,p(\mu)\,d\mu = \langle\mu\rangle$ by the definition of the mean
+magnification, so $N(>S) = N_0(>S)$ for \emph{any} $p(\mu)$. \checkmark
+
+\textbf{Physical reason:} magnification does two competing things.  It
+brightens each source by $\mu$ (raising it above threshold), but it also
+stretches the sky by $\mu$, diluting the surface density of sources by
+$1/\mu$.  For counts with logarithmic slope $\beta = 1$ (equal flux per
+logarithmic interval) these effects cancel exactly; steeper counts
+($\beta>1$) are net-boosted, flatter counts ($\beta<1$) net-depleted.

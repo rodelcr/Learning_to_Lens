@@ -27,7 +27,11 @@ if ! command -v pdflatex &> /dev/null; then
 fi
 
 # ---- Version 1: Student Edition (no solutions) ----
+# Sequence: pdflatex -> bibtex -> pdflatex -> pdflatex resolves \cite and the
+# References chapter (natbib + references.bib). bibtex is allowed to warn.
 echo "=== Building Student Edition (no solutions) ==="
+pdflatex -interaction=nonstopmode main.tex > /dev/null 2>&1
+bibtex main > /dev/null 2>&1 || true
 pdflatex -interaction=nonstopmode main.tex > /dev/null 2>&1
 pdflatex -interaction=nonstopmode main.tex > /dev/null 2>&1
 cp main.pdf "$OUTDIR/Learning_to_Lens.pdf"
@@ -35,6 +39,8 @@ echo "  -> $OUTDIR/Learning_to_Lens.pdf"
 
 # ---- Version 2: Instructor Edition (with solutions) ----
 echo "=== Building Instructor Edition (with solutions) ==="
+pdflatex -interaction=nonstopmode "\def\showsolutions{}\input{main.tex}" > /dev/null 2>&1
+bibtex main > /dev/null 2>&1 || true
 pdflatex -interaction=nonstopmode "\def\showsolutions{}\input{main.tex}" > /dev/null 2>&1
 pdflatex -interaction=nonstopmode "\def\showsolutions{}\input{main.tex}" > /dev/null 2>&1
 cp main.pdf "$OUTDIR/Learning_to_Lens_Solutions.pdf"

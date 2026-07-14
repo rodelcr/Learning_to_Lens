@@ -891,6 +891,161 @@ B1608+656 is one of the best-studied time-delay lenses:
 
 
 % =====================================================================
+\section{Substructure and Flux-Ratio Anomalies}
+\label{sec:substructure}
+
+Everything so far has treated the lens as a \emph{smooth} mass
+distribution.  But $\Lambda$CDM predicts that galaxy haloes are lumpy:
+$N$-body simulations produce far more low-mass subhaloes than the number
+of luminous satellites we observe (the ``missing satellites'' problem),
+with of order a few percent of the projected mass near the images bound
+in substructure \citep[][Part~2, \S8]{schneider_kochanek_wambsganss_2006}.
+Strong lensing offers a way to weigh this \emph{dark} substructure.
+
+\subsection{The Flux-Ratio Anomaly}
+\label{sec:flux_anomaly}
+
+Lens models that fit the image \emph{positions} of a quad to
+milliarcsecond precision routinely fail to reproduce the image
+\emph{flux ratios}.  For a source straddling a fold or cusp of the
+caustic, smooth models make sharp predictions --- e.g.\ the
+\textbf{cusp relation}, that the signed magnifications of the three
+merging images of a cusp image sum to zero --- and real systems (the
+classic case is the radio quad B1422$+$231) violate them.  Optical flux
+ratios can be corrupted by microlensing (Module~\ref{ch:microlensing})
+and dust; but \emph{radio} flux ratios are largely immune to both, and
+they are anomalous just the same.
+
+\subsection{Why Flux Ratios Probe Low-Mass Substructure}
+\label{sec:why_flux}
+
+The key is how many derivatives of the potential each observable
+requires.  For virialized objects $M \propto \sigma_v^4$ and
+$R \propto \sigma_v^2$, so:
+\begin{itemize}[nosep]
+    \item \textbf{time delays} $\propto \psiL \propto M \propto \sigma_v^4$
+          --- unaffected by low-mass substructure;
+    \item \textbf{deflections} $\propto \nabla\psiL \propto \sigma_v^2$
+          --- perturbed only by \emph{massive} substructure;
+    \item \textbf{magnifications} $\kappab,\gammaL \propto \nabla^2\psiL
+          \propto \sigma_v^0$ --- perturbed \emph{equally by all mass
+          scales}.
+\end{itemize}
+Flux ratios (magnifications) are therefore uniquely sensitive to the
+low-mass end of the substructure spectrum, exactly where CDM and warm
+dark matter differ.  A further diagnostic is that substructure
+preferentially \emph{demagnifies saddle-point} images relative to minima
+\citep[][Part~2, \S8]{schneider_kochanek_wambsganss_2006}.  Applying a
+Bayesian analysis to a sample of radio quads, Dalal \& Kochanek found a
+substructure mass fraction $f_{\mathrm{sat}} \approx 0.02$ (90\%
+confidence $0.006$--$0.07$), consistent with CDM and far above the
+luminous-satellite fraction.  Modern work extends this with
+\textbf{gravitational imaging} --- detecting individual dark subhaloes
+through their astrometric perturbations of extended arcs --- turning
+flux-ratio and arc anomalies into a probe of the small-scale matter
+power spectrum.
+
+
+% =====================================================================
+\section{Extended Sources and Einstein-Ring Reconstruction}
+\label{sec:extended_sources}
+
+Real sources are extended, and their lensed images --- arcs and
+\textbf{Einstein rings} --- carry far more information than a handful of
+point images.  The foundational fact is that
+\textbf{gravitational lensing conserves surface brightness}:
+\begin{equation}
+    f_I(\vectheta) = f_S(\vecbeta(\vectheta)),
+    \label{eq:sb_conservation}
+\end{equation}
+so what we call ``magnification'' is only the apparent brightening that
+follows from the image subtending a larger solid angle than the source;
+the intrinsic surface brightness is unchanged
+\citep[][Part~2, \S10]{schneider_kochanek_wambsganss_2006}.
+
+\subsection{The Einstein Ring as a Pattern}
+\label{sec:ring_pattern}
+
+An Einstein ring is not a set of discrete images but a \emph{pattern}:
+the locus of peak surface brightness along radial spokes from the lens
+centre.  For an isothermal lens with arbitrary angular structure,
+$\psiL = b\,\theta\,F(\varphi)$ with $\langle F\rangle = 1$, the
+tangential critical curve sits at
+\begin{equation}
+    \frac{r_{\mathrm{crit}}}{b} = F(\varphi) + F''(\varphi),
+    \label{eq:ring_crit}
+\end{equation}
+while, for a compact source offset by $\vecbeta_0$ from the lens centre,
+the ring curve is
+\begin{equation}
+    \frac{r_E(\varphi)}{b} = F(\varphi) + \vecbeta_0 \cdot \hat{e}_\theta
+    \label{eq:ring_curve}
+\end{equation}
+\citep[Kochanek, Keeton \& McLeod 2001; see][Part~2, eq.~141]{schneider_kochanek_wambsganss_2006}.
+The remarkable consequence is that the \emph{angular shape} of the ring
+directly reads off the multipoles $F(\varphi)$ of the lens potential
+(\S\ref{sec:multipoles} of Module~\ref{ch:elliptical_models}): the even
+multipoles of the ring encode the lens, the odd multipoles the source.
+Rings thus break the angular degeneracies that a two-image lens cannot
+constrain --- though they pin down the \emph{radial} profile only weakly
+(the dependence scales as $|\Delta\beta|^4$).
+
+\subsection{Source Reconstruction}
+\label{sec:source_reconstruction}
+
+To use every pixel of an arc, one reconstructs the source.  Because
+surface brightness is conserved, every image-plane pixel maps to a source
+position $\vecbeta(\vectheta,\mathbf{p})$ for lens parameters
+$\mathbf{p}$; in a \emph{correct} model all image pixels mapping to the
+same source pixel share a surface brightness, while an incorrect model
+scatters them.  Minimizing that scatter --- the ``Ring Cycle'' idea,
+now realized as regularized linear (semilinear) inversion onto a pixel
+or adaptive grid --- underlies modern pipelines such as
+\texttt{PyAutoLens} and the SLaM framework used in surveys like AGEL.
+This is the practical engine behind galaxy-scale mass measurements and
+the source-plane reconstructions of high-redshift galaxies.
+
+
+% =====================================================================
+\section{External Convergence and Lens Environments}
+\label{sec:external_convergence}
+
+No lens is isolated.  Mass in the lens's group or cluster, and
+uncorrelated structure along the line of sight, contribute an
+\textbf{external convergence} $\kappa_{\mathrm{ext}}$ that is nearly
+uniform across the image region --- i.e.\ a mass sheet.  As we saw in
+\S\ref{sec:msd}, a uniform sheet leaves the image positions and flux
+ratios unchanged (it is the physical realization of the mass-sheet
+transform with $\lambda = 1 - \kappa_{\mathrm{ext}}$), but it rescales an
+inferred Hubble constant,
+\begin{equation}
+    \Hubble^{\mathrm{true}}
+    = (1 - \kappa_{\mathrm{ext}})\,\Hubble^{\mathrm{naive}},
+    \label{eq:kappa_ext_H0}
+\end{equation}
+exactly as in Eq.~\eqref{eq:mst_H0}.  Estimating
+$\kappa_{\mathrm{ext}}$ --- typically a few percent --- from the
+photometric and spectroscopic weighting of the lens field, calibrated
+against numerical line-of-sight simulations, is an essential and
+irreducible step in time-delay cosmography
+\citep{wong_h0licow_2020,Birrer2020}.
+
+\subsection{Dust and the Interstellar Medium of the Lens}
+\label{sec:lens_dust}
+
+A more mundane environmental effect is the \textbf{interstellar medium of
+the lens galaxy}.  Differential extinction reddens and dims the optical
+and near-infrared images that pass through different lines of sight in
+the lens, corrupting optical flux ratios (and biasing colours) in a
+strongly wavelength-dependent way
+\citep[][Part~2, \S9]{schneider_kochanek_wambsganss_2006}.  This is a
+principal reason the substructure studies of \S\ref{sec:substructure}
+rely on \emph{radio} flux ratios, which are essentially dust-free, and a
+reminder that a clean lensing measurement must always account for the
+baryonic astrophysics of the deflector.
+
+
+% =====================================================================
 \section{Summary}
 \label{sec:galaxy_lensing_summary}
 

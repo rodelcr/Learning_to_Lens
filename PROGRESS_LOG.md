@@ -4,6 +4,53 @@ Timestamped record of major milestones and work completed.
 
 ---
 
+## 2026-07-14 — Schneider et al. (2006) gap-fill + real bibliography
+
+Compared the tutorial against the newly-added Saas-Fee volume
+*Gravitational Lensing: Strong, Weak and Micro* (Schneider, Kochanek &
+Wambsganss 2006; Zotero `NNNRZT8L`) and added the material it covers that
+the tutorial lacked, following all repo conventions (Mathematica-verified
+derivations, epigraph + companion-`.wl` layout, problems/solutions,
+source-referenced citations).
+
+**Bibliography (new).** Replaced the inline-only citation style's missing
+backend with a real `Notes/references.bib` (natbib, `plainnat`) and a
+**References** chapter. Every entry is verified — Zotero export, CrossRef
+DOI lookup, or publisher/ISBN record (see provenance comments in the
+`.bib`). Activated the previously-commented bibliography block in
+`main.tex`, added a bibtex pass to `build.sh`, added Schneider 2006 to both
+source lists, and fixed the previously-broken `\citep{Birrer2020}` (now
+TDCOSMO IV, verified).
+
+**Content added (14 → 17 modules; new Part IV):**
+- **Module 8** — new §"Angular Structure of Lenses: Multipole Expansion"
+  (Kochanek §4.4): κ_m relation, internal/external quadrupole, SIE
+  f_int=1/4. Verified in `multipole_expansion.wl` (7/7).
+- **Module 9** — new §§ on substructure & flux-ratio anomalies (Kochanek
+  §8), Einstein-ring reconstruction (§10), and external convergence + lens
+  dust (§5.2, §9). Verified in `substructure_and_rings.wl` (6/6).
+- **Module 11 (new)** — Lensing Statistics & Cross-Sections (Schneider
+  Pt1 §5; Kochanek §6). `lensing_statistics.wl` (9/9) + solutions (8/8).
+- **Module 12 (new)** — Weak Lensing & Cosmic Shear (Schneider Pt3):
+  Kaiser–Squires, tangential shear, cosmic shear. `weak_lensing.wl` (10/10).
+- **Module 13 (new)** — Gravitational Microlensing (Wambsganss Pt4):
+  Paczynski light curve, optical depth, astrometric/quasar microlensing.
+  `microlensing.wl` (16/16).
+
+Weak & Micro modules 12/13 drafted by two parallel subagents against the
+Module-07 template and the Schneider PDF, then independently
+re-verified (every `.wl` re-run to PASS; every `\citep` key traced to a
+verified `.bib` entry; new refs Paczynski 1986, Mao & Paczynski 1991, and
+Paczynski 1998 CrossRef-verified before merge — the last for the astrometric
+centroid-shift result, which the microlensing agent correctly re-attributed
+from 1986 to 1998).
+
+**Build:** student 210 → 249 pp, instructor 257 → 306 pp; 0 undefined
+citations, 0 undefined references, 0 LaTeX errors. Master textbook
+verification still 12/12.
+
+---
+
 ## 2026-05-14 — Pre-expert-review audit pass
 
 Triggered by spotting that Fig 8.1 (`lensing_geometry.pdf`) had its θ-arc on

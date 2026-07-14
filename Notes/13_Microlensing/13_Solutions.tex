@@ -1,0 +1,191 @@
+% =============================================================================
+% Module 13: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included based on \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:micro_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{13_Microlensing/problems\_13.wl}{problems\_13.wl},
+which verifies each answer symbolically and numerically.
+
+% ----- Exercise 13.1 -----
+\subsection*{Exercise~\ref{ex:micro_magnification}: Total Magnification and Its Limits}
+
+\textbf{(a)} The lens equation $u = y - 1/y$ is $y^2 - u\,y - 1 = 0$, with
+roots
+\begin{equation*}
+    y_\pm = \frac{1}{2}\left(u \pm \sqrt{u^2 + 4}\right) \,.
+\end{equation*}
+The separation is $y_+ - y_- = \sqrt{u^2+4}$. \checkmark
+
+\textbf{(b)} With $\mu = [1 - y^{-4}]^{-1}$ evaluated at $y_\pm$ one finds
+\begin{equation*}
+    \mu_\pm = \frac{1}{2}\left[\frac{u^2+2}{u\sqrt{u^2+4}} \pm 1\right] \,,
+\end{equation*}
+so $\mu_+ > 0$, $\mu_- < 0$, and (adding the absolute values)
+\begin{equation*}
+    A(u) = |\mu_+| + |\mu_-| = \mu_+ - \mu_-
+    = \frac{u^2 + 2}{u\sqrt{u^2 + 4}} \,. \quad \checkmark
+\end{equation*}
+
+\textbf{(c)} As $u\to0$, $A(u) \simeq 2/(u\cdot2) = 1/u \to \infty$
+(high magnification).  As $u\to\infty$, $A(u) \simeq u^2/(u\cdot u) = 1$
+(unlensed). \checkmark
+
+\textbf{(d)} For $u_0 = 1$, $A(1) = 3/\sqrt5 \approx 1.342$, so
+\begin{equation*}
+    \Delta m = 2.5\log_{10}A(1) \approx 0.32~\text{mag} \,. \quad \checkmark
+\end{equation*}
+
+
+% ----- Exercise 13.2 -----
+\subsection*{Exercise~\ref{ex:micro_timescale}: Einstein Radius and Timescale}
+
+\textbf{(a)} With $\Dds = \Ds - \Dd = 4$~kpc, $\Dd = 4$~kpc, $\Ds = 8$~kpc,
+$M = 0.3\,\Msun$, eq.~\eqref{eq:micro_thetaE} gives
+\begin{equation*}
+    \thetaE = \sqrt{\frac{4\Gnewton M}{\speedoflight^2}\,
+    \frac{\Dds}{\Dd\,\Ds}} \approx 0.55~\text{mas} \,,
+    \qquad
+    \RE = \Dd\,\thetaE \approx 2.2~\text{AU} \,.
+\end{equation*}
+
+\textbf{(b)} With $v_\perp = 200$~km\,s$^{-1}$,
+\begin{equation*}
+    t_{\mathrm{E}} = \frac{\RE}{v_\perp}
+    = \frac{2.2~\text{AU}}{200~\text{km s}^{-1}}
+    \approx 19~\text{days} \,.
+\end{equation*}
+Galactic events last of order weeks because $\RE\sim$~AU and Galactic
+transverse speeds are $\sim\!200$~km\,s$^{-1}$, so $\RE/v_\perp$ is weeks.
+
+\textbf{(c)} $\thetaE \propto \sqrt{M}$ and $\RE = \Dd\thetaE$, so
+$t_{\mathrm{E}} = \Dd\thetaE/v_\perp \propto \sqrt{M}\,\Dd^{1/2}\ldots$ ---
+more precisely, doubling nothing but the mass scales
+$t_{\mathrm{E}} \to \sqrt{M}$: $t_{\mathrm{E}}(4M)/t_{\mathrm{E}}(M) = 2$.
+A single measured $t_{\mathrm{E}}$ is one number constraining the three
+unknowns $(M, \Dd, v_\perp)$, so it cannot determine any of them alone.  The
+degeneracy is broken by finite-source effects, microlensing parallax, or the
+astrometric centroid shift (Exercise~\ref{ex:micro_astrometric}). \checkmark
+
+
+% ----- Exercise 13.3 -----
+\subsection*{Exercise~\ref{ex:micro_optical_depth}: Optical Depth and the MACHO Test}
+
+\textbf{(a)} The optical depth is the total Einstein-disk area per unit sky
+area, $\tau = n_{\mathrm{ang}}\,\pi\thetaE^2$, where $n_{\mathrm{ang}}$ is the
+lens number per steradian.  Each Einstein area scales as
+$\pi\thetaE^2 \propto M$, while for fixed mass density the number density
+scales as $n \propto 1/M$.  The two factors cancel, leaving $\tau$ dependent
+only on the total mass density, not on how it is divided into lenses. \checkmark
+
+\textbf{(b)} For a thin screen at the lens plane, the number of lenses per
+steradian is $n_{\mathrm{ang}} = \Sigma\,\Dd^2/M$ and the Einstein disk has
+angular area $\pi\thetaE^2$ with $\thetaE^2 = 4\Gnewton M\Dds/
+(\speedoflight^2\Dd\Ds)$.  Hence
+\begin{equation*}
+    \tau = n_{\mathrm{ang}}\,\pi\thetaE^2
+    = \frac{\Sigma\,\Dd^2}{M}\cdot
+    \frac{4\pi\Gnewton M\,\Dds}{\speedoflight^2\Dd\Ds}
+    = \Sigma\cdot\frac{4\pi\Gnewton\,\Dd\,\Dds}{\speedoflight^2\Ds}
+    = \frac{\Sigma}{\Sigmacr} \,,
+\end{equation*}
+using $\Sigmacr = \speedoflight^2\Ds/(4\pi\Gnewton\Dd\Dds)$. \checkmark
+
+\textbf{(c)} With $\tau \sim 5\times10^{-7}$, roughly $1/\tau \sim 2\times10^6$
+stars must be monitored to expect one lensed above the $u=1$ threshold at any
+instant --- of order a few million. \checkmark
+
+\textbf{(d)} The measured $\tau_{\mathrm{LMC}}\approx1.2\times10^{-7}$ is about
+$4$--$5$ times smaller than the value expected if the entire halo were compact
+objects.  Combined with the small number of detected events, this limits
+MACHOs to $\lesssim25\%$ of the halo mass over the probed mass range, and the
+surviving events are largely attributable to ordinary stars in the disk or the
+Magellanic Clouds.  Compact baryonic objects are therefore \emph{not} the
+dominant dark matter. \checkmark
+
+
+% ----- Exercise 13.4 -----
+\subsection*{Exercise~\ref{ex:micro_peak}: Peak Magnification and Event Width}
+
+\textbf{(a)} Solving $A(u_0) = (u_0^2+2)/(u_0\sqrt{u_0^2+4}) = 5$ numerically
+gives $u_0 \approx 0.203$.
+
+\textbf{(b)} For $u_0 = 0.05$, $A(u_0) = 20.02\ldots$ while $1/u_0 = 20$; the
+fractional error is $\sim\!0.1\%$, well under $1\%$. \checkmark
+
+\textbf{(c)} The threshold $u = 1$ is reached when
+$u_0^2 + (t-t_0)^2/t_{\mathrm{E}}^2 = 1$, i.e.
+\begin{equation*}
+    |t - t_0| = t_{\mathrm{E}}\sqrt{1 - u_0^2}
+    \qquad (u_0 < 1) \,.
+\end{equation*}
+Because $A(u)$ is monotonic in $u$, $A(u(t)) = A(1)$ if and only if
+$u(t) = 1$. \checkmark
+
+
+% ----- Exercise 13.5 -----
+\subsection*{Exercise~\ref{ex:micro_astrometric}: Astrometric Centroid Shift}
+
+\textbf{(a)} Differentiating $\delta(u) = u/(u^2+2)$ (in units of $\thetaE$),
+\begin{equation*}
+    \frac{d\delta}{du} = \frac{(u^2+2) - u(2u)}{(u^2+2)^2}
+    = \frac{2 - u^2}{(u^2+2)^2} = 0
+    \quad\Longrightarrow\quad u = \sqrt2 \,.
+\end{equation*}
+
+\textbf{(b)} Evaluating at $u = \sqrt2$:
+\begin{equation*}
+    \delta_{\max} = \frac{\sqrt2}{2 + 2} = \frac{\sqrt2}{4}
+    = \frac{1}{2\sqrt2} = 8^{-1/2} \approx 0.354
+    \quad(\text{in units of }\thetaE) \,. \quad \checkmark
+\end{equation*}
+
+\textbf{(c)} The centroid ellipse has \emph{angular} size $\propto\thetaE
+\propto\sqrt{M}$, so measuring it yields $\thetaE$ directly --- unlike the
+photometric light curve, which yields only the degenerate combination
+$t_{\mathrm{E}} = \Dd\thetaE/v_\perp$.  Combined with the relative parallax
+$\pi_{\mathrm{ds}}$, and using $\thetaE^2 = (4\Gnewton/\speedoflight^2)
+(M/\mathrm{AU})\,\pi_{\mathrm{ds}}$ expressed in milliarcseconds, the lens mass
+is $M = 0.123\,\Msun\,\thetaE^2/\pi_{\mathrm{ds}}$; the coefficient
+$1/8.14 \approx 0.123\,\Msun\,\mathrm{mas}^{-2}$ is verified in
+\texttt{problems\_13.wl}. \checkmark
+
+
+% ----- Exercise 13.6 -----
+\subsection*{Exercise~\ref{ex:micro_quasar}: Quasar Microlensing Scales}
+
+\textbf{(a)} The Einstein radius projected into the source plane is
+$r_{\mathrm{E}} = \sqrt{4\Gnewton M\,\Ds\Dds/(\speedoflight^2\Dd)}$.  For
+$M = \Msun$ with representative angular-diameter distances
+($\Dd\approx1250$~Mpc at $z_d=0.5$, $\Ds\approx1750$~Mpc at $z_s=2$,
+$\Dds\approx1550$~Mpc), $r_{\mathrm{E}} \approx 6\times10^{16}$~cm --- of order
+$10^{16}$~cm, consistent with eq.~\eqref{eq:micro_qso_rE}. \checkmark
+
+\textbf{(b)} All mass-independent factors are fixed, so
+$r_{\mathrm{E}} \propto \sqrt{M}$; $r_{\mathrm{E}}(4M)/r_{\mathrm{E}}(M) = 2$.
+\checkmark
+
+\textbf{(c)} With $R = 10^{15}$~cm and $v_\perp = 600$~km\,s$^{-1}$,
+\begin{equation*}
+    t_{\mathrm{cross}} = \frac{R}{v_\perp}
+    = \frac{10^{15}~\text{cm}}{600~\text{km s}^{-1}}
+    \approx 6~\text{months} \,.
+\end{equation*}
+The full Einstein-crossing time $t_{\mathrm{E}}\sim15$~yr is impractically
+long, but each \emph{caustic} crossing produces a flux change over
+$t_{\mathrm{cross}}$, so it is $t_{\mathrm{cross}}$ --- set by the source
+size --- that governs the observable variability. \checkmark
+
+\textbf{(d)} At a quasar macro-image the stellar convergence is
+$\kappab \sim 1$, meaning the projected separations of neighbouring stars are
+comparable to their Einstein radii.  Their deflections then combine
+non-linearly into an overlapping \emph{network} of caustics that covers the
+source plane, rather than the isolated, well-separated point caustics of a
+single Galactic lens.  The source is therefore microlensed continuously by the
+ensemble, and its light curve reflects the caustic network it drifts across.
+\checkmark
