@@ -400,8 +400,12 @@ Module[{},
                 {1.2, 1.2}]
         }
     ];
-    Export[FileNameJoin[{baseDir, "magnification_map.pdf"}], fig2];
-    Print["  Exported: magnification_map.pdf"];
+    (* Rasterize before export: the DensityPlot (PlotPoints 150) + BarLegend
+       exports to a ~56 MB vector PDF otherwise. A 300-DPI raster is visually
+       identical and ~450 KB. See feedback: "rasterize DensityPlots". *)
+    Export[FileNameJoin[{baseDir, "magnification_map.pdf"}],
+        Rasterize[fig2, ImageResolution -> 300]];
+    Print["  Exported: magnification_map.pdf (rasterized, 300 DPI)"];
 ];
 
 
