@@ -33,21 +33,33 @@
 
 % --- Title ---
 \title{
+    % The title block must stay under \textheight (650.4pt): report.cls wraps
+    % \maketitle in \null\vfil ... \vfil\null, so any overflow breaks at a \vfil
+    % and emits a stray page-number-only page (or a blank page before the title).
+    % The instructor edition adds ~25pt here, so keep >=25pt of slack.
     \vspace{-2cm}
     {\Huge \textbf{Learning to Lens}} \\[0.5cm]
     {\Large An Introduction to General Relativity \\
     and Strong Gravitational Lensing} \\[1cm]
     {\large with Mathematica} \\[0.8cm]
     {\normalsize Based on the published works of} \\[0.3cm]
-    {\small P.~Schneider, J.~Ehlers \& E.~E.~Falco, \textit{Gravitational Lenses} (1992)} \\
-    {\small R.~Narayan \& M.~Bartelmann, \textit{Lectures on Gravitational Lensing} (1997)} \\
-    {\small A.~O.~Petters, H.~Levine \& J.~Wambsganss, \textit{Singularity Theory and Gravitational Lensing} (2001)} \\
-    {\small S.~Carroll, \textit{Spacetime and Geometry} (2004)} \\
-    {\small A.~B.~Congdon \& C.~R.~Keeton, \textit{Principles of Gravitational Lensing} (2018)} \\
-    {\small M.~Meneghetti, \textit{Introduction to Gravitational Lensing} (2021)} \\
-    {\small P.~Saha, D.~Sluse, J.~Wagner \& L.~L.~R.~Williams, \textit{Essentials of Strong Gravitational Lensing} (2024)} \\
-    {\small P.~Schneider, C.~S.~Kochanek \& J.~Wambsganss, \textit{Gravitational Lensing: Strong, Weak and Micro} (2006)}
-    \\[0.5cm]
+    % Keep every \\ INSIDE this \small group, including the trailing one.  In a
+    % center environment \\ implies \par, and a paragraph's interline glue comes
+    % from the \baselineskip in force at its \par.  report.cls sets \@title in
+    % \LARGE, so any \\ left outside the brace breaks at \LARGE's ~22pt instead
+    % of \small's 13.6pt --- across these entries that adds ~80pt and pushes the
+    % block past \textheight, which makes \maketitle's \null\vfil ... \vfil\null
+    % break at a \vfil and emit a stray page.
+    {\small
+    P.~Schneider, J.~Ehlers \& E.~E.~Falco, \textit{Gravitational Lenses} (1992) \\
+    R.~Narayan \& M.~Bartelmann, \textit{Lectures on Gravitational Lensing} (1997) \\
+    A.~O.~Petters, H.~Levine \& J.~Wambsganss, \textit{Singularity Theory and Gravitational Lensing} (2001) \\
+    S.~Carroll, \textit{Spacetime and Geometry} (2004) \\
+    A.~B.~Congdon \& C.~R.~Keeton, \textit{Principles of Gravitational Lensing} (2018) \\
+    M.~Meneghetti, \textit{Introduction to Gravitational Lensing} (2021) \\
+    P.~Saha, D.~Sluse, J.~Wagner \& L.~L.~R.~Williams, \textit{Essentials of Strong Gravitational Lensing} (2024) \\
+    P.~Schneider, C.~S.~Kochanek \& J.~Wambsganss, \textit{Gravitational Lensing: Strong, Weak and Micro} (2006)
+    \\[0.5cm]}
     \ifsolutions
         {\normalsize\color{BrickRed}\textbf{--- Instructor Edition (with Solutions) ---}}
     \fi

@@ -4,6 +4,55 @@ Timestamped record of major milestones and work completed.
 
 ---
 
+## 2026-08-07 — Title-page overflow: blank/stray front-matter pages removed
+
+### Symptom
+The instructor PDF opened on a **blank page 1** (title pushed to page 2).
+The student PDF had the milder version of the same defect: a stray page 2
+containing only the page number, between the title and *About This Document*.
+
+### Root cause
+The `\title{}` block's natural height exceeded `\textheight`
+(650.4 pt; budget 638.4 pt after `\topskip`). Measured heights were
+**662.9 pt student / 687.9 pt instructor** — the instructor edition is
+~25 pt taller because of the "Instructor Edition (with Solutions)" banner.
+
+`report.cls` wraps `\maketitle` in `\null\vfil` … `\vfil\null`, so an
+overflowing block breaks at a `\vfil`:
+- student (12.5 pt over) broke at the **trailing** `\vfil` → the trailing
+  `\null` landed on its own page;
+- instructor (37.5 pt over) broke at the **leading** `\vfil` → `\null`
+  alone became blank page 1, *and* the trailing `\null` still made a
+  stray page 3.
+
+The height itself came from a `\\` placement bug. In a `center`
+environment `\\` implies `\par`, and a paragraph's interline glue is taken
+from the `\baselineskip` in force **at its `\par`**. The eight reference
+lines were written as `{\small …} \\` — with each `\\` *outside* the
+`\small` group — so they were spaced at `\LARGE`'s ~22 pt (the size
+`report.cls` sets `\@title` in) rather than `\small`'s 13.6 pt, inflating
+the block by ~80 pt.
+
+### Fix (`Notes/main.tex`)
+Moved every `\\` *inside* the `{\small …}` group, including the trailing
+`\\[0.5cm]`. No content, wording, or citation was changed; gap sizes are
+back at their original values. Block heights are now
+**568.9 pt student / 593.9 pt instructor** against the 638.4 pt budget —
+69.6 / 44.6 pt of slack, comfortably more than the 25 pt the instructor
+banner costs. A comment in the title block records the constraint.
+
+### Verification
+- Both PDFs now open on the title page, with *About This Document* on
+  page 2 in each. No stray page-number-only pages.
+- Page counts: student **249 → 248**, instructor **306 → 304** — exactly
+  the stray pages removed, no content lost.
+- Zero LaTeX errors; TOC and References chapter intact in both editions.
+- Title pages rendered and inspected visually; the eight reference
+  entries are now uniformly spaced.
+- Mathematica verification untouched by this change (layout only).
+
+---
+
 ## 2026-07-14 — Schneider et al. (2006) gap-fill + real bibliography
 
 Compared the tutorial against the newly-added Saas-Fee volume
