@@ -42,7 +42,7 @@ and verifies the key results for that module:
 | 8 | `multipole_expansion.wl` | Angular-structure multipoles: κ_m = a_m(1−m²)/(2θ)cos[m(φ−φ_m)], monopole→SIS, external shear κ=0, SIE internal-quadrupole fraction 1/4 (7/7) |
 | 9 | `substructure_and_rings.wl` | Isothermal ring κ=(b/2r)(F+F″), fold-caustic flux relation μ₊=−μ₋, surface-brightness conservation μ=1/detA (6/6) |
 | 10 | `cluster_lensing.wl` | NFW cluster-scale lensing, Einstein radius vs mass scaling |
-| 11 | `lensing_statistics.wl` | Point-mass cross-section σ(μ)=πθ_E²y²(μ) with σ∝μ⁻² (⇒ p(μ)∝μ⁻³), SIS μ=2/y & r=(1+y)/(1−y), β=1 magnification-bias null (9/9) |
+| 11 | `lensing_statistics.wl` | Point-mass cross-section σ(μ)=πθ_E²y²(μ) with σ∝μ⁻² (⇒ p(μ)∝μ⁻³), SIS μ=2/y & r=(1+y)/(1−y), β=1 magnification-bias null; SIS combined threshold cross-section by direct source-plane integration (35-pt grid incl. μ<2 — shows Schneider 2006 eq. 101's H(μ−2) factor must be absent), proper→comoving optical-depth identity, Ω_Λ volume factor 2.93× (flat 0.3/0.7 vs EdS, z_s=2) (13/13; extended 2026-09-22) |
 | 12 | `weak_lensing.wl` | Kaiser–Squires inversion recovers κ, tangential shear γ_t=θ_E/(2θ) [SIS], reduced-shear invariance under the mass-sheet transform (10/10) |
 | 13 | `microlensing.wl` | Point-lens A(u)=(u²+2)/(u√(u²+4)) from summed image magnifications, limits A→1/u, 1; Paczynski light-curve symmetry; astrometric centroid shift peaks at u=√2 (16/16) |
 
@@ -162,11 +162,11 @@ done
 
 ---
 
-*Last verified: 2026-07-14*
+*Last verified: 2026-09-22 (Module 11 extended to 13/13 after fact-critic pass; earlier modules 2026-07-14)*
 *Verification script: `Mathematica/verify_against_textbooks.wl`*
 *Master cross-checks: 12/12 passing. Per-module extension scripts added
 2026-07-14 (Schneider, Kochanek & Wambsganss 2006 gap-fill): Module 8
 multipole (7/7), Module 9 substructure/rings (6/6), Module 11 statistics
-(9/9 + 8/8 solutions), Module 12 weak lensing (10/10 + solutions),
+(13/13 as of 2026-09-22 + 8/8 solutions), Module 12 weak lensing (10/10 + solutions),
 Module 13 microlensing (16/16 + solutions). A BibTeX bibliography
 (`Notes/references.bib`, natbib) now backs all citations.*

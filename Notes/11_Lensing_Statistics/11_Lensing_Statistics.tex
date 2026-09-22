@@ -11,12 +11,13 @@
 
 \begin{quote}
 \textit{One is frequently interested in the probability that a specific
-gravitational lensing event occurs.  The results of such an
+gravitational lensing event occurs. [\ldots] The results of such an
 investigation depend on the assumed distribution of lens masses and
-their density profiles --- and a comparison with a well-defined sample
-of observed lenses can constrain the lens population and the geometry of
-the Universe.}
-\hfill --- Schneider, Kochanek \& Wambsganss (2006), Part 1
+their individual density profiles.  A comparison of these results with a
+statistically well defined sample of observed lens cases can in principle
+allow one to constrain the lens contents and/or the geometry of the
+Universe.}
+\hfill --- P.~Schneider, in Schneider, Kochanek \& Wambsganss (2006), Part 1, \S5
 \end{quote}
 
 \noindent
@@ -48,7 +49,9 @@ caustic structure of Module~\ref{ch:elliptical_models}.
 \begin{itemize}[nosep]
     \item \mathlink{11_Lensing_Statistics/lensing_statistics.wl}{lensing\_statistics.wl}
           --- symbolic derivation and verification of the point-mass and
-          SIS cross-sections, the optical-depth integrand, and the
+          SIS cross-sections (including the combined SIS threshold
+          cross-section, Eq.~\eqref{eq:sis_cross_full}), the comoving
+          optical-depth integrand and its $\OmegaL$ dependence, and the
           magnification-bias factor for power-law counts; figures
           exported to \texttt{Figures/11\_Lensing\_Statistics/}.
 \end{itemize}
@@ -132,14 +135,22 @@ in \citep[][Part~1, eq.~101]{schneider_kochanek_wambsganss_2006},
     \sigma(\Delta\theta, r, \mu)
     = \pi\,\thetaE^2
       \left[\min\!\left(\frac{r-1}{r+1},\,\frac{2}{\mu}\right)\right]^2
-      H(2\thetaE - \Delta\theta)\,H(\mu - 2).
+      H(2\thetaE - \Delta\theta),
     \label{eq:sis_cross_full}
 \end{equation}
+where $H$ is the Heaviside step function and $r$ is finite, so that
+$(r-1)/(r+1) < 1$ keeps the source inside the multiple-imaging disk.%
+\footnote{The printed eq.~101 of \citet{schneider_kochanek_wambsganss_2006}
+carries an extra factor $H(\mu - 2)$.  That factor would set
+$\sigma = 0$ for any magnification threshold $\mu < 2$, yet every SIS
+image pair has total magnification $2/y \ge 2$, so such a threshold is
+always met.  Direct integration over the source plane confirms the form
+above for all $\mu$ (companion script, Test~6).}
 Because the SIS Einstein radius scales as
-$\thetaE \propto \sigma_v^2$ (Module~\ref{ch:galaxy_lensing}), the
+$\thetaE \propto \sigma_v^2$ (Eq.~\eqref{eq:sis_einstein_radius}), the
 multiple-imaging cross-section scales as
-$\sigma \propto \thetaE^2 \propto \sigma_v^4$ --- the origin of the strong
-sensitivity of lens statistics to the most massive galaxies.
+$\sigma \propto \thetaE^2 \propto \sigma_v^4$, so lens statistics are
+dominated by the most massive galaxies.
 
 
 % =====================================================================
@@ -172,10 +183,14 @@ $\sigma = \pi\thetaE^2 \propto \sigma_v^4$, integrating over the observed
 velocity-dispersion function yields the classic result that the
 multiple-imaging optical depth scales as
 $\tau \propto n_{\mathrm{com}}\,(\sigma_v/c)^4$ times a cosmological
-volume factor (Turner, Ostriker \& Gott 1984).  It is that volume factor
---- larger in a universe with a cosmological constant --- that once made
-lens counts an early probe of $\OmegaL$, and today underpins forecasts
-for the $\sim 10^5$ lenses expected from \textit{Euclid} and LSST.
+volume factor \citep{turner_ostriker_gott_1984}.  Because this volume
+factor is larger when $\OmegaL > 0$ (for fixed $n_{\mathrm{com}}$ and
+$z_s = 2$, about three times larger in a flat $\Omegam = 0.3$ universe
+than in an Einstein--de~Sitter one), lens counts were an early probe of
+the cosmological constant
+\citep[][Part~2, \S6]{schneider_kochanek_wambsganss_2006}.  The same
+calculation underpins forecasts of $\sim 10^5$ galaxy-scale lenses
+discoverable in \textit{Euclid} and LSST imaging \citep{collett_2015}.
 
 
 % =====================================================================
@@ -192,8 +207,8 @@ counts, the observed counts are
     \label{eq:mag_bias}
 \end{equation}
 with $\int p\,d\mu = 1$ and $\int \mu\,p\,d\mu = \langle\mu\rangle$
-\citep[][Part~1, \S5.3]{schneider_kochanek_wambsganss_2006}.  Two limits
-are illuminating.  For \textbf{power-law counts}
+\citep[][Part~1, \S5.3]{schneider_kochanek_wambsganss_2006}.  Two cases
+follow.  For \textbf{power-law counts}
 $N_0(>S) = A\,S^{-\beta}$,
 \begin{equation}
     N(>S) = N_0(>S)\,
@@ -206,9 +221,10 @@ counts are \emph{unchanged}: the solid-angle dilution exactly cancels the
 brightening.  Counts steeper than $\beta = 1$ are boosted; flatter ones
 are depleted.
 
-Because $p(\mu) \propto \mu^{-3}$ at high magnification (the universal
-fold-caustic behaviour of \S\ref{sec:magnification_bias} and
-Module~\ref{ch:elliptical_models}), the bias integral grows sharply as
+Because $p(\mu) \propto \mu^{-3}$ at high magnification
+\citep{blandford_narayan_1986} --- a consequence of the universal fold
+magnification law, Eq.~\eqref{eq:fold_magnification}, met for the point
+mass in \S\ref{sec:cross_point} --- the bias integral grows sharply as
 $\beta \to 2$: a source population with steep counts, or with an
 exponential Schechter cutoff, is strongly biased toward including lensed
 objects.  This is why several of the apparently most luminous objects in

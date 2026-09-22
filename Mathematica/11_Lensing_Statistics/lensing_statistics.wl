@@ -7,7 +7,8 @@
             power-law source counts.  Exports one figure.
 
    Sources: Schneider, Kochanek & Wambsganss (2006), Part 1 (Schneider),
-            Sec. 5: cross-sections (eqs. 97-101), optical depth
+            Sec. 5: cross-sections (eqs. 97-101; see Test 6 for the
+            H(mu-2) factor in printed eq. 101), optical depth
             (eqs. 104-107), magnification bias (eqs. 108-111).
 
    Usage:   wolframscript -file lensing_statistics.wl
@@ -100,7 +101,58 @@ AppendTo[results,
                  Assumptions -> {S > 0, muc > 0}] === 0]];
 
 (* ---------------------------------------------------------------------------
-   Figure: point-mass cross-section y^2(mu) vs mu, with the mu^-1 asymptote.
+   Test 6: SIS combined cross-section (eq. sis_cross_full; cf. Schneider
+   2006 Part 1 eq. 101).  Integrate directly over the source plane:
+     sigma/(pi thetaE^2) = Integral 2y dy over {y<1, 2/y>mu, (1+y)/(1-y)<r}
+   and compare with [Min((r-1)/(r+1), 2/mu)]^2 on a grid that includes
+   thresholds mu < 2.  The book's printed extra factor H(mu-2) would give
+   0 for mu < 2; the direct integral shows it must be absent.
+   --------------------------------------------------------------------------- *)
+ClearAll[yy, m, rr];
+sigSISdirect[m_, rr_] := Integrate[
+   2 yy Boole[0 < yy < 1 && 2/yy > m && (1 + yy)/(1 - yy) < rr], {yy, 0, 1}];
+sigSISform[m_, rr_] := Min[(rr - 1)/(rr + 1), 2/m]^2;
+grid = Tuples[{{1/2, 1, 3/2, 2, 3, 5, 10}, {11/10, 3/2, 3, 5, 20}}];
+directVals = sigSISdirect @@@ grid;
+AppendTo[results,
+  check["SIS: sigma(r,mu)/(pi thetaE^2) = Min[(r-1)/(r+1),2/mu]^2 (direct integral, 35 grid pts incl. mu<2)",
+        And @@ MapThread[Simplify[#1 - sigSISform @@ #2] === 0 &, {directVals, grid}]]];
+(* Document the source-book factor explicitly: at mu=3/2, r=3 the true
+   cross-section is 1/4, while H(mu-2) would force 0. *)
+AppendTo[results,
+  check["SIS: direct sigma(mu=3/2, r=3) = 1/4 > 0  (so no H(mu-2) factor)",
+        sigSISdirect[3/2, 3] === 1/4]];
+
+(* ---------------------------------------------------------------------------
+   Test 7: optical depth, proper -> comoving form (eqs. 106 -> 107).
+   D_ang = f_K/(1+z), dr_prop = dw/(1+z), n = (1+z)^3 n_com  =>
+   D_ang^2 (dr_prop/dw) n = f_K^2 n_com.
+   --------------------------------------------------------------------------- *)
+ClearAll[z, fK, ncom];
+AppendTo[results,
+  check["Optical depth: D_ang^2 (dr_prop/dw) n = f_K^2 n_com",
+        Simplify[(fK/(1 + z))^2 (1/(1 + z)) (1 + z)^3 ncom - fK^2 ncom] === 0]];
+
+(* ---------------------------------------------------------------------------
+   Test 8: the SIS optical-depth volume factor is larger with Omega_Lambda.
+   Flat universe, fixed comoving density, sigma ~ (D_ds/D_s)^2 ~ ((ws-w)/ws)^2,
+   tau ~ Integral f_K^2 ((ws-w)/ws)^2 dw  (units c/H0).  z_s = 2.
+   Ratio (Omega_m, Omega_L) = (0.3, 0.7) vs (1, 0) quoted as "about three
+   times" in the text; independent Python/scipy recompute gave 2.93.
+   --------------------------------------------------------------------------- *)
+tauSIS[om_, zs_] := Module[{w, ws, ez},
+   ez[x_] := Sqrt[om (1 + x)^3 + 1 - om];
+   w[zz_?NumericQ] := NIntegrate[1/ez[x], {x, 0, zz}];
+   ws = w[zs];
+   NIntegrate[w[zz]^2 ((ws - w[zz])/ws)^2/ez[zz], {zz, 0, zs}]];
+tauRatio = tauSIS[0.3, 2]/tauSIS[1.0, 2];
+Print["    tau(0.3,0.7)/tau(1,0) at z_s=2: ", ToString[NumberForm[tauRatio, 4]]];
+AppendTo[results,
+  check["Optical depth: Lambda volume factor ~3x (flat 0.3/0.7 vs EdS, z_s=2)",
+        2.8 < tauRatio < 3.1]];
+
+(* ---------------------------------------------------------------------------
+   Figure: point-mass cross-section y^2(mu) vs mu, with the mu^-2 asymptote.
    --------------------------------------------------------------------------- *)
 Print[""];
 Print["--- Generating figure ---"];

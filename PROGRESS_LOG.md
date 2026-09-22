@@ -4,6 +4,34 @@ Timestamped record of major milestones and work completed.
 
 ---
 
+## 2026-09-22 — Module 11 fact-critic pass + fixes
+
+First full per-chapter fact-critic pass on Part IV (Module 11 had only the sampled
+2026-07-14 gap-fill critic). Report: `Notes/11_Lensing_Statistics/FACT_CRITIC_11_Lensing_Statistics_2026-09-22.md`.
+All 13 numeric claims and all Schneider (2006) citations checked out against the source PDF.
+Fixes applied after author approval:
+
+- **SIS combined cross-section (eq:sis_cross_full):** dropped the `H(μ−2)` factor copied
+  from Schneider et al. (2006) eq. 101. It zeroes σ for thresholds μ<2, but every SIS double
+  has μ = 2/y ≥ 2. A footnote records the discrepancy. Backed by new `lensing_statistics.wl`
+  Test 6 (direct source-plane integral on a 35-point grid; σ(μ=3/2, r=3) = 1/4).
+- **Epigraph** was a paraphrase set as a quote. It is now the verbatim source text.
+- **Citations:** Turner, Ostriker & Gott (1984) moved from plain text to `\citep`; the
+  "∼10⁵ Euclid/LSST lenses" claim now cites Collett (2015); p(μ)∝μ⁻³ now cites Blandford &
+  Narayan (1986), and a circular section self-reference was removed. All three are new
+  `.bib` entries (CrossRef-verified; Zotero 96CEGXDF, ZPACZCSH added, J42J5TWE tagged).
+- **Ω_Λ volume factor** is now quantified (~3×, flat 0.3/0.7 vs EdS at z_s = 2). Backed by
+  new Test 8 (2.93, matching the Python recompute). New Test 7 checks the
+  proper→comoving optical-depth identity.
+- Two sentences rewritten plainly (prose lens).
+
+`lensing_statistics.wl` goes from 9/9 to **13/13**; solutions 8/8. Build: student 248 pp,
+instructor 304 pp, 0 LaTeX errors. `VERIFICATION.md` updated. **Found in passing, not
+fixed:** Module 6 has 5 refs to the nonexistent label `ch:magnification_convergence_shear`,
+which render as "Module ??".
+
+---
+
 ## 2026-08-07 — Title-page overflow: blank/stray front-matter pages removed
 
 ### Symptom

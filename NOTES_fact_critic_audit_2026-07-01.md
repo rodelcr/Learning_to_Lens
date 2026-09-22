@@ -165,3 +165,18 @@ Bartelmann & Schneider 2001, Kilbinger 2015, Bartelmann et al. 1998.
 - Edited chapters: 01d, 01e, 02, 03, 04, 05, 07, 08 (`git diff` in the repo).
 - The `fact-critic` skill itself: `~/.claude/skills/fact-critic/` (portable edition,
   repo `~/Documents/fact-critic/`).
+
+## Part IV per-chapter passes (started 2026-09-22)
+
+Modules 11–13 had only the sampled gap-fill critic (`FACT_CRITIC_schneider2006_gapfill_2026-07-14.md`).
+Full per-chapter passes, in order 11 → 12 → 13:
+
+- **11 Lensing Statistics — DONE 2026-09-22** (`Notes/11_Lensing_Statistics/FACT_CRITIC_11_Lensing_Statistics_2026-09-22.md`).
+  All flags then APPLIED (author-approved); `.wl` extended 9/9 → 13/13. Flagged & fixed: eq. 101 `H(μ−2)` factor wrong for
+  μ<2 thresholds (Monte Carlo; inherited verbatim from Schneider 2006 eq. 101); epigraph is a
+  paraphrase set as a quote; Turner+84 plain-text cite missing from `.bib`; "~10⁵ lenses" uncited
+  (Collett 2015); circular `\S\ref{sec:magnification_bias}` self-reference. New Zotero items
+  96CEGXDF (Turner+84), ZPACZCSH (Blandford & Narayan 86); J42J5TWE (Collett 15) tagged.
+  Side finding: Module 6 has 5 `Module ??` refs (`ch:magnification_convergence_shear` → should be `ch:magnification`).
+- 12 Weak Lensing — next (includes the open ⚠ section-level eq-citation items 24/27/41/43/93/99/104–105/108).
+- 13 Microlensing — pending.
