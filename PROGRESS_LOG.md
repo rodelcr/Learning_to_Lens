@@ -4,6 +4,31 @@ Timestamped record of major milestones and work completed.
 
 ---
 
+## 2026-09-22 — Module 12 fact-critic pass + fixes
+
+Report: `Notes/12_Weak_Lensing/FACT_CRITIC_12_Weak_Lensing_2026-09-22.md`. All 22 cited
+Schneider (2006) Part 3 equation numbers were checked individually against the PDF and are
+exact, which closes the gap-fill ⚠. The epigraph is verbatim. Fixes (author-approved):
+
+- **NFW tangential shear has no peak.** Solution 12.2(d) had claimed γ_t "rises, peaks near
+  x∼1, and declines". In fact it decreases monotonically, from κ_s/2 at the centre to
+  (2κ_s/x²)[ln(x/2)−½] at large x. The solution, figure caption and exercise are rewritten;
+  3 new Mathematica tests.
+- **Exercise 12.5(c)** asked for an integral that diverges (P∝ℓ⁻²). It now uses P = A/ℓ, which
+  gives ξ₊ = ξ₋ = A/(2πθ), consistent with book eq. 113; 4 new tests.
+- **Attribution:** the general ⟨γ_t⟩ = κ̄ − ⟨κ⟩ result is Bartelmann (1995), eq. 2.44 of
+  arXiv:astro-ph/9412051, not "Schneider (2006)". The ADS record was confirmed in the browser.
+- **Citations:** Bartelmann 1995, Gunn 1967, Blandford+1991 and Brainerd+1996 moved from plain
+  text to `\cite`, with new `.bib` entries and Zotero items (SPQPNC3P, JR8E7SX2, WV43DQE2,
+  DER2EF9E).
+- Minor: citation location for ℓ∼5/θ, n range, mass-sheet wording, KS "method", α defined,
+  and intensifiers removed.
+
+`problems_12.wl` 14/14 → **21/21**; `weak_lensing.wl` 10/10. Build: student 249 pp,
+instructor 305 pp (+1 each), 0 LaTeX errors.
+
+---
+
 ## 2026-09-22 — Module 11 fact-critic pass + fixes
 
 First full per-chapter fact-critic pass on Part IV (Module 11 had only the sampled

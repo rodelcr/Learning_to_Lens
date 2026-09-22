@@ -24,7 +24,7 @@ Modules~\ref{ch:lens_equation}--\ref{ch:cluster_lensing} were concerned
 almost entirely with \textbf{strong} lensing: multiple images, giant
 arcs, Einstein rings --- phenomena in which the Jacobian
 $\Amat = \partial\vecbeta/\partial\vectheta$ differs so much from the
-identity that a single source produces spectacularly distorted images.
+identity that a single source produces strongly distorted images.
 This module treats the opposite, and far more common, regime.  In
 \textbf{weak} gravitational lensing the Jacobian is very close to the
 unit matrix,
@@ -102,7 +102,8 @@ number of usable background galaxies: the statistical error on the shear
 scales as $\sigma_\epsilon/\sqrt{N}$, where $\sigma_\epsilon \approx 0.3$
 is the intrinsic ellipticity dispersion (``shape noise'') and $N$ is the
 number of galaxies averaged over.  This is why deep imaging --- reaching
-$n \sim 10$--$40$ galaxies per arcmin$^2$ --- is the fundamental
+$n \sim 20$--$30$ galaxies per arcmin$^2$ in a few hours on a 4-m
+telescope --- is the fundamental
 observational requirement, and why correcting the atmospheric and
 telescope point-spread function (which circularizes small images) is the
 central technical challenge of the field
@@ -272,7 +273,7 @@ Module~\ref{ch:axisymmetric_models}
 (eq.~\ref{eq:gamma_circular}) that
 $\gammaL_{\mathrm t}(\theta) = \bar\kappa(\theta) - \kappab(\theta)$,
 the mean convergence interior to $\theta$ minus the local convergence.
-A beautiful result of Schneider (2006) is that a nearly identical relation
+\citet{bartelmann_1995} showed that a nearly identical relation
 holds for the \textit{azimuthal average} of a completely general,
 non-symmetric mass distribution.  Starting from Gauss's theorem applied to
 the deflection potential $\psiL$ (with $\nabla^2\psiL = 2\kappab$) and
@@ -289,11 +290,10 @@ one obtains
     \label{eq:wl_mean_tangential}
 \end{equation}
 where $\langle\cdot\rangle(\theta)$ denotes the average over the circle of
-radius $\theta$ and $\bar\kappa(\theta)$ the mean convergence inside it
-(Bartelmann 1995).  The immediate and powerful implication:
-\textit{from the tangential shear averaged on concentric circles one
-recovers the azimuthally-averaged mass profile of any lens, symmetric or
-not.}
+radius $\theta$ and $\bar\kappa(\theta)$ the mean convergence inside it.
+It follows that the tangential shear averaged on concentric circles
+gives the azimuthally averaged mass profile of any lens, symmetric or
+not.
 
 It is customary to write this in physical units.  Multiplying
 by the critical surface mass density $\Sigmacr$
@@ -306,8 +306,8 @@ by the critical surface mass density $\Sigmacr$
 \end{equation}
 the \textbf{excess surface mass density} $\Delta\Sigma$: the mean surface
 density inside radius $\theta$ minus that at $\theta$.  Equation
-\eqref{eq:wl_DeltaSigma} is the workhorse of cluster and galaxy--galaxy
-weak lensing --- the observable tangential shear translates directly into
+\eqref{eq:wl_DeltaSigma} is the basic relation of cluster and galaxy--galaxy
+weak lensing: the observable tangential shear translates directly into
 a projected mass profile.
 
 \begin{example}
@@ -335,7 +335,7 @@ in \mathlink{12_Weak_Lensing/weak_lensing.wl}{weak\_lensing.wl}.
 
 Galaxy ellipticities measure not the shear $\gammaL$ but the
 \textbf{reduced shear} $g = \gammaL/(1 - \kappab)$
-(eq.~\ref{eq:wl_expectation_eps}).  This has a profound consequence.
+(eq.~\ref{eq:wl_expectation_eps}).  This has an important consequence.
 Consider the transformation, for an arbitrary constant $\lambda$,
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~51)
 \begin{equation}
@@ -346,8 +346,9 @@ Consider the transformation, for an arbitrary constant $\lambda$,
     \label{eq:wl_mst}
 \end{equation}
 Since the shear is the traceless part of the same Hessian that gives the
-convergence, adding a \textit{uniform sheet} of convergence $(1-\lambda)$
-leaves the shear rescaled, $\gammaL \to \gammaL' = \lambda\gammaL$, and
+convergence, scaling $\kappab$ by $\lambda$ scales the shear by $\lambda$,
+while the added \textit{uniform sheet} $(1-\lambda)$ contributes no shear
+(its Hessian is isotropic).  Hence $\gammaL \to \gammaL' = \lambda\gammaL$, and
 therefore
 \begin{equation}
     \boxed{
@@ -375,7 +376,9 @@ eq.~\ref{eq:magnification_formula}), the transform~\eqref{eq:wl_mst} gives
 \end{equation}
 which is why \textit{magnification} information --- from the lensing-induced
 change in background number counts,
-$n(>S)/n_0(>S) \approx 1 + 2(\alpha - 1)\kappab$ in the weak limit
+$n(>S)/n_0(>S) \approx 1 + 2(\alpha - 1)\kappab$ in the weak limit for
+unlensed counts $n_0(>S) \propto S^{-\alpha}$ (here $\alpha$ is the count
+slope, not a deflection angle)
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~27) --- can in
 principle break the degeneracy that shear alone cannot.  Both invariances
 are checked symbolically in
@@ -386,7 +389,7 @@ are checked symbolically in
 \section{Cluster Mass Reconstruction}
 \label{sec:wl_ks}
 
-We now come to the discovery that launched quantitative weak lensing:
+We now come to the method that made weak lensing quantitative:
 from a measured shear field one can reconstruct a \textbf{parameter-free
 map of the projected mass}, with no assumption of symmetry
 \citep{kaiser_squires_1993}.
@@ -409,7 +412,7 @@ non-local convolution.  Explicitly
     = \frac{-1}{(\theta_1 - \mathrm{i}\,\theta_2)^2}\,.
     \label{eq:wl_ks_forward}
 \end{equation}
-The complex kernel $\mathcal{D}$ is nothing but the shear produced by a
+The complex kernel $\mathcal{D}$ is the shear produced by a
 point mass.  In Fourier space the convolution becomes a product,
 $\hat\gammaL(\boldsymbol\ell) = \pi^{-1}\hat{\mathcal D}(\boldsymbol\ell)\,
 \hat\kappab(\boldsymbol\ell)$, with
@@ -504,8 +507,10 @@ concentrations by their shear alone.
     (eq.~\ref{eq:wl_sis_gammat}), with $\thetaE = 1$.  \textbf{Dashed:} an
     NFW halo (Module~\ref{ch:axisymmetric_models},
     eq.~\ref{eq:nfw_gamma}) with $\kappa_s = 0.2$ and scale
-    $\theta_s = 1$; the NFW tangential shear turns over near the scale
-    radius, unlike the featureless power law of the SIS.  The measurable
+    $\theta_s = 1$.  The NFW tangential shear decreases monotonically: it
+    tends to the finite value $\kappa_s/2$ at the centre, is nearly flat
+    inside $\theta_s$, and steepens outside it, whereas the SIS is a single
+    power law.  The measurable
     $\gammaL_{\mathrm t}$ maps directly to the excess surface mass density
     $\Delta\Sigma$ (eq.~\ref{eq:wl_DeltaSigma}).  Generated by
     \texttt{weak\_lensing.wl}.}
@@ -523,8 +528,8 @@ distorted continuously by \textit{all} the inhomogeneous matter along the
 line of sight --- the large-scale structure (LSS).  This produces a weak,
 spatially coherent distortion of galaxy shapes across the sky called
 \textbf{cosmic shear}, whose statistics directly probe the matter
-distribution and hence cosmology (Gunn 1967; Blandford et al.\ 1991;
-\citealp{schneider_kochanek_wambsganss_2006}, Part~3, Sect.~6).
+distribution and hence cosmology \citep{gunn_1967, blandford_1991}
+(\citealp{schneider_kochanek_wambsganss_2006}, Part~3, Sect.~6).
 
 \subsection{The Effective Convergence}
 
@@ -573,10 +578,9 @@ The shear power spectrum equals the convergence power spectrum, since
 $\hat\gammaL(\boldsymbol\ell) = e^{2\mathrm{i}\beta_\ell}\,
 \hat\kappab(\boldsymbol\ell)$ from~\eqref{eq:wl_Dhat} and $|e^{2\mathrm
 i\beta_\ell}| = 1$.  The strong prefactor makes the cosmic-shear amplitude
-scale roughly as $\sigma_8\,\Omegam^{0.5}$ --- the same near-degenerate
-combination that governs cluster abundances --- so cosmic shear is a
-premier probe of the clustering amplitude of matter
-\citep{schneider_kochanek_wambsganss_2006}.
+scale roughly as $\sigma_8\,\Omegam^{0.5}$, much like cluster abundances,
+so cosmic shear is a leading probe of the clustering amplitude of matter
+\citep[][Part~3, Sect.~6.4]{schneider_kochanek_wambsganss_2006}.
 
 \subsection{Two-Point Statistics}
 
@@ -603,10 +607,11 @@ are the preferred observable because, unlike aperture statistics, they can
 be evaluated over gaps and masked regions --- one simply uses every galaxy
 pair at a given separation.  The aperture-mass dispersion
 $\langle M_{\mathrm{ap}}^2\rangle(\theta)$ built from the
-statistic~\eqref{eq:wl_Map} is a particularly clean summary, because its
+statistic~\eqref{eq:wl_Map} is a clean summary, because its
 filter is so narrow that it probes $P_\kappa$ at essentially a single
 multipole $\ell \sim 5/\theta$
-(\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~109).
+(\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~109 and
+Sect.~6.3).
 
 \begin{remark}
 \textbf{Tomography.}  Splitting the source galaxies into photometric-redshift
@@ -635,7 +640,7 @@ measures the mean tangential shear $\gammaL_{\mathrm t}(\theta)$ ---
 and hence, through eq.~\eqref{eq:wl_DeltaSigma}, the \textit{average}
 projected mass profile of the lens galaxies
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, Sect.~8.2;
-first detected by Brainerd et al.\ 1996).
+first detected by \citet{brainerd_1996}).
 
 Because a single galaxy's halo cannot be mapped, one parametrizes the
 lens population and fits.  A standard choice is a \textbf{truncated
@@ -655,7 +660,7 @@ Fitting the stacked $\gammaL_{\mathrm t}(\theta)$ constrains
 $(\sigma_*, s_*, \beta, \eta)$ and thereby the mass, extent, and
 luminosity scaling of galaxy dark-matter haloes out to radii far beyond
 the reach of stellar or gas dynamics.  The first detection
-(Brainerd et al.\ 1996) yielded $\sigma_* \approx 160$~km\,s$^{-1}$ for an
+\citep{brainerd_1996} yielded $\sigma_* \approx 160$~km\,s$^{-1}$ for an
 $L_*$ galaxy; modern surveys stack millions of lenses and split them by
 colour, stellar mass, and environment.  On larger scales the same
 measurement transitions into a probe of the galaxy--mass cross-correlation
@@ -765,9 +770,10 @@ Verify with
           $\gammaL_{\mathrm t}\Sigmacr = \bar\Sigma(<\theta) -
           \Sigma(\theta)$.
     \item For an NFW halo, sketch $\gammaL_{\mathrm t}(\theta)$ using
-          Module~\ref{ch:axisymmetric_models} (eq.~\ref{eq:nfw_gamma}) and
-          explain qualitatively why it turns over near $\theta_s$, unlike
-          the SIS.
+          Module~\ref{ch:axisymmetric_models} (eq.~\ref{eq:nfw_gamma}).
+          Show that it stays finite at the centre, and explain
+          qualitatively why its logarithmic slope changes near $\theta_s$,
+          unlike the single power law of the SIS.
 \end{enumerate}
 Verify with
 \solnlink{12_Weak_Lensing/problems\_12.wl}{problems\_12.wl}.
@@ -835,10 +841,11 @@ Verify with
           reflection, that the mixed correlator
           $\xi_\times = \langle\gammaL_{\mathrm t}\gammaL_\times\rangle$
           vanishes.  Why is this a useful systematics test?
-    \item For a scale-free power spectrum $P_\kappa(\ell) = A\,\ell^{-2}$,
-          use $\int_0^\infty J_0(\ell\theta)\,d\ell = 1/\theta$ to compute
-          $\xi_+(\theta)$.  (This idealization ignores convergence at
-          $\ell \to 0$; treat it formally.)
+    \item For a scale-free power spectrum $P_\kappa(\ell) = A\,\ell^{-1}$,
+          use $\int_0^\infty J_n(\ell\theta)\,d\ell = 1/\theta$ (valid for
+          $n = 0$ and $n = 4$) to compute $\xi_+(\theta)$ and
+          $\xi_-(\theta)$.  Why would the steeper $P_\kappa \propto \ell^{-2}$
+          not give a finite $\xi_+$?
     \item Explain why the aperture-mass dispersion
           $\langle M_{\mathrm{ap}}^2\rangle(\theta)$ gives more
           \textit{localized} information about $P_\kappa$ than the shear

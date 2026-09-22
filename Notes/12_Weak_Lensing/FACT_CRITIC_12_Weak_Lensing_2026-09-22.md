@@ -131,3 +131,35 @@ physics, or wording issue, so it is flag-only.
   — estimate …"*) and l.294–296 read as set-piece maxims in italics. They are accurate; consider
   plain roman type.
 - **Solutions:** "a powerful null test" (sol. l.215) → "a null test".
+
+---
+
+## Resolution — fixes applied 2026-09-22 (author-approved)
+
+| id | Fix | Backing |
+|----|-----|---------|
+| N12 | Sol. 12.2(d) rewritten: γ_t decreases monotonically, tends to a finite κ_s/2 at the centre, and approaches (2κ_s/x²)[ln(x/2) − ½] at large x. Log-slope ≈ −0.05 / −0.5 / −1.4 at x = 0.1 / 1 / 10. It bends; it has no maximum. | `problems_12.wl` **3 new tests**: central limit = 1/2 exactly; large-x series; strictly decreasing on a 201-pt log grid x∈[10⁻³,10²]. Mathematica slopes −0.046, −0.539, −1.40. (The report's earlier −0.57 at x=1 came from a coarse Python gradient; Mathematica's central difference gives −0.54.) |
+| N13 | Figure caption and Exercise 12.2(d) now describe a change of slope, not a "turnover" | same tests |
+| N14 | Exercise 12.5(c) now uses P_κ = Aℓ⁻¹ (ξ₊ = ξ₋ = A/2πθ) and asks why ℓ⁻² fails. Solution rewritten. | `problems_12.wl` **4 new tests** (replacing the old identity-only check): ξ₊, ξ₋ closed forms; the eq.-113 relation holds; ℓ⁻² integral does not converge |
+| C23/C24 | "A beautiful result of Schneider (2006)" → `\citet{bartelmann_1995} showed …`; stray "(Bartelmann 1995)" removed | ADS abstract page read in browser (bibcode 1995A&A...303..643B; title "Cluster mass estimates from weak lensing"). Full text arXiv:astro-ph/9412051 **eq. (2.44)** is the general-lens result κ̄ = ⟨κ⟩+⟨γ_t⟩. **Zotero SPQPNC3P**; new `.bib` entry |
+| C25 | Gunn 1967, Blandford+1991 → `\citep{gunn_1967, blandford_1991}` | CrossRef DOIs; **Zotero JR8E7SX2, WV43DQE2**; new `.bib` entries |
+| C26 | Brainerd+1996 ×2 → `\citet`/`\citep{brainerd_1996}` | CrossRef 10.1086/177537; **Zotero DER2EF9E**; new `.bib` entry |
+| C21 | ℓ∼5/θ now cited "eq. 109 and Sect. 6.3" | book p.365 |
+| N2 | n range → "20–30 arcmin⁻² in a few hours on a 4-m telescope" | book pp.276, 281 |
+| N7 | σ₈Ω_m^0.5 sentence now cites Part 3 Sect. 6.4 | book p.367 |
+| X1 | MST text: the λ-scaling rescales γ; the sheet adds no shear | book p.319 |
+| X2 | Sol. 12.3(c): linear vs reduced-shear (eq. 50) meaning of κ₀ | book p.319 |
+| X3 | "discovery" → "method that made weak lensing quantitative" | book p.316 |
+| X4 | Count slope α defined (and distinguished from deflection α) | book p.280 |
+| Prose | "spectacularly", "beautiful", "immediate and powerful", "profound", "workhorse", "nothing but", "premier", "particularly", "powerful null test" removed or made plain | — |
+
+Not changed (optional, author's call): the two italic set-piece sentences (l.205–206, and the
+tangential-shear implication, now plain roman after the C23 rewrite).
+
+**Verification after edits:**
+- `weak_lensing.wl` 10/10; `problems_12.wl` **21/21** (was 14/14).
+- `bash build.sh` → student **249 pp**, instructor **305 pp** (+1 each from the longer
+  solutions and caption text); 0 LaTeX errors; new refs render ([1] Bartelmann, [10] Gunn,
+  Blandford+91, Brainerd+96). Remaining "??" in the PDF are the 5 known Module 6 refs.
+- `.bib` page fields contain only CrossRef/ADS-confirmed values (Blandford+91 600–627 per CrossRef).
+- `VERIFICATION.md` Module-12 row and date updated.

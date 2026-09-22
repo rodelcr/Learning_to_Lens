@@ -8,7 +8,7 @@
    Sources: Schneider, Kochanek & Wambsganss (2006), Part 3 (P. Schneider):
               Sect. 2   (eqs. 8, 9, 14, 16, 17, 24)
               Sect. 5.1 (eqs. 41, 43, 44, 51)
-              Sect. 6   (eqs. 104, 105)
+              Sect. 6   (eqs. 104, 105, 113)
             Kaiser & Squires (1993); Bartelmann & Schneider (2001).
 
    Usage:   wolframscript -file problems_12.wl
@@ -85,6 +85,35 @@ Print["    gamma_t * Sigma_cr = Sigmabar(<theta) - Sigma(theta) = DeltaSigma."];
 (* symbolic identity: Sigma_cr*(Sbar/Sig_cr - S/Sig_cr) = Sbar - S *)
 lhs = Scr (Sbar/Scr - Sig/Scr);
 check["12.2(c) gamma_t Sigma_cr = Sigmabar - Sigma", Simplify[lhs - (Sbar - Sig)] === 0];
+
+(* (d) NFW tangential shear (Module 7 convention: kappa = kappa_s f(x),
+   kbar = (2 kappa_s/x^2)[ln(x/2) + g(x)], x = theta/theta_s).  Added
+   2026-09-22 after the fact-critic pass found that an earlier solution
+   claimed gamma_t "peaks near x ~ 1"; it does not.  Checks: finite central
+   value kappa_s/2; large-x asymptote (2 kappa_s/x^2)[ln(x/2) - 1/2];
+   strictly decreasing on a log grid x in [1e-3, 1e2]. *)
+Print["(d) NFW: gamma_t/kappa_s = kbar - kappa (x = theta/theta_s):"];
+gNFWlo[x_] := ArcCosh[1/x]/Sqrt[1 - x^2];
+gNFWhi[x_] := ArcTan[Sqrt[x^2 - 1]]/Sqrt[x^2 - 1];
+gNFW[x_?NumericQ] := If[x < 1, gNFWlo[x], If[x == 1, 1, gNFWhi[x]]];
+fNFW[x_?NumericQ] := If[x == 1, 1/3, (1 - gNFW[x])/(x^2 - 1)];
+gtNFW[x_?NumericQ] := (2/x^2) (Log[x/2] + gNFW[x]) - fNFW[x];
+gt0 = Limit[(2/x^2) (Log[x/2] + gNFWlo[x]) - (1 - gNFWlo[x])/(x^2 - 1), x -> 0,
+    Direction -> "FromAbove"];
+Print["    gamma_t(x->0)/kappa_s = ", Simplify[gt0]];
+check["12.2(d) NFW gamma_t -> kappa_s/2 at the centre (finite, unlike SIS)",
+    Simplify[gt0 - 1/2] === 0];
+asym = Normal[Series[x^2 ((2/x^2) (Log[x/2] + gNFWhi[x]) - (1 - gNFWhi[x])/(x^2 - 1)),
+    {x, Infinity, 0}]];
+Print["    x^2 gamma_t/kappa_s at large x -> ", Simplify[asym]];
+check["12.2(d) NFW gamma_t ~ (2/x^2)[ln(x/2) - 1/2] at large x",
+    Simplify[asym - 2 (Log[x/2] - 1/2), Assumptions -> x > 2] === 0];
+xgrid = N[10^Range[-3, 2, 1/40]];
+gtvals = gtNFW /@ xgrid;
+check["12.2(d) NFW gamma_t strictly decreasing (no peak), 201-pt log grid",
+    And @@ Negative[Differences[gtvals]]];
+slopes = Table[x0 (gtNFW[1.001 x0] - gtNFW[0.999 x0])/(0.002 x0 gtNFW[x0]), {x0, {0.1, 1.001, 10}}];
+Print["    d ln gamma_t / d ln x at x = 0.1, 1, 10: ", ToString[NumberForm[slopes, 3]]];
 Print[""];
 
 
@@ -171,13 +200,23 @@ xiCrossFlip = gt (-gx);                  (* after parity: gamma_cross -> -gamma_
 check["12.5(b) xi_cross = -xi_cross => 0 (parity)",
     Simplify[xiCrossFlip + xiCross] === 0];
 
-Print["(c) Scale-free P_kappa(l) = A l^-2, xi_+ ~ (A/2pi) Int J0(l theta)/l dl"];
-Print["    (log-divergent at l->0; the related P ~ l^-1 gives xi_+ ~ 1/theta"];
-Print["    via Int J0(l theta) dl = 1/theta). Scale-free P => power-law xi."];
-j0int = Integrate[BesselJ[0, l th], {l, 0, Infinity},
+(* (c) Revised 2026-09-22: the original P ~ l^-2 makes xi_+ diverge (J0/l at
+   l -> 0); the exercise now uses P = A l^-1. *)
+Print["(c) Scale-free P_kappa(l) = A l^-1:"];
+xiP = Integrate[l/(2 Pi) BesselJ[0, l th] A/l, {l, 0, Infinity}, Assumptions -> th > 0];
+xiM = Integrate[l/(2 Pi) BesselJ[4, l th] A/l, {l, 0, Infinity}, Assumptions -> th > 0];
+Print["    xi_+ = ", xiP, ",  xi_- = ", xiM];
+check["12.5(c) xi_+ = A/(2 pi theta) for P = A/l", Simplify[xiP - A/(2 Pi th)] === 0];
+check["12.5(c) xi_- = xi_+ for P = A/l", Simplify[xiM - xiP] === 0];
+rel = Integrate[(1/v) (A/(2 Pi v)) (4 - 12 th^2/v^2), {v, th, Infinity},
     Assumptions -> th > 0];
-Print["    Int[J0(l theta), {l,0,Inf}] = ", j0int];
-check["12.5(c) Int J0(l theta) dl = 1/theta", Simplify[j0int - 1/th] === 0];
+check["12.5(c) consistent with xi_+ = xi_- + Int (dv/v) xi_-(v)[4 - 12 th^2/v^2] (Schneider 2006 Pt3 eq.113)",
+    Simplify[xiM + rel - xiP] === 0];
+divP2 = Quiet@Check[Integrate[l/(2 Pi) BesselJ[0, l th] A/l^2, {l, 0, Infinity},
+    Assumptions -> th > 0], $Failed];
+Print["    P = A l^-2 gives: ", divP2];
+check["12.5(c) P = A l^-2 does NOT give a finite xi_+ (log divergence at l->0)",
+    ! FreeQ[{divP2}, $Failed] || ! FreeQ[{divP2}, Integrate] || ! FreeQ[{divP2}, DirectedInfinity]];
 
 Print["(d) Aperture-mass filter W_ap ~ J4^2(eta)/eta^4 is narrow (localized"];
 Print["    in l ~ 5/theta); top-hat W_TH ~ 4 J1^2(eta)/eta^2 is broad."];

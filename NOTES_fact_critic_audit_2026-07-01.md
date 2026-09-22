@@ -178,10 +178,10 @@ Full per-chapter passes, in order 11 → 12 → 13:
   (Collett 2015); circular `\S\ref{sec:magnification_bias}` self-reference. New Zotero items
   96CEGXDF (Turner+84), ZPACZCSH (Blandford & Narayan 86); J42J5TWE (Collett 15) tagged.
   Side finding: Module 6 has 5 `Module ??` refs (`ch:magnification_convergence_shear` → should be `ch:magnification`).
-- **12 Weak Lensing — critic DONE 2026-09-22, fixes NOT yet applied** (`Notes/12_Weak_Lensing/FACT_CRITIC_12_Weak_Lensing_2026-09-22.md`).
+- **12 Weak Lensing — critic DONE + all fixes APPLIED 2026-09-22** (solutions .wl 14/14 → 21/21) (`Notes/12_Weak_Lensing/FACT_CRITIC_12_Weak_Lensing_2026-09-22.md`).
   `.wl` 10/10 + solutions 14/14. All 22 cited Part 3 eq. numbers exact (closes the gap-fill ⚠).
   Flagged: NFW γ_t has NO peak (Sol. 12.2(d) wrong; caption/exercise "turns over" misleading;
   monotone, →κ_s/2 at centre); Ex. 12.5(c) integral diverges for P∝ℓ⁻² (use ℓ⁻¹ → ξ₊=A/2πθ);
   "result of Schneider (2006)" is Bartelmann (1995) per the book; 5 plain-text cites (Gunn 67,
   Blandford+91, Brainerd+96 CrossRef-OK; Bartelmann 95 A&A 303, 643 title unverifiable — ADS gated).
-- 13 Microlensing — pending.
+- 13 Microlensing — next.
