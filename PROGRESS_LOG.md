@@ -4,6 +4,16 @@ Timestamped record of major milestones and work completed.
 
 ---
 
+## 2026-09-23 — Module 6 refs fixed; published
+
+Five `\ref{ch:magnification_convergence_shear}` in Module 6 pointed at a label that doesn't
+exist and rendered as "Module ??". They now point at `ch:magnification`, and neither PDF has
+any "??" left. Pushed the main repo (`0b4fae7..db8f0e9`) and published both PDFs to
+rodelcr.github.io (`49db204`). The live files were confirmed byte-identical to the local
+builds (student 249 pp, instructor 305 pp).
+
+---
+
 ## 2026-09-23 — Module 13 fact-critic pass + fixes (Part IV fact-critic complete)
 
 Report: `Notes/13_Microlensing/FACT_CRITIC_13_Microlensing_2026-09-23.md`. All cited
