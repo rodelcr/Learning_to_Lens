@@ -4,6 +4,16 @@ Timestamped record of major milestones and work completed.
 
 ---
 
+## 2026-09-23 — Einstein (1936) epigraph verified against the original
+
+The Module 13 epigraph now matches the original *Science* 84, 506 verbatim: "Of course, there is
+no hope of observing this phenomenon directly." The source is a public scan of p.506 from the
+Wayback Machine (INFN copy linked from Semantic Scholar and Wikipedia; its live server is down),
+backed up in `Reference_Texts/`. The earlier interim wording ("not much hope", from Wambsganss's
+§1.1 paraphrase) was wrong. PDFs rebuilt and republished.
+
+---
+
 ## 2026-09-23 — Module 6 refs fixed; published
 
 Five `\ref{ch:magnification_convergence_shear}` in Module 6 pointed at a label that doesn't

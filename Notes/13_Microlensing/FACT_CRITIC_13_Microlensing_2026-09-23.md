@@ -113,3 +113,14 @@ Plain rewrites: "wrong for ours"; "unresolvable"; "As a result"; "Paczyński's m
 (was 20/20). Build: student 249 pp, instructor 305 pp (unchanged); 0 LaTeX errors; new refs
 render ([10] Einstein 1936, [21] Schneider & Weiss 1986). The 5 remaining "??" are the known
 Module 6 refs.
+
+### Addendum 2026-09-23 — C1 resolved against the primary source
+
+A public scan of the original *Science* 84, 506 (4 Dec 1936) was retrieved from the Wayback
+Machine (snapshot 20201109042521 of the INFN-hosted copy linked from Semantic Scholar and
+Wikipedia; the live server is down). It reads verbatim: **"Of course, there is no hope of
+observing this phenomenon directly."** The epigraph now quotes that sentence, cited to Science
+84, 506. The interim "not much hope" wording taken from the book's §1.1 was also wrong: the
+book quotes Einstein two ways, and only its footnote 7 (p.477) matches the original. The same
+wording is quoted in Cervantes-Cota, Galindo-Uribarri & Smoot (2019, arXiv:1912.07674). A local
+copy of the scan is in the git-ignored `Reference_Texts/`. **C1: ✅ PASS (primary source).**
