@@ -44,7 +44,7 @@ and verifies the key results for that module:
 | 10 | `cluster_lensing.wl` | NFW cluster-scale lensing, Einstein radius vs mass scaling |
 | 11 | `lensing_statistics.wl` | Point-mass cross-section σ(μ)=πθ_E²y²(μ) with σ∝μ⁻² (⇒ p(μ)∝μ⁻³), SIS μ=2/y & r=(1+y)/(1−y), β=1 magnification-bias null; SIS combined threshold cross-section by direct source-plane integration (35-pt grid incl. μ<2 — shows Schneider 2006 eq. 101's H(μ−2) factor must be absent), proper→comoving optical-depth identity, Ω_Λ volume factor 2.93× (flat 0.3/0.7 vs EdS, z_s=2) (13/13; extended 2026-09-22) |
 | 12 | `weak_lensing.wl` | Kaiser–Squires inversion recovers κ, tangential shear γ_t=θ_E/(2θ) [SIS], reduced-shear invariance under the mass-sheet transform (10/10). Solutions `problems_12.wl` 21/21 (extended 2026-09-22: NFW γ_t finite central value κ_s/2, large-x asymptote, monotone on a 201-pt grid — no peak; Ex. 12.5(c) ξ₊=ξ₋=A/(2πθ) for P_κ=A/ℓ, consistent with Schneider 2006 Pt 3 eq. 113; P∝ℓ⁻² shown divergent) |
-| 13 | `microlensing.wl` | Point-lens A(u)=(u²+2)/(u√(u²+4)) from summed image magnifications, limits A→1/u, 1; Paczynski light-curve symmetry; astrometric centroid shift peaks at u=√2 (16/16) |
+| 13 | `microlensing.wl` | Point-lens A(u)=(u²+2)/(u√(u²+4)) from summed image magnifications, limits A→1/u, 1; Paczynski light-curve symmetry; astrometric centroid shift peaks at u=√2 (16/16). Extended 2026-09-23: equal-mass binary caustic transitions derived exactly (half-separation a = 1 and 8^{-1/2}, i.e. d = 2 and 2^{-1/2}) — microlensing.wl 20/20; problems_13.wl 22/22 with quasar-plane distances computed in concordance cosmology (D_ds = 1097 Mpc, r_E = 5.2e16 cm, t_E = 28 yr, t_cross = 6.3 months) |
 
 To run all per-module verifications:
 ```bash
@@ -162,11 +162,11 @@ done
 
 ---
 
-*Last verified: 2026-09-22 (Module 11 extended to 13/13 and Module 12 solutions to 21/21 after fact-critic passes; earlier modules 2026-07-14)*
+*Last verified: 2026-09-23 (Part IV fact-critic passes: Module 11 → 13/13, Module 12 solutions → 21/21, Module 13 → 20/20 + 22/22; earlier modules 2026-07-14)*
 *Verification script: `Mathematica/verify_against_textbooks.wl`*
 *Master cross-checks: 12/12 passing. Per-module extension scripts added
 2026-07-14 (Schneider, Kochanek & Wambsganss 2006 gap-fill): Module 8
 multipole (7/7), Module 9 substructure/rings (6/6), Module 11 statistics
 (13/13 as of 2026-09-22 + 8/8 solutions), Module 12 weak lensing (10/10 + 21/21 solutions as of 2026-09-22),
-Module 13 microlensing (16/16 + solutions). A BibTeX bibliography
+Module 13 microlensing (20/20 + 22/22 solutions as of 2026-09-23). A BibTeX bibliography
 (`Notes/references.bib`, natbib) now backs all citations.*

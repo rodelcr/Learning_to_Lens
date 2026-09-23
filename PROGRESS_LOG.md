@@ -4,6 +4,33 @@ Timestamped record of major milestones and work completed.
 
 ---
 
+## 2026-09-23 — Module 13 fact-critic pass + fixes (Part IV fact-critic complete)
+
+Report: `Notes/13_Microlensing/FACT_CRITIC_13_Microlensing_2026-09-23.md`. All cited
+Wambsganss (Part 4) equation numbers (1, 3, 4, 8, 14, 22, 25) and section pointers are exact.
+Fixes:
+
+- **Binary-lens caustic transitions** were quoted as d≈1 and d=8^{-1/2} in total-mass units.
+  Those are Schneider & Weiss's *half*-separation values, a mix-up inherited from the book.
+  They are now d = 2 and d = 2^{-1/2}, derived exactly in `microlensing.wl` (3 new tests) and
+  confirmed by a numerical critical-curve count. A footnote explains the book's numbers.
+- **Einstein epigraph** was a misquotation ("no great chance"). It now uses the wording the
+  book quotes, attributed to Wambsganss; the 1936 original is paywalled and unverified.
+- **Quasar microlensing scales:** the solution used D_ds = 1550 Mpc (wrong; 1097 Mpc, since
+  D_ds ≠ D_s − D_d). The text's 15 yr / 4 months did not follow from r_E/v, and text and
+  solution disagreed. Now r_E ≈ 5×10¹⁶ cm, t_E ≈ 28 yr, t_cross ≈ 6 R₁₅ months, computed in
+  the concordance cosmology inside `problems_13.wl`. A footnote records the book's values.
+- **MACHO/EROS:** the < 25% limit is attributed to EROS (2×10⁻⁷–1 M☉), the "ruled out" claim is
+  scoped to the probed mass range, the bulge τ range is (0.9–4)×10⁻⁶, and Q2237 varies by up to
+  1.3 mag.
+- New `.bib` + Zotero: `einstein_1936` (TBJBX6QT, tagged), `schneider_weiss_1986` (5CZJQR7X).
+- Minor wording and prose fixes.
+
+`microlensing.wl` 17 → **20/20**; `problems_13.wl` 20 → **22/22**. Build: 249 / 305 pp, 0 errors.
+With this, every chapter (01a–13) has a full per-chapter fact-critic report.
+
+---
+
 ## 2026-09-22 — Module 12 fact-critic pass + fixes
 
 Report: `Notes/12_Weak_Lensing/FACT_CRITIC_12_Weak_Lensing_2026-09-22.md`. All 22 cited

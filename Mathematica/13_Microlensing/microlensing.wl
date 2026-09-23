@@ -197,6 +197,28 @@ Print["Einstein crossing time for M=Msun, Dd=10 kpc, v=200 km/s:"];
 Print["  tE ~ ", sig[t0demo, 3], " yr (order 0.1-0.2 yr). OK\n"];
 
 
+(* Binary-lens caustic topology transitions (equal masses), added 2026-09-23
+   after the fact-critic pass.  Lens-plane units of the TOTAL-mass Einstein
+   radius, lenses at +/- a (half-separation a = d/2), m1 = m2 = 1/2.  Critical
+   curves satisfy |f(z)| = 1 with f = sum m_i/(zbar - zbar_i)^2.
+   Wide <-> intermediate: the critical curve self-touches at the midpoint z=0.
+   Intermediate <-> close: the curve touches the perpendicular (imaginary)
+   axis tangentially, i.e. max_y |f(iy)| = 1.
+   Schneider & Weiss (1986) (reproduced in Schneider et al. 2006, Part 4,
+   Fig. 4) quote the transitions in HALF-separation a: a = 1 and 8^{-1/2};
+   in full separation d = 2a they are d = 2 and d = 2^{-1/2}. *)
+Clear[a, y];
+fPerp[a_, y_] := Abs[(a^2 - y^2)/(a^2 + y^2)^2];   (* |f(i y)| for y real *)
+aWide = a /. First@Solve[fPerp[a, 0] == 1 && a > 0, a];
+hMax = Simplify[(y^2 - a^2)/(a^2 + y^2)^2 /. y -> Sqrt[3] a, a > 0];  (* max over y>a *)
+aClose = a /. First@Solve[hMax == 1 && a > 0, a];
+Print["Binary caustic transitions (q=1): half-separation a = ", aWide, " and ", aClose];
+report["wide/intermediate transition at a = 1  (d = 2)", aWide === 1];
+report["intermediate/close transition at a = 8^{-1/2}  (d = 2^{-1/2})",
+    Simplify[aClose - 8^(-1/2)] === 0 && Simplify[2 aClose - 2^(-1/2)] === 0];
+report["max_y (y^2-a^2)/(a^2+y^2)^2 attained at y = Sqrt[3] a",
+    Simplify[D[(y^2 - a^2)/(a^2 + y^2)^2, y] /. y -> Sqrt[3] a, a > 0] === 0];
+
 Print["=== Generating figures ===\n"];
 
 

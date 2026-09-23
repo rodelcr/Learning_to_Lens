@@ -184,4 +184,9 @@ Full per-chapter passes, in order 11 → 12 → 13:
   monotone, →κ_s/2 at centre); Ex. 12.5(c) integral diverges for P∝ℓ⁻² (use ℓ⁻¹ → ξ₊=A/2πθ);
   "result of Schneider (2006)" is Bartelmann (1995) per the book; 5 plain-text cites (Gunn 67,
   Blandford+91, Brainerd+96 CrossRef-OK; Bartelmann 95 A&A 303, 643 title unverifiable — ADS gated).
-- 13 Microlensing — next.
+- **13 Microlensing — critic DONE + fixes APPLIED 2026-09-23** (`Notes/13_Microlensing/FACT_CRITIC_13_Microlensing_2026-09-23.md`).
+  Binary caustic transitions were in half-separation units (book-inherited) → d = 2, 2^{-1/2};
+  Einstein epigraph misquoted; quasar D_ds 1550→1097 Mpc and r_E/t_E/t_cross made consistent;
+  MACHO/EROS attribution scoped. `.wl` 20/20 + 22/22.
+- **Part IV per-chapter pass COMPLETE.** Every chapter 01a–13 now has a full fact-critic report.
+  Outstanding elsewhere: Module 6 "Module ??" refs (label `ch:magnification_convergence_shear`).

@@ -215,16 +215,28 @@ Print["--- Exercise 13.6: quasar microlensing ---\n"];
 (* Einstein radius projected into the SOURCE (quasar) plane:
    rE = Dds/Dd * Dd thetaE ... use r_E(source plane) = thetaE * Ds with
    thetaE = Sqrt[4 G M Dds/(c^2 Dd Ds)] => r_E = Sqrt[4 G M Ds Dds/(c^2 Dd)].
-   For zL=0.5, zS=2 the book quotes r_E ~ 4e16 Sqrt[M/Msun] cm. Check the
-   Sqrt[M] scaling and order of magnitude with representative distances. *)
-DdQ = 1250 MpcToM;   (* D_A(0.5) ~ 1250 Mpc *)
-DsQ = 1750 MpcToM;   (* D_A(2.0) ~ 1750 Mpc *)
-DdsQ = 1550 MpcToM;  (* D_A(0.5,2.0) ~ 1550 Mpc *)
+   For zL=0.5, zS=2 the book quotes r_E ~ 4e16 Sqrt[M/Msun] cm (older EdS-type
+   cosmology).  Revised 2026-09-23 (fact-critic): distances are now COMPUTED in
+   the concordance cosmology of Module 3 (Om=0.3, OL=0.7, H0=70) instead of
+   hardcoded; the old hardcoded D_ds = 1550 Mpc was wrong (D_ds != D_s - D_d
+   for angular-diameter distances; the correct value is ~1097 Mpc). *)
+H0q = 70.; Omq = 0.3; cKms = 299792.458;
+EzQ[z_] := Sqrt[Omq (1 + z)^3 + 1 - Omq];
+DcQ[z_?NumericQ] := (cKms/H0q) NIntegrate[1/EzQ[zz], {zz, 0, z}];   (* Mpc *)
+DdQ  = DcQ[0.5]/1.5 MpcToM;
+DsQ  = DcQ[2.0]/3.0 MpcToM;
+DdsQ = (DcQ[2.0] - DcQ[0.5])/3.0 MpcToM;   (* flat: (Dc_s - Dc_d)/(1+z_s) *)
+Print["  D_d, D_s, D_ds [Mpc] = ", sig[#/MpcToM, 4] & /@ {DdQ, DsQ, DdsQ}];
+report["(a) D_ds(0.5,2) ~ 1097 Mpc (astropy cross-check 1097.08)",
+    Abs[DdsQ/MpcToM - 1097.08] < 1];
 rEsource[Mr_] := Sqrt[4 Gnewton (Mr Msolar) DsQ DdsQ/(cc^2 DdQ)];
 Print["  r_E(source plane, M=Msun) = ",
     expo[rEsource[1]*100, 3], " cm"];  (* meters -> cm *)
-report["(a) r_E ~ few x 10^16 cm for M=Msun",
-    1*^16 < rEsource[1]*100 < 9*^16];
+report["(a) r_E ~ 5 x 10^16 cm for M=Msun (text eq. micro_qso_rE)",
+    4.9*^16 < rEsource[1]*100 < 5.5*^16];
+tEq = rEsource[1]/(600*1000)/yrToS;
+Print["  t_E = r_E/v (v=600 km/s) = ", sig[tEq, 3], " yr"];
+report["(c) t_E = r_E/v ~ 28 yr (text eq. micro_qso_tE)", 26 < tEq < 30];
 (* sqrt scaling checked symbolically (Kq collects M-independent factors) *)
 rEsym[Mr_] := Sqrt[Kq Mr];
 report["(b) r_E ~ Sqrt[M] scaling",
@@ -237,7 +249,7 @@ veff = 600*1000;         (* m/s *)
 tcross = Rsrc/veff;
 Print["  t_cross(R=1e15 cm, v=600 km/s) = ",
     sig[tcross/(yrToS/12), 3], " months"];
-report["(c) t_cross ~ few months", 1 < tcross/(yrToS/12) < 12];
+report["(c) t_cross = R/v ~ 6 months (text: ~6 R15 months)", 5.8 < tcross/(yrToS/12) < 6.8];
 
 (* (d) surface mass density at a quasar image is of order kappa ~ 1,
    so an ensemble of microlenses acts coherently (network of caustics). *)

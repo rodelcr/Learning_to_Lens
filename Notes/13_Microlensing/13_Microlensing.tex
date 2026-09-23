@@ -12,15 +12,17 @@
 \label{ch:microlensing}
 
 \begin{quote}
-\textit{``Of course, there is no great chance of observing this phenomenon
+\textit{``Of course, there is not much hope of observing this phenomenon
 directly.''}
-\hfill --- A. Einstein (1936), on star--star lensing
+\hfill --- A.~Einstein (1936), on star--star lensing,\\
+\hfill as quoted by J.~Wambsganss in Schneider, Kochanek \& Wambsganss (2006), Part~4
 \end{quote}
 
 \noindent
-Einstein's pessimism was well founded for the technology of his day, but
-spectacularly wrong for ours.  The images formed when one star lenses another
-are split by only $\sim\!10^{-3}$~arcsec --- utterly unresolvable --- so the
+Einstein's pessimism \citep{einstein_1936} was well founded for the
+technology of his day, but wrong for ours.  The images formed when one star
+lenses another are split by only $\sim\!10^{-3}$~arcsec, far too small to
+resolve, so the
 individual images that dominated Modules~\ref{ch:lens_equation}
 through~\ref{ch:elliptical_models} can never be seen.  What \emph{is}
 observable is the \textbf{total magnification}, and because the lens, source,
@@ -83,13 +85,12 @@ star at distance $\Ds$.  The angular Einstein radius is
     \label{eq:micro_thetaE}
 \end{equation}
 which for stellar masses and kiloparsec distances evaluates to
-$\thetaE \sim 10^{-3}$~arcsec (a \emph{milli}arcsecond --- hence
-``\emph{micro}'' relative to the arcsecond image splittings of galaxy
-lensing).  The two images produced by a point lens straddle the lens and are
+$\thetaE \sim 10^{-3}$~arcsec (a milliarcsecond, far below the arcsecond
+image splittings of galaxy lensing).  The two images produced by a point lens straddle the lens and are
 separated by $\Delta\theta \approx 2\thetaE \sim$~mas, far below the
 resolution of any conventional telescope.
 
-The consequence is decisive: \textbf{individual image positions,
+As a result, \textbf{individual image positions,
 magnifications, and shapes are not measurable}.  All the information carried by
 the image geometry in earlier modules is lost.  What survives is the
 \emph{sum} of the image fluxes --- the total magnification --- which, thanks to
@@ -282,7 +283,7 @@ For lenses distributed with mass density $\rho(\Dd)$ along the line of sight,
     \frac{\Dd\,\Dds}{\Ds}\,\rho(\Dd)\,d\Dd\;}
     \label{eq:micro_tau}
 \end{equation}
-Remarkably, $\tau$ is \emph{independent of the individual lens masses}: it
+The optical depth is \emph{independent of the individual lens masses}: it
 depends only on the total mass density, because the Einstein area
 $\pi\thetaE^2 \propto M$ while the number density $\propto 1/M$, and the two
 cancel.  The equivalence of ``fraction of sky in Einstein disks'' and
@@ -291,7 +292,7 @@ $\Sigma/\Sigmacr$ for a thin lens screen is verified in
 
 \subsection{The Dark-Matter Test Toward the Magellanic Clouds}
 
-Paczy\'nski's motivation was profound: if the dark halo of the Milky Way were
+Paczy\'nski's motivation was this: if the dark halo of the Milky Way were
 made of compact objects (MACHOs --- MAssive Compact Halo Objects), they would
 microlens background stars in the Large and Small Magellanic Clouds
 (LMC/SMC).  For a standard isothermal halo he predicted
@@ -303,20 +304,23 @@ so roughly one star in two million is measurably lensed at any time --- a small
 but tractable number given large CCD surveys.  The MACHO, EROS, and OGLE
 collaborations carried out the experiment through the 1990s and 2000s.  Their
 verdict: the observed rate toward the LMC,
-$\tau_{\mathrm{LMC}} \approx 1.2^{+0.4}_{-0.3} \times 10^{-7}$ (MACHO), is far
-too low for compact objects to constitute the entire halo.  MACHOs in the
-mass range $\sim\!10^{-7}$ to $1\,\Msun$ contribute less than about $25\%$ of
-the halo, and the surviving events are consistent with ordinary stars in the
-disk or within the Clouds themselves
-\citep[Sect.~3.5]{schneider_kochanek_wambsganss_2006}.  This is a landmark
-\emph{null} result: it decisively ruled out baryonic compact objects as the
-dominant dark matter.
+$\tau_{\mathrm{LMC}} \approx 1.2^{+0.4}_{-0.3} \times 10^{-7}$ (MACHO, with a
+further $\sim\!20\%$ systematic uncertainty), is far too low for compact
+objects to constitute the entire halo.  EROS limits objects of
+$2\times10^{-7}$ to $1\,\Msun$ to less than $25\%$ of the halo, MACHO finds
+that objects of $0.3$--$30\,\Msun$ cannot make up the whole halo, and the
+surviving events are consistent with ordinary stars in the disk or within the
+Clouds themselves \citep[Sect.~3.5]{schneider_kochanek_wambsganss_2006}.
+This important \emph{null} result rules out compact objects of
+$\sim\!10^{-7}$--$30\,\Msun$ as the dominant component of the halo dark
+matter.
 
 \subsection{Toward the Galactic Bulge}
 
 Monitoring the crowded Galactic bulge yields events with near certainty and a
 much higher optical depth,
-$\tau_{\mathrm{bulge}} \approx (0.9\text{--}3) \times 10^{-6}$, tracing the
+$\tau_{\mathrm{bulge}} \approx (0.9\text{--}4) \times 10^{-6}$ (EROS to
+MACHO/OGLE), tracing the
 stellar bar along the line of sight
 \citep[Sect.~3.6]{schneider_kochanek_wambsganss_2006}.  The bulge is now the
 principal hunting ground for the planetary events of the next section.
@@ -343,22 +347,30 @@ For a binary lens the deflection is the sum of two point-mass terms
 and the system is described by three new parameters: the mass ratio
 $q = M_B/M_A$, the projected separation $d$ (in units of $\thetaE$ of the total
 mass), and the angle $\phi$ of the source trajectory relative to the binary
-axis.  The caustic topology changes qualitatively with $d$: widely separated
-lenses have two small asteroid-shaped caustics; near $d \approx 1$ these merge
-through an intermediate six-cusp caustic; and at $d = 8^{-1/2} \approx 0.354$
-the caustic splits into a central four-cusp plus two triangular caustics
-\citep[Sect.~2.1]{schneider_kochanek_wambsganss_2006, petters_singularity_2001}.
+axis.  The caustic topology changes qualitatively with $d$.  For equal
+masses: widely separated lenses ($d > 2$) have two small four-cusp
+(astroid-shaped) caustics; for $2^{-1/2} < d < 2$ these are merged into a
+single six-cusp caustic; and for $d < 2^{-1/2} \approx 0.707$ the caustic
+splits into a central four-cusp caustic plus two small triangular ones
+\citep{schneider_weiss_1986, petters_singularity_2001}
+\citep[Part~4, Sect.~2.1]{schneider_kochanek_wambsganss_2006}.%
+\footnote{\citet{schneider_weiss_1986}, reproduced as Fig.~4 of
+\citet[Part~4]{schneider_kochanek_wambsganss_2006}, quote these transitions
+as $1$ and $8^{-1/2}$ because they measure the \emph{half}-separation of the
+two lenses.  In the full-separation units used here the transitions are at
+$d = 2$ and $d = 2^{-1/2}$; both values are checked by counting critical
+curves in \texttt{microlensing.wl}.}
 
 \subsection{Caustic Crossings}
 
-The observational signature is dramatic.  When the source \emph{crosses} a
+The observational signature is a sharp spike.  When the source \emph{crosses} a
 caustic, a pair of highly magnified images is created or destroyed, and because
 these images dominate the (unresolved) total flux, the light curve shows a
 sharp spike.  A point source would formally be infinitely magnified at the
 caustic; the finite spike height instead \emph{measures the source size},
 since the magnification is smeared over the time
-$t_{\mathrm{cross}} = R_{\mathrm{source}}/v_\perp$ it takes the source to cross
-its own diameter.  Caustic-crossing binaries thus break the point-source
+$t_{\mathrm{cross}} = R_{\mathrm{source}}/v_\perp$ it takes the source to move
+by its own radius.  Caustic-crossing binaries thus break the point-source
 approximation in a useful way, occasionally even resolving the stellar surface
 brightness profile.
 
@@ -372,13 +384,13 @@ $q = M_{\mathrm{planet}}/M_\star$ generates a small caustic whose perturbation
 is strongest when the projected separation lies in the \textbf{lensing zone}
 $0.6 \lesssim d/\thetaE \lesssim 1.6$, where the planetary caustic falls near
 the Einstein ring of the host star
-\citep[Sect.~4.1]{schneider_kochanek_wambsganss_2006}.  By a fortunate
+\citep[Sect.~4.1]{schneider_kochanek_wambsganss_2006}.  By
 coincidence this angular range corresponds to physical separations of order
 $1$~AU for typical Galactic lenses --- overlapping the habitable zone.  The
 planetary deviation is brief (hours to a day) and of small amplitude (a few
 percent), so dense, continuous monitoring of ongoing stellar events is
-required.  Microlensing is uniquely sensitive to \emph{cool, low-mass planets
-at $\sim\!1$--$10$~AU} around distant ($\sim$~kpc) stars, a region of parameter
+required.  Microlensing is especially sensitive to \emph{cool, low-mass
+planets at $\sim\!1$--few~AU} around distant ($\sim$~kpc) stars, a region of parameter
 space complementary to radial-velocity and transit surveys.  Its cost is that
 each event is a unique, non-repeatable alignment, and only the mass \emph{ratio}
 $q$ (not the planet mass directly) is measured from the light curve alone.
@@ -450,25 +462,39 @@ single isolated event.
 The relevant scales, for typical lens and source redshifts
 $z_d \approx 0.5$, $z_s \approx 2$, are the Einstein radius projected into the
 quasar plane and its crossing time
-\citep[Sect.~7.1]{schneider_kochanek_wambsganss_2006}:
+\citep[Sect.~7.1]{schneider_kochanek_wambsganss_2006}.  For the concordance
+cosmology of Module~\ref{ch:cosmological_distances}
+($\Dd \approx 1260$, $\Ds \approx 1730$, $\Dds \approx 1100$~Mpc),
 \begin{align}
-    r_{\mathrm{E}} &\approx 4 \times 10^{16}\,
+    r_{\mathrm{E}} &= \sqrt{\frac{4\Gnewton M}{\speedoflight^2}\,
+    \frac{\Ds\,\Dds}{\Dd}}
+    \approx 5 \times 10^{16}\,
     \left(\frac{M}{\Msun}\right)^{1/2}\,\text{cm} \,,
     \label{eq:micro_qso_rE} \\
-    t_{\mathrm{E}} &\approx 15\,
+    t_{\mathrm{E}} &= \frac{r_{\mathrm{E}}}{v_\perp} \approx 28\,
     \left(\frac{M}{\Msun}\right)^{1/2}
-    \left(\frac{v_\perp}{600~\text{km s}^{-1}}\right)^{-1}\,\text{yr} \,.
+    \left(\frac{v_\perp}{600~\text{km s}^{-1}}\right)^{-1}\,\text{yr} \,,
     \label{eq:micro_qso_tE}
 \end{align}
+where $v_\perp$ is the relative transverse velocity projected into the
+source plane.%
+\footnote{\citet[Part~4, Sect.~7.1]{schneider_kochanek_wambsganss_2006} quotes
+$r_{\mathrm{E}} \approx 4\times10^{16}$~cm, which corresponds to an older
+Einstein--de~Sitter-type cosmology (EdS with $H_0 = 70$ gives
+$3.8\times10^{16}$~cm).  It also quotes $t_{\mathrm{E}} \approx 15$~yr and
+$t_{\mathrm{cross}} \approx 4$~months.  Those two values are consistent with
+each other but are about $1.5\times$ shorter than $r/v$ for
+$v = 600$~km\,s$^{-1}$, which implies a differently defined effective velocity.
+Here we quote $r/v$ directly; see \texttt{problems\_13.wl}.}
 The full Einstein-crossing time is discouragingly long, but the observable
 fluctuations are governed instead by the much shorter \emph{caustic}-crossing
-time $t_{\mathrm{cross}} = R_{\mathrm{source}}/v_\perp \approx 4\,(R_{15})\,
-(v_\perp/600~\text{km s}^{-1})^{-1}$~months, where the quasar continuum size
+time $t_{\mathrm{cross}} = R_{\mathrm{source}}/v_\perp \approx 6\,R_{15}\,
+(v_\perp/600~\text{km s}^{-1})^{-1}$~months, where the quasar continuum radius
 $R_{15}$ is in units of $10^{15}$~cm.  The scale estimates and the
 $\propto\sqrt{M}$ mass scaling are checked in
 \solnlink{13_Microlensing/problems\_13.wl}{problems\_13.wl}.
 
-The great power of quasar microlensing is that $t_{\mathrm{cross}}$ ---
+The value of quasar microlensing is that $t_{\mathrm{cross}}$ ---
 and hence the sharpness of the microlensing fluctuations --- is set by the
 \emph{source size}: a compact continuum-emitting region crosses caustics
 cleanly and flickers strongly, whereas a large emission region washes the
@@ -476,7 +502,7 @@ peaks out.  Monitoring the uncorrelated (non-time-delayed) variability between
 the macro-images therefore constrains the \textbf{quasar accretion-disk size},
 independently of the time-delay cosmography of Module~\ref{ch:galaxy_lensing}.
 The classic laboratory is the ``Einstein Cross'' Q2237$+$0305, whose four
-images vary independently by up to $\sim\!1$~mag; the fits imply a continuum
+images vary independently by up to $\sim\!1.3$~mag; the fits imply a continuum
 region of order $10^{14}$~cm
 \citep[Sect.~7.3]{schneider_kochanek_wambsganss_2006}.  Quasar microlensing
 also probes the fraction of the lens-galaxy mass in compact objects versus
@@ -510,9 +536,10 @@ smooth dark matter, complementing the halo constraints of
     \item The \textbf{optical depth}
           $\tau = \int (4\pi\Gnewton/\speedoflight^2)(\Dd\Dds/\Ds)\rho\,d\Dd$
           is mass-independent.  Toward the LMC the measured
-          $\tau \approx 1.2\times10^{-7}$ rules out MACHOs as the dominant
-          dark matter ($\lesssim 25\%$ of the halo); toward the bulge
-          $\tau \sim 10^{-6}$.
+          $\tau \approx 1.2\times10^{-7}$ rules out compact objects of
+          $\sim\!10^{-7}$--$30\,\Msun$ as the dominant halo dark matter
+          (EROS: $< 25\%$ of the halo for $2\times10^{-7}$--$1\,\Msun$);
+          toward the bulge $\tau \sim 10^{-6}$.
 
     \item \textbf{Binary and planetary} lenses add extended caustics; caustic
           crossings give sharp, source-size-dependent spikes, and a planet in
