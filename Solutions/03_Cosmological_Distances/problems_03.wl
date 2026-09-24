@@ -249,6 +249,19 @@ Do[
     ],
     {zd0, zdRange}
 ];
+(* Added 2026-09-24 (fact-critic): the (d) solution previously claimed a
+   maximum of theta_E at z_d ~ 0.3-0.4.  In fact theta_E decreases
+   monotonically in z_d; it is the PHYSICAL radius R_E = D_d theta_E that
+   peaks at intermediate z_d. *)
+tEofZd[z_] := Sqrt[4 GN Mlens/clight^2 * (DdsFunc[z, 1.0, 0.3, 0.7] MpcToM)/
+    ((DAFunc[z, 0.3, 0.7] MpcToM) (DAFunc[1.0, 0.3, 0.7] MpcToM))];
+zgrid = Range[0.02, 0.98, 0.02];
+tEvals = tEofZd /@ zgrid;
+REvals = MapThread[#1 DAFunc[#2, 0.3, 0.7] &, {tEvals, zgrid}];   (* Mpc *)
+Print["  theta_E strictly decreasing in z_d on [0.02,0.98]: ",
+    And @@ Negative[Differences[tEvals]]];
+Print["  R_E = D_d theta_E peaks at z_d = ", zgrid[[First@Ordering[REvals, -1]]],
+    " (R_E = ", ToString[NumberForm[1000 Max[REvals], {3, 1}]], " kpc)"];
 Print[""];
 
 Print["=== End of Module 3 Solutions ==="];

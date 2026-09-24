@@ -230,15 +230,15 @@ Module[{},
         },
         PlotRange -> {{0, 3}, {0, 5}},
         AxesLabel -> {
-            Style["\[Theta] / " <> Subscript["\[Theta]", "E"], 13],
+            Style[Row[{"\[Theta] / ", Subscript["\[Theta]", "E"]}], 13],
             Style["\[Kappa](\[Theta])", 13]
         },
         PlotLabel -> Style["Exercise 7.4(e): NIS Convergence Profiles", 13],
         PlotLegends -> {
-            Style[Subscript["\[Theta]", "c"] <> " = 0 (SIS)", 10],
-            Style[Subscript["\[Theta]", "c"] <> " = 0.1 " <> Subscript["\[Theta]", "E"], 10],
-            Style[Subscript["\[Theta]", "c"] <> " = 0.3 " <> Subscript["\[Theta]", "E"], 10],
-            Style[Subscript["\[Theta]", "c"] <> " = 0.5 " <> Subscript["\[Theta]", "E"], 10]
+            Style[Row[{Subscript["\[Theta]", "c"], " = 0 (SIS)"}], 10],
+            Style[Row[{Subscript["\[Theta]", "c"], " = 0.1 ", Subscript["\[Theta]", "E"]}], 10],
+            Style[Row[{Subscript["\[Theta]", "c"], " = 0.3 ", Subscript["\[Theta]", "E"]}], 10],
+            Style[Row[{Subscript["\[Theta]", "c"], " = 0.5 ", Subscript["\[Theta]", "E"]}], 10]
         },
         Epilog -> {Gray, Dashed, AbsoluteThickness[1],
             InfiniteLine[{{0, 1}, {10, 1}}]},

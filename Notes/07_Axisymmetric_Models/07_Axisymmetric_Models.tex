@@ -10,12 +10,10 @@
 \label{ch:axisymmetric_models}
 
 \begin{quote}
-\textit{For most applications in gravitational lensing, one begins with
-a specific mass model and derives the observable consequences ---
-image positions, magnifications, and time delays.  The simplest models
-with circular symmetry already capture the essential physics of galaxy
-and cluster lensing.}
-\hfill --- Narayan \& Bartelmann (1997)
+\textit{In the special case of a circularly symmetric lens, we can shift the
+coordinate origin to the center of symmetry and reduce light deflection to a
+one-dimensional problem.}
+\hfill --- Narayan \& Bartelmann (1997), Sect.~2.1.2
 \end{quote}
 
 \noindent
@@ -389,12 +387,15 @@ models below, $|\gammaL| \neq \kappab$ in general.
 
 \subsection{SIS Lens Equation and Images}
 
-Substituting $\alpha(\theta) = \thetaE$ into the 1D lens equation:
+Take $\theta$ as a signed coordinate along the line through the lens
+and the source ($\beta \geq 0$; $\theta > 0$ on the source's side).  The
+SIS deflection has constant magnitude $\thetaE$ and points along
+$\theta/|\theta|$, so the 1D lens equation is
 \begin{equation}
-    \beta = \theta - \thetaE \,.
+    \beta = \theta - \thetaE\,\frac{\theta}{|\theta|} \,.
     \label{eq:sis_lens_eq}
 \end{equation}
-This is \textit{linear} in $\theta$ (unlike the point mass lens
+This is \textit{piecewise linear} in $\theta$ (unlike the point mass lens
 equation, which is quadratic).  The analysis depends on whether the
 source lies inside or outside the Einstein radius:
 
@@ -406,9 +407,10 @@ There are \textbf{two images}:
     \label{eq:sis_two_images}
 \end{equation}
 where $\theta_- < 0$ indicates the image is on the opposite side of
-the lens from the source.  (We must include the solution on the
-opposite side, where the lens equation is
-$\beta = -\theta - (-\thetaE) = \thetaE - \theta$.)
+the lens from the source.  (For $\theta > 0$,
+eq.~\eqref{eq:sis_lens_eq} reads $\beta = \theta - \thetaE$, giving
+$\theta_+$; for $\theta < 0$ it reads $\beta = \theta + \thetaE$,
+giving $\theta_-$, which is indeed negative when $\beta < \thetaE$.)
 
 \paragraph{Case 2: $\beta > \thetaE$ (source outside the caustic).}
 There is only \textbf{one image}:
@@ -416,8 +418,8 @@ There is only \textbf{one image}:
     \theta = \beta + \thetaE \,.
     \label{eq:sis_one_image}
 \end{equation}
-The second image would have $|\theta| = \thetaE - \beta < 0$ in
-absolute value, which is unphysical.
+The $\theta < 0$ branch would give $\theta = \beta - \thetaE > 0$,
+which contradicts $\theta < 0$, so there is no second image.
 
 \paragraph{Case 3: $\beta = 0$ (source on the optical axis).}
 The image is a complete \textbf{Einstein ring} at $\theta = \thetaE$.
@@ -494,6 +496,16 @@ where $\theta_c$ is the angular core radius.  For $\theta \gg \theta_c$,
 $\Sigma \to \sigma_v^2 / (2\Gnewton\, \Dd\, \theta)$, recovering
 the SIS\@.  For $\theta \to 0$,
 $\Sigma(0) = \sigma_v^2 / (2\Gnewton\, \Dd\, \theta_c)$ is finite.
+This is the projection of the 3D density
+(Congdon \& Keeton eq.~2.53)
+\begin{equation}
+    \rho(r) = \frac{\sigma_v^2}{2\pi\Gnewton\,(r^2 + r_c^2)} \,,
+    \label{eq:nis_rho}
+\end{equation}
+with physical core radius $r_c = \Dd\,\theta_c$: since
+$\int_{-\infty}^{\infty} dz/(\xi^2 + r_c^2 + z^2) = \pi/\sqrt{\xi^2 + r_c^2}$,
+integrating along the line of sight at $\xi = \Dd\theta$ gives
+eq.~\eqref{eq:nis_sigma}.
 
 \subsection{Convergence of the NIS}
 
@@ -641,9 +653,10 @@ The NFW profile is usually parametrized by two quantities:
           density of the universe.
     \item The \textbf{concentration parameter}
           $c = r_{200}/r_s$: the ratio of virial to scale radius.
-          Typical values are $c \sim 3$--$5$ for massive clusters
-          ($M_{200} \sim 10^{15}\,\Msun$) and $c \sim 10$--$20$ for
-          galaxy-mass haloes ($M_{200} \sim 10^{12}\,\Msun$).
+          Typical values are $c \sim 5$ for massive clusters
+          ($M_{200} \sim 10^{15}\,\Msun$) and $c \sim 10$ for
+          galaxy-mass haloes ($M_{200} \sim 10^{12}\,\Msun$)
+          \citep[][Part~2, p.~128]{schneider_kochanek_wambsganss_2006}.
 \end{itemize}
 
 The characteristic density is related to $c$ by:

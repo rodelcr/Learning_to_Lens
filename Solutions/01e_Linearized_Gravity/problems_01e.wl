@@ -168,40 +168,13 @@ Print["  = 2/b  (as expected)\n"];
 
 (* (c) Combine *)
 Print["(c) Deflection angle:"];
-Print["  alpha_hat = (4/c^2) * integral nabla_perp Phi dl"];
-Print["           = (4/c^2) * GM * (2/b)"];
-
-(* Wait — this gives 8GM/(c^2 b), not 4GM/(c^2 b).
-   The issue is that the integral already overcounts.
-   The standard formula uses the 2D projected potential integral.
-
-   Actually, the correct derivation: the deflection from the TIME part
-   is (2/c^2) * int nabla_perp Phi dl = (2/c^2) * GM * 2/b = 4GM/(c^2 b).
-   The SPACE part adds an equal amount.
-   Total = 2 * 4GM/(c^2 b) = 8GM/(c^2 b)?
-
-   No. Let's be careful. The standard formula (Weinberg 1972, eq. 8.5.4;
-   Congdon & Keeton derivation) is:
-
-   alpha_hat = (1+gamma)/c^2 * integral nabla_perp Phi dl
-
-   where gamma = 1 in GR (the PPN parameter).
-   So alpha_hat = 2/c^2 * int nabla_perp Phi dl = 2/c^2 * GM * 2/b = 4GM/(c^2 b).
-
-   The "4" in the formula alpha = (4/c^2) * int ... uses a DIFFERENT
-   normalization of the integral where nabla_perp acts on Phi projected
-   onto the lens plane (2D), not integrated along the line of sight (3D).
-*)
-
-Print[""];
-Print["  IMPORTANT: The standard formula is derived as follows."];
-Print["  Time contribution: (2/c^2) * int nabla_perp Phi dl = 2GM/(c^2 b)"];
-Print["  Space contribution: equal, also 2GM/(c^2 b)"];
-Print["  Total: alpha_hat = 4GM/(c^2 b)"];
-Print[""];
-Print["  In PPN formalism: alpha = (1+gamma)/c^2 * int nabla_perp Phi dl"];
-Print["  with gamma = 1 (GR):"];
-Print["  alpha = (2/c^2) * GM * (2/b) = 4GM/(c^2 b)  CHECK\n"];
+(* eq. deflection_integral: alpha_hat = (1 + gamma_PPN)/c^2 * int nabla_perp|Phi| dl.
+   The time part (h_00) contributes (1/c^2) * int = 2GM/(c^2 b); the space
+   part (h_ij) contributes an equal amount (gamma_PPN = 1 in GR). *)
+Print["  alpha_hat = (1 + gamma_PPN)/c^2 * integral nabla_perp |Phi| dl"];
+Print["  Time part (h_00):  (1/c^2) * GM * (2/b) = 2GM/(c^2 b)"];
+Print["  Space part (h_ij): equal (gamma_PPN = 1), 2GM/(c^2 b)"];
+Print["  Total: alpha_hat = (2/c^2) * GM * (2/b) = 4GM/(c^2 b)  CHECK\n"];
 
 (* (d) Numerical values *)
 Print["(d) Numerical values:\n"];

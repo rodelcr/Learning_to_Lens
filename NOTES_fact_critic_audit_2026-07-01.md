@@ -146,18 +146,34 @@ Bartelmann & Schneider 2001, Kilbinger 2015, Bartelmann et al. 1998.
 
 ## Outstanding / recommended next steps
 
-1. ~~Equation-number cleanup pass~~ **DONE** (2026-07-01): 42 applied / 23 flagged,
-   PDF-verified. Remaining 23 flagged items need author judgment (per-chapter reports,
-   "Equation-number cleanup" sections).
-2. ~~Recompile~~ **DONE**: builds clean, 210 pp.
-3. **Cosmology audit** — regenerate all worked-example distances from astropy; resolve the
-   ch04/ch09 factor-of-2 θ_E items and the ch10 mass (~2e14 → ~1.3e14). (ch03/07 done.)
-4. Review the flagged physics/consistency items (κ>1 parity, Shapiro sign, T⁰⁰/T₀₀ index,
-   Kerr ergosphere r₊, image-count-sequence framing, etc.).
-5. Add the lone `\citep{Birrer2020}` to a `.bib` (or convert to prose) — the doc's only
-   undefined citation.
-6. Verify Kormann, Schneider & Bartelmann (1994) via NASA ADS and add to Zotero (the one
-   recurring citation the adapters couldn't confirm).
+*Status as of 2026-09-24. Every item from the original July list is closed.*
+
+1. ~~Equation-number cleanup~~: **DONE**. On 2026-09-24 the 23 July-flagged items were reconciled.
+   13 had already been fixed in the 07-09 harden pass; the other 10 were fixed after checking
+   them against the PDFs (Carroll via tesseract OCR of the scanned `Carroll_SG.pdf`).
+   Chapters 02 and 03, never part of the eq-number pass, were then checked: 33 citations,
+   20 fixes. The ch02 C&K 3.88–3.104 numbers were off by 1–2; the ch03 Carroll 8.2/8.5/8.6/8.8
+   pointed at de Sitter equations and should be 8.43/8.44/8.45/8.48.
+2. ~~Recompile~~: **DONE**.
+3. ~~Cosmology audit~~: **DONE 2026-09-24**. Every worked-example distance was swept against
+   astropy (flat, Ω_m=0.3, H0=70). Fixed:
+   - ch03 solutions: Q0957 distances, and Σ_cr 3.3→2.4e9.
+   - ch03 Ex 3.5(d): wrongly claimed θ_E peaks in z_d. It is monotone; R_E peaks at 0.36.
+   - ch04 exercise inputs: 1200/1800/1400 → 1055/1727/1329.
+   - ch09 Sol 9.1: D_d 770→919; Σ_cr, M_E, σ_v now match `problems_09.wl`.
+   - ch10: rounded 900/1750/1400 → 919/1727/1328, everywhere including both `.wl`, which now
+     compute the distances. Also Ex 10.3 z_s=9 (D_s 1850→921 Mpc), weak-lensing Σ_cr
+     3.5→2.8e15, and a wrong κ>1 radius (x≲0.5 → 0.11).
+   - ch13 (09-23).
+4. ~~Flagged physics items~~: **DONE** in the 07-09 harden pass.
+5. ~~Birrer2020 `.bib`~~: **DONE** 07-14.
+6. ~~Kormann+94~~: **DONE** (ADS; `.bib` + Zotero).
+7. **Epigraphs** (2026-09-24): all 17 checked against primary sources. Eleven of them
+   (01e, 02, 03, 04–10, and earlier 11 and 13) were paraphrases, invented, or misquoted. Each
+   was replaced with a verified verbatim quote, with the source section or page given.
+   01a–01d (Carroll) were already verbatim.
+8. The May-14 handoff (`HANDOFF_audit_2026-05-14.md`) was reconciled on 2026-09-24; see
+   PROGRESS_LOG.
 
 ## Artifacts
 

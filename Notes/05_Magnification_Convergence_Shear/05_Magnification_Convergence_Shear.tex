@@ -10,12 +10,11 @@
 \label{ch:magnification}
 
 \begin{quote}
-\textit{The convergence and shear are the two fundamental quantities that
-describe the local properties of a gravitational lens.  The convergence
-causes isotropic focusing; the shear causes anisotropic distortion.
-Together they determine the magnification and shape distortion of lensed
-images.}
-\hfill --- Narayan \& Bartelmann (1997)
+\textit{Convergence acting alone causes an isotropic focusing of light rays, leading
+to an isotropic magnification of a source.  The source is mapped onto an image
+with the same shape but larger size.  Shear introduces anisotropy (or
+astigmatism) into the lens mapping [\ldots]}
+\hfill --- Narayan \& Bartelmann (1997), Sect.~3.2
 \end{quote}
 
 \noindent
@@ -572,8 +571,9 @@ radius $\delta$.
     \textbf{Left:} Pure convergence ($\kappab = 0.3$, $\gammaL = 0$)
     produces a larger circle (isotropic magnification).
     \textbf{Center:} Pure shear ($\kappab = 0$, $|\gammaL| = 0.3$)
-    produces an ellipse (anisotropic distortion without magnification
-    change to first order).
+    produces an ellipse (anisotropic distortion; the magnification
+    $\mu = 1/(1 - |\gammaL|^2) \approx 1.10$ differs from unity only at
+    second order in $|\gammaL|$).
     \textbf{Right:} Both ($\kappab = 0.3$, $|\gammaL| = 0.3$) produces
     a larger ellipse.
     The dashed circle shows the original source in each panel.
@@ -695,11 +695,13 @@ This is precisely eq.~\eqref{eq:magnification_pm} from
 Module~\ref{ch:lens_equation}!  Evaluating at the image positions
 $\theta_\pm$:
 \begin{equation}
-    \mu_\pm = \frac{u^2 + 2}{2u\sqrt{u^2 + 4}} \pm \frac{1}{2}
+    |\mu_\pm| = \frac{u^2 + 2}{2u\sqrt{u^2 + 4}} \pm \frac{1}{2} \,,
+    \qquad \mu_+ > 0 \,, \quad \mu_- < 0 \,,
     \label{eq:mu_pm_recovered}
 \end{equation}
 where $u = \beta/\thetaE$, recovering eq.~\eqref{eq:magnification_u}
-exactly.  The consistency is verified symbolically in
+exactly.  (The inner image has $|\theta_-| < \thetaE$, so
+$\theta_-^4 - \thetaE^4 < 0$ and its signed magnification is negative.)  The consistency is verified symbolically in
 \mathlink{05_Magnification_Convergence_Shear/lensing_potential.wl}{lensing\_potential.wl}.
 
 
@@ -845,7 +847,8 @@ in Module~8.
     \item For a \textbf{point mass lens}: $\kappab = 0$ (away from
           the origin), $|\gammaL| = \thetaE^2/\theta^2$, and the
           general magnification formula recovers the result
-          $\mu_\pm = (u^2+2)/(2u\sqrt{u^2+4}) \pm 1/2$ from Module~4.
+          $|\mu_\pm| = (u^2+2)/(2u\sqrt{u^2+4}) \pm 1/2$ from Module~4,
+          with $\mu_- < 0$.
 
     \item \textbf{Critical curves} ($\det\Amat = 0$) and their
           mappings, \textbf{caustics}, govern the image multiplicity
@@ -932,7 +935,9 @@ Verify with
     \item Evaluate $\mu$ at the image positions $\theta_\pm =
           (\beta \pm \sqrt{\beta^2 + 4\thetaE^2})/2$.  Using
           $u = \beta/\thetaE$, show that the result reduces to
-          $\mu_\pm = (u^2+2)/(2u\sqrt{u^2+4}) \pm 1/2$.
+          $\mu_+ = (u^2+2)/(2u\sqrt{u^2+4}) + 1/2$ and
+          $\mu_- = 1/2 - (u^2+2)/(2u\sqrt{u^2+4})$, i.e.,
+          $|\mu_\pm| = (u^2+2)/(2u\sqrt{u^2+4}) \pm 1/2$.
     \item Verify that $\mu_+ > 0$ (positive parity) and
           $\mu_- < 0$ (negative parity) for all $u > 0$.
     \item Show that $|\mu_+| + |\mu_-| > 1$ for all $u > 0$

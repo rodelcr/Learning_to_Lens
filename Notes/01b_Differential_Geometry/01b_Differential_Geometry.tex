@@ -342,7 +342,9 @@ These are the quantities that appear in Einstein's field equation
     \label{eq:einstein_field_eq}
 \end{equation}
 relating the curvature of spacetime (left side) to its matter and energy
-content (right side).
+content (right side).  Here $c = 1$; with factors of $c$ restored the
+right-hand side reads $8\pi G\, T_{\mu\nu}/c^4$, the form used from
+Module~1c on.
 
 \begin{remark}
 The Riemann tensor in $n$ dimensions has $n^2(n^2 - 1)/12$ independent
@@ -626,15 +628,17 @@ $\mu = \theta$, $\nu = \phi$):
     \label{eq:cookbook_ricci_phiphi}
 \end{align}
 For $R_{\theta\theta}$, we need $R^\phi_{\ \theta\phi\theta}$.
-By the antisymmetry $R^\rho_{\ \sigma\mu\nu} = -R^\rho_{\ \sigma\nu\mu}$
-and the symmetry of the fully lowered tensor:
+Lower the index and use the antisymmetry of the fully lowered tensor
+in each index pair,
+$R_{\phi\theta\phi\theta} = -R_{\theta\phi\phi\theta} = +R_{\theta\phi\theta\phi}$:
 \[
     R^\phi_{\ \theta\phi\theta}
     = g^{\phi\phi}\, R_{\phi\theta\phi\theta}
-    = g^{\phi\phi}\, g_{\theta\theta}\, R^\theta_{\ \phi\theta\phi} \cdot (-1) \cdot (-1)
+    = g^{\phi\phi}\, R_{\theta\phi\theta\phi}
+    = g^{\phi\phi}\, g_{\theta\theta}\, R^\theta_{\ \phi\theta\phi}
+    = \frac{R^2 \sin^2\theta}{R^2 \sin^2\theta} = 1 \,,
 \]
-More directly, a short computation analogous to the one above gives
-$R^\phi_{\ \theta\phi\theta} = 1$, so
+so
 \begin{equation}
     R_{\theta\theta}
     = R^\lambda_{\ \theta\lambda\theta}

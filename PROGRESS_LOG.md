@@ -4,6 +4,68 @@ Timestamped record of major milestones and work completed.
 
 ---
 
+## 2026-09-24 — Full cleanup: epigraphs, distances, citations, May-14 audit reconciled
+
+Covers every open item from the July audit and the May pre-review handoff.
+
+**Epigraphs (all 17 checked against primary sources).** Eleven were wrong: paraphrases set as
+quotes, invented sentences, or misquotations. Each is now a verified verbatim quote with section
+or page.
+- 01e: Carroll §7.1.
+- 02: Einstein, *The Times*, 28 Nov 1919 ("The great attraction of the theory is its logical
+  consistency…"), checked against the archive.org scan of the *Science* 51 (1920) reprint. The
+  old "chief attraction… logical completeness" was the later *Ideas and Opinions* translation.
+- 03: Hawking, "Does God Play Dice?" (1999 lecture, hawking.org.uk). "definitely" was missing.
+- 04–08: Narayan & Bartelmann §§2.1.2, 2.1.3, 3.2, 3.3.1, 3.5. The old four "N&B" quotes were
+  not in the paper.
+- 09: Treu 2010, ARA&A 48, 87.
+- 10: Meneghetti 2021, §5.7.
+- 01a–01d were already verbatim; this was confirmed via tesseract OCR of the scanned Carroll PDF.
+
+**Cosmology/distance sweep (astropy, flat Ω_m=0.3, H0=70).**
+- ch03 solutions: Q0957 distances, and Σ_cr 3.3→2.4e9.
+- ch03 Ex 3.5(d): falsely claimed θ_E peaks. θ_E is monotone; R_E peaks at z_d≈0.36 (new `.wl`
+  check).
+- ch04: exercise inputs (1200/1800/1400 Mpc) now match the solutions.
+- ch09 Sol 9.1: D_d 770→919; Σ_cr, M_E, σ_v now match `problems_09.wl`.
+- ch10: rounded 900/1750/1400 → 919/1727/1328 in text, solutions and both `.wl` (which now
+  compute the distances). This moves θ_E 7.4→6.9″, Ex 10.4 values, and θ_t 16→15″.
+- ch10 Ex 10.3 (z_s=9): D_s 1850→921 Mpc.
+- ch10 weak-lensing Σ_cr: 3.5→2.8e15, so M(5′) 5.2→4.4e14.
+- ch10: false "κ>1 for x≲0.5" corrected to x≲0.11 (new `.wl` check).
+
+**Equation-number citations.** The 23 July-flagged items were reconciled: 13 already fixed and 10
+fixed now, including Carroll eq. 4.21, NFW concentrations (Kochanek p.128), and the Q0957
+delay citation. Chapters 02 and 03, never checked before, had 33 citations with 20 fixes: the
+ch02 C&K 3.88–3.104 numbers were off by 1–2, and the ch03 Carroll de Sitter numbers
+(8.2/8.5/8.6/8.8) should be 8.43/8.44/8.45/8.48.
+
+**May-14 handoff Section 2 (26 findings):** 6 already resolved, 19 fixed now, 1 justified as is.
+- H1: μ₋ sign muddle (ch04/05 and `problems_05.wl`). The signed μ₋ = ½ − A is now shown, and a
+  new Reduce check proves μ₋ < 0.
+- H2: SIS+shear caustic mapping was wrong in the ch08 solution and `problems_08.wl`. It is now
+  β₁=−2γθ_E cos³φ/(1+γ), β₂=2γθ_E sin³φ/(1−γ); area 0.048 (analytic = shoelace), was 0.013.
+  8.2(c): the SIE-vs-shear comparison was backwards; the cusp value is corrected.
+- H4: `<>` label artifacts in Module 7/8 figures.
+- M2: scratchpad block in `problems_01e.wl` and 01e Sol (c) prefactor wording.
+- M3/L5/I-3: log-coordinate Epilog bugs in three 01e figures. Also the caption error
+  thresholds: 1% at b≈150 R_S, not 50.
+- M4: ch03 exercise wording.
+- M6: NIS 3D density (C&K eq. 2.53).
+- M7: SIS signed lens equation.
+- M10: Morse arrival-order label.
+- L1–L4: 1b index chain, R_s→R_S, c=1 convention, photon-potential plot range.
+- L6–L8: exact-vs-weak caption, Shapiro ln|θ| reference angle, shear caption.
+- L10: λ>1 meaning.
+- L12: Earendel. μ~1000–40,000 per Welch+2022 (Nature 603, 815; arXiv PDF read), not
+  "≳4000", and the magnitudes are fixed; new `.bib` + Zotero entry.
+- The SIE magnification map was rasterized: 33 MB → 0.78 MB.
+
+New `.bib` + Zotero: `welch_2022` (E45NSIMW). Figures regenerated: 01d, 01e, 07, 08, 10.
+Master verification 12/12. Build: student 251 pp, instructor 307 pp, 0 errors, 0 "??".
+
+---
+
 ## 2026-09-23 — Einstein (1936) epigraph verified against the original
 
 The Module 13 epigraph now matches the original *Science* 84, 506 verbatim: "Of course, there is

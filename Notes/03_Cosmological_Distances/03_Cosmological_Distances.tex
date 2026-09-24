@@ -3,7 +3,7 @@
 % =============================================================================
 % Sources: Carroll Ch. 8 (FRW cosmology, Friedmann equations);
 %          Congdon & Keeton Ch. 3.5 (cosmological distances for lensing);
-%          Narayan & Bartelmann Sec. 2.2;
+%          Narayan & Bartelmann Sec. 2.1.3;
 %          Weinberg, Cosmology (2008) Ch. 1
 % Mathematica: ../Mathematica/03_Cosmological_Distances/
 % =============================================================================
@@ -12,9 +12,9 @@
 \label{ch:cosmological_distances}
 
 \begin{quote}
-\textit{Not only does God play dice, but He sometimes confuses us by
+\textit{Not only does God definitely play dice, but He sometimes confuses us by
 throwing them where they can't be seen.}
-\hfill --- Stephen Hawking
+\hfill --- Stephen Hawking, \textit{Does God Play Dice?} (public lecture, 1999)
 \end{quote}
 
 \noindent
@@ -93,7 +93,7 @@ history.
 The mathematical consequence of the cosmological principle is powerful:
 the spatial part of the metric must be a maximally symmetric
 3-dimensional Riemannian manifold.  By a classic theorem in differential
-geometry (see Carroll Sec.~8.1), maximally symmetric $n$-dimensional
+geometry (see Carroll Secs.~3.9 and~8.2), maximally symmetric $n$-dimensional
 spaces have $n(n+1)/2$ Killing vectors, and there are exactly three
 possibilities for $n = 3$: positive curvature (the 3-sphere $S^3$),
 zero curvature (flat $\mathbb{R}^3$), or negative curvature (the
@@ -115,8 +115,8 @@ the \textbf{spatial curvature constant} $k$:
 
 Combining the cosmological principle with the requirement that spacetime
 be described by a Lorentzian 4-metric, the most general metric takes the
-\textbf{Robertson--Walker (RW)} form (Carroll eq.~8.2; Congdon \& Keeton
-eq.~3.113):
+\textbf{Robertson--Walker (RW)} form (Carroll eq.~8.43; Congdon \& Keeton
+eq.~3.123a):
 \begin{equation}
     \boxed{
     ds^2 = -\speedoflight^2\, dt^2
@@ -197,7 +197,7 @@ metric components are (reading off from eq.~\eqref{eq:rw_metric}):
 \end{align}
 
 Since this is a diagonal metric, we use the formulas from Module~1b
-(Section~4): for a diagonal metric with components $g_{aa}$ (no sum),
+(Remark~\ref{rem:diagonal_shortcut}): for a diagonal metric with components $g_{aa}$ (no sum),
 \begin{align}
     \christoffel{a}{b}{b} &= -\frac{1}{2g_{aa}}\, \partial_a g_{bb}
     \qquad (a \neq b) \,, \nonumber \\
@@ -207,7 +207,7 @@ Since this is a diagonal metric, we use the formulas from Module~1b
 \end{align}
 
 The \textbf{nonvanishing Christoffel symbols} of the RW metric are
-(Carroll eq.~8.5; verified in
+(Carroll eq.~8.44; verified in
 \texttt{friedmann\_equations.wl}):
 
 \medskip
@@ -265,7 +265,7 @@ the results here and verify them symbolically in
 \texttt{friedmann\_equations.wl}.
 
 The nonvanishing independent components of the \textbf{Ricci tensor} are
-(Carroll eq.~8.6):
+(Carroll eq.~8.45):
 \begin{align}
     R_{00} &= -\frac{3\ddot{a}}{\speedoflight^2\, a} \,,
     \label{eq:R00} \\[6pt]
@@ -318,7 +318,7 @@ where $\Lambda$ is the \textbf{cosmological constant}.
 
 For a \textbf{perfect fluid} at rest in the comoving frame (the natural
 choice for a homogeneous, isotropic universe), the stress-energy tensor
-is (Carroll eq.~8.8):
+is (Carroll eq.~8.48):
 \begin{equation}
     T^{\mu\nu} = \left(\rho + \frac{p}{\speedoflight^2}\right)
     U^\mu U^\nu + p\, g^{\mu\nu}
@@ -632,7 +632,7 @@ $\rho_\Lambda = \rho_{\Lambda,0}$.  Dividing through by $\Hubble^2$ and
 using the density parameter definitions~\eqref{eq:density_parameters}:
 $H^2/\Hubble^2 = \Omegam(1+z)^3 + \Omega_r(1+z)^4 + \OmegaL +
 \Omega_k(1+z)^2$.  Taking the square root
-(Congdon \& Keeton eq.~3.123; verified in
+(cf.\ Congdon \& Keeton eq.~3.143, which omits $\Omega_r$; verified in
 \mathlink{03_Cosmological_Distances/friedmann_equations.wl}{friedmann\_equations.wl}):
 \begin{equation}
     \boxed{
@@ -747,7 +747,7 @@ angle, making $D_A$ decrease.  The turnover at $z \approx 1.6$ (for the
 concordance cosmology) occurs where these two effects balance:
 $d\chi/dz = \chi/(1+z)$, i.e., where the fractional growth of comoving
 distance equals the fractional growth of the redshift factor
-(Carroll Sec.~8.4; computed numerically in
+(for $D_A$ see Carroll Sec.~8.5, eq.~8.125; the turnover is computed numerically in
 \mathlink{03_Cosmological_Distances/friedmann_equations.wl}{friedmann\_equations.wl}).
 
 \begin{figure}[ht]
@@ -834,7 +834,7 @@ distance is:
     \label{eq:Dds_flat}
 \end{equation}
 For a general (non-flat) universe one uses the Hogg~(1999) form
-(eq.~19; equivalently Congdon \& Keeton 2018):
+(eq.~19; equivalently Congdon \& Keeton eq.~3.155):
 \begin{equation}
     \Dds = \frac{1}{1+z_s}\!\left[
     D_M(z_s)\sqrt{1 + \Omega_k\,D_M^2(z_d)/D_H^2}
@@ -866,7 +866,7 @@ $\Dds \approx 1097$~Mpc $\neq \Ds - \Dd \approx 468$~Mpc.
 
 The \textbf{lens equation} (Module~4) and the \textbf{Einstein radius}
 both depend on a specific combination of distances.  The Einstein radius
-of a point mass $M$ is (Congdon \& Keeton eq.~4.9):
+of a point mass $M$ is (Congdon \& Keeton eq.~2.25):
 \begin{equation}
     \thetaE = \sqrt{\frac{4\Gnewton M}{\speedoflight^2}
     \frac{\Dds}{\Dd\,\Ds}}
@@ -1052,8 +1052,9 @@ $\OmegaL = 0.7$, $\Hubble = 70$~km\,s$^{-1}$\,Mpc$^{-1}$:
     \item How does $\thetaE$ scale with $M$?  What mass gives
           $\thetaE = 10''$?
     \item Plot $\thetaE$ as a function of $z_d$ (with $z_s = 1$ and
-          $M = 10^{12}\,\Msun$ fixed).  At what $z_d$ is $\thetaE$
-          largest?
+          $M = 10^{12}\,\Msun$ fixed).  Does $\thetaE$ have a maximum?
+          At what $z_d$ is the physical Einstein radius
+          $\RE = \Dd\thetaE$ largest?
 \end{enumerate}
 Verify with
 \solnlink{03_Cosmological_Distances/problems\_03.wl}{problems\_03.wl}.

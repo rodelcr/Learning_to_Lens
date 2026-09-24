@@ -162,7 +162,7 @@ done
 
 ---
 
-*Last verified: 2026-09-23 (Part IV fact-critic passes: Module 11 → 13/13, Module 12 solutions → 21/21, Module 13 → 20/20 + 22/22; earlier modules 2026-07-14)*
+*Last verified: 2026-09-24. Full cleanup: distances computed in-script for Modules 3 and 10; new checks in problems_03 (θ_E monotone, R_E peak), problems_05 (signed μ₋ < 0 via Reduce), problems_08 (SIS+shear caustic closed form, analytic area) and cluster_lensing (κ=1 radius); all affected scripts re-run; master 12/12. Part IV passes 2026-09-22/23: Module 11 → 13/13, Module 12 solutions → 21/21, Module 13 → 20/20 + 22/22.*
 *Verification script: `Mathematica/verify_against_textbooks.wl`*
 *Master cross-checks: 12/12 passing. Per-module extension scripts added
 2026-07-14 (Schneider, Kochanek & Wambsganss 2006 gap-fill): Module 8

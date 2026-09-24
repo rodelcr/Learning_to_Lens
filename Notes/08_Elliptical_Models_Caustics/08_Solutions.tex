@@ -70,22 +70,34 @@ $\theta = 1.1/0.99 \approx 1.111''$.  The critical curve is an
 ellipse elongated along $\theta_2$. \checkmark
 
 \textbf{(c)} Mapping through the lens equation
-$\beta_i = \theta_i - \alpha_i$:
+$\beta_i = \theta_i - \alpha_i$ at $\theta = \theta_{\mathrm{crit}}(\phi)$
+and using the result of part~(b):
 \begin{align*}
-    \beta_1(\phi) &= -\gamma_{\mathrm{ext}}\,
-    \theta_{\mathrm{crit}}(\phi)\cos\phi \,, \\
-    \beta_2(\phi) &= \gamma_{\mathrm{ext}}\,
-    \theta_{\mathrm{crit}}(\phi)\sin\phi \,.
+    \beta_1(\phi) &= (1 - \gamma_{\mathrm{ext}})\,
+    \theta_{\mathrm{crit}}\cos\phi - \thetaE\cos\phi
+    = -\frac{2\gamma_{\mathrm{ext}}\thetaE}{1 + \gamma_{\mathrm{ext}}}
+    \cos^3\phi \,, \\
+    \beta_2(\phi) &= (1 + \gamma_{\mathrm{ext}})\,
+    \theta_{\mathrm{crit}}\sin\phi - \thetaE\sin\phi
+    = \frac{2\gamma_{\mathrm{ext}}\thetaE}{1 - \gamma_{\mathrm{ext}}}
+    \sin^3\phi \,.
 \end{align*}
 This traces out a diamond (astroid) with four cusps at $\phi = 0,
-\pi/2, \pi, 3\pi/2$.  The cusps are at $\beta_1 \approx \pm 0.092''$
-and $\beta_2 \approx \pm 0.112''$. \checkmark
+\pi/2, \pi, 3\pi/2$.  For $\gamma_{\mathrm{ext}} = 0.1$ the cusps are at
+$\beta_1 = \pm 0.2/1.1 \approx \pm 0.182''$
+and $\beta_2 = \pm 0.2/0.9 \approx \pm 0.222''$. \checkmark
 
-\textbf{(d)} The area enclosed by the caustic can be computed using
-the shoelace formula on the parametric curve.  For
-$\gamma_{\mathrm{ext}} = 0.1$, the caustic area is approximately
-$0.013\,\mathrm{arcsec}^2$.  This is verified numerically in
-\texttt{problems\_08.wl}.
+\textbf{(d)} An astroid with semi-axes $a$ and $b$ encloses an area
+$3\pi ab/8$, so
+\begin{equation*}
+    A = \frac{3\pi}{8}\,
+    \frac{4\gamma_{\mathrm{ext}}^2\thetaE^2}{1 - \gamma_{\mathrm{ext}}^2}
+    = \frac{3\pi\gamma_{\mathrm{ext}}^2\thetaE^2}
+    {2(1 - \gamma_{\mathrm{ext}}^2)}
+    \approx 0.048\,\mathrm{arcsec}^2
+\end{equation*}
+for $\gamma_{\mathrm{ext}} = 0.1$, matching the shoelace-formula area
+computed numerically in \texttt{problems\_08.wl}.
 
 % ----- Exercise 8.2 -----
 \subsection*{Exercise~\ref{ex:sie_caustic}: SIE Tangential Caustic}
@@ -110,15 +122,19 @@ curve is an oval elongated \emph{along} the mass major axis $\theta_1$
 $\pm\thetaE\sqrt{q}$), and its image in the source plane is the
 diamond (astroid) caustic, also elongated along $\beta_1$ for $q < 1$.
 For $q = 0.7$ the cusps lie at
-$|\beta_1| \approx 0.265\,\thetaE$ on the $\beta_1$-axis and
+$|\beta_1| \approx 0.263\,\thetaE$ on the $\beta_1$-axis and
 $|\beta_2| \approx 0.213\,\thetaE$ on the $\beta_2$-axis.
 
 \textbf{(c)} The caustic area for $q = 0.7$ is approximately
-$0.032\,\mathrm{arcsec}^2$.  This is somewhat larger than the
-SIS + shear model with an ``equivalent'' shear
-$\gamma_{\mathrm{ext}} \approx (1-q)/(1+q) \approx 0.176$.  The
-exact comparison depends on how one maps between ellipticity and
-shear; see \texttt{problems\_08.wl} for numerical details.
+$0.066\,\mathrm{arcsec}^2$.  This is less than half the area of the
+SIS + shear astroid with an ``equivalent'' shear
+$\gamma_{\mathrm{ext}} = (1-q)/(1+q) \approx 0.176$, which by
+Exercise~\ref{ex:sis_shear_crit}(d) is
+$3\pi\gamma_{\mathrm{ext}}^2\thetaE^2/[2(1-\gamma_{\mathrm{ext}}^2)]
+\approx 0.15\,\mathrm{arcsec}^2$ (ratio $\approx 0.43$).  The
+correspondence $\gamma_{\mathrm{ext}} = (1-q)/(1+q)$ between ellipticity
+and shear is only rough; see \texttt{problems\_08.wl} for numerical
+details.
 
 % ----- Exercise 8.3 -----
 \subsection*{Exercise~\ref{ex:fold_magnification}: Fold Magnification Scaling}

@@ -173,39 +173,26 @@ with $u = \beta/\thetaE$ and working in units of $\thetaE$:
 $\theta_\pm/\thetaE = \frac{1}{2}(u \pm \sqrt{u^2 + 4})$.
 After substitution and simplification (verified in \texttt{problems\_05.wl}):
 \begin{equation*}
-    \mu_\pm = \frac{\theta_\pm^4}{\theta_\pm^4 - \thetaE^4}
-    = \frac{u^2 + 2}{2u\sqrt{u^2+4}} \pm \frac{1}{2} \,. \quad \checkmark
+    \mu_+ = \frac{u^2 + 2}{2u\sqrt{u^2+4}} + \frac{1}{2} \,, \qquad
+    \mu_- = \frac{1}{2} - \frac{u^2 + 2}{2u\sqrt{u^2+4}} \,,
 \end{equation*}
+i.e.\ $|\mu_\pm| = (u^2+2)/(2u\sqrt{u^2+4}) \pm 1/2$, the form quoted in
+eq.~\eqref{eq:magnification_u} (which, like Narayan \& Bartelmann
+eq.~27, gives the absolute value for the lower sign). \checkmark
 
-\textbf{(c)} For $u > 0$: $(u^2+2)/(2u\sqrt{u^2+4})$ is positive and
-less than 1 (verify by squaring: $(u^2+2)^2 < 4u^2(u^2+4)$ simplifies
-to $4 - 4u^2 < 0$ which is... actually let us check more carefully).
+\textbf{(c)} Write $A(u) \equiv (u^2+2)/(2u\sqrt{u^2+4}) > 0$.  Then
+$\mu_+ = A + 1/2 > 0$ at once.  For $\mu_- = 1/2 - A < 0$ we need
+$A > 1/2$, i.e.\ $u^2 + 2 > u\sqrt{u^2+4}$.  Both sides are positive,
+so we may square: $u^4 + 4u^2 + 4 > u^4 + 4u^2$, i.e.\ $4 > 0$, which
+holds for every $u$.  Hence $\mu_- < 0$ for all $u > 0$.
 
-In fact, $(u^2+2)^2 = u^4 + 4u^2 + 4$ and
-$4u^2(u^2+4) = 4u^4 + 16u^2$, so
-$4u^2(u^2+4) - (u^2+2)^2 = 3u^4 + 12u^2 - 4$.
-For $u > 0$ this can be either positive or negative (negative for small $u$).
-
-The correct approach: $\mu_+ = (u^2+2)/(2u\sqrt{u^2+4}) + 1/2 > 1/2 > 0$.
-And $\mu_- = (u^2+2)/(2u\sqrt{u^2+4}) - 1/2$.  We need to show this is
-negative.  Note $(u^2+2)/(2u\sqrt{u^2+4}) < 1/2$ iff $(u^2+2) < u\sqrt{u^2+4}$,
-i.e., $(u^2+2)^2 < u^2(u^2+4) = u^4 + 4u^2$, i.e.,
-$u^4 + 4u^2 + 4 < u^4 + 4u^2$, i.e., $4 < 0$.
-This is false!  So in fact $(u^2+2)/(2u\sqrt{u^2+4}) > 1/2$ and
-$\mu_- > 0$.
-
-The resolution is that $\theta_- < 0$, so when we write
-$\mu_- = \theta_-^4/(\theta_-^4 - \thetaE^4)$, we should be more
-careful.  In fact, $|\theta_-| < \thetaE$, so
-$\theta_-^4 < \thetaE^4$ and $\mu_- < 0$ when computed from the
-\textit{signed} magnification formula
-$\mu = (\theta/\beta)(d\theta/d\beta)$.
-
-Using the formula~\eqref{eq:magnification_u} with the sign convention:
-$\mu_- = (u^2+2)/(2u\sqrt{u^2+4}) - 1/2 > 0$ gives the
-\textit{absolute} value, while the parity is negative because
-$\theta_-$ is on the opposite side of the lens from the source.
-The signed magnification is $-|(u^2+2)/(2u\sqrt{u^2+4}) - 1/2|$. \checkmark
+The same conclusion follows directly from
+$\mu = \theta^4/(\theta^4 - \thetaE^4)$: for $u > 0$,
+$|\theta_-|/\thetaE = (\sqrt{u^2+4} - u)/2 < 1$, so
+$\theta_-^4 < \thetaE^4$ and the denominator is negative.  (That
+$\theta_- < 0$, i.e.\ the image lies on the far side of the lens, plays
+no role here, since $\theta_-$ enters only through $\theta_-^4$.)
+The negative sign means the image is mirror-reflected. \checkmark
 
 \textbf{(d)} The total magnification is:
 \begin{equation*}

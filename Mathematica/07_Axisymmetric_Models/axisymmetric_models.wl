@@ -263,10 +263,10 @@ Module[{},
             },
             PlotRange -> {{0, 3}, {0, 3}},
             AxesLabel -> {
-                Style[Superscript["\[Theta]", ""] <> " / " <> Subscript["\[Theta]", "E"], 11],
+                Style[Row[{"\[Theta] / ", Subscript["\[Theta]", "E"]}], 11],
                 None
             },
-            PlotLabel -> Style[Subscript["\[Theta]", "c"] <> " = 0.1 " <> Subscript["\[Theta]", "E"], 11],
+            PlotLabel -> Style[Row[{Subscript["\[Theta]", "c"], " = 0.1 ", Subscript["\[Theta]", "E"]}], 11],
             ImageSize -> 220
         ],
 
@@ -280,10 +280,10 @@ Module[{},
             },
             PlotRange -> {{0, 3}, {0, 3}},
             AxesLabel -> {
-                Style[Superscript["\[Theta]", ""] <> " / " <> Subscript["\[Theta]", "E"], 11],
+                Style[Row[{"\[Theta] / ", Subscript["\[Theta]", "E"]}], 11],
                 None
             },
-            PlotLabel -> Style[Subscript["\[Theta]", "c"] <> " = 0.5 " <> Subscript["\[Theta]", "E"], 11],
+            PlotLabel -> Style[Row[{Subscript["\[Theta]", "c"], " = 0.5 ", Subscript["\[Theta]", "E"]}], 11],
             ImageSize -> 220
         ],
 
@@ -297,10 +297,10 @@ Module[{},
             },
             PlotRange -> {{0, 3}, {0, 3}},
             AxesLabel -> {
-                Style[Superscript["\[Theta]", ""] <> " / " <> Subscript["\[Theta]", "E"], 11],
+                Style[Row[{"\[Theta] / ", Subscript["\[Theta]", "E"]}], 11],
                 None
             },
-            PlotLabel -> Style[Subscript["\[Theta]", "c"] <> " = 1.0 " <> Subscript["\[Theta]", "E"], 11],
+            PlotLabel -> Style[Row[{Subscript["\[Theta]", "c"], " = 1.0 ", Subscript["\[Theta]", "E"]}], 11],
             PlotLegends -> Placed[
                 LineLegend[{
                     Style["\[Kappa]", 10],
@@ -335,14 +335,14 @@ Module[{},
         },
         PlotRange -> {{0, 5}, {0, 3}},
         AxesLabel -> {
-            Style["x = \[Theta] / " <> Subscript["\[Theta]", "s"], 13],
-            Style["Amplitude / " <> Subscript["\[Kappa]", "s"], 13]
+            Style[Row[{"x = \[Theta] / ", Subscript["\[Theta]", "s"]}], 13],
+            Style[Row[{"Amplitude / ", Subscript["\[Kappa]", "s"]}], 13]
         },
         PlotLabel -> Style["NFW Convergence and Shear Profiles", 14],
         PlotLegends -> Placed[
             LineLegend[{
-                Style["\[Kappa] / " <> Subscript["\[Kappa]", "s"], 11],
-                Style["|\[Gamma]| / " <> Subscript["\[Kappa]", "s"], 11]
+                Style[Row[{"\[Kappa] / ", Subscript["\[Kappa]", "s"]}], 11],
+                Style[Row[{"|\[Gamma]| / ", Subscript["\[Kappa]", "s"]}], 11]
             }, LegendMarkerSize -> 15],
             {0.7, 0.75}],
         ImageSize -> 550,
@@ -386,7 +386,7 @@ Module[{},
             },
             PlotRange -> {{0, 4}, {0, 3}},
             AxesLabel -> {
-                Style["\[Theta] / " <> Subscript["\[Theta]", "E"], 13],
+                Style[Row[{"\[Theta] / ", Subscript["\[Theta]", "E"]}], 13],
                 Style["\[Kappa]", 13]
             },
             PlotLabel -> Style["Convergence Profiles", 13],
@@ -417,8 +417,8 @@ Module[{},
             },
             PlotRange -> {{0, 4}, {0, 4}},
             AxesLabel -> {
-                Style["\[Theta] / " <> Subscript["\[Theta]", "E"], 13],
-                Style["\[Alpha](\[Theta]) / " <> Subscript["\[Theta]", "E"], 13]
+                Style[Row[{"\[Theta] / ", Subscript["\[Theta]", "E"]}], 13],
+                Style[Row[{"\[Alpha](\[Theta]) / ", Subscript["\[Theta]", "E"]}], 13]
             },
             PlotLabel -> Style["Deflection Angle Profiles", 13],
             PlotLegends -> Placed[
@@ -457,8 +457,8 @@ Module[{},
             },
             PlotRange -> {{0, 3}, {-1.5, 4.5}},
             AxesLabel -> {
-                Style["\[Beta] / " <> Subscript["\[Theta]", "E"], 13],
-                Style["\[Theta] / " <> Subscript["\[Theta]", "E"], 13]
+                Style[Row[{"\[Beta] / ", Subscript["\[Theta]", "E"]}], 13],
+                Style[Row[{"\[Theta] / ", Subscript["\[Theta]", "E"]}], 13]
             },
             PlotLabel -> Style["SIS Image Positions", 13],
             PlotLegends -> Placed[
@@ -500,14 +500,14 @@ Module[{},
             },
             PlotRange -> {{0, 3}, {0, 12}},
             AxesLabel -> {
-                Style["\[Beta] / " <> Subscript["\[Theta]", "E"], 13],
+                Style[Row[{"\[Beta] / ", Subscript["\[Theta]", "E"]}], 13],
                 Style["|\[Mu]|", 13]
             },
             PlotLabel -> Style["SIS Magnification", 13],
             PlotLegends -> Placed[
                 LineLegend[{
-                    Style["|" <> Subscript["\[Mu]", "+"] <> "|", 11],
-                    Style["|" <> Subscript["\[Mu]", "-"] <> "|", 11],
+                    Style[Row[{"|", Subscript["\[Mu]", "+"], "|"}], 11],
+                    Style[Row[{"|", Subscript["\[Mu]", "-"], "|"}], 11],
                     Style["Total", 11]
                 }, LegendMarkerSize -> 12],
                 {0.7, 0.75}],
@@ -540,16 +540,16 @@ Module[{},
         },
         PlotRange -> {{0, 3}, {0, 5}},
         AxesLabel -> {
-            Style["\[Theta] / " <> Subscript["\[Theta]", "E"], 13],
+            Style[Row[{"\[Theta] / ", Subscript["\[Theta]", "E"]}], 13],
             Style["\[Kappa](\[Theta])", 13]
         },
         PlotLabel -> Style["NIS Convergence for Various Core Radii", 14],
         PlotLegends -> Placed[
             LineLegend[{
-                Style[Subscript["\[Theta]", "c"] <> " = 0 (SIS)", 10],
-                Style[Subscript["\[Theta]", "c"] <> " = 0.1 " <> Subscript["\[Theta]", "E"], 10],
-                Style[Subscript["\[Theta]", "c"] <> " = 0.3 " <> Subscript["\[Theta]", "E"], 10],
-                Style[Subscript["\[Theta]", "c"] <> " = 0.5 " <> Subscript["\[Theta]", "E"], 10]
+                Style[Row[{Subscript["\[Theta]", "c"], " = 0 (SIS)"}], 10],
+                Style[Row[{Subscript["\[Theta]", "c"], " = 0.1 ", Subscript["\[Theta]", "E"]}], 10],
+                Style[Row[{Subscript["\[Theta]", "c"], " = 0.3 ", Subscript["\[Theta]", "E"]}], 10],
+                Style[Row[{Subscript["\[Theta]", "c"], " = 0.5 ", Subscript["\[Theta]", "E"]}], 10]
             }, LegendMarkerSize -> 12],
             {0.7, 0.7}],
         Epilog -> {
@@ -577,15 +577,15 @@ Module[{},
         },
         PlotRange -> {{0, 10}, {0, 2}},
         AxesLabel -> {
-            Style["x = \[Theta] / " <> Subscript["\[Theta]", "s"], 13],
-            Style["f(x) = \[Kappa] / " <> Subscript["\[Kappa]", "s"], 13]
+            Style[Row[{"x = \[Theta] / ", Subscript["\[Theta]", "s"]}], 13],
+            Style[Row[{"f(x) = \[Kappa] / ", Subscript["\[Kappa]", "s"]}], 13]
         },
         PlotLabel -> Style["NFW Surface Density Profile Shape", 14],
         ImageSize -> 550,
         Epilog -> {
             Gray, Dashed, AbsoluteThickness[1],
             InfiniteLine[{{1, 0}, {1, 10}}],
-            Text[Style["x = 1 (r = " <> Subscript["r", "s"] <> ")", 9, Gray],
+            Text[Style[Row[{"x = 1 (r = ", Subscript["r", "s"], ")"}], 9, Gray],
                 {1.6, 1.8}]
         }
     ];

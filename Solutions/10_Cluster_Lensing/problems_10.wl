@@ -37,9 +37,17 @@ Ez03 = Sqrt[0.3 * (1.3)^3 + 0.7];  (* E(z=0.3) *)
 Hz03 = H0 * Ez03;
 rhoCrit03 = 3 Hz03^2 / (8 Pi Gnewton);
 
-DdVal = 900 * MpcToM;      (* Dd for zd = 0.3, in meters *)
-DsVal = 1750 * MpcToM;     (* Ds for zs = 2 *)
-DdsVal = 1400 * MpcToM;    (* Dds for zd = 0.3, zs = 2 *)
+(* Angular-diameter distances computed in the concordance cosmology
+   (flat, Om = 0.3, OL = 0.7, H0 = 70) -- replaces the rounded hardcoded
+   900/1750/1400 Mpc (fact-critic 2026-09-24; astropy: 918.8/1726.6/1328.2). *)
+cKmsDA = 299792.458; H0DA = 70.;
+DcMpc[z_?NumericQ] := (cKmsDA/H0DA) NIntegrate[1/Sqrt[0.3 (1 + zz)^3 + 0.7], {zz, 0, z}];
+DAMpc[z_] := DcMpc[z]/(1 + z);
+DA12Mpc[z1_, z2_] := (DcMpc[z2] - DcMpc[z1])/(1 + z2);
+DdVal = DAMpc[0.3] * MpcToM;         (* Dd for zd = 0.3 (~918.8 Mpc), in meters *)
+DsVal = DAMpc[2.0] * MpcToM;         (* Ds for zs = 2 (~1726.6 Mpc) *)
+DdsVal = DA12Mpc[0.3, 2.0] * MpcToM; (* Dds for zd = 0.3, zs = 2 (~1328.2 Mpc) *)
+Print["D_d, D_s, D_ds (Mpc) = ", {DdVal, DsVal, DdsVal}/MpcToM];
 DdsOverDs = DdsVal / DsVal;
 
 (* Critical surface mass density *)
@@ -287,8 +295,11 @@ Print["    observational signatures compared to galaxy-scale lensing.\n"];
 Print["--- Exercise 10.5: Weak Lensing Mass Estimate ---\n"];
 
 (* Sigma_cr for zd=0.3, zs=1 *)
-SigmaCrWL = 3.5*^15;  (* Msun/Mpc^2, given in the problem *)
-DdMpc = 900;           (* Mpc *)
+(* Revised 2026-09-24: the problem used to give Sigma_cr = 3.5e15 and
+   D_d = 900 Mpc; the concordance values for zd=0.3, zs=1 are computed here. *)
+DdMpc = DAMpc[0.3];
+SigmaCrWL = (cc^2/(4 Pi Gnewton)) DAMpc[1.0]/(DAMpc[0.3] DA12Mpc[0.3, 1.0] MpcToM)/Msolar MpcToM^2;  (* Msun/Mpc^2 *)
+Print["Sigma_cr(zd=0.3, zs=1) = ", ScientificForm[SigmaCrWL, 3], " Msun/Mpc^2;  D_d = ", DdMpc, " Mpc"];
 
 gammaT[thetaArcmin_] := 0.1 * (thetaArcmin)^(-0.8);
 

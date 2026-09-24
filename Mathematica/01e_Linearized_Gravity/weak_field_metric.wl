@@ -219,7 +219,11 @@ Print["--- Section 5: Exact vs Weak-Field Deflection Comparison ---\n"];
 exactDeflection[beta_?NumericQ] := Module[{umax, integrand, result},
     (* Find turning point: 1/b^2 - u^2(1 - u) = 0, i.e., beta^2 - u^2(1-u)/1 *)
     (* In Rs=1 units: 1/b^2 = beta^2, so solve beta^2 = u^2(1-u) *)
-    umax = u /. FindRoot[beta^2 - u^2 (1 - u) == 0, {u, beta}];
+    (* Bracket the physical turning point between u = beta and the
+       photon sphere u = 2/3.  The unbracketed secant search overshot for
+       b/Rs = 17-19, giving complex angles and a gap in the figure. *)
+    umax = u /. FindRoot[beta^2 - u^2 (1 - u) == 0, {u, beta, 2/3},
+        Method -> "Brent"];
     integrand[uu_] := 1/Sqrt[beta^2 - uu^2 (1 - uu)];
     result = 2 * NIntegrate[integrand[uu], {uu, 0, umax}] - Pi;
     result
@@ -268,7 +272,7 @@ Print["--- Generating Figures ---\n"];
 (* ---- Figure 1: Deflection angle comparison ---- *)
 fig1 = Show[
     ListLogLogPlot[{exactAngles, weakAngles},
-        PlotRange -> {{2.5, 250}, {0.005, 2}},
+        PlotRange -> {{2.0, 250}, {0.005, 2}},
         PlotStyle -> {
             {Blue, AbsoluteThickness[2]},
             {Red, AbsoluteThickness[2], Dashed}
@@ -289,11 +293,14 @@ fig1 = Show[
         GridLines -> Automatic,
         GridLinesStyle -> Directive[LightGray, Dashed]
     ],
-    (* Mark photon sphere limit *)
+    (* Mark the capture impact parameter b_crit = (3 Sqrt[3]/2) Rs
+       (photons with b < b_crit fall in).  Graphics added to a LogLog plot
+       use natural-log coordinates, hence the Log[] calls. *)
     Graphics[{
         Orange, Dashed, AbsoluteThickness[1.5],
-        InfiniteLine[{{3/2, 0.001}, {3/2, 10}}],
-        Text[Style["Photon\nsphere", 9, Orange], {2.2, 1.2}]
+        InfiniteLine[{{Log[3 Sqrt[3]/2], 0}, {Log[3 Sqrt[3]/2], 1}}],
+        Text[Style["capture:\nb = (3\[Sqrt]3/2) Rs", 9, Orange],
+            {Log[2.75], Log[0.012]}, {-1, 0}]
     }]
 ];
 Export[FileNameJoin[{baseDir, "deflection_comparison.pdf"}], fig1];
@@ -317,11 +324,12 @@ fig2 = ListLogLogPlot[errorData,
     PlotLabel -> Style["Weak-Field Approximation Error", 14],
     Epilog -> {
         Red, Dashed, AbsoluteThickness[1],
-        InfiniteLine[{{1, 0.01}, {1000, 0.01}}],
-        Text[Style["1% error", 10, Red], {15, 0.015}],
+        (* Epilog of a LogLog plot uses natural-log coordinates *)
+        InfiniteLine[{{0, Log[0.01]}, {1, Log[0.01]}}],
+        Text[Style["1% error", 10, Red], {Log[4], Log[0.015]}],
         Darker[Green], Dashed, AbsoluteThickness[1],
-        InfiniteLine[{{1, 0.001}, {1000, 0.001}}],
-        Text[Style["0.1% error", 10, Darker[Green]], {15, 0.0015}]
+        InfiniteLine[{{0, Log[0.001]}, {1, Log[0.001]}}],
+        Text[Style["0.1% error", 10, Darker[Green]], {Log[4], Log[0.0015]}]
     },
     ImageSize -> 500,
     GridLines -> Automatic,
@@ -344,14 +352,16 @@ fig3 = LogLogPlot[nMinusOne[rr], {rr, 1, 1*^7},
     },
     PlotLabel -> Style["Effective Refractive Index (Point Mass)", 14],
     Epilog -> {
-        (* Mark solar limb for the Sun *)
+        (* Epilog of a LogLog plot uses natural-log coordinates.
+           Mark the solar limb, r/Rs = Rsun/(2GMsun/c^2) ~ 2.4 x 10^5. *)
         Red, PointSize[0.015],
-        Point[{Rsolar/(2 Gnewton Msolar/cc^2), nMinus1[Rsolar] * cc^2/(2 Gnewton Msolar) * (2 Gnewton Msolar/cc^2)}],
+        Point[{Log[Rsolar/(2 Gnewton Msolar/cc^2)], Log[nMinus1[Rsolar]]}],
         Text[Style["Solar limb\n(r/Rs ~ 2.4 x 10^5)", 9, Red],
-            Scaled[{0.35, 0.45}]],
-        (* Weak-field region *)
+            {Log[Rsolar/(2 Gnewton Msolar/cc^2)], Log[nMinus1[Rsolar]]},
+            {-1.1, -1.2}],
+        (* Weak-field region: n - 1 < 0.1 *)
         Darker[Green], AbsoluteThickness[1.5], Dashed,
-        InfiniteLine[{{1, 0.1}, {1*^8, 0.1}}],
+        InfiniteLine[{{0, Log[0.1]}, {1, Log[0.1]}}],
         Text[Style["Weak-field regime\n(n - 1 < 0.1)", 10, Darker[Green]],
             Scaled[{0.7, 0.65}]]
     },

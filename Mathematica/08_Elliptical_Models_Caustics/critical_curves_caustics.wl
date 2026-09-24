@@ -596,8 +596,8 @@ Module[{q0 = 0.7, tE0 = 1.0, cc},
         PlotPoints -> 100,
         MaxRecursion -> 2,
         FrameLabel -> {
-            Style[Subscript["\[Theta]", "1"] <> " (arcsec)", 13],
-            Style[Subscript["\[Theta]", "2"] <> " (arcsec)", 13]
+            Style[Row[{Subscript["\[Theta]", "1"], " (arcsec)"}], 13],
+            Style[Row[{Subscript["\[Theta]", "2"], " (arcsec)"}], 13]
         },
         PlotLabel -> Style["log|\[Mu]| for SIE (q = 0.7)", 14],
         PlotLegends -> Placed[
@@ -609,7 +609,10 @@ Module[{q0 = 0.7, tE0 = 1.0, cc},
         Epilog -> {White, AbsoluteThickness[2],
             Line[Append[cc, cc[[1]]]]}
     ];
-    Export[FileNameJoin[{baseDir, "magnification_map_sie.pdf"}], fig7];
+    (* Rasterize: vector DensityPlot export is ~33 MB (same fix as
+       lensing_potential.wl, commit 0b4fae7). *)
+    Export[FileNameJoin[{baseDir, "magnification_map_sie.pdf"}],
+        Rasterize[fig7, ImageResolution -> 300, Background -> White]];
     Print["  Exported: magnification_map_sie.pdf"];
 ];
 

@@ -10,13 +10,11 @@
 \label{ch:cluster_lensing}
 
 \begin{quote}
-\textit{Galaxy clusters are the most massive gravitationally bound objects
-in the universe.  When they act as gravitational lenses, they produce the
-most dramatic manifestations of general relativity visible in the sky:
-giant luminous arcs stretching tens of arcseconds, dozens of multiply
-imaged background galaxies, and magnification factors large enough to
-reveal individual stars at cosmological distances.}
-\hfill --- adapted from Meneghetti (2021)
+\textit{In the hierarchical model of structure formation, galaxy clusters are the
+largest and the youngest structures in the universe.  They form through the
+assembly of smaller-scale structures, and for this reason, they are often
+observed during mergers.}
+\hfill --- M.~Meneghetti, \textit{Introduction to Gravitational Lensing} (2021), Sect.~5.7
 \end{quote}
 
 \noindent
@@ -162,16 +160,18 @@ convergence:
 \textbf{Characteristic convergence for a massive cluster.}
 For a cluster with $M_{200} = 10^{15}\,\Msun$, $c = 5$, at
 $z_d = 0.3$ lensing a source at $z_s = 2$
-($\Dd \approx 900$~Mpc, $\Ds \approx 1750$~Mpc,
-$\Dds \approx 1400$~Mpc):
+($\Dd \approx 919$~Mpc, $\Ds \approx 1727$~Mpc,
+$\Dds \approx 1328$~Mpc, from Module~\ref{ch:cosmological_distances}):
 \begin{itemize}[nosep]
     \item $r_{200} \approx 1.86$~Mpc, $r_s = r_{200}/c \approx 372$~kpc,
-    \item $\theta_s = r_s / \Dd \approx 85''$,
-    \item $\kappa_s \approx 0.52$.
+    \item $\theta_s = r_s / \Dd \approx 84''$,
+    \item $\kappa_s \approx 0.51$.
 \end{itemize}
-Since $\kappa_s \times f(x)$ can exceed unity for $x \lesssim 0.5$
-(i.e., $\theta \lesssim 43''$), the cluster has a central region of
-super-critical convergence and is therefore a strong lens.
+The local convergence $\kappab = \kappa_s f(x)$ exceeds unity for
+$x \lesssim 0.11$ (i.e., $\theta \lesssim 9''$), and the mean convergence
+$\bar\kappa$ reaches unity at $x \approx 0.18$ ($\theta \approx 15''$), so the
+cluster has a central region of super-critical convergence and is
+therefore a strong lens.
 These values are computed and verified in
 \mathlink{10_Cluster_Lensing/cluster\_lensing.wl}{cluster\_lensing.wl}.
 \end{example}
@@ -195,8 +195,8 @@ $2\kappab(x_r) - \bar{\kappa}(x_r) = 1$, i.e.:
 \end{equation}
 Both equations must be solved numerically.  For the cluster parameters
 above ($M_{200} = 10^{15}\,\Msun$, $c = 5$, $z_d = 0.3$, $z_s = 2$),
-the tangential critical curve lies at $x_t \approx 0.19$, giving
-$\theta_t \approx 16''$ --- a physical radius of $\sim 70$~kpc at the
+the tangential critical curve lies at $x_t \approx 0.18$, giving
+$\theta_t \approx 15''$ --- a physical radius of $\sim 66$~kpc at the
 cluster redshift.
 
 \begin{remark}
@@ -593,8 +593,8 @@ and angular resolution.  Notable results include:
 \begin{itemize}
     \item \textbf{Earendel} (WHL0137-LS): The most distant individual
           star known, at $z = 6.2$, magnified by a factor of
-          $\mu \gtrsim 4000$ by the cluster WHL~0137-08
-          (Welch et al.\ 2022).  The extreme magnification occurs
+          $\mu \sim 1000$--$40{,}000$ by the cluster WHL~0137-08
+          \citep{welch_2022}.  The extreme magnification occurs
           because the star lies almost exactly on the cluster's
           critical curve.
     \item \textbf{The Sunrise Arc}: A galaxy at $z = 6.2$ lensed into
@@ -609,13 +609,15 @@ and angular resolution.  Notable results include:
 
 \begin{remark}
 The discovery of Earendel illustrates the extreme power of cluster
-lensing.  An individual star at $z = 6.2$ has an apparent magnitude
-of $m \sim 40$ without magnification --- utterly undetectable.  A
-magnification of $\mu \sim 4000$ corresponds to $\Delta m \sim -9$
-magnitudes, bringing it within reach of HST and JWST\@.  However,
-such extreme magnification requires the source to be within
-$\sim 0.001''$ of the critical curve, making such discoveries
-exceedingly rare.
+lensing.  Without magnification, Earendel would have an apparent
+magnitude of $m \approx 35$--$39$ --- utterly undetectable.  A
+magnification of $\mu \sim 1000$--$40{,}000$ corresponds to
+$\Delta m \approx -7.5$ to $-11.5$ magnitudes, bringing it to the observed
+$m \approx 27.2$, within reach of HST and JWST \citep{welch_2022}.
+Such extreme magnification requires the image to lie within a few
+hundredths of an arcsecond of the critical curve ($\lesssim 0.036''$ in
+the \citet{welch_2022} lens models), making such discoveries exceedingly
+rare.
 \end{remark}
 
 
@@ -865,7 +867,7 @@ Modules~1--9 govern both regimes.
 
     \item Clusters serve as \textbf{gravitational telescopes},
           magnifying high-redshift galaxies and enabling discoveries
-          like Earendel ($z = 6.2$, $\mu \gtrsim 4000$) and galaxies
+          like Earendel ($z = 6.2$, $\mu \sim 10^3$--$10^4$) and galaxies
           at $z > 10$.
 
     \item \textbf{Weak lensing} measures the statistical shear
@@ -942,7 +944,7 @@ field, we suggest the following directions:
 \textbf{(NFW cluster Einstein radius and enclosed mass.)}
 Consider an NFW cluster with $M_{200} = 5\ee{14}\,\Msun$, $c = 5$,
 at $z_d = 0.3$ lensing a source at $z_s = 2$.  Use
-$\Dd = 900$~Mpc, $\Ds = 1750$~Mpc, $\Dds = 1400$~Mpc.
+$\Dd = 919$~Mpc, $\Ds = 1727$~Mpc, $\Dds = 1328$~Mpc.
 \begin{enumerate}[label=(\alph*)]
     \item Compute the NFW parameters: $r_{200}$, $r_s$, $\rho_s$,
           $\theta_s$, and $\kappa_s$.
@@ -985,8 +987,10 @@ Verify with
 \label{ex:magnification_high_z}
 \textbf{(Magnification of a high-redshift galaxy.)}
 Consider a galaxy at $z_s = 9$ lensed by a cluster at $z_d = 0.3$
-with $\thetaE = 30''$.  (Use $\Dd = 900$~Mpc, $\Ds = 1850$~Mpc,
-$\Dds = 1500$~Mpc.)
+with $\thetaE = 30''$.  (For reference, $\Dd = 919$~Mpc,
+$\Ds = 921$~Mpc and $\Dds = 802$~Mpc; at $z_s = 9$ the angular-diameter
+distance has turned over, so $\Ds$ is barely larger than $\Dd$.  Parts
+(a)--(c) need only $\thetaE$.)
 \begin{enumerate}[label=(\alph*)]
     \item For an SIS model with the same Einstein radius, compute the
           magnification of a point source at $\beta = 3''$, $1''$,
@@ -1010,8 +1014,8 @@ Verify with
 \label{ex:einstein_radius_comparison}
 \textbf{(Einstein radii across mass scales.)}
 Compare the Einstein radii of three lenses at $z_d = 0.3$ with a
-source at $z_s = 2$, using $\Dd = 900$~Mpc, $\Ds = 1750$~Mpc,
-$\Dds = 1400$~Mpc:
+source at $z_s = 2$, using $\Dd = 919$~Mpc, $\Ds = 1727$~Mpc,
+$\Dds = 1328$~Mpc:
 \begin{enumerate}[label=(\alph*)]
     \item A galaxy lens modeled as an SIS with $\sigma_v = 250$~km\,s$^{-1}$
           ($M \approx 10^{12}\,\Msun$).
@@ -1045,9 +1049,9 @@ $\gamma_t(\theta) = 0.1\times(\theta/1')^{-0.8}$.
     \item Convert $\bar{\kappa}(\theta)$ to the projected mass
           enclosed within $\theta$:
           $M(\theta) = \pi\,(\Dd\,\theta)^2\,\Sigmacr\,\bar{\kappa}(\theta)$.
-          Use $\Sigmacr \approx 3.5\ee{15}\,\Msun\,\mathrm{Mpc}^{-2}$
+          Use $\Sigmacr \approx 2.8\ee{15}\,\Msun\,\mathrm{Mpc}^{-2}$
           for $z_d = 0.3$, $z_s = 1$ (a typical background redshift
-          for weak lensing), and $\Dd = 900$~Mpc.
+          for weak lensing), and $\Dd = 919$~Mpc.
     \item Estimate $M$ within $\theta = 5'$ (corresponding to a
           physical radius of $\sim 1.3$~Mpc at $z_d = 0.3$).
     \item Compare your estimated mass with a typical cluster virial

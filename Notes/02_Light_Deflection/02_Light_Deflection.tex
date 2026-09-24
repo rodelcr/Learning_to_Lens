@@ -10,11 +10,11 @@
 \label{ch:light_deflection}
 
 \begin{quote}
-\textit{The chief attraction of the theory lies in its logical completeness.
-If a single one of the conclusions drawn from it proves wrong, it must be
-given up; to modify it without destroying the whole structure seems to be
-impossible.}
-\hfill --- Albert Einstein, 1919
+\textit{The great attraction of the theory is its logical consistency.  If any
+deduction from it should prove untenable, it must be given up.  A
+modification of it seems impossible without destruction of the whole.}
+\hfill --- Albert Einstein, \textit{The Times} (London), 28 November 1919\\
+\hfill (reprinted in \textit{Science} \textbf{51}, 8, 1920)
 \end{quote}
 
 \noindent
@@ -159,7 +159,7 @@ the Newtonian prediction.
 The \textbf{impact parameter} $b$ is defined as the perpendicular distance
 between the undeflected ray (the asymptotic straight line at $r \to \infty$)
 and the mass~$M$.  From the conserved quantities, it is related to $E$ and
-$L$ by (Congdon \& Keeton eq.~3.88):
+$L$ by (Congdon \& Keeton eq.~3.90):
 \begin{equation}
     b = \frac{\speedoflight\, L}{E} \,.
     \label{eq:impact_parameter}
@@ -170,7 +170,7 @@ $L$ by (Congdon \& Keeton eq.~3.88):
 
 At the turning point $r = r_0$, the radial velocity vanishes:
 $dr/d\lambda = 0$.  From the radial equation of motion, this gives
-(Congdon \& Keeton eq.~3.90):
+(Congdon \& Keeton eq.~3.89):
 \begin{equation}
     \frac{E^2}{\speedoflight^2} - \frac{L^2}{r_0^2}
     \left(1 - \frac{\RS}{r_0}\right) = 0 \,.
@@ -200,7 +200,7 @@ $r = \infty$ (outgoing) is twice the angle from $r_0$ to infinity:
     \label{eq:delta_phi_integral}
 \end{equation}
 Substituting $b = \speedoflight L/E$ and simplifying
-(Congdon \& Keeton eq.~3.91):
+(Congdon \& Keeton eq.~3.92):
 \begin{equation}
     \Delta\phi = 2 \int_{r_0}^{\infty}
     \frac{dr}{r^2}
@@ -265,7 +265,7 @@ This is the flat-spacetime result: no deflection.
 
 \medskip
 \noindent\textbf{First-order integral:}  We need
-(Congdon \& Keeton eq.~3.95):
+(the $m/r_0$ term of Congdon \& Keeton eq.~3.94):
 \begin{equation}
     I_1 = 2\int_0^1 \frac{1 - u^3}{(1 - u^2)^{3/2}}\, du \,.
     \label{eq:I1_def}
@@ -298,7 +298,7 @@ this symbolically.
 \subsection{The Deflection Angle}
 \label{sec:deflection_result}
 
-Assembling the result (Congdon \& Keeton eq.~3.96): using
+Assembling the result (Congdon \& Keeton eqs.~3.95--3.96): using
 $\Delta\phi = I_0 + \varepsilon\, I_1 + \order{\varepsilon^2}$,
 \begin{equation}
     \Delta\phi = \pi + 4\varepsilon + \order{\varepsilon^2}
@@ -373,13 +373,13 @@ conserved quantities (Congdon \& Keeton eq.~3.97):
     \label{eq:dt_dr}
 \end{equation}
 The coordinate time for the photon to travel from closest approach $r_0$ to
-a radial distance~$R$ is (Congdon \& Keeton eq.~3.98):
+a radial distance~$R$ is (Congdon \& Keeton eq.~3.97):
 \begin{equation}
     T(R) = \int_{r_0}^{R} \frac{dt}{dr}\, dr \,.
     \label{eq:travel_time}
 \end{equation}
 In the weak-field limit ($m/r \ll 1$), expanding to first order gives
-(Congdon \& Keeton eq.~3.104):
+(Congdon \& Keeton eq.~3.100, second line; its expansion in $r_0/R$ is their eq.~3.102):
 \begin{equation}
     T(R) \approx \frac{1}{\speedoflight}\sqrt{R^2 - r_0^2}
     + \frac{2m}{\speedoflight}\ln\!\left(
@@ -398,14 +398,18 @@ unlensed path) has two contributions
     \boxed{
     \Delta T = \underbrace{\frac{\Dd \Ds}{2\speedoflight\,\Dds}
     (\theta - \beta)^2}_{\text{geometric delay}}
-    - \underbrace{\frac{4\Gnewton M}{\speedoflight^3}
-    \ln|\theta|}_{\text{Shapiro (gravitational) delay}}
+    + \underbrace{\frac{4\Gnewton M}{\speedoflight^3}
+    \ln\frac{\theta_{\mathrm{ref}}}{|\theta|}}_{\text{Shapiro (gravitational) delay}}
     }
     \label{eq:time_delay_total}
 \end{equation}
 where $\Dd$, $\Ds$, $\Dds$ are the angular diameter distances from
 observer to lens, observer to source, and lens to source respectively;
-$\theta$ is the image position and $\beta$ the (unlensed) source position.
+$\theta$ is the image position and $\beta$ the (unlensed) source position;
+and $\theta_{\mathrm{ref}}$ is an arbitrary reference angle.  Changing
+$\theta_{\mathrm{ref}}$ adds the same constant to $\Delta T$ for every
+image, so it drops out of the measurable delay \emph{differences}
+between images.
 
 \begin{remark}
 \textbf{Geometric delay:} The lensed ray follows a longer path through

@@ -10,12 +10,9 @@
 \label{ch:fermat_time_delays}
 
 \begin{quote}
-\textit{The positions of the images of a gravitational lens are determined
-by Fermat's principle: images form at stationary points of the arrival
-time.  The time delays between multiple images, in turn, give us a
-direct measurement of cosmological distances --- and hence the Hubble
-constant.}
-\hfill --- Narayan \& Bartelmann (1997)
+\textit{The lensing properties of model gravitational lenses are especially easy to
+visualize by application of Fermat's principle of geometrical optics [\ldots]}
+\hfill --- Narayan \& Bartelmann (1997), Sect.~3.3.1
 \end{quote}
 
 \noindent
@@ -137,7 +134,7 @@ $\Delta t_{\mathrm{obs}} = (1 + z_d)\,\Delta t_{\mathrm{lens}}$ in the
 observer's frame, just as photon wavelengths are redshifted by the same
 factor (eq.~\ref{eq:redshift_scale_factor} from
 Module~\ref{ch:cosmological_distances}; cf.\ Schneider, Ehlers \&
-Falco 1992, Sec.~4.4).
+Falco 1992, Sec.~4.6, eqs.~4.65--4.67).
 The combination $\Dd\,\Ds / \Dds$ is the \textbf{effective lensing
 distance}, which encodes the geometry of the observer--lens--source
 system.
@@ -282,8 +279,11 @@ classified by \textbf{Morse theory}:
 \begin{table}[ht]
 \centering
 \caption{Classification of images by Morse type.  The Hessian of the
-Fermat potential at each image determines its type, parity, and arrival
-order.}
+Fermat potential at each image determines its type and parity.  The
+global minimum of $\tau$ is a Type~I image and arrives first; a saddle
+always arrives after it, but its order relative to other images is not
+fixed (for a point-mass or SIS lens, which has no Type~III image, the
+saddle arrives last).}
 \label{tab:morse_types}
 \begin{tabular}{lccccc}
 \toprule
@@ -291,7 +291,7 @@ order.}
 & $\det(\Amat)$ & \textbf{Parity} & \textbf{Arrival} \\
 \midrule
 I   & Minimum & $+, +$ & $> 0$ & $+$ (same) & First \\
-II  & Saddle  & $+, -$ & $< 0$ & $-$ (flipped) & Middle \\
+II  & Saddle  & $+, -$ & $< 0$ & $-$ (flipped) & After I \\
 III & Maximum & $-, -$ & $> 0$ & $+$ (same) & Last \\
 \bottomrule
 \end{tabular}

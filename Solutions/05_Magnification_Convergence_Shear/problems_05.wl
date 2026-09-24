@@ -209,10 +209,10 @@ muM = thetaM[u]^4 / (thetaM[u]^4 - 1) //
     FullSimplify[#, Assumptions -> u > 0] &;
 Print["  mu(theta_-) = ", muM];
 
-muMexpected = (u^2 + 2)/(2 u Sqrt[u^2 + 4]) - 1/2 //
+muMexpected = 1/2 - (u^2 + 2)/(2 u Sqrt[u^2 + 4]) //
     FullSimplify[#, Assumptions -> u > 0] &;
 diffM = Simplify[muM - muMexpected, Assumptions -> u > 0];
-Print["  Expected:     (u^2+2)/(2u*sqrt(u^2+4)) - 1/2"];
+Print["  Expected:     1/2 - (u^2+2)/(2u*sqrt(u^2+4))  (signed)"];
 Print["  Difference:   ", diffM, "\n"];
 
 (* Numerical verification *)
@@ -221,7 +221,7 @@ Print["  theta_+ = ", N[thetaP[1]], ", theta_- = ", N[thetaM[1]]];
 Print["  mu_+ = ", N[muP /. u -> 1], " (expected: ",
     N[(1 + 2)/(2*1*Sqrt[5]) + 1/2], ")"];
 Print["  mu_- = ", N[muM /. u -> 1], " (expected: ",
-    N[(1 + 2)/(2*1*Sqrt[5]) - 1/2], ")"];
+    N[1/2 - (1 + 2)/(2*1*Sqrt[5])], ")"];
 Print[""];
 
 (* (c) Parity *)
@@ -230,11 +230,14 @@ Print["  mu_+ = (u^2+2)/(2u*sqrt(u^2+4)) + 1/2"];
 Print["  Since (u^2+2)/(2u*sqrt(u^2+4)) > 0 for u > 0,"];
 Print["  mu_+ > 1/2 > 0. (Positive parity) VERIFIED\n"];
 
-Print["  mu_- = (u^2+2)/(2u*sqrt(u^2+4)) - 1/2"];
-Print["  This represents the absolute value. The signed magnification"];
-Print["  of the secondary image is negative because theta_- < 0 (the"];
-Print["  image is on the opposite side of the lens from the source,"];
-Print["  indicating mirror reflection). VERIFIED\n"];
+Print["  mu_- = 1/2 - (u^2+2)/(2u*sqrt(u^2+4))"];
+Print["  (u^2+2)^2 - u^2 (u^2+4) = ", Expand[(u^2 + 2)^2 - u^2 (u^2 + 4)],
+    " > 0, so (u^2+2)/(2u*sqrt(u^2+4)) > 1/2 and mu_- < 0."];
+Print["  Reduce[mu(theta_-) >= 0 && u > 0] -> ", Reduce[muM >= 0 && u > 0, u],
+    "  (False => mu_- < 0 for all u > 0)"];
+Print["  Equivalently |theta_-| < thetaE, so theta_-^4 - thetaE^4 < 0."];
+Print["  |mu_-| = (u^2+2)/(2u*sqrt(u^2+4)) - 1/2 (the lower sign of"];
+Print["  eq. magnification_u). Negative parity: mirror-reflected. VERIFIED\n"];
 
 (* (d) Total magnification > 1 *)
 Print["(d) Total magnification:"];

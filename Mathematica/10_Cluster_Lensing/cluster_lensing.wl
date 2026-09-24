@@ -89,10 +89,17 @@ Print["NFW functions defined: fNFW, gNFW, kappaNFW, kbarNFW, alphaNFW, gammaNFW\
 
 Print["--- Section 2: Cluster-Scale NFW Parameters ---\n"];
 
-(* Cosmological distances (approximate, for flat LCDM with H0=70, Om=0.3) *)
-DdVal = 900 * MpcToM;     (* Dd for zd = 0.3 *)
-DsVal = 1750 * MpcToM;    (* Ds for zs = 2 *)
-DdsVal = 1400 * MpcToM;   (* Dds for zd=0.3, zs=2 *)
+(* Angular-diameter distances computed in the concordance cosmology
+   (flat, Om = 0.3, OL = 0.7, H0 = 70) -- replaces the rounded hardcoded
+   900/1750/1400 Mpc (fact-critic 2026-09-24; astropy: 918.8/1726.6/1328.2). *)
+cKmsDA = 299792.458; H0DA = 70.;
+DcMpc[z_?NumericQ] := (cKmsDA/H0DA) NIntegrate[1/Sqrt[0.3 (1 + zz)^3 + 0.7], {zz, 0, z}];
+DAMpc[z_] := DcMpc[z]/(1 + z);
+DA12Mpc[z1_, z2_] := (DcMpc[z2] - DcMpc[z1])/(1 + z2);
+DdVal = DAMpc[0.3] * MpcToM;         (* Dd for zd = 0.3 (~918.8 Mpc) *)
+DsVal = DAMpc[2.0] * MpcToM;         (* Ds for zs = 2 (~1726.6 Mpc) *)
+DdsVal = DA12Mpc[0.3, 2.0] * MpcToM; (* Dds for zd=0.3, zs=2 (~1328.2 Mpc) *)
+Print["D_d, D_s, D_ds (Mpc) = ", {DdVal, DsVal, DdsVal}/MpcToM];
 
 (* Critical surface mass density *)
 SigmaCr = cc^2 / (4 Pi Gnewton) * DsVal / (DdVal * DdsVal);
@@ -178,6 +185,13 @@ Print["  M(theta_E)/M200 = ", NumberForm[mEncl1 * Msolar / params1["M200"], {3, 
 
    Plot theta_E(M200) for fixed c = 5, zd = 0.3, zs = 2
    ========================================================================= *)
+
+(* Added 2026-09-24 (fact-critic): radius where the LOCAL convergence
+   kappa(x) reaches 1 for the massive cluster (the text previously claimed
+   x <~ 0.5; the true value is ~0.11, i.e. ~9 arcsec). *)
+xKappa1 = x /. FindRoot[kappaNFW[x, params1["kappaS"]] == 1, {x, 0.1}];
+Print["Massive cluster: kappa(x) = 1 at x = ", xKappa1, "  (theta = ",
+    xKappa1 params1["thetaS"] radToArcsec, " arcsec)\n"];
 
 Print["--- Section 4: Einstein Radius vs. Cluster Mass ---\n"];
 

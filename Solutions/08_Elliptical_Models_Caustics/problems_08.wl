@@ -163,17 +163,24 @@ Print[""];
 
 (* (c) Caustic *)
 Print["(c) Caustic (mapping critical curve through lens equation):"];
+(* beta = theta - alpha on the critical curve, with the SIS term included
+   (same mapping as critical_curves_caustics.wl, eqs. caustic_sis_shear_1/2):
+     beta_1 = (1 - gext) thc cos(phi) - tE cos(phi) = -2 gext tE cos^3(phi)/(1 + gext)
+     beta_2 = (1 + gext) thc sin(phi) - tE sin(phi) = +2 gext tE sin^3(phi)/(1 - gext) *)
 causticSISShear1[phi_, tE_, gext_] := Module[{thc},
     thc = thetaCritSISShear[phi, tE, gext];
-    -gext * thc * Cos[phi]
+    thc * Cos[phi] - tE * Cos[phi] - gext * thc * Cos[phi]
 ];
 causticSISShear2[phi_, tE_, gext_] := Module[{thc},
     thc = thetaCritSISShear[phi, tE, gext];
-    gext * thc * Sin[phi]
+    thc * Sin[phi] - tE * Sin[phi] + gext * thc * Sin[phi]
 ];
 
-Print["    beta_1(phi) = -gamma_ext * theta_crit(phi) * cos(phi)"];
-Print["    beta_2(phi) = gamma_ext * theta_crit(phi) * sin(phi)\n"];
+Print["    beta_1(phi) = -2 gamma_ext thetaE cos^3(phi) / (1 + gamma_ext)"];
+Print["    beta_2(phi) = +2 gamma_ext thetaE sin^3(phi) / (1 - gamma_ext)"];
+Print["    Closed-form check (should be {0, 0}): ",
+    FullSimplify[{causticSISShear1[ph8, tE8, g8] + 2 g8 tE8 Cos[ph8]^3/(1 + g8),
+                  causticSISShear2[ph8, tE8, g8] - 2 g8 tE8 Sin[ph8]^3/(1 - g8)}], "\n"];
 
 Print["  Cusp positions:"];
 Do[
@@ -194,6 +201,8 @@ caustPts = Table[
 ];
 area81 = polygonArea[caustPts];
 Print["    Area = ", NumberForm[area81, {5, 5}], " arcsec^2"];
+Print["    Analytic astroid area 3 Pi g^2 tE^2 / (2 (1 - g^2)) = ",
+    3 Pi gext0^2 tE0^2/(2 (1 - gext0^2)), " arcsec^2"];
 Print["    This is the cross-section for quad lensing.\n"];
 
 
@@ -257,7 +266,7 @@ areaSISEquiv = polygonArea[caustPtsSISEquiv];
 Print["    SIS + shear area (gamma = ", NumberForm[gextEquiv, {4, 3}],
     ") = ", NumberForm[areaSISEquiv, {5, 5}], " arcsec^2"];
 Print["    Ratio SIE/SIS+shear: ", NumberForm[area82/areaSISEquiv, {4, 2}]];
-Print["    The areas are comparable but differ due to different mass profiles.\n"];
+Print["    The SIE caustic encloses less than half the area of the equivalent-shear astroid.\n"];
 
 
 (* =========================================================================
@@ -295,7 +304,7 @@ Do[
         Print["  ", PaddedForm[b, {4, 3}], "    ", Length[imgs],
             "           ",
             If[Length[sortedMags] >= 2,
-                NumberForm[sortedMags[[1]], {6, 2}] <> ", " <>
+                ToString[NumberForm[sortedMags[[1]], {6, 2}]] <> ", " <>
                 ToString[NumberForm[sortedMags[[2]], {6, 2}]],
                 NumberForm[sortedMags[[1]], {6, 2}]
             ]],

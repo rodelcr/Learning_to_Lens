@@ -10,11 +10,10 @@
 \label{ch:lens_equation}
 
 \begin{quote}
-\textit{The lens equation is the fundamental relation in gravitational
-lensing theory.  It is simple to write down, but its consequences ---
-multiple images, Einstein rings, magnification, and time delays --- are
-extraordinarily rich.}
-\hfill --- Narayan \& Bartelmann (1997)
+\textit{Equation (14) is called the lens equation, or ray-tracing equation.  It is
+nonlinear in the general case, and so it is possible to have multiple images
+$\vec\theta$ corresponding to a single source position $\vec\beta$.}
+\hfill --- Narayan \& Bartelmann (1997), Sect.~2.1.3
 \end{quote}
 
 \noindent
@@ -152,7 +151,7 @@ angular positions by:
 \end{align}
 where $\vecxi$ is the position in the lens plane and $\veceta$ is the
 position in the source plane
-(Congdon \& Keeton eq.~4.1; Narayan \& Bartelmann eq.~5).
+(Narayan \& Bartelmann eq.~15; Congdon \& Keeton Sec.~2.2.2).
 
 \begin{figure}[ht]
     \centering
@@ -180,7 +179,7 @@ ray that is observed at angle $\vectheta$ from the optical axis was
 emitted from the source at position $\veceta$ in the source plane.
 Following the deflected ray from the lens plane to the source plane, the
 physical displacement in the source plane is
-(Narayan \& Bartelmann eq.~6; Congdon \& Keeton eq.~4.2):
+(Narayan \& Bartelmann Sec.~2.1.3; Congdon \& Keeton eq.~2.16):
 \begin{equation}
     \veceta = \frac{\Ds}{\Dd}\, \vecxi
     - \Dds\, \boldsymbol{\hat{\alpha}}(\vecxi) \,.
@@ -662,8 +661,12 @@ Several important properties follow:
 \begin{itemize}
     \item $\mu_+ > 0$ always (same parity as the source).
     \item $\mu_- < 0$ always (opposite parity --- the image is
-          mirror-reflected).  The \textit{absolute} magnification is
-          $|\mu_-|$.
+          mirror-reflected), because $|\theta_-| < \thetaE$ makes the
+          denominator of eq.~\eqref{eq:magnification_pm} negative.  As in
+          Narayan \& Bartelmann eq.~27, the lower sign in
+          eq.~\eqref{eq:magnification_u} gives the \textit{absolute}
+          magnification $|\mu_-|$; the signed value is
+          $\mu_- = \frac{1}{2} - \frac{u^2+2}{2u\sqrt{u^2+4}}$.
     \item The total magnification (sum of absolute values) is:
           \begin{equation}
               |\mu_+| + |\mu_-| = \frac{u^2 + 2}{u\sqrt{u^2 + 4}} > 1
@@ -783,11 +786,11 @@ Compute the Einstein radius $\thetaE$ for:
     \item \textbf{Galaxy lensing:} $M = 10^{12}\,\Msun$, $z_d = 0.3$,
           $z_s = 1$.  Use the angular diameter distances from
           Module~3 (or the Mathematica script):
-          $\Dd \approx 900$~Mpc, $\Ds \approx 1700$~Mpc,
-          $\Dds \approx 1200$~Mpc.  Express the result in arcseconds.
+          $\Dd \approx 919$~Mpc, $\Ds \approx 1652$~Mpc,
+          $\Dds \approx 1055$~Mpc.  Express the result in arcseconds.
     \item \textbf{Cluster lensing:} $M = 10^{15}\,\Msun$, $z_d = 0.3$,
-          $z_s = 2$.  Use $\Dd \approx 900$~Mpc, $\Ds \approx 1800$~Mpc,
-          $\Dds \approx 1400$~Mpc.  Express the result in arcseconds.
+          $z_s = 2$.  Use $\Dd \approx 919$~Mpc, $\Ds \approx 1727$~Mpc,
+          $\Dds \approx 1329$~Mpc.  Express the result in arcseconds.
 \end{enumerate}
 For each case, also compute the physical Einstein radius $\RE = \Dd\,\thetaE$
 in kpc.  Verify with

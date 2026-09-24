@@ -10,10 +10,13 @@
 \label{ch:linearized_gravity}
 
 \begin{quote}
-\textit{In the weak-field limit, we can expand the metric about flat
-spacetime and treat gravity as a small perturbation.  This is the regime
-in which essentially all gravitational lensing takes place.}
-\hfill --- Sean Carroll, \textit{Spacetime and Geometry}
+\textit{The weak-field limit described in this chapter is less restrictive, assuming
+that the field is still weak but it can vary with time, and without any
+restrictions on the motion of test particles.  This will allow us to discuss
+phenomena that are absent or ambiguous in the Newtonian theory, such as
+gravitational radiation (where the field varies with time) and the deflection
+of light (which involves fast-moving particles).}
+\hfill --- Sean Carroll, \textit{Spacetime and Geometry}, Sect.~7.1
 \end{quote}
 
 \noindent
@@ -58,7 +61,7 @@ foundation for treating extended mass distributions in later modules.
 
 Consider a photon passing the Sun at the solar limb.  The relevant
 dimensionless quantity characterizing the strength of gravity is
-(Carroll eq.~4.11):
+(Carroll eq.~4.21):
 \begin{equation}
     \frac{|\Phi|}{c^2} = \frac{GM}{rc^2} \bigg|_{r = R_\odot}
     \approx \frac{6.674 \times 10^{-11} \times 1.989 \times 10^{30}}
@@ -419,8 +422,11 @@ that both approaches agree.
     \caption{Comparison of the exact Schwarzschild deflection angle
     (solid blue) with the weak-field approximation
     $\alphahat = 4GM/(c^2 b)$ (dashed red) as a function of impact
-    parameter $b/R_S$.  The two curves are virtually indistinguishable
-    for $b/R_S \gtrsim 5$ (i.e., $|\Phi|/c^2 \lesssim 0.1$).  For the
+    parameter $b/R_S$.  The weak-field value falls short of the exact
+    one by a fraction $\approx (15\pi/32)\,R_S/b$ (the second-order
+    term): about 15\% at $b = 10\,R_S$, 5\% at $30\,R_S$ and 1.5\% at
+    $100\,R_S$.  The orange dashed line marks the capture impact
+    parameter $b = (3\sqrt{3}/2)\,R_S$.  For the
     Sun, $R_S \approx 3$~km and the closest approach is $R_\odot \approx
     7 \times 10^5$~km, so $b/R_S \approx 2.4 \times 10^5$ --- deep in the
     weak-field regime.  Interactive version:
@@ -642,8 +648,8 @@ essential input to the lens equation.
     \caption{Fractional error $|\alphahat_{\mathrm{exact}} -
     \alphahat_{\mathrm{weak}}| / \alphahat_{\mathrm{exact}}$ of the
     weak-field approximation as a function of $b/R_S$.  The error is
-    below 1\% for $b/R_S \gtrsim 50$ and below 0.1\% for
-    $b/R_S \gtrsim 150$.  For typical astrophysical lenses
+    $\approx (15\pi/32)\,R_S/b$: below 1\% for $b/R_S \gtrsim 150$ and
+    below 0.1\% for $b/R_S \gtrsim 1500$.  For typical astrophysical lenses
     ($b/R_S > 10^4$), the weak-field approximation is essentially
     exact.}
     \label{fig:exact_vs_weak_field}

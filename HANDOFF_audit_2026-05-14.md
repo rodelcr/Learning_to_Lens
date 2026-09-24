@@ -229,6 +229,11 @@ This is the most-cited inconsistency in the audit:
 
 ---
 
+> **Status 2026-09-24:** Section 2 reconciled. H3, M1, M5, M8, M9 and L9 had already been
+> resolved in earlier passes. H1, H2, H4, M2, M3, M4, M6, M7, M10, L1–L8, L10 and L12 were fixed
+> on 2026-09-24. L11 is justified as is: D_L²(10)/D_L²(3–4) ≈ 8–17, so μ ~ 10–100 is enough.
+> See PROGRESS_LOG 2026-09-24.
+
 ## Section 2: Substantive findings flagged for your review
 
 These need physics judgment and are NOT auto-fixed. File:line locations

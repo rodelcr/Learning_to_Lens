@@ -166,7 +166,9 @@ Print["  Exported: effective_potential_massive.pdf"];
 (* ---- Figure 2: Effective potential for photons ---- *)
 fig2 = Plot[Evaluate[Table[Veff[r, LL, 0], {LL, {2, 3, 4, 5}}]],
     {r, 2, 30},
-    PlotRange -> {{0, 30}, {-0.02, 0.08}},
+    (* Peaks are V(3) = L^2/54 = 0.074, 0.167, 0.296, 0.463 for L = 2..5;
+       the y-range must reach ~0.5 to show all of them. *)
+    PlotRange -> {{0, 30}, {-0.02, 0.5}},
     PlotStyle -> {
         {Orange, AbsoluteThickness[1.5]},
         {Red, AbsoluteThickness[2]},
@@ -178,7 +180,10 @@ fig2 = Plot[Evaluate[Table[Veff[r, LL, 0], {LL, {2, 3, 4, 5}}]],
     PlotLabel -> Style["Effective Potential (Photons, GR)", 13],
     Epilog -> {
         Red, PointSize[0.015], Point[{3, Veff[3, 3, 0]}],
-        Text[Style["Photon sphere\nr = 3GM/c\[CapitalTwo]", 10, Red], {6, Veff[3, 3, 0] + 0.008}]
+        AbsoluteThickness[0.75], Line[{{3.4, Veff[3, 3, 0] + 0.01}, {9, 0.28}}],
+        Text[Style[Column[{"Photon sphere",
+                Row[{"r = 3GM/", Superscript["c", "2"]}]}], 10, Red],
+            {9, 0.28}, {-1, -1}]
     },
     PlotLegends -> Placed[
         LineLegend[{"L = 2", "L = 3", "L = 4", "L = 5"}, LegendMarkerSize -> 15],
