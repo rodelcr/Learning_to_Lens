@@ -126,9 +126,8 @@ is twice the Schwarzschild radius divided by the impact parameter.
 
 \textit{Size.}  For a galaxy at $b = 10$~kpc the expansion parameter is
 $m/b = \Gnewton M/(\speedoflight^2 b) \approx 4.8\times10^{-6}$, so every
-correction of relative order $m/b$ dropped in this chapter is utterly negligible
-for galaxy and cluster lensing; the weak-field formula is not an approximation
-anyone needs to worry about there.  (Numbers: checks A12a--d.)
+correction of relative order $m/b$ dropped in this chapter is negligible
+for galaxy and cluster lensing.  (Numbers: checks A12a--d.)
 
 \textit{Which angle.}  $\alphahat$ is the \emph{physical} bending angle at the
 lens: the angle between the incoming and outgoing asymptotes of one ray.  It is
@@ -718,7 +717,7 @@ potential as $(\Dd\Ds/\speedoflight\Dds)[\tfrac12(\theta-\beta)^2 -
 \thetaE^2\ln|\theta|]$.  With $\thetaE^2 = (4\Gnewton M/\speedoflight^2)\,\Dds/(\Dd\Ds)$
 the distance factors cancel in the second term, leaving exactly
 $(4\Gnewton M/\speedoflight^3)\ln(1/|\theta|)$ (check A18): the Shapiro term
-knows nothing about cosmology, while the geometric term carries all of it.
+is independent of the distances; all the cosmology sits in the geometric term.
 
 \textit{The reference angle.}  $\ln$ needs a dimensionless argument;
 $\theta_{\rm ref}$ supplies the unit.  Changing it adds a constant to every image's
@@ -757,19 +756,24 @@ bouncing off a planet at distance~$R$ from the Sun.
           where $R_\oplus$ is the Earth--Sun distance and $r_0$ the
           closest approach distance.
     \item For a signal grazing the Sun ($r_0 = \Rsun$) bouncing off
-          Mercury at inferior conjunction, compute $\Delta T$ numerically.
-          You should find $\Delta T \approx 240~\mu\mathrm{s}$.
+          Mercury at superior conjunction (Mercury behind the Sun as seen
+          from Earth), compute $\Delta T$ numerically.
+          You should find $\Delta T \approx 220~\mu\mathrm{s}$
+          ($240~\mu\mathrm{s}$ once the non-logarithmic $+1$ of
+          Exercise~\ref{ex:shapiro_radar} is kept).
 \end{enumerate}
 \end{exercise}
 
 
-\begin{annotation}[Which formula gives 240\,$\mu$s]
+\begin{annotation}[220 versus 240\,$\mu$s]
 With $4\Gnewton\Msun/\speedoflight^3 = 19.7~\mu$s and
 $\ln(4R_\oplus R/r_0^2) = 11.18$ for Mercury and a grazing ray, the leading-log
-formula of part~(a) gives $19.7 \times 11.18 \approx 220~\mu$s.  The quoted
-$240~\mu$s is $19.7 \times (11.18 + 1)$: it includes the non-logarithmic
+formula of part~(a) gives $19.7 \times 11.18 \approx 220~\mu$s.  The
+$240~\mu$s value is $19.7 \times (11.18 + 1)$: it includes the non-logarithmic
 ``$+1$'' that Exercise~\ref{ex:shapiro_radar} keeps (derived in the solutions).
-(Checks A14c--f.)
+The ray can graze the Sun only if Mercury is behind it (superior conjunction);
+at inferior conjunction Mercury lies between Earth and Sun and the path stays
+$\sim 80\,\Rsun$ away.  (Checks A14c--f, A22, A24a--b.)
 \end{annotation}
 
 % =====================================================================
@@ -796,7 +800,7 @@ Converting to arcseconds:
     }
     \label{eq:deflection_sun_arcsec}
 \end{equation}
-This is the Newtonian value $0.875''$ \textit{doubled} by general relativity.
+This is the Newtonian value $0.876''$ \textit{doubled} by general relativity.
 Eddington's measurements confirmed the GR prediction (within the
 substantial error bars of the time), making Einstein a global celebrity.
 
@@ -866,7 +870,7 @@ $b \sim 10$~kpc~$\approx 3.09 \times 10^{20}$~m:
     \label{eq:deflection_galaxy}
 \end{equation}
 The corresponding Einstein radius (which we will derive properly in
-Module~4) is of order $\sim 1''$, depending on the distance configuration.
+Module~4) is a few arcseconds, depending on the distance configuration.
 
 \begin{remark}
 The Einstein radius $\thetaE$ for a point mass lens at cosmological
@@ -877,7 +881,11 @@ distances is:
     \label{eq:einstein_radius_deflection}
 \end{equation}
 For a $10^{12}\,\Msun$ galaxy at $z_d \sim 0.3$ with a source at
-$z_s \sim 1$, this gives $\thetaE \sim 1''$.  Multiple images form
+$z_s \sim 1$, this gives $\thetaE \approx 2.4''$
+(Exercise~\ref{ex:einstein_radius_numerical}).\footnote{Earlier versions of
+this remark quoted $\thetaE \sim 1''$; with the concordance distances of
+Module~3 ($D_d = 919$, $D_s = 1652$, $D_{ds} = 1055$~Mpc) the value is
+$2.38''$.}  Multiple images form
 whenever the source lies within $\sim \thetaE$ of the optical axis ---
 this is the regime of \textbf{strong gravitational lensing}.  We will
 develop this quantitatively in Modules~4--5.
@@ -896,8 +904,7 @@ $\theta^2 = (4\Gnewton M/\speedoflight^2)\,\Dds/(\Dd\Ds)$, which is
 eq.~\eqref{eq:einstein_radius_deflection} (check A17).  For
 $M = 10^{12}\,\Msun$, $z_d = 0.3$, $z_s = 1$ in the concordance cosmology the
 distances of Module~3 give $\thetaE \approx 2.4''$
-(Exercise~\ref{ex:einstein_radius_numerical}); ``$\sim 1''$'' above is an
-order-of-magnitude statement.
+(Exercise~\ref{ex:einstein_radius_numerical}; check A25).
 \end{derivation}
 
 \begin{bridge}[One physical deflection, two source planes]
@@ -1063,7 +1070,7 @@ traveling at speed $\speedoflight$ past a mass $M$ at impact parameter $b$.
           $\alphahat_{\mathrm{Newton}} = 2\Gnewton M /
           (\speedoflight^2 b)$ in the weak-field limit.
     \item Compute the Newtonian prediction for the solar deflection.  You
-          should get $0.875''$.
+          should get $0.876''$.
 \end{enumerate}
 \end{exercise}
 
@@ -1117,8 +1124,11 @@ $r_0$, bounces off Mercury, and returns.
           $R_{\mathrm{Merc}} = 5.79 \times 10^{10}$~m are the
           Earth--Sun and Mercury--Sun distances.
     \item For $r_0 = \Rsun$, compute $\Delta T$ in microseconds.
-    \item Shapiro's 1964 measurement using the Haystack radar gave
-          $\Delta T = 200 \pm 20~\mu$s.  Is this consistent?
+    \item The first radar measurement of the effect (Shapiro et al.\ 1968,
+          Phys.\ Rev.\ Lett.\ 20, 1265; Shapiro's 1964 paper was the
+          prediction) gave $\Delta T = 200 \pm 20~\mu$s.  By how many
+          standard deviations does it differ from your result, and what
+          could account for the difference?
 \end{enumerate}
 \end{exercise}
 

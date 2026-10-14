@@ -165,3 +165,30 @@ Scratch script: `/private/tmp/claude-504/-Users-rosador-Documents-Learning-to-Le
 Repo: `problems_02.wl` → `SUMMARY: 44 PASS, 0 FAIL  (of 44 checks)`. Note that its
 pre-existing (non-check) printout still shows the V1 error (lines 121–122) and the V6
 attribution (line 225). The check suite passing does not cover those printed lines.
+
+## Resolution — fixes applied 2026-10-14
+
+| id | Fix | Backing |
+|----|-----|---------|
+| V1 | 02_Solutions Ex 2.2(b): n = √[(1+2m/r)/(1−2m/r)] ≈ 1 + 2GM/(c²r), cross-ref to 01e eq:refractive_index, one-sentence note that the earlier version dropped the root; Newtonian (g_tt-only) index → 1 + GM/(c²r). problems_02.wl printout (ll.121–122) corrected. | `problems_02.wl` A20a (coefficient 2/r, fails on 4/r), A20b, A20c (g_tt-only 1/r, fails on 2/r); A15a–c |
+| V2 | 02_Solutions Ex 2.1(b): φ± = ±(π/2 + δ), swept angle π + 2δ | A21a (new asymptote satisfies cos φ = −1/e), A21b (old π − δ fails), A21c; A16c |
+| V3 | ex:shapiro_sun(b): "ΔT ≈ 220 μs (240 μs once the +1 of Exercise ex:shapiro_radar is kept)"; annotation retitled "220 versus 240 μs" | A22 (leading log = 220, ≠ 240); A14c–f |
+| V4 | Remark after eq:einstein_radius_deflection: θ_E ≈ 2.4″ (Exercise ex:einstein_radius_numerical) + footnote recording the old "∼1″" and the distances; line before the remark "of order ∼1″" → "a few arcseconds"; layer box: order-of-magnitude clause dropped | A25 (2.379″ from flat ΛCDM distances, fails on ∼1″); problems_03 B19d |
+| V5 | 0.875″ → 0.876″ in chapter §Deflection by the Sun, the Soldner exercise, and 02_Solutions Ex 2.1(c) (4.24 → 4.25×10⁻⁶ rad); "Rounding" annotation reworded ("often-quoted 0.875″") | A16d |
+| V6 | ch:1120 exercise and 02_Solutions:252: "first radar measurement (Shapiro et al. 1968, Phys. Rev. Lett. 20, 1265); Shapiro's 1964 paper was the prediction". Plain prose, no \cite (no bib key). problems_02.wl:225 printout corrected. | CrossRef 10.1103/PhysRevLett.20.1265 and 10.1103/PhysRevLett.13.789 (critic) |
+| V7 | "consistent" → "Our idealized point-mass value lies 2σ above it (check A23), so the agreement is marginal rather than clean"; chapter exercise now asks for the difference in σ. Added (i) r₀ > R☉ lowers the log. "Haystack radar" dropped from the chapter exercise (unverified). | A23 ((240−200)/20 = 2) |
+| V8 | "inferior" → "superior conjunction" (ch:760 with a parenthetical "Mercury behind the Sun", Sol:254, problems_02.wl printout); annotation box after ex:shapiro_sun explains why | A24a (superior: Earth–Mercury line crosses the solar disc), A24b (inferior: closest approach ≈ 83 R☉) |
+| P1 | "utterly negligible … anyone needs to worry about there" → "is negligible for galaxy and cluster lensing." | prose |
+| P2 | "knows nothing about cosmology …" → "is independent of the distances; all the cosmology sits in the geometric term." | prose |
+
+**Verification after edits.** Before: `problems_02.wl` → `SUMMARY: 44 PASS, 0 FAIL  (of 44 checks)`.
+After (`bash Mathematica/run_wl.sh Solutions/02_Light_Deflection/problems_02.wl`):
+`SUMMARY: 55 PASS, 0 FAIL  (of 55 checks)`. `cd Notes && ANNOT_REQUIRED=1 bash build.sh` →
+"all assertions passed"; Student 360 pp, Instructor 444 pp, Annotated 569 pp.
+
+**Left open.**
+- V7 number/instrument: "200 ± 20 μs" is kept (attributed to the 1968 paper) but remains
+  unverified against the paper's full text; "Haystack radar" was removed rather than verified.
+  Check against Shapiro et al. 1968 when a copy is available.
+- The DOIs for Shapiro 1964 / Shapiro et al. 1968 are not in `references.bib`; the text cites
+  them in plain prose (see orchestrator requests).
