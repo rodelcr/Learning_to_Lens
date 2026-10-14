@@ -685,4 +685,24 @@ check["F3a advance at r = 12 is 2.6 rad = 149 deg (> 1 rad: NOT a small angle)",
 check["F3b r = 600 >> 6: advance small (< 0.04 rad) and within 1.5% of 6 Pi/r",
   N[fxAdv[600]] < 0.04 && Abs[N[fxAdv[600]/(6 Pi/600)] - 1] < 0.015];
 
+(* --- F3c  Fig. precessing_orbit (geodesic_equation.wl Fig. 4: L = 4.2, u(0) = 1.3/L^2):
+       the plotted orbit's advance is 2.07 rad = 119 deg per radial period, NOT "small";
+       weak-field 6 Pi/p = 1.07 rad for p = L^2.  Caption corrected 2026-10-14. --- *)
+Module[{Lv = 4.2, ev = 0.3, pp, solF, uF, peri, periX, adv},
+  pp = Lv^2;
+  solF = NDSolve[{u''[phi] + u[phi] == 1/pp + 3 u[phi]^2, u[0] == (1 + ev)/pp, u'[0] == 0},
+                 u, {phi, 0, 12 Pi}, PrecisionGoal -> 10, AccuracyGoal -> 10];
+  uF = u /. First[solF];
+  peri = Reap[Do[If[uF'[x] > 0 && uF'[x + 0.01] < 0, Sow[x]], {x, 0.5, 12 Pi - 0.02, 0.01}]][[2, 1]];
+  periX = Map[phi /. FindRoot[uF'[phi] == 0, {phi, #}] &, peri];
+  adv = Differences[periX] - 2 Pi;
+  Print["    plotted orbit: r_peri = ", N[pp/(1 + ev)], ", advance per radial period = ", adv,
+        " rad; 6 Pi/p = ", N[6 Pi/pp]];
+  check["F3c plotted orbit (L=4.2): r_peri = 13.57, advance = 2.07 rad = 119 deg per orbit (> 1 rad)",
+    Round[N[pp/(1 + ev)], 0.01] == 13.57 && Length[adv] >= 2 &&
+    And @@ (Round[#, 0.01] == 2.07 & /@ adv) && Round[adv[[1]] 180/Pi] == 119 && adv[[1]] > 1];
+  check["F3d weak-field estimate 6 Pi/p = 1.07 rad underestimates the plotted advance by ~2x",
+    Round[N[6 Pi/pp], 0.01] == 1.07 && 1.8 < adv[[1]]/(6 Pi/pp) < 2.1];
+];
+
 summary[];

@@ -171,3 +171,6 @@ each fails on the pre-fix printed value.
 ### Left open
 - X4: visible "Bartelmann (1996)" (and "Wright & Brainerd (2000)") at `07_Axisymmetric_Models.tex:1113` still has no `\cite`; no bib key added per instructions. Needs `bartelmann_1996` (A&A 313, 697–702; arXiv astro-ph/9602053; no DOI) from the orchestrator.
 - C5: full-text support for κ̄ = ⟨κ⟩ + ⟨γ_t⟩ in Bartelmann 1995 still unverified (citation now no longer claims it).
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- X4 closed: `bartelmann_1996` (arXiv journal-ref A&A 313, 697–702; no publisher DOI; Zotero HEDT5W9M, already tagged) and `wright_brainerd_2000` (CrossRef 10.1086/308744; Zotero Q4N8INM2, tagged `learning_to_lens`) added to `references.bib` and cited at `07_Axisymmetric_Models.tex:1122`.

@@ -209,3 +209,6 @@ assertions passed ===". Page counts: student 360, instructor 444, annotated 569.
 - Exercise 10.2 (ii) still says "β = 0.5θ_E (halfway to the critical curve)". This mixes source-plane and
   image-plane language, but the critic did not flag it, so it is unchanged.
 - P1/P2 prose (flag-only) was not applied.
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- Ex 10.2(ii): "(halfway to the critical curve)" → "(a source half an Einstein radius off axis)" — source-plane language only; no number changed.

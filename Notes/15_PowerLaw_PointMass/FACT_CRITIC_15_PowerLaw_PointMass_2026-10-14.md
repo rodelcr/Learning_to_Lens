@@ -288,3 +288,6 @@ The `ANNOT_REQUIRED=1 bash build.sh` build ended "all assertions passed". Page c
 - N-6 (A4 cross-link to Ch. 21): outside this chapter, so it is noted for the orchestrator.
 - The spiral-project feedback F1–F7 is outside this repo.
 - Provenance (whole chapter machine-drafted): the author still needs to rewrite it before external release.
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- N-6: Chapter 21 derives its own `eq:cb_mcrit` (`17_Central_Mass_Bias.tex:715`) and its table values from it; it does not retype the spiral A4 thresholds, so no cross-link is needed. Closed.

@@ -319,3 +319,6 @@ A&A 564, A103; 10.1093/mnras/staa344 = Kochanek 2020, MNRAS 493, 1725.
 **Left open.**
 - X5 on the Chapter 13 side (bridge at `09_Galaxy_Lensing_Applications.tex:644-666` uses η for the distance ratio and plane 1 = far): assigned to another agent.
 - P2–P4 remaining prose tells (closers at l.394-395, l.505-506, l.533, l.758; "Three …" lead-ins at l.68, l.353, l.454; Solutions antithesis l.161-162): flag-only, for the author.
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- X5 closed by the 08–09 fix pass: the Chapter 13 bridge (`09_Galaxy_Lensing_Applications.tex:644-666`) now uses 𝓑 for the distance ratio, η for θE1/θE2, and plane 1 = near.

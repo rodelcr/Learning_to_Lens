@@ -190,7 +190,7 @@
 - Layer: name planes in the η' bridge (η<1 needs plane 1 = far source), cite eq ms_free; add sentence that γ'_eff size (dγ'/df=1.4) ≠ Ch 21 fit (+15.6, radial image); shorten D_Δt boxes after fix.
 ## ch15 critic (36 PASS / 13 SUSPECT / 1 FAIL [visible tags — FIXED 8982cee]; derivations 6/6; both source-note errors CONFIRMED)
 - DONE: editions.tex \annot → \unskip (stray space before punctuation); Ch 15 [Checks …] tags gated.
-- TODO: Ch 14 ("(Check 1c.)", "(check 3e)") and Ch 21 ("[Verified: checks D1–D3c…]") still print check tags in the student edition — apply the Ch 15 policy (\annot{}).
+- DONE (session 2, re-verified session 3 by pdftotext grep): Ch 14 / Ch 21 check tags gated with \annot{}; student PDF prints none.
 - N9 l.759 "θ₋ ≃ −0.016 θ_E" → "−0.0154 θ_E (leading order 0.016)"; tighten AN7 tolerance.
 - X11 Summary ll.1074–1076 repeats the source-note "t₁→2 at fixed inner mass" wording → joint limit; add caveat to the point-mass-limit exercise.
 - C10 "SMBH in essentially every massive galaxy" uncited → Kormendy & Ho 2013 ARA&A 51, 511 (DOI 10.1146/annurev-astro-082708-101811, CrossRef-confirmed; not in bib) or soften.
@@ -215,4 +215,19 @@
 ## Fix pass status (Chapters 1–17): ALL SEVEN GROUPS MERGED (01a–c c662633, 01d–e 2aea4b8, 02–03 acc0e85, 04–05 a44690a, 06–07 2f0046f, 08–09 eb365e0, 10–13 d7d557b). Note: the 10–13 CRITIC's β_r ≈ 0.517″ for Ex 10.2 was wrong; the fixer computed β_r = 1.01″ ≈ 0.146θ_E two ways and the Resolution section records it.
 ## Orchestrator notes (post fix pass)
 - Ch 7 epigraph "N&B Sect. 2.1.2" is CORRECT (the quoted sentence precedes the 2.1.3 heading in the N&B PDF); the Ch 17 fixer's 2.1.4 correction applies to its own comment (circular lens equation / Einstein radius), not to Ch 7. No change.
-- Part V fix passes merged: 14 e65d282, 15 52168ee, 16 246fdae, 17 cebbe81, 18 083e595, 20 f801400, 21 143a5f5; 19 pending.
+- Part V fix passes merged: 14 e65d282, 15 52168ee, 16 246fdae, 17 cebbe81, 18 083e595, 20 f801400, 21 143a5f5, 19 d667ef9.
+
+## Session 3 closeout (2026-10-14) — orchestrator-scope "Left open" items
+Closed (each noted in the chapter's report under "Session-3 closeout"):
+- 01d Fig. precessing_orbit caption: plotted orbit (L=4.2) advances 2.07 rad = 119°/orbit, not "small"; non-silent caption fix + checks F3c/F3d (problems_01d.wl 87 → 89 PASS).
+- Bib keys added, all verified + Zotero-tagged: bartelmann_1996 (arXiv journal-ref, no DOI), wright_brainerd_2000 (10.1086/308744), keeton_2003 (10.1086/344539), nightingale_2023 (10.1093/mnras/stad587). Cited at 07:1122, 16:563, 17:827.
+- Plain-text citations → keys: 01e (bertotti_2003, will_2014), 02 chapter + Solutions (shapiro_1964/1968).
+- 01c:372 "perfectly smooth" → "smooth"; 10 Ex 10.2(ii) source-plane wording.
+- X3 (01a, 01c), X5 (18), N-6 (15), 04 DdsClus, 14 check tags: verified closed, no edit needed.
+- CPL: Linder 2003 full text verified; Chevallier & Polarski 2001 formula not extractable from the PDF text layer (existence only).
+Still open (author's call or unverifiable here):
+- Shapiro et al. 1968 "200 ± 20 μs" (paywalled full text); Carroll eq. 5.66 constant (01d C3; scan unreadable); Bender et al. 1989 (uncited, left uncited).
+- Prose "tells" flagged P-only in 10–12, 17, 18, 20, 21; machine-drafted provenance of Part V (author rewrite).
+- "Module~N" references in the visible text of Ch 1–14 (≈70 occurrences) name module ids (Module 3 = Chapter 7 in the PDF); flagged by the 04/05 critics as out of scope. Decision needed: leave, or convert to \ref{ch:…}.
+- 09: the Ch 21 value +15.6 is quoted, not re-derived, in problems_09.wl.
+Build after closeout: 364 / 449 / 572 pages (fingerprints in Output/build_fingerprints.txt); master verification unchanged (28/28).

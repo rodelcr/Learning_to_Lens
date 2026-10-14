@@ -148,3 +148,6 @@ annotated 569 pp.
 **Left open.**
 - Bib keys for Bertotti, Iess & Tortora 2003 and Will 2014 (both cited in plain text): orchestrator request.
 - Exercise statement (chapter) still says "with Φ = −GM/r to first order in R_S/r"; correct to first order, left as is.
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- Bib keys `bertotti_2003`, `will_2014` (added in the fix pass) are now used: the plain-text citations at `01e_Linearized_Gravity.tex:557-566` became `\citep`/`\citet`.

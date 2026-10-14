@@ -255,3 +255,6 @@ Fix pass on branch `wt/ch14` (after merging `annotated-edition`). Line numbers r
 - Visible check tag "(`multiplane_dspl.wl` check 5a.)" (tex:149) still prints in the student edition (verified by `pdftotext`); the Ch. 15 `\annot{}` policy (tracker TODO under the ch15 critic) was not in this pass's confirmed list, so it is left for the orchestrator.
 - `references.bib` comment-placement remark (out of scope; bib not editable by chapter agents).
 - Attaching the KSB94 scan to Zotero CW87FPFT (optional, orchestrator).
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- Visible check tags: `pdftotext Output/Learning_to_Lens.pdf | grep` for `(Check`, `[check`, `[Verified` returns nothing (session 3 re-check after the `\annot{}` gating). Closed.

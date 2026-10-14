@@ -76,3 +76,6 @@ Build fingerprints: `Learning_to_Lens.pdf 360 pages text-md5 e49fc6843f3f6c7c8ca
 
 ### Left open
 - X3 (pending): Ch. 14 bridge content, re-check when Ch. 14 lands.
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- X3 closed: Chapter 18 is no longer a stub; `14_Multiplane_DSPL.tex:34,190` states the multi-plane lens equation is recursive, matching the bridge.

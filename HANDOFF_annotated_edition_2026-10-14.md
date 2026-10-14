@@ -35,3 +35,8 @@
 - Tracker of every confirmed error + fix status: `NOTES_fixpass_tracker_2026-10-14.md`
 - Agent briefs: `docs/agent_briefs_2026-10-14/` (COMMON, PARTV, ANNOTATE, CRITIC + required reading, RECONCILE, FIXER)
 - Spiral digests + feedback: `docs/spiral_reconciliation_2026-10-14/`
+
+## Session 3 addendum (2026-10-14)
+- Wolfram MCP servers registered (`Wolfram` local, `WolframCloud` hosted); `harness.wl` MCP mode. See CLAUDE.md "Wolfram MCP tools".
+- Orchestrator-scope "Left open" items closed (details: tracker "Session 3 closeout"); notable: the Ch 4 precessing-orbit caption was wrong (2.07 rad per orbit, not small).
+- Build now 364 / 449 / 572 pages. Still open for the author: Module~N vs chapter numbering decision; prose rewrites; Shapiro 1968 number; Carroll 5.66.

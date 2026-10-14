@@ -265,3 +265,6 @@ Fix pass on branch `wt/ch17` (after `git merge annotated-edition`). Check ids re
 - N-R2 citation: Nightingale et al. 2023 (MNRAS 521, 3298; arXiv:2303.15514) UNVERIFIED here, not in `references.bib`.
 - Shear statement is on-axis only; the full 2-D (off-axis, ellipticity) boundary was not derived here.
 - P1/P2 remaining aphoristic closers ("The method carries over unchanged; the coefficients do not.", "it cannot be averaged away", item-4 closer) and the provenance note (100% machine-drafted) are left for the author.
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- N-R2: `nightingale_2023` (CrossRef 10.1093/mnras/stad587; Zotero GV875BSE, tagged) added. Its abstract states the Abell 1201 black-hole limit comes from the deformation of a lensed image "without a central image being observed", which is exactly the sentence at `17_Central_Mass_Bias.tex:827`; cited there.

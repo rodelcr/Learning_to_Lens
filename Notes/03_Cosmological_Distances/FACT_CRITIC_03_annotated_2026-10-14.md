@@ -222,3 +222,7 @@ Annotated 569 pp.
 - `DdsFunc` in problems_03.wl remains the flat formula (commented as such); it is only called
   with flat models.
 - VERIFICATION.md should now count `friedmann_equations.wl` as an asserting script (orchestrator).
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- CPL: Linder 2003 full text (arXiv astro-ph/0208512, text after "I suggest a new model") reads verbatim `w(a) = w0 + wa (1 − a) = w0 + wa z/(1 + z)` — verified. Chevallier & Polarski 2001 (gr-qc/0009008) full text was fetched but its parametrisation is not recoverable from the PDF text layer; existence-only for that one.
+- VERIFICATION.md Level-1 table lists `friedmann_equations.wl` (row 3); the sweep counts it among the harnessed scripts.

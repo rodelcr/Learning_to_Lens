@@ -212,3 +212,7 @@ Spiral rows that the record already knows (S7-046, S7-049, S7-050, S7-051, S7-05
 - C7 (optional Keeton 2003 attribution) — needs a verified bib key.
 - X11 (harness stdout drop) — orchestrator scope (`Mathematica/harness.wl`).
 - Pre-existing, not flagged: the cusp paragraph's "it has a central image" holds only for sources inside the radial caustic (cf. G.6, γ'=1.2, y=0.1); left as is.
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- C7 applied: `keeton_2003` (CrossRef 10.1086/344539; Zotero TMAV32UF, tagged `learning_to_lens`) added and named as the source of the C&K magnification estimate at `16_Odd_Images_Central.tex:563`.
+- X11 (harness stdout drop) closed in `harness.wl` (WriteString; and MCP mode 2026-10-14).

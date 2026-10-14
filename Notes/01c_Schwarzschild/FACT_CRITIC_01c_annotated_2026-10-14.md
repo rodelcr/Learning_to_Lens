@@ -93,3 +93,7 @@ Build fingerprints: `Learning_to_Lens.pdf 360 pages text-md5 e49fc6843f3f6c7c8ca
 ### Left open
 - X3 (pending): Ch. 15 bridge content, re-check when Ch. 15 is committed.
 - "perfectly smooth" also appears in the VISIBLE chapter text, 01c_Schwarzschild.tex:372 ("the geometry is perfectly smooth"). That line is outside the critic's scope, so it was not changed.
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- X3 closed: `15_PowerLaw_PointMass.tex:26` describes the central point mass as the supermassive black holes at galaxy centres, matching the bridge.
+- Visible `01c_Schwarzschild.tex:372` "perfectly smooth" → "smooth" (same P2 fix as the annotation layer).

@@ -183,3 +183,6 @@ failed 9 of the new checks (59 PASS / 9 FAIL).
 - Hard-coded "Module~3 / Module~5 / Module~10 …" in the visible text: these are module numbers, not `\ref`s. They were left alone because they are outside X10's scope.
 - `Mathematica/04_Lens_Equation/lens_equation.wl` l.129 still uses `DdsClus = 1329`. That directory is not in this fixer's file list, so this goes to the orchestrator.
 - The "exactly" pointer words beyond the one the critic quoted were left as is (flag-only).
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- `lens_equation.wl:129` already reads `DdsClus = 1328` (changed in session 2). Closed.

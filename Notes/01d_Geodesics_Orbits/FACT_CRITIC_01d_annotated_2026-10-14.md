@@ -144,3 +144,7 @@ before `SUMMARY: 73 PASS, 0 FAIL  (of 73 checks)`; after `SUMMARY: 87 PASS, 0 FA
 - C3 (Carroll eq. 5.66 constant ½ε): Carroll scan unreadable; unchanged.
 - Fig. `precessing_orbit` caption (visible, chapter) still says "advances by a small angle each orbit". The plotted
   orbit's parameters were not checked in this pass; not a confirmed item. Worth checking against F3.
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- Fig. `precessing_orbit` caption: the plotted orbit (`geodesic_equation.wl` Fig. 4, L = 4.2, u(0) = 1.3/L², r_peri = 13.57 GM/c²) advances **2.07 rad = 119° per radial period** (NDSolve + FindRoot on the perihelia; three successive periods agree to 1e-7), versus the weak-field 6π/p = 1.07 rad. The caption said "a small angle"; corrected non-silently (old wording kept in the caption). New checks F3c, F3d in `problems_01d.wl`.
+- C3 (Carroll eq. 5.66) still unchanged.

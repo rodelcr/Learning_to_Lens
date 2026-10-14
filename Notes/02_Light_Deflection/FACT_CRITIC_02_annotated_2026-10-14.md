@@ -192,3 +192,6 @@ After (`bash Mathematica/run_wl.sh Solutions/02_Light_Deflection/problems_02.wl`
   Check against Shapiro et al. 1968 when a copy is available.
 - The DOIs for Shapiro 1964 / Shapiro et al. 1968 are not in `references.bib`; the text cites
   them in plain prose (see orchestrator requests).
+
+### Session-3 closeout (2026-10-14, orchestrator)
+- `shapiro_1964`, `shapiro_1968` are now cited by key in the exercise (`02_Light_Deflection.tex:1127`) and Solution (c). The "200 ± 20 μs" figure remains unverified against the 1968 full text (APS paywalled; abstract withheld from Semantic Scholar); left attributed.
