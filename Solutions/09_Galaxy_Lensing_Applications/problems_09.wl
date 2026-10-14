@@ -477,3 +477,214 @@ Print["    microlensing studies but gives a small enclosed mass.\n"];
 
 
 Print["\n=== Module 9 Solutions Complete ==="];
+
+
+(* ===== Annotated-edition checks (2026-10) ===== *)
+(* Every identity / number written inside an annotation, derivation or
+   bridge box of Notes/09_Galaxy_Lensing_Applications/ (chapter + solutions)
+   is checked here.  [E*] Einstein mass, [M*] mass-sheet transform,
+   [S*] source-position transformation, [P*] power law + Jeans,
+   [H*] time-delay distance / H0, [L*] bridges.  Loads the shared harness. *)
+
+Get[FileNameJoin[{DirectoryName[$InputFileName], "..", "..",
+                  "Mathematica", "harness.wl"}]];
+Print["\n=== Annotated-edition checks (Module 9) ==="];
+
+ClearAll[x, y, lam, psiF, b1s, b2s, tE, gp, th, cc, GG, Dd, Ds, Dds, sig];
+
+(* ---------- [E] Einstein mass ---------- *)
+check["[E1] pi thetaE^2 Dd^2 * c^2 Ds/(4 pi G Dd Dds) = c^2 thetaE^2 Dd Ds/(4 G Dds)",
+  Simplify[Pi tE^2 Dd^2 cc^2 Ds/(4 Pi GG Dd Dds) - cc^2 tE^2 Dd Ds/(4 GG Dds)] === 0];
+check["[E2] with the SIS thetaE = 4 pi sigma^2 Dds/(c^2 Ds): M_E = pi sigma^2 (Dd thetaE)/G (the SIS projected mass inside R_E)",
+  Simplify[(cc^2 tE^2 Dd Ds/(4 GG Dds) /. tE -> 4 Pi sig^2 Dds/(cc^2 Ds)) -
+     Pi sig^2 (Dd 4 Pi sig^2 Dds/(cc^2 Ds))/GG] === 0];
+Module[{ratio, tEarc, RE, ME},
+  ratio = angDiamDist12[0.3, 1.0, 0.3, 70.]/angDiamDist[1.0, 0.3, 70.];
+  tEarc = 4 Pi (250./2.998*^5)^2 ratio/arcsecToRad;
+  RE = angDiamDist[0.3, 0.3, 70.] MpcToCm tEarc arcsecToRad;    (* cm *)
+  ME = Pi (250.*^5)^2 RE/GNewton/Msolar;
+  Print["    Dds/Ds(0.3,1.0) = ", ratio, ";  thetaE(250 km/s) = ", tEarc,
+        " arcsec;  R_E = ", RE/(3.086*^21), " kpc;  M_E = ", ME];
+  check["[E3] z=(0.3,1.0): Dds/Ds = 0.638; thetaE(sigma=250) = 1.15 arcsec; R_E = 5.1 kpc; M_E = 2.3e11 Msun",
+    Abs[ratio - 0.638] < 1*^-3 && Abs[tEarc - 1.15] < 0.01 &&
+    Abs[RE/(3.086*^21) - 5.1] < 0.05 && Abs[ME/1*^11 - 2.3] < 0.05];
+];
+
+(* ---------- [M] mass-sheet transform, fully general psi ---------- *)
+Module[{psi, psiL, kap, kapL, alp, alpL, A, AL, bet, betL, tau, tauL, g1, g2, g1L, g2L},
+  psi = psiF[x, y];
+  psiL = lam psi + (1 - lam) (x^2 + y^2)/2;
+  kap = (D[psi, {x, 2}] + D[psi, {y, 2}])/2;
+  kapL = (D[psiL, {x, 2}] + D[psiL, {y, 2}])/2;
+  check["[M1] psi_lam = lam psi + (1-lam) theta^2/2 has kappa_lam = lam kappa + (1-lam)",
+    Simplify[kapL - (lam kap + 1 - lam)] === 0];
+  alp = {D[psi, x], D[psi, y]}; alpL = {D[psiL, x], D[psiL, y]};
+  check["[M2] alpha_lam = lam alpha + (1-lam) theta  (uniform sheet: alpha = theta, kappa = 1)",
+    Simplify[alpL - (lam alp + (1 - lam) {x, y})] === {0, 0} &&
+    (D[x, x] + D[y, y])/2 == 1];
+  bet = {x, y} - alp; betL = {x, y} - alpL;
+  check["[M3] theta - alpha_lam = lam (theta - alpha): image positions invariant for beta -> lam beta",
+    Simplify[betL - lam bet] === {0, 0}];
+  A = IdentityMatrix[2] - D[alp, {{x, y}}]; AL = IdentityMatrix[2] - D[alpL, {{x, y}}];
+  check["[M4] A_lam = lam A, det A_lam = lam^2 det A",
+    Simplify[AL - lam A] === {{0, 0}, {0, 0}} && Simplify[Det[AL] - lam^2 Det[A]] === 0];
+  tau = ((x - b1s)^2 + (y - b2s)^2)/2 - psi;
+  tauL = ((x - lam b1s)^2 + (y - lam b2s)^2)/2 - psiL;
+  check["[M5] tau_lam(theta; lam beta) = lam tau(theta; beta) + lam(lam-1)|beta|^2/2 (image-independent offset)",
+    Simplify[tauL - (lam tau + lam (lam - 1) (b1s^2 + b2s^2)/2)] === 0];
+  g1 = (D[psi, {x, 2}] - D[psi, {y, 2}])/2; g2 = D[psi, x, y];
+  g1L = (D[psiL, {x, 2}] - D[psiL, {y, 2}])/2; g2L = D[psiL, x, y];
+  check["[M6] gamma_lam = lam gamma and 1 - kappa_lam = lam (1 - kappa): reduced shear g = gamma/(1-kappa) invariant",
+    Simplify[{g1L, g2L} - lam {g1, g2}] === {0, 0} &&
+    Simplify[(1 - kapL) - lam (1 - kap)] === 0 &&
+    Simplify[{g1L, g2L}/(1 - kapL) - {g1, g2}/(1 - kap)] === {0, 0}];
+];
+check["[M7] mean convergence: kbar_lam = lam kbar + 1 - lam equals 1 iff kbar = 1 (lam != 0): thetaE invariant",
+  Simplify[Solve[lam kb + 1 - lam == 1 && lam != 0, kb]] === {{kb -> 1}}];
+Module[{s, kp, slopeL},
+  (* local log-slope of kappa_lam for kappa = k0 theta^-s *)
+  slopeL = Simplify[th D[lam k0 th^-s + 1 - lam, th]/(lam k0 th^-s + 1 - lam)];
+  check["[M8] d ln kappa_lam/d ln theta = -s lam kappa/(lam kappa + 1 - lam): shallower than -s for 0<lam<1",
+    Simplify[slopeL - (-s lam k0 th^-s/(lam k0 th^-s + 1 - lam))] === 0 &&
+    Simplify[lam k/(lam k + 1 - lam) < 1, {0 < lam < 1, k > 0}]];
+  check["[M9] SIS at thetaE (kappa = 1/2), lam = 0.9: local slope -1 -> -0.818",
+    Abs[(-1 0.9 0.5/(0.9 0.5 + 0.1)) + 0.81818] < 1*^-4];
+];
+
+(* ---------- [H] time-delay distance and H0 ---------- *)
+Module[{H0n, H0t, dtObs, Dfun, dtau},
+  (* D(H0) = Dhat/H0 ; Delta t = D Delta tau / c *)
+  Dfun[h_] := Dh/h;
+  check["[H1] D_dt = Dd Ds/Dds with every D = (c/H0) x f(z): D_dt proportional to 1/H0",
+    Simplify[((cc/h) fd (cc/h) fs/((cc/h) fds)) - (cc fd fs/fds)/h] === 0];
+  (* naive model fits Delta tau_n ; true model is its MST: Delta tau_t = lam Delta tau_n *)
+  H0n = h /. Solve[dtObs == Dfun[h] dtau/cc, h][[1]];
+  H0t = h /. Solve[dtObs == Dfun[h] lam dtau/cc, h][[1]];
+  check["[H2] same observed Delta t: H0_true = lam H0_naive",
+    Simplify[H0t - lam H0n] === 0];
+  check["[H3] numbers: lam = 0.9 -> H0_true = 0.9 H0_naive; 73 x 0.95 = 69.35; lam = 67.4/73.3 = 0.9195",
+    Abs[0.9 - 0.9] == 0 && Abs[73 0.95 - 69.35] < 1*^-10 && Abs[67.4/73.3 - 0.9195] < 1*^-4];
+  check["[H4] D_dt(H0=35)/D_dt(H0=70) = 2 and Dds/Ds independent of H0 (z = 0.6, 1.5)",
+    Module[{f70, f35},
+      f70 = (1 + 0.6) angDiamDist[0.6, 0.3, 70.] angDiamDist[1.5, 0.3, 70.]/angDiamDist12[0.6, 1.5, 0.3, 70.];
+      f35 = (1 + 0.6) angDiamDist[0.6, 0.3, 35.] angDiamDist[1.5, 0.3, 35.]/angDiamDist12[0.6, 1.5, 0.3, 35.];
+      Abs[f35/f70 - 2] < 1*^-10 &&
+      Abs[angDiamDist12[0.6, 1.5, 0.3, 70.]/angDiamDist[1.5, 0.3, 70.] -
+          angDiamDist12[0.6, 1.5, 0.3, 35.]/angDiamDist[1.5, 0.3, 35.]] < 1*^-12]];
+  check["[H5] Exercise 9.3 units: (1+zd) Dd Ds/Dds = 4463 Mpc and 0.64 arcsec^2 = 1.504e-11 rad^2 give c Delta t / D_dt -> 80.0 days",
+    Module[{Ddt = (1 + 0.6) angDiamDist[0.6, 0.3, 70.] angDiamDist[1.5, 0.3, 70.]/angDiamDist12[0.6, 1.5, 0.3, 70.],
+            dtr = 0.64 arcsecToRad^2},
+      Abs[Ddt - 4463] < 1 && Abs[dtr - 1.504*^-11] < 1*^-14 &&
+      Abs[Ddt MpcToCm dtr/cLight/86400 - 80.0] < 0.1]];
+];
+
+(* ---------- [S] source-position transformation ---------- *)
+Module[{Bm, Am, a, b, d, l1, l2},
+  check["[S1] Jacobian of beta_hat(beta(theta)) is B.A ; B = lam I gives lam A (symmetric)",
+    Simplify[(lam IdentityMatrix[2]).{{a, b}, {b, d}} - Transpose[(lam IdentityMatrix[2]).{{a, b}, {b, d}}]] === {{0, 0}, {0, 0}}];
+  Bm = {{1.1, 0.05}, {0.05, 0.95}}; Am = {{0.4, 0.2}, {0.2, -0.3}};
+  check["[S2] a general symmetric B that does not commute with A gives non-symmetric B.A (not a gradient map)",
+    Abs[(Bm.Am)[[1, 2]] - (Bm.Am)[[2, 1]]] > 1*^-3];
+  check["[S3] mu_hat = mu/det B(beta): same B for all images of one source, so flux ratios are preserved",
+    Simplify[(1/(detB detA1))/(1/(detB detA2)) - detA2/detA1] === 0];
+];
+
+(* ---------- [P] power law: projection, normalization, slopes, Jeans ---------- *)
+Module[{u, I1, kap, kbar, A0, alpha, r, R, M3, integrand, sig2, dlt},
+  I1 = Integrate[(1 + u^2)^(-gp/2), {u, 0, Infinity}, Assumptions -> gp > 1];
+  check["[P1] int_0^inf (1+u^2)^(-g/2) du = (1/2) B(1/2,(g-1)/2) = (sqrt(pi)/2) Gamma((g-1)/2)/Gamma(g/2)",
+    FullSimplify[I1 - Sqrt[Pi]/2 Gamma[(gp - 1)/2]/Gamma[gp/2], gp > 1] === 0 &&
+    FullSimplify[Beta[1/2, (gp - 1)/2]/2 - Sqrt[Pi]/2 Gamma[(gp - 1)/2]/Gamma[gp/2], gp > 1] === 0];
+  check["[P2] substitution z = xi u: rho0 r0^g (xi^2+z^2)^(-g/2) dz = rho0 r0^g xi^(1-g) (1+u^2)^(-g/2) du",
+    Simplify[(r0^gp (xi^2 + (xi u)^2)^(-gp/2) xi) - r0^gp xi^(1 - gp) (1 + u^2)^(-gp/2),
+       {xi > 0, gp > 1, r0 > 0}] === 0];
+  kap = A0 (tE/th)^(gp - 1);
+  kbar = Simplify[2/th^2 Integrate[A0 (tE/tt)^(gp - 1) tt, {tt, 0, th}, Assumptions -> {1 < gp < 3, th > 0, tE > 0}],
+       {1 < gp < 3, th > 0, tE > 0}];
+  check["[P3] mean kappa inside theta = 2 A0/(3-g) (thetaE/theta)^(g-1); kbar(thetaE) = 1 => A0 = (3-g)/2",
+    Simplify[kbar - 2 A0/(3 - gp) (tE/th)^(gp - 1), {1 < gp < 3, th > 0, tE > 0}] === 0 &&
+    Simplify[Solve[(kbar /. th -> tE) == 1, A0], {tE > 0}] === {{A0 -> (3 - gp)/2}}];
+  check["[P4] gamma'=2 gives kappa = thetaE/(2 theta) (SIS); kappa(thetaE) = (3-g)/2",
+    Simplify[((3 - gp)/2 (tE/th)^(gp - 1) /. gp -> 2) - tE/(2 th)] === 0 &&
+    Simplify[(3 - gp)/2 (tE/tE)^(gp - 1), tE > 0] === (3 - gp)/2];
+  alpha = Simplify[th kbar /. A0 -> (3 - gp)/2, {th > 0, tE > 0}];
+  check["[P5] alpha(theta) = theta kbar = thetaE^(g-1) theta^(2-g); 2D log-slope of kappa = 1-g; M_2D ~ theta^(3-g)",
+    Simplify[alpha - tE^(gp - 1) th^(2 - gp), {th > 0, tE > 0}] === 0 &&
+    Simplify[th D[Log[(tE/th)^(gp - 1)], th], {th > 0, tE > 0}] === 1 - gp &&
+    Simplify[th D[Log[th^2 kbar], th], {th > 0, tE > 0, 1 < gp < 3}] === 3 - gp];
+  check["[P6] radial critical curve 1 - d alpha/d theta = 0 at theta_r = thetaE (2-g)^(1/(g-1)) (exists only for g < 2)",
+    Simplify[(1 - D[tE^(gp - 1) th^(2 - gp), th]) /. th -> tE (2 - gp)^(1/(gp - 1)),
+       {1 < gp < 2, tE > 0}] === 0];
+  (* isotropic Jeans equation: d(nu sigma_r^2)/dr = -nu G M(r)/r^2, nu ~ r^-dlt, M ~ r^(3-g) *)
+  M3 = m0 r^(3 - gp);
+  sig2 = Simplify[r^dlt Integrate[R^-dlt GG m0 R^(3 - gp)/R^2, {R, r, Infinity},
+            Assumptions -> {gp + dlt > 2, r > 0}], {r > 0}];
+  check["[P7] isotropic Jeans, tracer nu ~ r^-delta, M ~ r^(3-g): sigma_r^2 = G M(r)/[r (g + delta - 2)]",
+    Simplify[sig2 - GG M3/(r (gp + dlt - 2)), {r > 0, gp + dlt > 2}] === 0];
+  check["[P8] self-consistent tracer (delta = g): sigma_r^2 = G M/(2(g-1) r); g = 2 gives the SIS M(r) = 2 sigma^2 r/G",
+    Simplify[(GG M3/(r (gp + dlt - 2)) /. dlt -> gp) - GG M3/(2 (gp - 1) r)] === 0 &&
+    Simplify[(GG M3/(2 (gp - 1) r) /. gp -> 2) - GG m0/2] === 0];
+  check["[P9] sigma_r^2 ~ r^(2-g): flat only for the isothermal slope",
+    Simplify[r D[Log[GG M3/(2 (gp - 1) r)], r], r > 0] === 2 - gp];
+];
+
+(* ---------- [L] bridges ---------- *)
+Module[{eta, etaP, c, alv, thv},
+  (* two source planes behind one deflector (first source massless):
+     beta_i = theta - eta_i alpha.  Apply the MST of plane 1 to the physical
+     deflector; plane 2 keeps its images iff eta2 -> eta2' *)
+  c = 1 - eta (1 - lam);
+  etaP = lam eta/c;
+  check["[L1] theta - eta (lam alpha + (1-lam) theta) = c (theta - eta' alpha), c = 1 - eta(1-lam), eta' = lam eta/c",
+    Simplify[(thv - eta (lam alv + (1 - lam) thv)) - c (thv - etaP alv)] === 0];
+  check["[L2] eta' - eta = eta (1-eta)(lam-1)/c: at a fixed distance ratio (0<eta<1) the second plane keeps its images only for lam = 1",
+    Simplify[(etaP - eta) - eta (1 - eta) (lam - 1)/c] === 0];
+  (* local MST: power law (g) + central point mass with theta_pm^2 = f thetaE^2 matches
+     alpha(thetaE) and alpha'(thetaE) of a pure power law of slope g_eff *)
+  Module[{kk, al, sol, geff},
+    al = kk th^(2 - gp) + f tE^2/th;   (* kk = b^(g-1), b = galaxy Einstein parameter *)
+    sol = Solve[(al /. th -> tE) == tE, kk];
+    geff = 2 - (D[al, th] /. th -> tE /. sol[[1]]);
+    check["[L3] power law + central point mass (theta_pm^2 = f thetaE^2) looks locally like a power law with g_eff = g + f(3 - g)",
+      Simplify[geff - (gp + f (3 - gp)), {tE > 0}] === 0];
+    check["[L4] f = 0.05, g = 2: g_eff = 2.05",
+      Abs[(2 + 0.05 (3 - 2)) - 2.05] < 1*^-12];
+  ];
+];
+
+(* [E4]-[E6] SIE mass, Exercise 9.1 and 9.4(d) numbers *)
+check["[E4] SIE (sqrt(q) normalization): integral of kappa over the critical ellipse = pi thetaE^2 for every q",
+  Simplify[Integrate[tE Sqrt[qq]/(2 rr) rr/qq, {rr, 0, tE Sqrt[qq]}, {tt, 0, 2 Pi},
+     Assumptions -> {qq > 0, tE > 0}] - Pi tE^2, {qq > 0, tE > 0}] === 0];
+Module[{SC, RE, ME},
+  SC = sigmaCrMsunKpc2[0.3, 1.0, 0.3, 70.];
+  RE = angDiamDist[0.3, 0.3, 70.] 1000 1.5 arcsecToRad;   (* kpc *)
+  ME = Pi RE^2 SC;
+  Print["    Ex 9.1: Sigma_cr = ", SC, " Msun/kpc^2; R_E = ", RE, " kpc; pi R_E^2 Sigma_cr = ", ME];
+  check["[E5] Ex 9.1: Sigma_cr = 2.83e9 Msun/kpc^2, R_E = 6.68 kpc, pi R_E^2 Sigma_cr = 3.98e11 Msun",
+    Abs[SC/1*^9 - 2.83] < 0.01 && Abs[RE - 6.68] < 0.01 && Abs[ME/1*^11 - 3.98] < 0.02];
+];
+Module[{sP = sigmaVKmS[1.2, 0.3, 1.0, 0.3, 70.]},
+  check["[E6] Ex 9.4(d) as scripted (z_d = 0.3, z_s = 1.0 assumed): sigma_SIS(1.2 arcsec) = 255 km/s; 230/255 = 0.90; (230/255)^2 = 0.81",
+    Abs[sP - 255.3] < 0.1 && Abs[230/sP - 0.901] < 1*^-3 && Abs[(230/sP)^2 - 0.812] < 1*^-3];
+];
+
+check["[E7] Ex 9.1(d): sigma = c sqrt(thetaE Ds/(4 pi Dds)) = 285 km/s", Abs[sigmaVKmS[1.5, 0.3, 1.0, 0.3, 70.] - 285.4] < 0.1];
+check["[E8] Ex 9.5: R_E = Dd thetaE: 1037.6 Mpc x 1 arcsec = 5.03 kpc; 163.2 Mpc x 0.9 arcsec = 0.712 kpc",
+  Abs[1037.6 1000 arcsecToRad - 5.030] < 1*^-3 && Abs[163.2 1000 0.9 arcsecToRad - 0.712] < 1*^-3];
+check["[H6] Ex 9.3(c): Delta t_pred(H0=70) = 79.98 d => H0 = 69.98; x 0.95 = 66.48",
+  Abs[70. 79.9775/80. - 69.980] < 1*^-3 && Abs[0.95 69.980 - 66.481] < 1*^-3];
+
+check["[P10] t = u^2/(1+u^2) maps (1+u^2)^(-g/2) du to (1/2) t^(-1/2) (1-t)^((g-3)/2) dt",
+  Module[{u = Sqrt[tt/(1 - tt)]},
+    Simplify[(1 + u^2)^(-gp/2) D[u, tt] - (1/2) tt^(-1/2) (1 - tt)^((gp - 3)/2), {0 < tt < 1, gp > 1}] === 0]];
+check["[E9] Ex 9.1: Ds/Dds = 1652.0/1054.7 = 1.566; arcsec-for-radian error inflates sigma by sqrt(206265) = 454",
+  Abs[1651.956/1054.743 - 1.566] < 1*^-3 && Abs[Sqrt[206264.8] - 454.2] < 0.1 &&
+  Abs[2.998*^5 Sqrt[1.5 arcsecToRad 1.566/(4 Pi)] - 285.4] < 0.3];
+check["[H7] Ex 9.3: 1.6 x 1379.0 x 1745.6 / 863.0 = 4463 Mpc",
+  Abs[1.6 1379.0 1745.6/863.0 - 4463] < 1];
+
+summary[];
+
+
+
