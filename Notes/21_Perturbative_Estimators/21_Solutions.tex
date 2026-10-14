@@ -48,8 +48,13 @@ strictly positive; it vanishes only in the degenerate limit $\rho=1$.
 \emph{only} part of the central mass's signal that the model cannot
 absorb: it is the evidence that a central mass is present. A plane with
 two images can be biased by a central mass but can never detect one; a
-plane with a radial image can.
-\emph{[Attested: \solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl}, checks 1a--1e.]}
+plane with a radial image can, if the slope is held fixed. With the
+slope free, a single three-image plane gives three equations for three
+unknowns and is fitted exactly (\S\ref{sec:pe_free_slope}; for the
+running example the $3\times3$ system has determinant $0.561$), so
+detection then needs a fourth datum or a second source plane that shares
+the slope.
+\emph{[Attested: \solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl}, checks 1a--1f.]}
 
 % ----- Exercise: intercept -----
 \subsection*{Exercise~\ref{ex:pe_intercept}: Why the Intercept Matters}
@@ -145,9 +150,12 @@ For $1<\gp<3$, $k>0$, and for $0<\Brat<1$ (write $\Brat=e^{-L}$, $L>0$)
 the threshold $\Brat^{-k}=e^{kL}>1$. The sign flips when plane~2's
 response exceeds plane~1's by more than the geometric suppression
 factor. Since $\partial(\Delta\Brat/\Brat)/\partial c_2=-(\gp-1)\mBH_1\Brat^k<0$,
-a larger $c_2$ --- a deeper plane-2 radial image --- drives the bias
-negative. The sign of the cosmological bias is controlled by where the
-radial images sit.
+a larger $c_2$ drives the bias negative; in a source-plane fit a larger
+$c_2$ means a deeper plane-2 radial image, while in an image-plane fit
+a very deep radial image is down-weighted and $c_2$ returns towards the
+floor (\S\ref{sec:pe_beyond_canonical}). The sign of the cosmological
+bias is controlled by where the radial images sit and by how the fit
+weights them.
 
 \textbf{Why the shortcut cannot.} Setting both $c_i$ to the floor gives
 $\mBH_1(1-\Brat^{k})=\mBH_1(1-e^{-kL})>0$ for every $0<\Brat<1$. It

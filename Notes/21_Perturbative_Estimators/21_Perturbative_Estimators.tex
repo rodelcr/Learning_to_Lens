@@ -38,7 +38,8 @@ contains a small central point mass, such as a supermassive black hole
 Chapter~\ref{ch:central_mass_bias} catalogues the bias channels it
 opens). The example shows every feature of the method: a nuisance
 parameter that must not be fixed, a single image --- the radial image
---- that carries almost all the leverage, an exact closed form for a
+--- that in a source-plane fit carries almost all the leverage (and in
+an image-plane fit much less), an exact closed form for a
 canonical configuration, a sign change, and, once several source planes
 look through the same deflector, a \emph{coherent} error that does not
 average down.
@@ -85,7 +86,7 @@ in $\delta\vb{p}$. Its solution is
     \qquad W=\operatorname{diag}(w_j).\;}
     \label{eq:pe_general}
 \end{equation}
-Equation~\eqref{eq:pe_general} is the whole method. The bias is linear
+Equation~\eqref{eq:pe_general} is the estimator. The bias is linear
 in the amplitude $m$, and its coefficient is the regression of the
 omitted shape $\vb{g}$ onto the columns of $X$ --- the directions in
 which the model is free to move. Three consequences are immediate.
@@ -177,8 +178,8 @@ Eq.~\eqref{eq:alpha_mean_kappa}, is what makes $\mBH$ a mass ratio.
 
 The observer, unaware of the point mass, fits a \emph{pure} power law
 with the slope held fixed (we free it in \S\ref{sec:pe_free_slope}).
-The free parameters are the Einstein radius and --- crucially --- the
-source position, which is never observed.
+The free parameters are the Einstein radius and the source position,
+which is never observed.
 
 \subsection{Image configuration}
 
@@ -431,8 +432,8 @@ slightly heavier power law.
 
 \subsection{Why the radial image dominates}
 
-Now add a radial image at $\theta=\rho$, $0<\rho<1$. It differs from
-the pair in exactly the way that matters:
+Now add a radial image at $\theta=\rho$, $0<\rho<1$. Its two shapes
+behave oppositely:
 \[
     a_C=\frac{1}{\rho}\;\to\;\infty,
     \qquad
@@ -444,14 +445,16 @@ law's response to a change of Einstein radius vanishes. This is where
 the two shapes are \emph{most} different, so this is the datum that
 breaks the degeneracy of the pair --- and, by the same token, the datum
 that drags the fitted Einstein radius furthest when the point mass is
-ignored. The radial image is the load-bearing datum.
+ignored, provided it carries the same weight as the other images (a
+source-plane fit). How strongly it pulls in an image-plane fit is a
+different matter (\S\ref{sec:pe_beyond_canonical}).
 
 \subsection{The exact closed form for the canonical triple}
 \label{sec:pe_closed_form}
 
 For the \textbf{canonical triple} --- a symmetric pair at $\pm1$ and a
 radial image at $\rho$ --- the regression can be done exactly. With unit
-weights,
+weights, i.e.\ for the source-plane $\chi^2$ of Eq.~\eqref{eq:pe_chi2},
 \begin{equation}
     a=\Bigl(1,\,-1,\,\frac1\rho\Bigr),
     \qquad
@@ -497,25 +500,29 @@ image's side.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.70\textwidth]{../Figures/21_Perturbative_Estimators/response_coefficient.pdf}
-    \caption{Response coefficient $c$ of a fixed-slope power-law fit to a
+    \caption{Response coefficient $c$ of a fixed-slope, source-plane
+    (unit-weight) power-law fit to a
     lens with an omitted central point mass, as a function of the
     density slope $\gp$, for the canonical configuration: tangential
     pair only (dashed; the floor $1/(\gp-1)$ of Eq.~\eqref{eq:pe_floor})
     and with a radial image at $\rho=0.2$, $0.05$ and $0.01$
     (Eq.~\eqref{eq:pe_cclosed}). The radial image raises $c$ above the
-    floor, the more so the deeper it sits. From
+    floor, the more so the deeper it sits. This depth dependence is a
+    property of the unit weights; an image-plane fit behaves differently
+    (\S\ref{sec:pe_beyond_canonical}). From
     \texttt{response\_coefficient.wl}.}
     \label{fig:pe_response}
 \end{figure}
 
 \paragraph{Limits.} Figure~\ref{fig:pe_response} shows
-Eq.~\eqref{eq:pe_cclosed}; its limits carry the physics.
+Eq.~\eqref{eq:pe_cclosed}; its limits carry the physics of the
+source-plane fit.
 \begin{itemize}
     \item $\rho\to1$: $c\to4/[4(\gp-1)]=1/(\gp-1)$, the floor of
           Eq.~\eqref{eq:pe_floor}. The ``radial'' image has merged with
           a tangential one and the configuration has lost its extra
-          datum. Masked and unmasked cases are one function evaluated
-          at the two ends of $\rho$.
+          datum. For the canonical triple, masked and unmasked cases
+          are one function evaluated at the two ends of $\rho$.
     \item $\rho\to0$: $\rho^{1-\gp}\to\infty$ dominates the numerator
           while $\rho^{4-2\gp}\to0$ in the denominator, so
           \begin{equation}
@@ -523,10 +530,12 @@ Eq.~\eqref{eq:pe_cclosed}; its limits carry the physics.
               \;\longrightarrow\;\infty .
               \label{eq:pe_asym}
           \end{equation}
-          The deeper the radial image, the larger the leverage of an
-          unmodelled central mass. The divergence is a warning, not a
-          prediction: once $\mBH c$ is no longer small the linear
-          estimate fails (\S\ref{sec:pe_validity}).
+          In a source-plane fit, the deeper the radial image, the larger
+          the leverage of an unmodelled central mass. The divergence is
+          a warning, not a prediction: the linear estimate fails well
+          before $\mBH c$ becomes large (\S\ref{sec:pe_validity}). It is
+          also specific to unit weights: under image-plane weights $c$
+          tends to the floor instead (\S\ref{sec:pe_beyond_canonical}).
     \item In between, $c$ decreases strictly with $\rho$ for every
           $1<\gp<2$: the numerator of $\dd c/\dd\rho$ is a sum of three
           terms with negative coefficients
@@ -536,7 +545,7 @@ Eq.~\eqref{eq:pe_cclosed}; its limits carry the physics.
 \subsection{How good is the asymptote?}
 
 Dividing Eq.~\eqref{eq:pe_cclosed} by Eq.~\eqref{eq:pe_asym} gives an
-exact correction factor,
+exact correction factor (Fig.~\ref{fig:pe_corrfactor}),
 \begin{equation}
     \frac{c}{c_{\rm asym}}=\frac{1+3u}{1+v/3},
     \qquad u\equiv\rho^{\gp-1},\qquad v\equiv\rho^{4-2\gp}.
@@ -588,9 +597,9 @@ The asymptote is the natural first answer and is correct as a limit,
 but at realistic radial-image depths it can be off by a large factor:
 for shallow profiles the dropped tangential-pair term $3u$ decays only
 like $\rho^{\gp-1}$, which is very slow.
-Exercise~\ref{ex:pe_radial_leverage}(e) puts a number on it. The lesson
-generalises: a leading-order asymptote of a regression coefficient is
-only as good as the slowest-decaying term it drops.
+Exercise~\ref{ex:pe_radial_leverage}(e) puts a number on it. In
+general, the accuracy of a leading-order asymptote of a regression
+coefficient is set by the slowest-decaying term it drops.
 \end{annotation}
 
 \subsection{Beyond the canonical triple}
@@ -598,8 +607,9 @@ only as good as the slowest-decaying term it drops.
 
 Real tangential pairs are \emph{not} symmetric. In the running example
 ($\gp=1.6$, $\ysrc=0.2$) the source-plane regression of
-Eq.~\eqref{eq:pe_c}, with $w_j=1$ on the three actual images, gives
-$c=10.47$, whereas the canonical formula evaluated at
+Eq.~\eqref{eq:pe_c}, with $w_j=1$ on the three images listed in
+\S\ref{sec:pe_setup}, gives
+$c=10.46$, whereas the canonical formula evaluated at
 $\rho=|\theta_C|=0.0237$ gives $6.81$: the asymmetric pair raises $c$ by
 about half. With the radial image masked, the same regression gives
 $c=2.00$ rather than the canonical floor $1/(\gp-1)=1.67$. The closed
@@ -610,8 +620,12 @@ The estimator itself is confirmed by brute force in
 \texttt{response\_coefficient.wl}: generating the images of the
 power-law-plus-point-mass lens for $\mBH=10^{-6}$ and fitting a pure
 power law with \texttt{FindMinimum} returns $\epsilon/\mBH$ equal to the
-linear $c$ to better than $10^{-4}$, both with and without the radial
-image.
+linear $c$ evaluated on the same perturbed images to better than
+$10^{-4}$, both with and without the radial image. (On those images
+$c=10.466$. Evaluating $a_j$ and $b_j$ on the perturbed rather than the
+unperturbed images changes $c$ only at $\order{\mBH}$, here by a
+relative $4\times10^{-4}$ at $\mBH=10^{-6}$, large because the radial image is so
+sensitive; see \S\ref{sec:pe_validity}.)
 
 \paragraph{The weights matter.} An image-plane fit of the same three
 images --- Eq.~\eqref{eq:pe_chi2} with $w_j\propto1/\lambda_r^2$ ---
@@ -622,6 +636,21 @@ displacement and the image-plane $\chi^2$ down-weights it. The radial
 image's leverage is therefore a property of the \emph{estimator} as well
 as of the lens: which $\chi^2$ is minimised, and with which astrometric
 errors, is part of the data geometry in Eq.~\eqref{eq:pe_general}.
+
+The weights change the dependence on $\rho$ as well as the value of
+$c$. Apply Eq.~\eqref{eq:pe_chi2} with equal $\sigma$ to the canonical
+triple: the pair has weight $1/(\gp-1)^2$, and the radial image has weight
+$1/\lambda_r(\rho)^2$. Since $|\lambda_r(\rho)|$ grows like
+$\rho^{1-\gp}$, that weight falls like $\rho^{2(\gp-1)}$, and the deep
+radial image is switched off rather than given unlimited leverage.
+At $\gp=1.6$ the image-plane $c$ does not diverge but tends to the floor
+$1/(\gp-1)=5/3$ as $\rho\to0$, and it is not monotonic: $1.70$, $1.83$,
+$2.48$, $3.72$, $4.76$ and $4.70$ at $\rho=0.001$, $0.01$, $0.05$,
+$0.1$, $0.15$ and $0.2$, where the source-plane values are $36.7$,
+$10.4$, $4.87$, $3.68$, $3.17$ and $2.86$. The $\rho\to0$ divergence
+of Eq.~\eqref{eq:pe_asym}, Fig.~\ref{fig:pe_response} and the sign-change
+example of \S\ref{sec:pe_sign_change} are therefore source-plane
+(unit-weight) results.
 
 \begin{annotation}[Common error: quoting $c$ without the likelihood]
 A response coefficient is meaningless without the weights it was
@@ -666,18 +695,21 @@ $L>0$, $\delta\gp/\mBH=(e^{L(3-\gp)}-1)/L>0$.
 \end{derivation}
 
 Equation~\eqref{eq:pe_free_slope} makes the role of the radial image
-explicit. With the slope free, the Einstein radius falls back to the
+explicit. For the canonical triple with the slope free, the Einstein
+radius falls back to the
 total-mass value of Eq.~\eqref{eq:pe_total_mass}, and \emph{all} of the
 radial image's information goes into the slope: the fitted profile
 steepens to mimic the central mass, the fit is perfect, and the central
 mass is undetectable from these three positions. Without the radial
 image the free-slope normal matrix is singular (rank~2 for three
 parameters): two tangential images at the pivot cannot constrain the
-slope at all. \textbf{The radial image is the slope's lever arm}, and an
-unmodelled central mass pulls on exactly that lever. For the asymmetric
-running example the same calculation gives $\epsilon/\mBH=-3.51$ and
-$\delta\gp/\mBH=86.4$, again confirmed by a three-parameter
-\texttt{FindMinimum} fit. How this slope bias propagates into other
+slope at all, so the radial image is what fixes the slope, and an
+unmodelled central mass biases the slope through it. For the asymmetric
+running example the same calculation gives $\delta\gp/\mBH=86.4$ and
+$\epsilon/\mBH=-3.51$, again confirmed by a three-parameter
+\texttt{FindMinimum} fit: the fit is still exact and the slope still
+steepens, but the Einstein radius no longer returns to the total-mass
+value $1/(\gp-1)=1.67$. How this slope bias propagates into other
 observables is one of the channels of
 Chapter~\ref{ch:central_mass_bias}.
 
@@ -775,15 +807,20 @@ Equation~\eqref{eq:pe_bias} changes sign where the bracket vanishes:
     \label{eq:pe_sign}
 \end{equation}
 The bias is positive while plane~2 responds less than $\Brat^{-k}$ times
-as strongly as plane~1, and negative beyond. Since a deep radial image
-raises $c$ without bound, a plane-2 radial image close enough to the
-centre always flips the sign. For example, with $\gp=1.6$,
-$\Brat=0.8$, plane~1 at its floor and plane~2 a canonical triple, the
-bias is negative for $\rho_2<0.212$ and positive above. (A root always
-exists in $0<\rho_2<1$: $c_2(\gp-1)$ runs from $1$ at $\rho_2=1$ to
-$\infty$ as $\rho_2\to0$, while $\Brat^{-k}>1$.) The shortcut
-Eq.~\eqref{eq:pe_shortcut} has a fixed sign and cannot reproduce this:
-\emph{the sign of the cosmological bias is set by image geometry}.
+as strongly as plane~1, and negative beyond. In a source-plane fit a
+deep radial image raises $c$ without bound, so a plane-2 radial image
+close enough to the centre always flips the sign. For example, with
+$\gp=1.6$, $\Brat=0.8$, plane~1 at its floor and plane~2 a canonical
+triple, the source-plane bias is negative for $\rho_2<0.212$ and
+positive above. (A root always exists in $0<\rho_2<1$: the source-plane
+$c_2(\gp-1)$ runs from $1$ at $\rho_2=1$ to $\infty$ as $\rho_2\to0$,
+while $\Brat^{-k}>1$.) An image-plane fit of the same configuration
+reverses the pattern: since its $c_2$ returns to the floor as
+$\rho_2\to0$ (\S\ref{sec:pe_beyond_canonical}), the bias is positive for
+a very deep radial image and negative only for $0.065<\rho_2<\theta_r$.
+The shortcut Eq.~\eqref{eq:pe_shortcut} has a fixed sign and cannot
+reproduce either pattern. The sign of the cosmological bias is set by
+the image geometry together with the choice of $\chi^2$.
 
 % =====================================================================
 \section{Multi-Plane Coherence}
@@ -859,7 +896,10 @@ A compound lens with more source planes is more \emph{exposed} to a
 coherent modelling systematic, not less. Extra planes buy statistical
 precision, which the systematic does not share. Intuition of the form
 ``$N$ planes, so errors average down like $\sqrt N$'' presumes
-independent draws, and here there is one physical cause. The only
+independent draws, and here there is one physical cause; when the
+planes' response coefficients are comparable it also pushes every ratio
+the same way (unequal $c_i$ can give opposite signs,
+\S\ref{sec:pe_sign_change}). The only
 lever that lowers $\mathcal{S}$ is the modelling one: give the
 deflector's inner profile the freedom to represent the central mass, or
 measure the radial image well enough to constrain it. How per-ratio
@@ -876,9 +916,20 @@ the numerics must be used, in the following situations.
 \begin{enumerate}
     \item \textbf{The fitted shift is not small.} The step
           $e^{(\gp-1)\epsilon}\simeq1+(\gp-1)\epsilon$ requires
-          $|\epsilon|=\mBH|c|\ll1$. Because $c\sim\rho^{1-\gp}$ grows
-          without bound as the radial image deepens, a deep radial image
-          breaks the expansion at a smaller $\mBH$.
+          $|\epsilon|=\mBH|c|\ll1$. That is necessary but not
+          sufficient. The image positions of
+          Eq.~\eqref{eq:pe_image_shift} were also linearised, which
+          requires each image to move by a small fraction of its
+          distance from the centre,
+          $|\mBH a_j/(\lambda_r(\theta_j)\,\theta_j)|\ll1$. For a deep
+          radial image this is the stricter condition: in the running
+          example it reads $640\,\mBH\ll1$, against
+          $\mBH c\simeq10\,\mBH$. The brute-force $\epsilon/\mBH$ there
+          departs from $c$ by $0.4\%$ at $\mBH=10^{-5}$ and by $4.5\%$ at
+          $\mBH=10^{-4}$, and by $\mBH=10^{-3}$ the radial image has
+          disappeared altogether (item~3). In a source-plane fit $c$ also
+          grows as $\rho^{1-\gp}$, so a deep radial image breaks the
+          expansion at a smaller $\mBH$ on both counts.
     \item \textbf{An image is near a critical curve.} The image shift
           $\mBH a_j/\lambda_r(\theta_j)$ of Eq.~\eqref{eq:pe_image_shift}
           diverges as $\lambda_r\to0$, i.e.\ as the source approaches
@@ -894,8 +945,8 @@ closed form Eq.~\eqref{eq:pe_cclosed} applies only to the symmetric
 triple, and for any other configuration Eq.~\eqref{eq:pe_c} must be
 evaluated on the actual images (\S\ref{sec:pe_beyond_canonical}).
 
-Inside its domain, the error of the linear estimate is genuinely second
-order. In the running example, the departure of the brute-force
+Inside its domain, the error of the linear estimate is second order.
+In the running example, the departure of the brute-force
 $\epsilon/\mBH$ from $c$ doubles (to within $1\%$) when $\mBH$ is
 doubled from $10^{-5}$ to $2\times10^{-5}$, as an $\order{\mBH^2}$ error
 in $\epsilon$ must.
@@ -932,24 +983,32 @@ should be free, or contains a bug.
     \item A symmetric tangential pair alone gives $c=1/(\gp-1)$: it
           measures the total enclosed mass. The radial image, where the
           point-mass and power-law shapes differ most, supplies the
-          leverage. For the canonical triple
+          leverage in a source-plane fit. For the canonical triple with
+          unit (source-plane) weights
           $c=(3+\rho^{1-\gp})/[(\gp-1)(3+\rho^{4-2\gp})]$ exactly, with
           asymptote $\rho^{1-\gp}/[3(\gp-1)]$, a crossing at
           $\rho_\times=9^{1/(5-3\gp)}$ for $\gp>5/3$, and the floor at
-          $\rho=1$.
+          $\rho=1$. Under image-plane weights the deep radial image is
+          down-weighted and $c$ returns to the floor as $\rho\to0$.
     \item With the slope free, the radial image's leverage goes into the
-          slope: the fit steepens, absorbs the central mass exactly, and
-          the Einstein radius returns to its total-mass value.
+          slope: the fit steepens and absorbs the central mass exactly,
+          and for the canonical triple the Einstein radius returns to its
+          total-mass value.
     \item For two source planes,
           $\Delta\Brat/\Brat=(\gp-1)\mBH_1[c_1-\Brat^{k}c_2]$ with
           $k=(3-\gp)/(\gp-1)$, which changes sign at
           $c_2/c_1=\Brat^{-k}$; the total-mass shortcut
-          $\mBH_1(1-\Brat^{k})$ cannot.
+          $\mBH_1(1-\Brat^{k})$ cannot. Where the sign changes depends
+          on the weights: in a source-plane fit a deep enough plane-2
+          radial image always makes the bias negative, in an image-plane
+          fit it does not.
     \item For $N$ planes all responses share the plane-1 term and tend
           to $(\gp-1)c_1$: the error is coherent, so adding planes makes
           the systematic more \emph{significant}.
-    \item The estimate fails when $\mBH c$ is not small, near critical
-          curves, and when images are created or destroyed.
+    \item The estimate fails when $\mBH c$ is not small, when a deep
+          radial image's fractional shift $\mBH a_j/(\lambda_r\theta_j)$
+          is not small (about $640\,\mBH$ in the running example), near
+          critical curves, and when images are created or destroyed.
 \end{itemize}
 
 % =====================================================================
@@ -978,7 +1037,8 @@ $c$.
 \begin{exercise}
 \label{ex:pe_radial_leverage}
 \textbf{(The radial image's leverage.)}
-Consider the canonical triple of Eq.~\eqref{eq:pe_triple}.
+Consider the canonical triple of Eq.~\eqref{eq:pe_triple} with unit
+(source-plane) weights.
 \begin{enumerate}[label=(\alph*)]
     \item Show that the radial image dominates $\operatorname{Cov}(a,b)$
           as $\rho\to0$ while $\operatorname{Var}(b)\to2(\gp-1)^2$, and

@@ -304,3 +304,36 @@ mechanism as the chapter's §pe_sign_change, which the chapter scopes correctly 
    3e-4 for a radial image at ρ = 0.024. That is because the relevant small parameter is m a_C/(λ_C θ_C) ≈ 640 m,
    not m c. Part of A3's 16–84% spread (0.75–1.16) may be non-linearity. Suggested check: re-run `verify_a3` at
    m = 1e-5.
+
+## Resolution — fixes applied 2026-10-14
+
+Fix pass on branch `wt/ch21` (after `git merge annotated-edition`). Checks are in
+`Mathematica/21_Perturbative_Estimators/response_coefficient.wl` (rc) and
+`Solutions/21_Perturbative_Estimators/problems_21.wl` (p21). Every changed number has a check that fails on the old statement.
+
+| id | Fix | Backing |
+|----|-----|---------|
+| F1 | Labelled as source-plane / unit-weight results: the closed-form lead-in (Eq. pe_cclosed), the "Limits" paragraph and the ρ→0 bullet (Eq. pe_asym), "the deeper the radial image, the larger the leverage", the caption of Fig. pe_response, the §pe_sign_change example and its root argument, both Summary bullets, the intro sentence, the §Why the radial image dominates closer, and the Ex. pe_radial_leverage statement. Added a paragraph to §pe_beyond_canonical ("The weights matter"): under image-plane weights the radial image's weight falls like ρ^{2(γ′−1)}, c_img → 1/(γ′−1) = 5/3 as ρ → 0, and it is non-monotonic (1.70/1.83/2.48/3.72/4.76/4.70 at ρ = 0.001/0.01/0.05/0.1/0.15/0.2, source plane 36.7/10.4/4.87/3.68/3.17/2.86). §pe_sign_change: the image-plane bias is positive for a very deep radial image and negative only for 0.065 < ρ₂ < θ_r (source plane: ρ₂ < 0.212). "The sign … is set by image geometry" became "image geometry together with the choice of χ²". Sol. 25.4 (sign change): "larger c₂ = deeper radial image" is now scoped to the source plane | rc `ip1` (weight ∝ ρ^{2(γ′−1)}), `ip2` (exact limit → 1/(γ′−1) at γ′ = 7/5, 8/5, 9/5), `ip3` (table), `ip4` (non-monotonic; source-plane monotonic), `ip5` (ρ* = 0.0650 and sign pattern up to θ_r), `ip6` (bracket > 0 as ρ₂ → 0); p21 `4e` label |
+| F2 | Validity item 1: \|ε\| = m\|c\| ≪ 1 is necessary but not sufficient. Added \|m a_j/(λ_r θ_j)\| ≪ 1, which reads 640 m ≪ 1 for the running example's radial image (vs m c ≈ 10 m). The brute-force ε/m departs from c by 0.4% at m = 1e−5 and 4.5% at m = 1e−4, and the radial image is gone by m = 1e−3. Summary's last bullet updated to match | rc `val1` (\|fractional shift\|/m = 642), `val2` (0.41%, 4.53%; radial image tracked at θ_C = −0.0235, −0.0221), `val3` (min of the lens equation on (−θ_r, 0) is < 0 at m = 1e−4 and > 0 at m = 1e−3) |
+| N5 | "c = 10.47" → 10.46, now evaluated on the m = 0 images listed in §pe_setup. Added a sentence saying the brute-force comparison uses c on the same perturbed images (10.466; relative difference 4×10⁻⁴ at m = 10⁻⁶) | rc `bf4b` now tests c0 (m = 0 images) = 10.46 (the old 10.47 fails the 0.005 tolerance by 0.0088); `bf4c` (10.47/10.466 is the perturbed-image value, relative 4e-4) |
+| X3 | §pe_free_slope: "For the canonical triple with the slope free, the Einstein radius falls back …". The asymmetric example now says ε/m = −3.51 does not return to 1/(γ′−1) = 1.67. Summary bullet: "for the canonical triple" | rc `fs10` (\|−3.51 − 1.67\| > 1), existing `fs9` |
+| X5 | Added "(Fig.~\ref{fig:pe_corrfactor})" at the correction-factor equation | build (no undefined refs) |
+| X8 | rc header now says it exports the two figures (lists both). The header also lists the new S3b/S4b sections | — |
+| Recon 1 | Sol. 25.1 l.49–51: "a plane with a radial image can, if the slope is held fixed". With the slope free, one three-image plane is an exact 3×3 solve (det 0.561), so detection needs a fourth datum or a second plane that shares the slope (§pe_free_slope) | p21 `1f` (det = 0.5607, residual 0) |
+| Recon 2 | Keybox "The design consequence": the systematic pushes every ratio the same way only "when the planes' response coefficients are comparable (unequal c_i can give opposite signs, §pe_sign_change)" | p21 `5e` (γ′ = 1.6, B = 0.8: r₂ = −2.70 < 0 < r₃ = +0.41) |
+| Recon 3 | l.517–518 → "For the canonical triple, masked and unmasked cases are one function …" | — (wording) |
+| Recon 4 | l.88 "is the whole method" → "is the estimator" | — (wording) |
+| P1/P2 (prose, at discretion) | Deleted "crucially" and "genuinely". "in exactly the way that matters" → "Its two shapes behave oppositely". Rewrote the closers at l.447 ("load-bearing datum", now scoped to source-plane weights), l.592–593 (annotation) and l.676–677 ("lever arm"). l.786 replaced under F1 | — |
+
+**Verification after edits.**
+- Before: rc `SUMMARY: 85 PASS, 0 FAIL  (of 85 checks)`; p21 `SUMMARY: 39 PASS, 0 FAIL  (of 39 checks)`.
+- After: rc `SUMMARY: 96 PASS, 0 FAIL  (of 96 checks)`; p21 `SUMMARY: 41 PASS, 0 FAIL  (of 41 checks)`.
+- Build: `cd Notes && ANNOT_REQUIRED=1 bash build.sh` ended with "all assertions passed". Page counts: Student 361, Instructor 445, Annotated 567.
+- Rebuilding also resolves X6: chapter 25 is rendered, not a stub.
+- Re-running rc re-exports both figures with unchanged content, so those files were reverted with `git checkout -- Figures/`.
+
+**Left open.**
+- Provenance (V1/V2): the author still needs to rewrite the prose in their own words. "The free intercept is not a technicality" (keybox title) and "more precisely wrong" (Sol.) are left as they were (author's call).
+- P4: em-dash thinning in the intro was not done.
+- Critic note on Fig. correction_factor: the dip below 1 at γ′ = 1.8 is barely visible on the 0.8–3.2 y-range. This is cosmetic and was not changed.
+- Spiral-project feedback items 1–5 (Reconciliation section) are outside this repo.

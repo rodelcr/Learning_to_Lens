@@ -53,6 +53,19 @@ check["1d  three images (canonical, rho = 1/10, g = 3/2): minimum residual > 0",
   N[resMin /. {rho -> 1/10, g -> 3/2}] > 10^-3];
 check["1e  a = 1/theta is in span{b, 1} only if the radial image sits at rho = 1",
   FullSimplify[(resMin /. rho -> 1) == 0, 1 < g < 2]];
+(* Fix pass 2026-10-14 (reconciler fix 1): "a plane with a radial image can detect a
+   central mass" holds only at FIXED slope.  With gamma' free, one three-image plane is a
+   square, non-singular 3x3 system [b, h, 1] and the residual is exactly zero.
+   Running example: gamma' = 8/5, y = 1/5, thetaE = 1. *)
+aPLs[t_, gg_] := Abs[t]^(2 - gg) Sign[t];
+imsRE = {t /. FindRoot[1/5 == t - aPLs[t, 8/5], {t, 3/2}, WorkingPrecision -> 40],
+   t /. FindRoot[1/5 == t - aPLs[t, 8/5], {t, -7/10}, WorkingPrecision -> 40],
+   t /. FindRoot[1/5 == t - aPLs[t, 8/5], {t, -1/50}, WorkingPrecision -> 40]};
+XfRE = Transpose[{(8/5 - 1) (aPLs[#, 8/5] & /@ imsRE), (aPLs[#, 8/5] Log[1/Abs[#]]) & /@ imsRE, {1, 1, 1}}];
+solRE = LinearSolve[XfRE, 1/imsRE];
+Print["   free slope, running example: det = ", N[Det[XfRE], 5], "  (eps, dgamma')/m = ", N[solRE[[1 ;; 2]], 5]];
+check["1f  free slope: one three-image plane is a non-singular 3x3 solve (det 0.561) with zero residual -> no detection",
+  Abs[Det[XfRE] - 0.561] < 0.0005 && Norm[XfRE.solRE - 1/imsRE] < 10^-30];
 
 (* ---------------- Exercise: intercept ---------------- *)
 Print["\n--- ex:pe_intercept ---"];
@@ -115,7 +128,7 @@ check["4c  total-mass shortcut = both planes at the floor: m1 (1 - B^k)",
   FullSimplify[(bias /. {c1 -> 1/(g - 1), c2 -> 1/(g - 1)}) == m1 (1 - B^kExp)]];
 check["4d  shortcut has fixed sign: m1 (1 - e^(-kL)) > 0",
   Simplify[m1 (1 - Exp[-kk L]) > 0, m1 > 0 && kk > 0 && L > 0]];
-check["4e  d(bias)/d c2 = -(g-1) m1 B^k < 0: a deeper plane-2 radial image drives the bias negative",
+check["4e  d(bias)/d c2 = -(g-1) m1 B^k < 0: a larger c2 (source plane: a deeper plane-2 radial image) drives the bias negative",
   Simplify[D[bias, c2] == -(g - 1) m1 B^kExp]];
 
 (* ---------------- Exercise: coherence limit ---------------- *)
@@ -130,6 +143,14 @@ check["5c  B_i = d1/d_i > d1 because d_i < 1: the limit is approached, not reach
   Simplify[d1/di > d1, 0 < d1 < di < 1]];
 check["5d  equal c > 0: |r_i| strictly increases as B_i decreases",
   Simplify[D[(gg - 1) c0 (1 - BB^kk), BB] < 0, 1 < gg < 3 && c0 > 0 && 0 < BB < 1 && kk > 0]];
+(* Fix pass 2026-10-14 (reconciler fix 2): "same direction" needs comparable c_i.
+   gamma' = 8/5, B_2 = B_3 = 4/5, plane 1 at the floor; plane 2 canonical triple with a
+   radial image at rho = 0.01 (source plane), plane 3 tangential pair only. *)
+r2ex = (8/5 - 1) (1/(8/5 - 1) - (4/5)^((3 - 8/5)/(8/5 - 1)) (cExact /. {rho -> 1/100, g -> 8/5}));
+r3ex = (8/5 - 1) (1/(8/5 - 1) - (4/5)^((3 - 8/5)/(8/5 - 1)) (1/(8/5 - 1)));
+Print["   unequal c_i: r_2 = ", N[r2ex, 4], "  r_3 = ", N[r3ex, 4]];
+check["5e  with unequal c_i the r_i can have opposite signs (r_2 < 0 < r_3)",
+  N[r2ex] < 0 < N[r3ex]];
 
 (* ---------------- Exercise: design ---------------- *)
 Print["\n--- ex:pe_design ---"];
