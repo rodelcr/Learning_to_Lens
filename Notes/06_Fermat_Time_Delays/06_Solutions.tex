@@ -82,20 +82,22 @@ positions are:
 $x_+ = 1.2808$, $x_- = -0.7808$.
 \begin{align*}
     \tau(x_+) &= \half(1.2808 - 0.5)^2 - \ln(1.2808) \\
-    &= \half(0.7808)^2 - 0.2474
-    = 0.3048 - 0.2474 = 0.0574 \,, \\
+    &= \half(0.7808)^2 - 0.2475
+    = 0.3048 - 0.2475 = 0.0573 \,, \\
     \tau(x_-) &= \half(-0.7808 - 0.5)^2 - \ln(0.7808) \\
-    &= \half(1.2808)^2 - (-0.2474)
-    = 0.8202 + 0.2474 = 1.0676 \,.
+    &= \half(1.2808)^2 - (-0.2475)
+    = 0.8202 + 0.2475 = 1.0677 \,.
 \end{align*}
 
 \textbf{(c)} The dimensionless time delay is:
 \begin{equation*}
-    \Delta\tau = \tau(x_-) - \tau(x_+) = 1.0676 - 0.0574 = 1.0101 \,.
+    \Delta\tau = \tau(x_-) - \tau(x_+) = 1.0677 - 0.0573 \approx 1.0103 \,.
 \end{equation*}
+(The unrounded values give $1.01032$; the last digit of the rounded
+difference is not significant.)
 This matches the analytic formula:
 $\Delta\tau = y\sqrt{y^2+4}/2 + \ln[(\sqrt{y^2+4}+y)/(\sqrt{y^2+4}-y)]
-= 0.5154 + 0.4947 = 1.0101$.  \checkmark
+= 0.5154 + 0.4949 = 1.0103$.  \checkmark
 
 \begin{derivation}[Shortcut for (b)--(c)]
 Because $x_+ + x_- = y$, we have $x_+-y = -x_-$ and $x_--y = -x_+$.  The
@@ -105,9 +107,8 @@ Also $x_+x_- = -1$, so $\ln|x_-| = -\ln x_+$: the two logarithms are
 equal and opposite.  Hence
 $\Delta\tau = \half(x_+^2-x_-^2)+2\ln x_+$, which is the analytic formula
 term by term (\texttt{problems\_06.wl} A6a--e).  To four decimals,
-$\ln x_+ = \ln 1.28078 = 0.2475$ (not $0.2474$), so $2\ln x_+ = 0.4949$,
-$\tau(x_+) = 0.0573$, and $\Delta\tau = 0.5154+0.4949 = 1.0103$ (A17a,b).  The
-values above are low by $2\times10^{-4}$, which does not matter for (d).
+$\ln x_+ = \ln 1.28078 = 0.2475$, so $2\ln x_+ = 0.4949$,
+$\tau(x_+) = 0.0573$, and $\Delta\tau = 0.5154+0.4949 = 1.0103$ (A17a,b).
 \end{derivation}
 
 \textbf{(d)} For $M = 10^{12}\,\Msun$, $z_d = 0.3$:
@@ -116,22 +117,23 @@ values above are low by $2\times10^{-4}$, which does not matter for (d).
     = \frac{2 \times 6.674 \times 10^{-11} \times
     1.989 \times 10^{42}}{(2.998 \times 10^8)^2}
     \approx 2.953 \times 10^{15}~\text{m} \,, \\
-    \Delta t &= \frac{\RS}{\speedoflight}\,(1 + z_d)\,\Delta\tau
-    = \frac{2.953 \times 10^{15}}{2.998 \times 10^8}
-    \times 1.3 \times 1.0101 \\
-    &\approx 1.293 \times 10^{7}~\text{s}
-    \approx 149.7~\text{days} \,.
+    \Delta t &= \frac{2\RS}{\speedoflight}\,(1 + z_d)\,\Delta\tau
+    = \frac{2 \times 2.953 \times 10^{15}}{2.998 \times 10^8}
+    \times 1.3 \times 1.0103 \\
+    &\approx 2.587 \times 10^{7}~\text{s}
+    \approx 299.5~\text{days} \,.
 \end{align*}
+The prefactor is $4\Gnewton M/\speedoflight^3 = 2\RS/\speedoflight$, not
+$\RS/\speedoflight$; an earlier version of this solution dropped the factor 2
+and quoted $149.7$~days.
 
 \begin{annotation}[Factor of 2 in (d)]
 The prefactor is $(1+z_d)\,\Dd\Ds\thetaE^2/(\speedoflight\Dds) = (1+z_d)\,4\Gnewton M/\speedoflight^3$,
 and $4\Gnewton M/\speedoflight^3 = 2\RS/\speedoflight$ (\texttt{problems\_06.wl} A7a,b).
 With the correct factor,
 $\Delta t = 1.97\times10^7\,\mathrm{s}\times1.3\times1.0103\approx2.59\times10^7$\,s
-$\approx299$\,d (A7d).  The $149.7$\,d above (and in the chapter's
-Example~\ref{ex:point_mass_numerical}) uses $\RS/\speedoflight$ and is low by
-exactly a factor 2 (A7e); this has been flagged for correction.  A quick way to
-catch this kind of slip: $\RS/\speedoflight$ for $10^{12}\,\Msun$ is $\approx114$\,d, so any
+$\approx300$\,d (A7d).  Using $\RS/\speedoflight$ instead would give a value
+low by a factor 2 (A7e).  A quick way to catch this kind of slip: $\RS/\speedoflight$ for $10^{12}\,\Msun$ is $\approx114$\,d, so any
 point-mass delay with $\Delta\tau\sim1$ and $z_d\sim0.3$ must be a few hundred
 days.
 \end{annotation}
@@ -141,9 +143,12 @@ days.
 
 \textbf{(a)} For a point mass lens, $\tau(x) = \half(x - y)^2 - \ln|x|$.
 The image at $x_+$ is the primary image (minimum of $\tau$), and
-$x_-$ is the secondary image (saddle point).  Since $x_+$ is a minimum
-and $x_-$ is a saddle point, by definition
-$\tau(x_+) \leq \tau(x_-)$ for any source position.
+$x_-$ is the secondary image (saddle point).  Since $\tau\to+\infty$
+both as $|\vectheta|\to\infty$ and as $\vectheta\to0$, $\tau$ has a global
+minimum, which must be a stationary point of minimum type.  The only such
+point is $x_+$, so $\tau(x_+)<\tau(x_-)$ for any $y>0$.  (Being a local
+minimum alone would not be enough: in general a minimum need not lie below
+a saddle elsewhere on the surface.)
 
 More explicitly: $\Delta\tau = y\sqrt{y^2+4}/2 +
 \ln[(\sqrt{y^2+4}+y)/(\sqrt{y^2+4}-y)]$.  Both terms are positive for
@@ -153,9 +158,7 @@ Therefore $\Delta\tau > 0$, i.e., $\tau(x_-) > \tau(x_+)$.
 \hfill $\square$
 
 \begin{annotation}[Is ``by definition'' enough?]
-The first paragraph of (a) is a heuristic, not a proof.  Being a local
-minimum does not by itself put $\tau(x_+)$ below a saddle located somewhere
-else on the surface.  The explicit formula is the proof.  An even shorter
+The explicit formula gives a second, independent proof.  An even shorter
 route: $\Delta\tau(0) = 0$ and $d\Delta\tau/dy = \sqrt{y^2+4}>0$
 (\texttt{problems\_06.wl} A6h,i), so $\Delta\tau>0$ for every $y>0$.
 \end{annotation}
@@ -167,15 +170,17 @@ route: $\Delta\tau(0) = 0$ and $d\Delta\tau/dy = \sqrt{y^2+4}>0$
 \toprule
 $y = \beta/\thetaE$ & $\tau(x_+)$ & $\tau(x_-)$ & $\Delta\tau$ \\
 \midrule
-0.1  & $-0.0024$ & $0.0076$  & $0.0100$ \\
-0.5  & $0.0574$  & $1.0676$  & $1.0101$ \\
-1.0  & $0.1903$  & $2.6180$  & $2.4277$ \\
-2.0  & $0.3508$  & $5.3573$  & $5.0065$ \\
+0.1  & $0.4025$  & $0.6025$  & $0.2001$ \\
+0.5  & $0.0573$  & $1.0677$  & $1.0103$ \\
+1.0  & $-0.2902$ & $1.7902$  & $2.0805$ \\
+2.0  & $-0.7956$ & $3.7956$  & $4.5912$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-In all cases $\tau(x_+) < \tau(x_-)$.  \checkmark
+In all cases $\tau(x_+) < \tau(x_-)$.  \checkmark\ (An earlier version of
+this table had wrong entries in the $y=0.1$, $1$ and $2$ rows; the values
+above follow from $\tau(x)=\half(x-y)^2-\ln|x|$ at $x_\pm$.)
 
 \textbf{(c)} Since $t(\vectheta) \propto \tau(\vectheta)$ (with a
 positive proportionality constant), a smaller $\tau$ means a smaller
@@ -183,21 +188,10 @@ arrival time.  Therefore the Type~I image (minimum of $\tau$) arrives
 before the Type~II image (saddle point of $\tau$).  The time delay
 between them is $\Delta t \propto \Delta\tau > 0$.
 
-\begin{annotation}[Correct values for the table in (b)]
-Only the $y=0.5$ row of the table agrees with the formulas (to rounding).
-Evaluating $\tau(x) = \half(x-y)^2-\ln|x|$ at
-$x_\pm = (y\pm\sqrt{y^2+4})/2$ gives (\texttt{problems\_06.wl} A17d):
-\begin{center}
-\begin{tabular}{rccc}
-$y$ & $\tau(x_+)$ & $\tau(x_-)$ & $\Delta\tau$ \\ \hline
-0.1 & $0.4025$  & $0.6025$ & $0.2001$ \\
-0.5 & $0.0573$  & $1.0677$ & $1.0103$ \\
-1.0 & $-0.2902$ & $1.7902$ & $2.0805$ \\
-2.0 & $-0.7956$ & $3.7956$ & $4.5912$ \\
-\end{tabular}
-\end{center}
-The conclusion $\tau(x_+)<\tau(x_-)$ is unaffected.  The table has been
-flagged for correction.  A quick consistency test catches rows like these:
+\begin{annotation}[Checking the table in (b)]
+The rows follow from $\tau(x) = \half(x-y)^2-\ln|x|$ at
+$x_\pm = (y\pm\sqrt{y^2+4})/2$ (\texttt{problems\_06.wl} A17d).
+A quick consistency test catches wrong rows:
 $\Delta\tau/y$ should start at 2 and grow slowly, and here it is $2.001$,
 $2.021$, $2.080$, $2.296$.  As $y\to0$, $\Delta\tau\to2y$, which matches the
 SIS result in units of $\thetaE^2$ (A6j, A8d).  Note that $\tau(x_+)<0$ at
@@ -240,16 +234,16 @@ difference is what moves $\Hubble$ from 70 to $\approx73$.
 distances scale as $D \propto \speedoflight / \Hubble$.  Writing the
 dimensionless comoving distance $\chi(z) = \int_0^z dz'/E(z')$ with
 $E(z) = \sqrt{\Omegam(1+z)^3 + \OmegaL}$, numerical integration gives
-$\chi_d \approx 0.279$, $\chi_s \approx 0.778$, $\chi_{ds} \approx 0.499$.
+$\chi_d \approx 0.279$, $\chi_s \approx 0.771$, $\chi_{ds} \approx 0.493$.
 Combining with $\Dd = (\speedoflight/\Hubble)\chi_d/(1+z_d)$,
 $\Ds = (\speedoflight/\Hubble)\chi_s/(1+z_s)$, and
 $\Dds = (\speedoflight/\Hubble)\chi_{ds}/(1+z_s)$:
 \begin{equation*}
     \frac{\Dd\,\Ds}{\Dds} = \frac{\speedoflight}{\Hubble}\,
     \frac{\chi_d\,\chi_s}{(1+z_d)\,\chi_{ds}}
-    = \frac{\speedoflight}{\Hubble} \times \frac{0.279 \times 0.778}
-        {1.3 \times 0.499}
-    \approx \frac{\speedoflight}{\Hubble} \times 0.334 \,.
+    = \frac{\speedoflight}{\Hubble} \times \frac{0.279 \times 0.771}
+        {1.3 \times 0.493}
+    \approx \frac{\speedoflight}{\Hubble} \times 0.336 \,.
 \end{equation*}
 
 \begin{derivation}[Where the $(1+z)$ factors go]
@@ -265,23 +259,22 @@ with $\chi_{ds} = \chi_s-\chi_d$ holds only for $\Omega_k=0$ (A10b).
 \begin{annotation}[More digits]
 Direct integration gives $\chi_d = 0.279$, $\chi_s = 0.771$,
 $\chi_{ds} = 0.493$, so the dimensionless factor is $0.336$
-(\texttt{problems\_06.wl} A10d).  The values $0.778$, $0.499$, $0.334$ quoted
-above are slightly off; the final answer $\Hubble = 73.3$\,km\,s$^{-1}$\,Mpc$^{-1}$
-(A10e) is unchanged at the precision quoted.  As a cross-check of
+(\texttt{problems\_06.wl} A10d), and the final answer is
+$\Hubble = 73.3$\,km\,s$^{-1}$\,Mpc$^{-1}$ (A10e).  As a cross-check of
 $\Dds\neq\Ds-\Dd$: in units of $\speedoflight/\Hubble$, $\Dd = 0.215$,
 $\Ds = 0.386$, $\Dds = 0.246$, whereas $\Ds-\Dd = 0.171$.
 \end{annotation}
 
 \textbf{(c)} Combining:
 \begin{equation*}
-    \Hubble = \frac{\speedoflight \times 0.334}
+    \Hubble = \frac{\speedoflight \times 0.336}
     {\Dd\,\Ds/\Dds}
-    = \frac{2.998 \times 10^8 \times 0.334}{4.24 \times 10^{25}}
-    \approx 2.36 \times 10^{-18}~\text{s}^{-1} \,.
+    = \frac{2.998 \times 10^8 \times 0.336}{4.24 \times 10^{25}}
+    \approx 2.38 \times 10^{-18}~\text{s}^{-1} \,.
 \end{equation*}
 Converting to km\,s$^{-1}$\,Mpc$^{-1}$:
 \begin{equation*}
-    \Hubble \approx 2.36 \times 10^{-18} \times 3.086 \times 10^{19}
+    \Hubble \approx 2.38 \times 10^{-18} \times 3.086 \times 10^{19}
     \approx 73~\text{km\,s}^{-1}\,\text{Mpc}^{-1} \,.
 \end{equation*}
 

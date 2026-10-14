@@ -148,7 +148,7 @@ and the reduced deflection angle is
 $\alphahat$ is the physical bending angle at the lens and depends only on the
 mass.  $\alpha = (\Dds/\Ds)\,\alphahat$ is the angle the observer infers,
 and it depends on where the source is.  Everything in this module ($\thetaE$,
-$\kappab$, $\gammaL$, critical curves) uses $\alpha$.  A classic error is to
+$\kappab$, $\gammaL$, critical curves) uses $\alpha$.  Do not
 set $\thetaE = \alphahat$ and forget the factor $\Dds/\Ds<1$.
 \end{annotation}
 
@@ -182,8 +182,8 @@ $\pi\Sigmacr\Dd^2\theta$ gives $\alpha = \bar\kappa\theta$.
 Setting $\beta = 0$ in $\beta = \theta-\bar\kappa\theta$ gives a ring where
 $\bar\kappa = 1$.  The mean convergence inside the Einstein radius is exactly
 one for \emph{every} axisymmetric lens, so the projected mass inside $\thetaE$
-is $M(\thetaE) = \pi\Sigmacr\Dd^2\thetaE^2$ whatever the profile.  This is why
-lensing measures the mass inside $\thetaE$ so robustly.  A common slip is to
+is $M(\thetaE) = \pi\Sigmacr\Dd^2\thetaE^2$ whatever the profile.  So lensing
+pins down the mass inside $\thetaE$ with little model dependence.  Do not
 look for $\kappab(\theta) = 1$ instead; that defines a different radius,
 and for an SIS $\kappab(\thetaE) = 1/2$.
 \end{annotation}
@@ -218,7 +218,10 @@ eq.~\eqref{eq:mean_kappa} (\texttt{problems\_07.wl} B2a).  Then
 $|\gammaL| = \half|2\kappab-2\bar\kappa| = \bar\kappa-\kappab$ for any profile whose
 $\kappab$ decreases outward (so $\bar\kappa\geq\kappab$).  For an
 \emph{arbitrary} (non-circular) lens the circle-averaged version is
-$\bar\kappa = \langle\kappab\rangle+\langle\gamma_t\rangle$ \citep{bartelmann_1995}.
+$\bar\kappa = \langle\kappab\rangle+\langle\gamma_t\rangle$, obtained by repeating the
+steps above with azimuthal averages on the circle of radius $\theta$.  For how
+well weak-lensing data recover cluster masses in practice, see
+\citet{bartelmann_1995}.
 \end{derivation}
 
 \subsection{Magnification for Circular Symmetry}
@@ -280,8 +283,7 @@ the same amount $b^2/\theta^2$ (\texttt{problems\_07.wl} B12).  As $\theta\to0$,
 $\lambda_r\to+\infty$ and $\lambda_t\to-\infty$.  The tangential critical curve
 moves outward.  The host's $\lambda_r<0$ region is eroded from the inside: it
 becomes an annulus bounded by two radial-type critical curves, or it vanishes
-altogether.  Every
-statement in that chapter about critical curves is a statement about these
+altogether.  That chapter's critical-curve results all follow from these
 two eigenvalues.
 \end{bridge}
 
@@ -817,9 +819,15 @@ The core radius has a dramatic effect on the critical curve structure:
 
 The radial critical curve of the NIS creates a \textbf{radial
 caustic} in the source plane: a circle of radius $\beta_r > 0$.
-Sources inside this radial caustic (and inside the tangential
-caustic) produce three images; sources between the radial and
-tangential caustics produce one image.
+Because the tangential caustic of an axisymmetric lens is the single
+point $\beta = 0$, the image count depends only on $|\beta|$: sources
+with $0 < |\beta| < \beta_r$ produce three images, sources with
+$|\beta| > \beta_r$ produce one, and a source at $\beta = 0$ produces an
+Einstein ring plus a central image.\footnote{An earlier version said that
+sources \emph{between} the radial and tangential caustics produce one image.
+For the NIS the tangential caustic is the point $\beta=0$, inside the radial
+caustic, so that region is the three-image region; one image forms outside
+$\beta_r$ (e.g.\ for $\theta_c = 0.1\,\thetaE$, $\beta_r = 0.427\,\thetaE$).}
 
 \begin{derivation}[NIS critical curves and caustic, explicitly]
 Write $s = \sqrt{\theta^2+\theta_c^2}$, so $\theta^2 = (s-\theta_c)(s+\theta_c)$ and
@@ -874,7 +882,8 @@ Two Part~V chapters start here.  In Chapter~\ref{ch:odd_images}, the NIS
 third image is the textbook \emph{central} image: a Type~III maximum of
 $\tau$ that sits inside $\theta_r$ where $\kappab>1$, is strongly
 demagnified, and arrives last.  A central point mass acts on exactly this
-region and can remove the image or split it.  In
+region and can remove the central image or add a second faint image next
+to it.  In
 Chapter~\ref{ch:power_law_point_mass}, the NIS radial critical curve is the
 prototype of the radial critical curves of shallower-than-isothermal power
 laws.  The radial caustic radius $\beta_r$ sets the cross-section for radial
@@ -1494,7 +1503,7 @@ Verify with
           $\kappab = \thetaE/(2\theta)$ in the limit $\theta_c \to 0$.
     \item Find the critical value of $\theta_c$ (in terms of $\thetaE$)
           above which the NIS cannot produce multiple images.
-          \textit{Hint:} multiple images require $\kappab(0) \geq 1$.
+          \textit{Hint:} multiple images require $\kappab(0) > 1$.
     \item For the NIS with $\theta_c = 0.1\,\thetaE$, compute
           $\kappab(0)$, $\kappab(\thetaE)$, and
           $\kappab(2\,\thetaE)$.

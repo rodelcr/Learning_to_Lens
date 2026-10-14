@@ -147,3 +147,27 @@ Script: `/private/tmp/claude-504/-Users-rosador-Documents-Learning-to-Lens/6bf85
 | D6 | v_c = √2σ from ρ = σ²/(2πGr²); power-law κ̄ normalisation | ✅ PASS | L3, L5 |
 
 Repo script `problems_07.wl`: `SUMMARY: 64 PASS, 0 FAIL  (of 64 checks)`.
+
+## Resolution — fixes applied 2026-10-14
+
+Branch `wt/ann0607`. New checks are the `F*` block at the end of `Solutions/07_Axisymmetric_Models/problems_07.wl`;
+each fails on the pre-fix printed value.
+
+| id | Fix | Backing |
+|----|-----|---------|
+| V6 | Sol 7.3(a) → `1055/1650 … ×0.639 ≈ 5.58e−6 rad ≈ 1.15″` + note on the old 1200/1700 → 1.27″; (b) 1.15″, θ± = 1.65″/−0.65″, μ± = 3.30/−1.30, sum 4.60. `problems_07.wl` body distances → 920/1650/1055, header comment and Print label updated (prints 1.152″). "Which distances?" box: dropped the flagged sentence. | F6, F6b; B6a–c |
+| V7 | Sol 7.3(d) → critic's replacement (point mass 2.4″; SIS 1.15″ about half; 2.3e11 M☉ inside θ_E) + note that the earlier comparison was reversed. Script body now prints 2.379″ and the "comparable" line is replaced. "Check of (d)" box: dropped "not 1.1″" and the flagged sentence. | F7; B6d, B15d |
+| V8 | Sol 7.5(a) `f(x) \simeq \ln(2/x) − 1`, peak of x f(x) "near x ≈ 0.6" (critic's optional item; peak at 0.613); visible note on the old (1/x)ln(2/x). "Small-x" box: flagged sentence replaced by why (1/x)ln(2/x) cannot be right. | F8 (Series; f/[(1/x)ln(2/x)] < 0.01 at 10⁻³; argmax x f = 0.61); B11i |
+| V9 | Ch 07 caustic sentence (ll.819–822) → critic's replacement + footnote recording the old "between the caustics → one image" error. | F9 (β = 0.2, 0.4 → 3; 0.45, 0.6 → 1; tangential caustic at β = 0); B10l–m |
+| V10 | Exercise hint `\kappab(0) > 1`; Sol 7.4(c) `> 1`, `θ_c < θ_E/2` + visible sentence that it is strict (old ≥); derivation box's last sentence on "≥ in the hint" replaced. | F10 (θ_c = θ_E/2: λ_r > 0 for θ > 0, λ_r(0) = 0, one image at β = 0.01, 0.1); B10i |
+| C5 | `\citep{bartelmann_1995}` no longer presented as the source of κ̄ = ⟨κ⟩ + ⟨γ_t⟩: the identity is attributed to the box's own derivation (azimuthal averages), and the paper is cited for what its abstract states ("how well weak-lensing data recover cluster masses"). | arXiv astro-ph/9412051 abstract |
+| C6 | Bridge: "remove the image or split it" → "remove the central image or add a second faint image next to it". | Ch 20 `16_Odd_Images_Central.tex` ll.695–731 |
+| P1–P3 | "A classic error is to" / "A common slip is to" → "Do not"; "so robustly" → "with little model dependence"; P2 chiasmus rewritten. Two "Classic error:" labels (ll.470, 744) left. | prose |
+
+### Verification after edits
+- `bash Mathematica/run_wl.sh Solutions/07_Axisymmetric_Models/problems_07.wl`: before `SUMMARY: 64 PASS, 0 FAIL  (of 64 checks)`; after **`SUMMARY: 70 PASS, 0 FAIL  (of 70 checks)`** / `ALL CHECKS PASS`.
+- `ANNOT_REQUIRED=1 bash build.sh`: all assertions passed; Student 360 pp, Solutions 444 pp, Annotated 569 pp.
+
+### Left open
+- X4: visible "Bartelmann (1996)" (and "Wright & Brainerd (2000)") at `07_Axisymmetric_Models.tex:1113` still has no `\cite`; no bib key added per instructions. Needs `bartelmann_1996` (A&A 313, 697–702; arXiv astro-ph/9602053; no DOI) from the orchestrator.
+- C5: full-text support for κ̄ = ⟨κ⟩ + ⟨γ_t⟩ in Bartelmann 1995 still unverified (citation now no longer claims it).

@@ -154,42 +154,41 @@ convergence/shear half of that analysis.
 \textbf{(a)} With $\sigma_v = 250$~km\,s$^{-1} = 2.5 \times 10^5$~m\,s$^{-1}$:
 \begin{equation*}
     \thetaE = 4\pi\left(\frac{2.5 \times 10^5}{3 \times 10^8}\right)^2
-    \times \frac{1200}{1700}
-    \approx 4\pi \times 6.944 \times 10^{-7} \times 0.706
-    \approx 6.16 \times 10^{-6}~\text{rad}
-    \approx 1.27'' \,.
+    \times \frac{1055}{1650}
+    \approx 4\pi \times 6.944 \times 10^{-7} \times 0.639
+    \approx 5.58 \times 10^{-6}~\text{rad}
+    \approx 1.15'' \,.
 \end{equation*}
+(This uses the exercise's distances $\Dds = 1055$~Mpc, $\Ds = 1650$~Mpc; an
+earlier version of this solution used $1200/1700$ and got $1.27''$.)
 
 \textbf{(b)} For $\beta = 0.5''$:
 
-(i) Since $\beta = 0.5'' < \thetaE \approx 1.27''$, the source is
+(i) Since $\beta = 0.5'' < \thetaE \approx 1.15''$, the source is
 \textit{inside} the caustic. Two images form.
 
 (ii) Image positions:
 \begin{equation*}
-    \theta_+ = \beta + \thetaE = 0.5'' + 1.27'' = 1.77'' \,, \qquad
-    \theta_- = \beta - \thetaE = 0.5'' - 1.27'' = -0.77'' \,.
+    \theta_+ = \beta + \thetaE = 0.5'' + 1.15'' = 1.65'' \,, \qquad
+    \theta_- = \beta - \thetaE = 0.5'' - 1.15'' = -0.65'' \,.
 \end{equation*}
 
 (iii) Magnifications:
 \begin{equation*}
     \mu_+ = 1 + \frac{\thetaE}{\beta}
-    = 1 + \frac{1.27}{0.5} = 3.54 \,, \qquad
+    = 1 + \frac{1.15}{0.5} = 3.30 \,, \qquad
     \mu_- = 1 - \frac{\thetaE}{\beta}
-    = 1 - \frac{1.27}{0.5} = -1.54 \,.
+    = 1 - \frac{1.15}{0.5} = -1.30 \,.
 \end{equation*}
 
 (iv) Total magnification:
-$|\mu_+| + |\mu_-| = 3.54 + 1.54 = 5.08 = 2\thetaE/\beta$.
+$|\mu_+| + |\mu_-| = 3.30 + 1.30 = 4.60 = 2\thetaE/\beta$.
 
 \begin{annotation}[Which distances?]
 The exercise statement gives $\Dd\approx920$, $\Ds\approx1650$,
 $\Dds\approx1055$\,Mpc (flat $\Lambda$CDM, $\Hubble = 70$, $\Omegam = 0.3$;
 \texttt{problems\_07.wl} B6a).  With those, $\Dds/\Ds = 0.639$ and
-$\thetaE = 1.15''$ (B6c), the chapter's Example value.  The solution above
-uses $1200/1700$ and gets $1.27''$, so its downstream numbers ($\theta_\pm$,
-$\mu_\pm$) differ accordingly; this has been flagged for correction.  The
-method is unaffected.  Note also $\Ds-\Dd = 730$\,Mpc $\neq\Dds$ (B6b).
+$\thetaE = 1.15''$ (B6c), the chapter's Example value.  Note also $\Ds-\Dd = 730$\,Mpc $\neq\Dds$ (B6b).
 \end{annotation}
 
 \textbf{(c)} Equal absolute magnification requires
@@ -211,19 +210,21 @@ ellipticity).
 \end{annotation}
 
 \textbf{(d)} The point mass Einstein radius for $M = 10^{12}\,\Msun$
-at $z_d = 0.3$, $z_s = 1$ is $\thetaE \approx 1.1''$ (from Module~4).
+at $z_d = 0.3$, $z_s = 1$ is $\thetaE \approx 2.4''$ (from Module~4).
 The SIS Einstein radius depends on $\sigma_v$ rather than total mass.
-For $\sigma_v = 250$~km\,s$^{-1}$, $\thetaE \approx 1.27''$, comparable
-but slightly larger.  The SIS is a more realistic model because it
+For $\sigma_v = 250$~km\,s$^{-1}$, $\thetaE \approx 1.15''$, about half
+as large: the SIS has only $\approx 2.3\times10^{11}\,\Msun$ inside its
+Einstein radius, and $M(<\thetaE)\propto\thetaE^2$.  (An earlier version
+quoted $1.1''$ for the point mass and called the SIS ring slightly larger;
+the comparison is the other way round.)  The SIS is a more realistic model because it
 accounts for the extended mass distribution, whereas the point mass
 concentrates all mass at a single point.
 
 \begin{annotation}[Check of (d)]
 Evaluating $\thetaE = \sqrt{4\Gnewton M\Dds/(\speedoflight^2\Dd\Ds)}$ for $M = 10^{12}\,\Msun$
 with the exercise's distances (920/1650/1055\,Mpc) gives $\approx2.4''$
-(\texttt{problems\_07.wl} B6d), not $1.1''$, so the point mass has the
-\emph{larger} Einstein radius here.  This has been flagged for correction.
-The physical comparison still holds: the SIS needs no total mass, because its
+(\texttt{problems\_07.wl} B6d), so the point mass has the
+\emph{larger} Einstein radius here.  The physical comparison still holds: the SIS needs no total mass, because its
 $\thetaE$ depends only on $\sigma_v$.  An SIS with $\thetaE = 1.15''$ has projected
 mass $\pi\Sigmacr\Dd^2\thetaE^2 = (\speedoflight^2/4\Gnewton)(\Dd\Ds/\Dds)\,\thetaE^2\approx2.3\times10^{11}\,\Msun$
 inside $\thetaE$ (B15d).  Because $M(<\thetaE)\propto\thetaE^2$, a point mass of
@@ -255,12 +256,15 @@ $\sqrt{\theta^2 + \theta_c^2} \to \sqrt{\theta^2} = \theta$ (for
 $\theta > 0$), so $\kappab \to \thetaE/(2\theta)$, the SIS result.
 \checkmark
 
-\textbf{(c)} Multiple images require $\kappab(0) \geq 1$:
+\textbf{(c)} Multiple images require $\kappab(0) > 1$:
 \begin{equation*}
-    \kappab(0) = \frac{\thetaE}{2\theta_c} \geq 1
+    \kappab(0) = \frac{\thetaE}{2\theta_c} > 1
     \qquad \Longrightarrow \qquad
-    \theta_c \leq \frac{\thetaE}{2} \,.
+    \theta_c < \frac{\thetaE}{2} \,.
 \end{equation*}
+The inequality is strict (an earlier version wrote $\geq$): at
+$\theta_c = \thetaE/2$ the radial critical curve has zero radius and every
+source with $\beta\neq0$ has a single image.
 
 \begin{derivation}[Why $\kappab(0)$ is the right quantity, and strict vs non-strict]
 Multiple images on the axis require $\beta(\theta) = \theta-\alpha(\theta)$ to be
@@ -271,8 +275,7 @@ decreases monotonically from its central value $\thetaE/(2\theta_c) = \kappab(0)
 $\Leftrightarrow\kappab(0)>1\Leftrightarrow\theta_c<\thetaE/2$.  At exactly
 $\theta_c = \thetaE/2$ the radial critical curve has zero radius and there is
 one image for every $\beta\neq0$, so the critical value itself does
-\emph{not} give multiple images.  The ``$\geq$'' in the hint should be read
-as the boundary of the multiple-imaging region.
+\emph{not} give multiple images, which is why the inequality is strict.
 \end{derivation}
 
 \textbf{(d)} For $\theta_c = 0.1\,\thetaE$:
@@ -304,15 +307,18 @@ at large $\theta$.
 \subsection*{Exercise~\ref{ex:nfw_concentration}: NFW Concentration and Lensing Strength}
 
 \textbf{(a)} The function $f(x)$ has a logarithmic divergence as
-$x \to 0$ (with $f(x) \sim (1/x)\ln(2/x)$), peaks near $x \sim 0.5$
+$x \to 0$ (with $f(x) \simeq \ln(2/x) - 1$), peaks near $x \approx 0.6$
 in terms of the product $x\,f(x)$, and falls off as $f(x) \sim 1/x^2$
-for $x \gg 1$.  See the plot generated by \texttt{problems\_07.wl}.
+for $x \gg 1$.  (An earlier version gave the small-$x$ form as
+$(1/x)\ln(2/x)$, which is wrong; see the series in the main text.)  See the
+plot generated by \texttt{problems\_07.wl}.
 
 \begin{annotation}[Small-$x$ behaviour of $f$]
 From $f = (1-K)/(x^2-1)$ and $K\simeq\ln(2/x)$ as $x\to0$,
 $f(x)\simeq\ln(2/x)-1$: a pure logarithm, as stated in the main text
-(\texttt{problems\_07.wl} B11i).  The ``$(1/x)\ln(2/x)$'' above is
-incorrect and has been flagged for correction.  The large-$x$ statement
+(\texttt{problems\_07.wl} B11i).  A $(1/x)\ln(2/x)$ divergence would be much
+stronger and would make the projected mass inside small $x$ diverge.  The
+large-$x$ statement
 $f\sim1/x^2$ is right (B11k).
 \end{annotation}
 

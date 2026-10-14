@@ -183,3 +183,27 @@ Script: `/private/tmp/claude-504/-Users-rosador-Documents-Learning-to-Lens/6bf85
 | D6 | MST: τ_λ − λτ independent of θ | ✅ PASS | L8 |
 
 Repo script `problems_06.wl`: `SUMMARY: 54 PASS, 0 FAIL  (of 54 checks)`.
+
+## Resolution — fixes applied 2026-10-14
+
+Branch `wt/ann0607`. New checks are the `F*` block at the end of `Solutions/06_Fermat_Time_Delays/problems_06.wl`;
+each fails on the pre-fix printed value.
+
+| id | Fix | Backing |
+|----|-----|---------|
+| V1 | eq. `delta_t_schwarzschild` second equality → `2\RS/\speedoflight`, plus footnote naming the factor (4GM/c³ = 2R_S/c) and the old R_S/c; Example `ex:point_mass_numerical` → `2×2.95e15/2.998e8 ×1.3×1.0103 ≈ 2.59e7 s ≈ 300 days`; "days to months" → "days to a year or so" (Example and Summary bullet); Sol 6.2(d) → `2R_S/c … ×1.0103 ≈ 2.587e7 s ≈ 299.5 days` + one-sentence note on the old 149.7 d. (299.5 rather than the critic's 299.6: the displayed inputs R_S = 2.953e15 m give 299.47 d; unrounded R_S gives 299.55 d.) `problems_06.wl` body l.149 and Print labels → `2 RS/cc`; `time_delay_function.wl` ll.185/208/209/223 → `2 RS/cc` (prints 299.554 d). | F1, F1b, F1c, F1d; A7a–e |
+| V2 | Sol 6.3(b) table rows replaced (0.4025/0.6025/0.2001; 0.0573/1.0677/1.0103; −0.2902/1.7902/2.0805; −0.7956/3.7956/4.5912) + note that earlier rows were wrong; roundings in Sol 6.2(b–c) and Example (0.2475, 0.0573, 1.0677, 1.6404, 0.4949, 1.0103). Sol 6.2(c) shows `1.0677 − 0.0573 ≈ 1.0103` with a note that unrounded values give 1.01032. | A17a, A17b, A17d, A17d'' (old rows fail), F2 |
+| V3 | Shapiro bullet in the Fermat-potential remark replaced with the critic's text; footnote records the old sign error, citing N&B eq. 3 (`narayan_lectures_1997`). | A13, F4; N&B 1997 eq. (3) |
+| V4 | Sol 6.3(a) "by definition" → global-minimum argument (critic's text). Annotation "Is 'by definition' enough?" reworded to present the formula as an independent second proof. | F3 (limits at 0 and ∞; only stationary points x±) |
+| V5 | Sol 6.4(b) χ_s 0.771, χ_ds 0.493, factor 0.336; (c) 0.336, 2.38e−18. "More digits" annotation no longer says the visible values are off. | A10d, F5 |
+| N2 | "≈299 d" → "≈300 d" in chapter "Unit check" box and Solutions "Factor of 2" box. | A7d (now `|Δt/day − 300| < 0.5`; fails on 299) |
+| layer | All "flagged for correction" sentences removed (chapter Unit-check box, Sol 6.2 Shortcut box, Factor-of-2 box, Sol 6.3 table box retitled "Checking the table in (b)" with the duplicate table dropped). | — |
+| P1–P4 | Applied: "shared prefactor is why…" → "so the two terms can share one bracket"; "This one line is why…" → "So the third image of a cored lens sits at the centre"; P3 colon reveal rewritten; "exactly" dropped ×2. | prose |
+
+### Verification after edits
+- `bash Mathematica/run_wl.sh Solutions/06_Fermat_Time_Delays/problems_06.wl`: before `SUMMARY: 54 PASS, 0 FAIL  (of 54 checks)`; after **`SUMMARY: 62 PASS, 0 FAIL  (of 62 checks)`** / `ALL CHECKS PASS`.
+- `bash Mathematica/run_wl.sh Mathematica/06_Fermat_Time_Delays/time_delay_function.wl`: exit 0 (no harness; prints Δt = 299.554 d for y = 0.5). Re-exported figures were byte-only changes and were reverted.
+- `ANNOT_REQUIRED=1 bash build.sh`: all assertions passed; Student 360 pp, Solutions 444 pp, Annotated 569 pp.
+
+### Left open
+- None of V1–V5 / N2. Prose items in the layer beyond P1–P4 ("classic/common error" phrasing) left as is.
