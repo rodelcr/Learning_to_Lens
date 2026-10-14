@@ -120,3 +120,69 @@ Note: `theory/note4_odd_images.tex`, `theory/solutions/sol_note4_odd_images.tex`
 - (2) "τ → −∞ as θ → 0" (sol l.170, l.176). **CONFIRMED error.** It is +∞ (SEF p.175 spike replacing a maximum; PLW p.425; critic16.wl S2).
 - (3) "the central maximum and the radial saddle … merge and annihilate" at the annihilation boundary (note4 keybox l.110–113; sol l.205–209). **CONFIRMED error.** At θ_•,crit the two radial critical circles merge (S3a). At fixed source the maximum merges with the BH-created saddle, never with the original radial saddle (S3b, S3c).
 - (4) "adding a point mass changes the image count by an even number" (note4 Ex.4 l.132; sol l.163, l.187). **CONFIRMED error.** The change is odd (S1b; parity of N + g is invariant). The source solution's own Euler-characteristic algebra (N = 2n_sad, even) already contradicts its "even change" conclusion.
+
+## Reconciliation with the spiral project's record (2026-10-14)
+
+Independent reconciler, per `docs/agent_briefs_2026-10-14/RECONCILE.md`. Spiral sources read:
+digest `docs/spiral_reconciliation_2026-10-14/note3_4_6.md` (note4 rows; full verdict text recovered from the
+packet critic's workflow journal `~/.claude/projects/-Users-rosador-Documents-AGEL-202607-Theoretical-spiral-compound/da19cc6d-…/subagents/workflows/wf_a10ff0a2-7f9/journal.jsonl`,
+claims S7-039…S7-058 = `theory/note4_odd_images.tex`), `note8_solutions.md` (**contains no sol_note4 row**: the 10-14 packet
+critic extracted claims from `SOLUTIONS.tex` and `sol_note10` only, so `sol_note4_odd_images.tex` was never checked by it),
+`auto_fixable_and_coverage_gaps.md`, `theory/FACT_CRITIC_study_notes_2026-07-11.md`,
+`theory/solutions/FACT_CRITIC_SOLUTIONS_2026-07-24.md`, `TESTS_AND_DIAGNOSTICS.md` rows A4/A5 (+§2 entries),
+`HANDOFF_arc_2026-09-21.md` §5–6, `NOTES_mcrit_label_defect_2026-08-03.md`, `mathematica/exercises/sol_note4_odd_images.wl`.
+
+Re-verification script (scratch, not in repo):
+`/private/tmp/claude-504/-Users-rosador-Documents-Learning-to-Lens/6bf8589b-f5b2-4d91-8bc1-cdd6f6bc49b6/scratchpad/reconcile_16/reconcile16.wl`,
+run as `bash Mathematica/run_wl.sh <that path>` → `SUMMARY: 22 PASS, 0 FAIL  (of 22 checks)`.
+It checks: V1 τ → +∞ at a point mass from both sides (symbolic `Limit`); V2 on 900 off-caustic sources
+(θ_c ∈ {0.1, 0.2, 0.3}, u/u_crit ∈ {0.01 … 1.5}) N_noBH ∈ {1,3}, N_BH ∈ {2,4}, and N_BH − N_noBH is odd every time
+(pairs seen: (1,2), (1,4), (3,2), (3,4)); V3a at u_crit, y′ = y″ = 0 share a far-side root (the TESTS A4 condition, i.e. the two
+radial critical circles merge); V3b–c y_out(u) and y_in(u) both strictly increase on (0, u_crit) (θ_c = 0.2: y_out 0.236 → 0.308);
+V3d for six fixed sources at θ_c = 0.2 the 4 → 2 drop happens at the inner root −r₁ (maximum + black-hole saddle), never at −r₂
+(maximum + radial saddle); V4a det A = (1−κ)² − γ² (the closure S7-051 asks for); V4b the SIS gives one image for β > θ_E.
+
+| spiral id | claim (spiral source) | status in chapter | action |
+|---|---|---|---|
+| S7-039 ⚠ | note4 abstract opens with a rhetorical question (l.10) | already fixed in the port: the chapter has no abstract; opener l.16–25 is declarative | none |
+| S7-046 ⚠ | Burke's hypothesis given as "κ falls off faster than θ⁻¹"; Burke's own is bounded bending, and his "transparent" explicitly *excludes black holes* (l.60–62) | already fixed: keybox l.259–269 states (S1) continuous, (S2) bounded deflection. Burke's own wording ("transparent … excludes solid objects and black holes", per S7-046's full-text read) **reinforces critic item X5**: annotation l.345–347 ("It is [transparent]") contradicts Burke as well as SEF p.172 and Ch.6 | no new fix; X5 already flagged. When fixing X5, Burke's own exclusion of black holes is the cleanest source |
+| S7-049 ⚠ | "the observed even counts are always missing one faint image" (l.77–78). The index theorem fixes only the parity of the hidden count | **partly inherited**, mild: l.22–25 "The missing odd image is the \emph{central image}". True for a single-centred galaxy, not in general | New fix 1 below |
+| S7-050 ⚠ | SIS "one observes an even number of images" unconditionally (l.80–83) | already fixed: l.357–366 and Table `tab:oi_centres` (two images inside the cut, one outside); Ex.~`ex:oi_sis_tip` | none |
+| S7-051 ❌ | μ_central ∼ 1/[(1−κ₀)² − …], an unfinished formula (l.90–92) | already fixed: eq. `oi_muc` l.487–493 is the closed form, with "the shear vanishes at the centre of an axisymmetric lens" (l.485). The general (1−κ)² − γ² follows from eq. `oi_eigen` (l.102–104; V4a) | none |
+| S7-052 ⚠ | "only a handful [of central images] known" (l.94–96) | already fixed: l.541–547 says one galaxy-scale detection (PMN J1632−0033), per C&K p.158 (critic C8) | none |
+| S7-058 ⚠ | Exercise 4 has no Wolfram attestation, yet it is covered by the blanket "every … answer is attested" claim (l.117) | already fixed: Ex.~`ex:oi_puncture` is attested by `problems_16.wl` checks 4a–4c (16_Solutions.tex:145) | none |
+| S7-054 (no verdict: coverage gap) | the point-mass suppression "is the same statement as the annihilation of the radial critical curve" (l.105–107) | already fixed and made precise: keybox l.807–818 and annotation l.833–844 separate the fixed-source merger from the disappearance of the caustic pair (V3d) | none |
+| S7-055 (no verdict: coverage gap) | "the odd image count drops from three toward one" (l.108) | already fixed: l.342, l.656, l.910 give an even count (4 or 2) with one point mass (V2b) | feedback item 1 |
+| S7-056 (no verdict: coverage gap) | keybox: below the boundary min, saddle, max; above it min + saddle "plus a faint image pinned at the black hole" (l.111–113) | already fixed: keybox l.811–814 gives four images or two below the boundary and exactly two above it (V2b) | feedback item 2 |
+| sol_note4 l.170, 176 (never extracted) | τ → −∞ at the point mass | already fixed: Table l.311 and l.320 give τ → +∞ (V1; critic S2) | feedback item 3 |
+| note4 Ex.4 l.131–132; sol_note4 l.163, 186–190 (never extracted) | adding a point mass changes the image count by an even number | already fixed: Ex.~`ex:oi_puncture` is titled "change the parity" and part (b) says N+g stays odd (V2c; critic S1) | feedback item 4 |
+| sol_note4 l.205–209 (never extracted) | annihilation boundary = the central maximum and the radial saddle merging in a fold | already fixed: annotation l.833–844 and keybox l.816–818 (V3a, V3d; critic S3b–c) | feedback item 2 |
+| FACT_CRITIC 07-11 | Burke 1981 = ApJ 244 L1 (not 289); MWK01 DOI 10.1046/j.1365-8711.2001.04143.x; note4 otherwise passed | consistent: bib keys `burke_1981`, `mao_witt_koopmans_2001` (critic C3, C9 PASS). That pass flagged none of the four note4 errors | none |
+| FACT_CRITIC_SOLUTIONS 07-24 C4 | sol_note4 "Burke's theorem" PASS; per-fragment tally "note4 10/10" | n.a. to the chapter. That pass did not catch sol_note4's τ sign or its "even change". Its tally disagrees with the 23 checks in `sol_note4_odd_images.wl` (same commit c3a9b1c; S7-058 re-ran 23/23) | feedback item 5 |
+| TESTS A4 | annihilation boundary = double root {y′ = 0, y″ = 0} of the lens map (derivation.wl, agrees with m_crit_numeric to 1.7e−6) | consistent: bridge l.820–825 uses the same condition; V3a reproduces it for the NIS. A4's condition is a merger of two *critical circles*, which contradicts note4's keybox reading (max + radial saddle) | none for the chapter; supports feedback item 2 |
+| TESTS A5 | MWK01 mechanism: a central point mass destroys the radial critical curve; numeric existence boundary | consistent: §`oi_pointmass` and the phase diagram; MWK01 attribution checked by critic C9 | none |
+| HANDOFF 09-21 §5 | retractions of this arc | n.a.: none touches note4 or its results | none |
+| HANDOFF 09-21 §6 | method lessons | n.a. | none |
+| NOTES_mcrit_label_defect | after the macro radial curve is destroyed, a residual point-mass critical curve at r ≈ 0.010″ survives (elliptical EPL+BH, LensCalc) | no conflict: the chapter's "above θ_•,crit … the radial caustic no longer exists" is for the axisymmetric NIS+BH, where λ_r has no root above u_crit (critic S3a). The defect note concerns elliptical Tier-3 mocks and the m/m_crit label (Ch.17 territory) | none |
+
+### New fixes for the fix pass (not already in the Flagged section)
+
+1. **S7-049, l.22–25.** "The missing odd image is the \emph{central image}" overstates what the index theorem gives. The theorem fixes only the parity of the number of unseen images. A deflector with several mass concentrations can have n_max > 1. Proposed: "For a single galaxy the missing odd image is the \emph{central image}, …". This is optional and minor, since the rest of the chapter only uses axisymmetric or single-core lenses.
+
+(No other spiral-record item adds a fix. S7-046 strengthens existing item X5 but does not create a new one.)
+
+### Feedback to the spiral project (errors the spiral record does not yet know)
+
+The 2026-07-11 study-notes critic passed note4 as a whole. The 2026-07-24 solutions critic passed sol_note4 (it checked only the Burke name, C4). The 2026-10-14 packet critic extracted the relevant note4 claims (S7-054, S7-055, S7-056) but returned no verdict on them, because they fell in the 160-claim coverage gap. It never extracted sol_note4 at all. TESTS, the HANDOFFs and the defect notes do not mention note4. **So none of the four source-note errors confirmed by this chapter's critic is known to the spiral record.** All four are confirmed again by `reconcile16.wl` (22/22).
+
+1. **`theory/note4_odd_images.tex:108`.** "the odd image count drops from three toward one" is wrong. With one central point mass the count is even: N = 2n₋ + 1 − g with g = 1 (SEF p.175; PLW Thm 11.4). An NIS+BH gives 4 or 2 images, never 3 or 1. The chapter says this at l.342, l.656 and l.910. Proof: V2a–c, 900 sources. Spiral packet id S7-055 (unverified).
+2. **`theory/note4_odd_images.tex:110–113` (keybox) and `theory/solutions/sol_note4_odd_images.tex:205–209`.** These make two errors.
+   - (a) The annihilation boundary is not "the central maximum and the radial saddle merging". At u_crit the BH's inner radial critical circle and the lens's radial critical circle merge, which is a double root y′ = y″ = 0. That is the project's own TESTS A4 condition. At fixed source the maximum always merges with the **black-hole** saddle, at −r₁. It never merges with the radial saddle, because y_out(u) rises monotonically.
+   - (b) "Above it … only the tangential min+saddle remain, plus a faint image pinned at the black hole" counts three images. The correct count is exactly two, a minimum and a saddle.
+   
+   The chapter's version is keybox l.807–818 plus annotation l.833–844. Proof: V3a–d and V2b. Spiral id S7-056 (unverified).
+3. **`theory/solutions/sol_note4_odd_images.tex:170` and `:176`.** "τ → −∞ as θ → 0" should be **+∞**. With ψ = θ_•² ln θ, −ψ → +∞: SEF p.175 calls it a "logarithmic spike" that replaces a maximum, and PLW p.425 agrees. The sign matters because a +∞ spike is exactly why the puncture acts as a hidden maximum with index +1, the reading l.193–196 of the same solution relies on. The chapter has +∞ at l.311 and l.320. Proof: V1a–b (`Limit`).
+4. **`theory/note4_odd_images.tex:131–132` (Exercise 4) and `sol_note4_odd_images.tex:163`, `:186–190`.** "Adding a point mass changes the image count by an even number" is wrong: the change is **odd**, since N + g is invariant mod 2. The solution contradicts itself. Its own algebra goes from N = 1 + 2n_sad to N = 2n_sad, and l.188–189 calls that "a shift of exactly one image" in the same sentence that concludes "even". The chapter's Ex. `ex:oi_puncture` asks for the parity change, attested by problems_16.wl 4b–4c (θ_c = 0.2, u = 0.3 u_crit: 3 → 2 at y = 0.1 and 3 → 4 at y = 0.2). Proof: V2c, where every source shows an odd change, including (1,4) pairs that change by +3.
+5. **Record inconsistency (minor), `theory/solutions/FACT_CRITIC_SOLUTIONS_2026-07-24.md` l.58.** "note4 10/10" does not match `mathematica/exercises/sol_note4_odd_images.wl`, which has 23 `report[]` checks in the same commit c3a9b1c. Both `sol_note4_odd_images.tex:14` and the 10-14 re-run (S7-058) give 23/23.
+
+Spiral rows that the record already knows (S7-046, S7-049, S7-050, S7-051, S7-052, S7-058) are not repeated here. The chapter has already fixed all of them except the mild S7-049 overstatement (New fix 1).
