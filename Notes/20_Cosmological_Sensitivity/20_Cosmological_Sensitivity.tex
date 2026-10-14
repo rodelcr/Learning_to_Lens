@@ -2,11 +2,935 @@
 % Module 20: Cosmological Sensitivity of Compound-Lens Ratios
 % =============================================================================
 % Part V — Compound Lenses, Degeneracies, and Cosmography
-% STUB created 2026-10-14 so that \ref{ch:cosmological_sensitivity} resolves while the chapter is
-% being written. Replace this file with the full chapter (keep the label).
+% Sources: Collett et al. (2012); Collett & Auger (2014); Schneider (2014,
+%          A&A 568, L2); Chapter 7 (cosmological distances) of these notes.
+%          CPL parametrisation: Chevallier & Polarski (2001), Linder (2003)
+%          [not in references.bib; stated without citation].
+% Mathematica: ../Mathematica/20_Cosmological_Sensitivity/
+% Label prefix: cs
 % =============================================================================
 
 \chapter{Cosmological Sensitivity of Compound-Lens Ratios}
 \label{ch:cosmological_sensitivity}
 
-\noindent\emph{[Chapter in preparation.]}
+\noindent
+A double-source-plane lens (DSPL) turns the image geometry of a single
+deflector into one number, the distance ratio $\Brat$ of
+Chapter~\ref{ch:multiplane_dspl}. That number depends on cosmology only
+through angular-diameter distances, and it does not depend on the Hubble
+constant at all \citep{collett_2012}. Chapter~\ref{ch:central_mass_bias}
+showed how a mass-model error, such as an unmodelled central mass, shifts
+the inferred ratio by a fractional amount $\Delta\Brat/\Brat$. This
+chapter takes the next step and asks what such a shift does to the
+inferred cosmological parameters.
+
+The obvious answer is to divide by a sensitivity,
+$\Delta w=(\Delta\Brat/\Brat)/S_w$. That is a one-dimensional projection
+of a multi-dimensional problem. A single DSPL constrains one combination
+of $(\Omegam,w_0,w_a)$, so a bias is a \emph{direction} in parameter
+space, and the number one quotes for $\Delta w$ depends on which other
+parameters were held fixed. Compound lenses with more than two source
+planes add a second subtlety: one inner-profile error enters every plane
+at once, so the per-plane biases are \emph{coherent} and do not average
+down like noise. Finally, a \emph{bias} has to be told apart from a
+\emph{degeneracy}. Removing a datum from the fit does not shift the
+answer; it gives up part of the constraint, and it must not be
+propagated as if it were a small shift.
+
+By the end of the chapter you should be able to
+(a) compute $\Brat$ and its Jacobian for any flat dark-energy cosmology,
+(b) explain why one DSPL constrains a direction in $(\Omegam,w_0,w_a)$ and
+what that implies for quoted single-parameter biases,
+(c) distinguish coherent from independent systematics across planes and
+lenses, and
+(d) tell a degeneracy from a bias.
+
+\medskip
+\noindent
+\textbf{Companion Mathematica files:}
+\begin{itemize}[nosep]
+    \item \mathlink{20_Cosmological_Sensitivity/cosmological_sensitivity.wl}{cosmological\_sensitivity.wl}
+          --- in-script flat CPL distances; $\Brat$ and its $\Hubble$
+          independence; the Jacobian by two independent routes; rank,
+          blind direction and projections; the $N$-plane coherence
+          identity; dynamic range of $\Brat$; exports both figures
+    \item \solnlink{20_Cosmological_Sensitivity/problems\_20.wl}{problems\_20.wl}
+          --- worked solutions to the Problems, with an independent
+          implementation of the distances
+\end{itemize}
+
+
+% =====================================================================
+\section{Why a Scalar Is Not Enough}
+\label{sec:cs_why}
+
+The inference chain of a galaxy-scale DSPL analysis
+(Chapters~\ref{ch:multiplane_dspl} and~\ref{ch:power_law_point_mass}) is
+\begin{equation}
+  \text{image positions}\;\longrightarrow\;
+  \etamea=\frac{\thetaE^{(1)}}{\thetaE^{(2)}}
+  \;\longrightarrow\;\Brat=\etamea^{\,\gp-1}
+  \;\longrightarrow\;(\Omegam,w_0,w_a),
+  \label{eq:cs_chain}
+\end{equation}
+where $\thetaE^{(i)}$ is the Einstein radius for source plane $i$ and
+$\gp$ the three-dimensional density slope of a power-law deflector. The
+last arrow is usually closed with a single number,
+\begin{equation}
+  S_w\equiv\pderiv{\ln\Brat}{w}\bigg|_{\Omegam}
+  \qquad\Longrightarrow\qquad
+  \Delta w=\frac{\Delta\Brat/\Brat}{S_w}.
+  \label{eq:cs_scalar}
+\end{equation}
+Equation~\eqref{eq:cs_scalar} is correct, but it answers a narrower
+question than the one we want. It presumes
+(i) a \emph{single} distance ratio,
+(ii) all other cosmological parameters held \emph{fixed}, and
+(iii) a bias small enough that a first-order expansion holds.
+A real compound-lens cosmography can violate all three: it may use
+several source planes, it marginalises over $\Omegam$ (and possibly over
+a time-varying dark-energy equation of state), and some mass-model
+failures produce excursions much larger than a linear expansion
+tolerates.
+
+What we need is the map from a \emph{vector} of per-plane ratio errors
+to a \emph{displacement} in parameter space, together with the direction
+along which that displacement is unconstrained.
+
+\begin{keybox}[Notation for this chapter]
+$\bm{p}=(p_1,p_2,p_3)=(\Omegam,w_0,w_a)$ is the cosmological parameter
+vector; the universe is spatially flat. The deflector is at $z_d$ and the
+sources at $z_1<z_2<\dots<z_N$. Index $i=2,\dots,N$ labels the ratio
+$\Brat_i$ of plane~1 to plane~$i$. The quantity
+$\delta_i\equiv\Delta\ln\Brat_i\simeq\Delta\Brat_i/\Brat_i$ is the
+fractional error in $\Brat_i$ \emph{induced by the mass model}. It is a
+systematic offset, not a measurement uncertainty.
+\end{keybox}
+
+
+% =====================================================================
+\section{The Ratio $\Brat$ in a Dark-Energy Cosmology}
+\label{sec:cs_cpl}
+
+\subsection{The CPL equation of state}
+
+Chapter~\ref{ch:cosmological_distances} treated dark energy with a
+constant equation of state $w$, for which the fluid equation gives
+$\rho\propto a^{-3(1+w)}$ (eq.~\ref{eq:rho_scaling}). To test whether
+dark energy evolves, the standard two-parameter extension is the
+Chevallier--Polarski--Linder (CPL) form
+\begin{equation}
+  w(a)=w_0+w_a\,(1-a)
+  \qquad\Longleftrightarrow\qquad
+  w(z)=w_0+w_a\,\frac{z}{1+z},
+  \label{eq:cs_cpl_w}
+\end{equation}
+using $a=1/(1+z)$ (eq.~\ref{eq:redshift_scale_factor}). Here $w_0$ is the
+present-day value and $w_a$ controls the evolution: $w\to w_0+w_a$ at
+high redshift. The cosmological constant is $(w_0,w_a)=(-1,0)$.
+
+With a time-dependent $w$ the fluid equation
+$\dd\ln\rho/\dd\ln a=-3[1+w(a)]$ no longer integrates to a single power.
+Writing $\rho_{\rm DE}(z)=\rho_{\rm DE,0}\,\zeta(z)$,
+\begin{equation}
+  \zeta(z)=\exp\!\left[3\int_0^z\frac{1+w(z')}{1+z'}\,\dd z'\right]
+  =(1+z)^{3(1+w_0+w_a)}\exp\!\left(-\frac{3w_az}{1+z}\right).
+  \label{eq:cs_zeta}
+\end{equation}
+
+\begin{derivation}[The CPL density factor]
+Start from $\dd\ln\rho/\dd\ln a=-3(1+w)$ and change variable to $z$.
+Since $\ln a=-\ln(1+z)$, we have $\dd\ln a=-\dd z/(1+z)$, so
+$\dd\ln\rho/\dd z=3(1+w(z))/(1+z)$. Integrate from $0$ to $z$ with
+$w(z')=w_0+w_a z'/(1+z')$:
+\[
+  \int_0^z\frac{1+w_0}{1+z'}\dd z'=(1+w_0)\ln(1+z),\qquad
+  \int_0^z\frac{w_a z'}{(1+z')^2}\dd z'
+  =w_a\Bigl[\ln(1+z)-\frac{z}{1+z}\Bigr],
+\]
+where the second integral uses $z'/(1+z')^2=1/(1+z')-1/(1+z')^2$.
+Adding and multiplying by $3$ gives
+$\ln\zeta=3(1+w_0+w_a)\ln(1+z)-3w_az/(1+z)$, which is
+eq.~\eqref{eq:cs_zeta}. Two limits are worth checking by eye:
+$w_a=0$ gives $\zeta=(1+z)^{3(1+w_0)}$, the constant-$w$ result of
+Chapter~\ref{ch:cosmological_distances}, and $(w_0,w_a)=(-1,0)$ gives
+$\zeta\equiv1$, a cosmological constant.
+\end{derivation}
+
+In a flat universe the expansion rate is then
+\begin{equation}
+  E^2(z)\equiv\frac{H^2(z)}{\Hubble^2}=\Omegam(1+z)^3+(1-\Omegam)\,\zeta(z),
+  \label{eq:cs_E}
+\end{equation}
+which reduces to the concordance form, eq.~\eqref{eq:Hz_concordance}, for
+$\Omegam=0.3$ and $\zeta\equiv1$, and satisfies $E(0)=1$ for every
+$(\Omegam,w_0,w_a)$.
+
+\subsection{$\Brat$ is a ratio of comoving distances}
+
+Following Chapter~\ref{ch:multiplane_dspl},
+\begin{equation}
+  \Brat\equiv\frac{D_{\mathrm{d}s_1}\,D_{s_2}}{D_{s_1}\,D_{\mathrm{d}s_2}}
+  =\frac{D_{\mathrm{d}s_1}/D_{s_1}}{D_{\mathrm{d}s_2}/D_{s_2}}\;<\;1 ,
+  \label{eq:cs_B_def}
+\end{equation}
+the ratio of the lensing efficiencies of the nearer and farther source
+planes. Every distance in eq.~\eqref{eq:cs_B_def} is a flat-universe
+angular-diameter distance, eqs.~\eqref{eq:DA_flat} and~\eqref{eq:Dds_flat}:
+$D_{s}=\chi_s/(1+z_s)$ and $D_{\mathrm{d}s}=(\chi_s-\chi_d)/(1+z_s)$, with
+\begin{equation}
+  \chi(z)=\frac{\speedoflight}{\Hubble}\int_0^z\frac{\dd z'}{E(z')} .
+  \label{eq:cs_chi}
+\end{equation}
+Substituting, the $(1+z)$ factors cancel pairwise and
+\begin{equation}
+  \boxed{\;\Brat=\frac{1-\chi_d/\chi_1}{1-\chi_d/\chi_2}\;}
+  \label{eq:cs_B_chi}
+\end{equation}
+Two properties follow at once. First, $\Brat$ involves only
+\emph{ratios} of comoving distances, so the Hubble distance
+$\speedoflight/\Hubble$ cancels: $\Brat$ is independent of $\Hubble$.
+Second, $\Brat\to1$ as $z_2\to z_1$, so the cosmological signal vanishes
+when the two source planes approach each other.
+
+\begin{bridge}[Back to Chapter~\ref{ch:cosmological_distances}]
+Equation~\eqref{eq:cs_B_chi} rests on two facts from
+Chapter~\ref{ch:cosmological_distances}: in a flat universe comoving
+distances add, $\chi_{ds}=\chi_s-\chi_d$, and the angular-diameter
+distance is $\chi/(1+z)$ (eqs.~\ref{eq:DA_flat} and~\ref{eq:Dds_flat}).
+The remark there that $\Dds\neq\Ds-\Dd$ is exactly why
+eq.~\eqref{eq:cs_B_chi} has to be written in $\chi$, not in $D_A$. In a
+curved universe eq.~\eqref{eq:Dds_general} replaces the simple
+difference; the $(1+z)$ factors still cancel, but $\Brat$ then also
+depends on $\Omega_k$.
+\end{bridge}
+
+\begin{annotation}[What $\Brat$ actually measures]
+Because $\Hubble$ cancels, $\Brat$ is sensitive only to the
+\emph{shape} of $\chi(z)$ between $z_d$ and $z_2$, that is, to how
+$E(z)$ varies with redshift. This is why a DSPL probes $\Omegam$ and
+dark energy but not the expansion rate today. It is also why the
+sensitivities below are small: a modest change in $w_0$ alters the
+shape of $\chi(z)$ only slightly, and the ratio of ratios in
+eq.~\eqref{eq:cs_B_chi} removes most of what is left.
+\end{annotation}
+
+\begin{aside}[Computing $\Brat$ in practice]
+Never use a fitting formula for $\Brat$. Write the cosmology as a
+callable function, integrate $1/E$ numerically, and form
+eq.~\eqref{eq:cs_B_chi}. The companion script does this in a few lines,
+checks it against an independent $\Lambda$CDM implementation, and proves
+symbolically that $\speedoflight/\Hubble$ drops out.
+\end{aside}
+
+
+% =====================================================================
+\section{The Sensitivity Jacobian}
+\label{sec:cs_jacobian}
+
+\subsection{Definition}
+
+For a fixed geometry $\{z_d;z_1,\dots,z_N\}$ define the
+\textbf{sensitivity Jacobian}
+\begin{equation}
+  J_{ij}(\bm{p})\equiv\pderiv{\ln\Brat_i}{p_j}\bigg|_{\bm{p}},
+  \qquad i=2,\dots,N,\quad j=1,2,3 .
+  \label{eq:cs_jacobian}
+\end{equation}
+Each row is the response of one observable to cosmology; each column is
+the imprint of one parameter across the planes. For a single DSPL, $J$ is
+the row vector $(S_{\Omegam},S_{w_0},S_{w_a})$, and $S_w$ of
+eq.~\eqref{eq:cs_scalar} is its middle entry.
+
+\subsection{Two ways to compute it}
+
+\paragraph{Finite differences.} Evaluate $\ln\Brat$ at $p_j\pm h$ with
+the other parameters fixed and take
+$[\ln\Brat(p_j+h)-\ln\Brat(p_j-h)]/2h$. The truncation error is
+$\mathcal{O}(h^2)$; combining steps $h$ and $h/2$ (Richardson
+extrapolation) removes the leading term.
+
+\paragraph{Differentiating under the integral.} From
+eq.~\eqref{eq:cs_chi},
+\begin{equation}
+  \pderiv{\chi(z)}{p_j}=-\frac{\speedoflight}{2\Hubble}\int_0^z
+  \frac{1}{E^3(z')}\,\pderiv{E^2(z')}{p_j}\,\dd z' ,
+  \label{eq:cs_dchi}
+\end{equation}
+and from eq.~\eqref{eq:cs_B_chi},
+$\ln\Brat=\ln(\chi_1-\chi_d)-\ln\chi_1+\ln\chi_2-\ln(\chi_2-\chi_d)$, so
+\begin{equation}
+  \pderiv{\ln\Brat}{p_j}
+  =\frac{\chi_1'-\chi_d'}{\chi_1-\chi_d}-\frac{\chi_1'}{\chi_1}
+   +\frac{\chi_2'}{\chi_2}-\frac{\chi_2'-\chi_d'}{\chi_2-\chi_d},
+  \qquad \chi'\equiv\pderiv{\chi}{p_j}.
+  \label{eq:cs_dlnB}
+\end{equation}
+The derivatives of $E^2$ needed in eq.~\eqref{eq:cs_dchi} are elementary:
+$\partial E^2/\partial\Omegam=(1+z)^3-\zeta$,
+$\partial E^2/\partial w_0=3(1-\Omegam)\zeta\ln(1+z)$ and
+$\partial E^2/\partial w_a=3(1-\Omegam)\zeta[\ln(1+z)-z/(1+z)]$.
+
+The two routes share nothing but $E(z)$, so their agreement is a real
+check. The companion script finds agreement to better than $10^{-10}$
+after Richardson extrapolation.
+
+\subsection{An illustrative geometry}
+
+Throughout this chapter we use the illustrative configuration
+\[
+  z_d=0.5,\qquad z_1=1.0,\qquad z_2=2.0,\qquad
+  \bm{p}_0=(\Omegam,w_0,w_a)=(0.3,-1,0),
+\]
+which is not meant to represent any particular observed system. There
+$\Brat=0.674156$ and
+\begin{equation}
+  J=(S_{\Omegam},\,S_{w_0},\,S_{w_a})=(-0.03569,\;-0.03301,\;-0.007255),
+  \qquad 1/S_{w_0}=-30.29 .
+  \label{eq:cs_J_values}
+\end{equation}
+All three entries are negative: raising $\Omegam$, $w_0$ or $w_a$ lowers
+$\Brat$. The scalar formula~\eqref{eq:cs_scalar} would therefore convert
+a $1\%$ ratio error into $|\Delta w_0|=0.30$ at fixed $\Omegam$ and
+$w_a$. The rest of the chapter is about what that number does and does
+not mean.
+
+\begin{annotation}[Why $S_{w_a}$ is small]
+$w_a$ enters $w(z)$ multiplied by $z/(1+z)$, which is at most $1/2$
+for $z\le1$ and at most $2/3$ for $z\le2$. Over the redshifts that
+dominate $\chi_d$ and $\chi_1$, a unit change in $w_a$ therefore acts
+like a much smaller change in $w_0$. At the illustrative geometry
+$S_{w_a}/S_{w_0}=0.22$. The practical consequence is that a single DSPL
+barely constrains $w_a$, and any statement about $w_a$ rests on the
+other parameters being pinned.
+\end{annotation}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.62\textwidth]{../Figures/20_Cosmological_Sensitivity/cs_B_contours.pdf}
+    \caption{Contours of $100\,(\Brat/\Brat_0-1)$, the percentage change
+    of $\Brat$ relative to its value at $(\Omegam,w_0)=(0.3,-1)$ (black
+    dot), for the illustrative geometry $z_d=0.5$, $z_1=1$, $z_2=2$ with
+    $w_a=0$. The thick contour is $\Brat=\Brat_0$: every cosmology on it
+    reproduces the same ratio. Note the small dynamic range (a few per
+    cent over the whole panel) and the curvature of the contours, which
+    makes $\Brat$ non-monotonic in $w_0$ (\S\ref{sec:cs_degeneracy}).
+    Generated by \texttt{cosmological\_sensitivity.wl}.}
+    \label{fig:cs_B_contours}
+\end{figure}
+
+
+% =====================================================================
+\section{From a Model Error to a Parameter Displacement}
+\label{sec:cs_biasvector}
+
+Suppose the mass model biases the inferred log-ratios by $\delta_i$.
+To first order the inferred parameters move by whatever $\Delta\bm{p}$
+reproduces those offsets:
+\begin{equation}
+  J\,\Delta\bm{p}=\bm{\delta} .
+  \label{eq:cs_linear}
+\end{equation}
+If the analysis carries a covariance $C$ on the $\ln\Brat_i$, the fit
+minimises $\chi^2=(J\Delta\bm{p}-\bm{\delta})^{\mathsf T}C^{-1}
+(J\Delta\bm{p}-\bm{\delta})$. Setting its gradient to zero gives the
+generalised least-squares solution, and hence the induced bias
+\begin{equation}
+  \boxed{\;\Delta\bm{p}=\bigl(J^{\mathsf T}C^{-1}J\bigr)^{-1}
+  J^{\mathsf T}C^{-1}\,\bm{\delta}\;}
+  \label{eq:cs_biasvector}
+\end{equation}
+The matrix $F=J^{\mathsf T}C^{-1}J$ is the Fisher matrix of the
+measurement, and $F^{-1}$ is the covariance of the \emph{statistical}
+errors. Equation~\eqref{eq:cs_biasvector} says that the same $F^{-1}$
+also converts a \emph{systematic} offset into a parameter shift. When
+$J$ is square and invertible, eq.~\eqref{eq:cs_biasvector} reduces to
+$\Delta\bm{p}=J^{-1}\bm{\delta}$ and $C$ drops out.
+
+\begin{derivation}[The normal equations]
+Write $\bm{r}=J\Delta\bm{p}-\bm{\delta}$. Then
+$\chi^2=\bm{r}^{\mathsf T}C^{-1}\bm{r}$ and
+$\partial\chi^2/\partial\Delta\bm{p}=2J^{\mathsf T}C^{-1}\bm{r}$ (using
+that $C^{-1}$ is symmetric). Setting this to zero gives
+$J^{\mathsf T}C^{-1}J\,\Delta\bm{p}=J^{\mathsf T}C^{-1}\bm{\delta}$.
+If $F=J^{\mathsf T}C^{-1}J$ is invertible, multiplying by $F^{-1}$ gives
+eq.~\eqref{eq:cs_biasvector}. If $J$ is square and invertible,
+$F^{-1}=J^{-1}C\,(J^{\mathsf T})^{-1}$ and the $C$'s cancel, leaving
+$J^{-1}\bm{\delta}$. Both statements are checked symbolically in the
+companion script.
+\end{derivation}
+
+Two consequences deserve to be stated explicitly.
+\begin{enumerate}
+  \item \textbf{Direction matters as much as magnitude.} $\Delta\bm{p}$
+  inherits the orientation of the poorly constrained eigendirections of
+  $F$. A systematic that projects onto a well-constrained direction is
+  comparatively harmless; the same magnitude along a degenerate direction
+  is not.
+  \item \textbf{Rank governs everything.} If $J$ has fewer rows than
+  there are parameters (one DSPL, three parameters), $F$ is singular and
+  eq.~\eqref{eq:cs_biasvector} has no unique solution. The bias is then a
+  \emph{ray}, not a point.
+\end{enumerate}
+
+
+% =====================================================================
+\section{One Source-Plane Pair: The Answer Is a Direction}
+\label{sec:cs_direction}
+
+\subsection{Rank and the blind direction}
+
+With one DSPL, $J$ is a single row and $F=\sigma^{-2}J^{\mathsf T}J$ is
+the outer product of one vector with itself. Its rank is $1$ whatever
+$\sigma$ is. In the full $(\Omegam,w_0,w_a)$ space the null space is
+two-dimensional, and in the $(\Omegam,w_0)$ plane it is the single
+direction
+\begin{equation}
+  \bm{n}\propto(S_{w_0},\,-S_{\Omegam}),
+  \qquad J\cdot\bm{n}=0 .
+  \label{eq:cs_null}
+\end{equation}
+Moving the cosmology along $\bm{n}$ does not change $\Brat$ to first
+order: $\bm{n}$ is the tangent to the contour $\Brat=\Brat_0$ in
+Figure~\ref{fig:cs_B_contours}. Parametrising directions in the
+$(\Omegam,w_0)$ plane as $\dd\Omegam=c\,\dd w_0$, the null direction
+corresponds to
+\begin{equation}
+  c_\star=-\frac{S_{w_0}}{S_{\Omegam}} ,
+  \label{eq:cs_cstar}
+\end{equation}
+which is $c_\star=-0.925$ at the illustrative geometry. We call
+$(c_\star,1)$ the \textbf{blind direction} of the system. The companion
+script confirms numerically that a step along it changes $\ln\Brat$ only
+at second order: for a step of $0.01$ the response is about $4\%$ of the
+response to the same step along $w_0$, and it halves when the step is
+halved.
+
+\subsection{The bias ray}
+
+With one equation $J\cdot\Delta\bm{p}=\delta$ and two or three unknowns,
+any direction $\hat{\bm{u}}$ with $J\cdot\hat{\bm{u}}\neq0$ provides a
+solution:
+\begin{equation}
+  \Delta\bm{p}=\frac{\delta}{J\cdot\hat{\bm{u}}}\,\hat{\bm{u}} .
+  \label{eq:cs_ray}
+\end{equation}
+Choosing $\hat{\bm{u}}$ \emph{is} a modelling assumption. Taking
+$\hat{\bm{u}}=\hat{\bm{e}}_{w_0}$, which amounts to declaring $\Omegam$
+(and $w_a$) known, recovers eq.~\eqref{eq:cs_scalar} exactly:
+$\Delta w_0=\delta/S_{w_0}$.
+
+What decides $\hat{\bm{u}}$ in a real analysis? Usually another probe.
+Suppose an external data set (supernovae, baryon acoustic oscillations,
+the CMB) constrains the combination $\Omegam-c\,w_0$ and is itself blind
+along $\dd\Omegam=c\,\dd w_0$. Minimising the joint $\chi^2$ of the DSPL
+and the external probe, both centred on the truth, gives
+\begin{equation}
+  \boxed{\;\Delta w_0=\frac{\delta}{S_{w_0}+c\,S_{\Omegam}},\qquad
+  \Delta\Omegam=c\,\Delta w_0\;}
+  \label{eq:cs_marginalised}
+\end{equation}
+\emph{independent of how precise the external probe is}. The case $c=0$,
+an $\Omegam$ prior centred on the truth, gives back $\delta/S_{w_0}$
+and $\Delta\Omegam=0$.
+
+\begin{derivation}[Why the external precision drops out]
+Let the DSPL contribute $(J\cdot\Delta\bm{p}-\delta)^2/\sigma_B^2$ and the
+external probe $(\bm{e}\cdot\Delta\bm{p})^2/\sigma_X^2$ with
+$\bm{e}=(1,-c)$, so that the probe is blind along $(c,1)$. There are two
+parameters $(\Delta\Omegam,\Delta w_0)$ and two terms. The pair of
+equations $J\cdot\Delta\bm{p}=\delta$, $\bm{e}\cdot\Delta\bm{p}=0$ has
+the unique solution $\Delta\bm{p}\propto(c,1)$ with
+$(cS_{\Omegam}+S_{w_0})\Delta w_0=\delta$. At that point both terms
+vanish, so $\chi^2=0$, its smallest possible value, whatever $\sigma_B$
+and $\sigma_X$ are. The companion script verifies the result by
+inverting the $2\times2$ Fisher matrix symbolically.
+\end{derivation}
+
+\subsection{Is the fixed-$\Omegam$ number a bound?}
+
+Equation~\eqref{eq:cs_marginalised} is a function of $c$ with a pole at
+$c=c_\star$, where the external probe and the DSPL are blind along the
+same line. Relative to the fixed-$\Omegam$ value it is larger by the
+\textbf{amplification factor}
+\begin{equation}
+  \mathcal{A}(c)=\left|\frac{S_{w_0}}{S_{w_0}+c\,S_{\Omegam}}\right| .
+  \label{eq:cs_amplification}
+\end{equation}
+At the illustrative geometry $\mathcal{A}(-\tfrac12)=2.18$ and
+$\mathcal{A}(+\tfrac12)=0.649$. For a $1\%$ ratio error this means
+$|\Delta w_0|=0.659$ at $c=-\tfrac12$, $0.303$ at $c=0$ and $0.197$ at
+$c=+\tfrac12$. Since $\mathcal{A}\geq1$ exactly when
+$|S_{w_0}+cS_{\Omegam}|\leq|S_{w_0}|$, the fixed-$\Omegam$ number is a
+lower bound on the bias only for
+\begin{equation}
+  c\in[\,2c_\star,\;0\,]\qquad(\,=[-1.850,\,0]\text{ here}),
+  \label{eq:cs_lb_interval}
+\end{equation}
+that is, only when the external degeneracy tilts toward the DSPL's own
+blind direction. Outside that interval, marginalising \emph{reduces} the
+bias. As $c\to c_\star$ the bias grows without limit: at
+$c=0.99\,c_\star$ it is already more than fifty times the
+fixed-$\Omegam$ value.
+
+\begin{keybox}[What the fixed-$\Omegam$ number is, and is not]
+$\Delta w_0=\delta/S_{w_0}$ is the bias projected onto $w_0$ under a
+perfect $\Omegam$ prior. It is \textbf{not} a bound on the bias of a
+marginalised analysis in either direction: it is the single point $c=0$
+on a curve with a pole at the blind direction $c_\star$. It is a lower
+bound only when the other probes' degeneracy lies in
+$c\in[2c_\star,0]$. Report the bias \emph{vector}
+(eq.~\ref{eq:cs_biasvector}) together with the blind direction, and
+label any single-parameter number with the assumption that produced it.
+\end{keybox}
+
+There \emph{is} a genuine bound, but it concerns statistical errors, not
+biases. For any Fisher matrix the error on $w_0$ with $\Omegam$ fixed,
+$1/F_{w_0w_0}$, never exceeds the marginalised error
+$(F^{-1})_{w_0w_0}$ (the Cram\'er--Rao inequality). With an $\Omegam$
+prior of width $\sigma_X$ the difference is exactly
+$\sigma_X^2S_{\Omegam}^2/S_{w_0}^2\geq0$. It is a common slip to carry
+the intuition that ``fixing parameters always underestimates'' from
+errors over to biases, where it does not hold.
+
+\begin{annotation}[Reading the formula against the literature]
+Collett et al.\ \citep{collett_2012} report that the $\Omegam$--$w$
+degeneracy of DSPLs is almost orthogonal to that of the CMB and baryon
+acoustic oscillations. In the language of this section, combining with
+those probes puts the external $c$ far from $c_\star$, which keeps
+$\mathcal{A}(c)$ finite. That is the good news. The caution is that
+$\mathcal{A}$ depends on $c$ as well as on the lens, so the
+cosmological cost of a given $\delta$ cannot be quoted for the lens
+alone. It belongs to the \emph{combination} of probes, and must be
+recomputed for the combination actually used.
+\end{annotation}
+
+\subsection{Linear is only linear}
+
+Equation~\eqref{eq:cs_marginalised} is first order. Near the blind
+direction the first-order response $S_{w_0}+cS_{\Omegam}$ is small, so
+the second-order terms that bend the contours of
+Figure~\ref{fig:cs_B_contours} take over sooner.
+Figure~\ref{fig:cs_degeneracy_bias} makes this concrete for
+$\delta=+0.5\%$. Along $c=0$ and $c=+\tfrac12$ the exact solutions of
+$\Brat(\bm{p}_0+t\,(c,1))=1.005\,\Brat_0$ are $\Delta w_0=-0.162$ and
+$-0.091$, close to the linear values $-0.151$ and $-0.098$. Along
+$c=-\tfrac12$ the linear formula predicts $\Delta w_0=-0.330$. In fact
+$\Brat$ rises by at most $0.09\%$ along that ray before falling again,
+so \emph{no} point on the ray absorbs a $0.5\%$ error. The linear answer
+is not merely inaccurate there; it describes a solution that does not
+exist.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.62\textwidth]{../Figures/20_Cosmological_Sensitivity/cs_degeneracy_bias.pdf}
+    \caption{The bias as a direction. Solid: the contour
+    $\Brat=\Brat_0$ through the reference cosmology (dot) at the
+    illustrative geometry ($w_a=0$). Dashed: $\Brat=1.005\,\Brat_0$, the
+    locus to which a $+0.5\%$ ratio error moves the fit. Dotted: the blind
+    direction $(c_\star,1)$, tangent to the solid curve. Arrows: the
+    linear bias vectors of eq.~\eqref{eq:cs_marginalised} for external
+    degeneracies $c=0$ (fixed $\Omegam$, blue), $c=+\tfrac12$ (green) and
+    $c=-\tfrac12$ (red). Open circles: the exact solutions on the first
+    two rays. The red ray never reaches the dashed curve. Generated by
+    \texttt{cosmological\_sensitivity.wl}.}
+    \label{fig:cs_degeneracy_bias}
+\end{figure}
+
+\begin{bridge}[Back to the mass-sheet transformation]
+The structure here (one observable, a flat direction, and an answer
+fixed only once an external constraint chooses a point on it) is the same
+as that of the mass-sheet degeneracy of Chapter~\ref{ch:galaxy_lensing}
+(\S\ref{sec:msd}). There, image positions fix the lens only up to the
+family $\kappab_\lambda=\lambda\kappab+(1-\lambda)$, and $\Hubble$ is
+pinned only by external information such as stellar kinematics. A
+multi-plane version of that transformation exists, and Schneider
+\citep{schneider_2014_multiplane} showed that for a two-source-plane
+system it can mimic a change of cosmological parameters. The flat
+direction in cosmology studied here and the flat direction in the mass
+model therefore have to be broken together.
+\end{bridge}
+
+\subsection{Raising the rank}
+
+The rank can only be raised by an observable whose row of $J$ is
+\emph{not} parallel to the DSPL row. There are three options:
+\begin{itemize}
+  \item a \textbf{time delay} in the same system, which measures the
+  time-delay distance $D_{\Delta t}=\Dd\Ds/\Dds$
+  (eq.~\ref{eq:time_delay_recap}). This is a different combination of the
+  same distances, and it also depends on $\Hubble$;
+  \item an \textbf{external probe} in the same likelihood, as above;
+  \item a \textbf{second lens} at a different $z_d$, or a third source
+  plane, each of which adds a row (but see \S\ref{sec:cs_coherence} for
+  how much it helps).
+\end{itemize}
+More images of the \emph{same} source planes do not raise the rank: they
+sharpen $\sigma$ but leave $J$ unchanged.
+
+One further caution applies to every option. $\Brat$ is never observed
+directly; it is inferred through a mass model, and a multi-plane
+generalisation of the mass-sheet transformation can trade a change in
+the mass model for a change in the inferred cosmology
+\citep{schneider_2014_multiplane}. Raising the rank of $J$ does not by
+itself break that second degeneracy.
+
+
+% =====================================================================
+\section{Many Planes: Coherence, Not Averaging}
+\label{sec:cs_coherence}
+
+A compound lens with $N>2$ source planes yields $N-1$ ratios. It is
+tempting to treat them as $N-1$ independent measurements whose errors
+average down. Two facts make that wrong, and both push the same way.
+
+\subsection{The rows of $J$ are nearly parallel}
+
+All $\Brat_i$ share the deflector redshift and the distance--redshift
+relation; their responses to $\Omegam$ and $w_0$ differ only through the
+lever arm in $z_i$. Add a third source at $z_3=3$ to the illustrative
+system. The ratio of plane~1 to plane~3 has $\Brat_3=0.6095$ and row
+$(-0.0600,\,-0.0456,\,-0.0114)$, with the same sign pattern as the first
+row. In the $(\Omegam,w_0)$ plane the two rows are only $5.5^\circ$
+apart, and the $2\times2$ Jacobian has condition number $22.7$. Nearly
+parallel rows make $F$ ill-conditioned. The extra plane does raise the
+rank, but it constrains the old blind direction only weakly, and a
+systematic that points along that direction is amplified by the large
+eigenvalue of $F^{-1}$.
+
+\subsection{The model error is one error}
+
+A single deflector with an incorrectly modelled interior produces one
+physical error, one wrong inner profile, which propagates into
+\emph{every} source plane. Take the case of
+Chapter~\ref{ch:central_mass_bias}: a power-law deflector plus a central
+point mass, characterised on plane $i$ by the central-mass fraction
+$\mBH_i=\thetaBH^{(i)\,2}/\thetaE^{(i)\,2}$. The per-plane fractions
+obey
+\begin{equation}
+  \boxed{\;\mBH_i=\mBH_1\,\Brat_i^{\,(3-\gp)/(\gp-1)}\;}
+  \label{eq:cs_mscaling}
+\end{equation}
+for every $i$, where $\Brat_i$ is the ratio of plane~1 to plane~$i$.
+
+\begin{derivation}[The $N$-plane coherence identity]
+Let $\varepsilon_i\equiv D_{\mathrm{d}s_i}/D_{s_i}$ be the lensing
+efficiency of plane $i$, so that $\Brat_i=\varepsilon_1/\varepsilon_i$
+(eq.~\ref{eq:cs_B_def}). Both pieces of the lens scale with the inverse
+critical density, which is proportional to $\varepsilon_i$:
+\begin{itemize}
+  \item point mass: $\thetaBH^{(i)\,2}=M\varepsilon_i$
+  (cf.\ eq.~\ref{eq:einstein_radius_preview}, with
+  $\Dds/(\Dd\Ds)=\varepsilon_i/\Dd$, and the constants absorbed in $M$);
+  \item power law with convergence $\kappab\propto\theta^{1-\gp}$: the
+  Einstein radius obeys $\thetaE^{(i)\,\gp-1}=A\varepsilon_i$, because
+  $\kappab$ scales with $\varepsilon_i$ and the mean convergence inside
+  $\thetaE$ must equal one.
+\end{itemize}
+Then $\mBH_i=M\varepsilon_i\,(A\varepsilon_i)^{-2/(\gp-1)}$ and
+\[
+  \frac{\mBH_i}{\mBH_1}
+  =\Bigl(\frac{\varepsilon_i}{\varepsilon_1}\Bigr)^{1-2/(\gp-1)}
+  =\Bigl(\frac{\varepsilon_1}{\varepsilon_i}\Bigr)^{(3-\gp)/(\gp-1)}
+  =\Brat_i^{\,(3-\gp)/(\gp-1)} .
+\]
+For the singular isothermal sphere, $\gp=2$, the exponent is $1$ and
+$\mBH_i=\mBH_1\Brat_i$.
+\end{derivation}
+
+For $1<\gp<3$ the exponent is positive, and $0<\Brat_i<1$, so
+$0<\mBH_i<\mBH_1$: farther planes feel a weaker but \emph{same-signed}
+perturbation. The $\delta_i$ are therefore not independent draws; they
+form a deterministic, monotone family driven by one amplitude. Write
+$\delta_i=\mBH_1 r_i$ with response vector
+$r_i\equiv\partial\ln\Brat_i/\partial\mBH_1$. Then
+eq.~\eqref{eq:cs_biasvector} becomes
+\begin{equation}
+  \Delta\bm{p}=\mBH_1\bigl(J^{\mathsf T}C^{-1}J\bigr)^{-1}
+  J^{\mathsf T}C^{-1}\bm{r} .
+  \label{eq:cs_coherentbias}
+\end{equation}
+Whether the planes reinforce or partially cancel is decided by how
+$\bm{r}$ lines up with the poorly constrained eigendirections of $F$.
+That alignment is a computable property of the geometry.
+
+\begin{bridge}[Back to the power-law lens]
+The scaling $\thetaE^{\gp-1}\propto\varepsilon$ used in the derivation is
+the same one that gives $\Brat=\etamea^{\gp-1}$ in
+eq.~\eqref{eq:cs_chain}. It is the power-law profile of
+Chapter~\ref{ch:galaxy_lensing} (\S\ref{sec:power_law_profile}) seen from
+two source planes: the profile shape is fixed, and only its amplitude
+scales with the lensing efficiency.
+\end{bridge}
+
+\subsection{Why coherent errors do not average down}
+
+The cleanest way to see the difference is a one-parameter fit (say $w_0$
+with everything else fixed) to $n$ ratios with equal variances. The
+estimator is $\Delta w_0=\sum_iJ_i\delta_i/\sum_iJ_i^2$. Define the
+\emph{per-plane bias} $b_i\equiv\delta_i/J_i$, the shift each ratio
+would produce on its own. Then
+\begin{equation}
+  \Delta w_0=\sum_i\omega_i\,b_i,\qquad
+  \omega_i=\frac{J_i^2}{\sum_kJ_k^2}>0,\qquad\sum_i\omega_i=1 .
+  \label{eq:cs_convex}
+\end{equation}
+The combined bias is a weighted \emph{mean} of the per-plane biases, so
+it lies between the smallest and the largest of them, for every $n$.
+When the $b_i$ share a sign, as they do for a coherent error, adding
+planes cannot push the bias toward zero.
+
+Compare independent errors of size $\delta$ on each ratio. The rms bias
+is then $\delta/\lVert J\rVert$. With equal $J_i=J$ this is
+$\delta/(J\sqrt n)$, while a coherent error $\delta_i=\delta$ gives
+$\delta/J$ for every $n$. For unequal same-sign $J_i$ the ratio of
+coherent to independent is $\sum_iJ_i/\lVert J\rVert$, which lies
+between $1$ and $\sqrt n$. Coherent errors never benefit from the
+$1/\sqrt n$.
+
+\begin{keybox}[Coherent systematics]
+In an $N$-plane compound lens a single inner-profile error enters all
+$N-1$ ratios through $\mBH_i=\mBH_1\Brat_i^{(3-\gp)/(\gp-1)}$, with one
+sign. The induced bias in any one parameter is a weighted mean of the
+per-plane biases (eq.~\ref{eq:cs_convex}), so it does not shrink as
+$1/\sqrt{N}$. A many-plane system is not automatically safer than a
+two-plane one: it is more precise, and therefore \emph{more} exposed to a
+systematic that does not average away.
+\end{keybox}
+
+\begin{annotation}[The same logic across lenses]
+The argument does not need a single deflector. If several DSPLs are
+analysed with the \emph{same} modelling convention (the same rigid
+profile family, the same prior on $\gp$), a shortcoming of that
+convention is a shared systematic. Stacking such lenses averages the
+noise down as $1/\sqrt N$ but leaves the shared bias untouched, so the
+stack yields an increasingly confident wrong answer. Independence across
+lenses is a property of the \emph{analysis}, not of the sky.
+\end{annotation}
+
+
+% =====================================================================
+\section{Degeneracy Versus Bias}
+\label{sec:cs_degeneracy}
+
+\subsection{Three things an analyst can do with the radial image}
+
+Chapters~\ref{ch:odd_images} and~\ref{ch:central_mass_bias} discuss how
+a radial (central) image constrains the inner profile of the deflector.
+For cosmography the useful classification is by what the analyst does
+with that image, rather than by which mass profile is true:
+\begin{enumerate}
+  \item \textbf{Masked.} The radial image is removed from the data
+  vector.
+  \item \textbf{Included, rigid inner profile.} It is fitted with a
+  single power law (no central mass, no break in slope).
+  \item \textbf{Included, flexible inner profile.} It is fitted with a
+  model that lets the inner slope differ from the outer one.
+\end{enumerate}
+Cases 2 and 3 produce \emph{biases}: a definite offset $\delta$ that the
+linear machinery of
+\S\S\ref{sec:cs_biasvector}--\ref{sec:cs_coherence} can propagate (with
+the caveat of Figure~\ref{fig:cs_degeneracy_bias}). Case 3 is expected
+to have the smaller bias, because the extra freedom can absorb the inner
+structure that case 2 forces into the slope. Case 1 is different in
+kind.
+
+\subsection{Masking surrenders a constraint}
+
+With the radial image removed, the data no longer determine the inner
+slope, and $\Brat=\etamea^{\gp-1}$ inherits that indeterminacy: a range
+of $(\gp,\Brat)$ pairs fits the remaining images equally well. Within
+that range $\Brat$ is not shifted by the data; it is not determined by
+them at all. The value an analyst reports is set by where their prior on
+$\gp$ sits. Calling the width of that range a ``bias'' and pushing it
+through eq.~\eqref{eq:cs_scalar} confuses two different objects.
+
+\begin{keybox}[A degeneracy is not a bias]
+A \textbf{bias} is a displacement: the data determine a value, and the
+value is wrong by $\delta$. A \textbf{degeneracy} is a surrendered
+constraint: the data determine a set, and the reported point within it is
+chosen by a prior. Masking a feature that carried information creates a
+degeneracy. Report it as the span of $\Brat$ allowed by the data, name
+the prior that selects within it, and propagate it non-linearly as a
+\emph{region} in parameter space. Never convert it into a linearised
+$\Delta w$.
+\end{keybox}
+
+\subsection{The model manifold is thin}
+
+There is a second, blunter reason not to linearise large offsets: no
+cosmology can absorb them. Figure~\ref{fig:cs_B_contours} shows how
+little $\Brat$ moves. At the illustrative geometry, with $w_a=0$:
+\begin{itemize}
+  \item along $\Omegam=0.3$, $\Brat$ is \emph{not monotonic} in $w_0$.
+  It peaks $1.81\%$ above $\Brat_0$ near $w_0=-2.2$ and falls on both
+  sides;
+  \item over the box $\Omegam\in[0.2,0.4]$, $w_0\in[-2.5,-0.5]$ the
+  fractional change stays within $[-1.7\%,+3.3\%]$ (grid evaluation).
+\end{itemize}
+A fractional error of, say, $25\%$ is therefore not a ``large
+$\Delta w$''. It lies far off the manifold of predictions, and no member
+of the model family reproduces it. A naive linearisation would return
+$|0.25/S_{w_0}|=7.6$, a number with no meaning: it extrapolates a local
+derivative across an excursion over which $\Brat$ is not even monotonic.
+The correct statement is that the inferred $\Brat$ is inconsistent with
+the whole model family, and that statement does not depend on how dark
+energy is parametrised.
+
+\begin{annotation}[Dynamic range depends on geometry]
+The numbers above belong to the illustrative geometry. The dynamic range
+of $\Brat$ shrinks as $z_2\to z_1$ (where $\Brat\to1$ for every
+cosmology), so re-evaluate the excursion for each configuration. The
+procedure is simple and worth automating: scan $\Brat$ over the
+parameter box actually allowed, compare $|\delta|$ with that range, and
+decide whether linear propagation is admissible before quoting any
+$\Delta w$.
+\end{annotation}
+
+
+% =====================================================================
+\section{A Practical Recipe}
+\label{sec:cs_recipe}
+
+For a given compound-lens system and a candidate mass-model systematic:
+\begin{enumerate}
+  \item Write the cosmology as a callable $E(z;\bm{p})$
+  (eq.~\ref{eq:cs_E}) and compute every $\Brat_i$ from
+  eq.~\eqref{eq:cs_B_chi}.
+  \item Compute $J$ by finite differences and check it against
+  eqs.~\eqref{eq:cs_dchi}--\eqref{eq:cs_dlnB}. $J$ belongs to the
+  geometry; do not transport it to another system.
+  \item Find the blind direction(s): the null space of $J$, or the
+  smallest-eigenvalue directions of $F$ when $N>2$.
+  \item Decide whether the systematic is a \emph{bias} (case 2 or 3) or a
+  \emph{degeneracy} (case 1). Only biases go further.
+  \item Check that $|\delta|$ is well inside the dynamic range of
+  $\Brat$, and that the probe combination being used is not close to the
+  blind direction. If either check fails, solve
+  $\Brat(\bm{p})=\Brat_{\rm obs}$ non-linearly.
+  \item For coherent multi-plane errors, build $\bm{\delta}$ from the
+  single amplitude via eq.~\eqref{eq:cs_mscaling} and propagate with
+  eq.~\eqref{eq:cs_coherentbias}. Do not divide by $\sqrt{N}$.
+  \item Report $\Delta\bm{p}$ as a vector with the degeneracy direction
+  shown, and give any single-parameter number with its projection
+  labelled.
+\end{enumerate}
+
+DSPL cosmography has gone from a forecast \citep{collett_2012} to a first
+measurement on an observed system \citep{collett_auger_2014}. Every step
+from $\delta$ to $\Delta\bm{p}$ carries an assumption about directions in
+parameter space, and those assumptions need to be stated alongside the
+result.
+
+
+% =====================================================================
+\section{Summary}
+\label{sec:cs_summary}
+
+\begin{itemize}
+  \item With CPL dark energy, $w(a)=w_0+w_a(1-a)$, the density factor is
+  $\zeta(z)=(1+z)^{3(1+w_0+w_a)}e^{-3w_az/(1+z)}$ and
+  $E^2=\Omegam(1+z)^3+(1-\Omegam)\zeta$.
+  \item In a flat universe
+  $\Brat=(1-\chi_d/\chi_1)/(1-\chi_d/\chi_2)$, a ratio of comoving
+  distances, independent of $\Hubble$.
+  \item The sensitivity Jacobian $J_{ij}=\partial\ln\Brat_i/\partial p_j$
+  can be computed by finite differences or by differentiating under the
+  integral. At the illustrative geometry all entries are negative and
+  $S_{w_a}$ is several times smaller than $S_{w_0}$.
+  \item A ratio error $\bm{\delta}$ maps to
+  $\Delta\bm{p}=F^{-1}J^{\mathsf T}C^{-1}\bm{\delta}$. With one DSPL $F$
+  has rank $1$, so the bias is a ray, fixed only by a choice of
+  direction.
+  \item With an external probe blind along $(c,1)$,
+  $\Delta w_0=\delta/(S_{w_0}+cS_{\Omegam})$, which diverges at the blind
+  direction $c_\star=-S_{w_0}/S_{\Omegam}$. The fixed-$\Omegam$ value is a
+  lower bound only for $c\in[2c_\star,0]$. For statistical errors, by
+  contrast, fixing parameters always gives a lower bound.
+  \item Near the blind direction the linear formula fails early, and can
+  describe a solution that does not exist.
+  \item In an $N$-plane lens one inner-profile error enters every ratio
+  through $\mBH_i=\mBH_1\Brat_i^{(3-\gp)/(\gp-1)}$; the resulting bias is a
+  weighted mean of per-plane biases and does not average as $1/\sqrt{N}$.
+  \item Masking a constraining feature creates a degeneracy, not a bias:
+  report a span and the prior, not a linearised $\Delta w$. Offsets larger
+  than the dynamic range of $\Brat$ mean that no cosmology in the family
+  fits.
+\end{itemize}
+
+
+% =====================================================================
+\section{Problems}
+\label{sec:cs_problems}
+
+\begin{exercise}
+\label{ex:cs_cpl}
+\textbf{(The CPL density.)}
+(a) Starting from $\dd\ln\rho/\dd\ln a=-3[1+w(a)]$ with
+$w(a)=w_0+w_a(1-a)$, derive eq.~\eqref{eq:cs_zeta}.
+(b) Show that $\zeta(z)\to e^{-3w_a}(1+z)^{3(1+w_0+w_a)}$ as
+$z\to\infty$, and interpret the exponent.
+(c) Evaluate $\zeta(1)$ for $(w_0,w_a)=(-0.9,-0.3)$.
+(d) Explain why $|S_{w_a}|$ is much smaller than $|S_{w_0}|$ for
+galaxy-scale DSPLs.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:cs_projection}
+\textbf{(Projection.)}
+Show that eq.~\eqref{eq:cs_ray} with $\hat{\bm{u}}=\hat{\bm{e}}_{w_0}$
+reproduces $\Delta w_0=\delta/S_{w_0}$, and derive the expression when
+$\Omegam$ moves along a fixed direction $\dd\Omegam=c\,\dd w_0$. At the
+illustrative geometry, compare $|\Delta w_0|$ for $\delta=1\%$ at
+$c=0,\pm\tfrac12$. For which $c$ is the fixed-$\Omegam$ value a lower
+bound? Why is ``marginalising always makes it worse'' the wrong
+intuition here?
+\end{exercise}
+
+\begin{exercise}
+\label{ex:cs_rank}
+\textbf{(Rank.)}
+For a single DSPL, show that $J^{\mathsf T}C^{-1}J$ has rank~$1$ and give
+its null direction in the $(\Omegam,w_0)$ plane at the illustrative
+geometry. Name an observable that raises the rank \emph{without} adding a
+source plane, and check that its row is not parallel to the DSPL row.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:cs_coherence}
+\textbf{(Coherence.)}
+Using eq.~\eqref{eq:cs_mscaling} with $\gp=1.6$ and $\Brat_2=0.7$,
+compute $\mBH_2/\mBH_1$. If a third plane has $\Brat_3=0.5$ relative to
+plane~1, do the three central-mass fractions have the same sign? Use
+eq.~\eqref{eq:cs_convex} to argue whether the per-plane biases reinforce.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:cs_nonlinear}
+\textbf{(Non-linearity.)}
+An analysis that masked the radial image reports that $\Brat$ could lie
+anywhere in a $25\%$ span. Explain why quoting
+$|\Delta w_0|=0.25/|S_{w_0}|$ is not meaningful, using both the
+degeneracy argument and the dynamic range of $\Brat$, and state what
+should be reported instead.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:cs_design}
+\textbf{(Design.)}
+Would you rather have one DSPL with an exquisitely modelled radial
+image, or three DSPLs whose radial images are all masked and which are
+analysed with the same rigid profile and the same $\gp$ prior? Justify
+your answer with the rank and coherence arguments of this chapter, not
+with intuition about $\sqrt N$.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:cs_newgeom}
+\textbf{(A second geometry.)}
+Compute $\Brat$, the Jacobian $(S_{\Omegam},S_{w_0},S_{w_a})$ and
+$c_\star$ for $z_d=0.3$, $z_1=0.8$, $z_2=3.0$ at
+$(\Omegam,w_0,w_a)=(0.3,-1,0)$, and compare with the illustrative
+geometry. What does the comparison tell you about transporting $S_w$
+from one system to another?
+\end{exercise}
