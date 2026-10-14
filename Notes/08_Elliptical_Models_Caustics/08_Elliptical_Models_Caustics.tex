@@ -408,14 +408,14 @@ Three ellipticity variables appear in this chapter and in modeling codes: the
 axis ratio $q = b/a$; the flattening $\epsilon = 1-q$ (used in
 \S\ref{sec:which_multipoles}); and $e = (1-q)/(1+q)$ (the ``equivalent shear''
 of Exercise~\ref{ex:sie_caustic}).  For $q = 0.7$: $\epsilon = 0.3$ but
-$e = 0.176$.  Putting one where the other is meant is a factor-of-two error.
+$e = 0.176$.  Putting one where the other is meant is nearly a factor-of-two error (1.7 at $q = 0.7$).
 
 The $\sqrt{q}$ can be absorbed into a more symmetric form,
 $\kappab = \thetaE\big/\big(2\sqrt{q\theta_1^2 + \theta_2^2/q}\big)$, which is
 the same function as eq.~\eqref{eq:sie_kappa}.  With this normalization the
 tangential critical curve encloses area $\pi\thetaE^2$ and mean convergence
 exactly 1 for every $q$ (box in the critical-curve subsection below).  That is
-the precise sense of ``SIS-equivalent'' Einstein radius.
+what ``SIS-equivalent'' Einstein radius means here.
 
 Units check: $[\sigma_v^2/(\Gnewton\xi)] =
 (\mathrm{cm^2\,s^{-2}})/(\mathrm{cm^3\,g^{-1}\,s^{-2}}\cdot\mathrm{cm}) =
@@ -577,35 +577,25 @@ $\nabla^2\psiL = \partial_1\alpha_1 + \partial_2\alpha_2$ from
        \frac{\partial}{\partial\theta_1}\!
             \arctan\!\!\left(\frac{\theta_1\sqrt{1-q^2}}{F}\right)
      = \frac{\thetaE\sqrt{q}}{\sqrt{1-q^2}}
-       \cdot \frac{\sqrt{1-q^2}}{F}\cdot \frac{\theta_2^2}{q^2\theta_1^2+\theta_2^2} \\
-    &= \frac{\thetaE\sqrt{q}\,\theta_2^2}{F^{3}},
+       \cdot \frac{F^2}{\theta^2}\cdot\frac{\sqrt{1-q^2}\,\theta_2^2}{F^{3}} \\
+    &= \frac{\thetaE\sqrt{q}\,\theta_2^2}{\theta^2 F},
     \\[2pt]
     \partial_2\alpha_2
-    &= \frac{\thetaE\sqrt{q}\,q^2\theta_1^2}{F^{3}},
+    &= \frac{\thetaE\sqrt{q}\,\theta_1^2}{\theta^2 F},
 \end{align*}
 after applying the chain rule to $\partial_i F = q^{2(1-\delta_{i2})}\theta_i/F$
-and simplifying.  Adding:
+and simplifying, with $\theta^2 = \theta_1^2+\theta_2^2$.  Adding:
 \begin{equation}
     \nabla^2\psiL \;=\;
-        \frac{\thetaE\sqrt{q}\,(q^2\theta_1^2 + \theta_2^2)}{F^{3}}
+        \frac{\thetaE\sqrt{q}\,(\theta_1^2 + \theta_2^2)}{\theta^2 F}
     \;=\; \frac{\thetaE\sqrt{q}}{F}
     \;=\; 2\,\kappab(\vectheta),
     \label{eq:sie_poisson_check}
 \end{equation}
 matching \eqref{eq:sie_kappa}.  This completes the verification.
 
-\begin{annotation}[Reading the Step-4 display]
-Read the two intermediate lines of the display above as a regrouping of the
-\emph{sum}, not as the individual derivatives.  The previous box gives
-$\partial_1\alpha_1 = \thetaE\sqrt{q}\,\theta_2^2/(\theta^2F)$ and
-$\partial_2\alpha_2 = \thetaE\sqrt{q}\,\theta_1^2/(\theta^2F)$: the factors
-$F^2/\theta^2$ and $F^2/(q^2\theta^2)$ from the outer derivatives must be kept.
-Each term differs from the one displayed, but both pairs add to the same total
-$\thetaE\sqrt{q}/F$.  Eq.~\eqref{eq:sie_poisson_check} therefore stands.
-\end{annotation}
-
 \begin{derivation}[Every isothermal lens has $\det\Amat = 1 - 2\kappab$]
-From the previous box, the SIE Hessian is
+From the Step-3 box (and Step~4), the SIE Hessian is
 \[
   \partial_i\partial_j\psiL = \frac{\thetaE\sqrt{q}}{\theta^2F}
   \begin{pmatrix}\theta_2^2 & -\theta_1\theta_2\\ -\theta_1\theta_2 & \theta_1^2\end{pmatrix}
@@ -644,12 +634,14 @@ which is the SIS deflection.  The limit is taken symbolically in
 
 The critical curves of the SIE are found by solving
 $\det\Amat(\vectheta) = 0$.  Unlike the SIS (where the critical
-curve is a circle), the SIE critical curves are smooth oval curves
-whose shape depends on $q$.
+curve is a circle), the SIE tangential critical curve is an
+ellipse, $q^2\theta_1^2 + \theta_2^2 = q\thetaE^2$, with the same
+axis ratio $q$ as the mass (it is the contour $2\kappab = 1$ of
+eq.~\eqref{eq:sie_kappa}).  Its shape depends on $q$.
 
 For axis ratios $q \lesssim 0.9$, the SIE has:
 \begin{itemize}
-    \item A \textbf{tangential critical curve}: a smooth oval close
+    \item A \textbf{tangential critical curve}: an ellipse close
           to the Einstein radius, elongated \emph{along} the mass
           distribution's major axis.  Concretely, with $q < 1$ and
           mass elongated along $\theta_1$, the critical curve
@@ -727,16 +719,19 @@ the cut and the cusp tip on the $\beta_1$ axis gives 3 images in
 \end{annotation}
 
 \begin{bridge}[Chapter~\ref{ch:multiplane_dspl}: the SIE Einstein-radius ratio]
-In a double-source-plane lens, ignoring the mass of the first source, the same
-deflector has $\kappab_2 = \eta\,\kappab_1$.  Here $\eta$ is the ratio of
-$\Dds/\Ds$ for the two sources, a ratio of four angular-diameter distances.
-The SIE enters only through $\thetaE \propto \Dds/\Ds$, so plane~2 sees the
-same SIE with $\thetaE^{(2)} = \eta\,\thetaE^{(1)}$.  Its critical ellipse is
-the plane-1 ellipse scaled by $\eta$ along \emph{both} axes, so
-$\thetaE^{(2)}/\thetaE^{(1)} = \eta$ independently of $q$.  Any convention that
+In a double-source-plane lens, ignoring the mass of the near source, number
+the planes as in Part~V: plane~1 is the near source, plane~2 the far one.  The
+same deflector then has $\kappab_1 = \Brat\,\kappab_2$, where
+$\Brat = D_{l,s1}D_{s2}/(D_{s1}D_{l,s2}) < 1$ is the ratio of $\Dds/\Ds$ for
+the two sources, a ratio of four angular-diameter distances.
+The SIE enters only through $\thetaE \propto \Dds/\Ds$, so plane~1 sees the
+same SIE with $\thetaE^{(1)} = \Brat\,\thetaE^{(2)}$.  Its critical ellipse is
+the plane-2 ellipse scaled by $\Brat$ along \emph{both} axes, so the measured
+Einstein-radius ratio $\etamea = \thetaE^{(1)}/\thetaE^{(2)}$ equals $\Brat$
+independently of $q$.  Any convention that
 multiplies $\thetaE$ by a $q$-dependent factor, the $\sqrt{q}$ here or another,
 cancels in the ratio.  Chapter~\ref{ch:multiplane_dspl} uses exactly this to
-read $\eta$, and hence cosmology, off a DSPL with an elliptical main
+read $\Brat$, and hence cosmology, off a DSPL with an elliptical main
 deflector.
 \end{bridge}
 
@@ -1213,15 +1208,22 @@ focus on the tangential caustic.
 Consider a source that starts far from the lens and moves inward,
 crossing the caustics:
 
-\paragraph{Stage 1: Source far outside all caustics.}
-The source position $\vecbeta$ is far from the lens center, well
-outside any caustic.  For a singular model like the SIE there are
-\textbf{two images} (one Type~I outside the critical curve, near
-the true source position, and one Type~II inside the critical curve
-on the opposite side of the lens).  In a non-singular model an
-additional third image would appear at the maximum of $\tau$ near
-the lens center, but for the SIE that central image is suppressed
-because $\Sigma$ is singular at the origin.  The two observable
+\paragraph{Stage 1: Source outside the tangential caustic.}
+For the singular SIE the outermost boundary in the source plane is
+not a radial caustic but the \emph{cut} (pseudo-caustic): the closed
+curve onto which an infinitesimal circle about the singular centre
+is mapped.  If the source is beyond the cut (for $q = 0.7$,
+$|\beta_1| > 0.932\,\thetaE$ on the $\beta_1$ axis and
+$|\beta_2| > 1.049\,\thetaE$ on the $\beta_2$ axis) the SIE forms a
+\textbf{single} Type~I image, the elliptical version of the SIS rule
+that $\beta > \thetaE$ gives one image.  Once the source is inside
+the cut but still outside the diamond, there are \textbf{two images}
+(one Type~I outside the critical curve, near the true source
+position, and one Type~II inside the critical curve on the opposite
+side of the lens).  In a non-singular model a third, Type~III image
+appears near the lens center once the source is inside the radial
+caustic, but for the SIE that central image is suppressed because
+$\Sigma$ is singular at the origin.  The two observable
 images are:
 \begin{itemize}
     \item \textbf{Type~I} (positive parity, minimum of the arrival
@@ -1233,13 +1235,8 @@ images are:
 \end{itemize}
 
 \begin{annotation}[How far is ``far''?]
-For the singular SIE, ``two images'' holds only while the source lies inside
-the cut (annotation in \S\ref{sec:sie}).  For $\thetaE = 1''$ and $q = 0.7$
-the cut crosses the axes at $|\beta_1| = 0.932''$ and $|\beta_2| = 1.049''$.
-A source beyond it has a \emph{single} image, the elliptical version of the
-SIS rule $\beta > \thetaE \Rightarrow$ one image.  In a cored model the radial
-caustic replaces the cut: one image outside it, three inside (the table at the
-end of this subsection).
+In a cored model the radial caustic replaces the cut: one image outside it,
+three inside (the table at the end of this subsection).
 \end{annotation}
 
 
@@ -1311,11 +1308,12 @@ creation event.
 For a non-singular lens model (e.g., a softened isothermal
 ellipsoid), there is also a \textbf{radial caustic} enclosing the
 tangential one.  As the source crosses the radial caustic inward,
-two additional images appear near the radial critical curve (near
-the lens center), bringing the total from 3 to 5.  This gives the
-complete sequence:
+two additional images appear (a Type~II near the radial critical
+curve and the Type~III central image), bringing the total from 1
+to 3; crossing the tangential caustic then adds two more, giving 5.
+This gives the complete sequence:
 \begin{center}
-\begin{tabular}{ccccc}
+\begin{tabular}{ccc}
 \toprule
 \textbf{Region} & \textbf{Image count} & \textbf{Types} \\
 \midrule
@@ -1336,7 +1334,7 @@ The singular SIE parks the Type~III image on the singularity with zero flux.
 A finite core brings it back, demagnified, inside the radial critical curve.
 Chapter~\ref{ch:odd_images} asks what a central point mass (a supermassive
 black hole) does to that central image and to the radial caustic.  The odd
-image is the most direct probe of the innermost mass profile.
+image probes the innermost mass profile.
 \end{bridge}
 
 

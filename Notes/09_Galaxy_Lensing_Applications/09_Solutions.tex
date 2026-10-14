@@ -149,10 +149,11 @@ images $A$ and $B$ is:
 The derivation proceeds by substituting $\vecbeta_\lambda =
 \lambda\vecbeta$ and $\psiL_\lambda = \lambda\psiL +
 \frac{1}{2}(1-\lambda)|\vectheta|^2$ and simplifying.  The
-uniform $|\vectheta|^2$ term cancels between the two images
-because they are at the same image positions, leaving a factor
-of $\lambda$ multiplying the original Fermat potential
-difference. \checkmark
+$|\vectheta|^2$ terms cancel within each image's Fermat potential,
+leaving $\phi_\lambda = \lambda\phi + \tfrac12\lambda(\lambda-1)|\vecbeta|^2$;
+the last term depends only on the common source position and
+cancels between the two images, leaving a factor of $\lambda$
+multiplying the original Fermat-potential difference. \checkmark
 
 \begin{derivation}[The simplification, every line]
 Expand $\phi_\lambda(\vectheta,\lambda\vecbeta)$:
@@ -188,12 +189,15 @@ $\Delta t$, or a dynamical mass).
 \textbf{(a)} The time-delay equation is:
 \begin{equation*}
     \Delta t = \frac{(1+z_d)}{\speedoflight}
-    \,\frac{\Dd\,\Ds}{\Dds}\,\Delta\tau \,.
+    \,\frac{\Dd\,\Ds}{\Dds}\,\Delta\tau
+    = \frac{D_{\Delta t}\,\Delta\tau}{\speedoflight}\,,
+    \qquad D_{\Delta t} = (1+z_d)\frac{\Dd\Ds}{\Dds}\,.
 \end{equation*}
 Solving for $\Hubble$: since $\Dd\Ds/\Dds \propto 1/\Hubble$,
 we can write
-$\Dd\Ds/\Dds = d(z_d, z_s, \Omegam)/\Hubble$ where $d$ is a
-dimensionless function of redshifts and cosmological parameters.
+$\Dd\Ds/\Dds = d(z_d, z_s, \Omegam)/\Hubble$, where $d$ (units of
+velocity, e.g.\ km\,s$^{-1}$) depends only on the redshifts and the
+density parameters.
 Then:
 \begin{equation*}
     \Hubble = \frac{(1+z_d)\,\Delta\tau}{\speedoflight\,\Delta t}
@@ -201,19 +205,14 @@ Then:
 \end{equation*}
 
 \begin{annotation}[Convention check]
-Here, as in the exercise hint, $(1+z_d)$ sits outside $d$, and
-$d = \Hubble\Dd\Ds/\Dds$ is in km\,s$^{-1}$ (it equals $\speedoflight\,f_df_s/f_{ds}$
-in the notation of the chapter's $D_{\Delta t}$ box).  The chapter's
-eq.~\eqref{eq:time_delay_recap} calls $\Dd\Ds/\Dds$ alone $D_{\Delta t}$; the
-script's printout calls $(1+z_d)\Dd\Ds/\Dds$ by that name.  Both conventions
-are in use.  The $\Hubble$ you get is the same provided $(1+z_d)$ appears
-exactly once.
+$d = \Hubble\Dd\Ds/\Dds = \speedoflight\,f_df_s/f_{ds}$ (chapter's
+$D_{\Delta t}$ box) has units of velocity, and $(1+z_d)$ appears exactly once.
 \end{annotation}
 
 
 \textbf{(b)} For $z_d = 0.6$, $z_s = 1.5$, $\Omegam = 0.3$
-(flat $\Lambda$CDM), the dimensionless distance ratio
-$d = \Hubble\Dd\Ds/\Dds$ is computed from the cosmological
+(flat $\Lambda$CDM), the distance factor
+$d = \Hubble\Dd\Ds/\Dds$ (a velocity) is computed from the cosmological
 integrals.  Converting $\Delta\tau = 0.64~\mathrm{arcsec}^2
 = 0.64 \times (4.848 \times 10^{-6})^2~\mathrm{rad}^2
 = 1.50 \times 10^{-11}~\mathrm{rad}^2$ and
@@ -244,7 +243,7 @@ $\lambda = 1 - \kappab_s = 0.95$.  Recall (Section~9.2,
 eq.~\ref{eq:mst_H0}) that under the MST the model-predicted time
 delay scales as $\Delta t_\lambda = \lambda\,\Delta t$ at fixed
 $\Hubble$, so at \emph{fixed observed} $\Delta t$ the inferred
-$\Hubble$ scales the opposite way:
+$\Hubble$ scales the same way, by $\lambda$:
 \begin{equation*}
     \Hubble^{\mathrm{true}} = \lambda\,\Hubble^{\mathrm{naive}}
     \quad\Longleftrightarrow\quad
@@ -342,23 +341,22 @@ dependence that lensing alone does not have.
 \end{derivation}
 
 
-\textbf{(d)} For a given $\thetaE$ and $\sigma_v$, the self-consistent
-$\gamma'$ can be found from the relation linking both.  For
-$\thetaE = 1.2''$ and $\sigma_v = 230$~km/s, numerical evaluation
-(see \texttt{problems\_09.wl}) gives $\gamma' \approx 2.0$--$2.1$,
-fully consistent with the bulge-halo conspiracy value
-$\gamma' \approx 2.0 \pm 0.2$. \checkmark
+\textbf{(d)} For $z_d = 0.3$, $z_s = 1.0$ (flat $\Lambda$CDM,
+$\Omegam = 0.3$, as given in the exercise), the isothermal prediction
+for $\thetaE = 1.2''$ is
+$\sigma_{\mathrm{SIS}} = \speedoflight\sqrt{\thetaE\Ds/(4\pi\Dds)}
+\approx 255$~km/s, so $\sigma_{\mathrm{obs}}/\sigma_{\mathrm{SIS}}
+\approx 0.90$ (\texttt{problems\_09.wl}).  Inverting this ratio for
+$\gamma'$ requires an aperture, a light profile and an anisotropy,
+none of which is specified, so no value of $\gamma'$ is computed
+here.  A ratio this close to unity is consistent with a
+near-isothermal $\gamma' \approx 2$ (the bulge--halo conspiracy).
+\checkmark
 
 \begin{annotation}[What the script actually computes]
-The exercise gives no redshifts.  \texttt{problems\_09.wl} assumes
-$z_d = 0.3$, $z_s = 1.0$ and computes the isothermal prediction for
-$\thetaE = 1.2''$: $\sigma_{\mathrm{SIS}} = 255$~km/s, so
-$\sigma_{\mathrm{obs}}/\sigma_{\mathrm{SIS}} = 0.90$ and
-$(\sigma_{\mathrm{obs}}/\sigma_{\mathrm{SIS}})^2 = 0.81$.  It stops there.  It
-does not invert $g(\gamma')$, because that requires an aperture, a light
-profile and an anisotropy that the exercise does not specify.  Treat the
-quoted $\gamma' \approx 2.0$--$2.1$ as a statement that the ratio is of order
-unity, not as a computed value.  For a real inversion, Part~V
+\texttt{problems\_09.wl} stops at $\sigma_{\mathrm{SIS}} = 255$~km/s and
+$(\sigma_{\mathrm{obs}}/\sigma_{\mathrm{SIS}})^2 = 0.81$; it does not invert
+$g(\gamma')$.  For a real inversion, Part~V
 (Chapter~\ref{ch:msd_kinematics}) sets up the full projected,
 aperture-weighted Jeans prediction.
 \end{annotation}

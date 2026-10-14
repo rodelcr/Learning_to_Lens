@@ -398,7 +398,7 @@ Print[""];
 Print["(d) Signed magnification sum:"];
 sumMu = Total[mags84];
 Print["    Sum(mu_i) = ", NumberForm[sumMu, {6, 3}]];
-Print["    Sum > 0? ", sumMu > 0, "  VERIFIED\n"];
+Print["    (-0.15 here vs +2 for any SIS double: the two-image sum is model-dependent;\n     it is not by itself evidence about the missing central image.)\n"];
 
 
 (* =========================================================================
@@ -590,14 +590,19 @@ Module[{k, F, th2, a1, a2, d11, d22, d12, d21, assum, lap, A, kap, ev, g1, g2,
   check["[B5] d2 alpha1 = d1 alpha2 = -thetaE sqrt(q) theta1 theta2/(theta^2 F) (curl-free)",
     FullSimplify[d12 + annTE Sqrt[annQ] annX annY/(th2 F), Assumptions -> assum] === 0 &&
     FullSimplify[d21 + annTE Sqrt[annQ] annX annY/(th2 F), Assumptions -> assum] === 0];
-  (* the chapter's printed intermediate forms (Step 4) differ term by term,
-     but their sum is right: record both facts *)
+  (* Step 4 of the chapter (fixed 2026-10-14 per FACT_CRITIC_08 F1): the display
+     now prints the individual derivatives B3/B4 and the sum line
+     thetaE sqrt(q)(theta1^2+theta2^2)/(theta^2 F).  Regression guard: the
+     old printed forms thetaE sqrt(q) theta2^2/F^3 and thetaE sqrt(q) q^2 theta1^2/F^3
+     are NOT the derivatives, so this check fails if they come back. *)
   num = {annTE -> 1, annQ -> 7/10, annX -> 3/10, annY -> 1/2};
-  check["[B6] FLAG: chapter Step-4 terms thetaE sqrt(q) theta2^2/F^3 and thetaE sqrt(q) q^2 theta1^2/F^3 are NOT the individual derivatives, though their sum equals Laplacian psi",
-    N[(d11 - annTE Sqrt[annQ] annY^2/F^3) /. num] != 0 &&
-    N[(d22 - annTE Sqrt[annQ] annQ^2 annX^2/F^3) /. num] != 0 &&
-    FullSimplify[annTE Sqrt[annQ] (annY^2 + annQ^2 annX^2)/F^3 - (d11 + d22),
-        Assumptions -> assum] === 0];
+  check["[B6] Step-4 display (fixed): d1 alpha1 = thetaE sqrt(q) theta2^2/(theta^2 F), d2 alpha2 = thetaE sqrt(q) theta1^2/(theta^2 F), sum (theta1^2+theta2^2)/(theta^2 F) -> thetaE sqrt(q)/F; old F^3 forms rejected",
+    FullSimplify[d11 - annTE Sqrt[annQ] annY^2/(th2 F), Assumptions -> assum] === 0 &&
+    FullSimplify[d22 - annTE Sqrt[annQ] annX^2/(th2 F), Assumptions -> assum] === 0 &&
+    FullSimplify[annTE Sqrt[annQ] (annX^2 + annY^2)/(th2 F) - annTE Sqrt[annQ]/F,
+        Assumptions -> assum] === 0 &&
+    Abs[N[(d11 - annTE Sqrt[annQ] annY^2/F^3) /. num]] > 1*^-3 &&
+    Abs[N[(d22 - annTE Sqrt[annQ] annQ^2 annX^2/F^3) /. num]] > 1*^-3];
   check["[B7] Euler / gradient condition theta_j d_i alpha_j = 0 (i = 1, 2)",
     FullSimplify[annX d11 + annY d21, Assumptions -> assum] === 0 &&
     FullSimplify[annX d12 + annY d22, Assumptions -> assum] === 0];
@@ -722,7 +727,7 @@ Module[{r, p, a1, p1, psi, lap, grad},
     Simplify[TrigExpand[(a1 r Cos[p - p1]) - (a1 (r Cos[p] Cos[p1] + r Sin[p] Sin[p1]))]] === 0 &&
     FreeQ[grad, annX | annY]];
 ];
-check["[D3] SIE critical ellipse for a second plane with kappa_2 = eta kappa_1: both semi-axes scale by eta (ratio independent of q)",
+check["[D3] SIE critical ellipse for the near plane with kappa_1 = B kappa_2: both semi-axes scale by B, so eta = thetaE1/thetaE2 = B (independent of q)",
   Simplify[{(eta annTE)/Sqrt[annQ], eta annTE Sqrt[annQ]}/{annTE/Sqrt[annQ], annTE Sqrt[annQ]}] === {eta, eta}];
 check["[D4] SIE with the sqrt(q) normalization: kappa = thetaE/(2 sqrt(q th1^2 + th2^2/q))",
   Simplify[annTE Sqrt[annQ]/(2 Sqrt[annQ^2 annX^2 + annY^2]) - annTE/(2 Sqrt[annQ annX^2 + annY^2/annQ]),
@@ -797,7 +802,87 @@ Module[{q = 0.8, F1, F2},
     Abs[F2 - 0.709] < 1*^-3 && Abs[Sqrt[q]/F2 - 1.262] < 1*^-3];
 ];
 
+(* ===== Fix pass 2026-10-14 (FACT_CRITIC_08_annotated_2026-10-14 F1-F6, N4) =====
+   Each check below fails on the value the visible text printed before the fix. *)
+Print["\n=== Fix-pass checks (Module 8, 2026-10-14) ==="];
+
+(* [F2] Stage 1 of the source walk (chapter, q = 0.7): beyond the cut ONE image,
+   between cut and diamond TWO, inside the diamond FOUR.  Old text: "far outside
+   all caustics ... two images". *)
+Module[{n},
+  n = Length[solveSIEImages[##, 1.0, 0.7]] & @@@ {{1.2, 0.}, {0., 1.3}, {0.8, 0.8}, {0.5, 0.}, {0.05, 0.03}};
+  Print["    q=0.7 image counts for beta = (1.2,0),(0,1.3),(0.8,0.8),(0.5,0),(0.05,0.03): ", n];
+  check["[F2] SIE q=0.7: source beyond the cut (|b1|>0.932, |b2|>1.049) -> 1 image; inside cut, outside diamond -> 2; inside diamond -> 4 (old text: 2 for a far source)",
+    n === {1, 1, 1, 2, 4}];
+];
+
+(* [F5] cored lens: 1 image outside the radial caustic, 3 between radial and
+   tangential (I, II, III), 5 inside the tangential.  Crossing the radial caustic
+   inward is 1 -> 3 (old text: "from 3 to 5").  Model: cored isothermal elliptical
+   potential psi = thetaE Sqrt[s^2 + (1-e) th1^2 + (1+e) th2^2], e = 0.1, s = 0.1. *)
+Module[{e = 0.1, s = 0.1, ax, ay, jac, imgs, counts, typ3},
+  ax[x_, y_] := (1 - e) x/Sqrt[s^2 + (1 - e) x^2 + (1 + e) y^2];
+  ay[x_, y_] := (1 + e) y/Sqrt[s^2 + (1 - e) x^2 + (1 + e) y^2];
+  jac[x_?NumericQ, y_?NumericQ] := Module[{u, v},
+    IdentityMatrix[2] - (D[{(1 - e) u/Sqrt[s^2 + (1 - e) u^2 + (1 + e) v^2],
+                            (1 + e) v/Sqrt[s^2 + (1 - e) u^2 + (1 + e) v^2]}, {{u, v}}] /. {u -> x, v -> y})];
+  imgs[b1_, b2_] := Module[{sols = {}, sol, p, x, y},
+    Do[sol = Quiet[FindRoot[{x - ax[x, y] - b1, y - ay[x, y] - b2}, {{x, x0}, {y, y0}}, MaxIterations -> 200]];
+       If[Head[sol] === List, p = {x, y} /. sol;
+         If[Norm[p - {ax @@ p, ay @@ p} - {b1, b2}] < 1*^-9 && Max[Abs[p]] < 5 &&
+            ! AnyTrue[sols, Norm[# - p] < 1*^-4 &], AppendTo[sols, p]]],
+       {x0, -2, 2, 0.1}, {y0, -2, 2, 0.1}]; sols];
+  counts = Length[imgs @@ #] & /@ {{1.2, 0.}, {0.4, 0.}, {0.05, 0.}};
+  (* the extra image appearing at the radial caustic includes a Type III: det > 0 and trace < 0 *)
+  typ3 = Count[imgs[0.4, 0.], p_ /; Det[jac @@ p] > 0 && Tr[jac @@ p] < 0];
+  Print["    cored lens image counts (outside radial, between, inside tangential): ", counts, "; Type III at beta=(0.4,0): ", typ3];
+  check["[F5] cored lens: counts 1 -> 3 -> 5 (radial crossing is 1 -> 3, not 3 -> 5); the 3-image region contains one Type III",
+    counts === {1, 3, 5} && typ3 === 1];
+];
+
+(* [F4] Ex 8.1(b): the SIS+shear critical curve is NOT an ellipse; max deviation from the
+   ellipse with the same semi-axes is 1.52% at g = 0.1 (old text: "is an ellipse").
+   The SIE tangential critical curve IS the exact ellipse q^2 th1^2 + th2^2 = q thetaE^2
+   (chapter l.645, Ex 8.2(b); old text "smooth oval"). *)
+Module[{g = 0.1, thc, a, b, ell, dev, q, x, y, kap},
+  thc[p_] := (1 - g Cos[2 p])/(1 - g^2);
+  a = thc[0]; b = thc[Pi/2];
+  ell[p_] := a b/Sqrt[b^2 Cos[p]^2 + a^2 Sin[p]^2];
+  dev = NMaxValue[{Abs[thc[p]/ell[p] - 1], 0 <= p <= Pi/2}, p];
+  Print["    SIS+shear: max relative deviation of critical curve from ellipse = ", dev];
+  check["[F4a] SIS+shear (g = 0.1) critical curve deviates from an ellipse by 1.52% (so not an ellipse)",
+    Abs[dev - 0.0152] < 2*^-4 && dev > 0.01];
+  kap = Sqrt[q]/(2 Sqrt[q^2 x^2 + y^2]);   (* thetaE = 1 *)
+  check["[F4b] SIE tangential critical curve 2 kappa = 1 is exactly the ellipse q^2 th1^2 + th2^2 = q",
+    Reduce[2 kap == 1 && 0 < q < 1 && x > 0 && y > 0, y, Reals] ===
+      Reduce[q^2 x^2 + y^2 == q && 0 < q < 1 && x > 0 && y > 0, y, Reals]];
+];
+
+(* [N4] eps/e at q = 0.7 is 1.70, "nearly a factor of two" (old text: "a factor-of-two error") *)
+check["[N4] eps/e = (1-q)/((1-q)/(1+q)) = 1 + q = 1.70 at q = 0.7 (not 2)",
+  Abs[0.3/(0.3/1.7) - 1.70] < 1*^-12 && Abs[1 + 0.7 - 2] > 0.2];
+
+(* [F3] Ex 8.4: cusps 0.159 / 0.139 (old: "approximately 0.1"); images solved from scratch
+   round to (0.36, 1.20) and (-0.56, -0.55); old printed (0.53, 0.79), (-0.37, -0.52)
+   are not solutions (residuals 0.30, 0.15). *)
+Module[{q = 0.8, k, c1, c2, im, srt, res, old},
+  k = Sqrt[1 - q^2];
+  c1 = 1/Sqrt[q] - Sqrt[q]/k ArcTan[k/q]; c2 = Abs[Sqrt[q] - Sqrt[q]/k ArcTanh[k]];
+  check["[F3a] Ex 8.4(a): q = 0.8 cusps |beta1| = 0.159, |beta2| = 0.139 (not ~0.1); source beta2 = 0.2 > 0.139",
+    Round[c1, 0.001] == 0.159 && Round[c2, 0.001] == 0.139 && Min[c1, c2] > 0.13 && 0.2 > c2];
+  im = solveSIEImages[0.1, 0.2, 1.0, q];
+  srt = SortBy[im, -#[[2]] &];
+  Print["    Ex 8.4 images (fresh solve): ", srt];
+  res[{x_, y_}] := Norm[{x - alphaSIE1[x, y, 1.0, q] - 0.1, y - alphaSIE2[x, y, 1.0, q] - 0.2}];
+  old = res /@ {{0.53, 0.79}, {-0.37, -0.52}};
+  Print["    old printed positions: lens-equation residuals ", old];
+  check["[F3b] Ex 8.4(b): exactly 2 images, at (0.36, 1.20) and (-0.56, -0.55) to 2 dp; old (0.53,0.79), (-0.37,-0.52) have residuals > 0.1",
+    Length[im] == 2 && Max[Abs[Flatten[Round[srt, 0.01] - {{0.36, 1.20}, {-0.56, -0.55}}]]] < 1*^-9 &&
+    Min[old] > 0.1];
+];
+
 summary[];
+
 
 
 
