@@ -172,8 +172,8 @@ $\psiL = \frac{\Dds}{\Dd\Ds}\frac{2}{\speedoflight^2}\int\Phi\,dz$
 \[
   t_{\rm grav} = -\frac{1}{\speedoflight}\,\frac{\Dd\Ds}{\Dds}\,\psiL ,
 \]
-the same prefactor as the geometric term.  That shared prefactor is why
-the two terms can be added inside one bracket.
+the same prefactor as the geometric term, so the two terms can share one
+bracket.
 (Both steps checked symbolically: \texttt{problems\_06.wl}, A1--A2.)
 \end{derivation}
 
@@ -223,16 +223,21 @@ The Fermat potential has a simple physical interpretation:
           lens plane ($\vectheta$) is far from the straight-line direction
           ($\vecbeta$).
     \item The second term $-\psiL(\vectheta)$ is the
-          \textbf{gravitational (Shapiro) delay}: for smooth extended
-          profiles (such as the SIS), the lensing potential $\psiL > 0$
-          everywhere in the vicinity of the lens, so this term
-          \textit{reduces} the arrival time --- photons passing through a
-          deeper potential arrive earlier due to the Shapiro effect
-          (recall Module~\ref{ch:light_deflection}).  For a point mass,
-          however, $\psiL = \thetaE^2\ln|\vectheta| < 0$ inside the
-          Einstein radius ($|\vectheta| < \thetaE$), so $-\psiL > 0$
-          there and the Shapiro term \textit{increases} the arrival time
-          in that region.
+          \textbf{gravitational (Shapiro) delay}.  Because $\psiL$ is
+          defined only up to an additive constant, its sign carries no
+          physical meaning; its shape does.  For any attractive
+          axisymmetric lens $d\psiL/d\theta = \alpha > 0$, so $-\psiL$ is
+          largest at the lens centre: photons passing through a deeper
+          part of the potential are delayed \textit{more}, as for the
+          Shapiro delay of Module~\ref{ch:light_deflection}.\footnote{An
+          earlier version of this remark said that $\psiL>0$ makes the
+          Shapiro term \emph{reduce} the arrival time.  That has the sign
+          backwards: the Shapiro delay $(2/\speedoflight^3)\int|\Phi|\,dl$
+          is positive and grows with $|\Phi|$
+          \citep[eq.~3]{narayan_lectures_1997}.}  For a point mass,
+          $\psiL = \thetaE^2\ln|\vectheta|$ and $-\psiL\to+\infty$ at the
+          origin, so the arrival-time surface has an infinite peak there
+          instead of a smooth maximum.
 \end{itemize}
 The competition between geometric and gravitational delay determines the
 structure of the arrival-time surface and hence the number and types of
@@ -385,8 +390,8 @@ $\lambda_1\lambda_2 = \det\Amat$ and $\lambda_1+\lambda_2 = \mathrm{tr}\,\Amat$
 Now use $\mathrm{tr}\,\Amat = 2-\nabla^2\psiL = 2(1-\kappab)$ (A3c).  A maximum
 needs $\mathrm{tr}\,\Amat<0$, i.e.\ $\kappab>1$ \emph{at the image}: Type~III
 images can only sit where the lens is locally supercritical, which in
-practice means the dense centre.  This one line is why the third image of
-a cored lens is a \emph{central} image.
+practice means the dense centre.  So the third image of a cored lens sits
+at the centre.
 \end{derivation}
 
 \begin{annotation}[Which image arrives first, and parity]
@@ -500,7 +505,7 @@ infinite singularity of $\psiL$, so the count obeys the $g=1$ version above,
 $N = 2(n_{\min}+n_{\max})$, which is even.  The central image of a cored lens
 is the Type~III \emph{maximum} of $\tau$ (it needs $\kappab>1$, see the
 derivation box on image types); adding the point mass changes what happens
-near that maximum, which is exactly where Chapter~\ref{ch:odd_images} starts.
+near that maximum, which is where Chapter~\ref{ch:odd_images} starts.
 \end{bridge}
 
 
@@ -741,7 +746,7 @@ $\Delta\tau_\lambda = \lambda\,\Delta\tau$ between any two images.
 \end{derivation}
 
 \begin{bridge}[$\Delta t\propto\lambda$: the mass-sheet transformation]
-Chapter~\ref{ch:msd_kinematics} uses exactly this scaling.  The images
+Chapter~\ref{ch:msd_kinematics} uses this scaling.  The images
 cannot tell $\lambda$ apart, but the predicted delay is $\Delta t\propto\lambda/\Hubble$.
 So for a fixed measured $\Delta t$ the inferred $\Hubble$ scales as $\lambda$.
 Some information that is \emph{not} image positions has to fix $\lambda$:
@@ -853,11 +858,14 @@ The physical time delay is:
 Using $\thetaE^2 = 4\Gnewton M / (\speedoflight^2) \cdot \Dds / (\Dd\,\Ds)$:
 \begin{equation}
     \Delta t = \frac{4\Gnewton M}{\speedoflight^3}\, (1 + z_d)\, \Delta\tau
-    = \frac{\RS}{\speedoflight}\, (1 + z_d)\, \Delta\tau \,,
+    = \frac{2\RS}{\speedoflight}\, (1 + z_d)\, \Delta\tau \,,
     \label{eq:delta_t_schwarzschild}
 \end{equation}
 where $\RS = 2\Gnewton M / \speedoflight^2$ is the Schwarzschild
-radius.
+radius.\footnote{The factor 2 in the second equality follows from
+$4\Gnewton M/\speedoflight^3 = 2\RS/\speedoflight$.  Earlier versions of these
+notes wrote $\RS/\speedoflight$ here and in
+Example~\ref{ex:point_mass_numerical}, which halved the delay.}
 
 \begin{annotation}[Unit check: $4\Gnewton M/\speedoflight^3 = 2\RS/\speedoflight$]
 Substituting $\thetaE^2 = (4\Gnewton M/\speedoflight^2)\,\Dds/(\Dd\Ds)$, all distances
@@ -865,14 +873,12 @@ cancel and the prefactor is $4\Gnewton M/\speedoflight^3$ (A7a).  With
 $\RS = 2\Gnewton M/\speedoflight^2$, this is $2\RS/\speedoflight$, not $\RS/\speedoflight$ (A7b).
 For $M=10^{12}\,\Msun$, $4\Gnewton M/\speedoflight^3\approx1.97\times10^7$\,s
 $\approx228$\,d (A7c).  The prefactor $(1+z_d)\,4\Gnewton M/\speedoflight^3\,\Delta\tau$
-with $z_d=0.3$, $y=0.5$ gives $\Delta t\approx2.59\times10^7$\,s $\approx299$\,d
-(A7d).  \textbf{Note:} the second equality of
-eq.~\eqref{eq:delta_t_schwarzschild} and Example~\ref{ex:point_mass_numerical}
-use $\RS/\speedoflight$, which is half the correct prefactor (A7e).  Also, to
-four decimals the ratio in the logarithm is $1.6404$, so the log is $0.4949$
-and $\Delta\tau(0.5)=1.0103$ (A17b).  Both
-have been flagged for correction.  The distance-free form is the point: a point-mass
-delay measures the mass directly, independent of cosmology.
+with $z_d=0.3$, $y=0.5$ gives $\Delta t\approx2.59\times10^7$\,s $\approx300$\,d
+(A7d), the value in Example~\ref{ex:point_mass_numerical}.  Writing the prefactor
+as $\RS/\speedoflight$ would halve it (A7e).  To four decimals the ratio in the
+logarithm is $1.6404$, so the log is $0.4949$ and $\Delta\tau(0.5)=1.0103$ (A17b).
+In this form the distances cancel, so a point-mass delay measures $M$
+independently of cosmology.
 \end{annotation}
 
 \begin{example}
@@ -891,18 +897,18 @@ For $y = 0.5$: $\sqrt{y^2 + 4} = \sqrt{4.25} \approx 2.0616$.
 \begin{align*}
     \Delta\tau &= \frac{0.5 \times 2.0616}{2}
     + \ln\!\left(\frac{2.0616 + 0.5}{2.0616 - 0.5}\right) \\
-    &= 0.5154 + \ln(1.6401)
-    = 0.5154 + 0.4947 = 1.0101 \,.
+    &= 0.5154 + \ln(1.6404)
+    = 0.5154 + 0.4949 = 1.0103 \,.
 \end{align*}
 The time delay is:
 \begin{equation*}
-    \Delta t = \frac{2.95 \times 10^{15}}{2.998 \times 10^8}
-    \times 1.3 \times 1.0101
-    \approx 1.29 \times 10^{7}~\text{s}
-    \approx 149~\text{days} \,.
+    \Delta t = \frac{2 \times 2.95 \times 10^{15}}{2.998 \times 10^8}
+    \times 1.3 \times 1.0103
+    \approx 2.59 \times 10^{7}~\text{s}
+    \approx 300~\text{days} \,.
 \end{equation*}
 This is a realistic order of magnitude --- observed time delays in
-galaxy-scale lens systems range from days to months.  Computed and
+galaxy-scale lens systems range from days to a year or so.  Computed and
 verified in
 \mathlink{06_Fermat_Time_Delays/time_delay_function.wl}{time\_delay\_function.wl}.
 \end{example}
@@ -1027,7 +1033,7 @@ times $\Dds/\Ds<1$.  Module~\ref{ch:axisymmetric_models} derives all of this.
     \item For a point mass lens, the dimensionless time delay is
           $\Delta\tau = y\sqrt{y^2+4}/2 + \ln[(\sqrt{y^2+4}+y)/(\sqrt{y^2+4}-y)]$,
           where $y = \beta/\thetaE$.  The physical time delay for a
-          galaxy-mass lens is of order days to months.
+          galaxy-mass lens is of order days to a year or so.
 
     \item For the SIS, $\Delta t_{\mathrm{SIS}} \propto \beta\,\thetaE$,
           a simple linear dependence on the source position.

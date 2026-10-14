@@ -121,21 +121,22 @@ Print["  This is precisely the SIS exponent! VERIFIED\n"];
    Exercise 7.3: SIS Numerical Example
 
    sigma_v = 250 km/s, zd = 0.3, zs = 1
-   Dd = 900 Mpc, Ds = 1700 Mpc, Dds = 1200 Mpc
+   Dd = 920 Mpc, Ds = 1650 Mpc, Dds = 1055 Mpc (flat LCDM, H0 = 70, Om = 0.3;
+   fixed 2026-10-14, earlier versions used 900/1700/1200)
    ========================================================================= *)
 
 Print["--- Exercise 7.3: SIS Numerical Example ---\n"];
 
 sigmaV = 250 * 1000;  (* m/s *)
-DdVal = 900 * MpcToM;
-DsVal = 1700 * MpcToM;
-DdsVal = 1200 * MpcToM;
+DdVal = 920 * MpcToM;
+DsVal = 1650 * MpcToM;
+DdsVal = 1055 * MpcToM;
 
 (* (a) Einstein radius *)
 Print["(a) Einstein radius:"];
 thetaESIS = 4 Pi (sigmaV/cc)^2 * DdsVal/DsVal;
 thetaEarcsec = thetaESIS * radToArcsec;
-Print["  thetaE = 4*Pi*(250000/c)^2 * (1200/1700)"];
+Print["  thetaE = 4*Pi*(250000/c)^2 * (1055/1650)"];
 Print["  = ", ScientificForm[thetaESIS, 4], " rad"];
 Print["  = ", NumberForm[thetaEarcsec, {4, 2}], " arcsec\n"];
 
@@ -177,7 +178,8 @@ Print["  thetaE(PM) = ", NumberForm[thetaEPM * radToArcsec, {4, 2}], " arcsec"];
 Print["  thetaE(SIS) = ", NumberForm[thetaEarcsec, {4, 2}], " arcsec"];
 Print["  The SIS Einstein radius depends on sigma_v (velocity dispersion),"];
 Print["  while the point mass depends on total mass M."];
-Print["  For typical galaxy parameters, they are comparable.\n"];
+Print["  Here the point-mass ring is about twice the SIS ring: the SIS has only"];
+Print["  ~2.3e11 Msun inside its Einstein radius, and M(<thetaE) ~ thetaE^2.\n"];
 
 
 (* =========================================================================
@@ -418,7 +420,7 @@ check["B6c Ex 7.3 with the stated distances: thetaE = 4 Pi (250/3e5)^2 1055/1650
   Abs[4 Pi (250000/2.998*^8)^2 (1055/1650.) radToArcsec - 1.15] < 0.005];
 pmTheta = Sqrt[4 Gnewton 1*^12 Msolar/cc^2 * 1055/(920*1650 MpcToM)] radToArcsec;
 Print["  [info] point-mass thetaE (1e12 Msun; 920/1650/1055 Mpc) = ", pmTheta, " arcsec;",
-  "  with 900/1700/1200 Mpc: ", thetaEPM radToArcsec, " arcsec"];
+  "  Ex 7.3 body: ", thetaEPM radToArcsec, " arcsec"];
 check["B6d point-mass thetaE(1e12 Msun) = 2.4 arcsec with the Ex 7.3 distances",
   Abs[pmTheta - 2.4] < 0.05];
 
@@ -591,7 +593,39 @@ check["B15d SIS M(<thetaE) = 2.3e11 Msun (thetaE = 1.15'', 919/1652/1055 Mpc)",
 check["B15e (2.4/1.15)^2 ~ 4.4: a 1e12 Msun point mass has a ~2x larger ring",
   Abs[Sqrt[1*^12/MthE] - 2.1] < 0.1];
 
+(* -- F. Fix pass 2026-10-14 (FACT_CRITIC_07 V6-V10): each check FAILS on the
+   pre-fix printed value and PASSES on the corrected one. ------------------ *)
+check["F6 Sol 7.3(a) body: thetaE = 1.15 arcsec with 920/1650/1055 (old 1200/1700 gave 1.27)",
+  Abs[thetaEarcsec - 1.15] < 0.005 && Abs[thetaEarcsec - 1.27] > 0.1 &&
+  Abs[(2.5*^5/3*^8)^2 - 6.944*^-7]/6.944*^-7 < 0.0005 && Abs[1055/1650. - 0.639] < 0.0005 &&
+  Abs[4 Pi 6.944*^-7 0.639/1*^-6 - 5.58] < 0.005];
+check["F6b Sol 7.3(b) with thetaE = 1.15: theta+- = 1.65, -0.65; mu+- = 3.30, -1.30; sum 4.60 = 2 thetaE/beta (old 1.77/-0.77/3.54/-1.54/5.08 fail)",
+  With[{t = 1.15, b = 0.5},
+   Abs[b + t - 1.65] < 10^-9 && Abs[b - t + 0.65] < 10^-9 && Abs[1 + t/b - 3.30] < 10^-9 &&
+   Abs[1 - t/b + 1.30] < 10^-9 && Abs[(1 + t/b) + (t/b - 1) - 4.60] < 10^-9 &&
+   Abs[2 t/b - 4.60] < 10^-9 && Abs[1 + t/b - 3.54] > 0.1]];
+check["F7 Sol 7.3(d) body: point-mass thetaE(1e12 Msun) = 2.38 arcsec (old 1.1 and 2.53 fail); about twice the SIS 1.15",
+  Abs[thetaEPM radToArcsec - 2.38] < 0.01 && Abs[thetaEPM radToArcsec - 1.1] > 1 &&
+  Abs[thetaEPM radToArcsec - 2.53] > 0.1 && 1.9 < thetaEPM radToArcsec/thetaEarcsec < 2.2];
+fSmall = Series[(1/(x^2 - 1)) (1 - ArcCosh[1/x]/Sqrt[1 - x^2]), {x, 0, 1}, Assumptions -> 0 < x < 1];
+xfPeak = x /. Last[FindMaximum[x fNFW[x], {x, 0.5, 0.05, 0.95}]];
+check["F8 Sol 7.5(a): f(x) = ln(2/x) - 1 + O(x^2 ln x) (not (1/x) ln(2/x)); x f(x) peaks at x = 0.61",
+  Simplify[Normal[fSmall] - (Log[2/x] - 1), 0 < x < 1] === 0 &&
+  N[fNFW[1/1000]/((1000) Log[2000])] < 0.01 && Abs[xfPeak - 0.61] < 0.01];
+nisCount[b_] := Length[rootsAt[b]];
+check["F9 Ch 07 caustic sentence (tc = 0.1 tE, beta_r = 0.427): beta = 0.2, 0.4 -> 3 images; 0.45, 0.6 -> 1; tangential caustic is beta = 0",
+  nisCount[1/5] == 3 && nisCount[2/5] == 3 && nisCount[45/100] == 1 && nisCount[3/5] == 1 &&
+  Abs[(thtN - (alNIS[thtN] /. num))] < 10^-12];
+ClearAll[tF];
+alHalf[t_] := (Sqrt[t^2 + 1/4] - 1/2)/t;   (* NIS with tE = 1, tc = 1/2 *)
+lamRHalf[t_] := 1 - D[alHalf[tF], tF] /. tF -> t;
+countHalf[b_] := Length[tF /. NSolve[(tF - b) tF == (Sqrt[tF^2 + 1/4] - 1/2) && tF != 0, tF, Reals]];
+check["F10 Ex/Sol 7.4(c): at tc = tE/2, lambda_r > 0 for theta > 0 and -> 0 at theta = 0, one image for beta = 0.01, 0.1 (so kappa(0) > 1, tc < tE/2 strict)",
+  Limit[lamRHalf[tF], tF -> 0] == 0 &&
+  Min[Table[lamRHalf[t], {t, 0.001, 5, 0.001}]] > 0 && countHalf[1/100] == 1 && countHalf[1/10] == 1];
+
 summary[];
+
 
 
 

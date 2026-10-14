@@ -146,14 +146,14 @@ Print["    VERIFIED\n"];
 Mlens = 1*^12 * Msolar;
 zd = 0.3;
 RS = 2 Gnewton Mlens / cc^2;
-deltaT = RS / cc * (1 + zd) * dtau;
+deltaT = 2 RS / cc * (1 + zd) * dtau;   (* 4GM/c^3 = 2 R_S/c; fixed 2026-10-14 (was R_S/c) *)
 deltaTdays = deltaT / dayToSec;
 
 Print["(d) Physical time delay:"];
 Print["    M = 10^12 Msun, z_d = 0.3"];
 Print["    R_S = 2*G*M/c^2 = ", ScientificForm[RS, 4], " m"];
-Print["    Delta_t = R_S/c * (1+z_d) * Delta_tau"];
-Print["            = ", ScientificForm[RS/cc, 4], " * ", 1 + zd, " * ",
+Print["    Delta_t = 2 R_S/c * (1+z_d) * Delta_tau   (2 R_S/c = 4GM/c^3)"];
+Print["            = ", ScientificForm[2 RS/cc, 4], " * ", 1 + zd, " * ",
     NumberForm[dtau, {5, 4}]];
 Print["            = ", ScientificForm[deltaT, 4], " s"];
 Print["            = ", NumberForm[deltaTdays, {5, 1}], " days\n"];
@@ -545,9 +545,9 @@ check["A7c 4GM/c^3 = 1.97e7 s = 228 d for M = 1e12 Msun",
 dtCorrect = fourGMc3 (1 + 0.3) deltaTauAnalytic[0.5];
 Print["  [info] (1+z_d) (4GM/c^3) Delta tau(0.5) = ", dtCorrect, " s = ",
   dtCorrect/dayToSec, " d"];
-check["A7d (1+z_d)(4GM/c^3) Delta tau(y=0.5) = 2.59e7 s = 299 d (z_d = 0.3)",
-  Abs[dtCorrect/1*^7 - 2.59] < 0.005 && Abs[dtCorrect/dayToSec - 299] < 0.6];
-check["A7e the text's R_S/c version is exactly half of A7d",
+check["A7d (1+z_d)(4GM/c^3) Delta tau(y=0.5) = 2.59e7 s = 300 d (z_d = 0.3)",
+  Abs[dtCorrect/1*^7 - 2.59] < 0.005 && Abs[dtCorrect/dayToSec - 300] < 0.5];
+check["A7e an R_S/c prefactor (pre-2026-10-14 text) is exactly half of A7d",
   Abs[(2 Gnewton 1*^12 Msolar/cc^2/cc) 1.3 deltaTauAnalytic[0.5]/dtCorrect - 1/2] < 10^-12];
 
 (* -- A8. SIS Fermat potential at the two images (thetaE = tE) ----------- *)
@@ -583,7 +583,7 @@ Print["  [info] (c/H0 units) Dd = ", DdM, " Ds = ", DsM, " Dds = ", DdsM,
   "  Ds - Dd = ", DsM - DdM];
 check["A10c Dds != Ds - Dd for z_d=0.3, z_s=1: Dds/(Ds - Dd) = 1.44",
   Abs[DdsM/(DsM - DdM) - 1.44] < 0.005];
-check["A10d chi_d = 0.279, chi_s = 0.771, chi_ds = 0.493, f = 0.336 (text quotes 0.778/0.499/0.334)",
+check["A10d chi_d = 0.279, chi_s = 0.771, chi_ds = 0.493, f = 0.336 (pre-fix text quoted 0.778/0.499/0.334)",
   Abs[chiD - 0.279] < 0.0005 && Abs[chiS - 0.771] < 0.0005 &&
   Abs[chiDS - 0.493] < 0.0005 && Abs[distFactor - 0.336] < 0.0005];
 check["A10e H0 from Ex 6.4 = 73 km/s/Mpc", Abs[H0kms - 73] < 0.5];
@@ -664,7 +664,7 @@ check["A17d corrected Ex 6.3 table (tau+, tau-, Delta tau) to 1e-4",
       {-0.2902, 1.7902, 2.0805}, {-0.7956, 3.7956, 4.5912}}]] < 0.00006];
 check["A17d' Delta tau/y = 2.001, 2.021, 2.080, 2.296",
   Max[Abs[tab[[All, 3]]/tabY - {2.001, 2.021, 2.080, 2.296}]] < 0.0006];
-check["A17d'' printed table rows y = 0.1, 1, 2 disagree with the formula (flag)",
+check["A17d'' pre-2026-10-14 table rows y = 0.1, 1, 2 (0.0100, 2.4277, 5.0065) disagree with the formula",
   Abs[tab[[1, 3]] - 0.0100] > 0.1 && Abs[tab[[3, 3]] - 2.4277] > 0.1 && Abs[tab[[4, 3]] - 5.0065] > 0.1];
 check["A17e 1.3 x 1374 = 1786 Mpc; 1870/1786 x 70 = 73.3",
   Abs[1.3 1374 - 1786] < 0.5 && Abs[1870/1786. 70 - 73.3] < 0.05];
@@ -672,6 +672,41 @@ check["A17f 206265^2 = 4.25e10 (arcsec^2 -> rad^2 factor)", Abs[radToArcsec^2/1*
 check["A17g Dd, Ds, Dds, Ds - Dd = 0.215, 0.386, 0.246, 0.171 (c/H0 units)",
   Max[Abs[{DdM, DsM, DdsM, DsM - DdM} - {0.215, 0.386, 0.246, 0.171}]] < 0.0006];
 
+(* -- F. Fix pass 2026-10-14 (FACT_CRITIC_06 V1-V5): each check FAILS on the
+   pre-fix printed value and PASSES on the corrected one. ------------------ *)
+check["F1 Ex 6.2(d) body: deltaT == (4GM/c^3)(1+z_d) Delta tau (was R_S/c)",
+  Abs[deltaT/(4 Gnewton Mlens/cc^3 (1 + zd) dtau) - 1] < 10^-12];
+check["F1b Ex 6.2(d): Delta t = 2.588e7 s = 299.6 d (old 1.293e7 s / 149.7 d fails)",
+  Abs[deltaT/1*^7 - 2.588] < 0.0005 && Abs[deltaTdays - 299.6] < 0.05 &&
+  Abs[deltaTdays - 149.7] > 1];
+dtEx = 2 2.95*^15/2.998*^8 1.3 1.0103;
+check["F1c Example ex:point_mass_numerical: 2 x 2.95e15/2.998e8 x 1.3 x 1.0103 = 2.59e7 s = 300 d (old 1.29e7 s / 149 d fails)",
+  Abs[dtEx/1*^7 - 2.59] < 0.01 && Abs[dtEx/dayToSec - 300] < 1.5 && Abs[dtEx/dayToSec - 149] > 100];
+dtSol = 2 2.953*^15/2.998*^8 1.3 1.0103;
+check["F1d Sol 6.2(d) with the printed inputs: 2 x 2.953e15/2.998e8 x 1.3 x 1.0103 = 2.587e7 s = 299.5 d (old 149.7 d fails)",
+  Abs[dtSol/1*^7 - 2.587] < 0.0005 && Abs[dtSol/dayToSec - 299.5] < 0.05 && Abs[dtSol/dayToSec - 149.7] > 100];
+check["F2 Ex 6.2(b)-(c) roundings: ln 1.2808 -> 0.2475 (not 0.2474); 0.3048-0.2475=0.0573, 0.8202+0.2475=1.0677; Delta tau 1.0103 (not 1.0101)",
+  Round[Log[xp5], 0.0001] == 0.2475 && Round[Log[xp5], 0.0001] != 0.2474 &&
+  Round[tauPM[xm5, 0.5], 0.0001] == 1.0677 && Round[deltaTauAnalytic[0.5], 0.0001] == 1.0103 &&
+  Round[deltaTauAnalytic[0.5], 0.0001] != 1.0101 && Round[(Sqrt[4.25] + 0.5)/(Sqrt[4.25] - 0.5), 0.0001] == 1.6404];
+ClearAll[x1F, x2F, yF];
+tauPlane = ((x1F - yF)^2 + x2F^2)/2 - Log[x1F^2 + x2F^2]/2;
+statPts = Solve[{D[tauPlane, x1F] == 0, D[tauPlane, x2F] == 0, x1F^2 + x2F^2 > 0} /. yF -> 1/2,
+   {x1F, x2F}, Reals];
+check["F3 Sol 6.3(a): tau -> +Infinity at theta -> 0 and |theta| -> Infinity; only stationary points are x_+ (min), x_- (saddle)",
+  Limit[tauPlane /. {x2F -> 0, yF -> 1/2}, x1F -> 0] === Infinity &&
+  Limit[tauPlane /. {x2F -> 0, yF -> 1/2}, x1F -> Infinity] === Infinity &&
+  Sort[x1F /. statPts] == Sort[{xPlus[1/2], xMinus[1/2]}] // Simplify];
+check["F4 V3 remark: point mass -psi = -tE^2 ln th -> +Infinity at the origin (Shapiro term largest at centre)",
+  Limit[-Log[th], th -> 0, Direction -> "FromAbove"] === Infinity];
+fEx64 = 0.279 0.771/(1.3 0.493);
+H0si = 2.998*^8 0.336/4.24*^25;
+check["F5 Sol 6.4(b-c): 0.279x0.771/(1.3x0.493) = 0.336 (old 0.334 fails); 2.998e8x0.336/4.24e25 = 2.38e-18 (old 2.36e-18 fails); x3.086e19 = 73.3",
+  Abs[fEx64 - 0.336] < 0.0005 && Abs[fEx64 - 0.334] > 0.001 &&
+  Abs[H0si/1*^-18 - 2.38] < 0.005 && Abs[H0si/1*^-18 - 2.36] > 0.01 &&
+  Abs[H0si 3.086*^19 - 73.3] < 0.1];
+
 summary[];
+
 
 
