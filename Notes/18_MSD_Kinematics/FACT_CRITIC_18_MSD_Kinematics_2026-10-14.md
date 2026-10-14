@@ -173,3 +173,123 @@ harness nor the chapter's scripts. Run via `bash Mathematica/run_wl.sh`.
 
 Repo scripts: `msd_multiplane.wl` → `SUMMARY: 69 PASS, 0 FAIL (of 69 checks)`; `problems_18.wl` →
 `SUMMARY: 40 PASS, 0 FAIL (of 40 checks)`.
+
+## Reconciliation with the spiral project's record (2026-10-14)
+
+Source notes: `theory/note5_msd_kinematics.tex` and `theory/solutions/sol_note5_msd_kinematics.tex` in
+`~/Documents/AGEL/202607_Theoretical_spiral_compound`. Record read: digest `docs/spiral_reconciliation_2026-10-14/note5.md`
+(12 FAIL, 15 SUSPECT). `note8_solutions.md` has no `sol_note5` rows; the one packet-critic row that touches `sol_note5`
+is S3-75. Also read: `theory/FACT_CRITIC_study_notes_2026-07-11.md` (N5-C5, N5-S1, PASS list),
+`theory/solutions/FACT_CRITIC_SOLUTIONS_2026-07-24.md` (C1, C2, the H0-sign FAIL), `TESTS_AND_DIAGNOSTICS.md` rows A7, G4 and HS10,
+`HANDOFF_arc_2026-09-21.md` §5–6, `lit_review/MSD_LITERATURE_REVIEW.md`, `lit_review/VERIFIED_ANCHORS_2026-07-16.md` §2,
+`Reference_papers/README.md`, and the spiral memory notes `msd-and-kinematics-anchor.md` and `reference-papers-and-note11.md`.
+The chapter is a heavy rewrite of note5. It drops all project content (G4/Tier-1 numbers, J0946/Ballard, the
+Horseshoe/Melo-Carneiro section, HS10, the AGEL anchors, the LOS budget line, Teodori 2026, Shajib 2023), and it adds
+derivations that the note does not contain: the exact two-source-plane MST, the Schneider two-lens-plane MST, the local MST
+with ξ, and the full Jeans solution.
+Note: the spiral working tree has uncommitted edits to note5 made today (S3-37, S3-42 and S3-72 applied as dated
+footnotes). These do not change any row below.
+
+Scratch re-verification (outside the repo):
+`/private/tmp/claude-504/-Users-rosador-Documents-Learning-to-Lens/6bf8589b-f5b2-4d91-8bc1-cdd6f6bc49b6/scratchpad/rec18/rec18_checks.wl`
+run as `bash Mathematica/run_wl.sh <that path>`, giving **`SUMMARY: 8 PASS, 0 FAIL  (of 8 checks)`** (output in `rec18_checks.out`, same dir).
+CrossRef records were fetched to the same directory (`cr1–cr5.json`):
+10.1051/0004-6361/201424450 = Schneider 2014, A&A **568, L2**; 10.1051/0004-6361/201424881 = Schneider **2019**, A&A 624, A54;
+10.1051/0004-6361/201321882 = Schneider & Sluse 2013, A&A 559, A37; 10.1051/0004-6361/201322106 = Schneider & Sluse 2014,
+A&A 564, A103; 10.1093/mnras/staa344 = Kochanek 2020, MNRAS 493, 1725.
+
+| spiral id | claim (note5 / sol_note5) | status in chapter | action |
+|---|---|---|---|
+| S3-01 (FAIL) | "Plain-text citations follow the verified MSD_LITERATURE_REVIEW.md"; Melo-Carneiro and Ballard are missing from it | n.a. The sentence is not ported. All cites in the chapter are `\cite` keys in `references.bib`, CrossRef-checked (C1–C21) | none |
+| S3-10 (FAIL) | "each source plane can carry its *own* mass-sheet parameter" (Schneider 2014); this is really Teodori 2026, since Schneider has one λ that alternates λ/1 | **already fixed in the port.** The two-lens-plane MST (l.416-468) has a single λ, ν₃ = 1 and the λ↔1 alternation, cited to `schneider_2014_multiplane` (L2, Eqs. 6–11) and `schneider_2019_generalized`. The annotation at l.470-476 (a candle on the far plane cannot see the MST; one on the near plane can, μ×λ⁻²) matches Schneider's "planes with j odd cannot break it". The λ₁ ≠ λ₂ of Eq. ms_free (l.355-362) is the chapter's own derivation for a single deflector with free 𝓑, explained as one physical sheet. It is not attributed to Schneider. Teodori is not cited | none (scratch R7 re-checks det A₂′ = λ² det A₂) |
+| S3-41, S3-42 (FAIL) | Melo-Carneiro §4.2.2 should be §4.2.1.1 | n.a. (Horseshoe content not ported). The spiral fix is already in its working tree | none |
+| S3-20, S3-21 (FAIL) | 67.4 attributed to "Birrer 2020; Shajib 2023"; no units | **already fixed in the port.** l.714-719 gives both values to `Birrer2020` only, with units, asymmetric errors, 33 SLACS, 9 resolved, and the shared-parent-population assumption (C19, C20). Shajib 2023 is not cited | none |
+| S3-72, S3-08 (FAIL / SUSP) | LOS "~1% on η" (Johnson+2025's η is our 𝓑⁻¹) | n.a. (no LOS budget line in the chapter, no Johnson cite) | none |
+| S3-06 (FAIL) | SPT "Schneider & Sluse 2013, 2014"; SS13 (A&A 559 A37) is the MSD/power-law paper | **already fixed in the port.** SPT → `schneider_sluse_2014` (564 A103) at l.233-234. The internal-sheet/power-law statement → `schneider_sluse_2013` (559 A37) at l.228, l.554. Bib DOIs match CrossRef | none |
+| S3-13 (FAIL) | "the crack the unmodelled SMBH exploits" metaphor (:74, :139) | already fixed. `grep crack` gives 0 hits in all four files | none |
+| S3-75, S3-70 (FAIL) | "~1% target precision on 𝓑" / "percent-level cosmological signal" is the retracted legacy band (correct CPL: 0.24% median); sol_note5 Ex3 multiples 8.8×/16.8× | **n.a. / not inherited.** Ex. 18.5 (l.841-848) and Sol. 18.5 (l.124-137) use a generic 250±10 km/s lens and "1% in λ" as a plain arithmetic target. Neither ties it to a 𝓑 signal or to the AGEL anchors. The chapter quotes no dark-energy signal band anywhere | none. Do not add a "~1% signal" sentence in the fix pass |
+| S3-25 (FAIL) | Ballard+2026 (private draft) cited for σ = 249.1 ± 2.1 km/s | n.a. (`grep -i ballard\|J0946` gives 0 hits; X10 lint) | none |
+| S3-36, S3-37, S3-29, S3-34, S3-38, S3-44 (SUSP) | G4 numbers: pinning 0.825→0.818, residual 10⁻⁶–10⁻⁴ (→ 9e-7–5.6e-4), ~82%, aperture scan +0.65/+0.61/+0.23/−0.27 | n.a. (G4 not ported) | see Feedback 3 for the physics behind the aperture rule |
+| S3-35 (SUSP) | σ "pins a combination of (θ_E, γ′) … exactly why it complements the radial image" | reworked. The chapter version (bridge l.751-758) is derived. Eq. ms_aperture sets the (λ, γ′) direction a dispersion fixes, and the second-order invariant ξ is MST-invariant. The closer "Two independent combinations…" is already flagged as prose (P2) | none beyond P2 |
+| S3-14 (SUSP) | schematic "σ_los²(R) ∝ GM(<r)/r" mixes projected and 3-D quantities | **already fixed in the port.** Exact σ_r² (Eq. ms_sigr), LOS projection, aperture average and lensing normalisation (Eqs. ms_sigap/ms_F; derivation box l.629-648; critic D5 brute-force) | but see New fix 1 (core Jeans validity) |
+| S3-45, S3-46, S3-56, S3-61, S3-65, S3-66 (SUSP) | Horseshoe "5σ that the lensing could not deliver alone", HS10 independence, aphoristic closers | n.a. (stripped) | none |
+| July N5-C5 | "Johnson, Fleury & Millon 2025" → Johnson, Collett, Li & Fleury 2025 | n.a. (not cited) | none |
+| July N5-S1 | 74.5 → 67.4 is driven by adding SLACS kinematics, not by freeing λ_int alone | already fixed (l.714-719 states both steps) | none |
+| July PASS list | "Schneider 2014 (A&A 568 A106)" marked PASS | chapter cites the correct record (568 L2, DOI …201424450) | Feedback 1 |
+| July open item | "Schneider & Sluse 2013, 2014 … defensible bundle", left as is | superseded by S3-06 and fixed in the chapter | none |
+| SOLUTIONS-07-24 FAIL (resolved `40a8108`) | H0 sign: forward H0 → λH0; 1/λ is the naive-observer reading | consistent. Keybox l.128-130 H0^true = λH0^naive; the annotation at l.150-158 gives the data-side reading; Sol. 18.2(b); X3 vs Ch.13 eq:mst_H0 | none |
+| SOLUTIONS-07-24 C1, C2 | FGS 1985 authors; Birrer 74.5/67.4 | consistent (C1, C19, C20) | none |
+| sol_note5 Ex3 (σ_e 267.3±11.8 vs 267±12) | anchor rounding | n.a. (anchors not ported) | none |
+| TESTS A7 | SPT/mass-sheet direction quarantined in position-only fits | n.a. (project pipeline). Conceptually consistent with §ms_what_sheet | none |
+| TESTS G4 | "slope information sits in (3−γ′)ln(R_ap/θ_E), vanishes at R_ap = θ_E" (projected-mass proxy, no JAM) | **chapter and spiral disagree on substance (not a chapter error).** l.691-701 and Sol. 18.7 show the proxy's zero at R_E moves under Jeans to R_E·exp(∂lnF/∂γ′) = 1.649 R_E at (2,2,0). Scratch R1–R3 extend this to the spiral grid: 0.91/1.09/1.32/1.47/1.65 R_E for γ′ = 1.4/1.6/1.8/1.9/2.0 (ν = 2, β_a = 0), and 3.6–6.4 R_E at ν = 2.5 | Feedback 3. Optional chapter enrichment: New fix 2 |
+| HANDOFF §5 | Horseshoe "drops below → consistency check with the kinematic channel" retracted twice | n.a. (no Horseshoe content) | none |
+| HANDOFF §5, other bullets | WP4b evidence sentence, γ = 1.288, Note 2b Eq. numbers, Wolfram counts, rail census, Ω_m ±0.3%, t₁_crit, T1M flags | n.a. to note5 / Ch.18 | none |
+| HANDOFF §6 | "a retraction must reach the code"; "two quantities that coincide in one limit get two names" | applied in spirit. The chapter keeps η (θ_E1/θ_E2) and 𝓑 (distance ratio) apart throughout. The cross-chapter η clash with Ch.13 is already flagged as X5 | none |
+| memory `msd-and-kinematics-anchor.md` | "Schneider 2014 … each plane carries its own sheet" | not inherited (see S3-10) | Feedback 2 |
+| lit review / memory | ξ ≡ θ_E α″(θ_E)/[1−κ(θ_E)] invariant | **not in the spiral record.** ξ appears nowhere in note5, sol_note5 or the theory tree. Kochanek 2020 is in `MSD_LITERATURE_REVIEW.md:133` (arXiv 1911.05083, DOI 10.1093/mnras/staa344, CrossRef-confirmed above), but only as the "H0 ∝ (1−κ_E)" critique, with no mention of ξ. So ξ was introduced in the port, and its missing attribution is the chapter's own gap | already Flagged item 1 (C18). The spiral lit-review row confirms the paper is in the project's reading list, so adding the bib entry needs no new discovery |
+| `Reference_papers/README.md:41-42` | `Schneider2014_multiplane_MST.pdf` labelled "Schneider 2014, A&A 568, A106 (1409.0015)"; `SchneiderSluse2013_SPT.pdf` labelled "2013, A&A 564, A103" | chapter unaffected. Its citations come from CrossRef and arXiv 1406.6152, not these PDFs. pdftotext p.1 confirms the first file is arXiv:1409.0015v1 (= Schneider 2019, A&A 624 A54). The project has **no local copy of 1406.6152** (the real 2014 L2) | Feedback 1 |
+| X6 (this report) vs note5:137, sol_note5 Ex4 | "a power-law fit absorbs [a central mass] by steepening γ′", stated unconditionally | inherited from the note. The over-general wording at l.546-549 and l.740 comes from note5:137 / sol_note5:171-172. Ch.17:594 ("Signs, in this configuration") is the port's own qualifier. The spiral record does not test whether the sign holds in every geometry | already Flagged item 4. Not reported as a spiral error (unproven either way) |
+
+### New fixes for the fix pass (not already in Flagged)
+
+1. **Uniform-core Jeans solution holds only for ν > 2 + 2β_a** (l.708, l.743-745; Sol. 18.8 l.171-173; Ex. 18.8 l.871-873).
+   The chapter's σ_r² = (4π/3)Gρ_c r²/(ν−2−2β_a) is a particular solution of the Jeans ODE. Repo check k18 verifies the ODE
+   only, not the boundary condition at large r. With the physical boundary condition (ρ_*σ_r² → 0 at ∞, uniform sphere of
+   radius r_c), the formula is the small-r limit only when ν > 2+2β_a (scratch R5, ν = 2.5).
+   - At the chapter's own isothermal tracer (ν = 2, β_a = 0) the formula divides by zero. The exact result is
+     σ_r² = (4π/3)Gρ_c r²[ln(r_c/r) + 1/3] (R4).
+   - For ν < 2 the formula is negative, while the exact σ_r² ∝ r_c^{2−ν} r^ν > 0 (R6, ν = 1.8).
+
+   The qualitative claims survive: the core's σ_r² still falls inward, and its share still vanishes as r_c → ∞, now with a
+   ln r_c / r_c rate at ν = 2.
+   Fix:
+   - Add "(for ν > 2 + 2β_a; at ν = 2 a logarithm appears)" at l.708.
+   - Write "∝ r² (or r² ln(r_c/r) at ν = 2)" at l.744.
+   - In Ex. 18.8 and Sol. 18.8, either state ν > 2 + 2β_a or say "∝ r² up to a logarithm".
+   - Strengthen k18 (or add k18b) to check the boundary-condition solution at ν = 2 and ν = 2.5.
+
+2. *(Optional, enrichment.)* At l.697-701, quote the γ′ dependence of the decoupling radius at ν = 2, β_a = 0:
+   R_ap/R_E = 0.91, 1.09, 1.32, 1.47, 1.65 for γ′ = 1.4, 1.6, 1.8, 1.9, 2.0, and 3.6–6.4 for ν = 2.5 (scratch R3a). This makes
+   "model dependent" concrete, and it shows the zero can also fall *inside* R_E for shallow mass profiles. The current text
+   only says it moves outward for steeper tracers. That is not wrong, but it is one-sided. Would need a repo check if adopted.
+
+### Feedback to the spiral project (errors its record does not yet know, or only partly knows)
+
+1. **Schneider 2014 is A&A 568, L2, not "A&A 568, A106", and it is not arXiv:1409.0015.**
+   - Wrong in four places: `lit_review/MSD_LITERATURE_REVIEW.md:85` and `:149` ("Schneider | A&A 568, A106 | arXiv:1409.0015 · DOI
+     10.1051/0004-6361/201424881"), `Reference_papers/README.md:41`, and the PASS list of `theory/FACT_CRITIC_study_notes_2026-07-11.md`
+     ("Schneider 2014 (A&A 568 A106)").
+   - The packet critic's own S3-06 text repeats "A&A 568, A106".
+   - CrossRef: DOI 10.1051/0004-6361/201424881 = Schneider **2019**, A&A **624, A54** ("Generalized multi-plane gravitational lensing…").
+     Schneider 2014 = A&A **568, L2**, DOI 10.1051/0004-6361/201424450, "Can one determine cosmological parameters from multi-plane
+     strong lens systems?" (arXiv 1406.6152 per this report's C10).
+   - The local `Schneider2014_multiplane_MST.pdf` is arXiv:1409.0015v1 (pdftotext p.1). The 2014 L2 paper is not in `Reference_papers/`.
+   - Partly known: S3-10 notes that the PDF is 1409.0015 and was published in 2019. But no record entry corrects the "568 A106" label
+     or the two lit-review rows that merge two papers into one.
+   - Same file: `MSD_LITERATURE_REVIEW.md:54,61` still carry "Schneider & Sluse 2013/2014" for the SPT (cf. S3-06), and
+     `Reference_papers/README.md:42` pairs 2013 with 564 A103 (S3-06 already lists this one).
+
+2. **The S3-10 misattribution also lives in memory.** The memory note
+   `~/.claude/projects/-Users-rosador-Documents-AGEL-202607-Theoretical-spiral-compound/memory/msd-and-kinematics-anchor.md`, item 1,
+   reads "Schneider 2014 multi-plane MST; Teodori 2026 … — each plane carries its own sheet". S3-10's fix targets only note5:67-69.
+   The memory line, and `MSD_LITERATURE_REVIEW.md:149` ("a per-plane mass sheet propagates…"), will re-seed the error.
+   - What Schneider (2014 L2 Eqs. 6–11; 2019 §4.3) has: one λ, alternating λ/1 between planes.
+   - Per-plane independent sheets reabsorbed into the distances: Teodori 2026.
+   - Ch.18 l.416-468 has the correct version, and scratch R7 re-checks the near-plane λ² scaling.
+
+3. **G4's "slope information vanishes at R_ap = θ_E" is a property of the projected-mass proxy, not of dynamics.**
+   Sources: TESTS row G4, "a falsifiable prediction of the model … −0.27 at R_ap = θ_E"; note5:116-121.
+   - In the proxy, ∂ln M_2D/∂γ′ at fixed θ_E is ln(θ_E/R), which is zero at θ_E (scratch R2).
+   - For the luminosity-weighted, aperture-averaged Jeans dispersion of a power-law mass with a power-law tracer, the slope-free
+     aperture sits at R_E·exp(∂lnF/∂γ′) (Ch.18 Eqs. ms_sigap/ms_F/ms_aperture; repo checks k15–k17; scratch R1, R3a/b).
+   - At ν = 2, β_a = 0 that is 0.91, 1.09, 1.32, 1.47, 1.65 R_E for γ′ = 1.4, 1.6, 1.8, 1.9, 2.0. At ν = 2.5 it is 3.6–6.4 R_E. Nowhere
+     on the grid is it exactly θ_E.
+   - So the measured backfire location (−0.27 at θ_E) is a proxy artefact. Under real dynamics the counter-productive aperture moves,
+     mostly outward. The design rule's direction ("measure well inside θ_E") survives for most of the grid, though only marginally at
+     γ′ = 1.4, ν = 2.
+   - The G4 row discloses "projected-mass proxy, NO JAM" but presents the zero location as a prediction. It should be caveated as
+     proxy-specific. The flagged S3-34/S3-35 cover scope, not this.
+
+4. *(Info, not an error.)* The MST invariant ξ = θ_E α″(θ_E)/[1−κ(θ_E)], equal to 2(γ′−2) for a power law, is Kochanek (2020,
+   MNRAS 493, 1725; arXiv 1911.05083). The spiral lit review already lists that paper (:133) but summarises it only as H0 ∝ (1−κ_E).
+   If ξ is ever used in the theory notes, attribute it there.
