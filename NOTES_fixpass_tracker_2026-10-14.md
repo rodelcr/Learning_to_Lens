@@ -143,3 +143,14 @@
 - ξ invariant is Kochanek 2020 MNRAS 493, 1725 (DOI 10.1093/mnras/staa344, arXiv 1911.05083) → add bib (CrossRef) + cite at ~512–515 and 757.
 - Eq ms_F validity needs ν>1, γ'>1, ν+γ'−2−2β_a>0. η notation clash with Ch 13 bridge (η = distance ratio there; plane numbering reversed) → fix the Ch 13 bridge box (ann0809 scope).
 - Ch 21 steepening claim "in this configuration" qualifier. eq:distance_ratio described as D_ds/D_s but defines 𝒟 = D_ds/(D_d D_s). "most common sign error" superlative.
+## critic 04–05 (04: 32 PASS/4 SUSPECT/6 FAIL; 05: 31/4/5; flags 1–7 CONFIRMED, 8 partly)
+- 04_Solutions Ex 4.3(a) ll.160–168: 4GM☉/c² = 5.906e3 m; θE = 4.38e−9 rad = 0.90 mas; RE = 6.8e11 m ≈ 4.5 AU.
+- 04 Ex 4.3(c): change statement to "M_E ≈ 2e14 M☉ inside θE (total M200 ~ 1e15)".
+- 04_Solutions Ex 4.5 table l.295 β=0.1 row → `0.1 & +1.051 & −0.951 & 2.002 & 5.519 & 4.519`.
+- 04 l.498 and 05 l.285: add "axisymmetric" to the κ<1 bullet (C&K §2.5).
+- 04_Solutions Ex 4.4(b) l.244 ≈2840 → ≈2830 (c=2.998e8); (c) l.250 2360 → ≈2350.
+- 05 ll.617–619: |μ|>1 iff |det A|<1 i.e. −1 < (1−κ)²−|γ|² < 1; reword annotation "upper bound alone".
+- 05 l.750: "for 1<κ<2 … still magnified (demagnified for κ>2, μ=1/4 at κ=3)".
+- 05 l.789: φγ = ½ atan2(γ₂, γ₁).
+- 05 layer FAIL L1: multipole bridge m=1 "pure shift of the lens centre" → "linear potential, constant deflection shifting only the unobservable source".
+- Layer wording suspects (both reports); Module~\ref vs Chapter~\ref mixing; Dds(0.3,2) = 1328 not 1329.
