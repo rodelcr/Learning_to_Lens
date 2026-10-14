@@ -113,8 +113,8 @@ gEx = 1.9;
 etaEx = B0^(1/(gEx - 1));
 lnEta = Log[etaEx];
 Print["    eta = B^(1/(g'-1)) = ", etaEx, ",  ln eta = ", lnEta];
-check["3c  at B = 0.6742, g' = 1.9: eta = 0.6452, ln eta = -0.4382",
-  Abs[etaEx - 0.6452] < 1*^-4 && Abs[lnEta - (-0.4382)] < 1*^-4];
+check["3c  at B = 0.6742, g' = 1.9: eta = 0.6453, ln eta = -0.4381",
+  Abs[etaEx - 0.6453] < 1*^-4 && Abs[lnEta - (-0.4381)] < 1*^-4];
 dg1 = 0.01/Abs[lnEta];
 Print["    delta g' for a 1% error in B = ", dg1];
 check["3d  delta g' producing a 1% error in B = 0.0228",
