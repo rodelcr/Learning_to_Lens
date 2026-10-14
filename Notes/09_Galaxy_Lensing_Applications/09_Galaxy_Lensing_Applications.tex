@@ -200,6 +200,34 @@ a cosmology).  It does not depend on the radial mass profile.  This
 is the great power of strong lensing as a mass measurement tool.
 \end{remark}
 
+\begin{derivation}[Substitution and a unit check]
+\[
+  \pi\thetaE^2\Dd^2\Sigmacr
+  = \pi\thetaE^2\Dd^2\,\frac{\speedoflight^2}{4\pi\Gnewton}\frac{\Ds}{\Dd\Dds}
+  = \frac{\speedoflight^2}{4\Gnewton}\,\thetaE^2\,\frac{\Dd\Ds}{\Dds}.
+\]
+Units: $[\speedoflight^2/\Gnewton] = (\mathrm{cm^2\,s^{-2}})/(\mathrm{cm^3\,g^{-1}\,s^{-2}}) = \mathrm{g\,cm^{-1}}$,
+times a length ($\Dd\Ds/\Dds$) gives a mass ($\thetaE$ in radians).
+
+\textit{Consistency with the SIS.}  Insert
+$\thetaE = 4\pi\sigma_v^2\Dds/(\speedoflight^2\Ds)$ for one of the two factors
+of $\thetaE$:
+$M_{\mathrm{E}} = \pi\sigma_v^2(\Dd\thetaE)/\Gnewton = \pi\sigma_v^2\RE/\Gnewton$.
+This is exactly the projected mass of an SIS inside $\RE$,
+$\int_0^{\RE}2\pi R\,\Sigma\,dR$ with $\Sigma = \sigma_v^2/(2\Gnewton R)$.
+\end{derivation}
+
+\begin{annotation}[It also holds for the SIE]
+The remark says ``circularly symmetric'', but for the SIE in the normalization
+of eq.~\eqref{eq:sie_kappa} the tangential critical curve is an ellipse of
+area $\pi\thetaE^2$ that encloses mean convergence exactly 1, for every $q$
+(Module~\ref{ch:elliptical_models}, box in the SIE critical-curve subsection).
+Eq.~\eqref{eq:mass_from_thetaE} is therefore exact for the SIE with $\thetaE$
+the SIS-equivalent radius.  This is why Exercise~\ref{ex:sie_mass} does not
+need its $q = 0.8$.
+\end{annotation}
+
+
 \subsection{The SIE Einstein Radius and Velocity Dispersion}
 
 For the SIE model, the Einstein radius is related to the velocity
@@ -225,6 +253,16 @@ The enclosed mass is then $M_{\mathrm{E}} \sim 2$--$4 \times
 galaxy.  The fact that $M_{\mathrm{E}}$ typically exceeds the
 stellar mass is direct evidence for dark matter within the Einstein
 radius.
+
+\begin{annotation}[The numbers behind the example]
+For flat $\Lambda$CDM ($\Hubble = 70$, $\Omegam = 0.3$),
+$\Dds/\Ds(0.3, 1.0) = 0.638$, so $\thetaE = 1.15''$.  With
+$\Dd = 919$~Mpc, $\RE = \Dd\thetaE = 5.1$~kpc and
+$M_{\mathrm{E}} = \pi\sigma_v^2\RE/\Gnewton = 2.3\times10^{11}\,\Msun$, inside
+the quoted range.  Quick scaling for estimates:
+$M_{\mathrm{E}} \propto \sigma_v^2\RE \propto \sigma_v^4\,\Dd\Dds/\Ds$.
+\end{annotation}
+
 
 \subsection{Numerical Examples with Real Systems}
 
@@ -303,6 +341,30 @@ and simultaneously rescales the source plane:
 \end{equation}
 where $\lambda$ is a free parameter.
 
+\begin{annotation}[What $\lambda$ means, and what is invariant]
+$1-\lambda$ is the convergence of the added sheet.  $\lambda < 1$ is a positive
+sheet (e.g.\ $\lambda = 1-\kappa_{\mathrm{ext}}$ with $\kappa_{\mathrm{ext}} > 0$);
+$\lambda > 1$ is a negative sheet, such as an underdense line of sight.
+Under the transform:
+\begin{itemize}[nosep]
+  \item \emph{invariant}: image positions; flux ratios; the critical curves
+        ($\Amat_\lambda = \lambda\Amat$ vanishes where $\Amat$ does); the
+        Einstein radius (since $\bar\kappab_\lambda = \lambda\bar\kappab + 1 - \lambda = 1$
+        iff $\bar\kappab = 1$); and the reduced shear
+        $g = \gammaL/(1-\kappab)$, because $\gammaL_\lambda = \lambda\gammaL$
+        and $1-\kappab_\lambda = \lambda(1-\kappab)$;
+  \item \emph{changed}: $\kappab$ and $\gammaL$ individually, absolute
+        magnifications ($\times\lambda^{-2}$), time delays ($\times\lambda$),
+        the source size and position ($\times\lambda$), the caustics
+        ($\times\lambda$), and the mass profile, whose slope is flattened for
+        $\lambda < 1$.
+\end{itemize}
+Classic error: ``$\thetaE$ is invariant, so the mass inside $\thetaE$ is the
+galaxy's mass.''  $M(<\thetaE)$ is indeed invariant, but it includes the sheet:
+the \emph{galaxy's} share is $\lambda$ times the original model's.
+\end{annotation}
+
+
 Physically, the MST adds a \textbf{uniform sheet of convergence}
 $(1 - \lambda)$ to the lens (hence the name ``mass sheet'') and
 rescales both the original convergence and the source plane by
@@ -334,6 +396,30 @@ So if $\vectheta$ satisfies the original lens equation for source
 position $\vecbeta$, it also satisfies the transformed lens
 equation for source position $\vecbeta_\lambda = \lambda\vecbeta$.
 \textbf{The image positions are unchanged.}
+
+\begin{derivation}[Where eq.~\eqref{eq:mst_alpha} comes from, and why $\vecbeta \to \lambda\vecbeta$ is forced]
+\textit{Potential.}  A uniform sheet of convergence 1 has
+$\psiL = |\vectheta|^2/2$: $\nabla\psiL = \vectheta$ and
+$\nabla^2\psiL = 2 = 2\kappab$.  So the transformed lens has
+\[
+  \psiL_\lambda = \lambda\psiL + (1-\lambda)\frac{|\vectheta|^2}{2},
+  \qquad
+  \nabla^2\psiL_\lambda = \lambda\,2\kappab + 2(1-\lambda) = 2\kappab_\lambda,
+  \qquad
+  \vecalpha_\lambda = \nabla\psiL_\lambda = \lambda\vecalpha + (1-\lambda)\vectheta .
+\]
+(The potential is fixed only up to a harmonic function; choosing none is
+what makes this the MST, and not a more general transformation.)
+
+\textit{Why the source must rescale.}  The sheet's deflection
+$(1-\lambda)\vectheta$ is linear in $\vectheta$, so
+$\vectheta - \vecalpha_\lambda = \lambda(\vectheta - \vecalpha)$ holds pointwise.
+If $\vectheta_A$ and $\vectheta_B$ are images of $\vecbeta$ in the original
+model, both map to the \emph{same} point $\lambda\vecbeta$ in the new one:
+they are still images of a single source.  The source position is not
+observed, so moving it costs nothing.  This is the whole degeneracy.
+\end{derivation}
+
 
 \subsection{What the MST Changes}
 
@@ -379,6 +465,17 @@ original model and the MST-transformed model.  Both steps are
 verified symbolically in
 \mathlink{09_Galaxy_Lensing_Applications/galaxy\_lensing.wl}{galaxy\_lensing.wl}.
 
+\begin{annotation}[Reading the parenthesis about $\nabla\cdot(\vectheta/2)$]
+The parenthesis above is compressed.  The clean statement is that a sheet of
+convergence $\kappab_s$ has deflection $\kappab_s\vectheta$, because
+$\nabla\cdot(\kappab_s\vectheta) = 2\kappab_s$ in two dimensions.  With
+$\kappab_s = 1-\lambda$ this is the extra term $(1-\lambda)\vectheta$ (previous
+box).  A useful corollary: the MST maps the critical curves onto themselves
+and shrinks the caustics by $\lambda$, so the \emph{topology} of the image
+configuration is unchanged as well.
+\end{annotation}
+
+
 \paragraph{Time delays.}
 The Fermat-potential difference between images, and therefore the
 model-predicted time delay for a given $\Hubble$, scales as:
@@ -412,6 +509,51 @@ $\Hubble$ from the H0LiCOW value
 $\Hubble \approx 73.3$~km\,s$^{-1}$\,Mpc$^{-1}$ toward the Planck CMB
 value $\Hubble \approx 67.4$~km\,s$^{-1}$\,Mpc$^{-1}$.
 
+\begin{derivation}[Time delays scale by $\lambda$; the sign of the $\Hubble$ correction]
+\textit{Fermat potential.}  With
+$\tau(\vectheta;\vecbeta) = \tfrac12|\vectheta-\vecbeta|^2 - \psiL(\vectheta)$,
+substitute $\vecbeta \to \lambda\vecbeta$ and $\psiL \to \psiL_\lambda$:
+\begin{align*}
+  \tau_\lambda
+  &= \tfrac12|\vectheta|^2 - \lambda\,\vectheta\cdot\vecbeta + \tfrac12\lambda^2|\vecbeta|^2
+     - \lambda\psiL - \tfrac12(1-\lambda)|\vectheta|^2\\
+  &= \lambda\Big[\tfrac12|\vectheta|^2 - \vectheta\cdot\vecbeta - \psiL\Big] + \tfrac12\lambda^2|\vecbeta|^2\\
+  &= \lambda\,\tau(\vectheta;\vecbeta) + \tfrac12\lambda(\lambda-1)|\vecbeta|^2 .
+\end{align*}
+The last term is the same for every image of the source, so it cancels in
+differences: $\Delta\tau_\lambda = \lambda\,\Delta\tau$, which is
+eq.~\eqref{eq:mst_time_delay}.
+
+\textit{$\Hubble$.}  The observed delay is fixed:
+$\Delta t_{\mathrm{obs}} = D_{\Delta t}(\Hubble)\,\Delta\tau/\speedoflight$
+with $D_{\Delta t} \propto 1/\Hubble$, so the inferred
+$\Hubble \propto \Delta\tau/\Delta t_{\mathrm{obs}}$.  The naive
+($\lambda = 1$) model uses $\Delta\tau$; the true model (its MST) has
+$\lambda\Delta\tau$.  Hence
+\[
+  \frac{\Hubble^{\mathrm{true}}}{\Hubble^{\mathrm{naive}}}
+  = \frac{\lambda\,\Delta\tau}{\Delta\tau} = \lambda
+  \quad\Longrightarrow\quad
+  \Hubble^{\mathrm{true}} = \lambda\,\Hubble^{\mathrm{naive}},
+\]
+the sign of eq.~\eqref{eq:mst_H0}.  To move $73.3$ to $67.4$ requires
+$\lambda = 67.4/73.3 = 0.920$, i.e.\ a sheet of $\kappab_s \approx 0.08$.
+\end{derivation}
+
+\begin{annotation}[Sign trap]
+Keep three statements together.  (i)~At fixed $\Hubble$ the model delay scales
+as $\lambda$.  (ii)~At fixed \emph{observed} delay the inferred $\Hubble$
+therefore scales as $\lambda$ too, $\Hubble^{\mathrm{true}} =
+\lambda\Hubble^{\mathrm{naive}}$; it does not go as $1/\lambda$.  (iii)~A
+positive sheet means $\lambda < 1$, which lowers $\Hubble$.  A one-line
+physical check: the transformed model predicts \emph{shorter} delays at fixed
+$\Hubble$ ($\lambda\Delta\tau$).  To reproduce the fixed observed delay it
+needs a \emph{longer} time-delay distance, $D_{\Delta t} \propto 1/\Hubble$
+larger by $1/\lambda$, i.e.\ a smaller $\Hubble$.  If you find yourself
+writing $1/\lambda$, recheck which delay is being held fixed.
+\end{annotation}
+
+
 \begin{remark}
 The MSD is devastating for time-delay cosmography.  If we model a
 lens and infer $\Hubble$ from the time delay, the answer is
@@ -421,6 +563,24 @@ assumed) reduces $\Hubble^{\mathrm{true}}$ below
 $\Hubble^{\mathrm{naive}}$.  Breaking this degeneracy is the central
 challenge of modern time-delay cosmography.
 \end{remark}
+
+\begin{annotation}[Steeper or shallower?]
+The MST with $\lambda < 1$ makes the profile locally \emph{shallower}.  For
+$\kappab \propto \theta^{-s}$, the transformed profile has
+\[
+  \frac{d\ln\kappab_\lambda}{d\ln\theta}
+  = -s\,\frac{\lambda\kappab}{\lambda\kappab + 1 - \lambda},
+\]
+whose magnitude is smaller than $s$ whenever $0 < \lambda < 1$ and
+$\kappab > 0$.  Example: an SIS at $\thetaE$ ($\kappab = 1/2$, $s = 1$) with
+$\lambda = 0.9$ has a local slope of $-0.82$ instead of $-1$.  So the pair
+``naive model / true model'' related by $\lambda < 1$ is ``steeper / shallower''.
+When reading statements about which profile change raises or lowers
+$\Hubble$, translate them into $\lambda$ first.
+\citet{schneider_sluse_2013} discuss how this degeneracy interacts with the
+assumption of a power-law profile in $\Hubble$ inferences.
+\end{annotation}
+
 
 \subsection{Physical Interpretation}
 
@@ -481,6 +641,30 @@ Several methods can break or constrain the mass-sheet degeneracy:
           partially breaking the degeneracy (though not completely).
 \end{enumerate}
 
+\begin{bridge}[Chapter~\ref{ch:msd_kinematics}: the MST with two source planes]
+Item~3 needs care.  Take one deflector and two sources, ignoring the mass of
+the first source: $\vecbeta_i = \vectheta - \eta_i\vecalpha(\vectheta)$, with
+$\eta_1 = 1$ and $\eta_2 = \eta < 1$ a distance ratio.  Apply the MST of plane~1
+to the physical deflector.  Plane~2 then sees
+$\vectheta - \eta[\lambda\vecalpha + (1-\lambda)\vectheta]$, which can be
+rewritten exactly as
+\[
+  c\,\big(\vectheta - \eta'\vecalpha\big),
+  \qquad c = 1 - \eta(1-\lambda),
+  \qquad \eta' = \frac{\lambda\eta}{c},
+\]
+with $\eta' - \eta = \eta(1-\eta)(\lambda-1)/c$.  So the images of
+\emph{both} planes are preserved provided the distance ratio is changed from
+$\eta$ to $\eta'$ (and source~2 rescaled by $c$).  If cosmology fixes $\eta$,
+only $\lambda = 1$ survives: the second plane breaks the MST.  If $\eta$ is a
+free parameter, which is the case when one wants to \emph{measure} cosmology
+from a DSPL, the MST survives as a $\lambda$--$\eta$ degeneracy.
+Chapter~\ref{ch:msd_kinematics} develops this and shows how the lens-galaxy
+velocity dispersion, which responds to the physical mass inside the aperture,
+can pin $\lambda$ down.
+\end{bridge}
+
+
 
 % =====================================================================
 \section{The Source Position Transformation}
@@ -512,6 +696,36 @@ source position $\hat{\vecbeta}$.
 The MST is the special case where $\hat{\vecbeta} = \lambda\vecbeta$
 (a linear scaling).  The SPT generalizes this to arbitrary nonlinear
 remappings of the source plane.
+
+\begin{derivation}[What an SPT does to the Jacobian, and why most SPTs are only approximate]
+Define the new deflection by
+$\hat{\vecalpha}(\vectheta) \equiv \vectheta - \hat{\vecbeta}\big(\vecbeta(\vectheta)\big)$,
+so that eq.~\eqref{eq:spt_lens_eq} holds by construction and every image of
+$\vecbeta$ maps to $\hat{\vecbeta}(\vecbeta)$.  Then, by the chain rule,
+\[
+  \hat{\Amat}(\vectheta) \equiv \frac{\partial\hat{\vecbeta}}{\partial\vectheta}
+  = \mathcal{B}\big(\vecbeta(\vectheta)\big)\,\Amat(\vectheta),
+  \qquad \mathcal{B} \equiv \frac{\partial\hat{\vecbeta}}{\partial\vecbeta}.
+\]
+\begin{enumerate}[nosep]
+  \item \textit{Flux ratios.}  $\hat\mu = 1/\det(\mathcal{B}\Amat) =
+        \mu/\det\mathcal{B}$.  All images of one source share the same
+        $\vecbeta$, hence the same $\det\mathcal{B}$, so ratios are preserved.
+  \item \textit{Is $\hat{\vecalpha}$ a deflection?}  A lens deflection is a
+        gradient, so $\hat\Amat$ must be symmetric.  For the MST,
+        $\mathcal{B} = \lambda\mathbb{I}$ and $\lambda\Amat$ is symmetric.  For
+        a general $\mathcal{B}$, $\mathcal{B}\Amat$ is symmetric only if
+        $\mathcal{B}$ and $\Amat$ commute, which fails generically (e.g.\
+        $\mathcal{B} = \begin{pmatrix}1.1&0.05\\0.05&0.95\end{pmatrix}$,
+        $\Amat = \begin{pmatrix}0.4&0.2\\0.2&-0.3\end{pmatrix}$ give an
+        asymmetric product).
+\end{enumerate}
+Hence a generic SPT does not correspond exactly to any mass distribution.
+It does only approximately, over the region where the images lie, which is
+why \citet{schneider_sluse_2014} call it an approximate invariance.  The MST
+is the exact member of the family.
+\end{derivation}
+
 
 \subsection{Implications}
 
@@ -638,6 +852,64 @@ where $f(\gamma')$ is a function of the slope that equals unity for
 $\gamma' = 2$ (recovering the SIE result) and $\sigma_{\mathrm{SIE}}$
 is the SIE-equivalent velocity dispersion.
 
+\begin{derivation}[Projection of $\rho \propto r^{-\gamma'}$ and the normalization of eq.~\eqref{eq:kappa_power_law}]
+\textit{Projection.}  Put $z = \xi u$, $dz = \xi\,du$:
+\[
+  \rho_0 r_0^{\gamma'}(\xi^2 + z^2)^{-\gamma'/2}dz
+  = \rho_0 r_0^{\gamma'}\,\xi^{1-\gamma'}(1+u^2)^{-\gamma'/2}du .
+\]
+Then substitute $t = u^2/(1+u^2)$, which turns the integral into the Beta
+integral $\tfrac12\int_0^1 t^{-1/2}(1-t)^{(\gamma'-3)/2}dt =
+\tfrac12 B\big(\tfrac12,\tfrac{\gamma'-1}{2}\big)$.  It converges only for
+$\gamma' > 1$.  $B(a,b) = \Gamma(a)\Gamma(b)/\Gamma(a+b)$ with
+$\Gamma(1/2) = \sqrt\pi$ gives the $\Gamma$-ratio form.  Check:
+$\gamma' = 2$ gives $\tfrac{\sqrt\pi}{2}\Gamma(\tfrac12)/\Gamma(1) = \pi/2$,
+and $\int_0^\infty du/(1+u^2) = \pi/2$.
+
+\textit{Normalization.}  Write $\kappab = A(\thetaE/\theta)^{\gamma'-1}$.  The
+mean convergence inside $\theta$ is
+\[
+  \bar\kappab(\theta) = \frac{2}{\theta^2}\int_0^\theta\kappab\,\theta'\,d\theta'
+  = \frac{2A}{3-\gamma'}\Big(\frac{\thetaE}{\theta}\Big)^{\gamma'-1}
+  \qquad (\gamma' < 3).
+\]
+The Einstein-radius condition $\bar\kappab(\thetaE) = 1$ gives
+$A = (3-\gamma')/2$.  The condition actually imposed is ``mean convergence
+1 at $\thetaE$''.  ``Matching the isothermal case'' is then the check that
+$\gamma' = 2$ returns $\thetaE/(2\theta)$.
+
+\textit{Consequences} (used repeatedly in Part~V):
+\begin{itemize}[nosep]
+  \item $\kappab(\thetaE) = (3-\gamma')/2$: $1/2$ for isothermal, larger for
+        shallower profiles;
+  \item $\alpha(\theta) = \theta\bar\kappab = \thetaE^{\gamma'-1}\theta^{2-\gamma'}$;
+  \item $M_{\mathrm{2D}}(<\theta) \propto \theta^{3-\gamma'}$;
+  \item radial critical curve: $1 - d\alpha/d\theta = 0$ at
+        $\theta_r = \thetaE(2-\gamma')^{1/(\gamma'-1)}$, which exists only
+        for $\gamma' < 2$.
+\end{itemize}
+\end{derivation}
+
+\begin{annotation}[Which ``slope''?  $\gamma'$ versus the 2D slope versus $\gammaL$]
+$\gamma'$ is the \emph{three-dimensional} density slope.  The projected
+convergence falls as $\theta^{1-\gamma'}$, a 2D log-slope of $-(\gamma'-1)$:
+$-1$ for isothermal, not $-2$.  The deflection goes as $\theta^{2-\gamma'}$.
+The prime is there to avoid confusion with the shear $\gammaL$; papers using
+$\gamma$ for the slope must be read carefully.  Classic error: plugging the 2D
+slope into a 3D formula, which is off by one.
+\end{annotation}
+
+\begin{bridge}[Chapter~\ref{ch:power_law_point_mass}: the projected power law]
+Chapter~\ref{ch:power_law_point_mass} adds a central point mass to exactly
+this profile.  It needs $\alpha(\theta) = \thetaE^{\gamma'-1}\theta^{2-\gamma'}$
+(the point mass simply adds $\theta_\bullet^2/\theta$), the convergence
+$(3-\gamma')/2$ at $\thetaE$, and the radial critical curve
+$\theta_r = \thetaE(2-\gamma')^{1/(\gamma'-1)}$, which exists only for
+$\gamma' < 2$.  Whether a radial critical curve exists, and where, controls
+the central image that a point mass can perturb or suppress.
+\end{bridge}
+
+
 \subsection{Breaking the Degeneracy}
 
 The key insight is that lensing and kinematics respond differently to
@@ -661,6 +933,34 @@ normalization and the slope $\gamma'$.  This breaks the mass-sheet
 degeneracy because the MST changes the effective $\gamma'$:
 steepening or shallowing the profile to compensate for the added
 mass sheet.
+
+\begin{derivation}[A Jeans-equation sketch: why $\sigma_v$ depends on $\gamma'$]
+For a spherical, isotropic, non-rotating tracer of density
+$\nu(r) \propto r^{-\delta}$ in a potential with enclosed mass
+$M(r) = m_0 r^{3-\gamma'}$, the Jeans equation is
+\[
+  \frac{d(\nu\sigma_r^2)}{dr} = -\nu\frac{\Gnewton M(r)}{r^2}
+  \quad\Longrightarrow\quad
+  \nu\sigma_r^2 = \int_r^\infty \nu\,\frac{\Gnewton M}{r'^2}\,dr'
+\]
+(taking $\nu\sigma_r^2 \to 0$ at infinity).  The integrand scales as
+$r'^{1-\gamma'-\delta}$, so for $\gamma' + \delta > 2$
+\[
+  \sigma_r^2(r) = \frac{\Gnewton M(r)}{r}\,\frac{1}{\gamma' + \delta - 2}
+  \;\xrightarrow{\ \delta = \gamma'\ }\;
+  \frac{\Gnewton M(r)}{2(\gamma'-1)\,r} .
+\]
+Checks: $\gamma' = 2$ gives $\sigma_r^2 = \Gnewton M/(2r)$, i.e.\ the SIS
+$M(r) = 2\sigma^2r/\Gnewton$; and $\sigma_r^2 \propto r^{2-\gamma'}$ is flat
+only for the isothermal slope.  The observable, a luminosity-weighted,
+projected, aperture-averaged $\sigma_v$, adds $\gamma'$- and
+anisotropy-dependent factors (the $g(\gamma')$ of
+Exercise~\ref{ex:power_law_profile}).  The essential point already shows
+here: $\sigma_v^2$ measures $M(r)/r$ at the aperture radius, while lensing
+fixes $M_{\mathrm{2D}}(<\RE)$.  Two radii, two constraints, so slope and
+normalization separate.
+\end{derivation}
+
 
 \subsection{The Bulge-Halo Conspiracy}
 \label{sec:conspiracy}
@@ -709,6 +1009,24 @@ remains an active area of research.  It has important implications:
           $\rho \propto r^{-2}$).
 \end{enumerate}
 
+\begin{bridge}[Chapter~\ref{ch:central_mass_bias}: the slope--central-mass trade is a ``local MST'']
+Images near $\thetaE$ constrain, to first order, $\alpha(\thetaE)$ and
+$d\alpha/d\theta$ at $\thetaE$.  For an axisymmetric lens with fixed $\thetaE$,
+these are equivalent to $\kappab(\thetaE)$.  Now give a power law of slope
+$\gamma'$ a central point mass of Einstein radius $\theta_\bullet$, with
+$f = \theta_\bullet^2/\thetaE^2$, and renormalize the galaxy so that $\thetaE$
+is unchanged.  The composite matches $\alpha$ and $d\alpha/d\theta$ at $\thetaE$
+of a \emph{pure} power law with
+\[
+  \gamma'_{\mathrm{eff}} = \gamma' + f\,(3-\gamma')
+\]
+(e.g.\ $f = 0.05$, $\gamma' = 2$ gives $2.05$).  An unmodelled central mass
+therefore looks like a steeper profile.  This is the MST idea applied over
+the annulus of the images rather than globally, and
+Chapter~\ref{ch:central_mass_bias} quantifies the bias it induces.
+\end{bridge}
+
+
 
 % =====================================================================
 \section{Time-Delay Cosmography}
@@ -736,6 +1054,44 @@ from the lens model) and the prefactor $\Dd\Ds/\Dds$ is called the
 \end{equation}
 so measuring $\Delta t$ (from monitoring the variable source) and
 modeling $\Delta\tau$ (from the lens model) gives $\Hubble$.
+
+\begin{derivation}[Why $D_{\Delta t} \propto 1/\Hubble$]
+In an FRW model every angular-diameter distance has the form
+$D_{ij} = (\speedoflight/\Hubble)\,f_{ij}(z_i, z_j; \Omegam, \ldots)$, with
+$f_{ij}$ dimensionless.  Then
+\[
+  \frac{\Dd\Ds}{\Dds}
+  = \frac{(\speedoflight/\Hubble)f_d\,(\speedoflight/\Hubble)f_s}{(\speedoflight/\Hubble)f_{ds}}
+  = \frac{\speedoflight}{\Hubble}\,\frac{f_df_s}{f_{ds}} .
+\]
+One power of $\speedoflight/\Hubble$ survives.  Halving $\Hubble$ doubles
+$D_{\Delta t}$ (checked numerically for $z_d = 0.6$, $z_s = 1.5$).
+\end{derivation}
+
+\begin{annotation}[Two conventions for $D_{\Delta t}$, and a unit check]
+Here the prefactor $\Dd\Ds/\Dds$ is called $D_{\Delta t}$ and $(1+z_d)$ is
+written separately.  Exercise~\ref{ex:H0_time_delay} and much of the
+literature fold it in, $D_{\Delta t} = (1+z_d)\Dd\Ds/\Dds$.  Both are
+$\propto 1/\Hubble$; just do not include $(1+z_d)$ twice.  Unit check with the
+exercise's numbers: $(1+z_d)\Dd\Ds/\Dds = 4463$~Mpc and
+$\Delta\tau = 0.64$~arcsec$^2 = 1.504\times10^{-11}$~rad$^2$ give
+$D_{\Delta t}\Delta\tau/\speedoflight = 80.0$~days.  $\Delta\tau$ must be in
+rad$^2$.
+\end{annotation}
+
+\begin{bridge}[Chapter~\ref{ch:cosmological_sensitivity}: what each distance combination constrains]
+$D_{\Delta t}$ carries one power of $\speedoflight/\Hubble$, so time delays
+measure $\Hubble$.
+Every \emph{ratio} of distances, such as $\Dds/\Ds$, or the DSPL ratio of two
+such ratios, is independent of $\Hubble$: the $\speedoflight/\Hubble$ factors
+cancel (checked numerically).  A DSPL therefore constrains
+the density parameters (and the dark-energy equation of state), not
+$\Hubble$.  Chapter~\ref{ch:cosmological_sensitivity}
+compares the two sensitivities; the MST affects them differently, since time
+delays scale with $\lambda$ while the DSPL ratio is degenerate with $\lambda$
+only through the $\eta'$ relation of the bridge in \S\ref{sec:msd}.
+\end{bridge}
+
 
 \subsection{The H0LiCOW / TDCOSMO Program}
 
@@ -798,6 +1154,15 @@ unmodeled positive mass sheet, $\Hubble^{\mathrm{true}} <
 \Hubble^{\mathrm{naive}}$.
 A 10\% mass sheet ($\lambda = 0.9$, i.e., adding $\kappab_s = 0.1$
 to the convergence) shifts $\Hubble^{\mathrm{naive}}$ downward by 10\%.
+
+\begin{annotation}[What ``shifts downward by 10\%'' means]
+Read the last sentence as: with $\lambda = 0.9$ the \emph{true} value is
+$0.9\,\Hubble^{\mathrm{naive}}$, 10\% below the naive one.  The naive number
+itself is whatever the no-sheet fit returns; the correction moves the
+\emph{inference} downward.  Equivalently, the naive value overestimates the
+truth by $1/\lambda - 1 = 11\%$.
+\end{annotation}
+
 
 The TDCOSMO collaboration (Birrer et al.\ 2020) showed that relaxing
 the assumption of a power-law mass profile (which partially encodes
@@ -1032,6 +1397,17 @@ photometric and spectroscopic weighting of the lens field, calibrated
 against numerical line-of-sight simulations, is an essential and
 irreducible step in time-delay cosmography
 \citep{wong_h0licow_2020,Birrer2020}.
+
+\begin{annotation}[Scale of the effect]
+Since $\Hubble^{\mathrm{true}} = (1-\kappa_{\mathrm{ext}})\Hubble^{\mathrm{naive}}$,
+an error $\delta\kappa_{\mathrm{ext}}$ maps one-to-one onto a fractional error
+in $\Hubble$.  Each 0.01 in $\kappa_{\mathrm{ext}}$ is a 1\% shift, which is
+why a 2\% $\Hubble$ requires $\kappa_{\mathrm{ext}}$ to about 0.02 or better
+per lens (or averaged over many lenses).  For scale, closing the whole
+73.3-versus-67.4 gap with a sheet alone would need
+$\kappa_{\mathrm{ext}} \approx 0.08$.
+\end{annotation}
+
 
 \subsection{Dust and the Interstellar Medium of the Lens}
 \label{sec:lens_dust}
