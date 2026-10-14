@@ -9,10 +9,12 @@
   (all ALL CHECKS PASS, re-run by the orchestrator), 7–10 exercises with solutions, 1–3 figures.
 - **Annotation layer** on all 17 original modules (deep 01d–09, solutions-only 01a–c, 10–13); student and
   instructor fingerprints verified identical to the pre-annotation baseline for every module.
-- **Fact-critic pass**: reports merged for 01a–c (annotated layer), Ch 14, 16, 17, 18, 19, 20, 21. Critics for Ch 15
-  and annotation layers 01d–e, 02–03, 04–05, 06–07, 08–09, 10–13 were RUNNING when the session ended
-  — check their worktree branches (`wt/ch15` … `wt/ann1013`) for committed `FACT_CRITIC_*_2026-10-14.md`
-  files and merge them (`git merge wt/<name>`). 
+- **Fact-critic pass COMPLETE**: one independent Opus critic per Part V chapter (14–21) and per annotation
+  group (01a–c, 01d–e, 02–03, 04–05, 06–07, 08–09, 10–13); all 24 reports merged into `annotated-edition`
+  (`Notes/*/FACT_CRITIC_*_2026-10-14.md`). Every Part V derivation survived independent re-derivation
+  (critics' scratch scripts: 25–59 checks each, 0 FAIL); FAILs are prose/scope/citation items. The critics
+  CONFIRMED ~60 pre-existing visible-text errors in Chapters 1–17 (listed with exact replacement text in
+  the tracker and reports). Plumbing fixed on the way: `\annot{}` → `\unskip` (stray space), Ch 15 tags.
 - **Fix pass NOT started.** Input list: `NOTES_fixpass_tracker_2026-10-14.md` (every visible-text error the
   agents and critics flagged, by module — several are serious, e.g. Module 6 point-mass delay factor 2,
   Module 4 Ex 4.3(a) numbers, Module 7 Sol 7.3 distances). Brief: `docs/agent_briefs_2026-10-14/FIXER.md`.

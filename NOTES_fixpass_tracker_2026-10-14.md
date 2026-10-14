@@ -195,3 +195,10 @@
 - X11 Summary ll.1074–1076 repeats the source-note "t₁→2 at fixed inner mass" wording → joint limit; add caveat to the point-mass-limit exercise.
 - C10 "SMBH in essentially every massive galaxy" uncited → Kormendy & Ho 2013 ARA&A 51, 511 (DOI 10.1146/annurev-astro-082708-101811, CrossRef-confirmed; not in bib) or soften.
 - X6 port the general |y_in|<|y_out| argument + γ'=1.3/1.8 image counts into power_law_point_mass.wl.
+## critic 10–13 (layer: 10: 25/1/1, 11: 12/0/0, 12: 13/0/1, 13: 14/1/0; visible flags 1–4 CONFIRMED, 5 not an error; replacement text in reports)
+- 13.1(b) AND chapter 13_Microlensing.tex:140 eq micro_mu_pm: μ± = ±½[(u²+2)/(u√(u²+4)) ± 1] (SKW 2006 Part 4 eq. 3 has the leading ±); fix layer closing clause.
+- 10_Solutions ll.154–156: M_3D ∝ r², M_2D ∝ R² ln(2r_s/R). 10.5(d): γ_t≈κ̄ fails at every radius (κ/κ̄=0.6, κ̄=2.5γ_t, M(5′)≈1.1e15); "within ~12%, partly fortuitous"; soften exercise premise 10_Cluster_Lensing.tex:1045–1047.
+- 10.2: cause is grid EXTENT (images at 13.5″ and 18.1″ outside ±1.5θ_E box); physics wrong too (no counter-image at 0.5θ_E; β=θ_E not on the tangential caustic; L/W≈2 not 5–10). Replacements for 10_Solutions:170–175, 179–184; exercise :976 → β = 0.1θ_E; problems_10.wl:164 gridRange 3θ_E; note ll.188–191.
+- 12.5(d) not an error; optional "ℓ ≈ 4–5/θ (filter peaks at η≈4.1)".
+- Layer: 10 N9 κ_s 0.330 → 0.329 (10_Solutions:88; problems_10.wl:398–399 target 0.329 tol 0.0005) — critic's auto-fix was blocked by the permission classifier, apply in fix pass; 10 X1 signed θ/β wording; 12 N2 ⟨χ⟩ = 2g(1−⟨|χ_s|²⟩/2) (SKW p.277).
+- Repo-check weaknesses: problems_12 "MST γ'=λγ" uses undefined `gam` (passes trivially); SIS 2θ_E check hard-codes κ=γ=1/4; problems_11 divergence clause; problems_10.wl:40 stale 1328.2 comment.
