@@ -94,3 +94,18 @@ Script `critic_1013.wl` → `SUMMARY: 44 PASS, 0 FAIL (of 44)`. Module-12 rows:
 
 Supplementary `critic_1013_c.wl`: ⟨χ⟩ = −(−2 + e²)g = 2g(1 − e²/2) ("equals 2g(1 - e^2/2): True"); control
 ⟨ε⟩ = g.
+
+## Resolution — fixes applied 2026-10-14
+
+| id | Fix | Backing |
+|----|-----|---------|
+| N2 | "Which ellipticity, which shear" annotation: ⟨χ⟩ ≈ 2g "holds only in the weak limit and for nearly round sources: to first order ⟨χ⟩ = 2g(1 − ⟨\|χ^(s)\|²⟩/2), so the mean of χ depends on the distribution of intrinsic ellipticities (SKW 2006, Part 3, p. 277)". | problems_12.wl "12.4 annotation: <chi> = 2g(1 - \|chi_s\|^2/2) + O(g^2) …; control <eps> = g" (phase average of SKW eq. 12 to O(g); also fails on the bare 2g); `schneider_kochanek_wambsganss_2006` |
+| VF5 (optional) | 12.5(d) and 12_Weak_Lensing.tex:612: "ℓ ≈ 4–5/θ (the filter J₄²(η)/η⁴ peaks at η = ℓθ ≈ 4.1)"; the chapter keeps the SKW citation and notes that SKW quote ℓ ∼ 5/θ. | problems_12.wl "12.5(d) W_ap = J_4^2(eta)/eta^4 peaks at eta ~ 4.1 (l W at ~4.5): l ~ 4-5/theta" (4.1047, 4.4897) |
+| repo-check: MST | The check that used an undefined `gam` (passed trivially) is replaced by a derivation from ψ' = λψ + (1−λ)\|θ\|²/2: γ' = λγ, κ' = λκ + 1 − λ, γ' − γ = (λ−1)γ ≠ 0 for λ ≠ 1, and g' = g. | problems_12.wl "12.1 MST: gamma' = lambda gamma (derived from psi') …", "12.1 MST: gamma' - gamma = (lambda - 1) gamma …" |
+| repo-check: SIS 2θ_E | κ and γ at θ = 2θ_E are now derived from the Hessian of ψ = θ_E\|θ\| (both 1/4), then g = 1/3. | problems_12.wl "12.1 SIS at theta = 2 thetaE: kappa = gamma = 1/4 (derived from psi = thetaE\|theta\|) …" |
+
+**Verification after edits.** `bash Mathematica/run_wl.sh Solutions/12_Weak_Lensing/problems_12.wl`:
+before `SUMMARY: 18 PASS, 0 FAIL  (of 18 annotated-edition checks)`, after
+`SUMMARY: 21 PASS, 0 FAIL  (of 21 annotated-edition checks)`. Build: see the module 10 resolution section.
+
+**Left open.** P1–P3 prose (flag-only, not applied).

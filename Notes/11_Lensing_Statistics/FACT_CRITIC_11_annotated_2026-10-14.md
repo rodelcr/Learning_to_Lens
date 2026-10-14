@@ -62,3 +62,14 @@ Script `critic_1013.wl` (path above) → `SUMMARY: 44 PASS, 0 FAIL (of 44)`. Mod
 - L14 ((r−1)/(r+1))² = 0.669 at r = 10: PASS.
 - L15 ∫₁^∞ μ^{β−3}dμ = 1/(2−β): PASS.
 - L18 SIS signed magnifications sum to 2: PASS.
+
+## Resolution — fixes applied 2026-10-14
+
+| id | Fix | Backing |
+|----|-----|---------|
+| repo-check note | The convoluted second clause of the problems_11 check "11.3 … diverges as beta->2" (`!FreeQ[Quiet@Check[…]]`) is replaced by explicit statements: ∫₁^M dμ/μ = ln M, ln M → ∞, and 1/(2−β) → +∞ as β → 2⁻. No .tex change. | problems_11.wl "11.3 int_1^Inf mu^-3 mu^beta dmu = 1/(2-beta) for beta<2 (diverges as beta->2)" |
+
+**Verification after edits.** `bash Mathematica/run_wl.sh Solutions/11_Lensing_Statistics/problems_11.wl`:
+before and after `SUMMARY: 20 PASS, 0 FAIL  (of 20 checks, incl. annotated-edition)`.
+
+**Left open.** P1 prose (optional, not applied).

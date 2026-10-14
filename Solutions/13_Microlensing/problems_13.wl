@@ -287,6 +287,16 @@ check["13.1(b) y+^2 + y-^2 = u^2 + 2", Simplify[yPlus^2 + yMinus^2 - (u^2 + 2)] 
 check["13.1(b) signed mu+ + mu- = 1", Simplify[muPlus + muMinus - 1, u > 0] === 0];
 check["13.1(b) signed: mu+ = (A+1)/2, mu- = -(A-1)/2 ; i.e. |mu_pm| = (A +- 1)/2",
   Simplify[{muPlus - (Amag[u] + 1)/2, muMinus + (Amag[u] - 1)/2}, u > 0] === {0, 0}];
+(* fix pass 2026-10-14: printed eq. micro_mu_pm now carries the leading +- (SKW 2006 Pt 4 eq. 3).
+   The old form without it fails this check (gives mu- = +(A-1)/2 > 0). *)
+muPrinted[s_] := s (1/2) ((u^2 + 2)/(u Sqrt[u^2 + 4]) + s);
+check["13.1(b) printed mu_pm = +-1/2[(u^2+2)/(u Sqrt[u^2+4]) +- 1] equals signed mu_pm",
+  Simplify[{muPrinted[1] - muPlus, muPrinted[-1] - muMinus}, u > 0] === {0, 0}];
+check["13.1(b) old form 1/2[... - 1] (no leading sign) is NOT mu- (it is |mu-|)",
+  Simplify[(1/2) ((u^2 + 2)/(u Sqrt[u^2 + 4]) - 1) - muMinus, u > 0] =!= 0 &&
+  Simplify[(1/2) ((u^2 + 2)/(u Sqrt[u^2 + 4]) - 1) + muMinus, u > 0] === 0];
+check["13.1(b) printed form: mu+ + mu- = 1 and mu+ - mu- = A",
+  Simplify[{muPrinted[1] + muPrinted[-1] - 1, muPrinted[1] - muPrinted[-1] - Amag[u]}, u > 0] === {0, 0}];
 check["13.1(b) mu- < 0 for u > 0 (A > 1)", Simplify[Amag[u] > 1, u > 0] || And @@ (Amag[#] > 1 & /@ {0.01, 0.5, 1., 5., 50.})];
 (* 13.1(d) arithmetic *)
 check["13.1(d) 3/Sqrt[5] = 1.3416, log10 = 0.1277, x 2.5 = 0.319",

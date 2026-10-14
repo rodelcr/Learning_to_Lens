@@ -247,11 +247,30 @@ annCheck["12.1(c) n/n0 = mu^(alpha-1) = 1 + 2(alpha-1) kappa to first order",
 annCheck["12.1(c) alpha = 1: n/n0 = 1 for any mu (no number-count signal)",
   Simplify[(MM^(al - 1)) /. al -> 1] === 1];
 (* reduced-shear pitfall: SIS at theta = 2 thetaE *)
-kSIS2 = 1/(2*2); gSIS2 = 1/(2*2);
-annCheck["12.1 SIS at theta = 2 thetaE: kappa = gamma = 1/4, g = 1/3 (33% above gamma)",
-  kSIS2 == 1/4 && gSIS2/(1 - kSIS2) == 1/3 && (1/3)/(1/4) - 1 == 1/3];
-annCheck["12.1 MST: gamma' = lambda gamma differs from gamma (shear itself not invariant)",
-  Simplify[lam gam - gam] =!= 0];
+(* fix pass 2026-10-14: derive kappa and gamma from the SIS potential psi = thetaE |theta|
+   instead of hard-coding 1/4 (fact-critic 10-14 repo-check note). *)
+ClearAll[x1, x2, tE];
+psiSIS = tE Sqrt[x1^2 + x2^2];
+hessSIS = {{D[psiSIS, x1, x1], D[psiSIS, x1, x2]}, {D[psiSIS, x1, x2], D[psiSIS, x2, x2]}};
+kSIS2 = Simplify[(Tr[hessSIS]/2) /. {x1 -> 2 tE, x2 -> 0}, tE > 0];
+gSIS2 = Simplify[Sqrt[((hessSIS[[1, 1]] - hessSIS[[2, 2]])/2)^2 + hessSIS[[1, 2]]^2] /. {x1 -> 2 tE, x2 -> 0}, tE > 0];
+Print["  SIS at 2 thetaE (derived from psi): kappa = ", kSIS2, ", |gamma| = ", gSIS2];
+annCheck["12.1 SIS at theta = 2 thetaE: kappa = gamma = 1/4 (derived from psi = thetaE|theta|), g = 1/3 (33% above gamma)",
+  kSIS2 === 1/4 && gSIS2 === 1/4 && gSIS2/(1 - kSIS2) === 1/3 && (gSIS2/(1 - kSIS2))/gSIS2 - 1 === 1/3];
+(* fix pass 2026-10-14: the old check used an undefined symbol `gam` and passed trivially.
+   Derive gamma' from the MST potential psi' = lambda psi + (1-lambda) |theta|^2/2. *)
+ClearAll[psiF, lam];
+psiMST = lam psiF[x1, x2] + (1 - lam) (x1^2 + x2^2)/2;
+g1[ps_] := (D[ps, x1, x1] - D[ps, x2, x2])/2; g2[ps_] := D[ps, x1, x2];
+kp[ps_] := (D[ps, x1, x1] + D[ps, x2, x2])/2;
+annCheck["12.1 MST: gamma' = lambda gamma (derived from psi'), kappa' = lambda kappa + 1 - lambda",
+  Simplify[{g1[psiMST] - lam g1[psiF[x1, x2]], g2[psiMST] - lam g2[psiF[x1, x2]],
+     kp[psiMST] - (lam kp[psiF[x1, x2]] + 1 - lam)}] === {0, 0, 0}];
+annCheck["12.1 MST: gamma' - gamma = (lambda - 1) gamma, nonzero unless lambda = 1 (shear not invariant)",
+  Simplify[lam g1[psiF[x1, x2]] - g1[psiF[x1, x2]] - (lam - 1) g1[psiF[x1, x2]]] === 0 &&
+  ((lam g1[psiF[x1, x2]] - g1[psiF[x1, x2]]) /. lam -> 2) =!= 0 &&
+  Simplify[(lam g1[psiF[x1, x2]]/(1 - (lam kp[psiF[x1, x2]] + 1 - lam))) -
+    g1[psiF[x1, x2]]/(1 - kp[psiF[x1, x2]])] === 0];
 
 (* 12.2(b): thetaE^2 = M/(pi Sigma_cr Dd^2) for a point mass *)
 annCheck["12.2(b) M/(pi Sigma_cr Dd^2) = 4 G M Dds/(c^2 Dd Ds) = thetaE^2",
@@ -288,6 +307,30 @@ annCheck["12.5(c) substitution x = l theta: int_0^Inf J_0(l theta) dl = 1/theta"
 annCheck["12.5(c) int_theta^Inf dv/v^2 = 1/theta, int_theta^Inf dv/v^4 = 1/(3 theta^3)",
   Integrate[1/v^2, {v, th, Infinity}, Assumptions -> th > 0] === 1/th &&
   Integrate[1/v^4, {v, th, Infinity}, Assumptions -> th > 0] === 1/(3 th^3)];
+
+(* fix pass 2026-10-14 (critic 12 N2): <chi> to first order in g depends on the intrinsic
+   ellipticity: average SKW 2006 Pt 3 eq. (12) over a random source phase at |chi_s| = e.
+   Control: the same average of the epsilon transformation gives <eps> = g. *)
+ClearAll[gR, eE, ph, zz];
+(* g real > 0, chi_s = e z with z = Exp[I ph]; conj(chi_s) = e/z written explicitly *)
+chiImg = (eE zz + 2 gR + gR^2 eE/zz)/(1 + gR^2 + gR eE (zz + 1/zz));   (* 2 Re(g conj(chi_s)) = g e (z + 1/z) *)
+epsImg = (eE zz + gR)/(1 + gR eE zz);                                  (* SKW eq. (12): (eps_s + g)/(1 + conj(g) eps_s) *)
+phaseAvg[expr_] := Module[{ser = Expand[Normal[Series[expr, {gR, 0, 1}]]]},
+   Simplify[Integrate[ser /. zz -> Exp[I ph], {ph, 0, 2 Pi}]/(2 Pi), {0 < eE < 1}]];
+chiMean1 = phaseAvg[chiImg];
+epsMean1 = phaseAvg[epsImg];
+Print["  <chi> to O(g) at |chi_s| = e: ", chiMean1, " ;  <eps> to O(g): ", epsMean1];
+annCheck["12.4 annotation: <chi> = 2g(1 - |chi_s|^2/2) + O(g^2) (depends on intrinsic e already at O(g)); control <eps> = g",
+  Simplify[chiMean1 - 2 gR (1 - eE^2/2)] === 0 && Simplify[epsMean1 - gR] === 0 &&
+  Simplify[chiMean1 - 2 gR] =!= 0];
+
+(* fix pass 2026-10-14 (critic 12 VF5, optional sharpening): the aperture-mass filter
+   W_ap ~ J_4^2(eta)/eta^4 peaks at eta = l theta ~ 4.1 (l W peaks at ~4.5) *)
+etaPk = eta /. Last[FindMaximum[BesselJ[4, eta]^2/eta^4, {eta, 4}]];
+etaPk2 = eta /. Last[FindMaximum[BesselJ[4, eta]^2/eta^3, {eta, 4.5}]];
+Print["  argmax J4^2/eta^4 = ", etaPk, " ; argmax eta J4^2/eta^4 = ", etaPk2];
+annCheck["12.5(d) W_ap = J_4^2(eta)/eta^4 peaks at eta ~ 4.1 (l W at ~4.5): l ~ 4-5/theta",
+  Abs[etaPk - 4.10] < 0.01 && Abs[etaPk2 - 4.49] < 0.01];
 
 (* bridge: MST keeps g; image positions too (beta -> lambda beta) *)
 annCheck["12 bridge: MST alpha' = lambda alpha + (1-lambda) theta maps beta -> lambda beta",
