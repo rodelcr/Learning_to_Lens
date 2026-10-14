@@ -17,7 +17,8 @@
               5. PL + point mass: lambda_r shift, stationary point u_star,
                  critical mass fraction m_crit(g) (closed form), two radial
                  critical curves for m < m_crit and none for m > m_crit,
-                 tangential-curve shift, image counts
+                 tangential-curve shift, image counts (g = 3/2; and the
+                 generic |y_in| < |y_out| ordering + 2/4/2 counts at g = 1.3, 1.8)
               6. SIS + point mass: closed-form images vs numerical root solve,
                  exactly two images for every source position
             and exports the chapter figures.
@@ -309,6 +310,44 @@ check["5v  leading-order inner-curve condition: (2-g) u^(1-g) = m u^-2  <=>  u =
     Assumptions -> 1 < g < 2 && m > 0]];
 check["5w  PL+BH supercritical: exactly 2 images for every y in a grid (m = 0.01, 0.05)",
   AllTrue[Flatten@Table[nImg[mv, yv], {mv, {1/100, 1/20}}, {yv, Range[1/100, 3, 1/20]}], # == 2 &]];
+(* --- 5x-5z (fix pass 2026-10-14, critic X6): the caustic ordering |y_in| < |y_out|
+   and the 2/4/2 image counts hold for ANY slope 1<g<2, not just g = 3/2.
+   Argument: y(u) = u - u^(2-g) - m/u = u lambda_t, so sign(y) = sign(lambda_t);
+   lambda_r - lambda_t = (g-1) u^(1-g) + 2 m u^-2 > 0, so at every radial critical
+   radius (lambda_r = 0) lambda_t < 0 and y < 0.  dy/du = lambda_r: y rises from -Inf,
+   peaks at u_in (y_in), falls to a minimum at u_out (y_out), so y_out < y_in < 0. *)
+yU[u_, g_, m_] := u - u^(2 - g) - m/u;
+check["5x  y = u lambda_t, dy/du = lambda_r, lambda_r - lambda_t = (g-1) u^(1-g) + 2m u^-2 > 0 (any 1<g<2, m>0)",
+  FullSimplify[yU[u, g, m] == u ltU[u, g, m], Assumptions -> u > 0] &&
+  FullSimplify[D[yU[u, g, m], u] == lrU[u, g, m], Assumptions -> u > 0] &&
+  FullSimplify[lrU[u, g, m] - ltU[u, g, m] == (g - 1) u^(1 - g) + 2 m u^-2, Assumptions -> u > 0] &&
+  Reduce[(g - 1) u^(1 - g) + 2 m u^-2 <= 0 && 1 < g < 2 && m > 0 && u > 0, {u}, Reals] === False];
+radRootsG[gv_, mv_] := Module[{us = (2 mv/((2 - gv) (gv - 1)))^(1/(3 - gv)), f, ui, uo},
+   f[uu_?NumericQ] := lrU[uu, gv, mv];
+   ui = uu /. FindRoot[f[uu], {uu, us/10^6, us}, Method -> "Brent", WorkingPrecision -> 40];
+   uo = uu /. FindRoot[f[uu], {uu, us, 1}, Method -> "Brent", WorkingPrecision -> 40];
+   {ui, uo}];
+causOK[gv_, mv_] := Module[{r = radRootsG[gv, mv], yi, yo},
+   yi = yU[r[[1]], gv, mv]; yo = yU[r[[2]], gv, mv];
+   r[[1]] < r[[2]] < 1 && ltU[r[[1]], gv, mv] < 0 && ltU[r[[2]], gv, mv] < 0 &&
+   yo < yi < 0 && Abs[lrU[r[[1]], gv, SetPrecision[mv, 40]]] < 10^-20];
+check["5y  |y_in| < |y_out| with both radial curves inside theta_t: g = 1.1..1.9, m/m_crit = 0.1, 0.5, 0.9",
+  AllTrue[Flatten[Table[causOK[gv, fr (mCrit /. g -> gv)], {gv, {11/10, 13/10, 3/2, 17/10, 19/10}},
+      {fr, {1/10, 1/2, 9/10}}]], TrueQ]];
+(* image counts for rational g = 2 - p/q: theta = +/- u^q turns both branches into polynomials
+   th>0: u^(2q) - u^(p+q) - y u^q - m = 0 ;  th<0: u^(2q) - u^(p+q) + y u^q - m = 0 *)
+nImgG[gv_, mv_, yv_] := Module[{p = Numerator[2 - gv], q = Denominator[2 - gv]},
+   CountRoots[u^(2 q) - u^(p + q) - yv u^q - mv, {u, 0, Infinity}] +
+   CountRoots[u^(2 q) - u^(p + q) + yv u^q - mv, {u, 0, Infinity}]];
+countsG[gv_] := Module[{mv = Rationalize[N[(mCrit /. g -> gv)/2, 30], 10^-25], r, yi, yo},
+   r = radRootsG[gv, mv]; yi = Abs[yU[r[[1]], gv, mv]]; yo = Abs[yU[r[[2]], gv, mv]];
+   {nImgG[gv, mv, Rationalize[yi/2, 10^-20]], nImgG[gv, mv, Rationalize[(yi + yo)/2, 10^-20]],
+    nImgG[gv, mv, Rationalize[yo + 1/10, 10^-20]],
+    Union[Table[nImgG[gv, Rationalize[N[2 (mCrit /. g -> gv), 30], 10^-25], yv], {yv, Range[1/100, 3, 1/10]}]]}];
+Print["       image counts at m = m_crit/2 {inside y_in, annulus, outside y_out, (m = 2 m_crit grid)}: g=1.3 ",
+  countsG[13/10], "; g=1.8 ", countsG[9/5]];
+check["5z  g = 1.3 and 1.8, m = m_crit/2: 2 / 4 / 2 images (inside |y_in|, annulus, outside |y_out|); m = 2 m_crit: 2 everywhere",
+  countsG[13/10] === {2, 4, 2, {2}} && countsG[9/5] === {2, 4, 2, {2}}];
 
 (* ============================================================ *)
 (* 6. SIS + point mass: closed form                              *)
