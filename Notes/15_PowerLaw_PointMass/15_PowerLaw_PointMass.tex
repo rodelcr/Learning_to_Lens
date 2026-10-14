@@ -65,11 +65,13 @@ point mass from a steeper inner density profile.
           --- worked solutions to the problems in
           \S\ref{sec:pl_problems}
 \end{itemize}
-Bracketed labels such as ``[check 5q]'' point to the individual
-PASS/FAIL checks that verify the statement next to them: in
+\ifannotated
+Bracketed labels such as ``[check 5q]'' (annotated edition only) point to the
+individual PASS/FAIL checks that verify the statement next to them: in
 \S\ref{sec:bpl_broken} they refer to \texttt{broken\_power\_law.wl},
 elsewhere to \texttt{power\_law\_point\_mass.wl}; labels beginning
 with AN refer to \texttt{problems\_15.wl}.
+\fi
 
 
 % =====================================================================
@@ -428,7 +430,7 @@ A source at $0<\ysrc_0<|\ysrc_r|$ therefore has three images:
 Outside the radial caustic, $\ysrc_0>|\ysrc_r|$, only the outer image
 survives.  For $\gp=1.5$ ($|\ysrc_r|=\thetaE/4$) a source at
 $\ysrc_0=0.05\,\thetaE$ has three images and one at $0.3\,\thetaE$ has
-one [check 5q].  This is the familiar odd-number count for a
+one \annot{check 5q}.  This is the familiar odd-number count for a
 nonsingular lens; Chapter~\ref{ch:odd_images} returns to it.
 
 
@@ -468,7 +470,7 @@ $\thetaE$.  The second equality uses
 $\thetaBH^2=M_\bullet/(\pi\Sigmacr\Dd^2)$, which follows from
 eq.~\eqref{eq:alpha_enclosed_mass}, together with
 $M_{\rm PL}(<\thetaE)=\pi\Sigmacr\Dd^2\thetaE^2\,\bar\kappa(\thetaE)$
-and $\bar\kappa(\thetaE)=1$ [check 4f].  Throughout this chapter
+and $\bar\kappa(\thetaE)=1$ \annot{check 4f}.  Throughout this chapter
 $\thetaE$ denotes the Einstein radius of the power law \emph{alone};
 the tangential critical curve of the composite lens sits slightly
 outside it (Problem~\ref{ex:pl_tangential_shift}).  For a black hole
@@ -591,7 +593,7 @@ bends the curve back up at the centre, so that $\lambda_r$ crosses zero
 inner one created by the point mass and an outer one inherited from
 the power law.  As $\mBH$ grows the two approach each other, merge at
 $u_c$ when $\mBH=\mBH_{\rm crit}$, and disappear together.  This is the
-annihilation of the radial critical curve [check 5n].
+annihilation of the radial critical curve \annot{check 5n}.
 
 \begin{figure}[ht]
     \centering
@@ -631,7 +633,7 @@ Each radial critical curve has its own caustic.  Below threshold the
 \emph{inner} radial curve maps to a caustic of radius $|\ysrc_{\rm in}|$
 and the outer one to $|\ysrc_{\rm out}|$, with
 $|\ysrc_{\rm in}|<|\ysrc_{\rm out}|$; for $\gp=1.5$ and $\mBH=0.003$
-these are $0.234\,\thetaE$ and $0.263\,\thetaE$ [check 5r].  Reading
+these are $0.234\,\thetaE$ and $0.263\,\thetaE$ \annot{check 5r}.  Reading
 the image diagram (the annotation of \S\ref{sec:pl_toolbox}) then gives
 the image count as a function of source position:
 \begin{itemize}
@@ -649,7 +651,7 @@ each side and there are exactly two images for every source position
 counts are even, not odd; Chapter~\ref{ch:odd_images} explains why.  At
 $\mBH=\mBH_{\rm crit}$ the two caustics coincide (at
 $|\ysrc|=9\thetaE/32$ for $\gp=1.5$) and the four-image annulus closes
-[check 5t].
+\annot{check 5t}.
 
 The inner caustic is a \textbf{zone of influence}: sources inside it
 lose their radial image.  It is large.  To leading order in small
@@ -894,7 +896,7 @@ mass.
 
 There is a subtlety.  If $\theta_B$ is held fixed, $\kappa_B\to0$
 takes the outer power law down with it, and the \emph{whole} lens
-collapses to a point mass [check 4c].  To get a galaxy \emph{plus} a
+collapses to a point mass \annot{check 4c}.  To get a galaxy \emph{plus} a
 point mass one must also hold the outer power law fixed,
 $K\equiv\kappa_B\theta_B^{t_2}$ constant.  Together with the fixed
 inner mass this forces
@@ -947,7 +949,7 @@ Two properties of $\theta_{\rm eff}$ are worth stating separately.
         steeper than the outer slope ($t_1>t_2$) acts as a positive
         point mass.  A shallower inner profile, a core ($t_1<t_2$),
         acts as a \emph{negative} one: a mass deficit relative to the
-        continued power law [check 5c].
+        continued power law \annot{check 5c}.
   \item \textbf{It is not the total inner mass.}  With
         $\pi\thetaBH^2\equiv2\pi\kappa_B\theta_B^2/(2-t_1)$ the mass
         inside the break,
