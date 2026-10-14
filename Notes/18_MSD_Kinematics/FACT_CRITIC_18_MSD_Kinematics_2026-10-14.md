@@ -293,3 +293,29 @@ A&A 564, A103; 10.1093/mnras/staa344 = Kochanek 2020, MNRAS 493, 1725.
 4. *(Info, not an error.)* The MST invariant ξ = θ_E α″(θ_E)/[1−κ(θ_E)], equal to 2(γ′−2) for a power law, is Kochanek (2020,
    MNRAS 493, 1725; arXiv 1911.05083). The spiral lit review already lists that paper (:133) but summarises it only as H0 ∝ (1−κ_E).
    If ξ is ever used in the theory notes, attribute it there.
+
+## Resolution — fixes applied 2026-10-14
+
+| id | Fix | Backing |
+|----|-----|---------|
+| C18 (Flagged 1) | ξ attributed: "An MST-invariant way to say this, due to `\citet{kochanek_2020}`" in the derivation box (§ms_local), and "second-order invariant ξ of `\citet{kochanek_2020}`" in the closing bridge. `.wl` Sources header and the l6 comment name Kochanek 2020 | bib key `kochanek_2020` (merged from annotated-edition); repo checks l6–l7 (unchanged, PASS) |
+| N16 (Flagged 2) | Eq. ms_F validity range now "1<ν<3, γ′>1, 3<ν+γ′<5 and ν+γ′−2−2β_a>0" with the reason (projections of ρ_* and ρ, aperture integral, Jeans integral at large r / σ_r²>0) | new check **k10d**: convergence condition Re q>1 read off `Integrate`; 0 of the grid points inside the new range violate a convergence condition; the old range admits (2.5, 0.8, 0) which fails; (2, 1.5, 0.9) gives F<0 and is now excluded |
+| X5 (Flagged 3) | After Eq. ms_eta: one sentence fixing the convention (plane 1 = nearer source, so 𝓑<1 and η<1; η is always θE1/θE2 and 𝓑 the distance ratio; papers with the opposite numbering quote 𝓑⁻¹). The Ch.13 bridge is being fixed by another agent | convention sentence only; s11 unchanged |
+| X6 (Flagged 4) | Bridge "slope drag": "in the configurations it studies … (the size of the drag depends on the image geometry, and its sign is established only for those configurations)"; λ_eff "> 1 when the fit steepens". §ms_core_bh and Sol. 18.8: "in the configurations of Chapter 21" | Ch.17 tex l.594 ("Signs, in this configuration") and l.598 (coefficient −4.26 → −17.8) |
+| X7 (Flagged 5) | Bridge "Distances and critical densities": 𝓑 is the ratio of the two lensing distance ratios 𝒟 ≡ D_ds/(D_d D_s) of Eq. distance_ratio; the common D_d cancels, giving 𝓑 = (D_ds1/D_s1)/(D_ds2/D_s2) | Eq. ms_brat (same expression); Ch.03 eq:distance_ratio |
+| P1 (Flagged 6) | "it is the most common sign error in this subject" → "the direction is easy to get backwards" | prose |
+| P2 (Flagged 7, partial) | l.720-721 closer replaced with the critic's plain rewrite ("Freeing λ_int widens the H0 interval to about ±6 km s⁻¹ Mpc⁻¹, and that width is set by the kinematics."). Other aphoristic closers and "Three …" lead-ins left for the author | Birrer 2020 74.5 +5.6/−6.1 (C19) |
+| Rec. new fix 1 | Uniform-core Jeans: chapter now says the r² law σ_r² ≃ (4π/3)Gρ_c r²/(ν−2−2β_a) is the r≪r_c limit of the solution with ρ_*σ_r²→0 at infinity *for ν>2+2β_a*; at ν=2, β_a=0 the exact result σ_r² = (4π/3)Gρ_c r²[ln(r_c/r)+1/3] is stated; the core fraction gets a ln(r_c/R_ap) at ν=2 and still vanishes. §ms_core_bh "∝ r² (times ln(r_c/r) at ν=2)". Ex. 18.8 restricted to ν>2+2β_a (r² up to a log at ν=2). Sol. 18.8 now gives the full boundary-condition solution (particular + homogeneous r_c^{2−ν+2β_a} r^{ν−2β_a} term), its three regimes, and notes the point-mass solution is exact for ν+1−2β_a>0 | new checks **k18b** (general BC solution = particular + homogeneous term and solves Jeans; ν=2.5 ratio→1 as r→0; ν=2 log form exactly; old formula's denominator vanishes at ν=2; at ν=1.8 old formula <0, exact >0); **k19** extended (ν=2 log solution's share →0 as r_c→∞); problems **8d** (closed form + ν=2 log), **8e** (ν=2.5 limit; ν=1.8 sign; coefficient (50/7)πGρ_c r_c^{1/5} of r^{9/5}) |
+| Rec. new fix 2 | Decoupling radius quoted: 0.91, 1.09, 1.32, 1.47, 1.65 R_E for γ′ = 1.4, 1.6, 1.8, 1.9, 2.0 (ν=2, isotropic), i.e. inside R_E for shallow profiles; 3.6–6.4 R_E at ν=2.5 over the same γ′ range. The previous one-sided "for steeper tracers … larger still" sentence was replaced | new check **k17b** (exp(∂lnF/∂γ′) from the closed form; ν=2.5 values 5.11, 3.61, 4.01, 4.81, 6.45 — not monotonic in γ′, so the text quotes a range) |
+
+**Verification after edits.**
+- Before: `msd_multiplane.wl` → `SUMMARY: 69 PASS, 0 FAIL  (of 69 checks)`; `problems_18.wl` → `SUMMARY: 40 PASS, 0 FAIL  (of 40 checks)`.
+- After: `bash Mathematica/run_wl.sh Mathematica/18_MSD_Kinematics/msd_multiplane.wl` → `SUMMARY: 72 PASS, 0 FAIL  (of 72 checks)`;
+  `bash Mathematica/run_wl.sh Solutions/18_MSD_Kinematics/problems_18.wl` → `SUMMARY: 42 PASS, 0 FAIL  (of 42 checks)`.
+- `cd Notes && ANNOT_REQUIRED=1 bash build.sh` → "all assertions passed"; Student 360 pp, Instructor 444 pp, Annotated 567 pp
+  (fingerprints: student text-md5 47dbd49af62d56b6c0bacc25fa754305, instructor e9e53fae893e81bb76f1b505ff11b539,
+  annotated 2f5e49ff3bc9d6ba899867fefcd06e14, sentinels 0/0/508). The figure PDF re-exported by the script was reverted (content unchanged).
+
+**Left open.**
+- X5 on the Chapter 13 side (bridge at `09_Galaxy_Lensing_Applications.tex:644-666` uses η for the distance ratio and plane 1 = far): assigned to another agent.
+- P2–P4 remaining prose tells (closers at l.394-395, l.505-506, l.533, l.758; "Three …" lead-ins at l.68, l.353, l.454; Solutions antithesis l.161-162): flag-only, for the author.

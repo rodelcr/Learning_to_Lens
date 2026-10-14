@@ -15,6 +15,8 @@
      ex:ms_local         the local MST: slope <-> sheet near theta_E
      ex:ms_aperture      aperture choice and the lambda-gamma' covariance
      ex:ms_core_vs_bh    cored vs point-mass internal directions
+                         (8d-8e added 2026-10-14: core solution with the
+                         boundary condition at infinity)
 
    Sources: Ported from the exercise solutions of an analytic study note on
             the MSD (Falco, Gorenstein & Shapiro 1985; Schneider 2014,
@@ -160,5 +162,21 @@ check["8b uniform core: sigma_r^2 = (4 pi/3) G rho_c r^2/(nu - 2 - 2 beta_a) sol
   zeroQ[Simplify[D[rhoS[rr] srCore[rr], rr] + 2 ba rhoS[rr] srCore[rr]/rr + rhoS[rr] GG (4 Pi/3) rhoc rr^3/rr^2, rr > 0]]];
 check["8c log-slopes of the two sigma_r^2 contributions differ by 3 (-1 vs +2): different radial directions",
   zeroQ[rr D[Log[srBH[rr]], rr] + 1] && zeroQ[rr D[Log[srCore[rr]], rr] - 2]];
+(* fix pass 2026-10-14: the r^2 core law is the small-r limit of the boundary-condition solution
+   only for nu > 2 + 2 beta_a; exact solution for a uniform sphere of radius rc *)
+Clear[rp, rc];
+srCoreBC[r_, n_, b_] := r^(n - 2 b) (
+   Integrate[(4 Pi/3) GG rhoc rp^(1 - n + 2 b), {rp, r, rc}, Assumptions -> {0 < r < rc}] +
+   Integrate[GG (4 Pi/3) rhoc rc^3 rp^(-n - 2 + 2 b), {rp, rc, Infinity}, Assumptions -> {rc > 0, n + 1 - 2 b > 0}]);
+check["8d uniform core, rho* sr2 -> 0 at infinity: sr2 = (4pi G rho_c/3)[r^2/(nu-2-2ba) - 3 rc^(2-nu+2ba) r^(nu-2ba)/((nu+1-2ba)(nu-2-2ba))]; at nu=2, ba=0: (4pi/3) G rho_c r^2 [ln(rc/r) + 1/3]",
+  zeroQ[Simplify[srCoreBC[rr, nu, ba] - (4 Pi GG rhoc/3) (rr^2/(nu - 2 - 2 ba) -
+        3 rc^(2 - nu + 2 ba) rr^(nu - 2 ba)/((nu + 1 - 2 ba) (nu - 2 - 2 ba))),
+        {0 < rr < rc, nu + 1 - 2 ba > 0, nu - 2 - 2 ba > 0}] // PowerExpand] &&
+  zeroQ[FullSimplify[srCoreBC[rr, 2, 0], 0 < rr < rc] - (4 Pi/3) GG rhoc rr^2 (Log[rc/rr] + 1/3)]];
+check["8e r^2 law is the r -> 0 limit for nu > 2+2ba (nu=2.5: ratio -> 1); nu = 1.8: exact sr2 > 0 ~ r^1.8 while r^2/(nu-2) < 0",
+  Limit[FullSimplify[srCoreBC[rr, 5/2, 0], 0 < rr < rc]/(srCore[rr] /. {nu -> 5/2, ba -> 0}), rr -> 0, Assumptions -> rc > 0] == 1 &&
+  (srCoreBC[rr, 9/5, 0] /. {rr -> 1/10, rc -> 1, rhoc -> 1, GG -> 1}) > 0 &&
+  (srCore[rr] /. {nu -> 9/5, ba -> 0, rr -> 1/10, rhoc -> 1, GG -> 1}) < 0 &&
+  zeroQ[Limit[PowerExpand[FullSimplify[srCoreBC[rr, 9/5, 0], 0 < rr < rc]]/rr^(9/5), rr -> 0, Assumptions -> rc > 0] - (50/7) Pi GG rhoc rc^(1/5)]];
 
 summary[];
