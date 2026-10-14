@@ -79,3 +79,41 @@ chapter's `Notes/<NN>_*/FACT_CRITIC_*_2026-10-14.md` (section "Reconciliation wi
     S7-130 / mcrit-defect item 3 fix one cell (l.512) but not the keybox. Suggested: "misfits the inner image
     region (the radial image where one exists)".
 21. Record only: S7-093's "60%" and the chapter's "37.5%" are the same shortfall against different bases.
+
+## note2 / note2b (→ Chapter 19) — the uncommitted "WT" fix pass of 2026-10-14 is accounted for
+22. S6-114 (SIS+PM "seeds a faint counter-image") is still in `theory/solutions/sol_note2_axisym_pl_pointmass.tex:202–204`
+    and in `mathematica/02_axisym_pl_pointmass/verify.wl` check 5e (the identity it tests is true; its label is false:
+    θ_cen back-substitutes to y = 2.300, not 0.3; SIS+PM has exactly 2 images).
+23. `note2b_broken_pl.tex` l.106–113 shows m_2D(θ) → πθ•² for every θ > 0 — the whole-lens collapse — but the keybox at
+    l.119 and TESTS C11 (i) still say "EPL+PM is the t₁→2 corner at fixed inner mass". The correct statement is the
+    joint limit (outer normalisation K fixed, θ_B → 0); `04_broken_pl/verify.wl:54` has it only as a comment and CHECK 4
+    tests only the inner branch. The degeneracy-limited regime (keybox l.229–237, C11b (b)) is reached only together
+    with an unresolved break (θ_B/θ_E = 0.111 → 0.024 at m = 0.0556); the 2−t₁ ≥ 0.763 conclusion is unaffected.
+24. The WT fixed the "±" image-shift sign in note2:179 but `sol_note2:164–165` still has it. `TESTS:196` (A5 §2) still
+    cites the retracted AGEL0854 γ_in ≈ 0.6. `note2:183` (WT) "outside the radial caustic only the tangential pair
+    survives" — for 1 < γ′ < 2 there is ONE image there. TESTS A1 row says tol 1e−10, its §2 entry 1e−9.
+25. ⚠ suspected: the mcrit-defect correction box's "point mass's own radial critical curve at r ≈ 0.010″" — a point
+    mass has λ_r > 0 everywhere; a circular PL+PM+0.1 shear at m = 0.0556 has no critical curve for r ≤ 0.5θ_E
+    (not re-run in autolens; probably a marching-squares artefact at the singular centre).
+
+## note3 (→ Chapter 21)
+26. `note3:133` ("one transcendental equation") and `sol_note3:80–88` ("preclude a closed form"; the exponent at l.86
+    is wrong) — the boundary IS closed-form: θ* = [(2−γ′)(3−γ′)/2]^(1/(γ′−1)), m_crit = ½(2−γ′)(γ′−1)θ*^(3−γ′),
+    = 27/4096 at γ′ = 3/2, max 0.0066 at γ′ = 1.4846; matches `annihilation_boundary.csv` to 2.2e−15. TESTS A4 §2
+    reads as if `derivation.wl` had the closed form; it uses FindRoot. `derivation.wl` prints "B=0.82" but uses 0.8200776.
+27. `NOTES_mcrit_label_defect` l.83: the Python boundary defines m against the power-law θ_E1, not "total-mass".
+28. S7-015's pseudo-inverse fix is incomplete: with source positions in p, J is 5×5 and exactly determined in 452/474
+    cells; the pseudo-inverse is needed only for the 22 six/seven-image cells. S7-014 confirmed: forcing m₂ = m₁ in the
+    axisymmetric exact fit INCREASES the bias (1.87×). B6's q = 1 column equals (1 − sh/B)^(−(3−γ′)/(γ′−1)) exactly, so
+    B6's shear is referenced to plane 1, not the radial-image plane (same error class as the label defect).
+
+## note9 (→ Chapter 24)
+29. S_w, S_Ωm, S_wa are finite-step central differences (dw = 0.05, dΩ = 0.02; `beta_sensitivity.py:44`,
+    `cosmology_impact.py:182`, `sol_note9.wl:72–74`) quoted to 9–10 digits. Exact: S_Ωm = −0.0254715510,
+    S_w = −0.0157254552, S_wa = −0.0048007212 → 1/S_w = −63.591, c* = −0.617373, |Δw0| at 1% = 3.345 (c = −½),
+    22.60 (c = −0.6). All 2–3 s.f. quotes stand; the step-halving gate cannot see an error this size.
+30. `sol_note9:182, :193` still carry the wrong B5 bound 9.2e−32 (true max 9.86e−32); `sol_note9:217` "three times more
+    confident" should be √3; TESTS H2b "w0 ≈ −1.75" peak is at −1.822; S2-076 should be FAIL: a flat two-bin w
+    (−1 below z = 0.68, 3–6 above) reaches ΔB/B = +12.6…+19.8%, inside the 11–36% masked span, so "unreachable by any
+    cosmology" holds only for the stated CPL boxes. The lower-bound claim was retracted 2026-08-03 (H1, NOTES §4a,
+    CLAUDE.md:616, sol_note9.wl:131) — the chapter's [2c*, 0] = [−1.2347, 0] at the fiducial triplet sharpens it.
