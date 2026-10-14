@@ -188,3 +188,10 @@
 - 09 l.561 remark: "shallower than assumed" (steeper raises H0). ~l.1155 wording "H0^true = 0.9 H0^naive". ~832–845 fragment + κ̄(θE)=1 normalisation. l.439 parenthesis → sheet of convergence 1−λ. Sol 9.2(d) within-image cancellation.
 - 09 D_Δt: eq time_delay_recap → (1+z_d)DdDs/Dds; Ex 9.3(a) d has units of velocity; (c) "scales the same way, by λ". Sol 9.4(d): state assumed z=(0.3,1.0), 255 km/s, ratio 0.90, don't claim γ'≈2.0–2.1. problems_09.wl Ex 9.5(d) "~0.1e11" → ~0.2.
 - Layer: name planes in the η' bridge (η<1 needs plane 1 = far source), cite eq ms_free; add sentence that γ'_eff size (dγ'/df=1.4) ≠ Ch 21 fit (+15.6, radial image); shorten D_Δt boxes after fix.
+## ch15 critic (36 PASS / 13 SUSPECT / 1 FAIL [visible tags — FIXED 8982cee]; derivations 6/6; both source-note errors CONFIRMED)
+- DONE: editions.tex \annot → \unskip (stray space before punctuation); Ch 15 [Checks …] tags gated.
+- TODO: Ch 14 ("(Check 1c.)", "(check 3e)") and Ch 21 ("[Verified: checks D1–D3c…]") still print check tags in the student edition — apply the Ch 15 policy (\annot{}).
+- N9 l.759 "θ₋ ≃ −0.016 θ_E" → "−0.0154 θ_E (leading order 0.016)"; tighten AN7 tolerance.
+- X11 Summary ll.1074–1076 repeats the source-note "t₁→2 at fixed inner mass" wording → joint limit; add caveat to the point-mass-limit exercise.
+- C10 "SMBH in essentially every massive galaxy" uncited → Kormendy & Ho 2013 ARA&A 51, 511 (DOI 10.1146/annurev-astro-082708-101811, CrossRef-confirmed; not in bib) or soften.
+- X6 port the general |y_in|<|y_out| argument + γ'=1.3/1.8 image counts into power_law_point_mass.wl.
