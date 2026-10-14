@@ -168,12 +168,26 @@ $R_{\rm E}$: the proxy misplaces the slope-free aperture.
 For a point mass, $M(r)=M_\bullet$; with $\rho_\ast\propto r^{-\nu}$, the Jeans
 equation~\eqref{eq:ms_jeans} is solved by
 $\sigma_r^2=GM_\bullet/[r(\nu+1-2\beta_a)]$ (the power-law solution with
-``$\gp=3$'').  For a uniform core, $M(r)=\tfrac{4\pi}{3}\rho_cr^3$ and
-$\sigma_r^2=\tfrac{4\pi}{3}G\rho_cr^2/(\nu-2-2\beta_a)$.  The logarithmic
-slopes are $-1$ and $+2$.
+``$\gp=3$''; the Jeans integral from infinity converges for
+$\nu+1-2\beta_a>0$, so this is the exact solution).  For a uniform core of
+radius $r_c$, $M(r)=\tfrac{4\pi}{3}\rho_cr^3$ inside and
+$\tfrac{4\pi}{3}\rho_cr_c^3$ outside.  Integrating
+$\rho_\ast\sigma_r^2r^{2\beta_a}=\int_r^\infty\rho_\ast GMr'^{2\beta_a-2}\dd r'$
+gives, for $r<r_c$,
+\[
+\sigma_r^2=\frac{4\pi G\rho_c}{3}\left[\frac{r^2}{\nu-2-2\beta_a}
+-\frac{3\,r_c^{2-\nu+2\beta_a}\,r^{\nu-2\beta_a}}{(\nu+1-2\beta_a)(\nu-2-2\beta_a)}\right].
+\]
+For $\nu>2+2\beta_a$ the second term is negligible at $r\ll r_c$ and
+$\sigma_r^2\simeq\tfrac{4\pi}{3}G\rho_cr^2/(\nu-2-2\beta_a)$.  At $\nu=2$,
+$\beta_a=0$ the limit gives $\sigma_r^2=\tfrac{4\pi}{3}G\rho_cr^2[\ln(r_c/r)+\tfrac13]$,
+and for $\nu<2+2\beta_a$ the second term dominates ($\sigma_r^2\propto r^{\nu-2\beta_a}$,
+still positive).  The logarithmic slopes are
+therefore $-1$ and $+2$ (up to a logarithm at $\nu=2$).
 
 Both perturbations can be tuned to leave the tangential images fixed (a power
-law absorbs the point mass by steepening and the core by flattening), but they
+law absorbs the point mass by steepening, in the configurations of
+Chapter~\ref{ch:central_mass_bias}, and the core by flattening), but they
 are not two amounts along one direction: one adds a near-$\delta$-function
 excess at the centre, the other a top-hat deficit.  A single aperture
 dispersion is one luminosity-weighted moment of the enclosed mass, and both
@@ -183,4 +197,4 @@ radial run $\sigma(R)$, where the point mass produces a central rise and the
 core a central dip, or the radial image, which samples $\kappab$ at the small
 radii where the two differ most.  The same information deficit underlies the
 mass--anisotropy degeneracy of \S\ref{sec:ms_kin_sys}.
-\emph{[Attested: \solnlink{18_MSD_Kinematics/problems\_18.wl}{problems\_18.wl}, checks 8a--8c; the argument itself is conceptual.]}
+\emph{[Attested: \solnlink{18_MSD_Kinematics/problems\_18.wl}{problems\_18.wl}, checks 8a--8e; the argument itself is conceptual.]}

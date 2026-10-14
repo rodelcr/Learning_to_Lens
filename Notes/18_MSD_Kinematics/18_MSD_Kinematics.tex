@@ -155,7 +155,7 @@ smaller by $\lambda$, i.e.\ an $\Hubble$ larger by $\lambda$.  If the truth
 contains a sheet ($\lambda<1$, a positive sheet) and one fits without it, the
 fit returns $\Hubble^{\rm naive}=\Hubble^{\rm true}/\lambda$, too high.
 Write it once as Eq.~\eqref{eq:mst_H0} and never re-derive the direction
-from memory: it is the most common sign error in this subject \annot{check s14}.
+from memory: the direction is easy to get backwards \annot{check s14}.
 \end{annotation}
 
 \subsection{Two explicit examples}
@@ -278,11 +278,16 @@ of the two Einstein radii,
 \end{equation}
 which follows from $\bar\kappab_2(\theta)=(\theta_{\rm E2}/\theta)^{\gp-1}$
 \annot{check s11} and $\bar\kappab_1=\Brat\,\bar\kappab_2=1$ at $\theta_{\rm E1}$.
+Throughout this chapter plane~1 is the \emph{nearer} source, so that
+$\Brat<1$ and $\etamea<1$; $\etamea$ always denotes the ratio of Einstein radii
+and $\Brat$ the distance ratio (papers that number the planes the other way
+quote $\Brat^{-1}$).
 
 \begin{bridge}[Distances and critical densities]
-$\Brat$ is the ratio of the two distance ratios $\Dds/\Ds$ of
-Chapter~\ref{ch:cosmological_distances} (\S\ref{sec:distance_ratio},
-Eq.~\ref{eq:distance_ratio}), one per source.  The prefactor $c/\Hubble$
+$\Brat$ is the ratio of the two lensing distance ratios
+$\mathcal{D}\equiv\Dds/(\Dd\Ds)$ of Chapter~\ref{ch:cosmological_distances}
+(\S\ref{sec:distance_ratio}, Eq.~\ref{eq:distance_ratio}), one per source;
+the common $\Dd$ cancels, leaving $\Brat=(\Dls{d}{s1}/\Dls{}{s1})/(\Dls{d}{s2}/\Dls{}{s2})$.  The prefactor $c/\Hubble$
 cancels, which is why a DSPL measures the shape of $D(z)$, and hence
 $\Omega_{\rm m}$ and $w$, but not $\Hubble$.
 \end{bridge}
@@ -509,7 +514,8 @@ slope is an MST}.
 Subtracting the $\delta^2$ coefficient of the power law with slope
 $\gp_{\rm eff}$ from that of Eq.~\eqref{eq:ms_local_mst} and multiplying by
 $2\thetaE$ gives $\lambda(1-\lambda)(\gp-1)^2$, non-zero for $\lambda\neq1$
-\annot{check l3}.  An MST-invariant way to say this:
+\annot{check l3}.  An MST-invariant way to say this, due to
+\citet{kochanek_2020}:
 $\xi\equiv\thetaE\,\alpha''(\thetaE)/[1-\kappab(\thetaE)]$ is unchanged by
 the MST, because numerator and denominator both scale by $\lambda$.  For a
 power law $\xi=2(\gp-2)$ \annot{check l6}, so the MST of an isothermal has $\xi=0$
@@ -543,10 +549,12 @@ therefore acts on $\Hubble$ and on $\Brat$ like a sheet.
 \end{keybox}
 
 \begin{bridge}[The slope drag of an unmodelled central mass]
-Chapter~\ref{ch:central_mass_bias} shows that a power-law fit to a lens with
-an unmodelled central point mass steepens $\gp$.  By Eq.~\eqref{eq:ms_local}
-that steepening is an effective MST with
-$\lambda_{\rm eff}=(\gp_{\rm fit}-1)/(\gp_{\rm true}-1)>1$.  For time delays it
+Chapter~\ref{ch:central_mass_bias} shows that, in the configurations it
+studies, a power-law fit to a lens with an unmodelled central point mass
+steepens $\gp$ (the size of the drag depends on the image geometry, and
+its sign is established only for those configurations).  By Eq.~\eqref{eq:ms_local} any such slope drag is an effective MST
+with $\lambda_{\rm eff}=(\gp_{\rm fit}-1)/(\gp_{\rm true}-1)$, which is $>1$
+when the fit steepens.  For time delays it
 biases $\Hubble$ by the factor $\lambda_{\rm eff}$ through Eq.~\eqref{eq:mst_H0}; for a
 DSPL it moves $\Brat=\etamea^{\,\gp-1}$ through the slope channel of
 \S\ref{sec:ms_pl_reading}.  It is also why a power-law assumption ``breaks''
@@ -620,8 +628,11 @@ applied to the galaxy part $\lambda\kappab$, one finds
            {\sqrt\pi\,\Gamma(\tfrac{\gp-1}{2})\,\Gamma(\tfrac{\nu-1}{2})\,\Gamma(\tfrac{\nu+\gp}{2})},
     \label{eq:ms_F}
 \end{equation}
-valid for $\nu<3$ and $3<\nu+\gp<5$ (convergence of the projection and of the
-aperture integral at small radius).  With
+valid for $1<\nu<3$, $\gp>1$, $3<\nu+\gp<5$ and $\nu+\gp-2-2\beta_a>0$
+(convergence of the line-of-sight projections of $\rho_\ast$ and of $\rho$,
+of the aperture integral at small radius, and of the Jeans integral at large
+radius, which also keeps $\sigma_r^2>0$ in Eq.~\ref{eq:ms_sigr})
+\annot{check k10d}.  With
 $GM_{\rm E}/R_{\rm E}=(c^2/4)\thetaE\Ds/\Dds$ and $F(2,2,0)=1/\pi$ this
 reduces to $\lambda$ times the SIS result \annot{check k10}; more generally
 $F(2,\nu,0)=2/(\nu\pi)$ \annot{check k10c}.
@@ -695,18 +706,27 @@ proxy says, $\sigma$ measures $\lambda$ independently of the slope.  The Jeans
 solution adds the second term.  For $\gp=\nu=2$ and $\beta_a=0$,
 $\partial\ln F/\partial\gp=1/2$ exactly, so the decoupling radius is
 $R_{\rm ap}=e^{1/2}R_{\rm E}\approx1.65\,R_{\rm E}$ \annot{check k17}.  Inside it, an
-error in $\gp$ leaks into $\lambda$.  For steeper tracers the slope
-sensitivity of $F$ is larger still (the aperture factor $1/(5-\nu-\gp)$
-grows), so the decoupling radius is model dependent and has to be computed,
-not assumed.
+error in $\gp$ leaks into $\lambda$.  The decoupling radius
+$R_{\rm E}\exp(\partial\ln F/\partial\gp)$ depends on both slopes.  For an
+isotropic $\nu=2$ tracer it is $0.91$, $1.09$, $1.32$, $1.47$ and
+$1.65\,R_{\rm E}$ for $\gp=1.4$, $1.6$, $1.8$, $1.9$ and $2.0$, so for shallow
+mass profiles it falls \emph{inside} $R_{\rm E}$; for $\nu=2.5$ it lies
+between $3.6$ and $6.4\,R_{\rm E}$ over the same range of $\gp$
+\annot{check k17b}.  It has to be computed for the model at hand, not
+assumed.
 
 \paragraph{Internal versus external sheet.}  For an external sheet the galaxy
 is $\lambda\kappab$ and Eq.~\eqref{eq:ms_sigap} is exact.  For an internal
 sheet the galaxy also contains the cored component $(1-\lambda)\kappab_{\rm c}$.
 Model it as a uniform sphere of radius $r_c\gg R_{\rm E}$: its central column
-is $2\rho_cr_c$, so $\rho_c=(1-\lambda)\Sigmacr/(2r_c)$, and its own Jeans
-solution, $\sigma_r^2=(4\pi/3)G\rho_cr^2/(\nu-2-2\beta_a)$ \annot{check k18},
-contributes a fraction of order $R_{\rm ap}^2/(R_{\rm E}r_c)$, which vanishes as
+is $2\rho_cr_c$, so $\rho_c=(1-\lambda)\Sigmacr/(2r_c)$.  Its own Jeans
+solution with $\rho_\ast\sigma_r^2\to0$ at infinity is, at $r\ll r_c$,
+$\sigma_r^2\simeq(4\pi/3)G\rho_cr^2/(\nu-2-2\beta_a)$ for
+$\nu>2+2\beta_a$ \annot{check k18}; for the isothermal tracer
+($\nu=2$, $\beta_a=0$) a logarithm appears, and the exact result is
+$\sigma_r^2=(4\pi/3)G\rho_cr^2[\ln(r_c/r)+1/3]$ \annot{check k18b}.  Either
+way the core contributes a fraction of order $R_{\rm ap}^2/(R_{\rm E}r_c)$
+(times $\ln(r_c/R_{\rm ap})$ at $\nu=2$), which vanishes as
 $r_c\to\infty$ \annot{check k19}.  In that limit the kinematics measures
 $\lambda_{\rm int}$ just as it measures $\lambda$ for an external sheet; at
 finite $r_c$ the core's own dispersion must be modelled.  A power law scaled
@@ -717,8 +737,8 @@ $\Hubble=74.5^{+5.6}_{-6.1}$~km\,s$^{-1}$\,Mpc$^{-1}$; adding imaging and
 spectroscopy of 33 SLACS lenses (nine with resolved kinematics used to
 constrain the anisotropy), under the assumption that both samples share a
 parent population, gave $\Hubble=67.4^{+4.1}_{-3.2}$~km\,s$^{-1}$\,Mpc$^{-1}$.
-The error bars are the lesson: once the MST is freed, kinematics carries the
-measurement.
+Freeing $\lambda_{\rm int}$ widens the $\Hubble$ interval to about
+$\pm6$~km\,s$^{-1}$\,Mpc$^{-1}$, and that width is set by the kinematics.
 
 \begin{annotation}[Units check]
 $GM_{\rm E}/R_{\rm E}=G\pi\Sigmacr R_{\rm E}$ with
@@ -736,12 +756,14 @@ $\sigma_v\approx250$~km\,s$^{-1}$ \annot{check 5g of \texttt{problems\_18.wl}}.
 
 The internal MST is one direction in the space of image-preserving
 re-profilings.  A central point mass is another, and it pushes the opposite
-way.  A point mass adds a compact excess that a power-law fit absorbs by
-steepening $\gp$ (Chapter~\ref{ch:central_mass_bias}); a core removes mass
+way.  A point mass adds a compact excess that a power-law fit, in the
+configurations of Chapter~\ref{ch:central_mass_bias}, absorbs by
+steepening $\gp$; a core removes mass
 from the centre and is absorbed by flattening $\gp$.  Their dynamical
 signatures differ in the same way: a point mass gives
 $\sigma_r^2=GM_\bullet/[r(\nu+1-2\beta_a)]$, rising inward as $1/r$, while a
-uniform core gives $\sigma_r^2\propto r^2$, falling inward
+uniform core gives $\sigma_r^2\propto r^2$ (times $\ln(r_c/r)$ at $\nu=2$),
+falling inward
 (Problem~\ref{ex:ms_core_vs_bh}).  A single aperture number averages over
 both and can be matched by either.  The radial run $\sigma(R)$, whose central
 rise is the black hole's signature, and the radial image, which samples
@@ -754,8 +776,8 @@ lensing fixes $M_{\rm E}$ and kinematics constrains the slope.  With
 Eq.~\eqref{eq:ms_sigap} in hand the statement is sharper: a dispersion fixes
 one combination of $\lambda$ and $\gp$, whose direction is set by the aperture
 through Eq.~\eqref{eq:ms_aperture}.  Imaging fixes $\thetaE$ and, through the
-second-order invariant $\xi$ of \S\ref{sec:ms_local}, a different
-combination.  Two independent combinations are what it takes to pin both.
+second-order invariant $\xi$ of \citet{kochanek_2020}
+(\S\ref{sec:ms_local}), a different combination.  Two independent combinations are what it takes to pin both.
 \end{bridge}
 
 
@@ -869,8 +891,9 @@ covariance vanishes.
 \begin{exercise}
 \label{ex:ms_core_vs_bh}
 \textbf{(Core or black hole?)}  Show that a central point mass and a uniform
-core give Jeans solutions $\sigma_r^2\propto r^{-1}$ and $\propto r^{2}$
-respectively.  Argue why the two are different internal directions of the
+core give Jeans solutions $\sigma_r^2\propto r^{-1}$ and, at radii well
+inside the core and for $\nu>2+2\beta_a$, $\propto r^{2}$ respectively (at
+$\nu=2$, $\beta_a=0$: $r^2$ up to a logarithm).  Argue why the two are different internal directions of the
 MST/SPT family, and why a single aperture dispersion cannot distinguish them
 while a resolved $\sigma(R)$ or a radial image can.
 \end{exercise}

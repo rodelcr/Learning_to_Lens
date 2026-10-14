@@ -36,7 +36,15 @@
               multi-plane MST, alternating scalings (Sect. 4.3)
             Congdon & Keeton (2018) Sect. 4.7.2; Meneghetti (2021) Sect. 5.9,
               eqs. 5.146-5.150; Saha et al. (2024) Sect. 3.7, eq. 51
+            Kochanek (2020), MNRAS 493, 1725 (arXiv:1911.05083) -- the
+              MST invariant xi = thE alpha''(thE)/(1-kappa_E), = 2(g'-2) for a
+              power law (both given in the abstract)
             Binney & Tremaine-style spherical Jeans equation (derived here)
+
+   Fix pass 2026-10-14: k10d (validity range of eq:ms_F), k17b (decoupling
+            radius vs g'), k18b (uniform-core Jeans solution with the
+            boundary condition at infinity; nu > 2 + 2 beta_a, log at nu = 2),
+            k19 extended to the nu = 2 exact solution.
 
    Usage:   bash Mathematica/run_wl.sh Mathematica/18_MSD_Kinematics/msd_multiplane.wl
 
@@ -273,7 +281,7 @@ check["l5  power law at thE: radial eigenvalue 1 - alpha' = g'-1; 1-kappa_E = (g
   zeroQ[(1 - D[alPos[y, gp], y] /. y -> thE) - (gp - 1)] &&
   zeroQ[(1 - (3 - gp)/2) - (gp - 1)/2] &&
   zeroQ[(1 - D[alPosLam[y, gp], y] /. y -> thE) - lam (gp - 1)]];
-(* MST invariant xi = thE alpha''(thE)/(1-kappa_E); power law: 2(g'-2) *)
+(* MST invariant xi = thE alpha''(thE)/(1-kappa_E); power law: 2(g'-2)  [Kochanek 2020, MNRAS 493, 1725] *)
 xiOf[al_] := Module[{a2v, kE},
   a2v = D[al[y], {y, 2}] /. y -> thE;
   kE = (1/2) (al[y]/y + D[al[y], y]) /. y -> thE;
@@ -376,6 +384,22 @@ check["k10b closed form F(g',nu,beta_a) printed in the text (eq:ms_F) equals the
   AllTrue[{{22/10, 2, 0}, {19/10, 25/10, 1/10}, {21/10, 2, -3/10}}, Abs[N[FF @@ #] - N[Fclosed @@ #]] < 10^-12 &]];
 check["k10c isotropic isothermal mass: F(2,nu,0) = 2/(nu pi)  =>  sigma_ap^2 = lam (2/nu) sigma_SIS^2",
   zeroQ[FF[2, nu, 0] - 2/(nu Pi)]];
+(* validity range of eq:ms_F as printed in the text (fix pass 2026-10-14; the old range
+   nu < 3, 3 < nu + g' < 5 admitted e.g. (g', nu) = (2.5, 0.8), where the tracer projection diverges) *)
+validF[g_, n_, b_] := 1 < n < 3 && g > 1 && 3 < n + g < 5 && n + g - 2 - 2 b > 0;
+Module[{projCond, okQ, grid, bad},
+  (* convergence condition of the LOS projection of r^-q, read off Integrate (not assumed) *)
+  projCond = Integrate[(1 + u^2)^(-q/2), {u, -Infinity, Infinity}] /. ConditionalExpression[_, c_] :> c;
+  Print["      LOS projection of r^-q converges iff ", projCond];
+  okQ[g_, n_, b_] := TrueQ[projCond /. q -> n] && TrueQ[projCond /. q -> g] &&      (* rho_* and rho project *)
+     (5 - n - g > 0) && (3 - n > 0) &&                                                (* aperture integral at R -> 0 *)
+     (n + g - 2 - 2 b > 0);                                                           (* Jeans integral from infinity; sigma_r^2 > 0 *)
+  grid = Flatten[Table[{g, n, b}, {g, 1/2, 7/2, 1/10}, {n, 1/2, 7/2, 1/10}, {b, {-1/2, 0, 1/2, 9/10}}], 2];
+  bad = Select[grid, validF @@ # && !okQ @@ # &];
+  Print["      grid points inside the stated range that violate a convergence condition: ", Length[bad]];
+  check["k10d eq:ms_F validity range 1<nu<3, g'>1, 3<nu+g'<5, nu+g'-2-2beta_a>0: every grid point inside it has convergent projections/Jeans integral (old range fails at (2.5,0.8,0))",
+    bad === {} && !okQ[5/2, 4/5, 0] && (3/2 < 3 && 3 < 5/2 + 4/5 < 5) && !validF[5/2, 4/5, 0] &&
+    !okQ[2, 3/2, 9/10] && !validF[2, 3/2, 9/10] && Fclosed[2, 3/2, 9/10] < 0]];
 check["k11 sigma_ap^2 strictly linear in lam  =>  lam = (sigma_obs/sigma_pred)^2, Delta lam/lam = 2 Delta sigma/sigma",
   zeroQ[D[sigAp2[gp, nu, ba, lam, Rap], {lam, 2}]] &&
   zeroQ[(D[Log[sobs^2/Spred], sobs] sobs) - 2]];
@@ -408,15 +432,48 @@ Module[{dF = Table[{n, N[D[Log[FF[g, n, 0]], g] /. g -> 2, 8]}, {n, {2, 5/2}}]},
   Print["      d ln F/d g' at g'=2, isotropic, nu = 2, 2.5: ", dF, "  => decoupling radius R*/R_E = ", N[Exp[dF[[All, 2]]], 6]];
   check["k17 isothermal, nu=2, isotropic: d ln F/d g' = 1/2 exactly, so lam decouples from g' at R_ap = e^(1/2) R_E = 1.6487 R_E",
     zeroQ[(D[Log[FF[g, 2, 0]], g] /. g -> 2) - 1/2]]];
+(* decoupling radius R*/R_E = exp(d ln F/d g') vs g' (isotropic), quoted in the text *)
+Module[{dec, g2, g25},
+  dec[g_, n_] := N[Exp[D[Log[Fclosed[x, n, 0]], x] /. x -> g], 10];
+  g2  = Table[dec[g, 2], {g, {14/10, 16/10, 18/10, 19/10, 2}}];
+  g25 = Table[dec[g, 5/2], {g, {14/10, 16/10, 18/10, 19/10, 2}}];
+  Print["      R*/R_E, nu = 2  : ", N[g2, 4]];
+  Print["      R*/R_E, nu = 2.5: ", N[g25, 4]];
+  check["k17b decoupling radius (nu=2, iso): 0.91, 1.09, 1.32, 1.47, 1.65 R_E for g' = 1.4,1.6,1.8,1.9,2.0 (inside R_E for g'=1.4); nu=2.5: between 3.6 and 6.4 R_E",
+    Round[g2, 1/100] == {91/100, 109/100, 132/100, 147/100, 165/100} && g2[[1]] < 1 &&
+    Round[Min[g25], 1/10] == 36/10 && Round[Max[g25], 1/10] == 64/10]];
 (* internal sheet realised by a large core: homogeneous sphere contribution to sigma_r^2 *)
 Clear[rhoc, rc];
 srCore2[r_] := (4 Pi/3) GG rhoc r^2/(nu - 2 - 2 ba);
 check["k18 homogeneous core (rho_c): sigma_r^2 = (4pi/3) G rho_c r^2/(nu - 2 - 2 beta_a) solves Jeans",
   zeroQ[Simplify[D[rhoS[rr] srCore2[rr], rr] + 2 ba rhoS[rr] srCore2[rr]/rr + rhoS[rr] GG (4 Pi/3) rhoc rr^3/rr^2, rr > 0]]];
+(* boundary-condition solution: rho* sr2 r^(2 ba) = Int_r^Inf rho* G M r'^(2ba-2) dr', uniform sphere radius rc *)
+Clear[rp, rcore];
+srCoreBC[r_, n_, b_] := r^(n - 2 b) (
+   Integrate[(4 Pi/3) GG rhoc rp^(1 - n + 2 b), {rp, r, rc}, Assumptions -> {0 < r < rc}] +
+   Integrate[GG (4 Pi/3) rhoc rc^3 rp^(-n - 2 + 2 b), {rp, rc, Infinity}, Assumptions -> {rc > 0, n + 1 - 2 b > 0}]);
+Module[{gen, nu2, nu25, nu18, homog},
+  gen = FullSimplify[srCoreBC[rr, nu, ba], {0 < rr < rc, nu + 1 - 2 ba > 0, nu - 2 - 2 ba > 0}];
+  homog = -(4 Pi/3) GG rhoc 3 rc^(2 - nu + 2 ba) rr^(nu - 2 ba)/((nu + 1 - 2 ba) (nu - 2 - 2 ba));
+  nu2  = FullSimplify[srCoreBC[rr, 2, 0], 0 < rr < rc];
+  nu25 = FullSimplify[srCoreBC[rr, 5/2, 0], 0 < rr < rc];
+  nu18 = FullSimplify[srCoreBC[rr, 9/5, 0], 0 < rr < rc];
+  Print["      core, BC solution at nu = 2: ", nu2];
+  check["k18b uniform core with rho* sr2 -> 0 at infinity: sr2 = particular + homogeneous (r_c/r)^(2-nu+2ba) term; -> particular as r->0 only for nu > 2+2beta_a (nu = 2.5); at nu = 2 exact (4pi/3)G rho_c r^2 [ln(r_c/r) + 1/3]; at nu = 1.8 positive while the particular formula is negative",
+    zeroQ[Simplify[gen - (srCore2[rr] + homog), {0 < rr < rc, nu - 2 - 2 ba > 0}] // PowerExpand] &&
+    zeroQ[Simplify[D[rhoS[rr] gen, rr] + 2 ba rhoS[rr] gen/rr + rhoS[rr] GG (4 Pi/3) rhoc rr^3/rr^2, 0 < rr < rc]] &&
+    Limit[nu25/(srCore2[rr] /. {nu -> 5/2, ba -> 0}), rr -> 0, Assumptions -> rc > 0] == 1 &&
+    zeroQ[nu2 - (4 Pi/3) GG rhoc rr^2 (Log[rc/rr] + 1/3)] &&
+    ((nu - 2 - 2 ba) /. {nu -> 2, ba -> 0}) == 0 &&
+    ((srCore2[rr] /. {nu -> 9/5, ba -> 0, rr -> 1/10, rc -> 1, rhoc -> 1, GG -> 1}) < 0) &&
+    ((nu18 /. {rr -> 1/10, rc -> 1, rhoc -> 1, GG -> 1}) > 0)]];
 check["k19 uniform sphere (radius r_c): central column 2 rho_c sqrt(r_c^2-R^2) -> 2 rho_c r_c; with rho_c = (1-lam)Sigma_cr/(2 r_c) its sigma_r^2 share relative to G pi Sigma_cr R_E -> 0 as r_c -> Infinity",
   zeroQ[Integrate[rhoc, {zz, -Sqrt[rc^2 - RR^2], Sqrt[rc^2 - RR^2]}] - 2 rhoc Sqrt[rc^2 - RR^2]] &&
   zeroQ[Limit[(srCore2[RR] /. rhoc -> (1 - lam) Sig0/(2 rc))/(GG Pi Sig0 RE), rc -> Infinity]] &&
-  zeroQ[rc D[(srCore2[RR] /. rhoc -> (1 - lam) Sig0/(2 rc)), rc] + (srCore2[RR] /. rhoc -> (1 - lam) Sig0/(2 rc))]];
+  zeroQ[rc D[(srCore2[RR] /. rhoc -> (1 - lam) Sig0/(2 rc)), rc] + (srCore2[RR] /. rhoc -> (1 - lam) Sig0/(2 rc))] &&
+  (* nu = 2 exact (log) solution: share ~ R^2 ln(r_c/R)/(R_E r_c), still -> 0 *)
+  zeroQ[Limit[((4 Pi/3) GG rhoc RR^2 (Log[rc/RR] + 1/3) /. rhoc -> (1 - lam) Sig0/(2 rc))/(GG Pi Sig0 RE), rc -> Infinity,
+     Assumptions -> {RR > 0, RE > 0}]]];
 
 (* ===================================================================== *)
 Print["\n--- F. Figure ---"];
