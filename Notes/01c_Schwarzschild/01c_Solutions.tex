@@ -158,8 +158,9 @@ At the horizon, $K(R_S) = 12/R_S^4 = 3/(4M^4)$ with $R_S = 2M$.
 
 \begin{annotation}[Coordinate singularity versus physical singularity]
 At $r = R_S$ the metric component $g_{rr}$ and the Christoffel symbols $\Gamma^t_{\ tr}$,
-$\Gamma^r_{\ rr}$ diverge, but every orthonormal Riemann component above stays finite
-($|R_{\hat a\hat b\hat a\hat b}| \le R_S/r^3$). Since $K$ is a scalar, its value does not depend
+$\Gamma^r_{\ rr}$ diverge, but every orthonormal Riemann component above stays finite as
+$r \to R_S$ ($|R_{\hat a\hat b\hat a\hat b}| \le R_S/r^3$; the static frame itself does not exist
+at $r = R_S$, so this is a limit). Since $K$ is a scalar, its value does not depend
 on coordinates. Two cautions. (i) A finite $K$ is \emph{consistent} with a coordinate singularity
 but does not prove one; the proof is to exhibit coordinates in which the metric is regular there
 (Eddington--Finkelstein, eq.~\eqref{eq:eddington_finkelstein}). (ii) A divergent scalar, as at
@@ -202,9 +203,9 @@ and $c = 2.998\times 10^{8}\;\text{m/s}$:
 
     \item \textbf{Sun} ($M = 1.989\times 10^{30}\;\text{kg}$, $R = 6.957\times 10^{8}\;\text{m}$):
     \begin{equation*}
-        R_S \approx 2953\;\text{m} \approx 2.95\;\text{km} \,.
+        R_S \approx 2954\;\text{m} \approx 2.95\;\text{km} \,.
     \end{equation*}
-    The ratio $R_S/R \approx 4.24\times 10^{-6}$: small, but measurable via
+    The ratio $R_S/R \approx 4.25\times 10^{-6}$: small, but measurable via
     gravitational redshift and light deflection.
 
     \item \textbf{Galaxy lens} ($M \sim 10^{12}\, M_\odot$, extent $\sim 50\;\text{kpc}$):
@@ -218,8 +219,8 @@ and $c = 2.998\times 10^{8}\;\text{m/s}$:
 
 \begin{derivation}[Scaling instead of recomputing]
 $R_S = 2GM/c^2$ is linear in $M$. With the constants above,
-$R_S^\odot = 2(6.674\times10^{-11})(1.989\times10^{30})/(2.998\times10^{8})^2\ \text{m} = 2953\ \text{m}$,
-so $R_S = 2.953\ \text{km}\,(M/M_\odot)$.
+$R_S^\odot = 2(6.674\times10^{-11})(1.989\times10^{30})/(2.998\times10^{8})^2\ \text{m} = 2953.8\ \text{m}
+\approx 2954\ \text{m}$, so $R_S = 2.954\ \text{km}\,(M/M_\odot)$.
 For $M = 10^{12} M_\odot$: $R_S = 2.95\times10^{15}$\,m; with
 $1\ \text{pc} = 3.0857\times10^{16}$\,m this is $0.096$\,pc; dividing by
 $50\ \text{kpc} = 5\times10^{4}$\,pc gives $R_S/R \approx 1.9\times10^{-6}$.
@@ -276,7 +277,7 @@ $(1 - x)^{-1/2} = 1 + \tfrac12 x + \tfrac38 x^2 + O(x^3)$, so
 \[
     z = (1 - x)^{-1/2} - 1 = \frac{x}{2} + \frac{3x^2}{8} + O(x^3) \,.
 \]
-For the Sun $x = 4.24\times10^{-6}$ and the first term gives $z_\odot = 2.12\times10^{-6}$; the
+For the Sun $x = 4.246\times10^{-6} \approx 4.25\times10^{-6}$ and the first term gives $z_\odot = 2.12\times10^{-6}$; the
 second term is smaller by a further factor $\sim x$. The ratio quoted is
 $0.306/(2.12\times10^{-6}) \approx 1.44\times10^{5}$.
 \end{derivation}
@@ -337,9 +338,10 @@ rotating it about the $z$-axis gives the paraboloid.
 
 \begin{annotation}[The throat is smooth]
 At $r = R_S$, $dz/dr = \sqrt{R_S/(r - R_S)} \to \infty$: the surface has a vertical tangent, so
-$r$ stops being a good coordinate along the surface, but the surface itself is perfectly smooth
+$r$ stops being a good coordinate along the surface, but the surface itself is smooth
 there (the parabola $z^2 = 4R_S(r - R_S)$ is regular at its vertex). This is the same lesson as
-Exercise~\ref{ex:kretschmann}: the trouble at $r = R_S$ lives in the coordinate, not the geometry.
+Exercise~\ref{ex:kretschmann}: the divergence at $r = R_S$ comes from the coordinate $r$, and the
+curvature there is finite.
 \end{annotation}
 
 This is the equation of a \textbf{paraboloid of revolution} ($z^2 = 4 R_S (r - R_S)$).
