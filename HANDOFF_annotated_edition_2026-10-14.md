@@ -14,7 +14,7 @@
   master `verify_against_textbooks.wl` 28/28; full sweep of all 55 scripts run at the end (see PROGRESS_LOG for
   the tally). Whole-book lint clean (0 duplicate labels, 209/223/76 annotation/derivation/bridge boxes balanced,
   0 leaked tags, 0 project leakage in Part V).
-- **Pages (final build):** see `Output/build_fingerprints.txt` (≈361 student / ≈445 instructor / ≈567 annotated).
+- **Pages (final build):** see `Output/build_fingerprints.txt` (363 student / 448 instructor / 571 annotated, commit fc84fbb).
 
 ## What a reader should know
 - Every chapter's `Notes/<NN>_*/FACT_CRITIC_*_2026-10-14.md` now has: Verdicts → Flagged → (Part V only)
