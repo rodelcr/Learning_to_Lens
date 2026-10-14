@@ -186,3 +186,29 @@ The 2026-07-11 study-notes critic passed note4 as a whole. The 2026-07-24 soluti
 5. **Record inconsistency (minor), `theory/solutions/FACT_CRITIC_SOLUTIONS_2026-07-24.md` l.58.** "note4 10/10" does not match `mathematica/exercises/sol_note4_odd_images.wl`, which has 23 `report[]` checks in the same commit c3a9b1c. Both `sol_note4_odd_images.tex:14` and the 10-14 re-run (S7-058) give 23/23.
 
 Spiral rows that the record already knows (S7-046, S7-049, S7-050, S7-051, S7-052, S7-058) are not repeated here. The chapter has already fixed all of them except the mild S7-049 overstatement (New fix 1).
+
+## Resolution — fixes applied 2026-10-14
+
+| id | Fix | Backing |
+|----|-----|---------|
+| S7-049 | Opener (visible): "For a single galaxy the missing odd image is the central image" | reconciler New fix 1 (wording; no number) |
+| N12 + P1 | Opener (visible): "The question is not academic" deleted; "innermost tenth or so of θ_E" → "the region inside the radial critical curve, which for the cored lenses of this chapter lies at a quarter to a third of θ_E". Annotation "Why the centre is a separate measurement": "innermost ~0.1 θ_E" → "region inside the radial critical curve (a few tenths of θ_E)" | odd_images.wl J.4a (θ_r = 0.2510, 0.2972 at θ_c = 0.1, 0.2; both in [1/4, 1/3]), J.4b (θ_r > 0.1 θ_E for θ_c ∈ {0.05,…,0.3}) |
+| X9 | Bridge (annotated-only): "…of Exercise ex:burke_verification, in its non-singular (cored) version, has n₊=3, n₋=2; the singular SIE itself has no central image" | 08_Solutions.tex (d) (non-singular version); F.1–F.3 |
+| X5 + P2 | Annotation (annotated-only): "the point mass is not transparent. It is" → students say "light hits the point mass"; it does not; "transparent" in thm:odd_number means smooth bounded Σ, so a point mass is not transparent; Burke's own "transparent" excludes black holes (\citep{burke_1981}); SEF Thm 1 hypotheses "exclude stars and black holes". Aphorism "not violated, it is relocated" → "counting the puncture as an index-+1 point restores the odd total" | SEF p.172 (pdftotext, quoted); Ch 6 06_Fermat_Time_Delays.tex:443–445; Burke wording per reconciler S7-046 (not re-read by fixer) |
+| X7 | SIS paragraph (visible): "a conical tip, a local maximum with no tangent plane" → "a conical tip with no tangent plane (a local maximum when \|β\|<θ_E)" | J.2a (tip is a max ∀φ ⇔ 0 ≤ β < θ_E; fails on the unconditional form), J.2b (β = 1.5: τ(−0.01 β̂) > τ(0)) |
+| X6 + P4 | Cusp paragraph (visible): untruncated power law violates (S2), but \|α\|/θ ∝ θ^{1−γ'} → 0, so ∇τ winds once at infinity; SEF p.174 generalisation (gradient maps asymptotic to the identity); real galaxies truncated anyway. Closing antithesis → "The counting rule needs a continuous deflection with \|α\|/θ→0 at infinity. A finite central density is not required." Summary bullet: "(or, more generally, \|α\|/θ→0 at infinity)" + "unbounded α at large θ" | J.3a (α → ∞), J.3b (\|α\|/θ → 0), J.3c (winding +1 at R = 100, γ' = 1.5); SEF p.174 "Additional remarks" (pdftotext, checked) |
+| X8 + P3 + P6 | Annotation "Reading eq. oi_muc" (annotated-only): "(iii) In between, μ_c is small" → "For κ₀ > 2, i.e. θ_c < θ_E/4, μ_c < 1, and for κ₀ ≫ 1 it is small…; between θ_E/4 and θ_E/2 the central image is magnified (μ_c = 2.25 at θ_c = 0.3 θ_E)". "Curvature of τ is inverse brightness" deleted; "make the formula memorable" → "are worth checking" | J.1a (μ_c<1 ⇔ θ_c<θ_E/4, Reduce), J.1b (κ₀=2, μ_c=1 at θ_E/4), J.1c (μ_c(0.3)=9/4) |
+| P5 | "Three effects conspire" → "Three effects hide it" (visible) | prose |
+| C7 | not applied (optional; Keeton 2003 not in bib) | — |
+
+### Verification after edits
+
+- `bash Mathematica/run_wl.sh Mathematica/16_Odd_Images_Central/odd_images.wl` — before `SUMMARY: 84 PASS, 0 FAIL  (of 84 checks)`; after `SUMMARY: 94 PASS, 0 FAIL  (of 94 checks)` / `ALL CHECKS PASS` (new section J, 10 checks).
+- `bash Mathematica/run_wl.sh Solutions/16_Odd_Images_Central/problems_16.wl` — `SUMMARY: 51 PASS, 0 FAIL  (of 51 checks)` (unchanged; no solution text changed).
+- `cd Notes && ANNOT_REQUIRED=1 bash build.sh` — "all assertions passed"; student 360 pp, instructor 444 pp, annotated 567 pp.
+
+### Left open
+
+- C7 (optional Keeton 2003 attribution) — needs a verified bib key.
+- X11 (harness stdout drop) — orchestrator scope (`Mathematica/harness.wl`).
+- Pre-existing, not flagged: the cusp paragraph's "it has a central image" holds only for sources inside the radial caustic (cf. G.6, γ'=1.2, y=0.1); left as is.
