@@ -49,6 +49,31 @@ $\Lambda(\phi) = \begin{psmallmatrix} \cosh\phi & -\sinh\phi \\ -\sinh\phi & \co
 \end{align*}
 using the hyperbolic addition formulas.
 
+\begin{derivation}[The product and the addition formulas]
+Entry $(i,j)$ of the product is row $i$ of $\Lambda(\phi_1)$ dotted into column $j$ of
+$\Lambda(\phi_2)$; e.g.\ the $(1,2)$ entry is
+$\cosh\phi_1(-\sinh\phi_2) + (-\sinh\phi_1)\cosh\phi_2$. The hyperbolic addition formulas are
+\[
+    \cosh(a+b) = \cosh a\cosh b + \sinh a\sinh b \,, \qquad
+    \sinh(a+b) = \sinh a\cosh b + \cosh a\sinh b \,,
+\]
+which turn the diagonal entries into $\cosh(\phi_1+\phi_2)$ and the off-diagonal ones into
+$-\sinh(\phi_1+\phi_2)$. For the velocity, take the ratio of the two formulas and divide
+numerator and denominator by $\cosh\phi_1\cosh\phi_2$:
+\[
+    \tanh(\phi_1+\phi_2)
+    = \frac{\sinh\phi_1\cosh\phi_2 + \cosh\phi_1\sinh\phi_2}{\cosh\phi_1\cosh\phi_2 + \sinh\phi_1\sinh\phi_2}
+    = \frac{\tanh\phi_1 + \tanh\phi_2}{1 + \tanh\phi_1\tanh\phi_2} \,.
+\]
+\end{derivation}
+
+\begin{annotation}[Rapidities add; velocities do not]
+The rapidity $\phi$ is the parameter in which collinear boosts compose additively; the velocity
+$v = \tanh\phi$ is not. The case $v_1 = v_2 = 1$ is a limit ($\phi \to \infty$), not a boost: in
+fact $v_1 = 1$ gives $v = (1+v_2)/(1+v_2) = 1$ for \emph{any} $v_2$, which is the invariance of
+$c$ in its strongest form.
+\end{annotation}
+
 For the velocity addition formula, we use $v = \tanh\phi$:
 \begin{equation*}
     v = \tanh(\phi_1 + \phi_2)
@@ -72,6 +97,15 @@ Then:
     = \boxed{-1} \,.
 \end{align*}
 
+\begin{annotation}[Superscripts that are not powers, and the sign of the metric]
+In this exercise $v^2$ means two different things: the second \emph{component} $v^2$ (in
+$U^\mu = \gamma(1, v^1, v^2, v^3)$) and the \emph{square} of the speed (in $\gamma$). Context
+decides; when in doubt write $|\mathbf v|^2$. Lowering the index with $\eta_{\mu\nu}$ flips only
+the time component, $U_\mu = \gamma(-1, v^1, v^2, v^3)$, and the middle step uses
+$\gamma^2 = 1/(1 - v^2)$. The answer $-1$ is tied to the signature $(-,+,+,+)$; in the
+$(+,-,-,-)$ convention the same computation gives $U^\mu U_\mu = +1$.
+\end{annotation}
+
 % ----- Exercise 1.4 -----
 \subsection*{Exercise~\ref{ex:photon_energy}: Photon Energy (Relativistic Doppler)}
 
@@ -93,6 +127,17 @@ Applying the boost $\Lambda$ along $x$:
     This is the \textbf{transverse Doppler effect} --- a purely relativistic
     blueshift with no classical analogue, arising from time dilation.
 \end{itemize}
+
+\begin{derivation}[From the boost matrix to the special cases]
+The time row of the boost is $\Lambda^{0'}{}_{\nu} = (\gamma, -\gamma v, 0, 0)$, so
+$p^{0'} = \gamma p^0 - \gamma v\,p^1 = \gamma E - \gamma v E\cos\theta$. For $\theta = 0$, write
+$\gamma = 1/\sqrt{(1-v)(1+v)}$:
+\[
+    \gamma(1 - v) = \frac{1 - v}{\sqrt{(1-v)(1+v)}} = \sqrt{\frac{1-v}{1+v}} \,.
+\]
+For $\theta = \pi$ the same steps give $\gamma(1+v) = \sqrt{(1+v)/(1-v)} > 1$, a blueshift (the
+observer moves toward the source). The boosted four-momentum is still null, as it must be.
+\end{derivation}
 
 % ----- Exercise 1.5 -----
 \subsection*{Exercise~\ref{ex:em_tensor}: Electromagnetic Field Strength Tensor}
@@ -124,3 +169,30 @@ while the magnetic components are unchanged.
 \end{align*}
 This is a Lorentz invariant: all inertial observers agree on the value of
 $|\mathbf{B}|^2 - |\mathbf{E}|^2$.
+
+\begin{derivation}[Raising indices and contracting, component by component]
+Since $\eta$ is diagonal, $F^{\mu\nu} = \eta^{\mu\mu}\eta^{\nu\nu}F_{\mu\nu}$ (no sum). A component
+with exactly one time index picks up one factor $\eta^{00} = -1$: $F^{0i} = -F_{0i}$. A purely
+spatial component picks up $(+1)^2$: $F^{ij} = F_{ij}$. In the sum
+$F_{\mu\nu}F^{\mu\nu}$, the six time--space terms ($0i$ and $i0$) give
+$2\sum_i F_{0i}F^{0i} = -2\sum_i E_i^2$, and the six space--space terms give
+$2\sum_{i<j}F_{ij}F^{ij} = 2(B_1^2 + B_2^2 + B_3^2)$.
+\end{derivation}
+
+\begin{annotation}[A matrix-algebra trap]
+The double sum $F_{\mu\nu}F^{\mu\nu}$ is \emph{not} the trace of the matrix product
+$F_{\mu\nu}\cdot F^{\mu\nu}$. It equals $\mathrm{Tr}(F_\downarrow F_\uparrow^{\mathsf T})$, and since
+$F$ is antisymmetric this is $-\mathrm{Tr}(F_\downarrow F_\uparrow)$. Writing the contraction as a
+plain trace gives the right magnitude with the wrong sign, $2(|\mathbf E|^2 - |\mathbf B|^2)$.
+\end{annotation}
+
+\begin{bridge}[Why lensing angles add (almost) linearly]
+Velocities do not add linearly, but to first order they do:
+$(v_1 + v_2)/(1 + v_1v_2) = v_1 + v_2 + O(v^3)$. Gravitational deflection angles are in the same
+position. They are first order in $\Phi/c^2 \ll 1$, and to that order the field equations are
+linear (Chapter~\ref{ch:linearized_gravity}), so the deflections produced by several masses in
+one lens plane add as vectors. In Chapter~\ref{ch:multiplane_dspl}, where the masses sit at
+different distances, the deflections still add, but each one is evaluated where the ray
+actually crosses its plane, so the multi-plane lens equation is a recursive sum rather than a
+plain one.
+\end{bridge}
