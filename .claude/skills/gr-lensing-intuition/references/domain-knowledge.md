@@ -94,6 +94,72 @@
 - Different slopes (steeper/shallower) with the same M(<θ_E) produce similar image positions
 - Breaking requires: combining lensing with kinematics, or using extended source reconstruction
 
+## Compound-Lens (DSPL) Cosmography
+
+> Added 2026-08-07 from the 202607_Theoretical_spiral_compound literature curation
+> (`Reference_papers/README.md` there holds the verified manifest; theory Note 11 is the
+> reading scaffold). Every citation below was arXiv/ADS-verified at curation time.
+
+### The observable
+- A double-source-plane lens (DSPL) measures the H₀-free distance ratio
+  **𝓑 = (D_ls1·D_s2)/(D_s1·D_ls2) < 1** — Collett & Auger 2014 call it β and quote its
+  inverse (J0946: β⁻¹ = 1.404 ± 0.016 ⇒ 𝓑 ≈ 0.712). Multi-plane codes generalize it to
+  per-plane deflection scaling factors (η_ij in the Ballard et al. J0946 papers).
+- Slope coupling: θ_E2/θ_E1 = 𝓑^(−1/(γ′−1)), i.e. 𝓑 = η^(γ′−1) with η = θ_E1/θ_E2 —
+  a γ′ error propagates multiplicatively into 𝓑. This is why "position-only DSPL fits
+  drift toward γ→1" (mass-sheet direction) and why an SIS (γ′=2) makes η = 𝓑 exactly.
+- Sensitivity: ∂ln𝓑/∂w ~ −0.016 for typical galaxy-scale triplets (Linder 2016 formalism);
+  it VANISHES as 𝓑→1 (source planes close together) — always check S_w before quoting a Δw.
+
+### The benchmark systems (verified)
+| system | nature | key result |
+|---|---|---|
+| SDSS J0946+1006 "Jackpot" | galaxy, 4 planes (z = 0.222/0.609/2.035/5.975) | Gavazzi+08 discovery; Collett & Auger 14 first w; Smith & Collett 21 spectroscopic z_s2 ⇒ w = −1.04±0.20; Collett & Smith 20 add s3 at z≈6 |
+| Carousel (DESI-090.9854-35.9683) | cluster z_l = 0.49, 4 source planes | Sheu+24 discovery; O'Donnell+26 MUSE; Urcelay+26 (Felipe Urcelay) cosmology: Ω_m = 0.34, w = −1.31 from the lens alone, all-EPL, no central mass, suspected radial image 7d* mis-fit by 1.5″ and excluded |
+| AGEL0353 / AGEL1507 | galaxy DSPLs | Bowden+25 (ApJ 993,124) and Sahu+25 — the 2nd and 3rd DSPLs ever used for cosmography; joint 3-lens sample |
+| Cosmic Horseshoe J1148+1930 | single-plane + radial arc | Melo-Carneiro+25: radial arc + 2D dynamics ⇒ log M_BH = 10.56, 5σ |
+| Abell 1201 | cluster BCG | Nightingale+23 UMBH from lensing alone — ⚠ NO central image observed; never cite as a radial-image detection |
+
+### Multi-plane degeneracies
+- **Schneider 2014** (A&A 568, A106): the mass-sheet transformation generalizes across N
+  planes (recursive lens equation) — the fundamental cap on DSPL precision. Modern treatment
+  with lens-lens coupling: Teodori 2026 (arXiv:2602.02802). SPT companion: Schneider & Sluse.
+- **Line of sight enters 𝓑 as an inseparable convergence ratio at the ~1% level on η**
+  (Daniel Johnson, Collett, Li & Fleury 2025, JCAP 08, 067) — comparable to or larger than
+  most modeling systematics; a genuine LOS perturber needs its own plane (it does NOT scale
+  as 𝓑 like a deflector-plane shear does).
+- Double-plane time delays: the H₀ error decomposes into plane-1 MST + an LOS term
+  ("unfolding relation", Johnson, Fleury & Millon 2026).
+
+### The empirical state of the art (2026)
+- **Lensing-only DSPL cosmology is mass-model-fragile.** On J0946, w swings from −0.5 to
+  −0.25 as the deflector model gains substructure and multipoles, with Ω_m drifting to ~0.7
+  (Ballard, Enzi, Collett et al. 2026 — PRIVATE draft at curation time; re-verify against
+  the published version). A **stellar-kinematics likelihood is the stabiliser**: with MUSE
+  σ_los the same ladder agrees at w ≈ −1.0 ± 0.1. Kinematic anchoring is not optional for
+  DSPL cosmography beyond a rigid power law.
+- **Slope errors trade between planes**: the J0946 s1-plane deflector fits super-isothermal
+  (γ ≈ 2.4) against a sub-isothermal main deflector — per-plane profile errors are coherent,
+  not independent (matches the 202607 project's H3 result: multi-plane biases STACK; more
+  planes = more exposed, not less).
+- **Radial-image mismodelling** (202607 project measurement): omitting a central mass
+  fraction m = θ_BH²/θ_E² from a radial-image lens biases 𝓑 by |Δ𝓑/𝓑| ≈ 3.6 m, nearly
+  independent of γ′ and of the redshifts (the lensing bias depends on them only through 𝓑);
+  the Δw it maps to is fully redshift-dependent via 1/S_w. Inner-profile FREEDOM (e.g.
+  broken power law) removes the bias; a literal SMBH term is not required at HST resolution.
+
+### Notation and identity traps (each has burned someone)
+- β (Collett & Auger) ≡ 𝓑 here; papers quote β or β⁻¹ interchangeably — check which.
+- γ′ (3D density slope) vs convergence slope s = γ′ − 1 (PyAutoLens `PowerLawBroken` uses s).
+- `PowerLaw.einstein_radius` in PyAutoLens is the physical (area-equivalent) θ_E divided by
+  F(q,γ′) = √q·(2/(1+q))^(1/(γ′−1)) — conflating them corrupts priors and m labels.
+- **Collett & Bacon 2016 is TWO papers**: MNRAS 456, 2210 (Einstein zig-zags / compound image
+  multiplicity, arXiv:1510.00242) and PRL 118, 091101 (GW speed, arXiv:1602.05882).
+- **"Johnson" is two lensing researchers**: Daniel Johnson (DSPL/LOS, Collett-Fleury orbit)
+  and Traci Johnson (cluster lens-model systematics, Johnson & Sharon 2016).
+- "Sahu" in DSPL context = Nandini Sahu (AGEL); a "Sahu+24" M_BH scaling relation had NO
+  verified paper behind it as of 2026-08-07 (nearest: Sahu, Graham & Davis 2019).
+
 ## Cosmological Distances for Lensing
 
 ### Key Relations
