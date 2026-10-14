@@ -25,6 +25,7 @@
      19.4 (ex:mu_critical)   --- first-order tangential critical-curve shift
      19.5 (ex:mu_residual)   --- inner-vs-outer residual demonstration
      19.6 (ex:mu_convention) --- amplitude/orientation bookkeeping
+                                 (incl. reversed component order, 6f-6g)
      19.7 (ex:mu_dipole)     --- the m = 1 resonance
    ========================================================================= *)
 
@@ -164,6 +165,10 @@ check["5g  ratios: PM/mp = 11.28 inside, 0.0784 outside; inner/outer: PM 65.65, 
   Abs[pm2Res[0.25]/pm2Res[1.2] - 65.6545] < 10^-3 && Abs[mpRes[0.25]/mpRes[1.2] - 0.456435] < 10^-5];
 check["5h  azimuthal content: PM residual is phi-independent; multipole residual averages to zero on every circle",
   FreeQ[dAlphaPM, ph] && FullSimplify[Integrate[alphaR, {ph, 0, 2 Pi}, Assumptions -> intAsm && asm], intAsm] === 0];
+mcrit[gg_] := (2 - gg) (gg - 1)/2 ((2 - gg) (3 - gg)/2)^((3 - gg)/(gg - 1));
+check["5i  f = 0.01 exceeds m_crit(1.5) = 27/4096: theta_r is the radial critical curve of the base only (no composite radial curve)",
+  mcrit[3/2] === 27/4096 && 27/4096 < 1/100 &&
+  NMinValue[{1 - D[tt^(1/2) + (1/100)/tt, tt], 10^-4 < tt < 1}, tt] > 0];
 
 (* ============ Exercise 19.6 ============ *)
 Print["--- Exercise 19.6 ---"];
@@ -179,6 +184,13 @@ check["6d  i.e. 33.3% (g=1.5) and 37.5% (g=1.4) below the intended a_m",
 check["6e  orientation degeneracies: phi_m -> phi_m + 2pi/m is identity; phi_m -> phi_m + pi/m flips the sign of k",
   FullSimplify[Cos[m (ph - phm - 2 Pi/m)] - Cos[m (ph - phm)]] === 0 &&
   FullSimplify[Cos[m (ph - phm - Pi/m)] + Cos[m (ph - phm)]] === 0];
+(* reversed component order (e1,e2) = k (sin m phi, cos m phi), as in at least one widely used code *)
+r1 = 0.015 Sin[4 30 Degree]; r2 = 0.015 Cos[4 30 Degree];
+check["6f  reversed ordering: same phi_4 = 30 deg needs (e1,e2) = (0.012990, -0.0075); inverse atan2(e1,e2)/4 = 30 deg",
+  Abs[r1 - 0.0129904] < 10^-7 && Abs[r2 + 0.0075] < 10^-12 && Abs[ArcTan[r2, r1]/4/Degree - 30] < 10^-9 &&
+  !(Abs[r1 + 0.0075] < 10^-6)];
+check["6g  chapter-convention numbers (-0.0075, 0.01299) read in the reversed order give 90/4 - 30 = -7.5 deg",
+  Abs[ArcTan[e2, e1]/4/Degree - (90/4 - 30)] < 10^-9];
 
 (* ============ Exercise 19.7 ============ *)
 Print["--- Exercise 19.7 ---"];
