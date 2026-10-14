@@ -18,14 +18,25 @@
                 to synthetic image positions generated WITH a point mass;
             (F) propagation of dB/B to dw for one illustrative flat-wCDM
                 configuration (sign and size of S_w = dlnB/dw);
-            (G) why any unmodelled central mass excess acts like a point
-                mass outside its own radius (enclosed-mass argument).
+            (G) why any unmodelled AXISYMMETRIC central mass excess acts
+                like a point mass outside its own radius (enclosed-mass
+                argument), and why an off-centre excess does not.
+            Fix pass 2026-10-14 (FACT_CRITIC_17 F2-F5, N-R1, N-R4-N-R6):
+                E13 (m2 = m1 counterfactual), E9d-E9e (fixed-slope fit at
+                unequal offsets), D9 (on-axis shear factor), D10 (inner
+                critical curve needs the PL's lambda_r < 0), F5 (efficiency
+                wording), G3 (off-centre lump), FIG1d-FIG1f (caption).
             Figures: bias in B vs m_1 for two slopes; annihilation boundary
             in the (gamma', m) plane.
 
    Sources: Axisymmetric lens equation and mean convergence:
-              Narayan & Bartelmann (1997) Sect. 2.1.2; Module 7 of these notes.
-            Lens Jacobian eigenvalues: Congdon & Keeton eq. 4.54 (Module 5).
+              Narayan & Bartelmann (1997) Sect. 2.1.4 (circularly symmetric
+              lens equation and Einstein radius; checked against the PDF
+              2026-10-14 -- an earlier header said Sect. 2.1.2, which is the
+              thin-screen approximation); Module 7 of these notes.
+            Lens Jacobian eigenvalues: Congdon & Keeton eq. 4.54 (the
+              characteristic equation of A^-1, roots (1-kappa) +- gamma;
+              checked against the PDF 2026-10-14) (Module 5).
             Angular-diameter distances: Module 3 (flat FRW, eq. DA_flat,
               Dds_flat).
             Central black holes and the central image: Mao, Witt &
@@ -251,6 +262,36 @@ nRoots[g_, u_] := Module[{v = Sign[yp[#, g, u] & /@ Range[10^-4, 2, 10^-4]]},
    Count[Differences[v], d_ /; d != 0]];
 check["D8  g=1.6: two sign changes of y' at u = 0.5 m_crit, none at u = 1.5 m_crit",
   nRoots[1.6, 0.5 N[m2crit[16/10]]] == 2 && nRoots[1.6, 1.5 N[m2crit[16/10]]] == 0];
+(* Fix pass 2026-10-14 (N-R5): the boundary is for an AXISYMMETRIC lens. Along the axis of an
+   external shear ge on the radial-image plane, lambda_r = 1 - ge - alpha'(th); rescaling
+   th = (1-ge)^(-1/(g-1)) X maps it onto the axisymmetric problem with u -> u (1-ge)^((3-g)/(g-1)),
+   so m_crit is multiplied by (1-ge)^(-(3-g)/(g-1)) > 1. *)
+ypS[th_, g_, u_, ge_] := 1 - ge - (2 - g) th^(1 - g) + u/th^2;
+check["D9a on-axis shear: y' and dy'/dth vanish at th = (1-ge)^(-1/(g-1)) th*, u = m_crit (1-ge)^(-(3-g)/(g-1))",
+  And @@ Flatten[Table[
+    FullSimplify[{ypS[th, gg, m2crit[gg] (1 - ge)^(-(3 - gg)/(gg - 1)), ge],
+                  D[ypS[th, gg, m2crit[gg] (1 - ge)^(-(3 - gg)/(gg - 1)), ge], th]} /.
+                 th -> (1 - ge)^(-1/(gg - 1)) thStar[gg], Assumptions -> 0 < ge < 1] == {0, 0},
+    {gg, {7/5, 3/2, 8/5, 9/5}}]]];
+Module[{bis, r},
+  bis[gg_, ge_] := Module[{lo = 0, hi = 1/10, mid},
+    Do[mid = (lo + hi)/2;
+       If[First[FindMinimum[{ypS[t, gg, mid, ge], t > 0}, {t, (1 - ge)^(-1/(gg - 1)) thStar[gg]},
+            WorkingPrecision -> wp]] < 0, lo = mid, hi = mid], {60}]; (lo + hi)/2];
+  r = Table[N[bis[gg, 1/10]/m2crit[gg], 12], {gg, {14/10, 16/10, 18/10}}];
+  Print["     on-axis shear 0.1: m_crit ratio (bisection) = ", r, "  closed form = ",
+        N[Table[(9/10)^(-(3 - gg)/(gg - 1)), {gg, {14/10, 16/10, 18/10}}], 6]];
+  check["D9b bisection on min lambda_r (shear 0.1, on axis) = (0.9)^(-(3-g)/(g-1)) = 1.524, 1.279, 1.171 at g = 1.4, 1.6, 1.8",
+    Max[Abs[r - N[Table[(9/10)^(-(3 - gg)/(gg - 1)), {gg, {14/10, 16/10, 18/10}}]]]] < 1*^-9 &&
+    Max[Abs[r - {1.52416, 1.27870, 1.17121}]] < 1*^-5]];
+(* Fix pass 2026-10-14 (N-R6): a point mass alone has no radial critical curve; the inner zero of
+   y' is the inner edge of the PL's lambda_r < 0 region, not a curve "of the black hole". *)
+check["D10 point mass alone: lambda_r = 1 + u/th^2 > 0; at both zeros of y' (g=1.6, u=0.5 m_crit) the PL's own lambda_r < 0",
+  Reduce[u > 0 && th > 0 && 1 - D[u/x, x] <= 0 /. x -> th, {u, th}, Reals] === False &&
+  Module[{uu = N[m2crit[16/10]/2, wp], zs},
+    zs = Select[x /. NSolve[yp[x, 16/10, uu] == 0 && 0 < x < 1, x, Reals, WorkingPrecision -> wp], Positive];
+    Print["     zeros of y' at g=1.6, u=0.5 m_crit: ", N[zs, 6]];
+    Length[zs] == 2 && AllTrue[zs, 1 - (2 - 16/10) #^(1 - 16/10) < 0 &]]];
 
 (* ---------------------------------------------------------------------
    (E) Brute-force power-law-only fit vs the linear-response formula
@@ -269,16 +310,18 @@ bracketRoots[f_, xs_] := Table[If[f[xs[[i]]] f[xs[[i + 1]]] < 0,
     Nothing], {i, Length[xs] - 1}];
 images[t_, g_, u_, b_] := Sort[Join[-bracketRoots[(ySgn[-#, t, g, u] - b) &, grid[t]],
                                       bracketRoots[(ySgn[#, t, g, u] - b) &, grid[t]]]];
-synth[g0_, B0_, m1_, b1_, f2_] := Module[{t2 = N[B0^(-1/(g0 - 1)), wp], i1, i2},
+(* optional u2in: plane-2 point-mass term tB2^2 (tE1 units); default = physical m1/B0.
+   u2in = m1 t2^2 is the counterfactual m2 = m1 of check E13. *)
+synth[g0_, B0_, m1_, b1_, f2_, u2in_: Automatic] := Module[{t2 = N[B0^(-1/(g0 - 1)), wp], i1, i2},
   i1 = images[1, g0, N[m1, wp], N[b1, wp]];
-  i2 = images[t2, g0, N[m1/B0, wp], N[f2 t2, wp]];
+  i2 = images[t2, g0, N[If[u2in === Automatic, m1/B0, u2in], wp], N[f2 t2, wp]];
   If[(m1 > 0 && Length[i2] != 4) || (m1 == 0 && Length[i2] != 3), Return[$Failed]];
   {{Max[i1], Min[i1]}, {Max[i2], Min[i2], i2[[2]]}}];      (* {A1,B1}, {A2,B2,R2} *)
 (* source-plane constraints of a PL-only model: all images of a plane map to one source *)
 cons[o_, t1_, t2_, g_] := Module[{yp1 = ySgn[#, t1, g, 0] &, yp2 = ySgn[#, t2, g, 0] &},
   {yp1[o[[1, 1]]] - yp1[o[[1, 2]]], yp2[o[[2, 1]]] - yp2[o[[2, 2]]], yp2[o[[2, 1]]] - yp2[o[[2, 3]]]}];
-bruteFit[g0_, B0_, m1_, b1_, f2_] := Module[{o, t2 = N[B0^(-1/(g0 - 1)), wp], chi2, sol, t1v, t2v, gv},
-  o = synth[g0, B0, m1, b1, f2]; If[o === $Failed, Return[$Failed]];
+bruteFit[g0_, B0_, m1_, b1_, f2_, u2in_: Automatic] := Module[{o, t2 = N[B0^(-1/(g0 - 1)), wp], chi2, sol, t1v, t2v, gv},
+  o = synth[g0, B0, m1, b1, f2, u2in]; If[o === $Failed, Return[$Failed]];
   chi2[a_?NumericQ, b_?NumericQ, c_?NumericQ] := Total[cons[o, a, b, c]^2];
   sol = FindMinimum[chi2[a, b, c], {{a, 1}, {b, t2}, {c, N[g0, wp]}}, WorkingPrecision -> wp,
                     AccuracyGoal -> 30, PrecisionGoal -> 20, MaxIterations -> 500];
@@ -380,6 +423,25 @@ check["E9a fixed-slope fit, images near the ring (b = 0.02): dB/B > 0, within 10
   ffs[[1, 2]] > 0 && Abs[ffs[[1, 2]]/boeB - 1] < 0.10];
 check["E9b ... and the agreement degrades monotonically as the sources move off-axis",
   Module[{rr = ffs[[All, 2]]/boeB}, And @@ Thread[Differences[Abs[rr - 1]] > 0]]];
+(* Fix pass 2026-10-14 (N-R4): the keybox quotes 0.3% at equal offsets 0.02 and x1.75 at 0.3;
+   at the worked example's UNEQUAL offsets (b1, b2) = (0.15, 0.3) even a fixed-slope fit returns
+   only 0.084 of the estimate: the per-plane shifts nearly cancel. *)
+check["E9d equal offsets: fixed-slope fit / estimate = 0.997 at 0.02 (0.3%) and 1.75 at 0.3",
+  Abs[ffs[[1, 2]]/boeB - 0.9974] < 0.0005 && Abs[ffs[[5, 2]]/boeB - 1.7467] < 0.001];
+ffUneq = fixedFit[g0, B0, 10^-3, b1, f2];
+Print["       fixed-slope fit at (b1, b2/tE2) = (0.15, 0.3): dB/B = ", N[ffUneq, 6], "  ratio to estimate ", N[ffUneq/boeB, 4]];
+check["E9e unequal offsets (0.15, 0.3): fixed-slope fit / estimate = 0.084 (not an order-of-magnitude match)",
+  Abs[ffUneq/boeB - 0.0844] < 0.0005 && ffUneq/boeB < 0.1];
+(* Fix pass 2026-10-14 (N-R1): counterfactual m2 = m1 (u2 = m1 t2^2). The total-mass radii ratio is
+   unchanged, but the fitted ratio is NOT: the free-slope bias is 1.87x the physical one. *)
+Module[{t2 = N[B0^(-1/(g0 - 1)), wp], fEq, rTot},
+  fEq = bruteFit[g0, B0, 10^-4, b1, f2, 10^-4 t2^2];
+  rTot = (thTot[g0, 10^-4]/(t2 thTot[g0, 10^-4]))/(1/t2) - 1;
+  Print["       counterfactual m2 = m1 = 1e-4: dB/B = ", N[fEq["dBB"], 6], " (physical ", N[fits[10^-4]["dBB"], 6],
+        "), ratio ", N[fEq["dBB"]/fits[10^-4]["dBB"], 5], ", chi2 = ", N[fEq["chi2"], 3]];
+  check["E13 m2 = m1: total-mass-radius ratio unchanged, but fitted dB/B = -0.0798% = 1.87 x physical (not zero)",
+    Abs[rTot] < 10^-30 && fEq["chi2"] < 10^-35 && Abs[100 fEq["dBB"] + 0.079819] < 1*^-5 &&
+    Abs[fEq["dBB"]/fits[10^-4]["dBB"] - 1.865] < 0.001]];
 
 (* ---------------------------------------------------------------------
    (F) Propagation to w (illustrative flat wCDM, Om = 0.3; H0 cancels in B)
@@ -399,6 +461,11 @@ check["F3  dw = (dB/B)/S_w: a -0.5% bias in B gives dw = +0.15 (dB/B < 0 -> dw >
   Abs[(-0.005)/Sw - 0.1515] < 0.002 && (-0.005)/Sw > 0];
 check["F4  a change of w by 0.3 changes B by about 1% here (|0.3 S_w| = 0.0099)",
   Abs[Abs[3/10 Sw] - 0.0099] < 2*^-4];
+(* Fix pass 2026-10-14 (F5): Module 3 defines the lensing efficiency E = D_d D_ds/D_s; D_ds/D_s is
+   proportional to it only at fixed z_d, where the ratio of efficiencies is still B. *)
+check["F5  at common D_d: E_1/E_2 = (D_d Dds1/Ds1)/(D_d Dds2/Ds2) = B; E itself is not Dds/Ds",
+  FullSimplify[(dd ds1/s1)/(dd ds2/s2) == (ds1/s1)/(ds2/s2)] &&
+  FullSimplify[(dd ds1/s1) == ds1/s1, Assumptions -> dd > 0 && ds1 > 0 && s1 > 0] =!= True];
 Print["     B = ", N[BLCDM, 6], ",  S_w = ", N[Sw, 5], ",  1/S_w = ", N[1/Sw, 4]];
 
 (* ---------------------------------------------------------------------
@@ -419,6 +486,10 @@ Module[{kin, kout, Min, alphaOut, dM},
     Module[{v = dM /. {tE -> 1, tb -> 1/10, g -> 19/10}},
       N[v /. gi -> 21/10] > 0 && N[v /. gi -> 17/10] < 0]];
 ];
+(* Fix pass 2026-10-14 (F3): the equivalence needs axisymmetry. A unit point mass displaced by 0.1
+   from the centre deflects a ray at (1, 0) by 1/0.9, i.e. 11% more than a central one. *)
+check["G3  off-centre point mass (offset 0.1) at th = 1: |alpha| = 1/0.9 = 1.111 vs 1 for a central one",
+  Module[{a = Norm[{1, 0} - {1/10, 0}]^-1}, a == 10/9 && Abs[N[a - 1] - 0.111] < 0.001]];
 
 (* ---------------------------------------------------------------------
    Figures
@@ -441,6 +512,25 @@ check["FIG1b linear slopes d(dB/B)/dm1 = -4.66 (g=1.6, b2=0.293 tE2) and -1.77 (
   Abs[N[fig1data[[1, 5]]] - 0.29316] < 1*^-4 && Abs[N[fig1data[[2, 5]]] - 0.48149] < 1*^-4];
 check["FIG1c near annihilation the exact bias exceeds the linear one (g=1.6, m1 = 0.35 m1crit: |exact| > 1.4 |linear|)",
   Module[{pt = Last[fig1data[[1, 3]]]}, Abs[pt[[2]]] > 1.4 Abs[fig1data[[1, 2]] pt[[1]]]]];
+(* Fix pass 2026-10-14 (F2): what the caption may say. Last plotted points are the grid values
+   0.35 (g=1.6) and 0.25 (g=1.8) m1crit; the radial image of this source is lost at 0.379 and
+   0.293 m1crit; exact/linear at the last points is 1.50 (g=1.6) and only 1.24 (g=1.8). *)
+lastRatio[k_] := Module[{pt = Last[fig1data[[k, 3]]]}, pt[[2]]/(fig1data[[k, 2]] pt[[1]])];
+radLimit[k_] := Module[{gg = fig1data[[k, 1]], ff2 = fig1data[[k, 5]], mc = fig1data[[k, 4]], t2, has, lo, hi, mid},
+  t2 = N[B0^(-1/(gg - 1)), wp];
+  has[fr_] := Length[images[t2, gg, N[fr mc/B0, wp], N[ff2 t2, wp]]] == 4;
+  {lo, hi} = {Last[fig1data[[k, 3]]][[1]]/mc, 1/2};
+  If[!has[lo] || has[hi], Return[$Failed]];
+  Do[mid = (lo + hi)/2; If[has[mid], lo = mid, hi = mid], {24}]; N[(lo + hi)/2]];
+Print["     last-point m1/m1crit: ", N[Last[#[[3]]][[1]]/#[[4]] & /@ fig1data, 4],
+      "  exact/linear: ", N[lastRatio /@ {1, 2}, 4], "  radial-image limits: ", radLimit /@ {1, 2}];
+check["FIG1d last plotted points are at 0.35 m1crit (g=1.6) and 0.25 m1crit (g=1.8)",
+  Abs[N[Last[fig1data[[1, 3]]][[1]]/fig1data[[1, 4]]] - 0.35] < 1*^-6 &&
+  Abs[N[Last[fig1data[[2, 3]]][[1]]/fig1data[[2, 4]]] - 0.25] < 1*^-6];
+check["FIG1e exact/linear at the last point = 1.50 (g=1.6) but 1.24 (g=1.8; i.e. NOT > 1.4)",
+  Abs[lastRatio[1] - 1.50] < 0.01 && Abs[lastRatio[2] - 1.24] < 0.01 && lastRatio[2] < 1.4];
+check["FIG1f this source loses its radial image at m1 = 0.379 m1crit (g=1.6) and 0.293 m1crit (g=1.8)",
+  Module[{r = radLimit /@ {1, 2}}, Abs[r[[1]] - 0.379] < 0.001 && Abs[r[[2]] - 0.293] < 0.001]];
 cols = {RGBColor[0.8, 0.1, 0.1], RGBColor[0.1, 0.3, 0.8]};
 p1 = Show[
   Plot[Evaluate[Table[100 fig1data[[k, 2]] mm, {k, 2}]], {mm, 0, 0.0045},

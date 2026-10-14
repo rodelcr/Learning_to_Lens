@@ -44,9 +44,8 @@ leaves their ratio alone. The two channels of part~(b) have equal
 magnitude when $|\ln\etamea|\,\delta\gp=(\gp-1)\,\delta\etamea/\etamea$,
 i.e.\ at
 $\etamea=\exp[-(\gp-1)(\delta\etamea/\etamea)/\delta\gp]=e^{-0.1}=0.905$.
-The slope channel wins for any $\etamea$ further from unity than this.
-A compound lens with well-separated Einstein radii is exactly the case
-where the slope channel matters most.
+The slope channel wins for any $\etamea$ further from unity than this,
+so it matters most when the two Einstein radii are well separated.
 \emph{[Attested: \solnlink{17_Central_Mass_Bias/problems_17.wl}{problems\_17.wl},
 checks 1a--1f.]}
 
@@ -81,9 +80,16 @@ the radial image forms, no power-law slope keeps its radial critical
 curve once the central mass exceeds $0.66\%$ of the power-law mass
 inside $\thetaE$. The boundary goes to zero at both ends: as $\gp\to2$
 because the isothermal profile has no radial critical curve to begin
-with, and as $\gp\to1$ because the radial critical curve moves to very
-small radii, where even a tiny point mass dominates.
-\emph{[Attested: checks 2a--2g.]}
+with, and as $\gp\to1$ because the profile approaches a uniform sheet
+with $\kappab=1$, for which $\lambda_r=0$ everywhere. For $\gp$ slightly
+above $1$, the power law's $\lambda_r=1-(2-\gp)(\thetaE/\theta)^{\gp-1}$
+is only marginally negative over a wide range inside $\theta_r$: at
+$\theta_r/10$ it equals $1-10^{\gp-1}$, which is $-0.023$ at $\gp=1.01$
+against $-2.2$ at $\gp=1.5$. A small positive term $u/\theta^2$ then
+lifts it above zero. The radial critical curve does \emph{not} move to
+small radii: as $\gp\to1$, $\theta_r\to e^{-1}\thetaE\approx0.37\,\thetaE$
+and $\theta_\star\to e^{-3/2}\thetaE\approx0.22\,\thetaE$.
+\emph{[Attested: checks 2a--2i.]}
 
 % ----- Exercise 17.3 -----
 \subsection*{Exercise~\ref{ex:cb_differential}: Why the Ratio Is Biased}
@@ -105,8 +111,9 @@ $\mBH_2=\mBH_1$. That happens in two limits:
         scale with $\Brat$ in the same way as $\thetaBH$, so the fraction
         is again the same on both planes.
 \end{itemize}
-In either case the black hole shifts both Einstein radii by the same
-fraction, and the ratio $\etamea$ cancels it. For $\gp=1.6$ and
+In either case the black hole shifts both total-mass Einstein radii by
+the same fraction, and their ratio cancels it. (A fit need not return
+the total-mass radii; see the keybox ``The bias is differential''.) For $\gp=1.6$ and
 $\Brat=0.8$, $\mBH_2/\mBH_1=0.594$ and the bracket is $0.406$.
 \emph{[Attested: checks 3a--3e.]}
 
@@ -148,8 +155,10 @@ $\delta\Brat/\Brat=2.03\times10^{-3}$; for $\gp=1.9$,
 $\delta\etamea/\etamea=1.33\times10^{-3}$ and
 $\delta\Brat/\Brat=1.19\times10^{-3}$. With $S_w=-0.0330$, the $\gp=1.9$
 estimate gives $\delta w=-0.036$. At $\gp=1.9$ there is no radial image
-to drag the slope, so if the slope is pinned by other data this
-ratio-channel estimate is the relevant order of magnitude.
+to drag the slope, so if the slope is pinned by other data the ratio
+channel is all that remains. Even then eq.~\eqref{eq:cb_boe} assumes the
+fit returns the total-mass radii, which holds only for images close to
+the rings (\S\ref{sec:cb_boe}).
 
 \textbf{(d)} The coefficient $-4.26$ of \S\ref{sec:cb_worked} belongs to
 one axisymmetric geometry with one particular pair of source positions.
@@ -213,18 +222,27 @@ $\kappab_{\rm in}\theta'=\kappab_{\rm PL}(\theta_b)\theta_b^{\gamma_{\rm in}-1}\
 \end{equation*}
 which is positive exactly when $\gamma_{\rm in}>\gp$.
 
-\textbf{(b)} For $\gp=1.9$, $\gamma_{\rm in}=2.1$, $\theta_b=0.1$:
-$\mBH_{\rm eff}=1.1\times0.1^{1.1}\times(1/0.9-1/1.1)=0.0177$. This is
-more than ten times $\mBH_{1,\rm crit}(1.9,0.8)=0.0017$.
+\textbf{(b)} For $\gp=1.9$, $\gamma_{\rm in}=2.1$, $\theta_b=0.02$:
+$\mBH_{\rm eff}=1.1\times0.02^{1.1}\times(1/0.9-1/1.1)=0.0030$, which is
+$2.3$ times $\mBH_{\rm crit}(1.9)=0.0013$. Both numbers are fractions on
+the same (far) plane. The comparison is valid because
+$\theta_b<\theta_\star=0.040<\theta_r=0.077$: the region where the
+radial critical curve would form lies outside $\theta_b$, where the lens
+is exactly a power law plus a point mass. Inside $\theta_b$ the slope
+$\gamma_{\rm in}>2$ gives $\deriv{\alpha}{\theta}<0$, so $\lambda_r>1$
+there too, and the deflector has no radial critical curve at all.
+(With $\theta_b=0.1$ both $\theta_\star$ and $\theta_r$ would lie
+inside the break, and the point-mass comparison would not apply.)
 
-\textbf{(c)} A modest steepening of the inner tenth of the Einstein
-radius acts, on all images outside it, like a central mass larger than
-any plausible black hole, and large enough to remove the radial image of
-a near-isothermal deflector. What biases the fit is the
+\textbf{(c)} A modest steepening of the inner $2\%$ of the Einstein
+radius acts, on all images outside it, like a central mass of $0.3\%$
+of the power-law mass inside $\thetaE$, comparable to a large black
+hole, and enough to remove the radial image of a near-isothermal
+deflector. What biases the fit is the
 \emph{rigidity} of the power law, its inability to put the right amount
 of mass in the centre, and not the black hole as such. A black hole is
 one physical source of that mismatch; a cusp or a nuclear cluster is
 another. Conversely, a model with freedom in its inner profile can
 absorb all of them, provided the images lie outside the region where the
 excess sits.
-\emph{[Attested: checks 7a--7d.]}
+\emph{[Attested: checks 7a--7f.]}
