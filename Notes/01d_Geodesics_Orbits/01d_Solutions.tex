@@ -18,22 +18,22 @@ which verifies each answer symbolically.
 We start from the normalization condition~\eqref{eq:normalization} with
 $f(r) = 1 - R_S/r$:
 \begin{equation*}
-    -f\!\left(\frac{dt}{d\lambda}\right)^{\!2}
+    -f c^2\!\left(\frac{dt}{d\lambda}\right)^{\!2}
     + \frac{1}{f}\left(\frac{dr}{d\lambda}\right)^{\!2}
-    + r^2\!\left(\frac{d\phi}{d\lambda}\right)^{\!2} = -\epsilon \,.
+    + r^2\!\left(\frac{d\phi}{d\lambda}\right)^{\!2} = -\epsilon c^2 \,.
 \end{equation*}
-Substituting the conserved quantities $E = f\, dt/d\lambda$ and
+Substituting the conserved quantities $E = f c^2\, dt/d\lambda$ and
 $L = r^2\, d\phi/d\lambda$:
 \begin{equation*}
-    -\frac{E^2}{f} + \frac{1}{f}\left(\frac{dr}{d\lambda}\right)^{\!2}
-    + \frac{L^2}{r^2} = -\epsilon \,.
+    -\frac{E^2}{f c^2} + \frac{1}{f}\left(\frac{dr}{d\lambda}\right)^{\!2}
+    + \frac{L^2}{r^2} = -\epsilon c^2 \,.
 \end{equation*}
 Multiplying through by $f$ and rearranging:
 \begin{align*}
     \left(\frac{dr}{d\lambda}\right)^{\!2}
-    &= E^2 - f(r)\!\left(\epsilon + \frac{L^2}{r^2}\right) \\
-    &= E^2 - \left(1 - \frac{R_S}{r}\right)\!\left(\epsilon + \frac{L^2}{r^2}\right) \\
-    &= E^2 - \epsilon + \frac{\epsilon R_S}{r} - \frac{L^2}{r^2} + \frac{R_S L^2}{r^3} \,.
+    &= \frac{E^2}{c^2} - f(r)\!\left(\epsilon c^2 + \frac{L^2}{r^2}\right) \\
+    &= \frac{E^2}{c^2} - \left(1 - \frac{R_S}{r}\right)\!\left(\epsilon c^2 + \frac{L^2}{r^2}\right) \\
+    &= \frac{E^2}{c^2} - \epsilon c^2 + \frac{\epsilon c^2 R_S}{r} - \frac{L^2}{r^2} + \frac{R_S L^2}{r^3} \,.
 \end{align*}
 Dividing by 2 and identifying terms:
 \begin{equation*}
@@ -41,7 +41,7 @@ Dividing by 2 and identifying terms:
     + \underbrace{\left(-\frac{\epsilon GM}{r}
     + \frac{L^2}{2r^2}
     - \frac{GML^2}{c^2 r^3}\right)}_{V_{\mathrm{eff}}(r)}
-    = \frac{1}{2}(E^2 - \epsilon) \equiv \mathcal{E} \,,
+    = \frac{1}{2}\left(\frac{E^2}{c^2} - \epsilon c^2\right) \equiv \mathcal{E} \,,
 \end{equation*}
 where we used $R_S = 2GM/c^2$.  This gives the effective
 potential~\eqref{eq:effective_potential}:
@@ -51,16 +51,8 @@ potential~\eqref{eq:effective_potential}:
 \]
 
 \begin{derivation}[The ``identifying terms'' step, with $c$ kept]
-The computation above sets $c = 1$ in the normalisation (right-hand side
-$-\epsilon$).  Keeping $c$ (right-hand side $-\epsilon c^2$,
-$E = f\,c\,dt/d\lambda$; see the derivation box after
-eq.~\eqref{eq:effective_potential}), the expanded line reads
-\[
-\Bigl(\frac{dr}{d\lambda}\Bigr)^2
-= E^2 - \epsilon c^2 + \frac{\epsilon c^2R_S}{r} - \frac{L^2}{r^2}
-  + \frac{R_SL^2}{r^3} ,
-\]
-and halving term by term with $R_S = 2GM/c^2$:
+Halving the last expanded line term by term with $R_S = 2GM/c^2$
+(see also the derivation box after eq.~\eqref{eq:effective_potential}):
 \begin{align*}
 \tfrac12\,\epsilon c^2R_S/r &= \epsilon GM/r
   && \text{(moves left as } -\epsilon GM/r\text{)} \\
@@ -69,8 +61,9 @@ and halving term by term with $R_S = 2GM/c^2$:
 \tfrac12\,R_SL^2/r^3 &= GML^2/(c^2r^3)
   && \text{(moves left as } -GML^2/(c^2r^3)\text{)} .
 \end{align*}
-With $c = 1$ the first line is just $\tfrac12\epsilon R_S/r = \epsilon GM/r$,
-which is the step summarised as ``we used $R_S = 2GM/c^2$''.
+The remaining two terms, $\tfrac12(E^2/c^2 - \epsilon c^2)$, are the
+constant $\mathcal{E}$.  With $c = 1$ (Carroll's units) every $c$ above
+drops out and $\mathcal{E} = \tfrac12(E^2 - \epsilon)$.
 \end{derivation}
 
 
@@ -86,12 +79,12 @@ reaching the origin.  The GR correction term is attractive at small $r$
 and allows the barrier to be overcome --- this is why particles can plunge
 into black holes.
 
-\begin{annotation}[What ``$c \to \infty$'' really means]
+\begin{annotation}[What ``$c \to \infty$'' means]
 The GR term is smaller than the centrifugal term by the factor
 $\bigl(GML^2/c^2r^3\bigr)/\bigl(L^2/2r^2\bigr) = R_S/r$.  Sending
 $c \to \infty$ at fixed $r$ is a shorthand for the physical condition
-$r \gg R_S$.  For the same reason $\mathcal{E} = \tfrac12(E^2 - c^2)$ tends
-to the Newtonian specific energy: with $E = c + e/c$,
+$r \gg R_S$.  For the same reason $\mathcal{E} = \tfrac12(E^2/c^2 - c^2)$ tends
+to the Newtonian specific energy: with $E = c^2 + e$,
 $\mathcal{E} = e + e^2/(2c^2)$.
 \end{annotation}
 
@@ -210,7 +203,7 @@ Using eq.~\eqref{eq:perihelion_precession} with Mercury's orbital parameters:
     \Delta\phi &= \frac{6\pi G M}{c^2\, a\,(1 - e^2)} \\
     &= \frac{6\pi \times 6.674\!\times\!10^{-11} \times 1.989\!\times\!10^{30}}
     {(2.998\!\times\!10^{8})^2 \times 5.79\!\times\!10^{10} \times (1 - 0.2056^2)} \\
-    &= 5.01 \times 10^{-7} \;\text{rad/orbit} \,.
+    &= 5.02 \times 10^{-7} \;\text{rad/orbit} \,.
 \end{align*}
 
 \begin{derivation}[The arithmetic in Step 1, organised by length scales]
@@ -227,16 +220,17 @@ a(1 - e^2) &= 5.79\times10^{10}\times0.9577~\text{m} = 5.545\times10^{10}~\text{
 \end{align*}
 Mathematica (\texttt{problems\_01d.wl}, annotated-edition checks) gives
 $5.020\times10^{-7}$~rad $= 0.10355''$ per orbit.  Keep four significant
-figures in Step~2 ($0.1036''$): then $0.1036\times415.2 = 43.0''$, whereas
-$0.1034\times415.2 = 42.9''$.  Step~3 uses the Julian year, 365.25~days.
+figures in Step~2 ($0.1036''$): then $0.1036\times415.2 = 43.0''$.  (Earlier
+versions of Steps~1--2 printed $5.01\times10^{-7}$ and $0.1034''$, a slip;
+$0.1034\times415.2 = 42.9''$.)  Step~3 uses the Julian year, 365.25~days.
 \end{derivation}
 
 
 \textbf{Step 2: Convert to arcseconds.}
 \begin{equation*}
-    \Delta\phi = 5.01 \times 10^{-7} \;\text{rad}
+    \Delta\phi = 5.02 \times 10^{-7} \;\text{rad}
     \times \frac{180 \times 3600}{\pi} \;\frac{\text{arcsec}}{\text{rad}}
-    = 0.1034\;\text{arcsec/orbit} \,.
+    = 0.1036\;\text{arcsec/orbit} \,.
 \end{equation*}
 
 \textbf{Step 3: Orbits per century.}
@@ -247,7 +241,7 @@ $0.1034\times415.2 = 42.9''$.  Step~3 uses the Julian year, 365.25~days.
 \textbf{Step 4: Precession per century.}
 \begin{equation*}
     \Delta\phi_{\mathrm{century}}
-    = 0.1034 \times 415.2
+    = 0.1036 \times 415.2
     = \boxed{43.0 \;\text{arcsec/century}} \,.
 \end{equation*}
 This matches the observed anomalous precession of Mercury, confirming one
@@ -282,12 +276,16 @@ $r \to 0$, allowing plunge orbits.
 \textbf{(b)} For $\mathcal{E}$ slightly above $V_{\mathrm{eff}}(r_+)$, the
 particle oscillates between a minimum radius (perihelion) and a maximum
 radius (aphelion), but the orbit does not close due to the GR correction
-term.  The perihelion advances by a small angle each orbit, producing a
-\textbf{bound precessing ellipse} --- the same effect responsible for
-Mercury's perihelion precession (Exercise~\ref{ex:mercury_precession}).
+term.  The perihelion advances by a large angle each orbit
+($\approx 2.6$~rad $\approx 149^\circ$ for near-circular orbits at
+$r \approx 12\,GM/c^2$), producing a strongly precessing rosette, a
+\textbf{bound precessing ellipse} in the classification of the exercise.
+Only for $r \gg 6GM/c^2$ does the advance become small, tending to
+$6\pi GM/(c^2 r)$ per orbit: the regime of Mercury's perihelion precession
+(Exercise~\ref{ex:mercury_precession}).
 
 \begin{annotation}[Why $V_{\mathrm{eff}}(4) = 0$ is special]
-Since $\mathcal{E} = \tfrac12(E^2 - 1)$ in these units, the unstable orbit at
+Since $\mathcal{E} = \tfrac12(E^2/c^2 - c^2) = \tfrac12(E^2 - 1)$ in these units, the unstable orbit at
 $r_- = 4$ has $E^2 = 1 + 2V_{\mathrm{eff}}(4) = 1$: it is \emph{marginally
 bound}.  A particle released from rest at infinity with $L = 4\,GM/c$ just
 reaches the top of the barrier at $r = 4GM/c^2$.
@@ -310,10 +308,8 @@ At $r_c = 12$ (which indeed has $L^2 = 144/9 = 16$) the excess over $2\pi$ is
 2\pi\bigl(\sqrt2 - 1\bigr) \approx 2.60~\text{rad} \approx 149^\circ
 \quad\text{per orbit},
 \]
-not a small angle: the orbit is a strongly precessing rosette.  For
+as quoted in part~(b).  For
 $r_c \gg 6$, $2\pi\bigl(1/\sqrt{1 - 6/r_c} - 1\bigr) \to 6\pi/r_c =
 6\pi GM/(c^2r_c)$, the $e \to 0$ limit of eq.~\eqref{eq:perihelion_precession}.
-The ``small angle'' of the qualitative answer is a statement about the
-weak-field regime $r \gg 6GM/c^2$.
 \end{derivation}
 

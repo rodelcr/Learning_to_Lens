@@ -126,32 +126,42 @@ So the metric becomes:
     + r^2\, d\Omega^2 \,.
 \]
 
-\textbf{(b)} In Cartesian-like coordinates ($dx^2 + dy^2 + dz^2 =
-dr^2 + r^2 d\Omega^2$ to zeroth order), and noting that the
-distinction between $dr^2 + r^2 d\Omega^2$ and $(1 + R_S/r)(dr^2 +
-r^2 d\Omega^2)$ versus $(1 + R_S/r) dr^2 + r^2 d\Omega^2$ only
-matters at second order in $R_S/r$:
+\textbf{(b)} Relabelling the Schwarzschild $r$ as the Cartesian radius
+does not work: $(1 + R_S/r)\,dr^2 + r^2 d\Omega^2$ and
+$(1 + R_S/r)(dr^2 + r^2 d\Omega^2)$ differ by $R_S\,r\,d\Omega^2$, which is
+\emph{first} order in $R_S/r$ relative to $r^2 d\Omega^2$.\footnote{Earlier
+versions of this solution said this difference ``only matters at second
+order in $R_S/r$''; it is first order, and the change of radius below is
+what removes it.}  Instead change to the isotropic radius $\rho$,
+$r = \rho\,(1 + R_S/4\rho)^2 \approx \rho + R_S/2$
+(eq.~\eqref{eq:isotropic_r}).  To first order in $R_S/\rho$,
 \[
-    ds^2 \approx -\left(1 - \frac{R_S}{r}\right) c^2 dt^2
-    + \left(1 + \frac{R_S}{r}\right)(dx^2 + dy^2 + dz^2) \,.
+    1 - \frac{R_S}{r} = 1 - \frac{R_S}{\rho} \,, \qquad
+    \Bigl(1 + \frac{R_S}{r}\Bigr)dr^2 + r^2 d\Omega^2
+    = \Bigl(1 + \frac{R_S}{\rho}\Bigr)\bigl(d\rho^2 + \rho^2 d\Omega^2\bigr) \,,
 \]
-With $\Phi = -GM/r$ and $R_S = 2GM/c^2$:
+and $d\rho^2 + \rho^2 d\Omega^2 = dx^2 + dy^2 + dz^2$ with
+$\rho = |\mathbf{x}|$:
 \[
-    1 - \frac{R_S}{r} = 1 + \frac{2\Phi}{c^2} \,, \qquad
-    1 + \frac{R_S}{r} = 1 - \frac{2\Phi}{c^2} \,.
+    ds^2 \approx -\left(1 - \frac{R_S}{\rho}\right) c^2 dt^2
+    + \left(1 + \frac{R_S}{\rho}\right)(dx^2 + dy^2 + dz^2) \,.
+\]
+With $\Phi = -GM/\rho$ (equal to $-GM/r$ up to terms of order
+$(R_S/\rho)^2$ in $\Phi/c^2$) and $R_S = 2GM/c^2$:
+\[
+    1 - \frac{R_S}{\rho} = 1 + \frac{2\Phi}{c^2} \,, \qquad
+    1 + \frac{R_S}{\rho} = 1 - \frac{2\Phi}{c^2} \,.
 \]
 This is exactly the weak-field metric~\eqref{eq:weak_field_metric}.
 
-\begin{annotation}[Careful: the shortcut in (b) is not first-order exact]
-$(1 + R_S/r)\,dr^2 + r^2d\Omega^2$ and $(1 + R_S/r)(dr^2 + r^2d\Omega^2)$ differ
-by $R_S\,r\,d\Omega^2$.  Relative to $r^2d\Omega^2$ this is $R_S/r$, i.e.\
-\emph{first} order, the same order as the terms being kept.  The final
-metric is nevertheless correct, provided the radius in it is the isotropic
-radius $\rho$ rather than the Schwarzschild $r$.  The derivation box below
-does it properly.
+\begin{annotation}[Why the radius must change in (b)]
+The missing $R_S\,r\,d\Omega^2$ is the same order as the terms being kept,
+so no relabelling of $r$ can supply it.  The shift $r \simeq \rho + R_S/2$
+does, through $r^2 \simeq \rho^2 + R_S\rho$.  The derivation box below
+expands each factor.
 \end{annotation}
 
-\begin{derivation}[Part (b) done properly: change to the isotropic radius]
+\begin{derivation}[Part (b) in detail: the isotropic substitution]
 Use $r = \rho\,(1 + R_S/4\rho)^2$ (eq.~\eqref{eq:isotropic_r}).  Expanding,
 \begin{align*}
 r &= \rho + \frac{R_S}{2} + \frac{R_S^2}{16\rho},
@@ -183,9 +193,9 @@ $r^2 = (1 + R_S/4\rho)^4\rho^2$.
 \end{derivation}
 
 
-\textbf{(c)} We identify $h_{00} = -2\Phi/c^2 = R_S/r$ and
-$h_{ij} = -2\Phi/c^2\, \delta_{ij} = (R_S/r)\, \delta_{ij}$.
-Thus $h_{00} = h_{xx} = h_{yy} = h_{zz} = R_S/r$ --- the time and
+\textbf{(c)} We identify $h_{00} = -2\Phi/c^2 = R_S/\rho$ and
+$h_{ij} = -2\Phi/c^2\, \delta_{ij} = (R_S/\rho)\, \delta_{ij}$.
+Thus $h_{00} = h_{xx} = h_{yy} = h_{zz} = R_S/\rho$ --- the time and
 spatial diagonal perturbations are equal in magnitude.  This equality is
 the origin of the factor-of-two in light bending.
 
@@ -214,7 +224,7 @@ Even weaker field; the Sun's effect at Earth's distance is tiny.
 \textbf{(c)} $r = 1$~kpc $= 3.086 \times 10^{19}$~m:
 \[
     n - 1 = \frac{2GM_\odot}{c^2 \times 3.086\!\times\!10^{19}}
-    = \boxed{9.58 \times 10^{-17}}
+    = \boxed{9.57 \times 10^{-17}}
 \]
 Completely negligible.  At kiloparsec scales, the gravitational
 potential of a single solar mass is immeasurably weak; only the
@@ -225,8 +235,7 @@ produces observable lensing.
 For a point mass $n - 1 = R_S/r$, and the Sun's Schwarzschild radius is
 $R_S \approx 2.95$~km.  Then $n - 1 \approx 2.95/(6.96\times10^5) =
 4.24\times10^{-6}$ at the limb, and the other two answers are this value
-scaled by $R_\odot/r$.  (Mathematica gives $9.572\times10^{-17}$ for part (c),
-so the last digit printed above is a rounding.)
+scaled by $R_\odot/r$.
 \end{annotation}
 
 
@@ -323,16 +332,15 @@ confirming the result.
 \end{align*}
 This is the value confirmed by Eddington's 1919 expedition.
 
-\begin{annotation}[Scaling shortcut, and the last digit of the galaxy answer]
+\begin{annotation}[Scaling shortcut]
 Since $\alphahat \propto M/b$, every point-mass deflection follows from the
 solar one:
 \[
 \alphahat = 1.75''\,\frac{M}{\Msun}\,\frac{R_\odot}{b} .
 \]
 For $M = 10^{12}\,\Msun$ and $b = 10$~kpc,
-$1.75''\times10^{12}\times(6.96\times10^8/3.086\times10^{20}) = 3.95''$.
-Mathematica gives $1.914\times10^{-5}$~rad $= 3.949''$ for the galaxy case
-below, so its last printed digit ($3.94''$) is a rounding.
+$1.75''\times10^{12}\times(6.96\times10^8/3.086\times10^{20}) = 3.95''$,
+the galaxy case below.
 \end{annotation}
 
 
@@ -343,7 +351,7 @@ $= 3.086 \times 10^{20}$~m:
     10^{12} \times 1.989\!\times\!10^{30}}
     {(2.998\!\times\!10^{8})^2 \times 3.086\!\times\!10^{20}}
     = 1.91 \times 10^{-5}~\text{rad}
-    = \boxed{3.94''}
+    = \boxed{3.95''}
 \]
 
 % ----- Exercise 5 -----

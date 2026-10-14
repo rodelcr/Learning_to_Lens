@@ -414,7 +414,7 @@ anVc[r_] := -aneps anGN anM/r + anL^2/(2 r^2) - anGN anM anL^2/(anc^2 r^3);
 (* -f c^2 tdot^2 + rdot^2/f + r^2 phidot^2 = -eps c^2 with tdot = E/(f c) *)
 anRd2 = Solve[-anfc[anr] anc^2 (anE/(anfc[anr] anc))^2 + anrd2/anfc[anr] +
      anL^2/anr^2 == -aneps anc^2, anrd2][[1, 1, 2]];
-check["A3 (1/2) rdot^2 + V_eff = (1/2)(E^2 - eps c^2)  [E = f c dt/dlam]",
+check["A3 [superseded convention E = f c dt/dlam; text now uses E = f c^2 dt/dlam, see F1a] (1/2) rdot^2 + V_eff = (1/2)(E^2 - eps c^2)",
   Simplify[anRd2/2 + anVc[anr] - (anE^2 - aneps anc^2)/2] === 0];
 (* photon normalisation with the energy-type E' = f c^2 dt/dlam *)
 anRd2p = Solve[-anfc[anr] anc^2 (anEp/(anfc[anr] anc^2))^2 + anrd2/anfc[anr] +
@@ -425,7 +425,7 @@ check["A3c b = L/|rdot|_inf = c L/E'",
   Simplify[anL/Sqrt[Limit[anRd2p, anr -> Infinity]] - anc anL/anEp,
     Assumptions -> {anc > 0, anEp > 0, anL > 0}] === 0];
 (* Newtonian specific energy: E = c + e/c *)
-check["A3d (1/2)(E^2 - c^2) = e + e^2/(2c^2) for E = c + e/c",
+check["A3d [superseded convention, see F1g] (1/2)(E^2 - c^2) = e + e^2/(2c^2) for E = c + e/c",
   Simplify[((anc + ane/anc)^2 - anc^2)/2 - (ane + ane^2/(2 anc^2))] === 0];
 
 (* --- A4  circular orbits (units): factorisation of V' and stability --- *)
@@ -515,9 +515,9 @@ check["A8a GM_sun/c^2 = 1477 m (4 s.f.)", Round[anGMc2] == 1477];
 check["A8b GM_sun/(c^2 a_Merc) = 2.55e-8", Abs[anGMc2/5.79*^10 - 2.55*^-8] < 0.005*^-8];
 check["A8c 1 - e^2 = 0.9577", Abs[(1 - 0.2056^2) - 0.9577] < 0.00005];
 check["A8d dphi = 5.02e-7 rad/orbit (3 s.f.)", Abs[anDphi - 5.02*^-7] < 0.005*^-7];
-check["A8e dphi = 0.1036 arcsec/orbit (4 s.f.) [solution text says 0.1034]",
+check["A8e dphi = 0.1036 arcsec/orbit (4 s.f.)",
   Abs[anArc - 0.1036] < 0.00005];
-check["A8h 0.1034 x 415.2 = 42.93 (the solution's rounded per-orbit value gives 42.9, not 43.0)",
+check["A8h 0.1034 x 415.2 = 42.93 (the former slip 0.1034 would give 42.9, not 43.0)",
   Abs[0.1034 415.2 - 42.93] < 0.005];
 check["A8f N_orbits/century = 415.2", Abs[anNorb - 415.2] < 0.05];
 check["A8g precession = 43.0 arcsec/century", Abs[anArc anNorb - 43.0] < 0.05];
@@ -628,5 +628,61 @@ check["A15c r = 6 in r^2 - L^2 r + 3 L^2 = 0 => L^2 = 12",
   Solve[36 - 6 anLsq + 3 anLsq == 0, anLsq] === {{anLsq -> 12}}];
 check["A15d circular orbit: r^2 - L^2 r + 3L^2 = 0 <=> L^2 = r^2/(r - 3)",
   Simplify[(anr^2 - anLsq anr + 3 anLsq) /. anLsq -> anr^2/(anr - 3)] === 0];
+
+(* ===== Fix-pass checks (2026-10-14; FACT_CRITIC_01d_annotated_2026-10-14 F1-F3) =====
+   Each check passes on the corrected text and is written to FAIL on the old value. *)
+Print["\n=== Fix-pass checks (2026-10-14) ===\n"];
+
+(* --- F1  one normalisation of E: E = f c^2 dt/dlam (Congdon & Keeton eq. 3.76a) --- *)
+fxf[r_] := 1 - 2 fxG fxM/(fxc^2 r);
+fxV[r_] := -fxeps fxG fxM/r + fxL^2/(2 r^2) - fxG fxM fxL^2/(fxc^2 r^3);
+(* normalisation -f c^2 tdot^2 + rdot^2/f + r^2 phidot^2 = -eps c^2, tdot = E/(f c^2) *)
+fxRd2 = Solve[-fxf[fxr] fxc^2 (fxE/(fxf[fxr] fxc^2))^2 + fxrd2/fxf[fxr] +
+     fxL^2/fxr^2 == -fxeps fxc^2, fxrd2][[1, 1, 2]];
+check["F1a (1/2) rdot^2 + V_eff = (1/2)(E^2/c^2 - eps c^2) with E = f c^2 dt/dlam; old (1/2)(E^2 - eps c^2) fails",
+  Simplify[fxRd2/2 + fxV[fxr] - (fxE^2/fxc^2 - fxeps fxc^2)/2] === 0 &&
+  Simplify[fxRd2/2 + fxV[fxr] - (fxE^2 - fxeps fxc^2)/2] =!= 0];
+check["F1b old c=1 normalisation (RHS -eps, E = f dt/dlam) does not give the printed V_eff with explicit c",
+  Module[{rd = Solve[-fxf[fxr] (fxE/fxf[fxr])^2 + fxrd2/fxf[fxr] + fxL^2/fxr^2 == -fxeps,
+        fxrd2][[1, 1, 2]]},
+    Simplify[D[rd/2 + fxV[fxr], fxr]] =!= 0]];
+(* photons (eps = 0) with the SAME E: eq. photon_orbit and b = c L/E *)
+fxRd2p = fxRd2 /. fxeps -> 0;
+check["F1c eps = 0: dphi/dr = (L/r^2)[E^2/c^2 - (L^2/r^2) f]^(-1/2)  (eq. photon_orbit)",
+  Simplify[(fxL/fxr^2)/Sqrt[fxRd2p] - (fxL/fxr^2) (fxE^2/fxc^2 - fxL^2/fxr^2 fxf[fxr])^(-1/2)] === 0];
+check["F1d b = L/|rdot|_inf = c L/E (and not L/E)",
+  Module[{bb = fxL/Sqrt[Limit[fxRd2p, fxr -> Infinity]]},
+    Simplify[bb - fxc fxL/fxE, Assumptions -> {fxc > 0, fxE > 0, fxL > 0}] === 0 &&
+    Simplify[bb - fxL/fxE, Assumptions -> {fxc > 0, fxE > 0, fxL > 0}] =!= 0]];
+check["F1e Killing: -K_mu u^mu = -g_tt tdot = f c^2 tdot with g_tt = -f c^2",
+  Simplify[-(-fxf[fxr] fxc^2) fxtd - fxf[fxr] fxc^2 fxtd] === 0];
+check["F1f Gamma^t_tr = (1/2) g^tt d_r g_tt = f'/(2f), independent of c",
+  Simplify[(1/2) (1/(-fxf[fxr] fxc^2)) D[-fxf[fxr] fxc^2, fxr] - D[fxf[fxr], fxr]/(2 fxf[fxr])] === 0];
+check["F1g E = c^2 + e => (1/2)(E^2/c^2 - c^2) = e + e^2/(2c^2); old E = c + e/c fails with new E-cal",
+  Simplify[((fxc^2 + fxe)^2/fxc^2 - fxc^2)/2 - (fxe + fxe^2/(2 fxc^2))] === 0 &&
+  Simplify[((fxc + fxe/fxc)^2/fxc^2 - fxc^2)/2 - (fxe + fxe^2/(2 fxc^2))] =!= 0];
+check["F1h circular orbit (rdot = 0): (E/c^2)^2 = 1 + 2 V_eff/c^2; ISCO (G=c=M=1) E/c^2 = 2 Sqrt2/3",
+  Simplify[(fxEsq /. Solve[(fxEsq/fxc^2 - fxc^2)/2 == fxVV, fxEsq][[1]])/fxc^4 - (1 + 2 fxVV/fxc^2)] === 0 &&
+  Simplify[Sqrt[1 + 2 (-1/18)] - 2 Sqrt[2]/3] === 0];
+check["F1i photon (G=c=M=1): E-cal = E^2/(2c^2) < L^2/54 <=> b^2 = c^2 L^2/E^2 > 27",
+  Simplify[Reduce[fxE^2/2 < fxL^2/54 && fxE > 0 && fxL > 0, fxL] ===
+           Reduce[fxL^2/fxE^2 > 27 && fxE > 0 && fxL > 0, fxL]]];
+
+(* --- F2  Mercury, 01d_Solutions Ex 4 (solution's own constants) --- *)
+check["F2a Step 1: dphi = 5.02e-7 rad/orbit at 3 s.f. (old 5.01e-7 fails)",
+  Round[anDphi 10^7, 0.01] == 5.02 && Round[anDphi 10^7, 0.01] != 5.01];
+check["F2b Step 2: 0.1036 arcsec/orbit at 4 s.f. (old 0.1034 fails)",
+  Round[anArc, 0.0001] == 0.1036 && Round[anArc, 0.0001] != 0.1034];
+check["F2c Step 4: 0.1036 x 415.2 = 43.0 (boxed value stands); 0.1034 x 415.2 = 42.9 != 43.0",
+  Round[0.1036 415.2, 0.1] == 43.0 && Round[0.1034 415.2, 0.1] != 43.0];
+
+(* --- F3  Ex 5(b): advance near r = 12 GM/c^2 is large; small only for r >> 6 GM/c^2 --- *)
+fxAdv[rc_] := 2 Pi (1/Sqrt[1 - 6/rc] - 1);
+Print["    advance per orbit: r=12 ", N[fxAdv[12]], " rad; r=600 ", N[fxAdv[600]],
+  " rad (6Pi/r = ", N[6 Pi/600], ")"];
+check["F3a advance at r = 12 is 2.6 rad = 149 deg (> 1 rad: NOT a small angle)",
+  Round[N[fxAdv[12]], 0.1] == 2.6 && Round[N[fxAdv[12] 180/Pi]] == 149 && N[fxAdv[12]] > 1];
+check["F3b r = 600 >> 6: advance small (< 0.04 rad) and within 1.5% of 6 Pi/r",
+  N[fxAdv[600]] < 0.04 && Abs[N[fxAdv[600]/(6 Pi/600)] - 1] < 0.015];
 
 summary[];

@@ -72,8 +72,8 @@ dimensionless quantity characterizing the strength of gravity is
 For a typical galaxy lens ($M \sim 10^{12}\,\Msun$, $r \sim 10$~kpc),
 the ratio is $|\Phi|/c^2 \approx 5 \times 10^{-6}$.  Even for
 galaxy clusters ($M \sim 10^{15}\,\Msun$, $r \sim 1$~Mpc), one finds
-$|\Phi|/c^2 \sim 5 \times 10^{-5}$; values of $\sim 10^{-4}$ arise
-only near cluster cores at $r \lesssim 100$~kpc.
+$|\Phi|/c^2 \sim 5 \times 10^{-5}$; values of $\sim 10^{-4}$ are reached
+only in the inner few hundred kpc of a massive cluster.
 
 In all of these astrophysical settings, gravity is \textit{extremely}
 weak.  This justifies expanding the metric perturbatively around flat
@@ -94,7 +94,7 @@ gravity} approximation.
           potential at closest approach.  Sun: $4\times2.12\times10^{-6} =
           8.49\times10^{-6}$~rad $= 1.75''$; the galaxy estimate gives
           $\approx 4''$.  Arcsecond image splittings are therefore the
-          \emph{natural} scale of galaxy lensing, not a coincidence.
+          \emph{natural} scale of galaxy lensing.
 \end{itemize}
 \end{annotation}
 
@@ -276,7 +276,7 @@ we get:
     \label{eq:newton_from_geodesic}
 \end{equation}
 
-\begin{annotation}[$d\tau \approx dt$ is not really needed]
+\begin{annotation}[$d\tau \approx dt$ is not needed]
 The $0$-component of the geodesic equation is
 $d^2x^0/d\tau^2 = -2\christoffel{0}{0}{i}\,(dx^0/d\tau)(dx^i/d\tau)$, which is
 suppressed by $v/c$ relative to the spatial equation, so $dt/d\tau$ is
@@ -554,9 +554,16 @@ perturbations to the metric, as derived in
 Section~\ref{sec:weak_field_metric}); in Brans--Dicke theory,
 $\gamma_{\mathrm{PPN}} = (1+\omega)/(2+\omega)$ where $\omega$ is the
 coupling constant.  Solar system tests --- most precisely the Cassini
-spacecraft's measurement of the Shapiro delay --- constrain
-$|\gamma_{\mathrm{PPN}} - 1| < 2.3 \times 10^{-5}$, strongly supporting
-GR (Will 2014, \textit{Living Reviews in Relativity}).
+spacecraft's measurement of the Shapiro delay (Bertotti, Iess \& Tortora
+2003, \textit{Nature}) --- give
+$\gamma_{\mathrm{PPN}} - 1 = (2.1 \pm 2.3) \times 10^{-5}$, strongly
+supporting GR (Will 2014, \textit{Living Reviews in
+Relativity}).\footnote{Earlier versions of this chapter quoted
+$|\gamma_{\mathrm{PPN}} - 1| < 2.3\times10^{-5}$, the number listed as the
+$\gamma - 1$ limit in Table~4 of Will (2014).  The measurement itself is a
+central value of $2.1\times10^{-5}$ with a $1\sigma$ uncertainty of
+$2.3\times10^{-5}$, as quoted in the text of Will (2014) and in Bertotti,
+Iess \& Tortora (2003).}
 The Newtonian prediction corresponds to $\gamma_{\mathrm{PPN}} = 0$
 (no spatial curvature contribution), giving half the GR value.
 
@@ -1006,13 +1013,20 @@ this to observed image positions on the sky, we need the
 $\vecbeta$ to the observed image position $\vectheta$ through the
 deflection angle (Congdon \& Keeton eq.~4.26):
 \begin{equation}
-    \vecbeta = \vectheta - \frac{\Dds}{\Ds}\, \vecalpha(\vectheta) \,,
+    \vecbeta = \vectheta - \vecalpha(\vectheta) \,,
     \label{eq:lens_equation_preview}
 \end{equation}
-where $\vecalpha = (\Dd / \Ds)\, \boldsymbol{\hat{\alpha}}$ is the
+where $\vecalpha = (\Dds / \Ds)\, \boldsymbol{\hat{\alpha}}$ is the
 \textbf{reduced deflection angle} and $\Dd$, $\Ds$, $\Dds$ are the
 angular diameter distances from observer to lens, observer to source,
-and lens to source.
+and lens to source.\footnote{Earlier versions of this preview wrote
+$\vecbeta = \vectheta - (\Dds/\Ds)\,\vecalpha$ with
+$\vecalpha = (\Dd/\Ds)\,\hat{\boldsymbol\alpha}$, which combine to the
+wrong factor $\Dd\Dds/\Ds^2$ in front of $\hat{\boldsymbol\alpha}$.  The
+small-angle geometry gives $\Ds\vecbeta = \Ds\vectheta -
+\Dds\hat{\boldsymbol\alpha}$, i.e.\ the form above, which is Congdon \&
+Keeton eq.~4.26 and eqs.~\eqref{eq:reduced_deflection}
+and~\eqref{eq:lens_equation} of Chapter~\ref{ch:lens_equation}.}
 
 The full derivation of this equation, along with the thin-lens
 approximation and the definition of angular diameter distances, will be
@@ -1021,13 +1035,12 @@ weak-field deflection angle computed in this module provides the
 essential input to the lens equation.
 
 \begin{annotation}[Reading eq.~\eqref{eq:lens_equation_preview}: physical versus reduced deflection]
-The form used from Chapter~\ref{ch:lens_equation} onward is
-$\vecbeta = \vectheta - \vecalpha(\vectheta)$ with
+The preview is already the form used from Chapter~\ref{ch:lens_equation}
+onward, $\vecbeta = \vectheta - \vecalpha(\vectheta)$ with
 $\vecalpha \equiv (\Dds/\Ds)\,\hat{\boldsymbol\alpha}$
-(eqs.~\eqref{eq:reduced_deflection} and~\eqref{eq:lens_equation}).  In the
-preview display the factor $\Dds/\Ds$ multiplies the \emph{physical} angle
-$\hat{\boldsymbol\alpha}$; read the $\vecalpha$ there as
-$\hat{\boldsymbol\alpha}$.  The physical $\hat{\boldsymbol\alpha}$ (this
+(eqs.~\eqref{eq:reduced_deflection} and~\eqref{eq:lens_equation}).  The
+factor is $\Dds/\Ds$ because the deflection acts over the lens--source leg:
+$\Ds\vecbeta = \Ds\vectheta - \Dds\hat{\boldsymbol\alpha}$.  The physical $\hat{\boldsymbol\alpha}$ (this
 chapter) depends only on the lens; the reduced $\vecalpha$ also depends on
 the source distance through $\Dds/\Ds$.  Note $\Dds \neq \Ds - \Dd$ for
 angular-diameter distances in an expanding universe

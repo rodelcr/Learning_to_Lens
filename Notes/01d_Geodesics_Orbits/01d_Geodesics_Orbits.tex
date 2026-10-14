@@ -53,10 +53,11 @@ means it possesses two \textbf{Killing vectors} (Carroll Sec.~5.4):
 \end{equation}
 For any geodesic $x^\mu(\lambda)$, the quantity $K_\mu\, dx^\mu/d\lambda$
 is conserved along the path (Carroll eq.~5.54).  Lowering the index with
-the metric gives the two conserved quantities (Carroll eqs.~5.61--5.62):
+the metric gives the two conserved quantities (Carroll eqs.~5.61--5.62,
+with $c$ restored as in Congdon \& Keeton eq.~3.76a):
 \begin{equation}
     \boxed{
-    E = \left(1 - \frac{R_S}{r}\right) \frac{dt}{d\lambda}
+    E = \left(1 - \frac{R_S}{r}\right) c^2\,\frac{dt}{d\lambda}
     }
     \label{eq:conserved_E}
 \end{equation}
@@ -67,7 +68,14 @@ the metric gives the two conserved quantities (Carroll eqs.~5.61--5.62):
     \label{eq:conserved_L}
 \end{equation}
 For massive particles ($\lambda = \tau$), $E$ and $L$ are the conserved
-energy and angular momentum \textit{per unit mass}.  For photons, they are
+energy (including rest energy, so $E = c^2$ for a particle at rest at
+infinity) and angular momentum \textit{per unit mass}.\footnote{Carroll
+sets $c = 1$ and writes $E = (1 - R_S/r)\,dt/d\lambda$.  Earlier versions
+of this chapter used that $c = 1$ form in eqs.~\eqref{eq:conserved_E}
+and~\eqref{eq:normalization} while keeping explicit factors of $c$ in
+eqs.~\eqref{eq:effective_potential} and~\eqref{eq:photon_orbit}, so the
+two did not match.  The factor $c^2$ follows Congdon \& Keeton
+eq.~3.76a; with it, one $E$ serves every equation of this chapter.}  For photons, they are
 the energy and angular momentum of the photon (up to normalization of the
 affine parameter).
 
@@ -76,13 +84,13 @@ equatorial plane $\theta = \pi/2$ without loss of generality (Carroll
 eq.~5.56).
 
 \begin{derivation}[Lowering the index: where $E$ and $L$ come from]
-Work with $c = 1$ (as Carroll does) and write $f(r) \equiv 1 - R_S/r$, so
-that $g_{tt} = -f$, $g_{rr} = f^{-1}$, $g_{\theta\theta} = r^2$,
+Write $f(r) \equiv 1 - R_S/r$ and use the coordinate time $t$, so
+that $g_{tt} = -fc^2$, $g_{rr} = f^{-1}$, $g_{\theta\theta} = r^2$,
 $g_{\phi\phi} = r^2\sin^2\theta$, and all off-diagonal components vanish.
 \begin{align*}
-K_\mu &= g_{\mu\nu}K^\nu = g_{\mu t} = (-f,\,0,\,0,\,0)
+K_\mu &= g_{\mu\nu}K^\nu = g_{\mu t} = (-fc^2,\,0,\,0,\,0)
   && \text{(diagonal metric, } K^\nu = \delta^\nu_t\text{)} \\
-K_\mu \frac{dx^\mu}{d\lambda} &= -f\,\frac{dt}{d\lambda} \equiv -E
+K_\mu \frac{dx^\mu}{d\lambda} &= -fc^2\,\frac{dt}{d\lambda} \equiv -E
   && (\text{sign: } E > 0 \text{ if future-directed}) \\
 R_\mu &= g_{\mu\phi} = (0,\,0,\,0,\,r^2\sin^2\theta)
   && (R^\nu = \delta^\nu_\phi) \\
@@ -98,13 +106,16 @@ Why these are constant: with $u^\mu = dx^\mu/d\lambda$,
 The first term vanishes by Killing's equation $\nabla_{(\mu}K_{\nu)} = 0$
 (only the symmetric part survives contraction with the symmetric
 $u^\mu u^\nu$); the second vanishes by the geodesic equation
-$u^\nu\nabla_\nu u^\mu = 0$.
+$u^\nu\nabla_\nu u^\mu = 0$.  Setting $c = 1$ gives Carroll's form
+$E = f\,dt/d\lambda$.
 \end{derivation}
 
 \begin{derivation}[The same two conservation laws straight from the Christoffel symbols]
-Killing vectors are a shortcut, not a necessity: the conservation laws are
-the $t$ and $\phi$ components of the geodesic equation.  For the
-Schwarzschild metric ($c = 1$, equatorial plane) the Christoffel symbols
+The conservation laws also follow directly from the $t$ and $\phi$
+components of the geodesic equation.  For the Schwarzschild metric
+(equatorial plane; the two symbols below do not involve $c$, since
+$g_{tt} = -fc^2$ enters $\Gamma^t_{\ tr} = \tfrac12 g^{tt}\partial_r g_{tt}$
+only through the ratio $\partial_r g_{tt}/g_{tt}$) the Christoffel symbols
 with an upper $t$ or $\phi$ that survive at $\theta = \pi/2$,
 $\dot\theta = 0$ are
 \[
@@ -124,26 +135,26 @@ f\ddot t + f'\,\dot r\,\dot t &= 0
 r^2\ddot\phi + 2r\,\dot r\,\dot\phi = \frac{d}{d\lambda}\bigl(r^2\dot\phi\bigr) &= 0
   && (\times r^2) .
 \end{align*}
-So $E = f\dot t$ and $L = r^2\dot\phi$ are the first integrals of these
-two components.
+So $f\dot t$ and $L = r^2\dot\phi$ are the first integrals of these
+two components, and $E = fc^2\dot t$ is $c^2$ times the first.
 \end{derivation}
 
-\begin{annotation}[Units: two normalisations of $E$ are used in this chapter]
-Eqs.~\eqref{eq:conserved_E} and~\eqref{eq:normalization} are written with
-$c = 1$, while $V_{\mathrm{eff}}$ and $\mathcal{E}$ in
-eqs.~\eqref{eq:effective_potential} and below carry explicit factors of $c$.
-To restore units consistently, read $t$ as the coordinate $x^0 = ct$:
+\begin{annotation}[Units: one normalisation of $E$ throughout]
+With $t$ the coordinate time ($g_{tt} = -fc^2$), eq.~\eqref{eq:conserved_E}
+defines $E = f\,c^2\,dt/d\lambda$ (Congdon \& Keeton eq.~3.76a).  For
+$\lambda = \tau$ it is an energy per unit mass, J\,kg$^{-1}$ =
+m$^2$\,s$^{-2}$, equal to $c^2$ for a particle at rest at infinity.  The
+same $E$ is used in every section:
 \begin{itemize}
-    \item In Sections~\ref{sec:effective_potential}--\ref{sec:perihelion_precession}
-          take $E \equiv f\,c\,dt/d\lambda$ (a velocity when $\lambda = \tau$)
-          and the right-hand side of eq.~\eqref{eq:normalization} as
-          $-\epsilon c^2$.  Then $\mathcal{E} = \tfrac12(E^2 - \epsilon c^2)$
-          holds exactly as written (derivation box below).
-    \item In Section~\ref{sec:null_geodesics_preview}, eq.~\eqref{eq:photon_orbit}
-          and $b = cL/E$ use instead the energy-type normalisation
-          $E \equiv f\,c^2\,dt/d\lambda$, one more power of $c$.
+    \item eq.~\eqref{eq:normalization} has right-hand side $-\epsilon c^2$, and
+          $\mathcal{E} = \tfrac12(E^2/c^2 - \epsilon c^2)$
+          (derivation box below);
+    \item for photons, eq.~\eqref{eq:photon_orbit} and $b = cL/E$
+          (Section~\ref{sec:null_geodesics_preview}).
 \end{itemize}
-Mixing the two is the classic source of stray factors of $c$.  Dimension
+Setting $c = 1$ recovers Carroll's forms, $E = f\,dt/d\lambda$ and
+right-hand side $-\epsilon$.  Dropping the $c^2$ from $E$ while keeping
+explicit $c$ elsewhere is the classic source of stray factors of $c$.  Dimension
 check with $L = r^2\,d\phi/d\tau$ in m$^2$\,s$^{-1}$: every term of
 $V_{\mathrm{eff}}$ is a specific energy, m$^2$\,s$^{-2}$; e.g.\
 $[GML^2/(c^2r^3)] = (\mathrm{m^3\,s^{-2}})(\mathrm{m^4\,s^{-2}})/
@@ -157,11 +168,11 @@ $[GML^2/(c^2r^3)] = (\mathrm{m^3\,s^{-2}})(\mathrm{m^4\,s^{-2}})/
 \label{sec:effective_potential}
 
 The normalization condition for the four-velocity gives
-(Carroll eq.~5.63):
+(Carroll eq.~5.63, with $c$ restored):
 \begin{equation}
-    -\left(1 - \frac{R_S}{r}\right)\left(\frac{dt}{d\lambda}\right)^2
+    -\left(1 - \frac{R_S}{r}\right)c^2\left(\frac{dt}{d\lambda}\right)^2
     + \left(1 - \frac{R_S}{r}\right)^{-1}\left(\frac{dr}{d\lambda}\right)^2
-    + r^2\left(\frac{d\phi}{d\lambda}\right)^2 = -\epsilon \,,
+    + r^2\left(\frac{d\phi}{d\lambda}\right)^2 = -\epsilon c^2 \,,
     \label{eq:normalization}
 \end{equation}
 where $\epsilon = 1$ for massive particles (timelike geodesics) and
@@ -186,31 +197,32 @@ Congdon \& Keeton eq.~3.80):
     }
     \label{eq:effective_potential}
 \end{equation}
-and $\mathcal{E} = \half(E^2 - \epsilon c^2)$ is the effective ``energy.''
+and $\mathcal{E} = \half(E^2/c^2 - \epsilon c^2)$ is the effective ``energy.''
 
 \begin{derivation}[From the normalisation condition to the radial equation, with $c$ restored]
 Metric $ds^2 = -f c^2dt^2 + f^{-1}dr^2 + r^2d\Omega^2$ with
 $f = 1 - R_S/r = 1 - 2GM/(c^2r)$; equatorial plane; dots are
-$d/d\lambda$; $E \equiv fc\,\dot t$, $L \equiv r^2\dot\phi$;
+$d/d\lambda$; $E \equiv fc^2\,\dot t$, $L \equiv r^2\dot\phi$;
 $g_{\mu\nu}\dot x^\mu\dot x^\nu = -\epsilon c^2$.
 \begin{align*}
 -fc^2\,\dot t^2 + f^{-1}\dot r^2 + r^2\dot\phi^2 &= -\epsilon c^2
   && \text{(normalisation)} \\
--\frac{E^2}{f} + \frac{\dot r^2}{f} + \frac{L^2}{r^2} &= -\epsilon c^2
-  && \bigl(\dot t = E/(fc),\ \dot\phi = L/r^2\bigr) \\
-\dot r^2 &= E^2 - f\Bigl(\epsilon c^2 + \frac{L^2}{r^2}\Bigr)
+-\frac{E^2}{fc^2} + \frac{\dot r^2}{f} + \frac{L^2}{r^2} &= -\epsilon c^2
+  && \bigl(\dot t = E/(fc^2),\ \dot\phi = L/r^2\bigr) \\
+\dot r^2 &= \frac{E^2}{c^2} - f\Bigl(\epsilon c^2 + \frac{L^2}{r^2}\Bigr)
   && (\times f,\ \text{rearrange}) \\
-&= E^2 - \epsilon c^2 + \frac{\epsilon c^2R_S}{r} - \frac{L^2}{r^2}
+&= \frac{E^2}{c^2} - \epsilon c^2 + \frac{\epsilon c^2R_S}{r} - \frac{L^2}{r^2}
    + \frac{R_SL^2}{r^3}
   && (\text{expand } f = 1 - R_S/r) \\
-\half\dot r^2 &= \half\bigl(E^2 - \epsilon c^2\bigr) + \frac{\epsilon GM}{r}
+\half\dot r^2 &= \half\Bigl(\frac{E^2}{c^2} - \epsilon c^2\Bigr) + \frac{\epsilon GM}{r}
    - \frac{L^2}{2r^2} + \frac{GML^2}{c^2r^3}
   && (\div 2,\ R_S = 2GM/c^2) .
 \end{align*}
 Moving the last three terms to the left-hand side gives
 eq.~\eqref{eq:radial_equation} with $V_{\mathrm{eff}}$ of
 eq.~\eqref{eq:effective_potential} and
-$\mathcal{E} = \tfrac12(E^2 - \epsilon c^2)$.
+$\mathcal{E} = \tfrac12(E^2/c^2 - \epsilon c^2)$, the form of Congdon \&
+Keeton eq.~3.78.
 \end{derivation}
 
 \begin{derivation}[Consistency check: the $r$-component of the geodesic equation]
@@ -227,7 +239,7 @@ equation follows directly from the $r$-component of the geodesic equation
 \christoffel{r}{r}{r} = -\frac{R_S}{2r(r - R_S)},\quad
 \christoffel{r}{\phi}{\phi} = -(r - R_S) ,
 \]
-after substituting $\dot t = E/f$, $\dot\phi = L/r^2$ and
+after substituting ($c = 1$, so $E = f\dot t$) $\dot t = E/f$, $\dot\phi = L/r^2$ and
 $\dot r^2 = E^2 - f(\epsilon + L^2/r^2)$: the right-hand side reduces
 identically to $-V_{\mathrm{eff}}'(r)$.  The first integral
 eq.~\eqref{eq:radial_equation} therefore carries all of the radial dynamics.
@@ -235,9 +247,9 @@ eq.~\eqref{eq:radial_equation} therefore carries all of the radial dynamics.
 
 \begin{annotation}[Reading the effective potential]
 \begin{itemize}
-    \item \textbf{What $\mathcal{E}$ is.} Write $E = c + e/c$, with $e$
+    \item \textbf{What $\mathcal{E}$ is.} Write $E = c^2 + e$, with $e$
           the Newtonian specific energy (kinetic plus potential).  Then
-          $\mathcal{E} = \tfrac12(E^2 - c^2) = e + e^2/(2c^2)$, so
+          $\mathcal{E} = \tfrac12(E^2/c^2 - c^2) = e + e^2/(2c^2)$, so
           $\mathcal{E} \to e$ in the Newtonian limit.  This is why
           absorbing Carroll's constant $\tfrac12\epsilon$ into $\mathcal{E}$
           is convenient: $V_{\mathrm{eff}}$ then has the Newtonian terms
@@ -358,7 +370,7 @@ $r = L^2/(2GM) = 12G^2M^2/(2GMc^2) = 6GM/c^2$.
           factor-of-2 error in this chapter.
     \item \textbf{The efficiency in the remark below.} At the ISCO
           ($G = c = M = 1$, $L^2 = 12$): $V_{\mathrm{eff}}(6) = -1/18$, so
-          $(E/c)^2 = 1 + 2V_{\mathrm{eff}} = 8/9$ and $E/c = 2\sqrt2/3$.  Gas
+          $(E/c^2)^2 = 1 + 2V_{\mathrm{eff}}/c^2 = 8/9$ and $E/c^2 = 2\sqrt2/3$.  Gas
           that drifts inward through circular orbits down to the ISCO has
           radiated the fraction $1 - 2\sqrt2/3 \approx 0.057$ (5.7\%) of its
           rest-mass energy.
@@ -408,9 +420,9 @@ which vanishes only at $r = 3GM/c^2$, for \emph{every} $L$: unlike the
 massive case, the circular photon orbit does not depend on angular
 momentum.  Height of the barrier ($G = c = M = 1$):
 $V^{\mathrm{photon}}_{\mathrm{eff}}(3) = L^2/18 - L^2/27 = L^2/54$.
-A photon from infinity has $\mathcal{E} = \tfrac12E^2$ ($\epsilon = 0$),
-so it turns around outside the barrier iff $\tfrac12E^2 < L^2/54$, i.e.\
-iff $b^2 = L^2/E^2 > 27$.  Restoring units,
+A photon from infinity has $\mathcal{E} = \tfrac12E^2/c^2 = \tfrac12E^2$
+($\epsilon = 0$), so it turns around outside the barrier iff
+$\tfrac12E^2 < L^2/54$, i.e.\ iff $b^2 = c^2L^2/E^2 = L^2/E^2 > 27$.  Restoring units,
 \[
 b_{\mathrm{crit}} = 3\sqrt3\,\frac{GM}{c^2} = \frac{3\sqrt3}{2}\,R_S
 \approx 2.598\,R_S ;
@@ -437,8 +449,7 @@ $\approx 1.0\times10^6$ at $b = 100$~pc).  The photon sphere, the ISCO and
 $b_{\mathrm{crit}}$ derived here lie six to seven orders of magnitude
 inside the region probed by lensed images: the black hole enters the
 compound-lens model only through its weak-field deflection $4GM_\bullet/(c^2b)$
-(Chapter~\ref{ch:linearized_gravity}).  The strong-field results of this
-chapter tell you what that model may safely ignore.
+(Chapter~\ref{ch:linearized_gravity}).
 \end{bridge}
 
 
@@ -597,8 +608,9 @@ $GM_\odot/(c^2a) \approx 2.55\times10^{-8}$; with $1 - e^2 = 0.9577$,
 $\Delta\phi = 6\pi\times2.55\times10^{-8}/0.9577 = 5.02\times10^{-7}$~rad per
 orbit $= 0.1036''$ per orbit.  A Julian century holds
 $36525/87.97 = 415.2$ orbits, giving $43.0''$ per century.  Carry four
-significant figures through the last multiplication: rounding the per-orbit
-value to $0.1034''$ gives $42.9''$.
+significant figures through the last multiplication:
+$0.1036\times415.2 = 43.0$, whereas a per-orbit value of $0.1034''$ (a slip,
+not a rounding of $0.10355''$) would give $42.9''$.
 \end{annotation}
 
 
@@ -644,8 +656,9 @@ effective potential deflects them more strongly than Newtonian gravity
 would predict.
 
 \begin{derivation}[From eq.~\eqref{eq:photon_orbit} to $\hat\alpha = 4GM/(c^2b)$]
-Here $E$ is the energy-type normalisation $E = fc^2\,dt/d\lambda$, so
-$dr/d\lambda \to E/c$ at infinity and $b = L/|dr/d\lambda|_\infty = cL/E$.
+With $E = fc^2\,dt/d\lambda$ (eq.~\eqref{eq:conserved_E}) and
+$\epsilon = 0$, the radial equation reads
+$\dot r^2 = E^2/c^2 - fL^2/r^2$, so $dr/d\lambda \to E/c$ at infinity and $b = L/|dr/d\lambda|_\infty = cL/E$.
 Set $u = 1/r$, $dr = -du/u^2$, and square eq.~\eqref{eq:photon_orbit}:
 \[
 \left(\frac{du}{d\phi}\right)^2 = u^4\left(\frac{dr}{d\phi}\right)^2
@@ -681,8 +694,8 @@ Schwarzschild coordinates there is no ``Newtonian part'' of the photon
 potential, and the whole $4GM/(c^2b)$ comes from the single $1/r^3$ term
 ($\tfrac32R_Su^2$ in the orbit equation).  The split ``half from $g_{tt}$,
 half from $g_{ij}$'' of Chapter~\ref{ch:linearized_gravity} is made in
-isotropic coordinates; it is coordinate-dependent bookkeeping of a
-coordinate-independent total.  Do not identify the $1/r^3$ term with the
+isotropic coordinates.  The split depends on the coordinates; the total
+deflection does not.  Do not identify the $1/r^3$ term with the
 ``spatial-curvature half''.  The Newtonian corpuscle value, $2GM/(c^2b)$, is
 derived in Section~\ref{sec:soldner}.
 \end{annotation}
@@ -775,7 +788,8 @@ Key features that differ from Schwarzschild:
           touches the horizon at the poles ($\cos^2\theta = 1$) and reaches
           $r = R_S$ at the equator for every $a$.
     \item \textbf{ISCO values} ($G = c = M = 1$, $a$ in units of
-          $GM/c^2$): the standard closed form
+          $GM/c^2$): the standard closed form (Bardeen, Press \&
+          Teukolsky 1972)
           $r_{\mathrm{ISCO}} = 3 + Z_2 \mp \sqrt{(3 - Z_1)(3 + Z_1 + 2Z_2)}$,
           with $Z_1 = 1 + (1 - a^2)^{1/3}\bigl[(1 + a)^{1/3} + (1 - a)^{1/3}\bigr]$,
           $Z_2 = \sqrt{3a^2 + Z_1^2}$ and the upper sign for prograde orbits,
