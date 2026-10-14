@@ -57,6 +57,11 @@ Run every script through `bash Mathematica/run_wl.sh <script.wl>` — a 3-slot s
 (`/tmp/ltl_wls_slot{1,2,3}`); a fourth concurrent kernel hangs on this machine. Scripts
 `Get[]` `Mathematica/harness.wl` (`check[]`, `report[]` alias, `summary[]` → exit code) so that
 `SUMMARY: p PASS, f FAIL` lines can be quoted verbatim and sweeps can rely on `$?`.
+The `Wolfram` MCP server registered with Claude Code (2026-10-14) runs its own persistent local
+kernel, which counts toward the cap: with it connected, run at most two `run_wl.sh` jobs. The harness
+switches to `Print` output and a non-exiting `summary[]` when it detects that kernel
+(`MCP_SERVER_NAME`); MCP evaluations are scratch work and never replace a `wolframscript` run of the
+committed script.
 
 
 ### Level 1: Symbolic Derivation (per-module `.wl` scripts)

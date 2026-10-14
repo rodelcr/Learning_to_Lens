@@ -39,6 +39,26 @@ Learning_to_Lens_Solutions.pdf   448 pages  text-md5 d1c73bb356827ce97027a012ddc
 Learning_to_Lens_Annotated.pdf   571 pages  text-md5 c50bca0df6c08feb5544721dcf48cb10  sentinels 508
 ```
 
+### Addendum (session 3) — Wolfram MCP servers added to the toolkit
+
+- Registered two MCP servers at user scope: `Wolfram` (local `Wolfram/AgentTools` v2.2.0 server,
+  persistent Mathematica 15.0 kernel with repo access; tools `WolframLanguageEvaluator`,
+  `WolframLanguageContext`, `SymbolDefinition`, `CodeInspector`, `TestReport`, `ReadNotebook`,
+  `WriteNotebook`) and `WolframCloud` (hosted `https://agenttools.wolfram.com/mcp`, no auth,
+  stateless cloud kernel, no filesystem; `WolframAlpha`, `WolframContext`). Paclet installed via
+  `PacletInstall["Wolfram/AgentTools"]`; config written by `InstallMCPServer["ClaudeCode","WolframLanguage"]`.
+- Probed the local server over stdio: cold start 4.3 s, subsequent evaluations < 0.1 s; definitions
+  persist only when the same `session` argument is passed. Two gotchas found and fixed in
+  `Mathematica/harness.wl`: the evaluator does not capture `WriteString["stdout"]` (PASS/FAIL lines
+  vanished) and `summary[]`'s `Exit[]` killed the server kernel. Harness now detects
+  `MCP_SERVER_NAME` and uses `Print` + a non-exiting `summary[]`; added `resetChecks[]`.
+- Regression after the harness change: `power_law_point_mass.wl` 75/75 and master
+  `verify_against_textbooks.wl` 28/28 under `wolframscript` (unchanged); the same chapter script run
+  via `Get[]` inside the MCP kernel prints all 75 PASS lines and the kernel survives `summary[]`.
+- Policy recorded in CLAUDE.md and VERIFICATION.md: MCP evaluations are scratch; the committed
+  `.wl` under `wolframscript` remains the source of truth; the MCP kernel counts as one of the
+  three allowed kernels.
+
 
 ---
 

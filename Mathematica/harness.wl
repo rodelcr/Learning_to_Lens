@@ -23,7 +23,20 @@
                         a count from prose.
 
    Usage:   not run directly; Get[] it from a script.
+
+   MCP mode (added 2026-10-14): when the kernel was launched by the Wolfram
+   AgentTools MCP server (Claude Code tool "Wolfram", env MCP_SERVER_NAME set),
+   output goes through Print[] (WriteString["stdout"] is not captured by the
+   MCP evaluator) and summary[] returns <|"pass","fail"|> instead of calling
+   Exit[] (which would kill the server's persistent kernel).  Under
+   wolframscript nothing changes.
    ========================================================================= *)
+
+$ltlMCP = StringQ[Environment["MCP_SERVER_NAME"]];
+
+ltlOut[s__String] := If[$ltlMCP,
+  Print[StringTrim[StringJoin[s], "\n"]],
+  WriteString["stdout", s]];
 
 $ltlPass = 0; $ltlFail = 0;
 
@@ -32,15 +45,20 @@ $ltlPass = 0; $ltlFail = 0;
    unaffected either way, but the per-check lines should be reliable. *)
 check[name_String, cond_] := Module[{ok = TrueQ[cond]},
   If[ok,
-    $ltlPass++; WriteString["stdout", "  PASS: ", name, "\n"],
-    $ltlFail++; WriteString["stdout", "  FAIL: ", name, "\n"]];
+    $ltlPass++; ltlOut["  PASS: ", name, "\n"],
+    $ltlFail++; ltlOut["  FAIL: ", name, "\n"]];
   ok];
 
 report = check;
 
 summary[] := (
-  WriteString["stdout", "========================================\n"];
-  WriteString["stdout", "SUMMARY: ", ToString[$ltlPass], " PASS, ", ToString[$ltlFail],
+  ltlOut["========================================\n"];
+  ltlOut["SUMMARY: ", ToString[$ltlPass], " PASS, ", ToString[$ltlFail],
         " FAIL  (of ", ToString[$ltlPass + $ltlFail], " checks)\n"];
-  WriteString["stdout", If[$ltlFail == 0, "ALL CHECKS PASS", "SOME CHECKS FAILED"], "\n"];
-  Exit[If[$ltlFail == 0, 0, 1]]);
+  ltlOut[If[$ltlFail == 0, "ALL CHECKS PASS", "SOME CHECKS FAILED"], "\n"];
+  If[$ltlMCP,
+    <|"pass" -> $ltlPass, "fail" -> $ltlFail|>,
+    Exit[If[$ltlFail == 0, 0, 1]]]);
+
+(* MCP mode only: zero the tally so a second Get[] of a script starts fresh. *)
+resetChecks[] := ($ltlPass = 0; $ltlFail = 0;);

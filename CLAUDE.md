@@ -97,6 +97,21 @@ wolframscript -file Mathematica/01a_Special_Relativity/lorentz_transforms.wl
 
 For the GitHub Pages publish flow (`rodelcr.github.io/assets/pdf/`), see `DEPLOYMENT.md`.
 
+### Wolfram MCP tools (added 2026-10-14)
+
+Two MCP servers are registered at user scope (`~/.claude.json`, so they are available in every project):
+
+| Server | What it is | Use it for |
+|---|---|---|
+| `Wolfram` | **Local** `Wolfram/AgentTools` server (stdio, Mathematica 15.0 kernel on this Mac). Tools: `WolframLanguageEvaluator`, `WolframLanguageContext` (doc search), `SymbolDefinition`, `CodeInspector`, `TestReport`, `ReadNotebook`, `WriteNotebook`. | Iterating on a derivation before it goes into a `.wl`: evaluate a snippet in ~0.1 s instead of a 5–20 s `wolframscript` start-up per try. Pass `session="ltl"` on every call so definitions persist; `SetDirectory` to the repo and `Get["Mathematica/harness.wl"]` once, then `check[]` as usual. A whole script can be run with `Get["Mathematica/NN/x.wl"]`. |
+| `WolframCloud` | **Hosted** `https://agenttools.wolfram.com/mcp` (no auth; stateless Wolfram Cloud Linux kernel, no access to this filesystem). Tools: `WolframLanguageEvaluator`, `WolframContext`, `WolframAlpha`. | Wolfram\|Alpha lookups and documentation search without spending a local kernel. Not for repo scripts. |
+
+Rules that still hold:
+- **The committed `.wl` run under `wolframscript` is the source of truth.** MCP evaluations are scratch work; every result that reaches the prose must be a `check[]` in a `.wl` that passes via `bash Mathematica/run_wl.sh`, and the SUMMARY line quoted from that run.
+- **The local server's kernel counts as one of the three allowed kernels.** While the `Wolfram` MCP is connected, run at most two `run_wl.sh` jobs alongside it (the semaphore does not know about it).
+- `harness.wl` detects the MCP kernel (`MCP_SERVER_NAME` env var): output goes through `Print` (the evaluator does not capture `WriteString["stdout"]`) and `summary[]` returns `<|"pass","fail"|>` instead of `Exit[]`, which would kill the server's persistent kernel. `resetChecks[]` zeroes the tally between scripts. Under `wolframscript` nothing changed.
+- Reinstall / repair with `InstallMCPServer["ClaudeCode","WolframLanguage"]` from `Wolfram`AgentTools``; verify with `claude mcp get Wolfram`.
+
 ## Key Conventions
 
 ### File types
