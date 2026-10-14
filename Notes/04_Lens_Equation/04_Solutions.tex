@@ -27,6 +27,24 @@ $-\Dds\,\boldsymbol{\hat{\alpha}}(\vecxi)$ in the source plane.  Therefore:
     \veceta = \frac{\Ds}{\Dd}\,\vecxi
     - \Dds\,\boldsymbol{\hat{\alpha}}(\vecxi) \,.
 \end{equation*}
+\begin{derivation}[Part (a) without the small-angle shortcut]
+In the plane containing the observer O, the lens L and the ray, the exact
+flat-space relation between the transverse positions is
+$\Ds\tan\beta = \Ds\tan\theta - \Dds\tan\alphahat$ (Congdon \& Keeton eq.~2.15):
+\begin{itemize}
+    \item $\Ds\tan\theta$: where the straight line from O at angle $\theta$
+          meets the source plane;
+    \item $\Dds\tan\alphahat$: how far the bent ray has moved away from that
+          straight line after travelling $\Dds$ beyond the kink;
+    \item $\Ds\tan\beta$: where the source actually is.
+\end{itemize}
+For lensing angles $\lesssim 10^{-4}$~rad, $\tan x = x(1 + x^2/3 + \dots)$ differs
+from $x$ by less than $10^{-8}$. With $\tan \to$ angle, and $\Ds\theta =
+(\Ds/\Dd)\xi$, this gives the displayed result. In two dimensions the same
+argument applies to each component, and the vector $\boldsymbol{\hat{\alpha}}$
+(pointing away from the mass) is subtracted because the ray is bent
+\emph{toward} the mass.
+\end{derivation}
 
 \textbf{(b)} Substituting $\vecxi = \Dd\,\vectheta$ and
 $\veceta = \Ds\,\vecbeta$:
@@ -47,6 +65,16 @@ $\vecalpha(\vectheta) \equiv (\Dds/\Ds)\,
 \begin{equation*}
     \vecbeta = \vectheta - \vecalpha(\vectheta) \,. \qquad \square
 \end{equation*}
+\begin{annotation}[What went into the lens equation]
+Four assumptions are hidden in the derivation, and each is relaxed somewhere
+later in the book. They are: (1) a single thin screen (relaxed by multi-plane lensing,
+Chapter~\ref{ch:multiplane_dspl}); (2) small angles; (3) distances that
+satisfy ``separation $=$ angle $\times$ distance'', i.e.\ angular-diameter
+distances, with $\Dds \neq \Ds - \Dd$; and (4) weak fields, so that
+deflections superpose linearly. A quick self-check of any rearrangement is
+dimensions: every term of $\veceta = \dots$ is a length, and every term of
+$\vecbeta = \dots$ is an angle.
+\end{annotation}
 
 % ----- Exercise 4.2 -----
 \subsection*{Exercise~\ref{ex:point_mass_solve}: Point Mass Lens Equation}
@@ -92,6 +120,26 @@ $\theta_- = (\beta - \sqrt{\beta^2 + 4\thetaE^2})/2 < 0$.
 Also $|\theta_-| = (\sqrt{\beta^2 + 4\thetaE^2} - \beta)/2 < \thetaE$,
 which can be verified by noting $\sqrt{\beta^2 + 4\thetaE^2} - \beta < 2\thetaE$.
 \hfill $\square$
+\begin{derivation}[The two ``square both sides'' steps of part (e)]
+\emph{Claim 1: $\theta_+ > \thetaE$}, i.e.\
+$\sqrt{\beta^2 + 4\thetaE^2} > 2\thetaE - \beta$.
+If $2\thetaE - \beta \le 0$ the claim is immediate, since a positive square root
+exceeds a non-positive number. If $2\thetaE - \beta > 0$, both sides are
+positive and squaring preserves the inequality:
+$\beta^2 + 4\thetaE^2 > 4\thetaE^2 - 4\beta\thetaE + \beta^2
+\iff 0 > -4\beta\thetaE$, which is true for $\beta > 0$.
+
+\emph{Claim 2: $|\theta_-| < \thetaE$}, i.e.\
+$\sqrt{\beta^2 + 4\thetaE^2} < 2\thetaE + \beta$. Both sides are positive, so
+square: $\beta^2 + 4\thetaE^2 < 4\thetaE^2 + 4\beta\thetaE + \beta^2
+\iff 0 < 4\beta\thetaE$, again true for $\beta > 0$.
+
+\emph{Alternative route (Vieta).} $\theta_+\theta_- = -\thetaE^2 < 0$ forces
+opposite signs. $\theta_+ + \theta_- = \beta > 0$ makes the positive root the
+larger in magnitude. Two unequal magnitudes whose product is $\thetaE^2$
+must lie on either side of $\thetaE$. Both routes are checked in
+\texttt{problems\_04.wl}.
+\end{derivation}
 
 % ----- Exercise 4.3 -----
 \subsection*{Exercise~\ref{ex:einstein_radius_compute}: Einstein Radius for Various Systems}
@@ -142,6 +190,32 @@ $\Dd = 919$~Mpc, $\Ds = 1727$~Mpc, $\Dds = 1329$~Mpc.
     \thetaE \approx 1.8 \times 10^{-4}~\text{rad} \approx 37'' \,.
 \end{equation*}
 Physical Einstein radius: $\RE \approx 165$~kpc.
+\begin{derivation}[Carrying every power of ten]
+\emph{(a)} $4\Gnewton M/\speedoflight^2 = 4\times6.674\times10^{-11}\times1.989\times10^{30}
+/(2.998\times10^{8})^2 = 5.91\times10^{3}$~m. Since $\Dd = \Dds$,
+$\Dds/(\Dd\Ds) = 1/\Ds = 1/(3.086\times10^{20}~\mathrm{m})$. Hence
+$\thetaE^2 = 5.91\times10^{3}/3.086\times10^{20} = 1.91\times10^{-17}$,
+$\thetaE = 4.38\times10^{-9}$~rad, and
+$\thetaE = 4.38\times10^{-9}\times206265'' = 9.0\times10^{-4}{}'' = 0.90$~mas,
+as in eq.~\eqref{eq:thetaE_microlensing}. Physical radius:
+$\RE = 1.543\times10^{20}~\mathrm{m}\times4.38\times10^{-9} = 6.8\times10^{11}$~m
+$= 4.5$~AU $= 2.2\times10^{-5}$~pc.
+
+\emph{(b)} $4\Gnewton M/\speedoflight^2 = 5.91\times10^{15}$~m.
+$\Dds/(\Dd\Ds) = 1055/(919\times1652)~\mathrm{Mpc^{-1}} = 6.95\times10^{-4}~\mathrm{Mpc^{-1}}
+= 2.25\times10^{-26}~\mathrm{m^{-1}}$. Hence $\thetaE^2 = 1.33\times10^{-10}$,
+$\thetaE = 1.15\times10^{-5}$~rad $= 2.4''$, and
+$\RE = 919~\mathrm{Mpc}\times1.15\times10^{-5} = 10.6$~kpc.
+
+\emph{(c)} With the mass inside the Einstein radius,
+$M_{\mathrm E} = 2\times10^{14}\,\Msun$:
+$\thetaE = 1.79\times10^{-4}$~rad $= 37''$ and $\RE = 165$~kpc.
+The exercise statement quotes the \emph{total} cluster mass $10^{15}\,\Msun$.
+Inserted literally into the point-mass formula, it gives
+$\thetaE = \sqrt5\times37'' \approx 83''$ and $\RE \approx 0.37$~Mpc. That is
+too large, because most of a cluster's mass lies outside $\thetaE$ and does not
+contribute to the deflection there (2D shell theorem, Section~\ref{sec:surface_mass_density}).
+\end{derivation}
 
 % ----- Exercise 4.4 -----
 \subsection*{Exercise~\ref{ex:sigma_cr_compute}: Critical Surface Mass Density}
@@ -175,12 +249,34 @@ $\Dds = 1329$~Mpc):
     \Sigmacr \approx 4.9~\text{kg\,m}^{-2} = 0.49~\text{g\,cm}^{-2}
     \approx 2360~\Msun\,\text{pc}^{-2} \,.
 \end{equation*}
+\begin{derivation}[Unit conversions in (b) and (c)]
+\emph{(b)} $\speedoflight^2/(4\pi\Gnewton) = (2.998\times10^{8})^2/(4\pi\times6.674\times10^{-11})
+= 1.07\times10^{26}$~kg\,m$^{-1}$, and
+$\Ds/(\Dd\Dds) = 1652/(919\times1055)~\mathrm{Mpc^{-1}} = 5.52\times10^{-26}~\mathrm{m^{-1}}$.
+Their product is $5.92$~kg\,m$^{-2}$. Dividing by
+$1~\Msun\,\mathrm{pc^{-2}} = 1.989\times10^{30}/(3.086\times10^{16})^2 = 2.09\times10^{-3}$~kg\,m$^{-2}$
+gives $2.83\times10^{3}~\Msun\,\mathrm{pc^{-2}}$ (or $2.84\times10^{3}$ with
+$\speedoflight$ rounded to $3\times10^{8}$, as in eq.~\eqref{eq:sigma_cr_numerical}).
+
+\emph{(c)} Only $\Ds$ and $\Dds$ change, so the shortcut is a ratio:
+$\Sigmacr(z_s{=}2)/\Sigmacr(z_s{=}1) = (1727/1329)/(1652/1055) = 0.83$, giving
+$0.83\times2.83\times10^{3} \approx 2.35\times10^{3}~\Msun\,\mathrm{pc^{-2}}$ and
+$4.9$~kg\,m$^{-2}$.
+\end{derivation}
 
 \textbf{(d)} A typical elliptical galaxy with
 $\Sigma_0 \approx 5000~\Msun\,\text{pc}^{-2}$ has
 $\kappab = \Sigma_0/\Sigmacr \approx 5000/2840 \approx 1.8 > 1$.
 Yes, it is a strong lens --- the central surface mass density exceeds
 the critical value, enabling the formation of multiple images.
+\begin{annotation}[Two caveats on part (d)]
+(1) The verdict depends on the source. For a $z_s = 2$ source the same galaxy
+has $\kappab_0 = 5000/2350 \approx 2.1$. Fainter, more distant sources are
+\emph{more} strongly lensed. (2) ``$\kappab > 1$ somewhere'' is sufficient for
+multiple imaging, and for an axisymmetric lens also necessary (Congdon \& Keeton Sec.~2.5).
+Whether multiple images are actually \emph{observed} depends on where the source sits
+relative to the caustics (Module~\ref{ch:elliptical_models}).
+\end{annotation}
 
 % ----- Exercise 4.5 -----
 \subsection*{Exercise~\ref{ex:image_positions_plot}: Image Positions for a Point Mass Lens}
@@ -204,6 +300,19 @@ $\beta$ (arcsec) & $\theta_+$ (arcsec) & $\theta_-$ (arcsec)
 \bottomrule
 \end{tabular}
 \end{center}
+\begin{derivation}[One row in full: $\beta = 0.5''$]
+$\sqrt{\beta^2 + 4} = \sqrt{4.25} = 2.0616$, so
+$\theta_\pm = (0.5 \pm 2.0616)/2 = +1.2808''$ and $-0.7808''$, and
+$\Delta\theta = 2.0616''$. With $u = 0.5$:
+$(u^2+2)/(2u\sqrt{u^2+4}) = 2.25/(1\times2.0616) = 1.0914$, so
+$|\mu_+| = 1.591$ and $|\mu_-| = 0.591$.
+\end{derivation}
+\begin{annotation}[Three checks to run on every row]
+Each row must satisfy three exact identities: $\theta_+ + \theta_- = \beta$,
+$\theta_+\theta_- = -\thetaE^2 = -1$, and $|\mu_+| - |\mu_-| = 1$. Together they
+catch most transcription and rounding errors, because each tests a different
+column.
+\end{annotation}
 
 \textbf{(b)--(d)} Plots are generated in
 \mathlink{04_Lens_Equation/lens_equation.wl}{lens\_equation.wl}
@@ -218,3 +327,8 @@ The total magnification $|\mu_+| + |\mu_-|$ diverges as $\beta \to 0$
 and approaches 1 (no magnification) as $\beta \to \infty$.  For
 $\beta = \thetaE$, the total magnification is
 $(1 + 2)/(1 \cdot \sqrt{5}) \approx 1.34$.
+\begin{annotation}[Cross-check with the literature]
+$3/\sqrt5 = 1.342$, split as $1.171 + 0.171$, is the value quoted by Narayan
+\& Bartelmann (eq.~29). It is the standard ``source crosses the Einstein
+radius'' threshold of microlensing surveys.
+\end{annotation}
