@@ -66,3 +66,18 @@ Scratch script: `/private/tmp/claude-504/-Users-rosador-Documents-Learning-to-Le
 | D3 | polar Christoffels, flat Riemann, n²(n²−1)/12 = 1 | PASS |
 | D4 (= F1a–d, F2) | meridian transport: V^θ const, V^φ = C/sinθ; loop holonomy = α = enclosed area | PASS (visible text X1 contradicted) |
 | D5 | factor 2 in the φ-geodesic equation: needed for tilted circles, harmless for meridians | PASS (N10 wording) |
+
+## Resolution — fixes applied 2026-10-14
+
+| id | Fix | Backing |
+|----|-----|---------|
+| X1 | VISIBLE Ex 1.4 text (01b_Solutions.tex) replaced with the critic's proposed sentence: $dV^\theta/d\theta = 0$, $dV^\phi/d\theta + \cot\theta V^\phi = 0$, $V^\theta$ and $V^{\hat\phi} = R\sin\theta V^\phi$ constant, $V^\phi \propto 1/\sin\theta$. Footnote records that the earlier version dropped the $\Gamma^\phi_{\theta\phi}(d\theta/d\lambda)V^\phi$ term (rule 3). | problems_01b.wl "1b fix X1: on a meridian Gamma^ph_thph (dth/dlam) V^ph ... != 0", "1b fix X1: coordinate V^ph = C/sin(th) is NOT constant", and the Christoffel-free R³-embedding transport "1b fix X1 (embedding): V^th stays 0.2 and sin(th) V^ph stays 0.7 at th = 0.1", "... coordinate V^ph changes (0.7 -> ~7.0), so 'components constant' fails" |
+| X1 (optional note) | Rotation paragraph rewritten: the rotation is acquired at the pole, where the orthonormal frames of the meridians $\phi=0$ and $\phi=\alpha$ differ by $\alpha$; the equator leg adds nothing ($\Gamma^\theta_{\phi\phi} = \Gamma^\phi_{\phi\theta} = 0$ at $\theta=\pi/2$). "solid angle subtended by the triangular path" → "region enclosed by the closed loop ... has area $\alpha$ on the unit sphere". | "1b fix X1: equator leg: ... vanish at th = pi/2"; "1b fix X1 (embedding): returning vector makes angle alpha (= enclosed area) with local east" (α = 0.9, pole→equator transport in R³); existing "area of the lune-triangle ... = alpha" |
+| N10 | Annotation 1.5: "harmless for the equator ($\dot\theta=0$) but gives wrong orbits for any tilted great circle" → "harmless for the equator and the meridians ($\dot\theta = 0$ or $\dot\phi = 0$) but gives wrong orbits for every other great circle" | "1b fix N10: a meridian satisfies the phi-equation with OR without the factor 2 (old 'any tilted' fails)"; "1b fix N10: other great circles (i = 0.3, 1.0, 1.4) fail without the factor 2" |
+
+### Verification after edits
+`bash Mathematica/run_wl.sh Solutions/01b_Differential_Geometry/problems_01b.wl`: before `SUMMARY: 32 PASS, 0 FAIL  (of 32 checks)`, after `SUMMARY: 40 PASS, 0 FAIL  (of 40 checks)`.
+Build fingerprints: `Learning_to_Lens.pdf 360 pages text-md5 e49fc6843f3f6c7c8ca53b9156a4552f sentinels 0` · `Learning_to_Lens_Solutions.pdf 444 pages text-md5 10cabda46607d9d87bfc5f1dce86e946 sentinels 0` · `Learning_to_Lens_Annotated.pdf 568 pages text-md5 b66a874ec79fcc96ea7f723a8be5808b sentinels 511`; `ANNOT_REQUIRED=1 bash build.sh` ended "all assertions passed".
+
+### Left open
+- None from this report. (The annotated derivation box for Ex 1.4 already had the correct content and now agrees with the visible text; left unchanged.)

@@ -75,3 +75,21 @@ Scratch script: `/private/tmp/claude-504/-Users-rosador-Documents-Learning-to-Le
 | D6 | Flamm integral z = 2√(R_S(r−R_S)) | PASS |
 | F2a–g | pc, AU, R_S scalings (flag 2) | PASS |
 | N-rounding | R_S^⊙ rounds to 2954 m | PASS (confirms N6) |
+
+## Resolution — fixes applied 2026-10-14
+
+| id | Fix | Backing |
+|----|-----|---------|
+| N6 | $R_S^\odot$: visible Ex 1.3 "≈ 2953 m" → "≈ 2954 m"; derivation box "= 2953 m" → "= 2953.8 m ≈ 2954 m", "2.953 km (M/M☉)" → "2.954 km (M/M☉)". Downstream 2.95e15 m, 0.096 pc, 1.9e−6, 2.95e12 m unchanged. | problems_01c.wl "1c fix N6: RS(Msun) = 2953.8 m rounds to 2954 m (old 2953 fails)" (`Round[RSsun] == 2954`, replacing the old `Abs[RSsun - 2953] < 1`), "1c fix N6: RS = 2.954 km (M/Msun) to 1 m" |
+| N11 | Sun $x = R_S/R_\odot$: visible "≈ 4.24e−6" → "≈ 4.25e−6"; Ex 1.4 box "x = 4.24e−6" → "x = 4.246e−6 ≈ 4.25e−6" (z☉ = 2.12e−6 is x/2 from the unrounded x). | "1c fix N11: Sun x = RS/R = 4.246e-6, i.e. 4.25e-6 at 3 s.f. (old 4.24 fails)" (x now computed from G, c, M☉, R☉ instead of typed in), "1c fix N11: z_sun = x/2 = 2.12e-6 (unrounded x); exact z also 2.12e-6" |
+| N16 | Kretschmann annotation: "stays finite (\|R\| ≤ R_S/r³)" → "stays finite as $r \to R_S$ (...; the static frame itself does not exist at $r = R_S$, so this is a limit)". The optional free-fall-frame remark was NOT added (unverified). | wording only; bound itself already backed by "1c ann: 4 x sum of squares of the 6 pair components" and the orthonormal-component checks |
+| P1 | Flamm annotation closer → "the divergence at $r = R_S$ comes from the coordinate $r$, and the curvature there is finite." (critic's wording) | prose only; K(R_S) finite backed by "1c ann: K(RS) = 12/RS^4 = 3/(4 M^4)" |
+| P2 | "perfectly smooth" → "smooth" in the Flamm annotation | prose only |
+
+### Verification after edits
+`bash Mathematica/run_wl.sh Solutions/01c_Schwarzschild/problems_01c.wl`: before `SUMMARY: 41 PASS, 0 FAIL  (of 41 checks)`, after `SUMMARY: 43 PASS, 0 FAIL  (of 43 checks)`.
+Build fingerprints: `Learning_to_Lens.pdf 360 pages text-md5 e49fc6843f3f6c7c8ca53b9156a4552f sentinels 0` · `Learning_to_Lens_Solutions.pdf 444 pages text-md5 10cabda46607d9d87bfc5f1dce86e946 sentinels 0` · `Learning_to_Lens_Annotated.pdf 568 pages text-md5 b66a874ec79fcc96ea7f723a8be5808b sentinels 511`; `ANNOT_REQUIRED=1 bash build.sh` ended "all assertions passed".
+
+### Left open
+- X3 (pending): Ch. 15 bridge content, re-check when Ch. 15 is committed.
+- "perfectly smooth" also appears in the VISIBLE chapter text, 01c_Schwarzschild.tex:372 ("the geometry is perfectly smooth"). That line is outside the critic's scope, so it was not changed.

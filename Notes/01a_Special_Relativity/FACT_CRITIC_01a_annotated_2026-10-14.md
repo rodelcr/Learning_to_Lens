@@ -62,3 +62,17 @@ Scratch script: `/private/tmp/claude-504/-Users-rosador-Documents-Learning-to-Le
 | D3 | E' = γE(1 − v cosθ); θ = 0, π special cases | PASS |
 | D4 | F_μνF^μν = 2(B²−E²); trace-sign trap | PASS |
 | D5 | bridge: velocity addition is linear to O(v³) | PASS |
+
+## Resolution — fixes applied 2026-10-14
+
+| id | Fix | Backing |
+|----|-----|---------|
+| N3 | Annotation "Rapidities add; velocities do not": "for \emph{any} $v_2$" → "for any $\|v_2\| < 1$" | problems_01a.wl "1a fix N3: v1 = 1 gives v = 1 for every \|v2\| < 1" and "1a fix N3: ... but v1 = 1, v2 = -1 is 0/0 (old 'for any v2' fails)" |
+| P1 | Aphoristic closer "which is the invariance of $c$ in its strongest form" → ": light moves at $c$ in every inertial frame." (critic's wording) | prose only |
+
+### Verification after edits
+`bash Mathematica/run_wl.sh Solutions/01a_Special_Relativity/problems_01a.wl`: before `SUMMARY: 18 PASS, 0 FAIL  (of 18 checks)`, after `SUMMARY: 20 PASS, 0 FAIL  (of 20 checks)`.
+Build fingerprints: `Learning_to_Lens.pdf 360 pages text-md5 e49fc6843f3f6c7c8ca53b9156a4552f sentinels 0` · `Learning_to_Lens_Solutions.pdf 444 pages text-md5 10cabda46607d9d87bfc5f1dce86e946 sentinels 0` · `Learning_to_Lens_Annotated.pdf 568 pages text-md5 b66a874ec79fcc96ea7f723a8be5808b sentinels 511`; `ANNOT_REQUIRED=1 bash build.sh` ended "all assertions passed".
+
+### Left open
+- X3 (pending): Ch. 14 bridge content, re-check when Ch. 14 lands.

@@ -19,6 +19,9 @@
      this file check[]s every identity / number written in the derivation,
      annotation and bridge boxes of the matching _Solutions.tex (Annotated
      Study Edition).  The script ends with summary[] (exit 0 iff all PASS).
+   Fix pass (2026-10-14): checks backing the fact-critic fixes of the
+     2026-10-14 reports (Notes/01?_*/FACT_CRITIC_*_annotated_2026-10-14.md);
+     each fails on the old (pre-fix) value.
      Run:  bash Mathematica/run_wl.sh <this file>
    ========================================================================= *)
 
@@ -317,6 +320,60 @@ Module[{r, ph, x, g, G, Riem, a, b, c, d, lam, X, Y, rr, pp, geoR, geoP},
     Simplify[D[pp, {lam, 2}] + 2/rr D[rr, lam] D[pp, lam] == 0]];
   check["1b ann: d/dlam (r^2 phi') = r (r phi'' + 2 r' phi')",
     Simplify[D[rr^2 D[pp, lam], lam] == rr (rr D[pp, {lam, 2}] + 2 D[rr, lam] D[pp, lam])]];
+];
+
+(* ===== Fix pass 2026-10-14 (FACT_CRITIC_01b_annotated_2026-10-14.md, X1 + N10) ===== *)
+(* X1: visible Ex 1.4 text.  The old text claimed dV^mu/dlambda = 0 along a meridian
+   (all coordinate components constant).  The checks below fail on that claim. *)
+Module[{t, C0},
+  check["1b fix X1: on a meridian Gamma^ph_thph (dth/dlam) V^ph = cot(th) V^ph != 0 (old claim dropped it)",
+    Simplify[Cot[t] C0/Sin[t]] =!= 0 && N[Cot[1.0]] != 0];
+  check["1b fix X1: coordinate V^ph = C/sin(th) is NOT constant (dV^ph/dth != 0)",
+    Simplify[D[C0/Sin[t], t]] =!= 0];
+  check["1b fix X1: equator leg: Gamma^th_phph = -sin cos and Gamma^ph_phth = cot vanish at th = pi/2",
+    (-Sin[t] Cos[t] /. t -> Pi/2) == 0 && (Cot[t] /. t -> Pi/2) == 0];
+];
+(* Independent route: parallel transport in the R^3 embedding of the unit sphere,
+   dV/ds = -(V . dn/ds) n, which uses no Christoffel symbols. *)
+Module[{nn, eth, eph, tr, V0, V1, V2, al = 9/10, t, ph = 3/10, Vf, comp},
+  nn[t_, p_] := {Sin[t] Cos[p], Sin[t] Sin[p], Cos[t]};
+  eth[t_, p_] := {Cos[t] Cos[p], Cos[t] Sin[p], -Sin[t]};        (* d_theta *)
+  eph[t_, p_] := {-Sin[t] Sin[p], Sin[t] Cos[p], 0};              (* d_phi   *)
+  (* transport along the meridian phi = p from theta = t0 to theta = t1 *)
+  tr[V_, p_, t0_, t1_] := Module[{s},
+    Module[{w1, w2, w3, sol},
+      sol = NDSolve[{Thread[D[{w1[s], w2[s], w3[s]}, s] ==
+          -({w1[s], w2[s], w3[s]} . D[nn[s, p], s]) nn[s, p]],
+          w1[t0] == V[[1]], w2[t0] == V[[2]], w3[t0] == V[[3]]},
+          {w1, w2, w3}, {s, Min[t0, t1], Max[t0, t1]},
+          PrecisionGoal -> 10, AccuracyGoal -> 12];
+      {w1[t1], w2[t1], w3[t1]} /. sol[[1]]]];
+  V0 = 0.2 eth[Pi/2, ph] + 0.7 eph[Pi/2, ph];
+  V1 = tr[V0, ph, N[Pi/2], 0.1];
+  comp = LeastSquares[Transpose[{eth[0.1, ph], eph[0.1, ph]}], V1];
+  check["1b fix X1 (embedding): V^th stays 0.2 and sin(th) V^ph stays 0.7 at th = 0.1",
+    Abs[comp[[1]] - 0.2] < 10^-6 && Abs[Sin[0.1] comp[[2]] - 0.7] < 10^-6];
+  check["1b fix X1 (embedding): coordinate V^ph changes (0.7 -> ~7.0), so 'components constant' fails",
+    Abs[comp[[2]] - 0.7] > 1 && Abs[comp[[2]] - 0.7/Sin[0.1]] < 10^-5];
+  (* holonomy: east vector up phi = 0 to the pole, down phi = alpha to the equator *)
+  V1 = tr[eph[Pi/2, 0], 0, N[Pi/2], 0.];
+  V2 = tr[V1, N[al], 0., N[Pi/2]];
+  check["1b fix X1 (embedding): returning vector makes angle alpha (= enclosed area) with local east",
+    Abs[ArcCos[V2 . eph[Pi/2, N[al]]] - al] < 10^-6 && Abs[Norm[V2] - 1] < 10^-8];
+];
+(* N10: the dropped factor 2 is harmless on the equator AND on the meridians *)
+Module[{s, th, ph, eqPh1, eqPh2, bad},
+  th = s; ph = 3/10;   (* a meridian: phi const, theta = s (unit speed) *)
+  eqPh1 = D[ph, {s, 2}] + Cot[th] D[th, s] D[ph, s];
+  eqPh2 = D[ph, {s, 2}] + 2 Cot[th] D[th, s] D[ph, s];
+  check["1b fix N10: a meridian satisfies the phi-equation with OR without the factor 2 (old 'any tilted' fails)",
+    eqPh1 === 0 && eqPh2 === 0 && (D[th, {s, 2}] - Sin[th] Cos[th] D[ph, s]^2) === 0];
+  bad = Table[Module[{P, t2, p2},
+      P = {Cos[s], Sin[s] Cos[i0], Sin[s] Sin[i0]};
+      t2 = ArcCos[P[[3]]]; p2 = ArcTan[P[[1]], P[[2]]];
+      Abs[N[(D[p2, {s, 2}] + Cot[t2] D[t2, s] D[p2, s]) /. s -> 7/10]]], {i0, {3/10, 1, 7/5}}];
+  check["1b fix N10: other great circles (i = 0.3, 1.0, 1.4) fail without the factor 2",
+    Min[bad] > 10^-3];
 ];
 
 summary[];

@@ -19,6 +19,9 @@
      this file check[]s every identity / number written in the derivation,
      annotation and bridge boxes of the matching _Solutions.tex (Annotated
      Study Edition).  The script ends with summary[] (exit 0 iff all PASS).
+   Fix pass (2026-10-14): checks backing the fact-critic fixes of the
+     2026-10-14 reports (Notes/01?_*/FACT_CRITIC_*_annotated_2026-10-14.md);
+     each fails on the old (pre-fix) value.
      Run:  bash Mathematica/run_wl.sh <this file>
    ========================================================================= *)
 
@@ -365,6 +368,15 @@ Module[{e1, e2, e3, b1, b2, b3, Fd, Fu, eta = DiagonalMatrix[{-1, 1, 1, 1}], sc}
     Simplify[2 Sum[Fd[[i, j]] Fu[[i, j]], {i, 2, 4}, {j, i + 1, 4}] == 2 (b1^2 + b2^2 + b3^2)]];
   check["1a ann: F_{mn}F^{mn} = Tr(Fd . Transpose[Fu]) = -Tr(Fd . Fu)",
     Simplify[sc == Tr[Fd.Transpose[Fu]] == -Tr[Fd.Fu]]];
+];
+
+(* ===== Fix pass 2026-10-14 (FACT_CRITIC_01a_annotated_2026-10-14.md, N3) ===== *)
+Module[{v1, v2, vv},
+  vv = (v1 + v2)/(1 + v1 v2);
+  check["1a fix N3: v1 = 1 gives v = 1 for every |v2| < 1",
+    Simplify[(vv /. v1 -> 1) == 1, -1 < v2 < 1]];
+  check["1a fix N3: ... but v1 = 1, v2 = -1 is 0/0 (old 'for any v2' fails)",
+    Quiet[(vv /. {v1 -> 1, v2 -> -1})] === Indeterminate];
 ];
 
 summary[];

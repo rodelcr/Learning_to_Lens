@@ -24,6 +24,9 @@
      this file check[]s every identity / number written in the derivation,
      annotation and bridge boxes of the matching _Solutions.tex (Annotated
      Study Edition).  The script ends with summary[] (exit 0 iff all PASS).
+   Fix pass (2026-10-14): checks backing the fact-critic fixes of the
+     2026-10-14 reports (Notes/01?_*/FACT_CRITIC_*_annotated_2026-10-14.md);
+     each fails on the old (pre-fix) value.
      Run:  bash Mathematica/run_wl.sh <this file>
    ========================================================================= *)
 
@@ -496,7 +499,9 @@ Module[{t, r, th, ph, RS, x, f, g, G, al, be, Riem, Rlow, gi, K, cond,
 Module[{G = 6.674*^-11, c = 2.998*^8, Msun = 1.989*^30, pc = 3.0857*^16, AU = 1.496*^11,
         RSsun, RSgal, RSbh},
   RSsun = 2 G Msun/c^2; RSgal = 1*^12 RSsun; RSbh = 1*^9 RSsun;
-  check["1c ann: RS(Msun) = 2953 m (to 1 m)", Abs[RSsun - 2953] < 1];
+  (* Fix pass 2026-10-14 (critic N6): was Abs[RSsun - 2953] < 1, which also passed 2953.85 *)
+  check["1c fix N6: RS(Msun) = 2953.8 m rounds to 2954 m (old 2953 fails)", Round[RSsun] == 2954];
+  check["1c fix N6: RS = 2.954 km (M/Msun) to 1 m", Round[RSsun/1000, 0.001] == 2.954];
   check["1c ann: RS proportional to M: RS(1e12 Msun) = 2.95e15 m",
     Abs[RSgal/2.95*^15 - 1] < 0.005];
   check["1c ann: 2.95e15 m = 0.096 pc", Abs[RSgal/pc - 0.096] < 0.0005];
@@ -512,8 +517,13 @@ Module[{xx, s},
   s = Series[1/Sqrt[1 - xx] - 1, {xx, 0, 2}];
   check["1c ann: (1-x)^(-1/2) - 1 = x/2 + 3x^2/8 + O(x^3)",
     Simplify[Normal[s] == xx/2 + 3 xx^2/8]];
-  check["1c ann: Sun x = 4.24e-6 -> z = 2.12e-6",
-    Abs[(4.24*^-6)/2 - 2.12*^-6] < 1*^-9 && Abs[(1/Sqrt[1 - 4.24*^-6] - 1) - 2.12*^-6] < 0.01*^-6];
+  (* Fix pass 2026-10-14 (critic N11): x computed from the module constants, not typed in *)
+  Module[{xs = (2 6.674*^-11 1.989*^30/(2.998*^8)^2)/6.957*^8},
+    check["1c fix N11: Sun x = RS/R = 4.246e-6, i.e. 4.25e-6 at 3 s.f. (old 4.24 fails)",
+      Round[xs 10^6, 0.001] == 4.246 && Round[xs 10^6, 0.01] == 4.25];
+    check["1c fix N11: z_sun = x/2 = 2.12e-6 (unrounded x); exact z also 2.12e-6",
+      Round[xs/2 10^6, 0.01] == 2.12 && Round[(1/Sqrt[1 - xs] - 1) 10^6, 0.01] == 2.12];
+  ];
   check["1c ann: NS x = 0.414: x/2 = 0.207 vs exact 0.306",
     Abs[0.414/2 - 0.207] < 1*^-9 && Abs[(1/Sqrt[1 - 0.414] - 1) - 0.306] < 0.001];
   check["1c ann: second-order x/2 + 3x^2/8 = 0.271 at x = 0.414",

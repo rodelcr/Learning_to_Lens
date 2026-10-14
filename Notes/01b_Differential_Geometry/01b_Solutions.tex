@@ -163,19 +163,35 @@ indices; contracting on a different pair can flip the sign.
 % ----- Exercise 1.4 -----
 \subsection*{Exercise~\ref{ex:parallel_transport_sphere}: Parallel Transport}
 
-Along a meridian ($\phi = \text{const}$), $d\phi/d\lambda = 0$, so the
-parallel transport equation reduces to $dV^\mu/d\lambda = 0$ --- the
-vector components are constant along the path.
+Along a meridian ($\phi = \text{const}$, parametrised by $\theta$),
+$d\phi/d\lambda = 0$ but $d\theta/d\lambda \neq 0$, so the parallel
+transport equation gives $dV^\theta/d\theta = 0$ and
+$dV^\phi/d\theta + \cot\theta\,V^\phi = 0$.  Thus $V^\theta$ and the
+orthonormal component $V^{\hat\phi} = R\sin\theta\,V^\phi$ are constant:
+the vector keeps a fixed angle to the meridian, while the coordinate
+component $V^\phi \propto 1/\sin\theta$ grows only because $\partial_\phi$
+shrinks toward the pole.\footnote{An earlier version of this solution
+dropped the term $\Gamma^\phi_{\ \theta\phi}\,(d\theta/d\lambda)\,V^\phi$
+and claimed that all coordinate components are constant along the meridian.
+That term vanishes only where $\cot\theta = 0$, i.e.\ on the equator.}
 
-After traveling north to the pole along $\phi = 0$ and south along
-$\phi = \alpha$, the vector returns to the equator.  However, the
-coordinate basis $\hat{\phi}$ at $\phi = \alpha$ is rotated by angle
-$\alpha$ relative to $\hat{\phi}$ at $\phi = 0$.  The physical vector
-has therefore rotated by angle $\alpha$.
+The rotation is picked up at the pole.  On the way up the vector keeps
+fixed components in the orthonormal frame
+$(\hat e_\theta, \hat e_\phi)$ of the meridian $\phi = 0$; on the way
+down it keeps fixed components in the frame of the meridian
+$\phi = \alpha$.  At the pole these two frames are rotated by $\alpha$
+relative to each other, because the two meridians meet there at
+angle $\alpha$.  The vector started along $\hat e_\phi$ (east), so on
+arriving back at the equator at $\phi = \alpha$ it makes angle $\alpha$
+with the local east direction $\hat e_\phi$ there.  (Closing the loop along the equator adds nothing: at
+$\theta = \pi/2$ both $\Gamma^\theta_{\ \phi\phi}$ and
+$\Gamma^\phi_{\ \phi\theta}$ vanish, so the components are constant
+there.)
 
-Geometrically, the solid angle subtended by the triangular path
-(two meridians and a segment of the equator) is $\alpha$.  On a unit
-sphere, the holonomy angle equals the enclosed solid angle.
+Geometrically, the region enclosed by the closed loop (two meridians
+and the equator arc between them) has area $\alpha$ on the unit sphere,
+and for a loop on a sphere of unit radius the rotation angle equals the
+enclosed area (the solid angle).
 
 \begin{derivation}[The transport equation along a meridian, component by component]
 On the meridian, parametrised by $\theta$, the tangent is $dx^\rho/d\theta = (1, 0)$, so
@@ -213,6 +229,6 @@ to the equator by a rotation, so all great circles are geodesics.
 The geodesic equation sums over both lower indices, so the $\phi$-equation contains
 $\Gamma^\phi_{\ \theta\phi}\dot\theta\dot\phi + \Gamma^\phi_{\ \phi\theta}\dot\phi\dot\theta
 = 2\cot\theta\,\dot\theta\dot\phi$. Forgetting the factor of 2 is harmless for the equator
-($\dot\theta = 0$) but gives wrong orbits for any tilted great circle. The same factor appears in
+and the meridians ($\dot\theta = 0$ or $\dot\phi = 0$) but gives wrong orbits for every other great circle. The same factor appears in
 $\ddot\phi + (2/r)\dot r\dot\phi$ of Exercise~\ref{ex:christoffel_polar}.
 \end{annotation}
