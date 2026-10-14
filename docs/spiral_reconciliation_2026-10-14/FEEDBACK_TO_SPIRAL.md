@@ -66,3 +66,16 @@ chapter's `Notes/<NN>_*/FACT_CRITIC_*_2026-10-14.md` (section "Reconciliation wi
 17. A8c tests `(1 − bb²) > 0` with k fixed at 2 and no γ′ (near-vacuous); A8b uses γ′ = 3/2 only. Tentative: A3's
     gate at m = 1e−4 may sit outside the linear regime for deep radial images (4.5% non-linearity at ρ = 0.024;
     the relevant small parameter is ≈640 m, not m·c) — re-run `verify_a3` at m = 1e−5.
+
+## note6 (→ Chapter 23)
+18. The S7-074 angle-map correction (autogalaxy orders the components as `arctan2(comps[0], comps[1])/m`, so the
+    same numbers put the mode at 90°/m − φ_m; verified with autogalaxy 2026.4.13.6: m = 4 at 30° comes back at
+    −7.5°) has not reached `theory/solutions/sol_note6_multipoles.tex:14` or
+    `lit_review/CODE_CAPABILITY_SURVEY_multipoles_potential_2026-07-21.md:28`.
+19. note6 eq. (alpharatio) l.177–183 needs |m² − (3−γ′)²| in the denominator (or m > 3−γ′); for m = 1 at γ′ < 2 the
+    printed ratio and its maximum are negative.
+20. "Omitted central mass misfits the radial image" (note6 summary keybox ~l.584) is wrong whenever f• exceeds the
+    annihilation threshold (27/4096 at γ′ = 1.5; ≤ 0.0066 for any slope): there is then no radial critical curve.
+    S7-130 / mcrit-defect item 3 fix one cell (l.512) but not the keybox. Suggested: "misfits the inner image
+    region (the radial image where one exists)".
+21. Record only: S7-093's "60%" and the chapter's "37.5%" are the same shortfall against different bases.
