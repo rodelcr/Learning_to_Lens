@@ -2,5 +2,229 @@
 % Module 17: Solutions to Exercises
 % =============================================================================
 % This file is conditionally included from main.tex via \ifsolutions
-% STUB created 2026-10-14. Replace with the full solutions file.
+% Attestation: ../Solutions/17_Central_Mass_Bias/problems_17.wl (check ids
+% quoted below exist in that script).
 % =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:cb_solutions}
+
+\noindent
+The Mathematica script
+\solnlink{17_Central_Mass_Bias/problems_17.wl}{problems\_17.wl}
+verifies every symbolic and numeric answer below.
+
+% ----- Exercise 17.1 -----
+\subsection*{Exercise~\ref{ex:cb_two_channels}: The Two Channels}
+
+\textbf{(a)} Take the logarithm of $\Brat=\etamea^{\gp-1}$ and form the
+total differential in the two fitted quantities $(\etamea,\gp)$:
+\begin{equation*}
+  \ln\Brat=(\gp-1)\ln\etamea
+  \;\Longrightarrow\;
+  \frac{\delta\Brat}{\Brat}
+  =\pderiv{\ln\Brat}{\etamea}\,\delta\etamea+\pderiv{\ln\Brat}{\gp}\,\delta\gp
+  =(\gp-1)\,\frac{\delta\etamea}{\etamea}+\ln\etamea\;\delta\gp .
+\end{equation*}
+
+\textbf{(b)} With $\gp=1.6$:
+\begin{align*}
+  \text{ratio channel:}\quad &(\gp-1)\,\frac{\delta\etamea}{\etamea}=(0.6)(0.005)=+0.300\%,\\
+  \text{slope-drag channel:}\quad &\ln\etamea\,\delta\gp=\ln(0.79)\times0.03=(-0.2357)(0.03)=-0.707\%.
+\end{align*}
+The channels have opposite signs. The slope channel is larger by a
+factor $2.357$ and sets the sign of the net bias,
+$\delta\Brat/\Brat=+0.300\%-0.707\%=-0.407\%$.
+
+\textbf{(c)} At fixed fractional shift $\delta\etamea/\etamea$ the ratio
+channel contains no $\etamea$ at all. The slope channel contains
+$\ln\etamea$, which vanishes as $\etamea\to1$: when the two planes
+coincide, a change of slope rescales both Einstein radii identically and
+leaves their ratio alone. The two channels of part~(b) have equal
+magnitude when $|\ln\etamea|\,\delta\gp=(\gp-1)\,\delta\etamea/\etamea$,
+i.e.\ at
+$\etamea=\exp[-(\gp-1)(\delta\etamea/\etamea)/\delta\gp]=e^{-0.1}=0.905$.
+The slope channel wins for any $\etamea$ further from unity than this.
+A compound lens with well-separated Einstein radii is exactly the case
+where the slope channel matters most.
+\emph{[Attested: \solnlink{17_Central_Mass_Bias/problems_17.wl}{problems\_17.wl},
+checks 1a--1f.]}
+
+% ----- Exercise 17.2 -----
+\subsection*{Exercise~\ref{ex:cb_annihilation}: The Annihilation Boundary}
+
+\textbf{(a)} Multiply $\ysrc''=0$ by $\theta^3$:
+$(2-\gp)(\gp-1)\theta^{3-\gp}-2u=0$, so
+$u=\tfrac12(2-\gp)(\gp-1)\theta^{3-\gp}$. Substituting into $\ysrc'$,
+\begin{equation*}
+  \ysrc'=1-(2-\gp)\theta^{1-\gp}+\tfrac12(2-\gp)(\gp-1)\theta^{1-\gp}
+  =1-\frac{(2-\gp)(3-\gp)}{2}\,\theta^{1-\gp}.
+\end{equation*}
+Setting this to zero gives
+$\theta_\star^{\gp-1}=(2-\gp)(3-\gp)/2$, which is
+eq.~\eqref{eq:cb_thetastar}. Then
+$\mBH_{\rm crit}=u=\tfrac12(2-\gp)(\gp-1)\theta_\star^{3-\gp}$, which is
+eq.~\eqref{eq:cb_mcrit}. Elimination gives a closed form because, on the
+curve $\ysrc''=0$, the black-hole term in $\ysrc'$ has the same power of
+$\theta$ as the power-law term.
+
+\textbf{(b)} At $\gp=1.6$: $(2-\gp)(3-\gp)/2=0.28$, so
+$\theta_\star=0.28^{1/0.6}=0.1198$ and
+$\mBH_{\rm crit}=0.12\times0.1198^{1.4}=0.006155$. A direct numerical
+solution of the two equations $\ysrc'=\ysrc''=0$ gives the same values to
+25 digits. For $\Brat=0.8$ the near-plane fraction is
+$\mBH_{1,\rm crit}=0.006155\times0.8^{-7/3}=0.01036$.
+
+\textbf{(c)} Maximising eq.~\eqref{eq:cb_mcrit} over $1<\gp<2$ gives
+$\gp=1.4846$ and $\mBH_{\rm crit}=0.00660$. Measured on the plane where
+the radial image forms, no power-law slope keeps its radial critical
+curve once the central mass exceeds $0.66\%$ of the power-law mass
+inside $\thetaE$. The boundary goes to zero at both ends: as $\gp\to2$
+because the isothermal profile has no radial critical curve to begin
+with, and as $\gp\to1$ because the radial critical curve moves to very
+small radii, where even a tiny point mass dominates.
+\emph{[Attested: checks 2a--2g.]}
+
+% ----- Exercise 17.3 -----
+\subsection*{Exercise~\ref{ex:cb_differential}: Why the Ratio Is Biased}
+
+From eq.~\eqref{eq:cb_m2_m1},
+$\mBH_2/\mBH_1=\Brat^{-1}\Brat^{2/(\gp-1)}=\Brat^{(3-\gp)/(\gp-1)}$, so
+the fixed-slope ratio shift is
+\begin{equation*}
+  \frac{\mBH_1-\mBH_2}{\gp-1}=\frac{\mBH_1}{\gp-1}\Big(1-\Brat^{(3-\gp)/(\gp-1)}\Big).
+\end{equation*}
+For $1<\gp<3$ the exponent is positive, and for $0<\Brat<1$ the power is
+below one, so the bracket is strictly positive: the near ring always
+moves out more than the far one. The shift vanishes if and only if
+$\mBH_2=\mBH_1$. That happens in two limits:
+\begin{itemize}[nosep]
+  \item $\Brat\to1$: the source planes coincide, and the black hole is
+        the same fraction of the enclosed mass on both;
+  \item $(3-\gp)/(\gp-1)\to0$, i.e.\ $\gp\to3$: the Einstein radii then
+        scale with $\Brat$ in the same way as $\thetaBH$, so the fraction
+        is again the same on both planes.
+\end{itemize}
+In either case the black hole shifts both Einstein radii by the same
+fraction, and the ratio $\etamea$ cancels it. For $\gp=1.6$ and
+$\Brat=0.8$, $\mBH_2/\mBH_1=0.594$ and the bracket is $0.406$.
+\emph{[Attested: checks 3a--3e.]}
+
+% ----- Exercise 17.4 -----
+\subsection*{Exercise~\ref{ex:cb_coherent}: A Coherent Systematic}
+
+\textbf{(a)} If every lens has bias $b$, the sample mean has bias
+$\tfrac1N\sum_{i=1}^N b=b$, independent of $N$. Independent statistical
+errors add in quadrature, so the error of the mean is
+$\sigma_1/\sqrt{N}$.
+
+\textbf{(b)} The systematic dominates once $\sigma_1/\sqrt{N}<b$, i.e.\
+for $N>(\sigma_1/b)^2=(0.02/0.005)^2=16$.
+
+\textbf{(c)} In a flat universe
+$\Brat=(1-\chi_{\rm d}/\chi_1)/(1-\chi_{\rm d}/\chi_2)$, with
+$\chi(z)\propto\int_0^z\dd z'/E(z')$ and
+$E^2=\Omegam(1+z)^3+(1-\Omegam)(1+z)^{3(1+w)}$. A centred finite
+difference about $w=-1$ gives $S_w=\partial\ln\Brat/\partial w=-0.0330$.
+Then $\delta w=(-0.005)/(-0.0330)=+0.151$. A $\Brat$ biased low by half a
+percent shifts $w$ by $+0.15$.
+\emph{[Attested: checks 4a--4d.]}
+
+% ----- Exercise 17.5 -----
+\subsection*{Exercise~\ref{ex:cb_real_system}: How Large Is It for a Real Lens?}
+
+\textbf{(a)} $\mBH_1=10^{9}/(2\times10^{11})=0.005$.
+
+\textbf{(b)} From eq.~\eqref{eq:cb_m1crit} with $\Brat=0.8$:
+$\mBH_{1,\rm crit}(1.6)=0.0104$, so $\mBH_1/\mBH_{1,\rm crit}=0.48$ and
+the radial image survives. $\mBH_{1,\rm crit}(1.9)=0.0017<\mBH_1$, so at
+$\gp=1.9$ the far plane has no radial image. The scales show why: at
+$\gp=1.9$, $\theta_r=0.077\,\thetaE$, while
+$\thetaBH=\sqrt{0.005}\,\thetaE=0.071\,\thetaE$.
+
+\textbf{(c)} Eq.~\eqref{eq:cb_boe} gives, for $\gp=1.6$,
+$\delta\etamea/\etamea=3.38\times10^{-3}$ and
+$\delta\Brat/\Brat=2.03\times10^{-3}$; for $\gp=1.9$,
+$\delta\etamea/\etamea=1.33\times10^{-3}$ and
+$\delta\Brat/\Brat=1.19\times10^{-3}$. With $S_w=-0.0330$, the $\gp=1.9$
+estimate gives $\delta w=-0.036$. At $\gp=1.9$ there is no radial image
+to drag the slope, so if the slope is pinned by other data this
+ratio-channel estimate is the relevant order of magnitude.
+
+\textbf{(d)} The coefficient $-4.26$ of \S\ref{sec:cb_worked} belongs to
+one axisymmetric geometry with one particular pair of source positions.
+Moving the far source alone changed it by a factor of four. Moreover,
+$\mBH_1$ here is about half of $\mBH_{1,\rm crit}$, well past the range
+where Figure~\ref{fig:cb_bias_vs_m} shows the linear response holding.
+To do better you need the actual image configuration (positions,
+including how close the radial image is to the critical curve), the
+model family actually fitted (ellipticity, shear, any freedom in the
+inner profile), which images and arcs enter the likelihood, and an
+independent estimate of $\gp$ and of the inner mass. With those, you
+compute $\mathsf{J}$ and $\mathbf{s}$ for that configuration, or
+simulate and refit, as in \S\ref{sec:cb_worked}.
+\emph{[Attested: checks 5a--5f.]}
+
+% ----- Exercise 17.6 -----
+\subsection*{Exercise~\ref{ex:cb_sis_point_mass}: Isothermal Sphere plus Point Mass}
+
+\textbf{(a)} For $\gp=2$, eq.~\eqref{eq:cb_thetatot} reads
+$\theta=\thetaE+\thetaBH^2/\theta$, i.e.\
+$\theta^2-\thetaE\theta-\thetaBH^2=0$, with positive root
+\begin{equation*}
+  \theta_{\mathrm{E,tot}}=\frac{\thetaE+\sqrt{\thetaE^2+4\thetaBH^2}}{2}
+  =\thetaE\,\frac{1+\sqrt{1+4\mBH}}{2}
+  =\thetaE\big(1+\mBH-\mBH^2+\order{\mBH^3}\big).
+\end{equation*}
+Eq.~\eqref{eq:cb_thetatot_series} at $\gp=2$ has $c_1=1/(\gp-1)=1$ and
+$c_2=(\gp-4)/[2(\gp-1)^2]=-1$, in agreement.
+
+\textbf{(b)} $\lambda_r=1-\deriv{}{\theta}\big(\thetaE+\thetaBH^2/\theta\big)
+=1+\thetaBH^2/\theta^2>0$ for all $\theta$, so there is never a radial
+critical curve, and hence no radial image. Without a radial image, the
+data have nothing near the centre with which to trade slope against the
+missing point mass. For near-isothermal lenses the radial image is, in
+any case, the first casualty of a central mass
+($\mBH_{\rm crit}\to0$ as $\gp\to2$). The slope-drag channel then works
+only through whatever other constraint fixes $\gp$.
+
+\textbf{(c)} $\theta_{\mathrm{E,tot}}/\thetaE=(1+\sqrt{1.04})/2=1.009902$,
+compared with $1+\mBH-\mBH^2=1.0099$.
+\emph{[Attested: checks 6a--6e.]}
+
+% ----- Exercise 17.7 -----
+\subsection*{Exercise~\ref{ex:cb_central_excess}: A Cusp Is a Point Mass from Outside}
+
+\textbf{(a)} For $\theta>\theta_b$, $\alpha=\bar\kappa\,\theta=(2/\theta)\int_0^\theta\kappab\,\theta'\,\dd\theta'$.
+Split the integral at $\theta_b$ and add and subtract the power law
+inside $\theta_b$:
+\begin{equation*}
+  \alpha(\theta)=\frac{2}{\theta}\int_0^{\theta}\kappab_{\rm PL}\theta'\,\dd\theta'
+  +\frac{2}{\theta}\int_0^{\theta_b}\big(\kappab_{\rm in}-\kappab_{\rm PL}\big)\theta'\,\dd\theta'
+  =\alpha_{\rm PL}(\theta)+\frac{\mBH_{\rm eff}}{\theta}.
+\end{equation*}
+The second integral is a constant, so its contribution has exactly the
+$1/\theta$ form of a point mass. With
+$\kappab_{\rm in}\theta'=\kappab_{\rm PL}(\theta_b)\theta_b^{\gamma_{\rm in}-1}\theta'^{\,2-\gamma_{\rm in}}$,
+\begin{equation*}
+  \mBH_{\rm eff}=2\,\frac{3-\gp}{2}\,\theta_b^{1-\gp}\,\frac{\theta_b^{2}}{3-\gamma_{\rm in}}
+  -2\,\frac{3-\gp}{2}\,\frac{\theta_b^{3-\gp}}{3-\gp}
+  =(3-\gp)\,\theta_b^{3-\gp}\Big[\frac{1}{3-\gamma_{\rm in}}-\frac{1}{3-\gp}\Big],
+\end{equation*}
+which is positive exactly when $\gamma_{\rm in}>\gp$.
+
+\textbf{(b)} For $\gp=1.9$, $\gamma_{\rm in}=2.1$, $\theta_b=0.1$:
+$\mBH_{\rm eff}=1.1\times0.1^{1.1}\times(1/0.9-1/1.1)=0.0177$. This is
+more than ten times $\mBH_{1,\rm crit}(1.9,0.8)=0.0017$.
+
+\textbf{(c)} A modest steepening of the inner tenth of the Einstein
+radius acts, on all images outside it, like a central mass larger than
+any plausible black hole, and large enough to remove the radial image of
+a near-isothermal deflector. What biases the fit is the
+\emph{rigidity} of the power law, its inability to put the right amount
+of mass in the centre, and not the black hole as such. A black hole is
+one physical source of that mismatch; a cusp or a nuclear cluster is
+another. Conversely, a model with freedom in its inner profile can
+absorb all of them, provided the images lie outside the region where the
+excess sits.
+\emph{[Attested: checks 7a--7d.]}
