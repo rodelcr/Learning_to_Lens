@@ -90,3 +90,18 @@ Script `critic_1013.wl` → `SUMMARY: 44 PASS, 0 FAIL (of 44)`. Module-13 rows:
 - L10 D_s − D_d = 467.5 Mpc vs D_ds = 1097.1 Mpc: PASS.
 - L11 5.237e16 vs 3.819e16 cm: PASS.
 - L12/L12b Γ = (2/π)τ/t_E, Γ ∝ M^{−1/2}, τ ∝ M⁰: PASS.
+
+## Resolution — fixes applied 2026-10-14
+
+| id | Fix | Backing |
+|----|-----|---------|
+| VF1 | Leading ± restored in `eq:micro_mu_pm` (13_Microlensing.tex:140) and in 13.1(b) (13_Solutions.tex:27): μ± = ±½[(u²+2)/(u√(u²+4)) ± 1]. A sentence after the chapter equation records that the sign is in the cited SKW 2006 Pt 4 eq. 3 and that an earlier version dropped it. "μ₊ > 0, μ₋ < 0, μ₊ + μ₋ = 1" and "A = μ₊ − μ₋" now hold as printed. | problems_13.wl "13.1(b) printed mu_pm = … equals signed mu_pm", "13.1(b) old form … is NOT mu- (it is \|mu-\|)", "13.1(b) printed form: mu+ + mu- = 1 and mu+ - mu- = A"; SKW 2006 Pt 4 eq. (3), p. 455 |
+| X1 | Derivation closing clause → "this is the bracket formula above, with its leading sign giving the parity." | same checks |
+
+Not changed: P1/P2 prose (flag-only). 04_Solutions.tex:285 writes the bracket as \|μ±\|, which is already correct.
+
+**Verification after edits.** `bash Mathematica/run_wl.sh Solutions/13_Microlensing/problems_13.wl`:
+before `SUMMARY: 34 PASS, 0 FAIL  (of 34 checks)`, after `SUMMARY: 37 PASS, 0 FAIL  (of 37 checks)`.
+Build: see the module 10 resolution section (one build for 10–13).
+
+**Left open.** None.

@@ -41,14 +41,15 @@ rhoCrit03 = 3 Hz03^2 / (8 Pi Gnewton);
 
 (* Angular-diameter distances computed in the concordance cosmology
    (flat, Om = 0.3, OL = 0.7, H0 = 70) -- replaces the rounded hardcoded
-   900/1750/1400 Mpc (fact-critic 2026-09-24; astropy: 918.8/1726.6/1328.2). *)
+   900/1750/1400 Mpc (fact-critic 2026-09-24).  Values computed here:
+   918.8/1726.6/1328.5 Mpc (an earlier comment said 1328.2; fixed 2026-10-14). *)
 cKmsDA = 299792.458; H0DA = 70.;
 DcMpc[z_?NumericQ] := (cKmsDA/H0DA) NIntegrate[1/Sqrt[0.3 (1 + zz)^3 + 0.7], {zz, 0, z}];
 DAMpc[z_] := DcMpc[z]/(1 + z);
 DA12Mpc[z1_, z2_] := (DcMpc[z2] - DcMpc[z1])/(1 + z2);
 DdVal = DAMpc[0.3] * MpcToM;         (* Dd for zd = 0.3 (~918.8 Mpc), in meters *)
 DsVal = DAMpc[2.0] * MpcToM;         (* Ds for zs = 2 (~1726.6 Mpc) *)
-DdsVal = DA12Mpc[0.3, 2.0] * MpcToM; (* Dds for zd = 0.3, zs = 2 (~1328.2 Mpc) *)
+DdsVal = DA12Mpc[0.3, 2.0] * MpcToM; (* Dds for zd = 0.3, zs = 2 (~1328.5 Mpc) *)
 Print["D_d, D_s, D_ds (Mpc) = ", {DdVal, DsVal, DdsVal}/MpcToM];
 DdsOverDs = DdsVal / DsVal;
 
@@ -140,7 +141,12 @@ Print["  M(theta_E)/M200 = ", NumberForm[fracM, {3, 2}], "\n"];
    Exercise 10.2: Ray-Tracing Through a Cluster
 
    Use the same cluster parameters as Exercise 10.1.
-   Source: circular disk, radius 0.5", at beta = 0, 0.5*thetaE, thetaE.
+   Source: circular disk, radius 0.5", at beta = 0, 0.5*thetaE, 0.1*thetaE
+   (exercise cases i-iii), plus beta = thetaE for comparison.
+   Fix pass 2026-10-14 (fact-critic 10-14, VF4): the box was +-1.5 thetaE,
+   but for beta = 0.5 and ~1 thetaE the single image lies at ~2-2.7 thetaE,
+   OUTSIDE the box, which is why those cases returned 0 pixels.  The box is
+   now +-3 thetaE (20.7").
    ========================================================================= *)
 
 Print["--- Exercise 10.2: Ray-Tracing (Giant Arcs) ---\n"];
@@ -155,15 +161,16 @@ ts1arcsec = ts1 * radToArcsec;
 Print["Ray-tracing with source radius = ", sourceR, " arcsec"];
 Print["Einstein radius = ", NumberForm[thetaE1, {4, 1}], " arcsec"];
 
-betaVals = {0.0, 0.5 * thetaE1, 0.95 * thetaE1};
-betaLabels = {"beta = 0", "beta = 0.5 * thetaE", "beta = 0.95 * thetaE"};
+betaVals = {0.0, 0.5 * thetaE1, 0.1 * thetaE1, 1.0 * thetaE1};
+betaLabels = {"beta = 0", "beta = 0.5 * thetaE", "beta = 0.1 * thetaE", "beta = thetaE"};
+rayCounts = {};   (* {total, on source side (th1 > 0), opposite side (th1 < 0)} *)
 
 Do[
-    Module[{beta0, gridRange, step, nPixels, thetaR, xVal, alphaR, ratio, b1, b2},
+    Module[{beta0, gridRange, step, nPixels, nPos, nNeg, thetaR, xVal, alphaR, ratio, b1, b2},
         beta0 = N[betaVals[[i]]];
-        gridRange = N[1.5 * thetaE1];
+        gridRange = N[3 * thetaE1];
         step = N[0.15];  (* finer grid for accuracy *)
-        nPixels = 0;
+        nPixels = 0; nPos = 0; nNeg = 0;
         Do[
             thetaR = Sqrt[th1^2 + th2^2];
             If[thetaR > 0.1,
@@ -174,24 +181,49 @@ Do[
                 b1 = th1 * (1 - ratio);
                 b2 = th2 * (1 - ratio);
                 If[Sqrt[(b1 - beta0)^2 + b2^2] <= sourceR,
-                    nPixels++
+                    nPixels++; If[th1 > 0, nPos++, nNeg++]
                 ];
             ],
             {th1, -gridRange, gridRange, step},
             {th2, -gridRange, gridRange, step}
         ];
-        Print["  ", betaLabels[[i]], ": ", nPixels, " image pixels"];
+        Print["  ", betaLabels[[i]], ": ", nPixels, " image pixels (",
+            nPos, " on the source side, ", nNeg, " opposite)"];
+        AppendTo[rayCounts, {nPixels, nPos, nNeg}];
     ],
-    {i, 1, 3}
+    {i, 1, 4}
 ];
 
-Print["\nNote: For off-axis source positions, the lensed images of a 0.5\""];
-Print["    source are thin arcs whose width may be sub-pixel at coarse"];
-Print["    grid resolution. Use a finer grid (step ~ 0.05\") or increase"];
-Print["    source radius to resolve the arcs in the interactive notebook."];
-Print["\n(d) The arc length-to-width ratio depends on source proximity"];
-Print["    to the caustic. For beta ~ thetaE (near the tangential caustic),"];
-Print["    the tangential magnification is large, giving L/W ~ 5-10.\n"];
+(* Point-source image analysis on the symmetry axis (arcsec). *)
+alphaA[t_?NumericQ] := 2 ks1 ts1arcsec/(t/ts1arcsec) (Log[t/ts1arcsec/2] + gNFW[t/ts1arcsec]);
+(* d alpha/d theta = 2 kappa - kbar for a circular lens; finite difference kept as a cross-check *)
+dalphaA[t_?NumericQ] := 2 kappaNFW[t/ts1arcsec, ks1] - kbarNFW[t/ts1arcsec, ks1];
+dalphaFD[t_?NumericQ] := (alphaA[t + 10^-4] - alphaA[t - 10^-4])/(2 10^-4);
+(* radial caustic = maximum of alpha(t) - t (robust; no derivative needed) *)
+{betaRad, thetaRad} = Module[{sol = NMaximize[{alphaA[tq] - tq, 0.01 <= tq <= thetaE1}, tq]},
+    {sol[[1]], tq /. sol[[2]]}];
+imgPos[b_] := tq /. FindRoot[tq - alphaA[tq] == b, {tq, thetaE1 + b}];
+(* for beta < beta_r: counter-image (|theta| > theta_r) and radial image (|theta| < theta_r) *)
+imgCounter[b_] := tq /. FindRoot[alphaA[tq] - tq == b, {tq, (thetaRad + thetaE1)/2, thetaRad, thetaE1}];
+imgRadial[b_] := tq /. FindRoot[alphaA[tq] - tq == b, {tq, thetaRad/4, 0.001, thetaRad}];
+muT[t_] := 1/(1 - alphaA[t]/t); muR[t_] := 1/(1 - dalphaA[t]);
+Print["  radial critical curve theta_r = ", thetaRad, "'', radial caustic beta_r = ",
+    betaRad, "'' = ", betaRad/thetaE1, " thetaE"];
+Do[With[{t = imgPos[f thetaE1]},
+    Print["  beta = ", f, " thetaE: outer image theta = ", t, "'' = ", t/thetaE1,
+      " thetaE; mu_t = ", muT[t], ", mu_r = ", muR[t], ", L/W ~ mu_t/mu_r = ", muT[t]/muR[t]]],
+  {f, {0.05, 0.1, 0.12, 0.5, 0.95, 1.0}}];
+With[{b = 0.1 thetaE1}, Print["  beta = 0.1 thetaE (inside the radial caustic): counter-image at -",
+    imgCounter[b], "'' (mu = ", muT[imgCounter[b]] muR[imgCounter[b]], "), radial image at -",
+    imgRadial[b], "'' (mu = ", muT[imgRadial[b]] muR[imgRadial[b]], ")"]];
+
+Print["\nNote: for beta = 0.5 thetaE and beta = thetaE the source lies far outside"];
+Print["    the radial caustic (beta_r ~ 1.0'' ~ 0.15 thetaE), so the circular NFW lens forms ONE image, at"];
+Print["    ~2 and ~2.7 thetaE.  An earlier +-1.5 thetaE box missed these images"];
+Print["    entirely (0 pixels); the cause was the box extent, not the resolution."];
+Print["\n(d) For a circular lens the tangential caustic is the point beta = 0,"];
+Print["    so arcs with L/W ~ 5-10 need beta ~ 0.05-0.12 thetaE (see the"];
+Print["    point-source table above); beta = thetaE gives only L/W ~ 2.\n"];
 
 
 (* =========================================================================
@@ -395,8 +427,10 @@ Print["  [pitfall] with rho_crit,0: r200 = ", p0["r200"]/MpcToM, " Mpc, kappa_s 
   p0["kappaS"], ", theta_E = ", thetaE0, " arcsec"];
 check["10.1 pitfall: rho_crit,0 gives r200 larger by E^(2/3) = 1.108 (1.637 Mpc)",
   near[p0["r200"]/p1["r200"], Ez03^(2/3), 10^-6] && near[p0["r200"]/MpcToM, 1.637, 0.001]];
-check["10.1 pitfall: kappa_s scales as rho_crit^(2/3): 0.404 -> 0.330",
-  near[p0["kappaS"]/p1["kappaS"], Ez03^(-4/3), 10^-6] && near[p0["kappaS"], 0.330, 0.001]];
+check["10.1 pitfall: kappa_s scales as rho_crit^(2/3): 0.404 -> 0.329",
+  near[p0["kappaS"]/p1["kappaS"], Ez03^(-4/3), 10^-6] && near[p0["kappaS"], 0.329, 0.0005]];
+check["10.1 pitfall (fix 2026-10-14): printed 0.329, not 0.330, at 3 decimals",
+  Round[p0["kappaS"], 0.001] == 0.329 && !near[p0["kappaS"], 0.330, 0.0005]];
 check["10.1 pitfall: theta_E drops from 6.9'' to ~4.3'' (-38%)", near[thetaE0, 4.31, 0.01] && near[1 - thetaE0/thetaE1, 0.38, 0.005]];
 (* 10.1(b) small-x expansion of the NFW mean convergence *)
 gLo[x_] := ArcCosh[1/x]/Sqrt[1 - x^2];
@@ -489,5 +523,53 @@ check["10.5 pitfall: power-law-consistent M(5') = 2.5 x 4.39e14 ~ 1.10e15 Msun",
 (* bridge: source-redshift dependence of Sigma_cr behind one cluster *)
 check["10 bridge: Sigma_cr(z_s=1)/Sigma_cr(z_s=2) ~ 1.21 for z_d = 0.3",
   near[SigmaCrWL/(SigmaCr/Msolar MpcToM^2), 1.21, 0.005]];
+
+(* ===== Fix pass 2026-10-14 (fact-critic 10-14: VF2, VF3, VF4) ===== *)
+(* VF2, 10.1(d): rho ~ 1/r cusp gives M_3D ~ r^2 and M_2D ~ R^2 ln(2 r_s/R), not M ~ r. *)
+ClearAll[rr, xx, rsV, rhoV];
+m3D = Integrate[4 Pi r^2 rhoV/((r/rsV) (1 + r/rsV)^2), {r, 0, rr}, Assumptions -> {rr > 0, rsV > 0}];
+check["10.1(d) NFW M_3D(<r) = 2 pi rho_s r_s r^2 + O(r^3)  (so M_3D ~ r^2, not r)",
+  Simplify[Normal[Series[m3D, {rr, 0, 2}]] - 2 Pi rhoV rsV rr^2] === 0 &&
+  Simplify[Normal[Series[m3D, {rr, 0, 1}]]] === 0];
+(* projected: M_2D(<R) = pi R^2 Sigma_cr kbar = 2 pi kappa_s Sigma_cr r_s^2 [ln(x/2) + g(x)] *)
+check["10.1(d) NFW M_2D(<R) ~ x^2 [ln(2/x) - 1/2] at small x (so ~ R^2 ln(2 r_s/R), not R)",
+  Simplify[PowerExpand[Normal[Series[Log[xx/2] + ArcCosh[1/xx]/Sqrt[1 - xx^2], {xx, 0, 2}]] -
+     (xx^2/2) (Log[2/xx] - 1/2)], xx > 0] === 0 &&
+  Limit[(Log[xx/2] + ArcCosh[1/xx]/Sqrt[1 - xx^2])/xx, xx -> 0, Direction -> "FromAbove"] === 0];
+(* VF3, 10.5(d): 4.39e14 / 5e14 -> 12% low, not 10% *)
+check["10.5(d) M(5')/5e14 = 0.877: within ~12% (not ~10%)",
+  near[1 - Mencl5/5*^14, 0.12, 0.005] && !near[1 - Mencl5/5*^14, 0.10, 0.005]];
+check["10.5(d) self-consistent M(5') = 2.5 x 4.39e14 ~ 2.2 x 5e14",
+  near[2.5 Mencl5/5*^14, 2.2, 0.05]];
+(* VF4, 10.2: extent, single image, caustic geometry, L/W *)
+check["10.2 d alpha/d theta = 2 kappa - kbar agrees with a finite difference (theta = 1, 8.5, 18.5'')",
+  And @@ (near[dalphaA[#], dalphaFD[#], 10^-5] & /@ {1., 8.5, 18.5})];
+check["10.2 radial caustic beta_r ~ 1.01'' ~ 0.146 thetaE, radial critical curve theta_r ~ 2.52''",
+  near[betaRad, 1.01, 0.005] && near[betaRad/thetaE1, 0.146, 0.002] && near[thetaRad, 2.52, 0.01] &&
+  near[1 - dalphaA[thetaRad], 0, 10^-3]];
+check["10.2 beta = 0.1 thetaE lies INSIDE the radial caustic: tangential arc + counter-image + radial image",
+  0.1 thetaE1 < betaRad && imgCounter[0.1 thetaE1] > thetaRad && imgRadial[0.1 thetaE1] < thetaRad &&
+  rayCounts[[3, 3]] > 0];
+check["10.2(d) beta = 0.1 thetaE: arc at ~8.5'' (1.23 thetaE), mu_t ~ 12, mu_r ~ 2.1, L/W ~ 6",
+  near[imgPos[0.1 thetaE1], 8.5, 0.05] && near[muT[imgPos[0.1 thetaE1]], 12.3, 0.1] &&
+  near[muR[imgPos[0.1 thetaE1]], 2.14, 0.02] && near[muT[imgPos[0.1 thetaE1]]/muR[imgPos[0.1 thetaE1]], 5.8, 0.1]];
+check["10.2 tangential critical curve maps to the POINT beta = 0 (not beta = thetaE)",
+  near[thetaE1 - alphaA[thetaE1], 0, 10^-3]];
+check["10.2 beta = 0.5 thetaE: one image at ~13.5'' (~1.95 thetaE), outside the old +-1.5 thetaE box",
+  near[imgPos[0.5 thetaE1], 13.5, 0.05] && imgPos[0.5 thetaE1] > 1.5 thetaE1 && 0.5 thetaE1 > betaRad];
+check["10.2 beta = 0.95 thetaE: image at ~18.1''; beta = thetaE: image at ~18.5'' (~2.7 thetaE)",
+  near[imgPos[0.95 thetaE1], 18.1, 0.05] && near[imgPos[thetaE1], 18.5, 0.1] && near[imgPos[thetaE1]/thetaE1, 2.7, 0.05]];
+check["10.2 no counter-image for beta > beta_r: alpha(t) - t < 0.5 thetaE for all t",
+  NMaxValue[{alphaA[tq] - tq, 0.01 <= tq <= 3 thetaE1}, tq] < 0.5 thetaE1];
+check["10.2(d) beta = thetaE: mu_t ~ 2.7, mu_r ~ 1.4, L/W ~ 2 (not 5-10)",
+  near[muT[imgPos[thetaE1]], 2.7, 0.05] && near[muR[imgPos[thetaE1]], 1.4, 0.05] &&
+  near[muT[imgPos[thetaE1]]/muR[imgPos[thetaE1]], 1.95, 0.1]];
+check["10.2(d) L/W = 5 at beta ~ 0.12 thetaE, L/W = 10 at beta ~ 0.05 thetaE",
+  near[muT[imgPos[0.12 thetaE1]]/muR[imgPos[0.12 thetaE1]], 5, 0.5] &&
+  near[muT[imgPos[0.05 thetaE1]]/muR[imgPos[0.05 thetaE1]], 10, 1]];
+check["10.2 ray trace with the +-3 thetaE box: every source position now has image pixels",
+  And @@ (#[[1]] > 0 & /@ rayCounts)];
+check["10.2 beta = 0.5 thetaE and thetaE: all image pixels on the source side (no counter-image)",
+  rayCounts[[2, 3]] == 0 && rayCounts[[4, 3]] == 0];
 
 summary[];

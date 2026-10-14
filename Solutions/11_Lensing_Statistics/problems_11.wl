@@ -114,7 +114,11 @@ AppendTo[results, check["11.3 A (S/mu)^-beta = A S^-beta mu^beta",
   PowerExpand[AA (SS/mm)^-bt - AA SS^-bt mm^bt] === 0]];
 AppendTo[results, check["11.3 int_1^Inf mu^-3 mu^beta dmu = 1/(2-beta) for beta<2 (diverges as beta->2)",
   Simplify[Integrate[mm^(bt - 3), {mm, 1, Infinity}, Assumptions -> bt < 2] - 1/(2 - bt)] === 0 &&
-  ! FreeQ[Quiet@Check[Integrate[mm^(2 - 3), {mm, 1, Infinity}], $Failed], $Failed | Integrate | DirectedInfinity]]];
+  (* divergence, made explicit (fix pass 2026-10-14): the beta = 2 integrand 1/mu has
+     int_1^M dmu/mu = Log[M] -> Infinity, and 1/(2-beta) -> +Infinity as beta -> 2 from below *)
+  Integrate[mm^(2 - 3), {mm, 1, MM}, Assumptions -> MM > 1] === Log[MM] &&
+  Limit[Log[MM], MM -> Infinity] === Infinity &&
+  Limit[1/(2 - bt), bt -> 2, Direction -> "FromBelow"] === Infinity]];
 
 ClearAll[sv, cL, d1, d2, s1, s2];
 thSISr[dls_, ds_] := 4 Pi sv^2/cL^2 dls/ds;

@@ -175,3 +175,37 @@ Script: `/private/tmp/claude-504/-Users-rosador-Documents-Learning-to-Lens/6bf85
 - L18 SIS signed μ = θ/β: PASS (hence X1).
 - Supplementary: `critic_1013_d.wl` gives L/W versus β (L/W = 5 at 0.12θ_E, 10 at 0.05θ_E);
   `critic_1013_b.wl` gives μ_t, μ_r at β = 0.5, 0.95, 1.0θ_E.
+
+## Resolution — fixes applied 2026-10-14
+
+| id | Fix | Backing |
+|----|-----|---------|
+| N9 | 10_Solutions.tex:88 κ_s "0.330" → "0.329". problems_10.wl label/target 0.329, tolerance 0.0005 (was 0.001). | problems_10.wl "10.1 pitfall: kappa_s scales as rho_crit^(2/3): 0.404 -> 0.329", "10.1 pitfall (fix 2026-10-14): printed 0.329, not 0.330, at 3 decimals" (κ_s = 0.32919) |
+| X1 | 10.3 derivation: "equals θ/β with θ signed, so \|μ\| = \|θ\|/β (the radial eigenvalue is 1; the tangential one is β/θ)". | existing "10.3 SIS mu(theta_pm) = theta_pm/beta (signed)" |
+| VF2 | 10.1(d): "the shallow 1/r inner density cusp gives M_3D(<r) ∝ r² (and a projected mass M_2D(<R) ∝ R² ln(2r_s/R)) at small radii". A sentence records that the earlier "M ∝ r" is the isothermal scaling. | problems_10.wl "10.1(d) NFW M_3D(<r) = 2 pi rho_s r_s r^2 + O(r^3) …" (also checks no O(r) term), "10.1(d) NFW M_2D(<R) ~ x^2 [ln(2/x) - 1/2] …" (also checks M_2D/x → 0) |
+| VF3 | 10.5(d): "(within ∼12%, though the agreement is partly fortuitous; see (i))". Item (i) now says γ_t ≈ κ̄ fails at every radius for this power law: κ/κ̄ = 0.6, κ̄ = 2.5γ_t, M(5′) ≈ 1.1e15 M☉. Exercise premise (10_Cluster_Lensing.tex, ex:weak_lensing_mass (a)) softened to "adopting the crude approximation γ_t ≈ κ̄ (part (d) asks how good it is)". | problems_10.wl "10.5(d) M(5')/5e14 = 0.877: within ~12% (not ~10%)", "10.5(d) self-consistent M(5') = 2.5 x 4.39e14 ~ 2.2 x 5e14", plus the existing power-law checks |
+| VF4 | (1) problems_10.wl ray trace: box ±1.5θ_E → ±3θ_E; sources at β = 0, 0.5θ_E, 0.1θ_E (exercise cases) plus θ_E for comparison; pixel counts split by side of the lens. Pixel counts: {4968, 220, 2173, 127}; β = 0.5θ_E and θ_E have 0 pixels on the far side. The stale "sub-pixel resolution" note is replaced: the images were outside the box. (2) Exercise (iii) β = θ_E "on the tangential caustic" → "β = 0.1θ_E (close to the tangential caustic, which for a circular lens is the point β = 0)". (3) 10_Solutions (a–c): Einstein ring; β = 0.5θ_E gives a single image at 13.5″ (≈2θ_E) and no counter-image; β = 0.1θ_E is inside the radial caustic and gives a giant arc at 8.5″ (1.23θ_E), a counter-image at ≈4.8″ and a faint radial image at ≈0.8″; β = θ_E gives one image at 18.5″. The text also states that the box must reach ≈3θ_E. (4) (d): at β = 0.1θ_E, μ_t ≈ 12, μ_r ≈ 2.1, L/W ≈ 6 (point source; the 0.5″ source smears this); L/W ≈ 5–10 needs β ≈ 0.05–0.12θ_E; β = θ_E gives μ_t ≈ 2.7, μ_r ≈ 1.4, L/W ≈ 2. | problems_10.wl "10.2 …" checks: radial caustic, tangential critical curve → point β = 0, single images at 13.5″/18.1″/18.5″, no counter-image for β > β_r, three images at 0.1θ_E, L/W values, dα/dθ = 2κ − κ̄ against a finite difference, ray-trace pixel counts > 0, no far-side pixels |
+| repo-check | problems_10.wl:40/47 stale "1328.2" comment → 1328.5 (the value computed and printed). | existing "10.1 D_d, D_s, D_ds = 918.8, 1726.6, 1328.5 Mpc" |
+
+**Correction to this report (VF4): the radial caustic.** The critic's β_r ≈ 0.517″ ≈ 0.075θ_E (θ_r ≈ 0.485″)
+does not reproduce. In the fix pass, β_r was computed two independent ways: max_θ[α(θ) − θ], and the root of
+1 − 2κ + κ̄ = 0 (also checked against a finite-difference α′). Both give **β_r = 1.01″ ≈ 0.146θ_E,
+θ_r = 2.52″**. This does not change the critic's conclusion for β = 0.5θ_E and θ_E: those sources are far
+outside the radial caustic, so each has a single image. It does change case (iii) of the corrected exercise:
+β = 0.1θ_E = 0.69″ lies **inside** the radial caustic, so the lens forms three images. That case therefore
+shows the arc, the counter-image and the radial image the exercise asks for in (c). The critic's suggested
+wording ("β_r ≈ 0.52″ ≈ 0.075θ_E") was not used. The image positions and the L/W values do agree with the
+critic: 13.48″, 18.07″, 18.55″; L/W = 1.95 at θ_E, 5.1 at 0.12θ_E and 9.7 at 0.05θ_E.
+
+**Verification after edits.** `bash Mathematica/run_wl.sh Solutions/10_Cluster_Lensing/problems_10.wl`:
+before `SUMMARY: 50 PASS, 0 FAIL  (of 50 checks)`, after `SUMMARY: 67 PASS, 0 FAIL  (of 67 checks)`.
+One build covers modules 10–13: `cd Notes && ANNOT_REQUIRED=1 bash build.sh` ended "=== Build complete: all
+assertions passed ===". Page counts: student 360, instructor 444, annotated 569. Fingerprints:
+`Learning_to_Lens.pdf 360 pages text-md5 c100be1eb30c52f133c57fb3f9e1bdea sentinels 0`;
+`Learning_to_Lens_Solutions.pdf 444 pages text-md5 7b9c5859868d31998851952d33ad8494 sentinels 0`;
+`Learning_to_Lens_Annotated.pdf 569 pages text-md5 720cdbe0b8e77045bf4ff426115826b1 sentinels 511`.
+
+**Left open.**
+- Exercise 10.2 (ii) still says "β = 0.5θ_E (halfway to the critical curve)". This mixes source-plane and
+  image-plane language, but the critic did not flag it, so it is unchanged.
+- P1/P2 prose (flag-only) was not applied.
