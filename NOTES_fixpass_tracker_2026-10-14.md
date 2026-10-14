@@ -180,3 +180,11 @@
 - 01e F7 Cassini → "γ_PPN − 1 = (2.1 ± 2.3)e−5 (Bertotti, Iess & Tortora 2003, Nature 425, 374, DOI 10.1038/nature01997; Will 2014)" — no bib key yet.
 - 01e F8 cluster |Φ|/c² ok as order of magnitude; optional soften "only … r ≲ 100 kpc".
 - Kerr ISCO: optional "(Bardeen, Press & Teukolsky 1972, DOI 10.1086/151796)". Prose tells listed in reports.
+## critic 08–09 (08: 27 PASS/5 SUSPECT/6 FAIL; 09: 29/5/9; all 11 flags CONFIRMED + 5 new; layer 0 FAIL; exact fixes in reports)
+- 08 Step 4 (~573–583): ∂1α1 = θE√q θ2²/(θ²F), ∂2α2 = θE√q θ1²/(θ²F); sum line; delete "Reading the Step-4 display" box; retire/invert problems_08 check [B6].
+- 08 Stage 1 (l.1216): beyond the cut 1 image (|β1|>0.932, |β2|>1.049 θE at q=0.7); between cut and diamond 2; cored sentence → "third image once inside the radial caustic".
+- 08_Solutions Ex 8.4(b): (0.36, 1.20)″ μ≈+3.67; (−0.56, −0.55)″ μ≈−3.82; (a) cusps |β1|=0.159, |β2|=0.139. Ex 8.1(b) SIS+shear: "oval, ≈1.5% from an ellipse" (SIE itself IS an exact ellipse — optional wording fix at ~645, Ex 8.2(b)).
+- 08 NEW (~1311–1315): image count 1→3 at radial caustic, 3→5 at tangential (text says 3→5 at radial). Ex 8.4(d) argument model-dependent (SIS gives +2).
+- 09 l.561 remark: "shallower than assumed" (steeper raises H0). ~l.1155 wording "H0^true = 0.9 H0^naive". ~832–845 fragment + κ̄(θE)=1 normalisation. l.439 parenthesis → sheet of convergence 1−λ. Sol 9.2(d) within-image cancellation.
+- 09 D_Δt: eq time_delay_recap → (1+z_d)DdDs/Dds; Ex 9.3(a) d has units of velocity; (c) "scales the same way, by λ". Sol 9.4(d): state assumed z=(0.3,1.0), 255 km/s, ratio 0.90, don't claim γ'≈2.0–2.1. problems_09.wl Ex 9.5(d) "~0.1e11" → ~0.2.
+- Layer: name planes in the η' bridge (η<1 needs plane 1 = far source), cite eq ms_free; add sentence that γ'_eff size (dγ'/df=1.4) ≠ Ch 21 fit (+15.6, radial image); shorten D_Δt boxes after fix.
