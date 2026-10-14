@@ -126,7 +126,7 @@ Print["  RE = ", NumberForm[REgal / kpcToM, {3, 1}], " kpc\n"];
 Mclus = 2*^14 * Msolar;
 DdClus = 919 * MpcToM;
 DsClus = 1727 * MpcToM;
-DdsClus = 1329 * MpcToM;
+DdsClus = 1328 * MpcToM;
 thetaEClus = thetaEfunc[Mclus, DdClus, DsClus, DdsClus];
 Print["(c) Cluster lensing (M_E = 2e14 Msun within thetaE, zd = 0.3, zs = 2):"];
 Print["  thetaE = ", ScientificForm[thetaEClus, 4], " rad"];
