@@ -202,3 +202,9 @@
 - 12.5(d) not an error; optional "ℓ ≈ 4–5/θ (filter peaks at η≈4.1)".
 - Layer: 10 N9 κ_s 0.330 → 0.329 (10_Solutions:88; problems_10.wl:398–399 target 0.329 tol 0.0005) — critic's auto-fix was blocked by the permission classifier, apply in fix pass; 10 X1 signed θ/β wording; 12 N2 ⟨χ⟩ = 2g(1−⟨|χ_s|²⟩/2) (SKW p.277).
 - Repo-check weaknesses: problems_12 "MST γ'=λγ" uses undefined `gam` (passes trivially); SIS 2θ_E check hard-codes κ=γ=1/4; problems_11 divergence clause; problems_10.wl:40 stale 1328.2 comment.
+
+# ===== PART V FIX ITEMS from reconciliation (in addition to each chapter's critic Flagged section) =====
+## Ch 14 (reconciler): A "if Ω_m is held fixed" at tex:603–609, 641–642, 948–949, Soln 93–95, 285 (+ R3 numbers: −1% → δw +0.29, +1% → −0.36; Ω_m free along dΩ_m = −½dw needs |δw| = 0.66); B rescope keybox tex:369–371 to α₂/α₁ = 1/B; C replace Summary tex:950–951 (differently oriented curves, cite collett_2012); D optional em-dash appositive tex:83–86; E mark C11, C13 ✅ in the verdict table. Critic flags F1, F3, F5 remain.
+## Ch 16 (reconciler): S7-049 l.22–25 "For a single galaxy the missing odd image…" (minor). Critic items X5–X9, N12 remain.
+## Ch 18 (reconciler): 1 uniform-core Jeans formula needs ν > 2+2β_a (l.708, 743–745, Sol 18.8 l.171–173, Ex 18.8 l.871–873; exact σ_r² = (4π/3)Gρ_c r²[ln(r_c/r)+1/3] at ν=2; add check k18b); 2 optional decoupling-radius table vs γ′. Critic items (Kochanek 2020 bib + cite; ms_F validity; η notation; Ch 21 qualifier; eq distance_ratio wording; superlative) remain.
+## Ch 21 (reconciler): 1 Sol l.49–51 "can detect" only at fixed slope → qualify, point to §pe_free_slope; 2 keybox l.858–863 qualify "comparable c_i" or point to §pe_sign_change; 3 l.517–518 "one function" → "For the canonical triple,"; 4 l.88 "is the whole method" → plain. Critic F1 (source-plane vs image-plane scope), F2 (validity criterion ≈640 m), N5 (10.46), X3 remain.
