@@ -49,10 +49,20 @@ chiFunc[z_, Om_, OL_] := NIntegrate[
     Method -> "GaussKronrod"
 ];
 
-DAFunc[z_, Om_, OL_] := chiFunc[z, Om, OL] / (1 + z);
+(* Transverse comoving distance D_M: sinh for open (Ok > 0), sin for closed (Ok < 0).
+   Fix-pass 2026-10-14 (FACT_CRITIC_03 V4): DAFunc previously returned chi/(1+z) for
+   every model, which is wrong for the open Ex 3.3 cosmology (check B25). *)
+DMFunc[z_, Om_, OL_] := Module[{chi = chiFunc[z, Om, OL], Ok = 1 - Om - OL,
+    dH = clight/H0si/MpcToM},
+  Which[Ok > 10^-12, dH/Sqrt[Ok] Sinh[Sqrt[Ok] chi/dH],
+        Ok < -10^-12, dH/Sqrt[-Ok] Sin[Sqrt[-Ok] chi/dH],
+        True, chi]];
+
+DAFunc[z_, Om_, OL_] := DMFunc[z, Om, OL] / (1 + z);
 
 DLFunc[z_, Om_, OL_] := chiFunc[z, Om, OL] * (1 + z);
 
+(* DdsFunc is the FLAT-universe formula; it is only called with Om + OL = 1 below. *)
 DdsFunc[zd_, zs_, Om_, OL_] := Module[{chis, chid},
     chis = chiFunc[zs, Om, OL];
     chid = chiFunc[zd, Om, OL];
@@ -144,6 +154,7 @@ t0Open = NIntegrate[
     1 / ((1 + z) * H0si * Efunc[z, 0.3, 0.0]),
     {z, 0, Infinity}] * secToGyr;
 Print["  t_0 = ", NumberForm[t0Open, {4, 1}], " Gyr"];
+Print["  Ratio concordance/open = ", ToString[NumberForm[t0Conc/t0Open, {3, 2}]], " (~19% older)"];
 Print["  Concordance gives larger age due to late-time acceleration.\n"];
 
 
@@ -155,20 +166,16 @@ Print["--- Exercise 3.3: Angular Diameter Distance Turnover ---\n"];
 
 Print["(a) DA for three cosmologies:\n"];
 
-daConc = Table[{z0, DAFunc[z0, 0.3, 0.7]}, {z0, 0.1, 5.0, 0.1}];
-maxConc = Max[daConc[[All, 2]]];
-zMaxConc = Select[daConc, #[[2]] == maxConc &][[1, 1]];
-Print["  Concordance: z_max=", zMaxConc, ", DA_max=", Round[maxConc], " Mpc"];
-
-daEdS = Table[{z0, DAFunc[z0, 1.0, 0.0]}, {z0, 0.1, 5.0, 0.1}];
-maxEdS = Max[daEdS[[All, 2]]];
-zMaxEdS = Select[daEdS, #[[2]] == maxEdS &][[1, 1]];
-Print["  EdS: z_max=", zMaxEdS, ", DA_max=", Round[maxEdS], " Mpc"];
-
-daOpen = Table[{z0, DAFunc[z0, 0.3, 0.0]}, {z0, 0.1, 5.0, 0.1}];
-maxOpen = Max[daOpen[[All, 2]]];
-zMaxOpen = Select[daOpen, #[[2]] == maxOpen &][[1, 1]];
-Print["  Open: z_max=", zMaxOpen, ", DA_max=", Round[maxOpen], " Mpc\n"];
+(* Fix-pass 2026-10-14: FindMaximum replaces the former 0.1-step grid
+   (which printed EdS z_max = 1.3 and, with the curvature-free DAFunc, open 1.5/1445). *)
+daNum[z_?NumericQ, om_, ol_] := DAFunc[z, om, ol];
+daMaxFn[om_, ol_, z0_] := FindMaximum[daNum[zt, om, ol], {zt, z0}];
+{maxConc, zMaxConc} = {#[[1]], zt /. #[[2]]} &[daMaxFn[0.3, 0.7, 1.6]];
+Print["  Concordance: z_max=", ToString[NumberForm[zMaxConc, {4, 3}]], ", DA_max=", Round[maxConc], " Mpc"];
+{maxEdS, zMaxEdS} = {#[[1]], zt /. #[[2]]} &[daMaxFn[1.0, 0.0, 1.3]];
+Print["  EdS: z_max=", ToString[NumberForm[zMaxEdS, {4, 3}]], ", DA_max=", Round[maxEdS], " Mpc"];
+{maxOpen, zMaxOpen} = {#[[1]], zt /. #[[2]]} &[daMaxFn[0.3, 0.0, 1.8]];
+Print["  Open (D_M with sinh): z_max=", ToString[NumberForm[zMaxOpen, {4, 3}]], ", DA_max=", Round[maxOpen], " Mpc\n"];
 
 Print["(b) DA = chi/(1+z). At low z, chi grows faster than (1+z)."];
 Print["  At high z, (1+z) dominates, causing DA to decrease.\n"];
@@ -266,8 +273,10 @@ tEvals = tEofZd /@ zgrid;
 REvals = MapThread[#1 DAFunc[#2, 0.3, 0.7] &, {tEvals, zgrid}];   (* Mpc *)
 Print["  theta_E strictly decreasing in z_d on [0.02,0.98]: ",
     And @@ Negative[Differences[tEvals]]];
-Print["  R_E = D_d theta_E peaks at z_d = ", zgrid[[First@Ordering[REvals, -1]]],
-    " (R_E = ", ToString[NumberForm[1000 Max[REvals], {3, 1}]], " kpc)"];
+reNum[z_?NumericQ] := tEofZd[z] DAFunc[z, 0.3, 0.7];
+Module[{reMax = FindMaximum[{reNum[zt], 0.05 <= zt <= 0.95}, {zt, 0.35}]},
+  Print["  R_E = D_d theta_E peaks at z_d = ", ToString[NumberForm[zt /. reMax[[2]], {3, 3}]],
+    " (R_E = ", ToString[NumberForm[1000 reMax[[1]], {3, 1}]], " kpc)"]];
 Print[""];
 
 Print["=== End of Module 3 Solutions ==="];
@@ -446,8 +455,9 @@ annDAnum[z_?NumericQ, om_, ol_] := DAFunc[z, om, ol];
 annEdSnum = FindMaximum[annDAnum[zt, 1.0, 0.0], {zt, 1.3}];
 Print["  EdS: (8/27) D_H = ", annEdSmax, " Mpc; numerical max ", annEdSnum];
 Print["  open (sinh, correct D_M): ", annOpenMax];
-Print["  open with chi/(1+z) (as DAFunc does, curvature ignored): ",
-      FindMaximum[annDAnum[zt, 0.3, 0.0], {zt, 1.5}]];
+annDAflatOpen[z_?NumericQ] := chiFunc[z, 0.3, 0.0]/(1 + z);
+Print["  open with chi/(1+z) (curvature ignored in D_M; the pre-2026-10-14 DAFunc): ",
+      FindMaximum[annDAflatOpen[zt], {zt, 1.5}]];
 check["B12e EdS: (8/27) c/H0 = 1269 Mpc and numerical maximum at z = 1.25",
   Round[annEdSmax] == 1269 && Abs[(zt /. annEdSnum[[2]]) - 1.25] < 0.01 &&
   Abs[annEdSnum[[1]] - annEdSmax] < 1];
@@ -615,5 +625,49 @@ check["B24a Q0957: calD = 0.64 Gpc^-1, sqrt = 0.80, 2.85 x sqrt(calD) = 2.28 arc
   Abs[annThFac Sqrt[1000 DdsQ/(DdQ DsQ)] - thetaEarcsec] < 10^-9 && Abs[thetaEarcsec - 2.28] < 0.005];
 check["B24b SIS: thetaE = 4 pi (sigma/c)^2 Dls/Ds  =>  thetaE1/thetaE2 = Dls1 Ds2/(Ds1 Dls2)",
   Simplify[(4 Pi sg^2/cS^2 Dls1/Ds1)/(4 Pi sg^2/cS^2 Dls2/Ds2) - Dls1 Ds2/(Ds1 Dls2)] === 0];
+
+(* ---- Fix-pass 2026-10-14 (FACT_CRITIC_03 V3-V6, N4, X2): each check fails on the old value ---- *)
+(* B25: V4 Ex 3.3(a) turnover table: new rows vs the old 1.61/1770, 1.25/1180, 1.44/1300 *)
+check["B25a concordance row 1.605 / 1748 Mpc (old 1770 fails)",
+  Abs[zMaxConc - 1.605] < 0.001 && Round[maxConc] == 1748 && Abs[maxConc - 1770] > 10];
+check["B25b EdS row 1.25 / 1269 Mpc (old 1180 fails)",
+  Abs[zMaxEdS - 1.25] < 0.001 && Round[maxEdS] == 1269 && Abs[maxEdS - 1180] > 50];
+check["B25c open row via DAFunc (sinh D_M): 1.90 / 1583 Mpc (old 1.44 / 1300 fail)",
+  Abs[zMaxOpen - 1.90] < 0.005 && Round[maxOpen] == 1583 &&
+  Abs[zMaxOpen - 1.44] > 0.3 && Abs[maxOpen - 1300] > 200];
+check["B25d DAFunc reduces to chi/(1+z) for flat models (D_A(1) concordance)",
+  Abs[DAFunc[1.0, 0.3, 0.7] - chiFunc[1.0, 0.3, 0.7]/2] < 10^-9];
+
+(* B26: V3 Ex 3.2(c): open age 11.3 Gyr, concordance ~19% older (old 11.0 Gyr / 23% fail) *)
+check["B26 open t0 = 11.3 Gyr (not 11.0); conc/open - 1 = 19% (not 23%)",
+  Abs[t0Open - 11.3] < 0.05 && Abs[t0Open - 11.0] > 0.2 &&
+  Round[100 (t0Conc/t0Open - 1)] == 19];
+
+(* B27: V5/V6 efficiency peak at chi_d/chi_s = 0.42 (z_s = 1), not 0.5; calD has no interior maximum *)
+Module[{pk, zd, ratio},
+  pk = FindMaximum[annEff[zt, 1.0], {zt, 0.35}];
+  zd = zt /. pk[[2]];
+  ratio = chiFunc[zd, 0.3, 0.7]/chiFunc[1.0, 0.3, 0.7];
+  Print["  efficiency peak (z_s = 1): z_d = ", zd, ", chi_d/chi_s = ", ratio];
+  check["B27a efficiency peak z_d = 0.350, chi_d/chi_s = 0.42 (not the midpoint 0.5)",
+    Abs[zd - 0.350] < 0.002 && Abs[ratio - 0.42] < 0.005 && ratio < 0.45]];
+(* calD monotonic: already asserted by B16d. *)
+
+(* B28: N4 chi(0.1) < cz/H0 because H(z) > H0: chi ~ (c/H0)[z - (1+q0) z^2/2], q0 = Om/2 - OL;
+        EdS (decelerating) gap 7%, LCDM 2%, pure Lambda 0% -- acceleration SHRINKS the gap *)
+Module[{dH = clight/H0si/MpcToM, q0 = 0.3/2 - 0.7, gapL, gapE, gapV},
+  gapL = 1 - chiFunc[0.1, 0.3, 0.7]/(dH 0.1);
+  gapE = 1 - chiFunc[0.1, 1.0, 0.0]/(dH 0.1);
+  gapV = 1 - chiFunc[0.1, 0.0, 1.0]/(dH 0.1);
+  Print["  cz/H0 excess at z=0.1: LCDM ", gapL, ", EdS ", gapE, ", pure Lambda ", gapV];
+  check["B28a second-order chi(0.1) = (c/H0)[z - (1+q0)z^2/2] within 0.1% of numerical",
+    Abs[dH (0.1 - (1 + q0) 0.1^2/2)/chiFunc[0.1, 0.3, 0.7] - 1] < 0.001];
+  check["B28b gaps: LCDM 2%, EdS 7%, pure Lambda 0 (more deceleration, larger gap)",
+    Round[100 gapL] == 2 && Round[100 gapE] == 7 && Abs[gapV] < 10^-6 && gapE > gapL > gapV]];
+
+(* B29: X2 age as a fraction of t_H: open 0.81 < concordance 0.96 *)
+check["B29 H0 t0: open 0.81 < concordance 0.96 (t_H overstates the open age by more)",
+  Abs[t0Open H0si/secToGyr - 0.81] < 0.005 && Abs[t0Conc H0si/secToGyr - 0.96] < 0.005 &&
+  t0Open < t0Conc];
 
 summary[];

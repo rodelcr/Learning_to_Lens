@@ -78,7 +78,7 @@ Print["  These agree to high precision.\n"];
 (* (c) Newtonian solar deflection in arcseconds *)
 Print["(c) Newtonian solar deflection:"];
 Print["  alpha_Newton = ", NumberForm[alphaNSun * radToArcsec, {4, 3}], " arcsec"];
-Print["  Expected: 0.875 arcsec\n"];
+Print["  Expected: 0.876 arcsec (often rounded to 0.875 = 1.75/2)\n"];
 
 
 (* =========================================================================
@@ -118,8 +118,8 @@ Print["  In the weak-field (isotropic coordinate) form:"];
 Print["    ds^2 ~ -(1 - 2*Phi/c^2)*c^2*dt^2 + (1 + 2*Phi/c^2)*(dx^2+dy^2+dz^2)"];
 Print["  where Phi = -GM/r is the Newtonian potential."];
 Print["  The effective refractive index for light is:"];
-Print["    n(r) = sqrt(g_rr / (-g_tt)) ~ 1 + 4*GM/(c^2*r)"];
-Print["  The Newtonian calculation uses only g_tt => n ~ 1 + 2*GM/(c^2*r)"];
+Print["    n(r) = sqrt(g_rr / (-g_tt)) ~ 1 + 2*GM/(c^2*r)   (fix-pass 2026-10-14: was 4GM; see check A20a)"];
+Print["  The Newtonian calculation uses only g_tt => n ~ 1 + GM/(c^2*r)"];
 Print["  => half the deflection."];
 Print["  The spatial curvature (g_rr) contributes EQUALLY, doubling the result.\n"];
 
@@ -222,9 +222,9 @@ Print["  = ", NumberForm[deltaT * 1*^6, {3, 0}], " microseconds\n"];
 (* (c) Comparison with measurement *)
 Print["(c) Comparison with Shapiro's measurement:"];
 Print["  Our calculation: Delta T ~ ", NumberForm[deltaT * 1*^6, {3, 0}], " us"];
-Print["  Shapiro (1964): Delta T = 200 +/- 20 us"];
-Print["  The agreement is reasonable. Differences arise from:"];
-Print["    - Mercury not exactly at inferior conjunction"];
+Print["  First radar measurement (Shapiro et al. 1968, PRL 20, 1265; Shapiro 1964,\n   PRL 13, 789, is the prediction): Delta T = 200 +/- 20 us (value as quoted in the exercise)"];
+Print["  The difference is 2 sigma (check A23). Possible contributions:"];
+Print["    - Mercury not exactly at superior conjunction"];
 Print["    - Solar corona effects"];
 Print["    - Our point-mass approximation"];
 Print["  The Viking Mars lander (1979) later confirmed GR to ~0.1%.\n"];
@@ -544,5 +544,56 @@ check["A18 (Dd Ds/(c Dds)) thetaE^2 = 4 G M/c^3",
         ratio of reduced deflections = (Dds1/Ds1)/(Dds2/Ds2) — numbers in Module 3 *)
 check["A19 alpha_1/alpha_2 = (Dds1 Ds2)/(Ds1 Dds2) for a common alpha_hat",
   Simplify[((Dds1/Ds1) ah)/((Dds2/Ds2) ah) - Dds1 Ds2/(Ds1 Dds2)] === 0];
+
+(* ---- Fix-pass 2026-10-14 (FACT_CRITIC_02 V1-V4, V7, V8): each check fails on the old value ---- *)
+(* A20: V1 refractive index. The square-root form gives 1 + 2m/r; the old no-root form
+        (1+2m/r)/(1-2m/r) expands to 1 + 4m/r; the g_tt-only index is 1 + m/r (not 1 + 2m/r). *)
+Module[{nRoot, nNoRoot, nTT},
+  nRoot = Coefficient[Normal[Series[Sqrt[(1 + 2 annm/annr)/(1 - 2 annm/annr)], {annm, 0, 1}]], annm];
+  nNoRoot = Coefficient[Normal[Series[(1 + 2 annm/annr)/(1 - 2 annm/annr), {annm, 0, 1}]], annm];
+  nTT = Coefficient[Normal[Series[(1 - 2 annm/annr)^(-1/2), {annm, 0, 1}]], annm];
+  check["A20a n - 1 = 2m/r (coefficient 2/r, not the old 4/r)",
+    Simplify[nRoot - 2/annr] === 0 && Simplify[nRoot - 4/annr] =!= 0];
+  check["A20b the old no-root expression is the one that gives 4m/r",
+    Simplify[nNoRoot - 4/annr] === 0];
+  check["A20c g_tt-only index n = (1-2m/r)^(-1/2) = 1 + m/r (not the old 1 + 2m/r)",
+    Simplify[nTT - 1/annr] === 0 && Simplify[nTT - 2/annr] =!= 0]];
+
+(* A21: V2 Soldner asymptotes. r -> infinity needs cos(phi) = -1/e:
+        phi = pi/2 + delta satisfies it, the old phi = pi - delta does not (e = 5). *)
+Module[{e0 = 5., d0},
+  d0 = ArcSin[1/e0];
+  check["A21a cos(pi/2 + delta) = -1/e (new asymptote)", Abs[Cos[Pi/2 + d0] + 1/e0] < 10^-12];
+  check["A21b cos(pi - delta) != -1/e (old asymptote fails)", Abs[Cos[Pi - d0] + 1/e0] > 0.5];
+  check["A21c swept angle 2(pi/2 + delta) - pi = 2 delta = alpha",
+    Abs[2 (Pi/2 + d0) - Pi - 2 d0] < 10^-12]];
+
+(* A22: V3 ex:shapiro_sun(b): the part-(a) leading-log formula gives 220 us, not 240 *)
+check["A22 leading-log formula of ex:shapiro_sun(a) = 220 us, != 240 us",
+  Round[tScale logFactor 1*^6] == 220 && Abs[tScale logFactor 1*^6 - 240] > 15];
+
+(* A23: V7 measurement vs prediction: (240 - 200)/20 = 2 sigma *)
+check["A23 (240 - 200)/20 = 2 sigma", Round[(deltaT 1*^6 - 200)/20] == 2];
+
+(* A24: V8 conjunction geometry. Earth at (-R_E, 0). Superior conjunction: Mercury at (+R_M, 0)
+        (behind the Sun): the Earth-Mercury segment passes the Sun at distance 0, so a ray can graze.
+        Inferior conjunction: Mercury at (-R_M, 0): segment's closest approach to the Sun = R_M >> R_sun. *)
+Module[{segDist},
+  segDist[p1_, p2_] := Module[{t = Clip[-(p1.(p2 - p1))/((p2 - p1).(p2 - p1)), {0, 1}]},
+    Norm[p1 + t (p2 - p1)]];
+  check["A24a superior conjunction: Earth-Mercury line passes through the solar disc",
+    segDist[{-Rearth, 0.}, {Rmerc, 0.}] < Rsolar];
+  check["A24b inferior conjunction: closest approach = R_Merc ~ 83 R_sun (no grazing ray)",
+    segDist[{-Rearth, 0.}, {-Rmerc, 0.}] > 80 Rsolar]];
+
+(* A25: V4 point-mass theta_E for 1e12 Msun, z_d = 0.3, z_s = 1, flat LCDM (H0 = 70, Om = 0.3):
+        2.38 arcsec (not "~1 arcsec") *)
+Module[{dH = 2.99792458*^5/70., chi, Dd, Ds, Dds, mpc = 3.0857*^22, thE},
+  chi[z_] := dH NIntegrate[1/Sqrt[0.3 (1 + zz)^3 + 0.7], {zz, 0, z}];
+  Dd = chi[0.3]/1.3; Ds = chi[1.]/2.; Dds = (chi[1.] - chi[0.3])/2.;
+  thE = Sqrt[4 Gnewton 1*^12 Msolar/cc^2 Dds/(Dd Ds mpc)] radToArcsec;
+  Print["  theta_E(1e12 Msun; 0.3 -> 1) = ", thE, " arcsec (Dd, Ds, Dds = ", {Dd, Ds, Dds}, " Mpc)"];
+  check["A25 theta_E = 2.4 arcsec (2.38; old '~1 arcsec' is low by > 2x)",
+    Abs[thE - 2.38] < 0.01 && thE/1. > 2]];
 
 summary[];

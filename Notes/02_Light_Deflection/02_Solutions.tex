@@ -50,8 +50,8 @@ $2\mathcal{E}L^2 = b^2\speedoflight^4$.  (Checks A16a--b in
 \end{derivation}
 \textbf{(b)} The orbit equation $r(\phi) = p/(1 + e\cos\phi)$ gives
 $r \to \infty$ when $\cos\phi = -1/e$.  The two asymptotic angles are
-$\phi_\pm = \pi \mp \delta$ where $\sin\delta = 1/e$.  The deflection
-angle is:
+$\phi_\pm = \pm(\pi/2 + \delta)$ where $\sin\delta = 1/e$.  The swept
+angle is $\pi + 2\delta$, so the deflection angle is:
 \begin{equation*}
     \alphahat_{\mathrm{Newton}} = 2\delta = 2\arcsin(1/e) \,.
 \end{equation*}
@@ -80,15 +80,15 @@ $\delta \to 0$ and the orbit degenerates to the straight line $r\cos\phi = p/e
     \alphahat_{\mathrm{Newton}} = \frac{2 \times 6.674 \times 10^{-11}
     \times 1.989 \times 10^{30}}{(2.998 \times 10^{8})^2 \times
     6.957 \times 10^{8}}
-    \approx 4.24 \times 10^{-6}~\text{rad}
-    = 0.875'' \,.
+    \approx 4.25 \times 10^{-6}~\text{rad}
+    = 0.876'' \,.
 \end{equation*}
 
 
 \begin{annotation}[Rounding]
 To four figures the Newtonian value is $4.246\times10^{-6}$~rad
 $= 0.876''$, exactly half of the GR value $1.75''$ computed with the same
-constants (check A16d); the textbook ``$0.875''$'' is half of the rounded
+constants (check A16d).  The often-quoted ``$0.875''$'' is half of the rounded
 $1.75''$.
 \end{annotation}
 % ----- Exercise 2.2 -----
@@ -118,13 +118,15 @@ isotropic coordinates takes the form:
 \end{equation*}
 For a null geodesic ($ds^2 = 0$), the effective refractive index is:
 \begin{equation*}
-    n(r) \approx \frac{1 + 2\Gnewton M / (\speedoflight^2 r)}
-    {1 - 2\Gnewton M / (\speedoflight^2 r)}
-    \approx 1 + \frac{4\Gnewton M}{\speedoflight^2 r} \,.
+    n(r) = \sqrt{\frac{1 + 2\Gnewton M / (\speedoflight^2 r)}
+    {1 - 2\Gnewton M / (\speedoflight^2 r)}}
+    \approx 1 + \frac{2\Gnewton M}{\speedoflight^2 r} \,,
 \end{equation*}
-The Newtonian calculation effectively uses $n = 1 + 2\Gnewton M /
-(\speedoflight^2 r)$ (only the $g_{tt}$ contribution), yielding half the
-deflection.  The spatial curvature ($g_{rr}$) contributes the other factor
+in agreement with Module~1e, eq.~\eqref{eq:refractive_index}.  (An earlier
+version omitted the square root and wrote $1 + 4\Gnewton M/(\speedoflight^2 r)$;
+check A20a--b.)  The Newtonian calculation effectively uses
+$n = 1 + \Gnewton M/(\speedoflight^2 r)$ (only the $g_{tt}$ contribution,
+check A20c), yielding half the deflection.  The spatial curvature ($g_{rr}$) contributes the other factor
 of~$2$.  Physically: in the Newtonian picture only time runs slower near a
 mass, but in GR space is also stretched, so the photon path through curved
 space is additionally bent.
@@ -249,9 +251,12 @@ $+1$ the delay is $240~\mu$s, without it $220~\mu$s (checks A14c--f).  The
 non-logarithmic term is a 9\% effect, not negligible at the precision of the
 radar experiments.
 \end{annotation}
-\textbf{(c)} Shapiro's 1964 measurement gave $200 \pm 20~\mu$s.  The
-small discrepancy with our idealized point-mass calculation is consistent
-given that: (i) Mercury is not exactly at inferior conjunction, (ii) the
+\textbf{(c)} The first radar measurement (Shapiro et al.\ 1968,
+Phys.\ Rev.\ Lett.\ 20, 1265) gave $200 \pm 20~\mu$s; Shapiro's 1964 paper
+was the prediction.  Our idealized point-mass value lies $2\sigma$ above it
+(check A23), so the agreement is marginal rather than clean.  Contributing
+factors: (i) Mercury is not exactly at superior conjunction, so
+$r_0 > \Rsun$ and the logarithm is smaller, (ii) the
 Sun's corona introduces additional delays, and (iii) later measurements
 with the Viking Mars lander confirmed the GR prediction to $\sim 0.1\%$
 accuracy.

@@ -307,9 +307,16 @@ the results here and verify them symbolically in
 \texttt{friedmann\_equations.wl}.
 
 The nonvanishing independent components of the \textbf{Ricci tensor} are
-(Carroll eq.~8.45):
+(Carroll eq.~8.45, restoring $\speedoflight$ with $x^0 = t$, so that
+$g_{00} = -\speedoflight^2$):\footnote{Earlier versions printed
+$R_{00} = -3\ddot a/(\speedoflight^2 a)$, which is the component with respect
+to $x^0 = \speedoflight t$, and combined it with $g_{00} = -\speedoflight^2$
+and $T_{00} = \rho\speedoflight^4$ (the $x^0 = t$ values).  The mixed
+bookkeeping put a spurious $1/\speedoflight^2$ into
+eq.~\eqref{eq:lhs_00}; the spatial components and $\ricciS$ do not depend on
+the choice of $x^0$.}
 \begin{align}
-    R_{00} &= -\frac{3\ddot{a}}{\speedoflight^2\, a} \,,
+    R_{00} &= -\frac{3\ddot{a}}{a} \,,
     \label{eq:R00} \\[6pt]
     R_{11} &= \frac{1}{\speedoflight^2(1-kr^2)}
     \left(a\ddot{a} + 2\dot{a}^2 + 2k\speedoflight^2\right) ,
@@ -358,10 +365,10 @@ with $\mu = \nu = 0$ and $x^0 = t$.
   \item The fourth term is $-\sum_{i,j}\christoffel{i}{0}{j}\christoffel{j}{0}{i}
         = -3(\dot a/a)^2$.
 \end{itemize}
-Sum: $R_{tt} = -3\ddot a/a$ (check B2a).  This carries \emph{no}
-$1/\speedoflight^2$ when the time coordinate is $t$; the form
-$-3\ddot a/(\speedoflight^2 a)$ of eq.~\eqref{eq:R00} is the component with
-respect to $x^0 = \speedoflight t$, $R_{tt}/\speedoflight^2$ (check B2b).
+Sum: $R_{tt} = -3\ddot a/a$ (check B2a), eq.~\eqref{eq:R00}.  This carries
+\emph{no} $1/\speedoflight^2$ when the time coordinate is $t$; the component
+with respect to $x^0 = \speedoflight t$ is $R_{tt}/\speedoflight^2 =
+-3\ddot a/(\speedoflight^2 a)$ (check B2b).
 Either is fine on its own, but it must be paired with $g_{00}$ and $T_{00}$ in
 the \emph{same} coordinate: $g_{tt} = -\speedoflight^2$, $T_{tt} =
 \speedoflight^4\rho$ for $x^0 = t$ (used below), versus $g_{00} = -1$,
@@ -441,7 +448,7 @@ The $(0,0)$ component of Einstein's equations gives:
     = \frac{8\pi\Gnewton}{\speedoflight^4}\, T_{00} \,.
     \label{eq:einstein_00}
 \end{equation}
-Substituting $R_{00} = -3\ddot{a}/(\speedoflight^2 a)$,
+Substituting $R_{00} = -3\ddot{a}/a$,
 $g_{00} = -\speedoflight^2$,
 $\ricciS = 6(\ddot{a}/a + \dot{a}^2/a^2 + k\speedoflight^2/a^2) / \speedoflight^2$,
 and $T_{00} = \rho\speedoflight^4$:
@@ -449,11 +456,11 @@ and $T_{00} = \rho\speedoflight^4$:
 \noindent Left side:
 \begin{align}
     R_{00} - \half \ricciS\, g_{00} + \Lambda g_{00}
-    &= -\frac{3\ddot{a}}{\speedoflight^2 a}
-    + \frac{3}{\speedoflight^2}\left(\frac{\ddot{a}}{a}
+    &= -\frac{3\ddot{a}}{a}
+    + 3\left(\frac{\ddot{a}}{a}
     + \frac{\dot{a}^2}{a^2} + \frac{k\speedoflight^2}{a^2}\right)
     - \Lambda\speedoflight^2 \nonumber \\
-    &= \frac{3}{\speedoflight^2}\left(\frac{\dot{a}^2}{a^2}
+    &= 3\left(\frac{\dot{a}^2}{a^2}
     + \frac{k\speedoflight^2}{a^2}\right) - \Lambda\speedoflight^2 \,.
     \label{eq:lhs_00}
 \end{align}
@@ -500,10 +507,10 @@ Dividing by~3 and moving terms gives eq.~\eqref{eq:friedmann_1} (check B2g).
 after division by~3: $\dot a^2/a^2$, $k\speedoflight^2/a^2$ (with $k$ in
 $\text{length}^{-2}$ when $a$ is dimensionless and $r$ is a length),
 $\Lambda\speedoflight^2$ ($\Lambda$ in $\text{length}^{-2}$), and
-$\Gnewton\rho$.  If one combines eq.~\eqref{eq:R00} (written for
-$x^0 = \speedoflight t$) with $g_{tt}$ and $T_{tt}$ (written for $x^0 = t$), the
-left side picks up a stray $1/\speedoflight^2$; the boxed result
-eq.~\eqref{eq:friedmann_1} is the consistent one.
+$\Gnewton\rho$.  Pairing the $x^0 = \speedoflight t$ component
+$-3\ddot a/(\speedoflight^2 a)$ with $g_{tt}$ and $T_{tt}$ (written for
+$x^0 = t$) would leave an uncancelled $\ddot a$ term, so the cancellation of
+$\ddot a$ is itself a test of consistent bookkeeping.
 \end{derivation}
 \subsection{The Second Friedmann Equation}
 \label{sec:friedmann_2}
@@ -751,7 +758,7 @@ $w = w(a)$ the same equation reads $d\ln\rho_{\rm DE}/d\ln a = -3[1+w(a)]$, so
   \frac{\rho_{\rm DE}(a)}{\rho_{\rm DE,0}}
   = \exp\!\left\{3\int_a^1 \frac{1 + w(a')}{a'}\,da'\right\}.
 \]
-The widely used two-parameter Chevallier--Polarski--Linder (CPL) form is
+The widely used two-parameter Chevallier--Polarski--Linder (CPL) form \citep{chevallier_polarski_2001,linder_2003} is
 $w(a) = w_0 + w_a(1-a)$, i.e.\ $w = w_0$ today and $w \to w_0 + w_a$ at early
 times.  The integral is elementary:
 $3\int_a^1 [(1+w_0+w_a)/a' - w_a]\,da' = -3(1+w_0+w_a)\ln a - 3w_a(1-a)$.
@@ -929,8 +936,10 @@ $\Hubble = 70$.
 \textit{Numbers.}  The script gives $\chi = 418$, $1889$, $3304$, $5180$,
 $7776$~Mpc for $z = 0.1$, $0.5$, $1$, $2$, $5$; the table entries are these,
 rounded (all within $1\%$, check B11).  Low-$z$ sanity check: $\chi \approx
-\speedoflight z/\Hubble = 428$~Mpc at $z = 0.1$, already $2\%$ high because the
-expansion has been accelerating.
+\speedoflight z/\Hubble = 428$~Mpc at $z = 0.1$, already $2\%$ high, because
+$H(z) > \Hubble$ at $z > 0$ ($\chi \approx (\speedoflight/\Hubble)[z -
+(1+q_0)z^2/2]$); in a decelerating Einstein--de~Sitter universe the gap would be
+$7\%$.
 \end{derivation}
 
 % =====================================================================
@@ -1211,7 +1220,7 @@ In a flat universe the exact relation between $\Dds$ and the naive difference is
 \]
 always positive: $\Ds - \Dd$ always \emph{underestimates} $\Dds$.  For the
 example above the gap is $1259 \times 1.5/3 = 630$~Mpc (check B13d), more than
-the ``answer'' $468$~Mpc itself.  It is not a small correction.
+the ``answer'' $468$~Mpc itself.
 
 \textit{Order matters.}  $D_A(z_1,z_2)$ is not symmetric:
 $D_A(z_2,z_1) = (\chi_2-\chi_1)/(1+z_1) = [(1+z_2)/(1+z_1)]\,D_A(z_1,z_2)$.  For
@@ -1232,7 +1241,7 @@ $(1+z_{s_1})$ and $(1+z_{s_2})$ factors cancel in pairs:
 So $\Brat$ depends only on comoving distances, and (since every $\chi$ scales
 with $d_H$) not at all on $\Hubble$ (check B15c).  Example:
 $z_l = 0.3$, $z_{s_1} = 0.8$, $z_{s_2} = 2.0$, flat $\Lambda$CDM with
-$\Omegam = 0.3$ gives $\Brat = 0.743$, comfortably below~1 (check B15b).  Note
+$\Omegam = 0.3$ gives $\Brat = 0.743$, below~1 (check B15b).  Note
 how the subtraction trap would enter: using $D_{ls} = D_s - D_l$ would be wrong
 in both the numerator and the denominator.
 \end{bridge}
@@ -1275,10 +1284,14 @@ which determines the ``lensing strength'' of a given observer--lens--source
 configuration.
 
 Note that $\mathcal{D}$ is \textit{not} simply $1/\Dd$, because $\Dds$
-depends on both $z_d$ and $z_s$ in a non-trivial way.  The distance
-ratio is maximized (lensing is most efficient) when the lens is roughly
-halfway between the observer and the source in terms of comoving
-distance.
+depends on both $z_d$ and $z_s$ in a non-trivial way.  At fixed $z_s$,
+$\mathcal{D}$ decreases monotonically with $z_d$ ($\thetaE$ is largest for
+the nearest lenses).\footnote{Earlier versions stated that $\mathcal{D}$ is
+maximized for a lens roughly halfway to the source; that statement applies to
+the efficiency $\Dd\Dds/\Ds$ of Section~\ref{sec:lensing_efficiency}, not to
+$\mathcal{D}$.}  The physical Einstein radius, through the efficiency
+$\Dd\Dds/\Ds$ of the next section, peaks at intermediate $z_d$, a little
+short of the comoving midpoint ($\chi_d \approx 0.42\,\chi_s$ for $z_s = 1$).
 
 
 \begin{annotation}[Which distance goes where]
@@ -1298,12 +1311,9 @@ distance.
         (check B19e).
 \end{itemize}
 
-\textit{Careful with ``maximised''.}  At fixed $z_s$, $\mathcal{D} =
-\Dds/(\Dd\Ds)$ itself is \emph{not} maximised at intermediate $z_d$: it
-diverges as $z_d \to 0$ (where $\Dd \to 0$) and decreases monotonically to zero
-at $z_d = z_s$ (check B16d, for $z_s = 1$).  The quantity that peaks at
-intermediate $z_d$ is the efficiency $\Dd\Dds/\Ds = \Dd^2\mathcal{D}$ of the next
-section, i.e.\ the physical Einstein radius at fixed mass.
+\textit{Monotonic $\mathcal{D}$.}  $\mathcal{D}$ diverges as $z_d \to 0$ and
+falls to zero at $z_d = z_s$ (check B16d, for $z_s = 1$); the efficiency
+$\Dd^2\mathcal{D}$ is what peaks.
 \end{annotation}
 
 % =====================================================================
@@ -1317,8 +1327,8 @@ $z_d$ is lensing most efficient?  The answer is determined by the
     \mathcal{E}(z_d; z_s) \equiv \frac{\Dd\,\Dds}{\Ds}
     \label{eq:lensing_efficiency}
 \end{equation}
-which is proportional to the square of the Einstein radius (at fixed
-mass).  Note that $\thetaE^2 \propto \Dds/(\Dd\,\Ds) =
+which is proportional to the square of the physical Einstein radius
+$R_E = \Dd\thetaE$ (at fixed mass).  Note that $\thetaE^2 \propto \Dds/(\Dd\,\Ds) =
 \mathcal{D}$, while the physical Einstein ring area scales as
 $\Dd^2 \thetaE^2 \propto \Dd\,\Dds/\Ds = \mathcal{E}$.
 
@@ -1329,9 +1339,9 @@ $\Dd^2 \thetaE^2 \propto \Dd\,\Dds/\Ds = \mathcal{E}$.
     redshift $z_d$ for several source redshifts $z_s = 1, 2, 3$ in
     the concordance cosmology.  For $z_s = 1$, lensing is most
     efficient at $z_d \approx 0.35$; for $z_s = 2$, at
-    $z_d \approx 0.5$.  The lens is typically most effective when
-    placed roughly ``halfway'' (in comoving distance) between the
-    observer and the source.  Generated by
+    $z_d \approx 0.5$.  The peak lies somewhat closer to the observer
+    than the comoving midpoint ($\chi_d \approx 0.42\,\chi_s$ for
+    $z_s = 1$).  Generated by
     \texttt{friedmann\_equations.wl}.}
     \label{fig:lensing_efficiency}
 \end{figure}
@@ -1384,9 +1394,10 @@ is at $z_d = 0.52$ (checks B16a, B16c).
           $\Dds = (\chi_s - \chi_d)/(1+z_s)$ for a flat universe.
 
     \item The \textbf{Einstein radius} $\thetaE \propto
-          \sqrt{\Dds/(\Dd\,\Ds)}$ depends on the distance configuration,
-          and lensing is most efficient when the lens is roughly
-          halfway (in comoving distance) to the source.
+          \sqrt{\Dds/(\Dd\,\Ds)}$ depends on the distance configuration;
+          the efficiency $\Dd\Dds/\Ds$ (physical Einstein radius) peaks
+          a little short of the comoving midpoint
+          ($\chi_d \approx 0.42\,\chi_s$ for $z_s = 1$).
 \end{itemize}
 
 
