@@ -169,6 +169,12 @@ check["B2d theta_eff^2 -> thBH^2 (t1-t2)/(2-t2) -> thBH^2 as t1 -> 2 (at fixed i
   FullSimplify[(2 kB tB^2 (t1 - t2)/((2 - t1) (2 - t2)) /. kB -> (2 - t1) thBH^2/(2 tB^2)) ==
      thBH^2 (t1 - t2)/(2 - t2), Assumptions -> tB > 0] &&
   Limit[thBH^2 (t1 - t2)/(2 - t2), t1 -> 2] === thBH^2];
+(* fix pass 2026-10-14 (critic X11): at FIXED tB the same kB also multiplies the outer branch,
+   so it too tends to thBH^2/th: the whole lens collapses to the point mass (chapter check 4c). *)
+check["B2e fixed tB, t1 -> 2 at fixed inner mass: OUTER branch alpha_out -> thBH^2/th too (galaxy vanishes)",
+  FullSimplify[Limit[alphaOut[th, (2 - t1) thBH^2/(2 tB^2), tB, t1, t2], t1 -> 2,
+      Assumptions -> 0 < tB < th && 0 < t2 < 2 && thBH > 0] == thBH^2/th,
+    Assumptions -> 0 < tB < th && 0 < t2 < 2 && thBH > 0]];
 
 (* ---------------- Exercise B3 : SIS limits ---------------- *)
 check["B3a t1 = t2 = 1: alpha = 2 kB tB on both branches (SIS with thE = 2 kB tB)",
@@ -203,9 +209,12 @@ check["AN5 max over 1<g<2 of m_crit = 0.0066 (at g = 1.48)",
   Abs[mcMax[[1]] - 0.0066] < 1*^-4 && Abs[(g /. mcMax[[2]]) - 1.48] < 0.01];
 check["AN6 inside the break: 10% difference reached at 0.9 tB (2 - t1 = 1) but 0.35 tB (2 - t1 = 0.1)",
   N[(1 - 0.1)^(1/1)] == 0.9 && Abs[N[(1 - 0.1)^(1/0.1)] - 0.35] < 0.005];
-check["AN7 SIS + point mass with y > thE still has a theta<0 image (exactly 2 images): y = 1.4, tBH = 0.08",
+(* fix pass 2026-10-14 (critic N9): the exact root is -0.0154 thE; 0.016 is only the leading
+   order tBH^2/(y - thE).  Tolerance tightened from 1e-3 (which passed both) to 5e-5. *)
+check["AN7 SIS + point mass, y = 1.4, tBH = 0.08: theta_- = -0.0154 thE exact (leading order tBH^2/(y-thE) = 0.016)",
   Module[{s1 = -((1 - 14/10) + Sqrt[(1 - 14/10)^2 + 4 (8/100)^2])/2},
-    s1 < 0 && Abs[N[s1 + 1 - (8/100)^2/s1 - 14/10]] < 1*^-12 && Abs[N[s1] + 0.0160] < 1*^-3]];
+    s1 < 0 && Abs[N[s1 + 1 - (8/100)^2/s1 - 14/10]] < 1*^-12 && Abs[N[s1] + 0.0154] < 5*^-5 &&
+    !(Abs[N[s1] + 0.0160] < 5*^-5) && (8/100)^2/(14/10 - 1) === 2/125]];
 
 check["AN8 isothermal dictionary: g = 2 <-> s = g - 1 = 1 <-> Keeton alpha_K = 3 - g = 1",
   (2 - 1) === 1 && (3 - 2) === 1];

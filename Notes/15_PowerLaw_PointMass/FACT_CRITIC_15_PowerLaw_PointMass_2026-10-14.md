@@ -252,3 +252,39 @@ tangential shift u_t − 1 ≈ m/(γ′−1) at γ′=1.3 (D7a).
 - **F5 — AGEL0854 slope still live in TESTS.** `TESTS_AND_DIAGNOSTICS.md:196` (A5 §2 entry) ends "(cf. AGEL0854 γ_in≈0.6)", the DM-only slope retracted in HANDOFF 07-30 §5 and now in note2's WT retraction box (which itself says the claim is still live in TESTS and HANDOFF_arc_2026-07-12). Recorded here so it is not lost: grep `0854` by error class.
 - **F6 — note2 §"Reading the source-plane mapping" image count (never extracted by the packet critic).** `theory/note2_axisym_pl_pointmass.tex:183` (WT numbering): "Outside the radial caustic only the tangential pair survives." For a power law with 1<γ′<2 and 0<y₀ outside the radial caustic there is **one** image (the outer one): the θ<0 branch y(θ) = −[s−α(s)] has maximum |y_r| at s = θ_r, so no far-side root exists for y₀>|y_r|. Ch. 15 states it correctly (l.426–427, check 5q: three images at y₀ = 0.05 θ_E, one at 0.3 θ_E for γ′=1.5). The packet critic's coverage has no claim on note2 l.150–157 (only S6-103 at l.160), so this was never checked. Minor spiral-internal: TESTS A1 row says "tol 1e-10", its §2 entry "<1e−9".
 - **F7 — ⚠ suspected artefact in the mcrit-defect correction (not re-run in autolens).** `NOTES_mcrit_label_defect_2026-08-03.md` (correction box) reports, above the macro threshold, "a radial critical curve DOES still exist … at r≈0.010″. It is the point mass's own critical curve." A point mass has no radial critical curve (λ_r = 1+θ•²/θ² > 0), and its own tangential curve (θ_BH ≈ 0.12″) is absorbed into the composite's tangential curve near θ_E. At r = 0.010″ ≈ 0.019 θ_E,1 in the γ′=1.40, mr0.75 cell the PM shear is m/r² ≈ 154 against κ_PL ≈ 3.9, so neither eigenvalue can vanish. A circular PL + PM + 0.1 external shear at the R5 true m has no critical curve anywhere in r ≤ 0.5 θ_E (R5b). I did not test the q=0.85 ellipse or the multi-plane tracer. The note's conclusion (no observable radial image in those cells) is unaffected, but the "point mass's own critical curve" reading is probably a 5-pixel marching-squares artefact at the singular PointMass centre (0.002″ pixels) and should be checked, e.g. by masking r < 3 px or evaluating det A analytically along a ray.
+
+## Resolution — fixes applied 2026-10-14
+
+Fix pass on wt/ch15 (after `git merge annotated-edition`). X9/X10 had already been fixed (8982cee) and were not touched again.
+
+| id | Fix | Backing |
+|---|---|---|
+| N9 | Annotation "A tempting misreading": θ₋ = −0.0154 θ_E for y = 1.4 θ_E, θ• = 0.08 θ_E, with the leading order θ•²/(y−θ_E) = 0.016 θ_E given separately | problems_15.wl AN7 (tolerance 10⁻³ → 5×10⁻⁵; now also asserts that −0.0160 FAILS that tolerance and that the leading order is exactly 2/125) |
+| X11 | Summary bullet rewritten as the joint corner t₁→2, θ_B→0 (inner mass and outer power law both fixed), and states that at fixed θ_B the limit leaves a bare point mass. Exercise ex:bpl_point_mass_limit gets the question "If θ_B is held fixed, what happens to the outer branch?" The solution answers it (outer branch → θ•²/θ, galaxy vanishes; joint limit needed) | broken_power_law.wl 4c (existing), 4d–4e; problems_15.wl new B2e |
+| C10 | "the supermassive black hole that sits at the centre of essentially every massive galaxy" → "the supermassive black holes found at the centres of massive galaxies \citep{kormendy_ho_2013}". I made the claim weaker because the arXiv abstract (1304.7762), which is what I read, supports "SMBHs found in galaxies" but does not state the "essentially every" occupation claim. | bib key kormendy_ho_2013 |
+| X6 | Ported to power_law_point_mass.wl: 5x (y = uλ_t, dy/du = λ_r, λ_r−λ_t = (γ′−1)u^{1−γ′}+2mu^{−2} > 0, proved symbolically for any 1<γ′<2, m>0); 5y (numeric grid γ′ = 1.1…1.9 × m/m_crit = 0.1, 0.5, 0.9: both radial roots inside θ_t, y_out < y_in < 0); 5z (exact CountRoots at γ′ = 1.3 and 1.8, m = m_crit/2: 2/4/2; m = 2m_crit: 2 for every y on a grid). Visible text: one clause added after |y_in|<|y_out| giving the argument ("for every slope 1<γ′<2: at either radial curve λ_t<λ_r=0 …") plus \annot tags | power_law_point_mass.wl 5x, 5y, 5z |
+| N-1 | l.997: "to first order linear in 2−t₁ and logarithmic in radius" plus a validity sentence ((2−t₁)ln(θ_B/θ) ≪ 1; at 2−t₁ = 1 the deviation is 1−θ/θ_B; the log form exceeds 1 inside θ_B/e and gives 2.3 against 0.9 at θ_B/10). l.1003–1004 "only logarithmically" → "only as the power (θ/θ_B)^{2−t₁}, slowly when the cusp is steep". Summary changed the same way | broken_power_law.wl 6g, 6h |
+| N-2 | "For t₁=2 the ratio is 1 at every radius" → "As t₁→2⁻ at fixed inner mass the ratio tends to 1 … (t₁=2 itself has a divergent inner mass, §bpl_pm_limit)". The annotation's (ii) now reads "tends to 1" | broken_power_law.wl 6b (existing), new 6i (inner mass at t₁=2 = 2πκ_Bθ_B² ln(θ_B/ε) → ∞) |
+| N-3 | Annotation "Two different reasons…": "unrelated" dropped, "no telescope fixes this" dropped. Added: the two regimes are not independent. For a fixed galaxy and BH mass, t₁→2 drives θ_B→0 (eq. bpl_joint_limit), so (ii) is reached only inside (i). Example given: θ_B = 0.0076 θ_E at m = 0.01, 2−t₁ = 0.1, t₂ = 0.5. At fixed θ_B the limit removes the galaxy (4c) or sends the inner mass to infinity | broken_power_law.wl new 4g (0.00763 θ_E at 2−t₁ = 0.1; 0.0354 θ_E at 2−t₁ = 1; K = (2−t₂)/2 for an outer power law of Einstein radius θ_E) |
+| N-4 | Slope-trap annotation: "exactly, for a circular model or with both codes on the same Einstein-radius convention; elliptical codes that define θ_E differently disagree by a factor that depends on the axis ratio" | prose caveat only (no new number); the circular identity is still checks 2c–2d |
+| N-5 | "necessary, not sufficient" is kept only in the subsection title. The body (l.1002–1003) and Summary now use plain wording | — |
+| P1 | "This one line is what makes the rest of the chapter work." → "Every critical-curve result below uses it." | — |
+| P2 | "the most common error" → "a frequent source of error" | — |
+| P3 | Keybox closers replaced with facts: "For γ′=1.5 and m=10⁻³ the Einstein ring moves by 0.2 per cent, yet any m>0.0066 removes the radial critical curve of every power law (eq. pl_mcrit below)" | power_law_point_mass.wl 5p, 5m (existing) |
+| P4 | "The numbers are worth absorbing." deleted | — |
+| P5 | "It is large." deleted | — |
+| P6 | Chiastic closer → "A power law therefore lacks a radial critical curve only for γ′ ≥ 2." | checks 3e–3f (existing) |
+| P7 | "Nothing new is being introduced; …" deleted from the bridge | — |
+| P8 | Rhetorical "exactly" dropped at l.236 ("is exactly what makes it so") and l.886 ("becomes \emph{exactly} the point-mass deflection"). The mathematical uses are kept | — |
+
+**Verification after edits.** All scripts were run with `bash Mathematica/run_wl.sh <script>`.
+- Before: `power_law_point_mass.wl` → `SUMMARY: 72 PASS, 0 FAIL  (of 72 checks)`; `broken_power_law.wl` → `SUMMARY: 36 PASS, 0 FAIL  (of 36 checks)`; `problems_15.wl` → `SUMMARY: 54 PASS, 0 FAIL  (of 54 checks)`.
+- After: `power_law_point_mass.wl` → `SUMMARY: 75 PASS, 0 FAIL  (of 75 checks)`; `broken_power_law.wl` → `SUMMARY: 40 PASS, 0 FAIL  (of 40 checks)`; `problems_15.wl` → `SUMMARY: 55 PASS, 0 FAIL  (of 55 checks)`.
+
+The `ANNOT_REQUIRED=1 bash build.sh` build ended "all assertions passed". Page counts: Student 360, Instructor 444, Annotated 568. `pdftotext Output/Learning_to_Lens.pdf - | grep -c '\[check'` = 0. Figures were not changed: the regenerated PDFs were reverted.
+
+**Left open.**
+- X12 (stale wt Output PDFs): informational only, and the rebuild supersedes it.
+- N-6 (A4 cross-link to Ch. 21): outside this chapter, so it is noted for the orchestrator.
+- The spiral-project feedback F1–F7 is outside this repo.
+- Provenance (whole chapter machine-drafted): the author still needs to rewrite it before external release.

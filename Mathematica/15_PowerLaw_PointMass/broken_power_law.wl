@@ -120,6 +120,14 @@ check["4e  joint limit t1 -> 2: alpha -> 2K th^(1-t2)/(2-t2) + thBH^2/th  (outer
     2 K th^(1 - t2)/(2 - t2) + thBH^2/th, Assumptions -> th > 0 && 0 < t2 < 2 && K > 0 && thBH > 0]];
 check["4f  Meneghetti Remark 5.3 in this language: t -> 2 (g -> 3) is the point mass, m(x) = const",
   Simplify[(x^(3 - g) /. g -> 3)] === 1];
+(* fix pass 2026-10-14 (reconciler N-3): how small the break must be along the joint limit.
+   Outer power law of Einstein radius thE = 1: 2K/(2-t2) = thE^t2 -> K = (2-t2)/2;
+   point mass m = thBH^2/thE^2 = 0.01. *)
+tBnum[epsv_, t2v_, mv_] := N[tBjoint /. {t1 -> 2 - epsv, t2 -> t2v, K -> (2 - t2v)/2, thBH -> Sqrt[mv]}, 20];
+Print["       joint-limit break radius tB/thE (m = 0.01, t2 = 0.5): 2-t1 = 0.1 -> ", tBnum[1/10, 1/2, 1/100],
+  "; 2-t1 = 1 -> ", tBnum[1, 1/2, 1/100]];
+check["4g  joint limit, m = 0.01, t2 = 0.5, K = (2-t2)/2 (outer thE = 1): tB = 0.0076 thE at 2-t1 = 0.1, 0.035 thE at 2-t1 = 1",
+  Abs[tBnum[1/10, 1/2, 1/100] - 0.0076] < 5*^-5 && Abs[tBnum[1, 1/2, 1/100] - 0.0354] < 5*^-4];
 
 (* --- 5. outside-the-break identity --- *)
 alphaPLsame[th_, kB_, tB_, t2_] := 2 kB tB^t2 th^(1 - t2)/(2 - t2);
@@ -163,6 +171,19 @@ check["6e  fractional difference delta is reached at th/tB = (1 - delta)^(1/(2 -
   FullSimplify[(1 - ((1 - delta)^(1/eps))^eps) == delta, Assumptions -> 0 < delta < 1 && eps > 0]];
 check["6f  numeric: eps = 1, delta = 0.1 -> th = 0.9 tB; eps = 0.1, delta = 0.1 -> th = 0.349 tB",
   (1 - 1/10)^(1/1) === 9/10 && Abs[N[(9/10)^(10)] - 0.3487] < 1*^-4];
+(* fix pass 2026-10-14 (reconciler N-1): the deviation is the POWER LAW 1 - (th/tB)^eps;
+   it is logarithmic in radius only while eps ln(tB/th) << 1.  At eps = 1 it is linear in th,
+   and the log form exceeds 1 (impossible for a fractional deficit) by th = tB/10. *)
+check["6g  eps = 1: exact deviation 1 - th/tB (linear in th); log form ln(tB/th) = 2.30 > 1 at th = tB/10 vs exact 0.9",
+  Simplify[(1 - (th/tB)^eps) /. eps -> 1] === 1 - th/tB &&
+  N[1 Log[10]] > 1 && (1 - (1/10)^1) === 9/10 && N[Log[10]] - 9/10 > 1];
+check["6h  eps ln(tB/th) << 1: log form within 4% of exact (eps = 0.1, th = tB/2), but 2x off at eps = 1, th = tB/10",
+  Abs[N[(1/10) Log[2]/(1 - (1/2)^(1/10))] - 1] < 0.04 && N[Log[10]/(1 - 1/10)] > 2];
+(* reconciler N-2: t1 = 2 itself is not a member: the inner mass diverges logarithmically *)
+check["6i  t1 = 2 exactly: inner mass 2 pi Int_e^tB kB (tB/x)^2 x dx = 2 pi kB tB^2 ln(tB/e) -> Infinity as e -> 0",
+  FullSimplify[2 Pi Integrate[kB (tB/x)^2 x, {x, e, tB}, Assumptions -> 0 < e < tB] == 2 Pi kB tB^2 Log[tB/e],
+    Assumptions -> 0 < e < tB] &&
+  Limit[2 Pi kB tB^2 Log[tB/e], e -> 0, Direction -> "FromAbove", Assumptions -> kB > 0 && tB > 0] === Infinity];
 
 (* --- 7. figure: alpha(theta) broken PL vs pure PL --- *)
 thEv = 1; t2v = 1/2; tBv = 1/10;
