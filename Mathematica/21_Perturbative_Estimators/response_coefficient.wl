@@ -20,7 +20,13 @@
                   sign change
               S7  multi-plane coherence (N planes, symbolic) and the
                   significance-vs-amplitude scaling
-            and exports the figure of c(gamma') for the two configurations.
+              S3b image-plane weights on the canonical triple (fix pass
+                  2026-10-14, critic F1): no divergence, non-monotonic,
+                  reversed sign change
+              S4b validity of the expansion for a deep radial image
+                  (fix pass 2026-10-14, critic F2)
+            and exports the two figures of this chapter: c(gamma') for the
+            canonical configurations, and the correction factor c/c_asym.
 
    Sources: Least-squares algebra is standard (no specific reference).
             Power-law deflection: Chapter "Galaxy Lensing Applications"
@@ -329,11 +335,22 @@ Print["   canonical closed form at rho = |theta_C| = ", N[Abs[obs[[3]]], 6], ": 
 check["bf4  asymmetric pair: general c differs from the canonical closed form (ratio > 1.1)",
   cBF3/cCanon > 11/10];
 
-check["bf4b numbers quoted on the page: images +1.316, -0.633, -0.0237; theta_r = 0.217; c = 10.47 (3 img), 2.00 (2 img), canonical 6.81 (ratio 1.54), floor 1.67",
+(* Fix pass 2026-10-14 (critic N5): the page quotes c on the listed m = 0
+   power-law images, c0 = 10.4612 -> 10.46.  The former value 10.47 was the
+   regression on the m = 1e-6 perturbed images (cBF3 = 10.4656), which is
+   what the brute-force comparison bf1 uses. *)
+c0 = cReg[aOf[plImgs], bOf[plImgs], {1, 1, 1}];
+c0two = cReg[aOf[plImgs[[1 ;; 2]]], bOf[plImgs[[1 ;; 2]]], {1, 1}];
+cCanon0 = cExact /. {rho -> Abs[plImgs[[3]]], gam -> gN};
+Print["   c on the m = 0 images: ", N[c0, 8], "   on the m = 1e-6 images: ", N[cBF3, 8]];
+check["bf4b numbers quoted on the page (m = 0 images): +1.316, -0.633, -0.0237; theta_r = 0.217; c = 10.46 (3 img), 2.00 (2 img), canonical 6.81 (ratio 1.54), floor 1.67",
   Max[Abs[N[plImgs] - {1.316, -0.633, -0.0237}]/{0.001, 0.001, 0.0001}] < 0.5 &&
-  Abs[cBF3 - 10.47] < 0.005 && Abs[cBF2 - 2.00] < 0.005 && Abs[cCanon - 6.81] < 0.005 &&
-  Abs[cBF3/cCanon - 1.54] < 0.01 && Abs[N[1/(gN - 1)] - 1.67] < 0.005 &&
+  Abs[c0 - 10.46] < 0.005 && Abs[c0two - 2.00] < 0.005 && Abs[cCanon0 - 6.81] < 0.005 &&
+  Abs[c0/cCanon0 - 1.54] < 0.01 && Abs[N[1/(gN - 1)] - 1.67] < 0.005 &&
   Abs[N[thetaR /. g -> gN] - 0.217] < 0.0005];
+check["bf4c 10.47 (10.466) is the perturbed-image (m = 1e-6) value, 10.46 the m = 0 value; relative difference 4e-4",
+  Round[c0, 1/100] == 1046/100 && Round[cBF3, 1/100] == 1047/100 &&
+  Round[cBF3, 1/1000] == 10466/1000 && Abs[cBF3/c0 - 1 - 4 10^-4] < 0.5 10^-4];
 (* error is O(m): eps/m - c scales linearly in m *)
 mA = 10^-5; mB = 2 10^-5;
 eA = srcFit[imgsM[mA], mA] - cReg[aOf[plImgs], bOf[plImgs], {1, 1, 1}];
@@ -359,6 +376,78 @@ check["bf6b image-plane value quoted on the page: c_w = 2.08; radial-image lambd
   Abs[cImgLin - 2.08] < 0.005 && Abs[lamObs[[3]] + 2.78] < 0.005];
 check["bf7  source- and image-plane fits give different c (weights matter)",
   Abs[cImgLin/cBF3 - 1] > 10^-2];
+
+(* =========================================================================
+   S3b. Image-plane weights on the canonical triple  (fix pass 2026-10-14,
+        critic F1).  Equal astrometric errors: w = 1/lambda_r^2, i.e.
+        1/(g-1)^2 on the pair at +-1 and 1/lambda_r(rho)^2 on the radial
+        image.  The rho -> 0 divergence, the monotonic decrease and the
+        sign change at rho* = 0.212 are SOURCE-PLANE (unit-weight) results.
+   ========================================================================= *)
+Print["\n--- S3b: image-plane weights, canonical triple ---"];
+lamC[r_, g_] := 1 - (2 - g) r^(1 - g);
+cImgC[r_, g_] := cReg[{1, -1, 1/r}, (g - 1) {1, -1, r^(2 - g)},
+   {1/(g - 1)^2, 1/(g - 1)^2, 1/lamC[r, g]^2}];
+cSrcC[r_, g_] := (3 + r^(1 - g))/((g - 1) (3 + r^(4 - 2 g)));
+(* with u = rho^(g-1) (-> 0 as rho -> 0), rho^(1-g) = 1/u *)
+check["ip1  radial-image weight 1/lambda_r^2 = u^2/(u - (2-g))^2 with u = rho^(g-1): -> 0 like rho^(2(g-1))/(2-g)^2",
+  (PowerExpand[rho^(1 - gam) - 1/rho^(gam - 1)] === 0) &&
+  Simplify[1/(1 - (2 - gam)/u)^2 == u^2/(u - (2 - gam))^2] &&
+  (Simplify[Limit[1/(u - (2 - gam))^2, u -> 0] - 1/(2 - gam)^2] === 0)];
+(* exact limit: substitute rho = x^5 so that every power is an integer power of x *)
+check["ip2  image-plane c -> floor 1/(g-1) as rho -> 0 (g = 7/5, 8/5, 9/5; no divergence)",
+  And @@ Table[Limit[Together[cImgC[x^5, gg]], x -> 0, Direction -> "FromAbove"] == 1/(gg - 1),
+    {gg, {7/5, 8/5, 9/5}}]];
+rhoTab = {1/1000, 1/100, 1/20, 1/10, 15/100, 2/10};
+cImgTab = N[cImgC[#, 8/5] & /@ rhoTab, 20];
+cSrcTab = N[cSrcC[#, 8/5] & /@ rhoTab, 20];
+Print["   rho = ", N[rhoTab], "\n   c_img = ", N[cImgTab, 5], "\n   c_src = ", N[cSrcTab, 5]];
+check["ip3  numbers quoted on the page (g = 1.6): c_img = 1.70, 1.83, 2.48, 3.72, 4.76, 4.70; c_src = 36.7, 10.4, 4.87, 3.68, 3.17, 2.86",
+  Max[Abs[cImgTab - {1.70, 1.83, 2.48, 3.72, 4.76, 4.70}]] < 0.005 &&
+  Max[Abs[cSrcTab - {36.7, 10.4, 4.87, 3.68, 3.17, 2.86}]/{0.1, 0.1, 0.01, 0.01, 0.01, 0.01}] < 0.5];
+check["ip4  image-plane c is NOT monotonic in rho (rises from rho = 0.001 to 0.15, falls to 0.2), unlike the source-plane c",
+  cImgTab[[1]] < cImgTab[[4]] < cImgTab[[5]] && cImgTab[[5]] > cImgTab[[6]] &&
+  OrderedQ[Reverse[cSrcTab]]];
+(* sign change, gamma' = 1.6, B = 0.8, plane 1 at the floor: bracket = c1 - B^k c2
+   (same example as sc3 in S6) *)
+gS = 8/5; BS = 4/5; kS = (3 - gS)/(gS - 1);
+brImg[r_] := 1/(gS - 1) - BS^kS cImgC[r, gS];
+rhoStarImg = r /. FindRoot[brImg[r] == 0, {r, 1/20, 1/50, 1/10}, WorkingPrecision -> 30];
+thetaRS = N[(2 - gS)^(1/(gS - 1)), 30];
+Print["   image-plane sign-change radius rho* = ", N[rhoStarImg, 6], "  (source plane 0.212); theta_r = ", N[thetaRS, 6]];
+check["ip5  image-plane sign change at rho* = 0.0650 (source plane 0.212): bias > 0 deeper, < 0 for rho* < rho2 < theta_r",
+  Abs[rhoStarImg - 0.0650] < 0.00005 && brImg[rhoStarImg/2] > 0 && brImg[rhoStarImg/10] > 0 &&
+  (And @@ Table[brImg[r] < 0, {r, Subdivide[rhoStarImg + 10^-3, thetaRS - 10^-4, 40]}])];
+check["ip6  so a deep plane-2 radial image does NOT always flip the sign in an image-plane fit: bracket > 0 as rho2 -> 0",
+  Limit[Together[1/(8/5 - 1) - (4/5)^((3 - 8/5)/(8/5 - 1)) cImgC[x^5, 8/5]], x -> 0, Direction -> "FromAbove"] > 0];
+
+(* =========================================================================
+   S4b. Validity: the radial image's fractional shift  (fix pass
+        2026-10-14, critic F2).  The small parameter is
+        m a_C/(lambda_C theta_C), not m c.
+   ========================================================================= *)
+Print["\n--- S4b: validity for a deep radial image ---"];
+fracC = shiftLin[[3]]/plImgs[[3]];       (* a_C/(lambda_C theta_C) per unit m *)
+Print["   radial-image fractional shift per unit m: ", N[fracC, 6], "   vs c0 = ", N[c0, 6]];
+check["val1 radial-image fractional shift m a_C/(lambda_C theta_C) = 640 m (vs m c = 10.5 m)",
+  Abs[Abs[fracC] - 640] < 5 && Abs[fracC]/c0 > 50];
+dep[mv_] := Module[{ts = imgsM[mv]},
+   {ts[[3]], srcFit[ts, mv]/c0 - 1}];
+dep5 = dep[10^-5]; dep4 = dep[10^-4];
+Print["   m = 1e-5: theta_C = ", N[dep5[[1]], 6], "  eps/(m c0) - 1 = ", N[dep5[[2]], 5]];
+Print["   m = 1e-4: theta_C = ", N[dep4[[1]], 6], "  eps/(m c0) - 1 = ", N[dep4[[2]], 5]];
+check["val2 brute-force eps/m departs from c by 0.4% at m = 1e-5 and 4.5% at m = 1e-4 (radial image tracked)",
+  Abs[dep5[[1]] + 0.0235] < 0.0002 && Abs[dep4[[1]] + 0.0221] < 0.0002 &&
+  Abs[dep5[[2]] - 0.004] < 0.0005 && Abs[dep4[[2]] - 0.045] < 0.0005];
+(* image count on the counter-image side inside theta_r: f = t - alpha_PL(t) - m/t - y
+   is positive at both ends of (-theta_r, 0); roots exist iff its minimum is < 0.
+   Parametrise t = -Exp[s]. *)
+fMin[mv_] := First@NMinimize[{-Exp[s] - aPLneg[-Exp[s], 1, gN] + mv Exp[-s] - yN,
+     -16 < s < Log[N[thetaR /. g -> gN]]}, s, WorkingPrecision -> 30];
+fm4 = fMin[10^-4]; fm3 = fMin[10^-3];
+Print["   min f on (-theta_r, 0): m = 1e-4 -> ", N[fm4, 5], ";  m = 1e-3 -> ", N[fm3, 5]];
+check["val3 radial image (and the central point-mass image) present at m = 1e-4, annihilated by m = 1e-3",
+  fm4 < 0 && fm3 > 0];
 
 (* =========================================================================
    S5. Freeing the slope
@@ -398,6 +487,8 @@ check["fs7  brute-force free-slope fit = linear solve (eps and dgamma', 1e-4; m 
 check["fs8  physical triple: fitted slope steepens (dgamma' > 0)", linFS[[2]] > 0];
 check["fs9  numbers quoted on the page: eps/m = -3.51, dgamma'/m = 86.4", 
   Abs[linFS[[1]] + 3.51] < 0.005 && Abs[linFS[[2]] - 86.4] < 0.05];
+check["fs10 (critic X3) the total-mass value 1/(g-1) is a canonical-triple result: the asymmetric example gives -3.51, not 1.67",
+  Abs[linFS[[1]] - 1/(gN - 1)] > 1];
 
 (* =========================================================================
    S6. Double-source-plane bias and the sign change
