@@ -230,3 +230,38 @@ quoted precision (0.014/0.0098/0.0017). The chapter uses B = 0.8 throughout, so 
 - **FB-4: S7-014 is confirmed by an independent route, and the effect is larger than "~65% of the bias standing".** In the axisymmetric exact-fit geometry (γ′=1.6, B=0.8, y₁=0.15θ_E1, y₂=0.3θ_E2), forcing m₂=m₁ **increases** the free-slope bias to 1.87× the physical value (R2b). note3:75–77 should be corrected as S7-014 proposes.
 - **FB-5: TESTS B6, q=1 column, has a closed form.** The column (1.682 / 1.354 / 1.215 at sh=0.10, γ′=1.4/1.6/1.8) is reproduced to all printed digits by the on-axis double-root closed form m_max/m_crit = (1 − γ_e)^(−(3−γ′)/(γ′−1)), with γ_e = sh/B = 0.10/0.8200776 the shear on the radial-image plane (R4c). This both confirms B6's "loosening" sign analytically and shows that B6's `sh` is referenced to plane 1, not to the radial-image plane. Worth stating in the B6 entry, since that plane-referencing convention is the same error class as the m/m_crit label defect.
 - **FB-6 (minor): `derivation.wl` prints "m1_crit(B=0.82)" but uses `Bfid = 0.8200776`.** The 3.8e−4 relative difference is harmless at the quoted precision, but the header should say 0.82008, matching H0's B = 0.8200775769.
+
+## Resolution — fixes applied 2026-10-14
+
+Fix pass on branch `wt/ch17` (after `git merge annotated-edition`). Check ids refer to
+`Mathematica/17_Central_Mass_Bias/central_mass_bias.wl` (main) and
+`Solutions/17_Central_Mass_Bias/problems_17.wl` (sol). Each new check fails on the old text/value.
+
+| id | Fix | Backing |
+|----|-----|---------|
+| F1 | Sol. 17.2(c): γ′→1 reason replaced by the uniform-sheet argument (κ→1, λ_r = 1−10^(γ′−1) at θ_r/10: −0.023 at γ′=1.01 vs −2.2 at 1.5); added that θ_r→e⁻¹θ_E, θ*→e^(−3/2)θ_E (curve does not shrink) | sol 2h (limits e⁻¹, e^(−3/2), κ→1), 2i |
+| F2 | Caption fig:cb_bias_vs_m reworded (figure NOT re-exported, content unchanged): points stop at 0.35 / 0.25 m₁,crit, radial image lost at 0.38 / 0.29 m₁,crit; exact exceeds linear by 50% (γ′=1.6) and 24% (γ′=1.8) at the last points | main FIG1d, FIG1e (asserts γ′=1.8 ratio 1.24 < 1.4, i.e. the old ">40%" fails), FIG1f (bisection on image count: 0.3789, 0.2934) |
+| F3 | "any central excess" → "any axisymmetric central excess" + parenthetical on off-centre multipoles (11% at θ=1 for offset 0.1) | main G1 (existing, axisymmetric), G3 (new) |
+| F4 | Ex./Sol. 17.7(b)–(c): θ_b = 0.1 → 0.02 (< θ* = 0.040 < θ_r = 0.077), profile placed on the far plane, compared with m_crit(1.9) = 0.0013 on the same plane: m_eff = 0.0030 = 2.3 m_crit; inner γ_in > 2 gives λ_r > 1 inside θ_b; note that θ_b = 0.1 would enclose θ*, θ_r. (c) "larger than any plausible black hole" → "0.3% of the PL mass inside θ_E, comparable to a large black hole" | sol 7b (0.0030055; old 0.0177 fails), 7c, 7e (min λ_r outside θ_b = +0.497; α′<0 inside), 7f |
+| F5 | l.130 and bridge l.159: D_ds/D_s is the lensing efficiency D_dD_ds/D_s divided by the common D_d (proportional at fixed z_d) | main F5; `03_Cosmological_Distances.tex` l.1316 definition |
+| F7 | Header comments (.tex and .wl): N&B Sect. 2.1.2 → **Sect. 2.1.4** (2.1.2 is "Thin Screen Approximation"; the circularly symmetric lens equation / Einstein radius is 2.1.4); C&K eq. 4.54 confirmed (characteristic equation of A⁻¹, roots (1−κ)±γ) | `Reference_Texts/` PDFs via pdftotext |
+| N-R1 | Keybox "The bias is differential": last two sentences replaced (m₂=m₁ leaves total-mass radii ratio unchanged, but the fit does not return them; at m₁=10⁻⁴ forcing m₂=m₁ makes the fitted bias 1.87× larger). Summary bullet: "one reason … the other is that the two planes' images respond differently". Sol. 17.3 gained a pointer that its cancellation is for total-mass radii | main E13 (−0.0798% vs −0.0428%, ratio 1.865; θ_E,tot ratio unchanged to 1e−30) |
+| N-R2 | Detected regime: "This is one way …" + deforming an existing image can also force a central mass. No citation (Nightingale+2023 not in bib) | wording only |
+| N-R3 | Coherent keybox: "tends to have the same sign … although the size, and in some geometries the sign, of the slope response varies"; "mean bias". Summary: "Its mean is coherent …" | wording only |
+| N-R4 | "order-of-magnitude estimate" label removed (intro step 3, subsection title → "A fixed-slope, on-ring estimate", keybox opener, Summary, Sol. 17.5(c)); keybox item 2 adds the unequal-offset case (0.15, 0.3) → 0.084 of the estimate | main E9d (0.997, 1.747 tightened), E9e (0.0844) |
+| N-R5 | "For an axisymmetric lens, no slope …"; added on-axis shear factor (1−γ_e)^(−(3−γ′)/(γ′−1)), 1.28 at γ_e=0.1, γ′=1.6 | main D9a (symbolic double root at 4 slopes), D9b (bisection = closed form to 1e−9 at γ′=1.4, 1.6, 1.8) |
+| N-R6 | l.663 "inner critical curve belonging to the black hole" → inner radial critical curve, with a point mass alone having none; l.714 "black hole's own critical curve" → "the inner critical curve" | main D10 (λ_r of point mass > 0; both zeros of y′ at γ′=1.6, u=0.5 m_crit lie where the PL's λ_r < 0) |
+| P2 (prose) | dropped "On the far plane the black hole falls behind." (annotation); Sol. 17.1 pointer-phrase closer rewritten | — |
+
+### Verification after edits
+
+- `bash Mathematica/run_wl.sh Mathematica/17_Central_Mass_Bias/central_mass_bias.wl`: before `SUMMARY: 66 PASS, 0 FAIL  (of 66 checks)`, after **`SUMMARY: 77 PASS, 0 FAIL  (of 77 checks)`**. Re-exported figure PDFs reverted (content unchanged).
+- `bash Mathematica/run_wl.sh Solutions/17_Central_Mass_Bias/problems_17.wl`: before `SUMMARY: 37 PASS, 0 FAIL  (of 37 checks)`, after **`SUMMARY: 41 PASS, 0 FAIL  (of 41 checks)`**.
+- `cd Notes && ANNOT_REQUIRED=1 bash build.sh` → "Build complete: all assertions passed"; student 361 pp, instructor 446 pp, annotated 569 pp.
+
+### Left open
+
+- C3/F7 follow-on: Ch. 7's epigraph (`07_Axisymmetric_Models.tex` l.16) also says "Narayan & Bartelmann (1997), Sect. 2.1.2"; the circularly symmetric material is Sect. 2.1.4 — outside this chapter's scope.
+- N-R2 citation: Nightingale et al. 2023 (MNRAS 521, 3298; arXiv:2303.15514) UNVERIFIED here, not in `references.bib`.
+- Shear statement is on-axis only; the full 2-D (off-axis, ellipticity) boundary was not derived here.
+- P1/P2 remaining aphoristic closers ("The method carries over unchanged; the coefficients do not.", "it cannot be averaged away", item-4 closer) and the provenance note (100% machine-drafted) are left for the author.

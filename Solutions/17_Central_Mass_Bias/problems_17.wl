@@ -15,12 +15,17 @@
                            m2 = m1
      ex:cb_coherent        coherent systematic vs N^(-1/2) statistics;
                            propagation to w
-     ex:cb_real_system     order-of-magnitude estimate for a given M_BH and
+     ex:cb_real_system     fixed-slope estimate for a given M_BH and
                            M(<theta_E); radial-image survival at g=1.6, 1.9
      ex:cb_sis_point_mass  SIS + point mass: theta_tot closed form, series,
                            absence of a radial critical curve
      ex:cb_central_excess  a steeper inner cusp acts as a point mass outside
-                           the break radius
+                           the break radius (theta_b = 0.02 < theta*, far-plane
+                           units, compared with m_crit(1.9))
+   Fix pass 2026-10-14 (FACT_CRITIC_17 F1, F4): checks 2h-2i (gamma' -> 1 limit
+   of the annihilation boundary: uniform sheet, not a shrinking radial curve);
+   7b-7c and 7e-7f rewritten (theta_b = 0.02 instead of 0.1; same-plane
+   comparison with m_crit).
 
    Sources: Chapter 17 of these notes (all identities derived there and
             verified in Mathematica/17_Central_Mass_Bias/central_mass_bias.wl);
@@ -81,6 +86,17 @@ check["2f  numerical double root (FindRoot on y'=y''=0) reproduces the closed fo
 gm = g /. Last[FindMaximum[{mcrit[g], 11/10 < g < 19/10}, {g, 3/2}, WorkingPrecision -> 30]];
 check["2g  max_g mcrit = 0.0065996 at g = 1.4846: no slope 1<g<2 tolerates m > 0.0066 on its own plane",
   Abs[gm - 1.48463] < 10^-4 && Abs[N[mcrit[gm]] - 0.00659955] < 10^-7];
+(* Fix pass 2026-10-14 (F1): why m_crit -> 0 as g -> 1. NOT because the radial curve moves to small
+   radii (theta_r -> e^-1, theta* -> e^-3/2 as g -> 1), but because the PL tends to a uniform kappa = 1
+   sheet: lambda_r is only marginally negative over the decade inside theta_r. lambda_r is monotone in
+   th, and at th = theta_r/10 it equals 1 - 10^(g-1). *)
+check["2h  g -> 1+: theta_r/tE -> e^-1 = 0.368 and th*/tE -> e^-3/2 = 0.223 (radial curve does NOT shrink to 0)",
+  Limit[(2 - g)^(1/(g - 1)), g -> 1, Direction -> "FromAbove"] == E^-1 &&
+  Limit[thStar[g], g -> 1, Direction -> "FromAbove"] == E^(-3/2) &&
+  Limit[(3 - g)/2 x^(1 - g), g -> 1] == 1];
+check["2i  PL lambda_r(theta_r/10) = 1 - 10^(g-1): -0.023 at g = 1.01 vs -2.16 at g = 1.5",
+  FullSimplify[(1 - (2 - g) x^(1 - g)) /. x -> (2 - g)^(1/(g - 1))/10, Assumptions -> 1 < g < 2] == 1 - 10^(g - 1) &&
+  Abs[N[1 - 10^(1/100)] + 0.02329] < 1*^-5 && Abs[N[1 - 10^(1/2)] + 2.16228] < 1*^-5];
 Print["     th*(1.6) = ", N[thStar[16/10], 8], "  mcrit(1.6) = ", N[mcrit[16/10], 8],
       "  m1crit(1.6,0.8) = ", N[m1crit[16/10, 8/10], 8], "  max at g = ", N[gm, 6]];
 
@@ -153,14 +169,27 @@ meff[gi_, g_, tb_] := 2 Integrate[kap[tb, g] (tb/x)^(gi - 1) x - kap[x, g] x, {x
 check["7a  m_eff = 2 Int_0^tb (k_in - k_PL) x dx = (3-g) tb^(3-g) [1/(3-gi) - 1/(3-g)]",
   FullSimplify[meff[gi, g, tb] == (3 - g) tb^(3 - g) (1/(3 - gi) - 1/(3 - g)),
     Assumptions -> tb > 0 && 1 < gi < 3 && 1 < g < 3]];
-check["7b  g = 1.9, gi = 2.1, tb = 0.1 tE: m_eff = 0.017652 (positive: steeper cusp = extra mass)",
-  Abs[N[meff[21/10, 19/10, 1/10]] - 0.0176517] < 10^-7];
-check["7c  this m_eff exceeds m1crit(1.9, B = 0.8) = 0.001706 by a factor > 10",
-  N[meff[21/10, 19/10, 1/10]] > 10 N[m1crit[19/10, 8/10]]];
+(* Fix pass 2026-10-14 (F4): the exercise now uses tb = 0.02 (< th*(1.9) = 0.040 < theta_r = 0.077),
+   in units of the far (radial-image) plane's tE, and compares with m_crit(1.9) on that plane.
+   The old tb = 0.1 enclosed theta_r and th*, so the point-mass comparison did not apply there. *)
+check["7b  g = 1.9, gi = 2.1, tb = 0.02 tE: m_eff = 0.003006 (positive: steeper cusp = extra mass)",
+  Abs[N[meff[21/10, 19/10, 2/100]] - 0.00300553] < 10^-8];
+check["7c  tb = 0.02 < th*(1.9) = 0.0398 < theta_r(1.9) = 0.0774, and m_eff = 2.31 m_crit(1.9) = 2.31 x 0.001299",
+  2/100 < N[thStar[19/10]] < N[(1/10)^(10/9)] &&
+  Abs[N[meff[21/10, 19/10, 2/100]/mcrit[19/10]] - 2.3135] < 10^-3];
+check["7e  the broken profile (tb = 0.02) has lambda_r > 0 at every radius: no radial critical curve",
+  Module[{me = meff[21/10, 19/10, 2/100], kb = kap[2/100, 19/10], outMin, inSign},
+    (* outside tb: y' of PL + point mass m_eff; inside: alpha ~ th^(2-gi) with gi > 2, so alpha' < 0 *)
+    outMin = NMinValue[{yp[x, 19/10, me], 2/100 <= x <= 3}, x, WorkingPrecision -> 30];
+    inSign = FullSimplify[D[2/x kb (2/100)^(21/10 - 1) x^(3 - 21/10)/(3 - 21/10), x] < 0, Assumptions -> x > 0];
+    Print["     tb = 0.02: min lambda_r outside tb = ", N[outMin, 5]];
+    outMin > 0 && inSign]];
+check["7f  old choice tb = 0.1 enclosed theta_r(1.9) and th*(1.9) (point-mass comparison invalid there)",
+  N[(1/10)^(10/9)] < 1/10 && N[thStar[19/10]] < 1/10];
 check["7d  for th > tb the deflection is alpha_PL + m_eff/th exactly",
   Module[{tb = 1/10, gi = 21/10, gg = 19/10, a},
     a[t_] := (2/t) (Integrate[kap[tb, gg] (tb/x)^(gi - 1) x, {x, 0, tb}] + Integrate[kap[x, gg] x, {x, tb, t}]);
     Simplify[a[t] - (t^(2 - gg) + meff[gi, gg, tb]/t), Assumptions -> t > tb] == 0]];
-Print["     m_eff(1.9, 2.1, 0.1) = ", N[meff[21/10, 19/10, 1/10], 6]];
+Print["     m_eff(1.9, 2.1, 0.02) = ", N[meff[21/10, 19/10, 2/100], 6], "  m_crit(1.9) = ", N[mcrit[19/10], 6]];
 
 summary[];
