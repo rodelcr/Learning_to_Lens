@@ -121,3 +121,26 @@ Repo script run (worktree `wt/ann01de`):
     SUMMARY: 73 PASS, 0 FAIL  (of 73 checks)
 
 Report path: `Notes/01d_Geodesics_Orbits/FACT_CRITIC_01d_annotated_2026-10-14.md`
+
+## Resolution — fixes applied 2026-10-14
+
+Branch `wt/ann01de`. C&K eq. 3.76a re-read in `Reference_Texts/Congdon and Keeton 2018` (pdftotext):
+"ε = c²(1 − R_S/r) ṫ"; eq. 3.78 ṙ² = ε²/c² − (1 − R_S/r)(ℓ²/r² + c²). Option A adopted.
+
+| id | Fix | Backing |
+|----|-----|---------|
+| F1 / X3 | eq. `conserved_E` → E = (1 − R_S/r) c² dt/dλ (text: "with c restored as in C&K eq. 3.76a"); eq. `normalization` → −(1 − R_S/r)c²ṫ² + … = −εc²; 𝓔 = ½(E²/c² − εc²) after eq. `effective_potential`; footnote naming Carroll's c = 1 form and C&K 3.76a. Eq. `photon_orbit` and b = cL/E unchanged. Units annotation rewritten ("one normalisation of E throughout"); "Lowering the index" box redone with g_tt = −fc²; Christoffel box (P1 wording, Γ^t_tr independent of c, E = fc²ṫ); normalisation derivation box (ṫ = E/(fc²), E²/c²); consistency box marked c = 1; "What 𝓔 is" (E = c² + e); ISCO efficiency (E/c²); photon-sphere box (𝓔 = E²/2c², b² = c²L²/E²); photon-orbit derivation box. 01d_Solutions Ex 1 visible derivation now carries c (RHS −εc², E = fc²ṫ, 𝓔 = ½(E²/c² − εc²)); its "c kept" box and "c → ∞" annotation updated (E = c² + e). | `problems_01d.wl` F1a–F1i (F1a, F1b, F1d, F1g assert the old forms FAIL); C&K 3.76a/3.78 |
+| F2 / X1 / X2 / X7 | 01d_Solutions Ex 4: Step 1 5.01e−7 → 5.02e−7; Step 2 0.1034″ → 0.1036″; Step 4 0.1034 × 415.2 → 0.1036 × 415.2 (= 43.0, box stands). Chapter Mercury annotation and Solutions box: "rounding" → "slip". | F2a–F2c (old values fail); A8d–A8h |
+| F3 / X4 | 01d_Solutions Ex 5(b): "small angle" → large angle ≈ 2.6 rad ≈ 149° near r ≈ 12GM/c²; small only for r ≫ 6GM/c², → 6πGM/(c²r). Box sentence on "small angle" dropped. | F3a (> 1 rad), F3b (r = 600 within 1.5% of 6π/r); A9c |
+| C1 | Kerr ISCO annotation: plain-text "(Bardeen, Press & Teukolsky 1972)"; no bib key. | A12c; DOI 10.1086/151796 (critic) |
+| P1–P4 | P1 Christoffel-box opener reworded; P2 → "The split depends on the coordinates; the total deflection does not."; P3 bridge closer deleted; P4 "really" dropped. | — |
+
+**Verification after edits.** `bash Mathematica/run_wl.sh Solutions/01d_Geodesics_Orbits/problems_01d.wl`:
+before `SUMMARY: 73 PASS, 0 FAIL  (of 73 checks)`; after `SUMMARY: 87 PASS, 0 FAIL  (of 87 checks)`.
+(A3/A3d relabelled "superseded convention"; they still pass as algebra.) `cd Notes && ANNOT_REQUIRED=1 bash build.sh`
+→ "all assertions passed"; student 360 pp, instructor 444 pp, annotated 569 pp.
+
+**Left open.**
+- C3 (Carroll eq. 5.66 constant ½ε): Carroll scan unreadable; unchanged.
+- Fig. `precessing_orbit` caption (visible, chapter) still says "advances by a small angle each orbit". The plotted
+  orbit's parameters were not checked in this pass; not a confirmed item. Worth checking against F3.

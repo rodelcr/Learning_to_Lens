@@ -467,11 +467,11 @@ anN3 = 2 anGN anMs/(anCl^2 anKpc);
 Print["    n - 1: ", {anN1, anN2, anN3}, "; Pluto (39.5 AU): ", 2 anGN anMs/(anCl^2 39.5 1.496*^11)];
 check["B12a n - 1 = 4.24e-6, 1.97e-8 at R_sun, 1 AU",
   Abs[anN1 - 4.24*^-6] < 0.005*^-6 && Abs[anN2 - 1.97*^-8] < 0.005*^-8];
-check["B12b n - 1 at 1 kpc = 9.57e-17 (solution text says 9.58e-17)",
+check["B12b n - 1 at 1 kpc = 9.57e-17",
   Abs[anN3 - 9.57*^-17] < 0.005*^-17];
 anAg = 4 anGN 1*^12 anMs/(anCl^2 10 anKpc);
 Print["    galaxy alpha_hat = ", anAg, " rad = ", anAg 180 3600/Pi, " arcsec"];
-check["B12c galaxy: 1.91e-5 rad = 3.95 arcsec (solution text says 3.94)",
+check["B12c galaxy: 1.91e-5 rad = 3.95 arcsec",
   Abs[anAg - 1.91*^-5] < 0.005*^-5 && Abs[anAg 180 3600/Pi - 3.95] < 0.005];
 check["B12d R_sun limb: 8.49e-6 rad = 1.75 arcsec",
   Abs[4 anGN anMs/(anCl^2 6.96*^8) - 8.49*^-6] < 0.005*^-6];
@@ -510,5 +510,55 @@ check["B14i R_S(Sun)/R_sun = 2.95 km / 6.96e5 km = 4.24e-6",
   Abs[2.95/6.96*^5 - 4.24*^-6] < 0.005*^-6 && Abs[2 anGN anMs/anCl^2/1000 - 2.95] < 0.005];
 check["B14j galaxy |Phi|/c^2 = 4.8e-6 is of order 1e-5 (nearest power of ten)",
   Round[Log10[anPhi[1*^12 anMs, 10 anKpc]]] == -5];
+
+(* ===== Fix-pass checks (2026-10-14; FACT_CRITIC_01e_annotated_2026-10-14 F4-F8) =====
+   Each check passes on the corrected text and is written to FAIL on the old value. *)
+Print["\n=== Fix-pass checks (2026-10-14) ===\n"];
+
+(* --- F4  01e_Solutions Ex 2(b): the relabelling difference is FIRST order --- *)
+fxDiff = (1 + anRs/anr) (anr^2) - anr^2;   (* coefficient of dOmega^2: (1+Rs/r) r^2 vs r^2 *)
+check["F4a difference R_S r dOmega^2 is first order in R_S/r (old 'second order' fails)",
+  Simplify[fxDiff/anr^2] === anRs/anr &&
+  Coefficient[Normal[Series[fxDiff/anr^2, {anRs, 0, 2}]], anRs, 1] =!= 0];
+check["F4b isotropic radius: radial and angular factors both 1 + Rs/rho at first order",
+  Simplify[anSer[(1 + anRs/anR[anrho]) D[anR[anrho], anrho]^2] -
+           anSer[anR[anrho]^2/anrho^2]] === 0 &&
+  Simplify[anSer[anR[anrho]^2/anrho^2] - (1 + anRs/anrho)] === 0];
+check["F4c Phi/c^2 = -Rs/(2 rho) vs -Rs/(2 r(rho)) differ only at O(Rs^2)",
+  Simplify[Normal[Series[-anRs/(2 anR[anrho]) + anRs/(2 anrho), {anRs, 0, 1}]]] === 0 &&
+  Simplify[Normal[Series[-anRs/(2 anR[anrho]) + anRs/(2 anrho), {anRs, 0, 2}]]] =!= 0];
+
+(* --- F5  eq. lens_equation_preview: beta = theta - alpha, alpha = (Dds/Ds) alpha_hat --- *)
+fxBeta = Solve[fxDs fxbeta == fxDs fxth - fxDds fxah, fxbeta][[1, 1, 2]];
+check["F5a geometry Ds beta = Ds theta - Dds alpha_hat => beta = theta - (Dds/Ds) alpha_hat",
+  Simplify[fxBeta - (fxth - (fxDds/fxDs) fxah)] === 0];
+check["F5b old preview theta - (Dds/Ds)(Dd/Ds) alpha_hat disagrees unless Dd = Ds",
+  Simplify[fxBeta - (fxth - (fxDds/fxDs) (fxDd/fxDs) fxah)] =!= 0 &&
+  Simplify[(fxBeta - (fxth - (fxDds/fxDs) (fxDd/fxDs) fxah)) /. fxDd -> fxDs] === 0];
+
+(* --- F6  01e_Solutions roundings --- *)
+check["F6a Ex 3(c) n - 1 at 1 kpc = 9.57e-17 at 3 s.f. (old 9.58e-17 fails)",
+  Round[anN3 10^17, 0.01] == 9.57 && Round[anN3 10^17, 0.01] != 9.58];
+check["F6b galaxy lens alpha_hat = 3.95 arcsec at 3 s.f. (old 3.94 fails)",
+  Round[anAg 180 3600/Pi, 0.01] == 3.95 && Round[anAg 180 3600/Pi, 0.01] != 3.94];
+
+(* --- F7  Cassini (Bertotti, Iess & Tortora 2003): gamma - 1 = (2.1 +- 2.3) x 10^-5 --- *)
+fxGc = 2.1*^-5; fxGs = 2.3*^-5;
+check["F7 1-sigma range of gamma - 1 is [-0.2, 4.4] x 1e-5; the old '|gamma - 1| < 2.3e-5' excludes most of it",
+  Abs[(fxGc + fxGs) - 4.4*^-5] < 1*^-12 && Abs[(fxGc - fxGs) + 0.2*^-5] < 1*^-12 &&
+  (fxGc + fxGs) > 2.3*^-5];
+
+(* --- F8  NFW cluster potential (M200 = 1e15 Msun, c200 = 4 and 6, H0 = 70; assumed typical values) --- *)
+fxMpc = 1000 anKpc; fxH0 = 70*^3/fxMpc; fxRhoc = 3 fxH0^2/(8 Pi anGN);
+fxM200 = 1*^15 anMs; fxR200 = (3 fxM200/(4 Pi 200 fxRhoc))^(1/3);
+fxPhiNFW[c_, r_] := Module[{rs = fxR200/c},
+   anGN fxM200 Log[1 + r/rs]/(r (Log[1 + c] - c/(1 + c)))/anCl^2];
+Print["    NFW r200 = ", fxR200/fxMpc, " Mpc; |Phi|/c^2 (c=4,6) at 100 kpc: ",
+  {fxPhiNFW[4, 100 anKpc], fxPhiNFW[6, 100 anKpc]}, "; 300 kpc: ",
+  {fxPhiNFW[4, 300 anKpc], fxPhiNFW[6, 300 anKpc]}, "; 1 Mpc: ",
+  {fxPhiNFW[4, fxMpc], fxPhiNFW[6, fxMpc]}];
+check["F8 NFW |Phi|/c^2 within 0.8-1.4 x 1e-4 for r <= 300 kpc, below 0.7e-4 at 1 Mpc (c200 = 4, 6)",
+  And @@ Flatten[Table[{0.8*^-4 < fxPhiNFW[cc, rr anKpc] < 1.4*^-4}, {cc, {4, 6}}, {rr, {1, 30, 100, 200, 300}}]] &&
+  fxPhiNFW[4, fxMpc] < 0.7*^-4 && fxPhiNFW[6, fxMpc] < 0.7*^-4];
 
 summary[];

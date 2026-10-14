@@ -126,3 +126,25 @@ Repo script run (worktree `wt/ann01de`):
     SUMMARY: 65 PASS, 0 FAIL  (of 65 checks)
 
 Report path: `Notes/01e_Linearized_Gravity/FACT_CRITIC_01e_annotated_2026-10-14.md`
+
+## Resolution — fixes applied 2026-10-14
+
+Branch `wt/ann01de`.
+
+| id | Fix | Backing |
+|----|-----|---------|
+| F4 / X1 | 01e_Solutions Ex 2(b): "only matters at second order" replaced by the first-order difference R_S r dΩ² and the isotropic radius r = ρ(1 + R_S/4ρ)² ≈ ρ + R_S/2 (eq. `isotropic_r`); final metric written in ρ, Φ = −GM/ρ (= −GM/r up to O(R_S²/ρ²)); part (c) h's in ρ; footnote recording the old claim. "Careful" annotation shortened; derivation box retitled. | `problems_01e.wl` F4a (first-order coefficient ≠ 0), F4b, F4c; B6a–B6e |
+| F5 / C2 / X2 / X6 | eq. `lens_equation_preview` → β = θ − α(θ), α = (D_ds/D_s) α̂; footnote naming the old form and its D_d D_ds/D_s² factor (C&K eq. 4.26; Ch. 4 eqs. `reduced_deflection`, `lens_equation`). Preview annotation rewritten (no "read α as α̂"). | F5a (geometry), F5b (old form fails unless D_d = D_s); C&K (4.26) |
+| F6 / X3 / X4 / X5 | Ex 3(c) 9.58e−17 → 9.57e−17; galaxy lens 3.94″ → 3.95″; both "rounding" annotation sentences deleted; annotation title shortened. | F6a, F6b (old values fail); B12b, B12c |
+| F7 / C1 | Cassini: "γ_PPN − 1 = (2.1 ± 2.3) × 10⁻⁵" with "(Bertotti, Iess & Tortora 2003, *Nature*)" in plain text, Will 2014 kept; footnote explaining the old "|γ − 1| < 2.3e−5" (Will 2014 Table 4). No bib key. | F7 (1σ range); DOI 10.1038/nature01997 (critic, CrossRef) |
+| F8 / N9 | "only near cluster cores at r ≲ 100 kpc" → "only in the inner few hundred kpc of a massive cluster". | F8: NFW M₂₀₀ = 10¹⁵ M☉, c = 4, 6, H₀ = 70 (assumed typical values): |Φ|/c² = 0.90–1.12 × 10⁻⁴ for r ≤ 300 kpc, 6.0–6.4 × 10⁻⁵ at 1 Mpc |
+| P1, P3 | P1 "not a coincidence" dropped; P3 "really" dropped. P2 kept (carries meaning). | — |
+
+**Verification after edits.** `bash Mathematica/run_wl.sh Solutions/01e_Linearized_Gravity/problems_01e.wl`:
+before `SUMMARY: 65 PASS, 0 FAIL  (of 65 checks)`; after `SUMMARY: 74 PASS, 0 FAIL  (of 74 checks)`.
+`cd Notes && ANNOT_REQUIRED=1 bash build.sh` → "all assertions passed"; student 360 pp, instructor 444 pp,
+annotated 569 pp.
+
+**Left open.**
+- Bib keys for Bertotti, Iess & Tortora 2003 and Will 2014 (both cited in plain text): orchestrator request.
+- Exercise statement (chapter) still says "with Φ = −GM/r to first order in R_S/r"; correct to first order, left as is.
