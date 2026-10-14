@@ -33,9 +33,9 @@ Repo scripts (run 2026-10-14):
 | C8 | "\citet[\S4.8]{congdon_principles_2018} make the same remark" (merging planes: D_12→0, β_12→0) | ✅ PASS | C&K p. 113: "if the planes are at the same distance, then D12 = 0 so β12 = 0 and θ2 = θ1" | none |
 | C9 | "DSPLs to constrain the dark-energy equation of state was developed by \citet{collett_2012}" | ✅ PASS | CrossRef 10.1111/j.1365-2966.2012.21424.x (MNRAS 424, 2864) title; Semantic Scholar abstract (arXiv 1203.2758) | none |
 | C10 | "why populations of DSPLs are needed \citep{collett_2012}" | ✅ PASS | S2 abstract: "constraints comparable to current data sets … possible with a handful of double-source plane systems" | none |
-| C11 | "several lenses with different redshift triplets, each contributing a differently oriented band \citep{collett_2012}" | ⚠ SUSPECT (support) | Abstract discusses the Ω_M–w degeneracy being orthogonal to CMB/BAO. It does not say that different triplets give differently oriented bands. Full text not read. | see Flagged F2 |
+| C11 | "several lenses with different redshift triplets, each contributing a differently oriented band \citep{collett_2012}" | ✅ PASS (closed 2026-10-14 by reconciler: Collett+2012 §4 p. 5) — was ⚠ SUSPECT (support) | Abstract discusses the Ω_M–w degeneracy being orthogonal to CMB/BAO. It does not say that different triplets give differently oriented bands. Full text not read. | see Flagged F2 |
 | C12 | "cosmological constraints from an observed galaxy-scale DSPL were derived by \citet{collett_auger_2014}" | ✅ PASS | CrossRef 10.1093/mnras/stu1190 (MNRAS 443, 969): "Cosmological constraints from the double source plane lens SDSSJ0946+1006" | none |
-| C13 | SIE normalisation "following \citet{kormann_isothermal_1994}" | ⚠ SUSPECT (existence only) | bib + Zotero CW87FPFT (A&A 284, 285; ADS-verified, no DOI). No PDF attached, so the normalisation itself was not checked against KSB94. In-repo eq. `sie_kappa` (08_Elliptical…tex:429-433) matches the chapter. | see Flagged F4 |
+| C13 | SIE normalisation "following \citet{kormann_isothermal_1994}" | ✅ PASS (closed 2026-10-14 by reconciler: KSB94 eqs. 15, 21a–d, p. 287) — was ⚠ SUSPECT (existence only) | bib + Zotero CW87FPFT (A&A 284, 285; ADS-verified, no DOI). No PDF attached, so the normalisation itself was not checked against KSB94. In-repo eq. `sie_kappa` (08_Elliptical…tex:429-433) matches the chapter. | see Flagged F4 |
 | C14 | "posed in the title of \citet{schneider_2014_multiplane}" | ✅ PASS | CrossRef 10.1051/0004-6361/201424450 = A&A 568, L2, "Can one determine cosmological parameters from multi-plane strong lens systems?" | none |
 
 ### Number (all at (z_l, z_s1, z_s2) = (0.5, 1.0, 2.0), flat ΛCDM, Ω_m = 0.3, unless stated)
@@ -219,3 +219,39 @@ Scratch script: `/private/tmp/claude-504/-Users-rosador-Documents-Learning-to-Le
 2. **TESTS H0 / `beta_sensitivity.py` S_w, S_Ωm are finite-step central differences, quoted to 10 digits.** At (0.68,1.52,2.11) in flat ΛCDM, Ω_m = 0.3, my quadrature reproduces B = 0.8200775769 (to 1e−9). The derivative limit, however, is S_w = −0.015725 and S_Ωm = −0.025472. The record's −0.0157139331 matches a central difference with step 0.05 in w (to 3e−5 relative); its −0.0254559324 matches step 0.02 in Ω_m (`fdstep.wl`). So the "<1e−9" agreement in H0 compares two implementations of the same finite step, not the derivative. The physics is unaffected (0.07%; 1/S_w = −63.59 vs −63.64), but the 10-digit precision is spurious, and the same digits feed `cosmology_impact.json:jacobian`. Suggest quoting S_w = −0.01572 (derivative) or labelling the step.
 3. **S6-088's fix is supported by Collett+2012.** For the note1b:178-179/381 rewrite, cite Collett+2012 §4, p. 5 ("…varies with z_l, z_s1, and z_s2 … widths and orientations of the constraints from each system"). It is in the project's own `Reference_papers/Collett2012_DSPL_forecast.pdf`. Degeneracy slopes for the record: −1.620 at the project triplet, −0.873 at (0.3,0.6,3.3).
 4. **S6-039 provenance.** The packet critic says it read KSB94 "via Zotero CW87FPFT → scanned PDF p. 288", but CW87FPFT has no attachment today. The page and equations it quotes are correct (ADS scan pp. 287–288, eqs. 21b, 26–27), so the verdict stands; only the stated path is wrong. Also, note1b's κ = (√q/2) b/√(θ1² + q²θ2²) is KSB94 21b with b ≡ ξ0-scaled length in the same orientation as KSB94, so the July "PLAUSIBLE, confirm against KSB94 §2" open item (07-13 report) can be closed.
+
+## Resolution — fixes applied 2026-10-14
+
+Fix pass on branch `wt/ch14` (after merging `annotated-edition`). Line numbers refer to the pre-fix file.
+
+| id | Fix | Backing |
+|----|-----|---------|
+| F1 (D-rad) | §mpi_degeneracy (tex:870-876) rewritten: stellar kinematics (Ch. 13), radial thickness of extended arcs (radial eigenvalue γ′−1 at θE, radial magnification 1/(γ′−1)) and a radial/central image are three equal anchors; the Ch. 20 "combination of inner slope and central mass" caveat is now explicit. Soln Ex. 10 "in practice, detecting … radial or central image" replaced by the same three anchors; Ex. 10 statement "a detected radial image" → "a better constraint on the slope". | `multiplane_dspl.wl` check 3h (symbolic); Ch. 20 annotation 16_Odd_Images…tex:880-888 |
+| F2 / C11 | Cite kept; verdict closed ✅. Body sentence (tex:826-828) gains `\annot{check 5n: slope −0.87 at (0.3,0.6,3.3)}`. | Collett+2012 §4 p. 5 (reconciler); `multiplane_dspl.wl` check 5n |
+| F3 / C4 | Annotation tex:305-307: "a numerical two-point-mass study" → "an unpublished (private-communication) numerical two-point-mass test". | SEF p. 282 footnote 1 |
+| F4 / C13 | Verdict closed ✅. Optional clause applied (visible): "following KSB94, whose eq. (21b) is this form with the axes rotated by 90°". | KSB94 eqs. 15, 21b (reconciler, ADS scan p. 287); `multiplane_dspl.wl` check 4g (rotated form equal, unrotated form differs) |
+| F5 | Ex. 7(b) statement: "(Here η is the ratio of the fitted θE parameters; with shear present, radii read off the critical curves do not scale by exactly 1/B.)"; Soln 7(b) gives the reason (SIE term degree 0, shear term degree 1). | `multiplane_dspl.wl` check 4h (q = 0.7, γ = (0.08, 0.03): area-equivalent critical-curve ratio 0.6714 vs B = 0.6742; this pass's own trace, not the critic's 0.6775, which presumably used a different radius definition — no number is quoted on the page) |
+| A (i) | After eq. mp_S / mp_propagate: "each with the other parameter held fixed" (×2). | definitional |
+| A (ii) | tex:641-646: "If Ω_m is held fixed, a 1% error … |δw| = 0.30"; new sentences: exact fixed-Ω_m roots −1% → δw = +0.29, +1% → δw = −0.36; along dΩ_m = −½dw, |δw| = 0.66; along the degeneracy curve unbounded. | checks 5g (0.303), 5l (+0.288 / −0.359; fails on a symmetric ±0.30), 5m (0.659) |
+| A (iii) | Summary tex:947-949: "with Ω_m held fixed". | check 5g |
+| A (iv) | Soln Ex. 3(c): "gives, at fixed Ω_m, δw = +0.40"; Soln Ex. 10: "…= 0.33 from this single lens, at fixed Ω_m. With Ω_m free, one lens leaves w unconstrained along the degeneracy of Exercise ~\ref{ex:mpi_degeneracy}." | `problems_14.wl` 3f (computed at fixed Ω_m), 9a–9d |
+| B (S6-028) | Keybox tex:369-371 → "The deflector's mass distribution cancels in the ratio α₂/α₁ = 1/B, which is pure geometry. Turning a measured ratio of Einstein radii into B still requires the deflector's slope (§mp_eta)." | check 2a; §mp_eta (checks 3c–3g) |
+| C (S6-088) | Summary tex:950-951 → "One lens constrains a curve in (Ω_m, w). Lenses at different redshift triplets give differently oriented curves \citep{collett_2012}, so a sample shrinks the allowed region." | Collett+2012 §4 p. 5; check 5n |
+| D (S6-027) | tex:83-86 em-dash appositive folded into the clause ("…cancels the deflector mass, leaving a dimensionless ratio of distances that depends on …"). | prose |
+| P1 | "A tempting shortcut is fatal." → "One shortcut invalidates the inference." | prose |
+| P2 | Em-dash pivot + triad (tex:642-646) split: "A single DSPL therefore gives only a weak w constraint, and populations of DSPLs are needed. For the same reason, percent-level systematics in B matter." (merged with fix A). | prose |
+| P3 | Superseded by fix C. | — |
+| E | C11 and C13 verdict rows updated above. | — |
+
+### Verification after edits
+
+- `bash Mathematica/run_wl.sh Mathematica/14_Multiplane_DSPL/multiplane_dspl.wl`: before `SUMMARY: 56 PASS, 0 FAIL  (of 56 checks)`; after `SUMMARY: 62 PASS, 0 FAIL  (of 62 checks)` (new: 3h, 4g, 4h, 5l, 5m, 5n).
+- `bash Mathematica/run_wl.sh Solutions/14_Multiplane_DSPL/problems_14.wl`: `SUMMARY: 49 PASS, 0 FAIL  (of 49 checks)` (unchanged; no Solutions number changed).
+- `cd Notes && ANNOT_REQUIRED=1 bash build.sh`: "all assertions passed". Student 360 pp (text-md5 cdfaf3529f0f047faf86e06086d199ad), Solutions 444 pp (bc8d3f15e4e54cf6036282ac3e3629ca), Annotated 567 pp (fe79b8b7c8ac8b30eab5f9bff6c53f21, sentinels 508). Label-uniqueness lint empty. New sentences confirmed in `pdftotext` of the student PDF; `[check …]` tags appear only in the Annotated edition.
+
+### Left open
+
+- P4, P5, P6: kept (rated acceptable by the critic).
+- Visible check tag "(`multiplane_dspl.wl` check 5a.)" (tex:149) still prints in the student edition (verified by `pdftotext`); the Ch. 15 `\annot{}` policy (tracker TODO under the ch15 critic) was not in this pass's confirmed list, so it is left for the orchestrator.
+- `references.bib` comment-placement remark (out of scope; bib not editable by chapter agents).
+- Attaching the KSB94 scan to Zotero CW87FPFT (optional, orchestrator).

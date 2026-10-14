@@ -89,8 +89,8 @@ $\ln\etamea=-0.4381$.  A $1\%$ error requires
 $|\delta\gp|=0.01/|\ln\etamea|=0.0228$.
 
 \textbf{(c)} $\delta\Brat/\Brat=\ln\etamea\,\delta\gp=-0.4381\times0.03
-=-1.31\%$.  With $S_w=-0.0330$, eq.~\eqref{eq:mp_propagate} gives
-$\delta w=(-0.0131)/(-0.0330)=+0.40$.  A slope bias of a few hundredths,
+=-1.31\%$.  With $S_w=-0.0330$, eq.~\eqref{eq:mp_propagate} gives, at
+fixed $\Omegam$, $\delta w=(-0.0131)/(-0.0330)=+0.40$.  A slope bias of a few hundredths,
 with a perfectly measured $\etamea$, is enough to move the inferred $w$
 by several tenths at this geometry.
 
@@ -199,7 +199,11 @@ Hence $\vecalpha^{(2)}=\vecalpha^{(1)}/\Brat$ exactly, and the reduced
 shear itself scales as $\gamma^{(2)}=\gamma^{(1)}/\Brat$.  A model that
 gives each plane its own reduced shear, related by the same factor
 $1/\Brat$ as the SIE normalisation, reproduces both image systems with
-$\etamea=\Brat$.  If instead a fit forces one shear value on both
+$\etamea=\Brat$, where $\etamea$ is the ratio of the fitted $\thetaE$
+parameters.  The radii of the critical curves do not share this exact
+scaling: the SIE deflection is of degree zero in $\vectheta$ and the
+shear term of degree one, so the critical curve on plane 2 is not a
+rescaled copy of the one on plane 1.  If instead a fit forces one shear value on both
 planes, it is mis-specified, and the resulting ratio of Einstein radii
 is only approximately $\Brat$.
 
@@ -211,7 +215,7 @@ efficiencies and leaves a genuine plane-to-plane residual in $\etamea$;
 the same holds, less dramatically, for any perturber not at $z_l$.
 
 \emph{[Attested: \solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
-checks 7a--7d.]}
+checks 7a--7d; \texttt{multiplane\_dspl.wl} check 4h.]}
 
 % ----- Exercise 14.8 -----
 \subsection*{Exercise~\ref{ex:mpi_two_channel}: Two Channels}
@@ -280,9 +284,13 @@ $1.84\%$, so the positive correlation reduces the error by $40\%$.
 
 The slope channel carries $3.9$ times the variance of the ratio channel.
 Better astrometry shrinks only the smaller, ratio channel; pinning the
-slope --- in practice, detecting and modelling a radial or central image
---- attacks the dominant term.  For $|S_w|=0.0330$ the result maps to
-$\sigma_w=0.0110/0.0330=0.33$ from this single lens.
+slope attacks the dominant term.  Stellar kinematics, the radial
+thickness of extended arcs and a detected radial or central image are
+all ways to do that (\S\ref{sec:mpi_degeneracy}).  For $|S_w|=0.0330$
+the result maps to $\sigma_w=0.0110/0.0330=0.33$ from this single lens,
+at fixed $\Omegam$.  With $\Omegam$ free, one lens leaves $w$
+unconstrained along the degeneracy of
+Exercise~\ref{ex:mpi_degeneracy}.
 
 \emph{[Attested: \solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
-checks 10a--10g.]}
+checks 10a--10g and 9a--9d.]}
