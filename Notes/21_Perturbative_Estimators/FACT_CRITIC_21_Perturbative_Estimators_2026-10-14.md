@@ -140,3 +140,167 @@ The five most load-bearing displayed equations were re-derived independently:
 | 5 | pe_free_slope, pe_mscaling, pe_bias | ✅ PASS |
 
 The equations themselves are right. The problems are about scope (F1, F2, X3), not algebra.
+
+## Reconciliation with the spiral project's record (2026-10-14)
+
+Reviewer: independent reconcile pass (RECONCILE.md). Read: the note10 digest (7 FAIL, 20 SUSPECT), the
+sol_note10 rows of `note8_solutions.md` (S5-127, S5-141 FAIL; S5-147–151 SUSPECT), spiral
+`TESTS_AND_DIAGNOSTICS.md` rows A2, A3 (both rows: m→0 closure and the first-order estimator), A8, A9, H3, B2/B4 §2,
+`HANDOFF_arc_2026-09-21.md` §5–6, `NOTES_R3_bepl_theta_e_rail_2026-07-26.md` (not relevant: it concerns the
+autogalaxy θ_E convention, which the chapter does not use), and the source code that defines c
+(`scripts/analytic_estimators.py:response_coefficient`, `scripts/tier1_axisym.py:fit_pl_only`,
+`mathematica/exercises/sol_note10_analytic_backbone.wl` A8a–d).
+Chapter text was not edited.
+
+Re-verification script (scratch): `.../scratchpad/recon_21/recon21.wl`, run as
+`bash Mathematica/run_wl.sh recon21.wl` → `SUMMARY: 11 PASS, 0 FAIL  (of 11 checks)`.
+R1–R3: the spiral's `response_coefficient()` (an unweighted `lstsq` of a on {b, 1}) equals the chapter's
+unit-weight, source-plane c to within 1e-12. On the m = 0 running-example images it gives 10.4612. The image-plane value is 2.0812.
+R4–R5: for the canonical triple, the image-plane c tends to 1/(γ′−1) as ρ → 0, while the source-plane c diverges.
+R6–R8: flat ΛCDM with Ω_m = 0.3, z_d = 0.4, z₁ = 1 reproduces the spiral A8d geometry B = (0.8054, 0.7283, 0.6898).
+The lower bound is B_min = d₁/d(∞) = 0.5957, so B_min^k = 0.299 at γ′ = 1.6.
+R9: when the c_i are unequal, the r_i can have opposite signs (r₂ = −2.76, r₃ = +0.52).
+R10–R11: in a free-slope fit to a single three-image plane the system is square and non-singular (det = 0.561), so the
+residual is exactly zero. The fit returns ε/m = −3.509 and δγ′/m = 86.39.
+
+### The two points to settle
+
+**(a) Does the spiral record define c as the source-plane estimator, and does it say so?**
+It defines c that way **by construction but never by name**. Tier 1 (`fit_pl_only`) minimises unweighted
+lens-equation residuals `ys − ys.mean()`, and its docstring calls this a "source-plane chi^2". The `sigma_pos`
+magnification rescaling is explicitly skipped. `response_coefficient()` is the matching unweighted regression,
+and R1 confirms it equals the chapter's w_j = 1 c. So the A3 agreement (median 1.017) compares one source-plane
+quantity with another, and that comparison is valid.
+The record never states the scope, though. Note10 (l.20, l.57, in bold), the A3 TESTS row and the module docstring
+all describe the fit as "a least squares over **image positions**". That is the opposite of what is computed:
+r_j is a source-plane residual. No line in note10, A3, A9 or H3 says that c, its ρ → 0 divergence, "the radial
+image is the load-bearing datum", or the sign-change mechanism depend on the weights.
+A9's "SCOPE IS LOAD-BEARING" warning covers the configuration (symmetric versus asymmetric triple), not the
+likelihood. Neither the packet critic nor any earlier critic raises weighting.
+The chapter is ahead of its source here. It names Σ r_j² as a source-plane fit (l.311), derives the image-plane
+weights (Eq. pe_chi2), and gives 10.46 versus 2.08. Its remaining gap is F1 in this report: the qualitative ρ-trend
+reverses under image-plane weights, and the chapter does not say so.
+One consequence on the spiral side is not recorded. The Tier-2 likelihood (B2/B4 §2) uses C = σ² A Aᵀ, which is
+image-plane-equivalent to first order. The A3 leverage story therefore does not carry over to Tier 2 without
+reweighting. See feedback item 1.
+
+**(b) Is "B_i → 0 is never reached (B_i > d₁)" consistent with H3's "r_i → (γ′−1)c₁ as B_i → 0"?**
+Yes, as mathematics: H3 and A8a state a limit, and the chapter says the limit is not attained. Both are true.
+The inconsistency sits in the spiral's **interpretation** of that limit:
+- `sol_note10:219` says "B_i → 0 is the limit of a source plane infinitely far behind the deflector". That is false.
+  A source at infinite redshift gives B = d₁/d(∞) = 0.596 (R7), not 0. B_i → 0 needs d₁ → 0, i.e. plane 1 at the deflector.
+- Note10 l.331 says "Adding well-separated planes drives the response toward a constant". In H3's own geometry,
+  B_i^k = 0.60, 0.48 and 0.42. With equal c, the responses therefore reach only 40%, 52% and 58% of the limit. Even
+  z_s → ∞ caps them at 70% (γ′ = 1.6, R8).
+The chapter's annotation ("approached, not reached") and its Solutions "Reach" paragraph are the correct reading.
+The spiral record does not know this (grep finds no correction).
+There is also a separate problem with H3's wording "all r_i share a sign" (TESTS H3 row, CLAUDE.md:633): it drops
+the equal-c qualifier that note10 l.335 keeps. With unequal c_i the signs can differ (R9). That is the same
+mechanism as the chapter's §pe_sign_change, which the chapter scopes correctly ("For equal c_i").
+
+### Table
+
+| spiral id | claim | status in chapter | action |
+|---|---|---|---|
+| S0-073 (FAIL) | naive back-of-envelope agrees in sign 49% (chance), ~4× low; keybox cadence | already fixed in port: no 49%/4× numbers. The shortcut Eq. pe_shortcut is framed correctly (fixed sign, cannot track the sign change, l.759–767, l.784–786) | none |
+| S0-101 (FAIL) | "bias grows as source 2 approaches the radial caustic" is inverted | already fixed in port: the chapter makes no source-offset-direction claim. Validity item 2 (image shift diverges as λ_r → 0) is a different and correct statement | none |
+| S0-064 (FAIL) | "closed form end to end" overstates (S_w is numerical) | n.a.: the cosmology leg (S_w, Δw) was stripped. The chapter claims a closed form only for c on the canonical triple | none |
+| S0-021 (FAIL) | "c ~ 6–10 over the realistic grid" | n.a.: grid numbers stripped | none |
+| S0-007 (FAIL) | abstract antithesis density | n.a.: abstract rewritten. The intro (l.20–44) has none of the four antitheses | none |
+| S0-055 (FAIL) | "error shrinks with γ′ *only* because steeper cells sit at smaller ρ" | already fixed in port: the annotation "Reading the correction factor" (l.584–594) gives the intrinsic γ′ cause (3u decays like ρ^{γ′−1}) | none |
+| S0-008 (FAIL) | "the whole story" (hollow intensifier, also inexact) | inherited as "Eq. pe_general is the whole method" (l.88). Critic V2 noted it as carry-over | reword in the fix pass ("is the method"), see new fix 4 |
+| S0-090 / S0-091 / S0-096 | robustness grid 27 vs 12 gated; 1.75–2.28×, 1.60–1.65× | n.a.: numbers stripped. The chapter states only the generic √N / σ-cancellation algebra (critic D6a/b) | none |
+| S0-030 | 3e-14 max error is a sampled worst case | n.a. | none |
+| S0-066 | 67 cells ≠ 5×4×4 = 80 | n.a. | none |
+| S0-009 | maxim opener "a result you cannot X…" | already fixed (absent) | none |
+| S0-011 | bolded "least squares over image positions" | already fixed, and corrected: the chapter calls Σ r_j² a source-plane fit (l.311). See (a) | none |
+| S0-015 | keybox title "is not a technicality" | inherited (l.389). Critic V2 noted | author's call |
+| S0-022 | "load-bearing datum" | inherited (l.447). Critic P1/V2 noted. Under F1 it is also true only for the source-plane fit | covered by F1 |
+| S0-024 | undated retraction fragment | n.a. | none |
+| S0-043 | 0.9911 "sat unremarked"; a second sub-unity entry 0.9936 | n.a. (project table stripped). The keybox l.569 keeps the generic "not a numerical glitch" | none |
+| S0-045 / S5-127 (FAIL) | "curve and its masked floor are one function"; floor back-reference to Ex. 1 does not resolve; 'masked' collides with the project's masked regime | partly inherited: l.517–518 "Masked and unmasked cases are one function evaluated at the two ends of ρ". The back-reference is fixed (Sol. (d) evaluates ρ = 1 directly). The term collision is n.a. (no masked regime in the book). The sentence is still loose: for the asymmetric running example the masked c is 2.00, not the ρ → 1 value 1.67 | new fix 3 |
+| S0-057 | 6.6% belongs to ρ ∈ [0.01, 0.2] only | n.a. | none |
+| S0-068 | scatter concentrated where c₁ − B^k c₂ cancels | n.a. | none |
+| S0-074 | "different question" prose | already fixed: l.761–767 is plain | none |
+| S0-088 / S5-149 | "one physical cause → cannot average down" stated as a maxim; broader than attested | inherited in scoped form (keybox l.858–863: "here there is one physical cause"). The chapter backs it with the toy S_N = √N S₁ and Eq. pe_ri. Strictly, "same direction" needs equal c (see (b)) | new fix 2 |
+| S0-098 | second-person "Then do not stop there" | already fixed (removed) | none |
+| S0-077 | A8a–c attestation not one-to-one | already fixed in port: rc `coh1`–`coh4` test general k, N = 5. The spiral A8c tests `(1−bb^2)>0` (k hard-wired to 2) and A8b fixes γ′ = 3/2 | feedback 4 |
+| S0-075 / S0-093 | CLAUDE.md pointer; unverifiable retraction quote | n.a. | none |
+| S5-141 (FAIL) | "Note 10 §8" should be §7 (also §6 → §5) | n.a.: no note-section pointers in the chapter | none |
+| S5-147 | "Neither. That is the point." | already fixed: "Neither move improves accuracy; both improve precision." (Sol l.187) | none |
+| S5-148 | "more precisely wrong" | inherited (Sol l.199) | author's call (prose) |
+| S5-150 | "constraining power but no protection" antithesis | inherited (Sol l.205–207). The content is correct | author's call (prose) |
+| S5-151 | sol_note10:40–42 "a plane with only a tangential pair cannot detect one, and a plane with a radial image can" (cadence only, "physics verified") | inherited (Sol l.49–51, same claim). It is true only at fixed slope: the chapter's own §pe_free_slope shows that with γ′ free one three-image plane is an exact 3×3 solve with zero residual (R10), so "can detect" fails | new fix 1; feedback 3 |
+| TESTS A2 | m₂ = m₁ B^k, θ_E2/θ_E1 = B^{−1/(γ′−1)} | consistent (Eq. pe_mscaling; critic D5e/D5f) | none |
+| TESTS A3 (m→0 closure) | PL-only fit recovers truth at m = 0 | n.a. (numerical-pipeline test) | none |
+| TESTS A3 (estimator) | Δ𝓑/𝓑 = (γ′−1)m₁[c₁ − B^k c₂]; "least squares over image positions"; median 1.017 at m = 1e-4 | equation consistent (Eq. pe_bias). The "image positions" wording is not carried. The chapter correctly says source-plane. 1.017 n.a. | feedback 1, 5 |
+| TESTS A8 | μ-floor sweep | n.a. ("A8" in note10/H3 means the coherence estimator, handled under H3) | none |
+| TESTS A9 | closed form c; ρ→1 floor; γ′ = 5/3 boundary; ρ_× = 9^{1/(5−3γ′)}; **scope = canonical symmetric triple**; real cells c₂/c_closed median 1.582; response_coefficient() remains the definition | consistent and the scope already carries over: l.452 ("For the canonical triple"), §pe_beyond_canonical (asymmetric pair raises c by ×1.54 in the running example, the same direction and size as the spiral's median 1.582), validity "fourth limitation" (l.893–895). One residual generalisation: critic X3 (free-slope summary) | X3 already flagged |
+| TESTS H3 | r_i share c₁; share a sign; r_i → (γ′−1)c₁ as B_i → 0; responses tend to a constant | consistent as a limit. The chapter adds the correct "approached, not reached" and scopes "same direction" to equal c (l.811–815). The H3 row drops the equal-c qualifier on the sign | feedback 2 |
+| HANDOFF §5 | "15/15" belongs to `05_response_coefficient/verify.wl` | n.a. (the chapter quotes only its own SUMMARY counts) | none |
+| HANDOFF §6 | "two quantities that coincide in one limit get two names" | applies to c: source-plane and image-plane c are different estimators sharing one symbol. The chapter's "Common error" annotation is the right remedy | covered by F1 |
+| NOTES_R3 | bEPL θ_E rail | n.a. | none |
+
+### New fixes for the fix pass (not already in the Flagged section above)
+
+1. **Sol. l.49–51 ("a plane with a radial image can [detect a central mass]") is true only at fixed slope.**
+   With γ′ free, a single three-image plane gives three equations in (ε, δγ′, δy). The system is
+   non-singular (det = 0.561 for the running example), so the residual is exactly zero, as the chapter itself says
+   for the canonical triple at l.671–673. Fix: "…a plane with a radial image can, **if the slope is held fixed**;
+   with the slope free a single three-image plane fits exactly (§\ref{sec:pe_free_slope}), and detection needs a
+   fourth datum or a second plane sharing the slope." Proof: `recon21.wl` R10.
+2. **Keybox l.858–863 / l.805 "all ratios are biased in the same direction" (and the Summary's coherence bullet, if it
+   restates this).** Item 3 at l.811 is correctly scoped to equal c_i. The keybox's "one physical cause" sentence
+   reads as unconditional. With unequal c_i (one plane with a deep radial image, another without) the r_i can have
+   opposite signs (R9: −2.76 versus +0.52, γ′ = 1.6). This is the chapter's own sign-change mechanism. Fix: add
+   "when the planes' response coefficients are comparable" or point to §\ref{sec:pe_sign_change}.
+3. **l.517–518 "Masked and unmasked cases are one function evaluated at the two ends of ρ"** holds for the canonical
+   triple only. In the running example the masked c is 2.00, not the ρ → 1 value 1.67 (l.605). Fix: prefix "For the
+   canonical triple,". Optionally cut the sentence, as the spiral S5-127 fix recommends.
+4. **l.88 "is the whole method"** is the port of note10's "the whole story" (S0-008, a FAIL in the spiral record).
+   Replace it with a plain statement, e.g. "Equation~\eqref{eq:pe_general} is the estimator."
+
+### Feedback to the spiral project (errors the spiral record does not yet know about)
+
+1. **c is a source-plane (unit-weight) estimator, but the record calls it an image-position least squares and never
+   states the weight dependence.**
+   - Where: `theory/note10_analytic_backbone.tex` l.20 and l.57 (bold: "the fit is a least squares over image
+     positions"), TESTS row A3 (estimator), `scripts/analytic_estimators.py` docstring l.21.
+   - What is actually computed: unweighted lens-equation residuals (`tier1_axisym.fit_pl_only`, residual
+     `ys − ys.mean()`, σ_pos rescaling skipped), i.e. a source-plane χ².
+   - Why it matters: an image-plane fit has weights 1/(σ²λ_r²), and these change the physics, not just the number.
+     For the canonical triple at γ′ = 1.6, the image-plane c tends to 1/(γ′−1) as ρ → 0 instead of diverging. It is
+     non-monotonic (1.70 / 1.83 / 1.97 / 2.48 / 3.72 / 4.76 / 4.70 at ρ = 0.001 to 0.2). The plane-2 sign change also
+     reverses: in the image plane the bias is negative for 0.065 < ρ₂ < θ_r, against ρ₂ < 0.212 in the source plane
+     (chapter critic F1, `critic21_imgplane.wl`). In the chapter's running example the source-plane c is 10.46 and the
+     image-plane c is 2.08 (`recon21.wl` R2–R3).
+   - Consequence for the project: the Tier-2 likelihood (B2/B4: C = σ² A Aᵀ) is image-plane-equivalent to first
+     order. So note10's leverage, monotonicity and sign-change statements apply to Tier 1 but not automatically to
+     Tier 2 or real modelling.
+   - Possibly relevant, but **untested**: B2/B4's "plonly dB/B agrees with Tier-1 within ×2" was attributed to the
+     source-placement convention. Weighting is a candidate the record has not considered.
+   - Fix: say "source-plane (unit-weight) least squares" in note10 §1/§2, A3 and A9, and add the weighted form.
+2. **The interpretation of the H3/A8 limit B_i → 0 is wrong.**
+   - `theory/solutions/sol_note10_analytic_backbone.tex:219` says B_i → 0 is "a source plane infinitely far behind
+     the deflector". It is not: B_i = d₁/d_i > d₁, and at z_s → ∞ the ratio is B = d₁/d(∞) = 0.596 (flat ΛCDM,
+     Ω_m = 0.3, z_d = 0.4, z₁ = 1). B_i → 0 would need d₁ → 0.
+   - Note10 l.331 ("adding well-separated planes drives the response toward a constant") overstates how close the
+     limit gets. In H3's own geometry, B_i^k = 0.60 / 0.48 / 0.42, so the equal-c responses sit at only 40 / 52 / 58%
+     of (γ′−1)c₁. The ceiling is 70% even for z_s → ∞ at γ′ = 1.6.
+   - The H3 conclusion (significance grows) is unaffected because it is computed at the real B_i. Only the prose
+     limit is misdescribed.
+   - Also: TESTS H3 and CLAUDE.md:633 say "all r_i share a sign" without the equal-c qualifier that note10 l.335
+     keeps. With unequal c_i the signs can differ (R9).
+3. **sol_note10:40–42 "a plane with a radial image can [detect a central mass]" is true only at fixed γ′.**
+   The packet critic (S5-151) judged it "physics verified" and flagged only the cadence. With the slope free, one
+   three-image plane is a non-singular 3×3 solve with zero residual. This is note10's own free-slope result, Eq. pe_free_slope
+   in the chapter, and R10 confirms it on an asymmetric triple.
+4. **A8c is close to vacuous.** In `mathematica/exercises/sol_note10_analytic_backbone.wl:121-123` the check reads
+   `Reduce[ForAll[bb, 0<bb<1, (1 - bb^2) > 0]]`: k is hard-wired to 2 and γ′ never enters. A8b is evaluated at
+   γ′ = 3/2 only. The general statement, (γ′−1)c(1 − B^k) ∈ (0, (γ′−1)c) for all k > 0, is what the chapter's rc
+   `coh3`/`coh4` test. The packet critic's S0-077 notes that the mapping is not one-to-one, but not this.
+5. **(Tentative, not verified here.) The A3 gate amplitude m = 1e-4 may not be in the linear regime for deep radial images.**
+   The chapter critic (F2, `critic21_validity.wl`) finds that ε/m departs from c by 4.5% at m = 1e-4 and by 18% at
+   3e-4 for a radial image at ρ = 0.024. That is because the relevant small parameter is m a_C/(λ_C θ_C) ≈ 640 m,
+   not m c. Part of A3's 16–84% spread (0.75–1.16) may be non-linearity. Suggested check: re-run `verify_a3` at
+   m = 1e-5.
