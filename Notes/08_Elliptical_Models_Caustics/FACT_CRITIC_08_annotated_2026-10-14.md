@@ -192,3 +192,31 @@ Critic scratch script (independent of the author's code):
 Author's repo script, run for this report:
 `bash Mathematica/run_wl.sh Solutions/08_Elliptical_Models_Caustics/problems_08.wl` →
 `SUMMARY: 54 PASS, 0 FAIL  (of 54 checks)` / `ALL CHECKS PASS` (note the `[B6] … FLAG` caveat above).
+
+## Resolution — fixes applied 2026-10-14
+
+Branch `wt/ann0809`. Checks are in `Solutions/08_Elliptical_Models_Caustics/problems_08.wl`
+(section "Fix pass 2026-10-14"); each fails on the value printed before the fix.
+
+| id | Fix | Backing |
+|----|-----|---------|
+| F1 | Step-4 display now prints ∂1α1 = θE√q θ2²/(θ²F), ∂2α2 = θE√q θ1²/(θ²F) (outer factor F²/θ² kept), sum line θE√q(θ1²+θ2²)/(θ²F) = θE√q/F; "with θ² = θ1²+θ2²" added. Annotation "Reading the Step-4 display" deleted; next box's "From the previous box" → "From the Step-3 box (and Step 4)". | `[B6]` inverted: now asserts the correct derivatives and sum, and rejects the old F³ forms (no more "FLAG") |
+| F2 | Stage 1 retitled "Source outside the tangential caustic"; visible definition of the cut added; beyond the cut (0.932/1.049 θE at q = 0.7) → 1 image, inside cut but outside diamond → 2. Cored sentence → "a third, Type III image appears near the lens center once the source is inside the radial caustic". "How far is far?" box trimmed to its cored-model sentence. | `[F2]` (counts {1,1,1,2,4} for β = (1.2,0),(0,1.3),(0.8,0.8),(0.5,0),(0.05,0.03)); `[B19]` |
+| F3 | Ex 8.4(a): cusps |β1| ≈ 0.159″, |β2| ≈ 0.139″, β2 = 0.2″ > 0.139″ → double; |β| ≈ 0.224″ comparison removed. (b): (0.36, 1.20)″ μ ≈ +3.67, (−0.56, −0.55)″ μ ≈ −3.82; solver hedge deleted. (c) quotes the values. Boxes "A sharper inside/outside test" and "What the script actually returns" reduced to their residual content. | `[F3a]`, `[F3b]` (fresh solve; old positions have residuals 0.297, 0.154); `[B24]`, `[B29]` |
+| F4 | Ex 8.1(b): "an oval, close to an ellipse for small γext (deviation ≈ 1.5% here)". Optional wording applied: ch. 8 l.~645 "the SIE tangential critical curve is an ellipse, q²θ1²+θ2² = qθE², with the same axis ratio q as the mass"; bullet "an ellipse close to the Einstein radius"; Ex 8.2(b) "the ellipse q²θ1²+θ2² = qθE²". | `[F4a]` (SIS+shear deviation 1.52%), `[F4b]` (2κ = 1 ⇔ exact ellipse); `[B13]` |
+| F5 | Radial-caustic sentence: crossing it inward 1 → 3 (Type II + Type III), tangential crossing then 3 → 5. `tabular{ccccc}` → `{ccc}`. | `[F5]` (cored isothermal elliptical potential, e = 0.1, s = 0.1: counts {1,3,5}, one Type III in the 3-image region) |
+| F6 | Ex 8.4(d) restated: μA+μB = −0.15 vs |μ| ≈ 3.7; SIS gives +2 for every double with the same missing image, so the two-image sum is model-dependent. Box "The signed sum is not a universal number" deleted (now redundant). Script printout "Sum > 0? False VERIFIED" replaced. | `[B24]`, `[B26]` |
+| N4 | "nearly a factor-of-two error (1.7 at q = 0.7)". | `[N4]` |
+| P1 | Ch 20 bridge closer → "The odd image probes the innermost mass profile." | prose |
+| P2 | 08_Solutions "treat the mapping as a rough heuristic." | prose |
+| P3 | "That is the precise sense of…" → "That is what ``SIS-equivalent'' Einstein radius means here." | prose |
+| (notation) | Ch 12 DSPL bridge aligned with the Part V preamble (same clash as the Ch 13 bridge flagged by the Ch 18 critic): plane 1 = near, plane 2 = far, κ1 = 𝓑κ2, θE(1) = 𝓑 θE(2), measured η = θE1/θE2 = 𝓑 for the SIE. | `[D3]` relabelled |
+
+**Verification after edits.** Before: `SUMMARY: 54 PASS, 0 FAIL  (of 54 checks)` (with the `[B6] FLAG`).
+After: `bash Mathematica/run_wl.sh Solutions/08_Elliptical_Models_Caustics/problems_08.wl` →
+`SUMMARY: 61 PASS, 0 FAIL  (of 61 checks)`. Build `ANNOT_REQUIRED=1 bash build.sh`: student 360 pp,
+instructor 444 pp, annotated 568 pp, "all assertions passed".
+
+**Left open.** None of the confirmed items. Not touched (not flagged): 08_Solutions Ex 8.4 text no longer
+makes the "Σμ > 0 for a non-singular lens" claim (it was removed with the old (d) wording); if the
+statement is wanted back it needs its own check.

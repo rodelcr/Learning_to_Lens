@@ -373,8 +373,8 @@ Module[{tE = 1.2, sigV = 230.0, zd = 0.3, zs = 1.0},
             NumberForm[sigVPredicted, {4, 0}], " km/s"];
         Print["    Observed sigma_v = ", sigV, " km/s"];
         Print["    Ratio = ", NumberForm[sigV/sigVPredicted, {3, 2}]];
-        Print["    Since predicted ~ observed, gamma' ~ 2.0"];
-        Print["    Consistent with bulge-halo conspiracy!\n"];
+        Print["    A ratio this close to 1 is consistent with near-isothermal gamma' ~ 2"];
+        Print["    (inverting for gamma' needs aperture, light profile, anisotropy: not computed).\n"];
     ];
 ];
 
@@ -461,7 +461,7 @@ Print[""];
 Print["(d) Rankings:"];
 Print["    Largest enclosed mass: B1608+656 (~3.9 x 10^11 Msun)"];
 Print["    Largest physical R_E:  B1608+656 (~6.8 kpc)"];
-Print["    Smallest enclosed mass: Q2237+0305 (~0.1 x 10^11 Msun)"];
+Print["    Smallest enclosed mass: Q2237+0305 (~0.2 x 10^11 Msun)"];
 Print["    Smallest physical R_E:  Q2237+0305 (~0.7 kpc)"];
 Print[""];
 Print["    B1608+656 has both the largest mass and R_E because"];
@@ -635,9 +635,9 @@ Module[{eta, etaP, c, alv, thv},
      deflector; plane 2 keeps its images iff eta2 -> eta2' *)
   c = 1 - eta (1 - lam);
   etaP = lam eta/c;
-  check["[L1] theta - eta (lam alpha + (1-lam) theta) = c (theta - eta' alpha), c = 1 - eta(1-lam), eta' = lam eta/c",
+  check["[L1] (superseded in the text by F13, kept as the inverse map) theta - eta (lam alpha + (1-lam) theta) = c (theta - eta' alpha), c = 1 - eta(1-lam), eta' = lam eta/c",
     Simplify[(thv - eta (lam alv + (1 - lam) thv)) - c (thv - etaP alv)] === 0];
-  check["[L2] eta' - eta = eta (1-eta)(lam-1)/c: at a fixed distance ratio (0<eta<1) the second plane keeps its images only for lam = 1",
+  check["[L2] (superseded in the text by F13) eta' - eta = eta (1-eta)(lam-1)/c: at a fixed distance ratio (0<eta<1) the second plane keeps its images only for lam = 1",
     Simplify[(etaP - eta) - eta (1 - eta) (lam - 1)/c] === 0];
   (* local MST: power law (g) + central point mass with theta_pm^2 = f thetaE^2 matches
      alpha(thetaE) and alpha'(thetaE) of a pure power law of slope g_eff *)
@@ -684,7 +684,112 @@ check["[E9] Ex 9.1: Ds/Dds = 1652.0/1054.7 = 1.566; arcsec-for-radian error infl
 check["[H7] Ex 9.3: 1.6 x 1379.0 x 1745.6 / 863.0 = 4463 Mpc",
   Abs[1.6 1379.0 1745.6/863.0 - 4463] < 1];
 
+(* ===== Fix pass 2026-10-14 (FACT_CRITIC_09_annotated_2026-10-14 F5-F13) =====
+   Each check below fails on the statement the visible text made before the fix. *)
+Print["\n=== Fix-pass checks (Module 9, 2026-10-14) ==="];
+
+(* [F5] remark after eq. mst_H0: at fixed image positions a STEEPER power law has a
+   LARGER Fermat-potential difference, so (H0 ~ Delta tau at fixed Delta t) it raises
+   H0; a SHALLOWER profile lowers it.  Old text: "steeper than assumed ... reduces H0". *)
+Module[{thA = 1.3, thB = -0.7, dtau, vals},
+  dtau[g_?NumericQ] := Module[{tE, b, al, ps, sol},
+    al[t_, e_] := e^(g - 1) Abs[t]^(2 - g) Sign[t];
+    ps[t_, e_] := e^(g - 1) Abs[t]^(3 - g)/(3 - g);
+    sol = FindRoot[thA - al[thA, e] == thB - al[thB, e], {e, 1.0}];
+    tE = e /. sol; b = thA - al[thA, tE];
+    ((thB - b)^2/2 - ps[thB, tE]) - ((thA - b)^2/2 - ps[thA, tE])];
+  vals = dtau /@ {1.8, 1.9, 2.0, 2.1, 2.2};
+  Print["    Delta tau(gamma' = 1.8 .. 2.2) at fixed images (1.3, -0.7): ", vals];
+  check["[F5] fixed images: Delta tau increases with gamma' (steeper => higher H0, shallower => lower H0); Delta tau(2.0) = 0.600",
+    And @@ Thread[Differences[vals] > 0] && Abs[vals[[3]] - 0.600] < 1*^-3];
+];
+
+(* [F6] lambda = 0.9: H0_true = 0.9 H0_naive (inferred value moves 10% down; naive 11% high) *)
+check["[F6] lambda = 0.9: H0_true/H0_naive = 0.9; naive overestimate 1/0.9 - 1 = 0.111",
+  Abs[0.9 - 0.9] < 1*^-12 && Abs[1/0.9 - 1 - 0.1111] < 1*^-4];
+
+(* [F7] normalisation of eq. kappa_power_law comes from kbar(thetaE) = 1, not from
+   "matching to the isothermal case": A = 1/2 also matches at gamma' = 2 but fails kbar = 1. *)
+Module[{A, gg, kbar},
+  kbar[AA_, g_] := 2 Integrate[AA t^(1 - g) t, {t, 0, 1}, Assumptions -> 1 < g < 3];
+  check["[F7] kbar(thetaE) = 1 => A = (3 - gamma')/2; A = 1/2 also matches the SIS at gamma' = 2 but gives kbar(thetaE) = 1/1.4 != 1 at gamma' = 1.6",
+    Simplify[(A /. First[Solve[kbar[A, gg] == 1, A]]) - (3 - gg)/2, 1 < gg < 3] === 0 &&
+    (3 - 2)/2 == 1/2 && Abs[kbar[1/2, 16/10] - 1] > 0.1];
+];
+
+(* [F8] the (1 - lambda) theta piece is a sheet of convergence 1 - lambda:
+   div[(1-lambda) theta] = 2(1-lambda); old "div(theta/2) = 1 = 1 - lambda" is false for lambda != 0 *)
+Module[{x, y, l},
+  check["[F8] div[(1-lambda)(x,y)] = 2(1-lambda) => kappa_s = 1-lambda; div(theta/2) = 1 != 1-lambda (lambda = 0.9)",
+    Simplify[D[(1 - l) x, x] + D[(1 - l) y, y] - 2 (1 - l)] === 0 &&
+    (D[x/2, x] + D[y/2, y]) == 1 && 1 != 1 - 0.9];
+];
+
+(* [F9] Sol 9.2(d): theta-dependence cancels WITHIN one image; the leftover
+   (1/2) lambda(lambda-1)|beta|^2 is common to all images and cancels BETWEEN them *)
+Module[{t1, t2, b1, b2, l, psi, phi, phil, diff},
+  phi = ((t1 - b1)^2 + (t2 - b2)^2)/2 - psi[t1, t2];
+  phil = ((t1 - l b1)^2 + (t2 - l b2)^2)/2 - (l psi[t1, t2] + (1 - l) (t1^2 + t2^2)/2);
+  diff = Simplify[phil - l phi];
+  check["[F9] phi_lambda(theta, lambda beta) - lambda phi(theta, beta) = lambda(lambda-1)|beta|^2/2, independent of theta",
+    Simplify[diff - l (l - 1) (b1^2 + b2^2)/2] === 0 && FreeQ[diff, t1 | t2]];
+];
+
+(* [F10] D_Delta_t = (1+z_d) Dd Ds/Dds (eq. time_delay_recap now folds (1+z_d) in):
+   Delta t = D_Delta_t Delta tau / c = 79.98 d.  Using the old name (Dd Ds/Dds) in
+   Delta t = D_Delta_t Delta tau/c would give 79.98/1.6 = 50.0 d. *)
+Module[{Dd, Ds, Dds, Ddt, dtau, dt, dtOld, Mpc = 3.0857*^24, c = 2.99792458*^10},
+  Dd = angDiamDist[0.6, 0.3, 70.]; Ds = angDiamDist[1.5, 0.3, 70.]; Dds = angDiamDist12[0.6, 1.5, 0.3, 70.];
+  Ddt = 1.6 Dd Ds/Dds; dtau = 0.64 arcsecToRad^2;
+  dt = Ddt Mpc dtau/c/86400.; dtOld = Dd Ds/Dds Mpc dtau/c/86400.;
+  Print["    D_Delta_t = ", Ddt, " Mpc; Delta t = ", dt, " d (unfolded name would give ", dtOld, " d)"];
+  check["[F10] D_Delta_t = (1+z_d) Dd Ds/Dds = 4463 Mpc and Delta t = D_Delta_t Delta tau/c = 80.0 d (not 50.0 d)",
+    Abs[Ddt - 4463] < 2 && Abs[dt - 79.98] < 0.05 && Abs[dtOld - 79.98] > 20];
+];
+
+(* [F10a] d = H0 Dd Ds/Dds has units of velocity (old text: "dimensionless") *)
+check["[F10a] d = H0 x (distance) has dimensions length/time (velocity), not dimensionless",
+  UnitDimensions[Quantity[70, "Kilometers"/("Seconds" "Megaparsecs")] Quantity[2789, "Megaparsecs"]] ===
+    {{"LengthUnit", 1}, {"TimeUnit", -1}}];
+
+(* [F10b] Ex 9.3(c): model delay and inferred H0 both scale as lambda (same direction) *)
+Module[{l, K = 1.234, dtauN = 0.6, dtObs = 80., H0of},
+  (* at fixed observed delay H0 = K * (model Delta tau) / Delta t_obs; MST model Delta tau = lambda dtauN *)
+  H0of[ll_] := K ll dtauN/dtObs;
+  check["[F10b] Ex 9.3(c): d ln H0_inferred / d ln lambda = +1, the same as d ln Delta t_model / d ln lambda (not -1)",
+    Simplify[l D[Log[H0of[l]], l]] == 1 && Simplify[l D[Log[l dtauN], l]] == 1];
+];
+
+(* [F12] local-MST bridge: d gamma'_eff/df = 3 - gamma' = 1.4 at gamma' = 1.6, an order of
+   magnitude below Chapter 21's fitted d gamma'/dm = +15.6 (radial-image fit) *)
+Module[{f, g},
+  check["[F12] d/df[gamma' + f(3 - gamma')] = 3 - gamma' = 1.4 at gamma' = 1.6 (< 15.6/10)",
+    (D[g + f (3 - g), f] /. g -> 16/10) == 14/10 && 14/10 < 15.6/10];
+];
+
+(* [F13] DSPL bridge in Part V notation: plane 1 near, plane 2 far, B = D_ls1 D_s2/(D_s1 D_ls2);
+   model ratio B' with far-plane MST lambda must satisfy lambda B'/c = B, c = 1 - B'(1-lambda)
+   => B' = 1/(1 - lambda + lambda/B)  (Chapter 22 eq. ms_free with lambda_2 = lambda) *)
+Module[{B, l, Bp, c, sol},
+  sol = Solve[l Bp/(1 - Bp (1 - l)) == B, Bp];
+  check["[F13a] lambda B'/(1 - B'(1-lambda)) = B  <=>  B' = 1/(1 - lambda + lambda/B)",
+    Simplify[(Bp /. First[sol]) - 1/(1 - l + l/B)] === 0];
+  check["[F13b] B' - B = B(1-B)(1-lambda)/(lambda + B(1-lambda)); B = 0.7, lambda = 0.9 -> B' = 0.722",
+    Simplify[1/(1 - l + l/B) - B - B (1 - B) (1 - l)/(l + B (1 - l))] === 0 &&
+    Abs[1/(1 - 0.9 + 0.9/0.7) - 0.7216] < 1*^-4];
+  check["[F13c] near-plane identity: theta - B'[lambda alpha + (1-lambda) theta] = c (theta - (lambda B'/c) alpha)",
+    Simplify[(th - Bp (l al + (1 - l) th)) - (1 - Bp (1 - l)) (th - l Bp/(1 - Bp (1 - l)) al)] === 0];
+];
+
+(* [E9.5d] Q2237+0305 enclosed mass ~0.17e11 -> "~0.2 x 10^11" (old printout "~0.1") *)
+Module[{ME = einsteinMassSolar[0.9, 0.04, 1.69, OmMstd, H0std]},
+  Print["    Q2237+0305 M_E = ", ME];
+  check["[E9.5d] Q2237+0305: M_E = 0.17e11 Msun, rounds to ~0.2e11 (not ~0.1e11)",
+    Abs[ME/1*^11 - 0.168] < 0.005 && Round[ME/1*^11, 0.1] == 0.2];
+];
+
 summary[];
+
 
 
 

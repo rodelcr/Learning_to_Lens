@@ -193,3 +193,33 @@ Critic scratch script (shared with the Module 8 report; Module 9 sections are E1
 Author's repo script, run for this report:
 `bash Mathematica/run_wl.sh Solutions/09_Galaxy_Lensing_Applications/problems_09.wl` →
 `SUMMARY: 42 PASS, 0 FAIL  (of 42 checks)` / `ALL CHECKS PASS`.
+
+## Resolution — fixes applied 2026-10-14
+
+Branch `wt/ann0809`. Checks are in `Solutions/09_Galaxy_Lensing_Applications/problems_09.wl`
+(section "Fix pass 2026-10-14"); each fails on the statement printed before the fix.
+
+| id | Fix | Backing |
+|----|-----|---------|
+| F5 / X11 | Remark after eq. `mst_H0`: "a profile that is *shallower* than assumed near the images". | `[F5]` (fixed images 1.3/−0.7: Δτ = 0.479…0.719 increasing for γ' = 1.8…2.2) |
+| F6 / X12 | "gives H0^true = 0.9 H0^naive: the inferred value moves 10% downward (equivalently, the naive value is 11% too high)". Box "What 'shifts downward by 10%' means" deleted. | `[F6]` |
+| F7 / X13 | Normalisation now "requiring the mean convergence inside θE to be unity, κ̄(θE) = 1 (which for γ' = 2 returns the SIS)"; fragment "…wl.\nand the Einstein radius is:" → "…wl.  The Einstein radius is". | `[F7]` (A = 1/2 also matches at γ' = 2 but gives κ̄ = 0.714 at γ' = 1.6) |
+| F8 / X14 | Parenthesis → "the deflection of a uniform sheet of convergence 1−λ, since ∇·[(1−λ)θ] = 2(1−λ)". Box "Reading the parenthesis…" cut to its corollary (retitled "A corollary: the image topology is unchanged"). | `[F8]` |
+| F9 / X15 | Sol 9.2(d): |θ|² terms cancel within each image; ½λ(λ−1)|β|² cancels between images. | `[F9]` |
+| F10 / X16, X10 | Eq. `time_delay_recap` text: "(1+z_d)DdDs/Dds is called the time-delay distance D_Δt, so that Δt = D_Δt Δτ/c" + one-sentence note on the other convention; derivation box notes (1+z_d) is H0-independent. Layer box "Two conventions…" → "A unit check on D_Δt"; Solutions "Convention check" → two lines. | `[F10]` (4463 Mpc → 79.97 d; the unfolded name would give 50.0 d); `[H7]` |
+| F10a / X17 | Ex 9.3(a): "d (units of velocity, e.g. km s⁻¹) depends only on the redshifts and the density parameters"; also (b) "the dimensionless distance ratio d" → "the distance factor d (a velocity)". | `[F10a]` (UnitDimensions) |
+| F10b / X18 | Ex 9.3(c): "scales the same way, by λ". | `[F10b]` |
+| F11 / X19 | **Chose: redshifts added to the exercise statement** (Ex 9.4(d): z_d = 0.3, z_s = 1.0, flat ΛCDM Ωm = 0.3), and the ask changed from "compute γ'" to "compare σ_v with the SIS prediction; what would it take to turn the ratio into γ'?". Solution states σ_SIS ≈ 255 km/s, ratio ≈ 0.90, no γ' computed, consistent with near-isothermal. Box trimmed. Script printout no longer says "gamma' ~ 2.0". | `[E6]` (255.3 km/s, 0.901, 0.812) |
+| F12 / X3 | Local-MST bridge: added that the ring-local estimate fixes only the sign; dγ'_eff/df = 3−γ' = 1.4 at γ' = 1.6 vs the fitted dγ'/dm = +15.6 of Chapter 21 (radial image). | `[F12]`; Ch 21 table `tab:cb_worked` (not \ref'd) |
+| F13 / X9 + Ch 18 critic η clash | DSPL bridge rewritten in Part V notation: plane 1 = near, plane 2 = far, 𝓑 = D_{l,s1}D_{s2}/(D_{s1}D_{l,s2}); distinguishes 𝓑 from η = θE1/θE2. Model with far-plane MST λ and ratio 𝓑' reproduces the true images iff 𝓑' = 1/(1−λ+λ/𝓑) — cited as Chapter 22 eq. `ms_free` (λ2 = λ); 𝓑'−𝓑 formula; worked 𝓑 = 0.7, λ = 0.9 → 0.722. Ch 24 bridge "η' relation" → "𝓑' relation". | `[F13a–c]`; old `[L1]`,`[L2]` relabelled as superseded |
+| script | `problems_09.wl` Ex 9.5(d) printout "~0.1 x 10^11" → "~0.2 x 10^11". | `[E9.5d]` (M_E = 1.68×10¹⁰) |
+| P1 | "…so moving it costs nothing." (dropped "This is the whole degeneracy.") | prose |
+| P2 | "Because the two constraints apply at different radii, they separate the slope from the normalization." | prose |
+
+**Verification after edits.** Before: `SUMMARY: 42 PASS, 0 FAIL  (of 42 checks)`. After:
+`bash Mathematica/run_wl.sh Solutions/09_Galaxy_Lensing_Applications/problems_09.wl` →
+`SUMMARY: 55 PASS, 0 FAIL  (of 55 checks)`. Build `ANNOT_REQUIRED=1 bash build.sh`: student 360 pp,
+instructor 444 pp, annotated 568 pp, "all assertions passed".
+
+**Left open.** None of the confirmed items. The Ch 21 number +15.6 is quoted from Chapter 21's table,
+not re-derived in `problems_09.wl` (the check only verifies the 1.4 side and the order-of-magnitude gap).

@@ -87,7 +87,8 @@ Solving for $\theta$:
 For $\thetaE = 1''$, $\gamma_{\mathrm{ext}} = 0.1$: at $\phi = 0$,
 $\theta = 0.9/0.99 \approx 0.909''$; at $\phi = \pi/2$,
 $\theta = 1.1/0.99 \approx 1.111''$.  The critical curve is an
-ellipse elongated along $\theta_2$. \checkmark
+oval, close to an ellipse for small $\gamma_{\mathrm{ext}}$ (deviation
+$\approx 1.5\%$ here), elongated along $\theta_2$. \checkmark
 
 \textbf{(c)} Mapping through the lens equation
 $\beta_i = \theta_i - \alpha_i$ at $\theta = \theta_{\mathrm{crit}}(\phi)$
@@ -164,7 +165,7 @@ $\sqrt{q} \approx 0.837$.
 \textbf{(b)} The critical curve and caustic are computed numerically
 by evaluating $\det\Amat$ on a fine grid (or parametrically) and
 mapping the critical curve through the lens equation.  The critical
-curve is an oval elongated \emph{along} the mass major axis $\theta_1$
+curve is the ellipse $q^2\theta_1^2 + \theta_2^2 = q\thetaE^2$, elongated \emph{along} the mass major axis $\theta_1$
 (crossing $\theta_1$ at $\pm\thetaE/\sqrt{q}$, $\theta_2$ at
 $\pm\thetaE\sqrt{q}$), and its image in the source plane is the
 diamond (astroid) caustic, also elongated along $\beta_1$ for $q < 1$.
@@ -203,7 +204,7 @@ details.
 \begin{annotation}[Equivalent shear: magnitude rough, direction perpendicular]
 Two cautions about ``equivalent shear''.  First, the magnitude:
 using $(1-q)/(1+q)$ as a shear overestimates the caustic area by a factor
-$1/0.433 = 2.3$ here, so treat the mapping as a heuristic, not an identity.
+$1/0.433 = 2.3$ here, so treat the mapping as a rough heuristic.
 Second, the direction: the
 SIE elongated along $\theta_1$ has a \emph{negative} $\cos2\phi$ term in its
 potential ($-0.059\,\thetaE$ for $q = 0.7$), so the shear that mimics it has
@@ -290,37 +291,31 @@ signature of small-scale structure (Module~\ref{ch:galaxy_lensing},
 
 \textbf{(a)} For $\vecbeta = (0.1, 0.2)''$ with $\thetaE = 1''$,
 $q = 0.8$: The tangential caustic of this SIE has cusps at
-approximately $\beta \approx 0.1''$.  The source at
-$|\vecbeta| \approx 0.224''$ is outside the tangential caustic,
-so we expect a \textbf{double} (2 bright images).
+$|\beta_1| \approx 0.159''$ and $|\beta_2| \approx 0.139''$.  The
+source has $\beta_2 = 0.2'' > 0.139''$, the largest $|\beta_2|$
+anywhere on the caustic, so it lies outside the tangential caustic
+but well inside the cut: a \textbf{double} (2 bright images).
 
 \begin{annotation}[A sharper inside/outside test]
 Comparing $|\vecbeta|$ with a single ``cusp radius'' is only a rough guide,
-because the diamond is not round.  A cleaner test uses the caustic's extent.
-For $q = 0.8$ the cusps are at $|\beta_1| = 0.159''$ and $|\beta_2| = 0.139''$,
-and the maximum of $|\beta_2|$ over the whole caustic is $0.139''$ (at the
-cusp).  The source has $\beta_2 = 0.2'' > 0.139''$, so it is certainly
-outside.  It is also well inside the cut, hence two images.
+because the diamond is not round; the caustic's extent along each axis
+(here the maximum $|\beta_2|$, reached at the cusp) is the cleaner test.
 \end{annotation}
 
 
 \textbf{(b)} Solving the lens equation numerically (see
 \texttt{problems\_08.wl}), two bright images are found:
 \begin{itemize}
-    \item Image A: $\vectheta_A \approx (0.53, 0.79)''$
-    \item Image B: $\vectheta_B \approx (-0.37, -0.52)''$
+    \item Image A: $\vectheta_A \approx (0.36, 1.20)''$, $\mu_A \approx +3.67$
+    \item Image B: $\vectheta_B \approx (-0.56, -0.55)''$, $\mu_B \approx -3.82$
 \end{itemize}
-(Exact values depend on the numerical solver and are verified in
-the Mathematica script.)
 
 \begin{annotation}[What the script actually returns]
-The current \texttt{problems\_08.wl} finds the two images at
-$\vectheta \approx (0.358, 1.195)''$ and $(-0.564, -0.547)''$.  These differ
-from the approximate positions quoted above.  Trust the script, which also
-prints the lens-equation residuals ($\sim10^{-16}$).  Sanity check: the
-positive-parity image lies on the same side as the source $(0.1, 0.2)''$,
-roughly along its direction, and outside the critical ellipse; the
-negative-parity image lies on the opposite side, inside it.
+\texttt{problems\_08.wl} also prints the lens-equation residuals
+($\sim10^{-16}$).  Sanity check: the positive-parity image lies on the same
+side as the source $(0.1, 0.2)''$, roughly along its direction, and outside
+the critical ellipse; the negative-parity image lies on the opposite side,
+inside it.
 \end{annotation}
 
 
@@ -330,7 +325,8 @@ $\mu = 1/\det\Amat$ at each image position:
     \item $\mu_A > 0$ (Type~I, positive parity)
     \item $\mu_B < 0$ (Type~II, negative parity)
 \end{itemize}
-Exact values are in \texttt{problems\_08.wl}.
+This gives the values quoted in~(b), $\mu_A \approx +3.67$ and
+$\mu_B \approx -3.82$ (\texttt{problems\_08.wl}).
 
 \begin{derivation}[Magnifications by hand from $\mu = 1/(1-2\kappab)$]
 For any isothermal lens $\det\Amat = 1-2\kappab$ (chapter,
@@ -344,24 +340,15 @@ No numerical derivatives are needed.
 \end{derivation}
 
 
-\textbf{(d)} For the singular SIE, the signed magnification sum
-$\mu_A + \mu_B$ may be slightly negative because the ``missing''
-central image (swallowed by the singularity) would contribute a
-small positive magnification.  For a non-singular lens, the sum
-over \textit{all} images (including the central one) satisfies
-$\sum_i \mu_i > 0$.  In this example, the sum of the two
-observable images is close to zero, consistent with the central
-image having small positive $|\mu|$. \checkmark
+\textbf{(d)} For the singular SIE the central image is swallowed
+by the singularity, so only $\mu_A$ and $\mu_B$ are observable.  In
+this example $\mu_A + \mu_B = 3.67 - 3.82 = -0.15$, small compared
+with the individual $|\mu| \approx 3.7$.  For comparison the SIS
+gives $\mu_+ + \mu_- = (1 + 1/y) + (1 - 1/y) = +2$ for every double
+($0 < y < 1$), with the same missing central image, so the
+two-image sum is model-dependent and not by itself evidence about
+the central image. \checkmark
 
-\begin{annotation}[The signed sum is not a universal number]
-With the values above, $\mu_A + \mu_B = 3.67 - 3.82 = -0.15$.  Compare the
-SIS: $\mu_\pm = 1 \pm 1/y$ for $0 < y < 1$, so $\mu_+ + \mu_- = 2$
-\emph{exactly}, for every source position.  The two-image signed sum thus
-depends on the model ($+2$ for the SIS, $-0.15$ for this SIE double) and is
-not a conserved quantity.  Arguments of the form ``the sum is close to $X$,
-consistent with a central image'' should be made with a specific model in
-hand.
-\end{annotation}
 
 
 % ----- Exercise 8.5 -----
