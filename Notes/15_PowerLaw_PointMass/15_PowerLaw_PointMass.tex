@@ -148,8 +148,7 @@ gives two terms, one from the prefactor and one from the upper limit:
 Substituting, $\dd\alpha/\dd\theta = \bar\kappa + 2(\kappab-\bar\kappa) = 2\kappab-\bar\kappa$.
 Then $\lambda_r = 1-2\kappab+\bar\kappa$.  Since the shear of a circular
 lens is $|\gammaL|=\bar\kappa-\kappab$, this is also
-$\lambda_r=1-\kappab+|\gammaL|$ and $\lambda_t=1-\kappab-|\gammaL|$.
-[Checks 0a--0c of \texttt{power\_law\_point\_mass.wl}.]
+$\lambda_r=1-\kappab+|\gammaL|$ and $\lambda_t=1-\kappab-|\gammaL|$.\annot{checks 0a--0c of \texttt{power\_law\_point\_mass.wl}}
 \end{derivation}
 
 \begin{bridge}[Chapters~\ref{ch:magnification} and~\ref{ch:axisymmetric_models}]
@@ -273,8 +272,7 @@ eq.~\eqref{eq:pl_kappa} and $\alpha=\thetaE^{\,\gp-1}\theta^{\,2-\gp}$.
 Going the other way, eq.~\eqref{eq:pl_kappa_inversion} gives
 $\theta\alpha=\thetaE^{\gp-1}\theta^{3-\gp}$,
 $\dd(\theta\alpha)/\dd\theta=(3-\gp)\thetaE^{\gp-1}\theta^{2-\gp}$, and
-dividing by $2\theta$ recovers~\eqref{eq:pl_kappa}.
-[Checks 1a--1e of \texttt{power\_law\_point\_mass.wl}.]
+dividing by $2\theta$ recovers~\eqref{eq:pl_kappa}.\annot{checks 1a--1e of \texttt{power\_law\_point\_mass.wl}}
 \end{derivation}
 
 \paragraph{Cross-check against the literature.}
@@ -290,7 +288,7 @@ with $M_{\rm cyl}\propto r^{\alpha_{\rm K}}$ asymptotically.  Setting the
 core $s=0$, $\alpha_{\rm K}=3-\gp$, and
 $b^{\gp-1}=(3-\gp)\,\thetaE^{\gp-1}$ reproduces both of our
 expressions; Keeton's scale $b$ equals $\thetaE$ only for the
-isothermal case.  [Checks 1i--1n.]
+isothermal case.\annot{checks 1i--1n}
 
 \begin{annotation}[The slope-convention trap: $\gp$ versus $s=\gp-1$]
 Three different numbers are all called ``the slope'' of the same
@@ -333,8 +331,8 @@ Two useful consequences:
 \end{itemize}
 If a code or a derivation gives you a power law with
 $\kappab(\thetaE)\ne(3-\gp)/2$, its $\thetaE$ is not the Einstein
-radius as defined here.  [Checks 1f--1h, 2d; numbers in AN1 of
-\texttt{problems\_15.wl}.]
+radius as defined here.\annot{checks 1f--1h, 2d; numbers in AN1 of
+\texttt{problems\_15.wl}}
 \end{annotation}
 
 \subsection{Critical curves of the power law}
@@ -379,7 +377,7 @@ goes to $0$ with exponent $\to1$, hence $\theta_r\to0$.  As
 $\gp\to1^+$, substitute $n'=1/(\gp-1)$: $\theta_r/\thetaE=(1-1/n')^{n'}\to
 e^{-1}$, which is eq.~5.44 of \citet{meneghetti_introduction_2021}.  The
 tangential root is simpler: $\lambda_t=0$ when $(\thetaE/\theta)^{\gp-1}=1$,
-i.e.\ $\theta=\thetaE$, for every slope.  [Checks 3a--3i; AN9.]
+i.e.\ $\theta=\thetaE$, for every slope.\annot{checks 3a--3i; AN9}
 \end{derivation}
 
 The radial critical curve maps to a radial caustic at
@@ -393,8 +391,7 @@ which is $-\thetaE/4$ at $\gp=1.5$.  The negative sign means the
 critical point lies on the opposite side of the lens from the sources
 it serves.  As $\gp\to2^-$, $|\ysrc_r|\to\thetaE$: the radial caustic
 grows even as the radial critical curve shrinks to a point (compare the
-statement after eq.~5.44 of \citet{meneghetti_introduction_2021}).
-[Checks 3j--3k.]
+statement after eq.~5.44 of \citet{meneghetti_introduction_2021}).\annot{checks 3j--3k}
 
 \begin{bridge}[Chapter~\ref{ch:axisymmetric_models}: two routes to a radial critical curve]
 In \S\ref{sec:nis} a radial critical curve appeared when the SIS was
@@ -565,7 +562,7 @@ minimum touches zero, $\lambda_r(u_\star)=0$, which fixes the location
 \]
 and then the stationarity condition fixes the mass:
 $\mBH_{\rm crit}=\tfrac12(2-\gp)(\gp-1)\,u_c^{3-\gp}$, which is
-eq.~\eqref{eq:pl_mcrit}.  [Checks 5f--5j.]
+eq.~\eqref{eq:pl_mcrit}.\annot{checks 5f--5j}
 \end{derivation}
 
 \begin{keybox}[Annihilation of the radial critical curve]
@@ -622,8 +619,8 @@ power law approaches a uniform sheet with $\kappab\to1$ and
 $\lambda_r\to0$ everywhere, so its $\lambda_r$ inside $\theta_r$ is only
 marginally negative, and again an arbitrarily small push removes it.  The radial
 critical curve is most robust at intermediate slopes, but even there it
-yields to less than one per cent of the Einstein mass.  [Checks 5l,
-5m; the $0.0066$ maximum is AN5 of \texttt{problems\_15.wl}.]
+yields to less than one per cent of the Einstein mass.\annot{checks 5l,
+5m; the $0.0066$ maximum is AN5 of \texttt{problems\_15.wl}}
 \end{annotation}
 
 \subsection{Caustics and image counts}
@@ -853,8 +850,7 @@ is continuous, so is $\dd\alpha/\dd\theta=2\kappab-\bar\kappa$, and
 $\lambda_r$ has no jump at the break.  With $t_1=t_2=t$ the bracket
 collapses and $\alpha=2\kappa_B\theta_B^t\theta^{1-t}/(2-t)$, the single
 power law of \S\ref{sec:pl_powerlaw} with
-$\thetaE^{t}=2\kappa_B\theta_B^t/(2-t)$.
-[Checks 1a--2d of \texttt{broken\_power\_law.wl}.]
+$\thetaE^{t}=2\kappa_B\theta_B^t/(2-t)$.\annot{checks 1a--2d of \texttt{broken\_power\_law.wl}}
 \end{derivation}
 
 \paragraph{Normalization.}
