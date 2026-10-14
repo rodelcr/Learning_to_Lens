@@ -75,6 +75,82 @@ Additionally, spherical symmetry allows us to restrict all orbits to the
 equatorial plane $\theta = \pi/2$ without loss of generality (Carroll
 eq.~5.56).
 
+\begin{derivation}[Lowering the index: where $E$ and $L$ come from]
+Work with $c = 1$ (as Carroll does) and write $f(r) \equiv 1 - R_S/r$, so
+that $g_{tt} = -f$, $g_{rr} = f^{-1}$, $g_{\theta\theta} = r^2$,
+$g_{\phi\phi} = r^2\sin^2\theta$, and all off-diagonal components vanish.
+\begin{align*}
+K_\mu &= g_{\mu\nu}K^\nu = g_{\mu t} = (-f,\,0,\,0,\,0)
+  && \text{(diagonal metric, } K^\nu = \delta^\nu_t\text{)} \\
+K_\mu \frac{dx^\mu}{d\lambda} &= -f\,\frac{dt}{d\lambda} \equiv -E
+  && (\text{sign: } E > 0 \text{ if future-directed}) \\
+R_\mu &= g_{\mu\phi} = (0,\,0,\,0,\,r^2\sin^2\theta)
+  && (R^\nu = \delta^\nu_\phi) \\
+R_\mu \frac{dx^\mu}{d\lambda} &= r^2\sin^2\theta\,\frac{d\phi}{d\lambda}
+  \;\xrightarrow{\ \theta = \pi/2\ }\; r^2\frac{d\phi}{d\lambda} \equiv L .
+\end{align*}
+Why these are constant: with $u^\mu = dx^\mu/d\lambda$,
+\[
+\frac{d}{d\lambda}\bigl(K_\mu u^\mu\bigr)
+= u^\nu\nabla_\nu\bigl(K_\mu u^\mu\bigr)
+= u^\mu u^\nu\,\nabla_{(\nu}K_{\mu)} + K_\mu\,u^\nu\nabla_\nu u^\mu = 0 .
+\]
+The first term vanishes by Killing's equation $\nabla_{(\mu}K_{\nu)} = 0$
+(only the symmetric part survives contraction with the symmetric
+$u^\mu u^\nu$); the second vanishes by the geodesic equation
+$u^\nu\nabla_\nu u^\mu = 0$.
+\end{derivation}
+
+\begin{derivation}[The same two conservation laws straight from the Christoffel symbols]
+Killing vectors are a shortcut, not a necessity: the conservation laws are
+the $t$ and $\phi$ components of the geodesic equation.  For the
+Schwarzschild metric ($c = 1$, equatorial plane) the Christoffel symbols
+with an upper $t$ or $\phi$ that survive at $\theta = \pi/2$,
+$\dot\theta = 0$ are
+\[
+\christoffel{t}{t}{r} = \frac{R_S}{2r(r - R_S)} = \frac{f'(r)}{2f(r)} ,
+\qquad
+\christoffel{\phi}{r}{\phi} = \frac{1}{r} .
+\]
+\begin{align*}
+\ddot t + 2\,\christoffel{t}{t}{r}\,\dot t\,\dot r &= 0
+  && (\Gamma^t_{\ tr} = \Gamma^t_{\ rt}\text{: factor 2}) \\
+f\ddot t + f'\,\dot r\,\dot t &= 0
+  && (\times f,\ \text{use } 2f\Gamma^t_{\ tr} = f') \\
+\frac{d}{d\lambda}\bigl(f\,\dot t\bigr) &= 0
+  && (\text{chain rule: } df/d\lambda = f'\dot r) \\[4pt]
+\ddot\phi + \frac{2}{r}\,\dot r\,\dot\phi &= 0
+  && (\phi \text{ component}) \\
+r^2\ddot\phi + 2r\,\dot r\,\dot\phi = \frac{d}{d\lambda}\bigl(r^2\dot\phi\bigr) &= 0
+  && (\times r^2) .
+\end{align*}
+So $E = f\dot t$ and $L = r^2\dot\phi$ are the first integrals of these
+two components.
+\end{derivation}
+
+\begin{annotation}[Units: two normalisations of $E$ are used in this chapter]
+Eqs.~\eqref{eq:conserved_E} and~\eqref{eq:normalization} are written with
+$c = 1$, while $V_{\mathrm{eff}}$ and $\mathcal{E}$ in
+eqs.~\eqref{eq:effective_potential} and below carry explicit factors of $c$.
+To restore units consistently, read $t$ as the coordinate $x^0 = ct$:
+\begin{itemize}
+    \item In Sections~\ref{sec:effective_potential}--\ref{sec:perihelion_precession}
+          take $E \equiv f\,c\,dt/d\lambda$ (a velocity when $\lambda = \tau$)
+          and the right-hand side of eq.~\eqref{eq:normalization} as
+          $-\epsilon c^2$.  Then $\mathcal{E} = \tfrac12(E^2 - \epsilon c^2)$
+          holds exactly as written (derivation box below).
+    \item In Section~\ref{sec:null_geodesics_preview}, eq.~\eqref{eq:photon_orbit}
+          and $b = cL/E$ use instead the energy-type normalisation
+          $E \equiv f\,c^2\,dt/d\lambda$, one more power of $c$.
+\end{itemize}
+Mixing the two is the classic source of stray factors of $c$.  Dimension
+check with $L = r^2\,d\phi/d\tau$ in m$^2$\,s$^{-1}$: every term of
+$V_{\mathrm{eff}}$ is a specific energy, m$^2$\,s$^{-2}$; e.g.\
+$[GML^2/(c^2r^3)] = (\mathrm{m^3\,s^{-2}})(\mathrm{m^4\,s^{-2}})/
+(\mathrm{m^2\,s^{-2}}\cdot\mathrm{m^3}) = \mathrm{m^2\,s^{-2}}$.
+\end{annotation}
+
+
 
 % =====================================================================
 \section{The Effective Potential}
@@ -111,6 +187,73 @@ Congdon \& Keeton eq.~3.80):
     \label{eq:effective_potential}
 \end{equation}
 and $\mathcal{E} = \half(E^2 - \epsilon c^2)$ is the effective ``energy.''
+
+\begin{derivation}[From the normalisation condition to the radial equation, with $c$ restored]
+Metric $ds^2 = -f c^2dt^2 + f^{-1}dr^2 + r^2d\Omega^2$ with
+$f = 1 - R_S/r = 1 - 2GM/(c^2r)$; equatorial plane; dots are
+$d/d\lambda$; $E \equiv fc\,\dot t$, $L \equiv r^2\dot\phi$;
+$g_{\mu\nu}\dot x^\mu\dot x^\nu = -\epsilon c^2$.
+\begin{align*}
+-fc^2\,\dot t^2 + f^{-1}\dot r^2 + r^2\dot\phi^2 &= -\epsilon c^2
+  && \text{(normalisation)} \\
+-\frac{E^2}{f} + \frac{\dot r^2}{f} + \frac{L^2}{r^2} &= -\epsilon c^2
+  && \bigl(\dot t = E/(fc),\ \dot\phi = L/r^2\bigr) \\
+\dot r^2 &= E^2 - f\Bigl(\epsilon c^2 + \frac{L^2}{r^2}\Bigr)
+  && (\times f,\ \text{rearrange}) \\
+&= E^2 - \epsilon c^2 + \frac{\epsilon c^2R_S}{r} - \frac{L^2}{r^2}
+   + \frac{R_SL^2}{r^3}
+  && (\text{expand } f = 1 - R_S/r) \\
+\half\dot r^2 &= \half\bigl(E^2 - \epsilon c^2\bigr) + \frac{\epsilon GM}{r}
+   - \frac{L^2}{2r^2} + \frac{GML^2}{c^2r^3}
+  && (\div 2,\ R_S = 2GM/c^2) .
+\end{align*}
+Moving the last three terms to the left-hand side gives
+eq.~\eqref{eq:radial_equation} with $V_{\mathrm{eff}}$ of
+eq.~\eqref{eq:effective_potential} and
+$\mathcal{E} = \tfrac12(E^2 - \epsilon c^2)$.
+\end{derivation}
+
+\begin{derivation}[Consistency check: the $r$-component of the geodesic equation]
+Differentiating eq.~\eqref{eq:radial_equation} with respect to $\lambda$
+gives $\dot r\,\ddot r + V_{\mathrm{eff}}'(r)\,\dot r = 0$, i.e.\
+$\ddot r = -V_{\mathrm{eff}}'(r)$ wherever $\dot r \neq 0$.  The same
+equation follows directly from the $r$-component of the geodesic equation
+($c = 1$, $\theta = \pi/2$),
+\[
+\ddot r = -\christoffel{r}{t}{t}\,\dot t^2 - \christoffel{r}{r}{r}\,\dot r^2
+          - \christoffel{r}{\phi}{\phi}\,\dot\phi^2 ,
+\qquad
+\christoffel{r}{t}{t} = \frac{R_S(r - R_S)}{2r^3},\quad
+\christoffel{r}{r}{r} = -\frac{R_S}{2r(r - R_S)},\quad
+\christoffel{r}{\phi}{\phi} = -(r - R_S) ,
+\]
+after substituting $\dot t = E/f$, $\dot\phi = L/r^2$ and
+$\dot r^2 = E^2 - f(\epsilon + L^2/r^2)$: the right-hand side reduces
+identically to $-V_{\mathrm{eff}}'(r)$.  The first integral
+eq.~\eqref{eq:radial_equation} therefore carries all of the radial dynamics.
+\end{derivation}
+
+\begin{annotation}[Reading the effective potential]
+\begin{itemize}
+    \item \textbf{What $\mathcal{E}$ is.} Write $E = c + e/c$, with $e$
+          the Newtonian specific energy (kinetic plus potential).  Then
+          $\mathcal{E} = \tfrac12(E^2 - c^2) = e + e^2/(2c^2)$, so
+          $\mathcal{E} \to e$ in the Newtonian limit.  This is why
+          absorbing Carroll's constant $\tfrac12\epsilon$ into $\mathcal{E}$
+          is convenient: $V_{\mathrm{eff}}$ then has the Newtonian terms
+          with their Newtonian normalisation.
+    \item \textbf{How big the GR term is.} The ratio of the third to the
+          second term is
+          $\bigl(GML^2/c^2r^3\bigr)/\bigl(L^2/2r^2\bigr) = 2GM/(c^2r) = R_S/r$.
+          ``Newtonian limit'' therefore means $r \gg R_S$, not $c \to \infty$
+          as an abstract instruction.  At Mercury's orbit $R_S/a \approx
+          5.1\times10^{-8}$; at the ISCO $R_S/r = 1/3$.
+    \item \textbf{Sign.} The GR term enters with a minus sign for both
+          $\epsilon = 1$ and $\epsilon = 0$: it is attractive and grows
+          fastest as $r \to 0$.
+\end{itemize}
+\end{annotation}
+
 
 \begin{remark}
 The three terms in $V_{\mathrm{eff}}$ have clear physical interpretations:
@@ -172,6 +315,57 @@ circular orbit (ISCO)} (Carroll eq.~5.74; Congdon \& Keeton eq.~3.84):
     \label{eq:ISCO}
 \end{equation}
 
+\begin{derivation}[Circular orbits, which one is stable, and the ISCO]
+For $\epsilon = 1$:
+\begin{align*}
+\frac{dV_{\mathrm{eff}}}{dr}
+  &= \frac{GM}{r^2} - \frac{L^2}{r^3} + \frac{3GML^2}{c^2r^4}
+   = \frac{GMr^2 - L^2r + 3GML^2/c^2}{r^4}
+  && \text{(differentiate term by term)} \\
+0 &= GMr_c^2 - L^2r_c + \frac{3GML^2}{c^2}
+  && (\times r_c^4) \\
+r_\pm &= \frac{L^2 \pm \sqrt{L^4 - 12G^2M^2L^2/c^2}}{2GM}
+  && \text{(quadratic formula)} \\
+  &= \frac{L^2}{2GM}\left(1 \pm \sqrt{1 - \frac{12G^2M^2}{L^2c^2}}\right)
+  && (\text{pull } L^2 \text{ out of the root}) .
+\end{align*}
+Which root is the minimum: the numerator factorises,
+$GMr^2 - L^2r + 3GML^2/c^2 = GM(r - r_+)(r - r_-)$, so
+$V_{\mathrm{eff}}' = GM(r - r_+)(r - r_-)/r^4$ and, differentiating the
+product (every term still containing a factor $r - r_\pm$ vanishes at
+$r = r_\pm$),
+\[
+V_{\mathrm{eff}}''(r_\pm) = \pm\,\frac{GM\,(r_+ - r_-)}{r_\pm^4} .
+\]
+This is positive at $r_+$ (minimum, stable) and negative at $r_-$
+(maximum, unstable).  The two merge when the square root vanishes,
+$L^2 = 12G^2M^2/c^2$, and then
+$r = L^2/(2GM) = 12G^2M^2/(2GMc^2) = 6GM/c^2$.
+\end{derivation}
+
+\begin{annotation}[What the ISCO is, and the classic slip]
+\begin{itemize}
+    \item $r_+(L)$ increases monotonically with $L$ for
+          $L > 2\sqrt3\,GM/c$, so $6GM/c^2$ is the \emph{smallest} radius of
+          any stable circular orbit.  Meanwhile $r_-(L)$ decreases from
+          $6GM/c^2$ towards $3GM/c^2$ as $L \to \infty$: unstable circular
+          orbits of massive particles fill $3GM/c^2 < r < 6GM/c^2$ and
+          approach the photon sphere (Section~\ref{sec:photon_sphere}) in the
+          ultra-relativistic limit.  In the $G = c = M = 1$ units of the
+          Solutions, $L = 4$ gives $r_+ = 12$, $r_- = 4$.
+    \item \textbf{Classic slip:} $r_{\mathrm{ISCO}} = 6GM/c^2 = 3R_S$, not
+          $6R_S$.  Mixing $GM/c^2$ and $R_S = 2GM/c^2$ is the most common
+          factor-of-2 error in this chapter.
+    \item \textbf{The efficiency in the remark below.} At the ISCO
+          ($G = c = M = 1$, $L^2 = 12$): $V_{\mathrm{eff}}(6) = -1/18$, so
+          $(E/c)^2 = 1 + 2V_{\mathrm{eff}} = 8/9$ and $E/c = 2\sqrt2/3$.  Gas
+          that drifts inward through circular orbits down to the ISCO has
+          radiated the fraction $1 - 2\sqrt2/3 \approx 0.057$ (5.7\%) of its
+          rest-mass energy.
+\end{itemize}
+\end{annotation}
+
+
 \begin{remark}
 The ISCO is a fundamental scale in black hole astrophysics.  Accreting
 matter in a thin disk spirals inward until it reaches the ISCO, then
@@ -203,6 +397,50 @@ the photon to either escape to infinity or spiral into the black hole.
 Nevertheless, the photon sphere plays a key role in strong gravitational
 lensing near black holes and is directly related to the ``photon ring''
 observed by the Event Horizon Telescope.
+
+\begin{derivation}[Photon sphere with units, and the capture impact parameter]
+\[
+\frac{dV_{\mathrm{eff}}^{\mathrm{photon}}}{dr}
+= -\frac{L^2}{r^3} + \frac{3GML^2}{c^2r^4}
+= \frac{L^2}{r^4}\left(\frac{3GM}{c^2} - r\right) ,
+\]
+which vanishes only at $r = 3GM/c^2$, for \emph{every} $L$: unlike the
+massive case, the circular photon orbit does not depend on angular
+momentum.  Height of the barrier ($G = c = M = 1$):
+$V^{\mathrm{photon}}_{\mathrm{eff}}(3) = L^2/18 - L^2/27 = L^2/54$.
+A photon from infinity has $\mathcal{E} = \tfrac12E^2$ ($\epsilon = 0$),
+so it turns around outside the barrier iff $\tfrac12E^2 < L^2/54$, i.e.\
+iff $b^2 = L^2/E^2 > 27$.  Restoring units,
+\[
+b_{\mathrm{crit}} = 3\sqrt3\,\frac{GM}{c^2} = \frac{3\sqrt3}{2}\,R_S
+\approx 2.598\,R_S ;
+\]
+photons with $b < b_{\mathrm{crit}}$ are captured.  This is the capture
+line in Fig.~\ref{fig:deflection_comparison} of
+Chapter~\ref{ch:linearized_gravity}.
+\end{derivation}
+
+\begin{annotation}[How far is lensing from the photon sphere?]
+``Strong'' lensing by galaxies is strong only in the sense of producing
+multiple images; the null geodesics involved stay at $b \gg R_S$.  For the
+Sun at the limb, $b/R_S = R_\odot/R_S \approx 2.36\times10^5$.  The photon
+sphere and $b_{\mathrm{crit}}$ matter for black-hole imaging (the EHT
+photon ring), never for galaxy-scale image positions.
+\end{annotation}
+
+\begin{bridge}[Chapter~\ref{ch:power_law_point_mass}: the central black hole is a weak-field point mass]
+Part~V adds a central point mass (a supermassive black hole) to a
+power-law galaxy.  For $M_\bullet = 10^9\,M_\odot$,
+$R_S \approx 2.95\times10^{12}$~m $\approx 9.6\times10^{-5}$~pc, so a ray
+at $b = 1$~kpc has $b/R_S \approx 1.0\times10^7$ (and still
+$\approx 1.0\times10^6$ at $b = 100$~pc).  The photon sphere, the ISCO and
+$b_{\mathrm{crit}}$ derived here lie six to seven orders of magnitude
+inside the region probed by lensed images: the black hole enters the
+compound-lens model only through its weak-field deflection $4GM_\bullet/(c^2b)$
+(Chapter~\ref{ch:linearized_gravity}).  The strong-field results of this
+chapter tell you what that model may safely ignore.
+\end{bridge}
+
 
 
 % =====================================================================
@@ -275,6 +513,74 @@ one finds the accumulated precession per orbit
 \end{equation}
 where $a$ is the semi-major axis and $e$ the eccentricity.
 
+\begin{derivation}[From the radial equation to the orbit equation~\eqref{eq:orbit_equation}]
+Use $u = 1/r$ and the angle $\phi$ as the parameter along the orbit.  With
+$d\phi/d\lambda = L/r^2 = Lu^2$ and primes denoting $d/d\phi$:
+\[
+\frac{dr}{d\lambda} = \frac{dr}{d\phi}\,\frac{d\phi}{d\lambda}
+= \left(-\frac{1}{u^2}\,u'\right)Lu^2 = -L\,u' .
+\]
+Eq.~\eqref{eq:radial_equation} with $\epsilon = 1$ becomes
+\[
+\tfrac12L^2u'^2 - GMu + \tfrac12L^2u^2 - \frac{GML^2}{c^2}\,u^3 = \mathcal{E} .
+\]
+Differentiate with respect to $\phi$ ($\mathcal{E}$ is constant):
+\[
+L^2u'\left(u'' + u - \frac{GM}{L^2} - \frac{3GM}{c^2}\,u^2\right) = 0 .
+\]
+Away from turning points ($u' \neq 0$),
+$u'' + u = GM/L^2 + 3GMu^2/c^2$.  Multiply by $L^2/(GM)$ and set
+$x = L^2u/(GM)$, i.e.\ $u = GMx/L^2$:
+\[
+x'' + x = 1 + \frac{3L^2}{c^2}\,u^2 = 1 + \frac{3G^2M^2}{L^2c^2}\,x^2 ,
+\]
+which is eq.~\eqref{eq:orbit_equation}.  Without the GR term,
+$x_0 = 1 + e\cos\phi$, i.e.\ $r = (L^2/GM)/(1 + e\cos\phi)$: a conic with
+semi-latus rectum $p = L^2/(GM)$.  Then
+$r_{\mathrm{peri}} + r_{\mathrm{apo}} = p/(1 + e) + p/(1 - e) = 2a$ gives
+$L^2 = GMa(1 - e^2)$.
+\end{derivation}
+
+\begin{derivation}[First-order perturbation theory and the precession angle]
+Write $\varepsilon_{\mathrm{GR}} \equiv 3G^2M^2/(L^2c^2) \ll 1$ (not to be
+confused with the timelike/null flag $\epsilon$) and
+$x = x_0 + x_1$, $x_0 = 1 + e\cos\phi$, $x_1 = \order{\varepsilon_{\mathrm{GR}}}$.
+To first order,
+\[
+x_1'' + x_1 = \varepsilon_{\mathrm{GR}}\,x_0^2
+= \varepsilon_{\mathrm{GR}}\Bigl[\Bigl(1 + \tfrac{e^2}{2}\Bigr)
+  + 2e\cos\phi + \tfrac{e^2}{2}\cos2\phi\Bigr]
+\qquad \bigl(\cos^2\phi = \tfrac12(1 + \cos2\phi)\bigr).
+\]
+Solve term by term with the operator $d^2/d\phi^2 + 1$:
+\begin{itemize}
+    \item a constant $C$ is reproduced by $x_1 = C$;
+    \item $(d^2/d\phi^2 + 1)\cos2\phi = -3\cos2\phi$, so
+          $\tfrac{e^2}{2}\cos2\phi$ needs $-\tfrac{e^2}{6}\cos2\phi$;
+    \item $2e\cos\phi$ is \emph{resonant} ($\cos\phi$ solves the homogeneous
+          equation); since $(d^2/d\phi^2 + 1)(\phi\sin\phi) = 2\cos\phi$, it
+          needs $e\,\phi\sin\phi$.
+\end{itemize}
+\[
+x_1 = \varepsilon_{\mathrm{GR}}\Bigl[1 + \tfrac{e^2}{2}
+      - \tfrac{e^2}{6}\cos2\phi + e\,\phi\sin\phi\Bigr] .
+\]
+Only the secular term $e\,\phi\sin\phi$ grows.  Since
+$1 + e\cos[(1 - \varepsilon_{\mathrm{GR}})\phi]
+= 1 + e\cos\phi + \varepsilon_{\mathrm{GR}}\,e\,\phi\sin\phi + \order{\varepsilon_{\mathrm{GR}}^2}$,
+the orbit is $x \simeq 1 + e\cos[(1 - \varepsilon_{\mathrm{GR}})\phi]$
+plus non-growing terms.  Perihelion (maximum of $x$) recurs when
+$(1 - \varepsilon_{\mathrm{GR}})\phi = 2\pi n$, so per orbit $\phi$ advances by
+$2\pi/(1 - \varepsilon_{\mathrm{GR}}) = 2\pi + 2\pi\varepsilon_{\mathrm{GR}}
++ \order{\varepsilon_{\mathrm{GR}}^2}$:
+\[
+\Delta\phi = 2\pi\varepsilon_{\mathrm{GR}} = \frac{6\pi G^2M^2}{L^2c^2}
+= \frac{6\pi GM}{c^2a(1 - e^2)}
+\qquad \bigl(L^2 = GMa(1 - e^2)\bigr).
+\]
+\end{derivation}
+
+
 For Mercury (Carroll eq.~5.96):
 \begin{equation}
     \Delta\phi_{\mathrm{Mercury}} = 5.02 \times 10^{-7}~\text{rad/orbit}
@@ -283,6 +589,18 @@ For Mercury (Carroll eq.~5.96):
 \end{equation}
 This matched the previously unexplained 43~arcseconds/century discrepancy
 in Mercury's orbit and was one of Einstein's first confirmations of GR.
+
+\begin{annotation}[Numbers and units for Mercury]
+Everything reduces to one dimensionless number, $GM/(c^2a)$.  With
+$GM_\odot/c^2 \approx 1477$~m and $a = 5.79\times10^{10}$~m,
+$GM_\odot/(c^2a) \approx 2.55\times10^{-8}$; with $1 - e^2 = 0.9577$,
+$\Delta\phi = 6\pi\times2.55\times10^{-8}/0.9577 = 5.02\times10^{-7}$~rad per
+orbit $= 0.1036''$ per orbit.  A Julian century holds
+$36525/87.97 = 415.2$ orbits, giving $43.0''$ per century.  Carry four
+significant figures through the last multiplication: rounding the per-orbit
+value to $0.1034''$ gives $42.9''$.
+\end{annotation}
+
 
 \begin{figure}[ht]
     \centering
@@ -324,6 +642,74 @@ clear \textit{why} light bends: photons follow null geodesics of the
 curved Schwarzschild spacetime, and the GR correction term in the
 effective potential deflects them more strongly than Newtonian gravity
 would predict.
+
+\begin{derivation}[From eq.~\eqref{eq:photon_orbit} to $\hat\alpha = 4GM/(c^2b)$]
+Here $E$ is the energy-type normalisation $E = fc^2\,dt/d\lambda$, so
+$dr/d\lambda \to E/c$ at infinity and $b = L/|dr/d\lambda|_\infty = cL/E$.
+Set $u = 1/r$, $dr = -du/u^2$, and square eq.~\eqref{eq:photon_orbit}:
+\[
+\left(\frac{du}{d\phi}\right)^2 = u^4\left(\frac{dr}{d\phi}\right)^2
+= \frac{E^2}{c^2L^2} - u^2(1 - R_Su)
+= \frac{1}{b^2} - u^2 + R_Su^3 .
+\]
+Differentiate with respect to $\phi$ and divide by $2u'$:
+\[
+u'' + u = \tfrac32R_S\,u^2 = \frac{3GM}{c^2}\,u^2 .
+\]
+Zeroth order ($R_S \to 0$): the straight line $u_0 = \sin\phi/b$
+(i.e.\ $r\sin\phi = b$).  First order: the source is
+$\tfrac32R_Su_0^2 = \tfrac{3R_S}{4b^2}(1 - \cos2\phi)$; using
+$(d^2/d\phi^2 + 1)\cos2\phi = -3\cos2\phi$ the particular solution is
+\[
+u_1 = \frac{3R_S}{4b^2} + \frac{R_S}{4b^2}\cos2\phi
+    = \frac{R_S}{2b^2}\bigl(1 + \cos^2\phi\bigr) .
+\]
+Asymptotes: $u = u_0 + u_1 = 0$ at $\phi = -\delta$ and at
+$\phi = \pi + \delta$; near $\phi = 0$,
+$-\delta/b + R_S/b^2 = 0$, so $\delta = R_S/b$ at each end.  The total
+swing beyond the straight-line value $\pi$ is $2\delta$:
+\[
+\hat\alpha = \frac{2R_S}{b} = \frac{4GM}{c^2b} .
+\]
+Module~\ref{ch:light_deflection} obtains the same result from the
+integral form of the orbit equation.
+\end{derivation}
+
+\begin{annotation}[Where the ``factor of two'' lives in this picture]
+For photons $\epsilon = 0$ removes the $-GM/r$ term altogether: in
+Schwarzschild coordinates there is no ``Newtonian part'' of the photon
+potential, and the whole $4GM/(c^2b)$ comes from the single $1/r^3$ term
+($\tfrac32R_Su^2$ in the orbit equation).  The split ``half from $g_{tt}$,
+half from $g_{ij}$'' of Chapter~\ref{ch:linearized_gravity} is made in
+isotropic coordinates; it is coordinate-dependent bookkeeping of a
+coordinate-independent total.  Do not identify the $1/r^3$ term with the
+``spatial-curvature half''.  The Newtonian corpuscle value, $2GM/(c^2b)$, is
+derived in Section~\ref{sec:soldner}.
+\end{annotation}
+
+\begin{bridge}[Chapter~\ref{ch:multiplane_dspl}: one null geodesic, several deflectors]
+A compound lens is one null geodesic that passes two (or more) mass
+concentrations at different redshifts.  Everything in Part~V rests on the
+statement of this section (light follows null geodesics) plus one
+weak-field fact from Chapter~\ref{ch:linearized_gravity}: a point mass bends the ray
+almost entirely near closest approach (71\% of $\hat\alpha$ accrues within
+$|x| < b$, 99.5\% within $|x| < 10b$).  The geodesic can therefore be
+replaced by straight segments with a kink at each deflector, and that
+replacement is the multi-plane lens equation.
+\end{bridge}
+
+\begin{bridge}[Chapter~\ref{ch:odd_images}: images are stationary null geodesics]
+In a static weak field, the null geodesics between fixed endpoints are
+exactly the paths that make the arrival time stationary (Fermat's
+principle; eq.~\eqref{eq:fermat_principle} of
+Chapter~\ref{ch:linearized_gravity} and Chapter~\ref{ch:fermat_time_delays}).  The geodesic picture of this chapter
+and the arrival-time-surface picture used in Chapter~\ref{ch:odd_images} are
+the same statement: each image is a null geodesic from source to observer,
+and its type (minimum, saddle, maximum) is the type of the stationary
+point.  The faint central image of a smooth lens is the maximum, and a
+central point mass changes the count of such central images.
+\end{bridge}
+
 
 
 % =====================================================================
@@ -375,6 +761,31 @@ Key features that differ from Schwarzschild:
     \item \textbf{Two horizons:}
           $r_\pm = GM/c^2 \pm \sqrt{(GM/c^2)^2 - a^2}$.
 \end{itemize}
+
+\begin{annotation}[Checking the Kerr numbers]
+\begin{itemize}
+    \item \textbf{Horizons:} $\Delta = 0 \iff
+          r = \tfrac12\bigl(R_S \pm \sqrt{R_S^2 - 4a^2}\bigr)
+          = GM/c^2 \pm \sqrt{(GM/c^2)^2 - a^2}$.  The ``two horizons''
+          bullet and the $r_+$ of the ergosphere bullet are the same
+          expression; both are real only for $a \le GM/c^2$.
+    \item \textbf{Ergosurface:} $g_{tt} = 0 \iff \Sigma = R_Sr \iff
+          r^2 - R_Sr + a^2\cos^2\theta = 0$, outer root
+          $\tfrac12\bigl(R_S + \sqrt{R_S^2 - 4a^2\cos^2\theta}\bigr)$.  It
+          touches the horizon at the poles ($\cos^2\theta = 1$) and reaches
+          $r = R_S$ at the equator for every $a$.
+    \item \textbf{ISCO values} ($G = c = M = 1$, $a$ in units of
+          $GM/c^2$): the standard closed form
+          $r_{\mathrm{ISCO}} = 3 + Z_2 \mp \sqrt{(3 - Z_1)(3 + Z_1 + 2Z_2)}$,
+          with $Z_1 = 1 + (1 - a^2)^{1/3}\bigl[(1 + a)^{1/3} + (1 - a)^{1/3}\bigr]$,
+          $Z_2 = \sqrt{3a^2 + Z_1^2}$ and the upper sign for prograde orbits,
+          gives $6$ at $a = 0$ and $1$ (prograde) or $9$ (retrograde) at
+          $a = 1$.
+    \item \textbf{Unit trap:} $a = J/(Mc)$ is a length.  Papers usually
+          quote the dimensionless spin $a_* = ac^2/(GM) \in [0, 1]$.
+\end{itemize}
+\end{annotation}
+
 
 \begin{remark}
 For gravitational lensing by galaxies and clusters, the Kerr metric is
