@@ -157,15 +157,18 @@ $\Ds = 10$~kpc $= 3.086 \times 10^{20}$~m.
     1.989 \times 10^{30}}{(2.998 \times 10^8)^2} \times
     \frac{1.543 \times 10^{20}}{1.543 \times 10^{20} \times
     3.086 \times 10^{20}}} \\
-    &= \sqrt{5.906 \times 10^{-10} \times
+    &= \sqrt{5.906 \times 10^{3} \times
     \frac{1}{3.086 \times 10^{20}}} \\
-    &= \sqrt{1.914 \times 10^{-30}} \\
-    &\approx 1.38 \times 10^{-15}~\text{rad}
-    \approx 0.28~\text{mas} \,.
+    &= \sqrt{1.914 \times 10^{-17}} \\
+    &\approx 4.38 \times 10^{-9}~\text{rad}
+    \approx 0.90~\text{mas} \,.
 \end{align*}
 Physical Einstein radius: $\RE = 5 \times 3.086 \times 10^{19} \times
-1.38 \times 10^{-15} \approx 2.1 \times 10^{-10}$~Mpc
-$\approx 6.6 \times 10^{-5}$~pc $\approx 14$~AU.
+4.38 \times 10^{-9} \approx 6.8 \times 10^{11}$~m
+$\approx 2.2 \times 10^{-11}$~Mpc $\approx 2.2 \times 10^{-5}$~pc $\approx 4.5$~AU.
+(Earlier printings wrote $4\Gnewton M/\speedoflight^2$ as $5.906\times10^{-10}$~m
+here; the correct value is $5.906\times10^{3}$~m, twice the Sun's Schwarzschild
+radius, and the result now agrees with eq.~\eqref{eq:thetaE_microlensing}.)
 
 \medskip
 \noindent\textbf{(b) Galaxy lensing:}
@@ -185,7 +188,7 @@ Physical Einstein radius: $\RE = 919 \times 1.15 \times 10^{-5}~\text{Mpc}
 \noindent\textbf{(c) Cluster lensing:}
 $M_{\mathrm{E}} \sim 2 \times 10^{14} \times 1.989 \times 10^{30}$~kg
 (mass within the Einstein radius for a typical massive cluster),
-$\Dd = 919$~Mpc, $\Ds = 1727$~Mpc, $\Dds = 1329$~Mpc.
+$\Dd = 919$~Mpc, $\Ds = 1727$~Mpc, $\Dds = 1328$~Mpc.
 \begin{equation*}
     \thetaE \approx 1.8 \times 10^{-4}~\text{rad} \approx 37'' \,.
 \end{equation*}
@@ -210,8 +213,9 @@ $\RE = 919~\mathrm{Mpc}\times1.15\times10^{-5} = 10.6$~kpc.
 \emph{(c)} With the mass inside the Einstein radius,
 $M_{\mathrm E} = 2\times10^{14}\,\Msun$:
 $\thetaE = 1.79\times10^{-4}$~rad $= 37''$ and $\RE = 165$~kpc.
-The exercise statement quotes the \emph{total} cluster mass $10^{15}\,\Msun$.
-Inserted literally into the point-mass formula, it gives
+The exercise statement gives this mass inside $\thetaE$; the \emph{total}
+mass of such a cluster is $M_{200}\sim10^{15}\,\Msun$.
+Inserted literally into the point-mass formula, that total would give
 $\thetaE = \sqrt5\times37'' \approx 83''$ and $\RE \approx 0.37$~Mpc. That is
 too large, because most of a cluster's mass lies outside $\thetaE$ and does not
 contribute to the deflection there (2D shell theorem, Section~\ref{sec:surface_mass_density}).
@@ -241,13 +245,14 @@ $\Dds = 1055$~Mpc):
     \approx 5.9~\text{kg\,m}^{-2} \,.
 \end{equation*}
 Converting: $5.9~\text{kg\,m}^{-2} = 0.59~\text{g\,cm}^{-2}
-\approx 2840~\Msun\,\text{pc}^{-2}$.
+\approx 2830~\Msun\,\text{pc}^{-2}$ (2840 if $\speedoflight$ is rounded to
+$3\times10^{8}$~m\,s$^{-1}$, as in eq.~\eqref{eq:sigma_cr_numerical}).
 
 \textbf{(c)} For the cluster lens ($\Dd = 919$~Mpc, $\Ds = 1727$~Mpc,
-$\Dds = 1329$~Mpc):
+$\Dds = 1328$~Mpc):
 \begin{equation*}
     \Sigmacr \approx 4.9~\text{kg\,m}^{-2} = 0.49~\text{g\,cm}^{-2}
-    \approx 2360~\Msun\,\text{pc}^{-2} \,.
+    \approx 2350~\Msun\,\text{pc}^{-2} \,.
 \end{equation*}
 \begin{derivation}[Unit conversions in (b) and (c)]
 \emph{(b)} $\speedoflight^2/(4\pi\Gnewton) = (2.998\times10^{8})^2/(4\pi\times6.674\times10^{-11})
@@ -259,23 +264,23 @@ gives $2.83\times10^{3}~\Msun\,\mathrm{pc^{-2}}$ (or $2.84\times10^{3}$ with
 $\speedoflight$ rounded to $3\times10^{8}$, as in eq.~\eqref{eq:sigma_cr_numerical}).
 
 \emph{(c)} Only $\Ds$ and $\Dds$ change, so the shortcut is a ratio:
-$\Sigmacr(z_s{=}2)/\Sigmacr(z_s{=}1) = (1727/1329)/(1652/1055) = 0.83$, giving
+$\Sigmacr(z_s{=}2)/\Sigmacr(z_s{=}1) = (1727/1328)/(1652/1055) = 0.83$, giving
 $0.83\times2.83\times10^{3} \approx 2.35\times10^{3}~\Msun\,\mathrm{pc^{-2}}$ and
 $4.9$~kg\,m$^{-2}$.
 \end{derivation}
 
 \textbf{(d)} A typical elliptical galaxy with
 $\Sigma_0 \approx 5000~\Msun\,\text{pc}^{-2}$ has
-$\kappab = \Sigma_0/\Sigmacr \approx 5000/2840 \approx 1.8 > 1$.
+$\kappab = \Sigma_0/\Sigmacr \approx 5000/2830 \approx 1.8 > 1$.
 Yes, it is a strong lens --- the central surface mass density exceeds
 the critical value, enabling the formation of multiple images.
 \begin{annotation}[Two caveats on part (d)]
 (1) The verdict depends on the source. For a $z_s = 2$ source the same galaxy
-has $\kappab_0 = 5000/2350 \approx 2.1$. Fainter, more distant sources are
+has $\kappab_0 = 5000/2350 \approx 2.1$. More distant sources are
 \emph{more} strongly lensed. (2) ``$\kappab > 1$ somewhere'' is sufficient for
 multiple imaging, and for an axisymmetric lens also necessary (Congdon \& Keeton Sec.~2.5).
 Whether multiple images are actually \emph{observed} depends on where the source sits
-relative to the caustics (Module~\ref{ch:elliptical_models}).
+relative to the caustics (Chapter~\ref{ch:elliptical_models}).
 \end{annotation}
 
 % ----- Exercise 4.5 -----
@@ -292,7 +297,7 @@ $u>0$):
 $\beta$ (arcsec) & $\theta_+$ (arcsec) & $\theta_-$ (arcsec)
 & $\Delta\theta$ (arcsec) & $|\mu_+|$ & $|\mu_-|$ \\
 \midrule
-0.1  & $+1.025$ & $-0.975$ & 2.000 & 5.519 & 4.519 \\
+0.1  & $+1.051$ & $-0.951$ & 2.002 & 5.519 & 4.519 \\
 0.5  & $+1.281$ & $-0.781$ & 2.062 & 1.591 & 0.591 \\
 1.0  & $+1.618$ & $-0.618$ & 2.236 & 1.171 & 0.171 \\
 2.0  & $+2.414$ & $-0.414$ & 2.828 & 1.030 & 0.030 \\

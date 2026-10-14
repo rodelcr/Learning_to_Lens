@@ -147,3 +147,39 @@ deflection.
 
 Repo script: `bash Mathematica/run_wl.sh Solutions/04_Lens_Equation/problems_04.wl`
 → `SUMMARY: 54 PASS, 0 FAIL  (of 54 checks)`.
+
+## Resolution — fixes applied 2026-10-14
+
+Branch `wt/ann0405`. New checks live in the "Fix-pass checks (2026-10-14)" section at the end of
+`Solutions/04_Lens_Equation/problems_04.wl`. Each one compares the value printed in the text, held
+as a literal, with the computed value. A mutation run that restored the old printed literals
+(5.906e-10 / 1.38e-15 / 0.28 mas / 14 AU; M = 1e15 statement; 1.025/−0.975/2.000; 2840; 2360; 1329)
+failed 9 of the new checks (59 PASS / 9 FAIL).
+
+| id | Fix | Backing |
+|----|-----|---------|
+| F1 / X1 | Ex 4.3(a) (`04_Solutions.tex`): 4GM☉/c² = 5.906×10³ m; √(1.914×10⁻¹⁷) ≈ 4.38×10⁻⁹ rad ≈ 0.90 mas; R_E ≈ 6.8×10¹¹ m ≈ 2.2×10⁻¹¹ Mpc ≈ 2.2×10⁻⁵ pc ≈ 4.5 AU. A sentence after the result says the earlier printing had 5.906×10⁻¹⁰ m and that the result now agrees with eq. `thetaE_microlensing`. | `F1 Ex 4.3(a) printed 4GM/c^2 …`, `F1 … thetaE = 4.38e-9 rad = 0.90 mas`, `F1 … R_E = 6.8e11 m …` |
+| F2 / X2 | Ex 4.3(c) statement (`04_Lens_Equation.tex`): "mass M_E ≈ 2×10¹⁴ M☉ inside the Einstein radius (total M₂₀₀ ∼ 10¹⁵ M☉)". The Solutions derivation box was reworded to match: the statement now gives the mass inside θ_E, and the total M₂₀₀ would give 83″. | `F2 Ex 4.3(c): statement mass M_E = 2e14 …` (37″, 165 kpc); `F2 … M200 = 1e15 would NOT give 37"` |
+| F3 / X3 | Ex 4.5 table, β = 0.1″ row → `+1.051 & −0.951 & 2.002 & 5.519 & 4.519` | `F3 Ex 4.5 printed row beta = 0.1 …` (this check also tests θ₊ + θ₋ = β) |
+| F4 / X4 | κ < 1 bullet → "an **axisymmetric** lens is subcritical … cannot produce multiple images. (For a non-axisymmetric lens, shear can produce multiple images even with κ < 1 everywhere; Congdon & Keeton Sec. 2.5.)" | C&K §2.5 (critic C5); counter-example to the old wording: `F4 kappa <= 0.8 everywhere …` + `F4 with external shear 0.4 … 3 images; axisymmetric (no shear): 1` |
+| F5 / X6 | Ex 4.4(b): "≈ 2830 M☉ pc⁻² (2840 if c is rounded to 3×10⁸, as in eq. `sigma_cr_numerical`)" | `F5 Ex 4.4(b) printed Sigma_cr = 2830 …` |
+| F5 / X7 | Ex 4.4(c): 2360 → 2350 M☉ pc⁻² | `F5 Ex 4.4(c) printed Sigma_cr(z_s = 2) = 2350 …` |
+| F5 (d) | Ex 4.4(d): 5000/2840 → 5000/2830 (≈ 1.8, unchanged), for consistency with (b) | `F5 Ex 4.4(d) printed kappa_0 = 5000/2830 = 1.8 …` |
+| X8 | D_ds(0.3, 2): 1329 → 1328 Mpc everywhere in Ch. 4 text and Solutions (chapter l.745, Ex 4.3(c) statement, Solutions Ex 4.3(c)/4.4(c)), and in `problems_04.wl` (worked solution + checks). No printed downstream number changes. Other chapters already print 1328. | `X8 D_ds(0.3, 2) = 1328 Mpc …` (computed 1328.49); `X8 the 1329 -> 1328 change moves no printed number …`; the distances check now requires `Round[...] == {919, 1652, 1055, 1727, 1328}` |
+| F-a | Bridge "Where the source redshift enters": "In single-plane lensing the source redshift enters only through D_ds/D_s: in Σcr and, for time delays, in the time-delay distance (1+z_d)D_dD_s/D_ds (Chapter~\ref{ch:fermat_time_delays})." | `F-a Sigma_cr and the time-delay distance … depend on (Ds, Dds) only through Ds/Dds` |
+| F-b | Ex 4.4(d) annotation: dropped "Fainter," | wording |
+| X10 | Every `Module~\ref{…}` in `04_Lens_Equation.tex` / `04_Solutions.tex` → `Chapter~\ref{…}` (visible and layer; the ref prints the book chapter number) | build, no `??` |
+| Prose | "This is exactly the efficiency factor" → "This is the efficiency factor" | wording |
+
+### Verification after edits
+
+- `bash Mathematica/run_wl.sh Solutions/04_Lens_Equation/problems_04.wl`. Before:
+  `SUMMARY: 54 PASS, 0 FAIL  (of 54 checks)`. After: `SUMMARY: 68 PASS, 0 FAIL  (of 68 checks)`.
+- `cd Notes && ANNOT_REQUIRED=1 bash build.sh` ended with "Build complete: all assertions passed".
+  Student 360 pp, Instructor 444 pp, Annotated 569 pp (fingerprints are in the module 05 Resolution section and the fix report).
+
+### Left open
+
+- Hard-coded "Module~3 / Module~5 / Module~10 …" in the visible text: these are module numbers, not `\ref`s. They were left alone because they are outside X10's scope.
+- `Mathematica/04_Lens_Equation/lens_equation.wl` l.129 still uses `DdsClus = 1329`. That directory is not in this fixer's file list, so this goes to the orchestrator.
+- The "exactly" pointer words beyond the one the critic quoted were left as is (flag-only).
