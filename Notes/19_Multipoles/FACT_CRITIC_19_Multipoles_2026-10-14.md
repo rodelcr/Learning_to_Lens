@@ -175,3 +175,38 @@ Repo scripts (run via `bash Mathematica/run_wl.sh` in this worktree):
   O'Riordan, C. M. & Vegetti, S. 2024, "Angular complexity in strong lens substructure detection", MNRAS 528, 1757–1768, DOI 10.1093/mnras/stae153 (arXiv:2310.10714);
   Stacey, H. R., Powell, D. M., Vegetti, S., McKean, J. P., Fassnacht, C. D., Wen, D. & O'Riordan, C. M. 2024, "Complex angular structure of three elliptical galaxies from high-resolution ALMA observations of strong gravitational lenses", A&A 688, A110, DOI 10.1051/0004-6361/202449710 (arXiv:2403.04850).
   Bender et al. 1989 (the classic boxy/discy isophote reference cited inside O'Riordan & Vegetti §1) is NOT verified by any record — do not add from memory.
+
+## Resolution — fixes applied 2026-10-14
+
+> Fix pass on branch `wt/ch19` after `git merge annotated-edition` (brings `oriordan_vegetti_2024`, `stacey_2024`).
+
+| id | Fix | Backing |
+|----|-----|---------|
+| F1 / N3 / P1 | Intro l. 18–24: "choice of convenience, not a fact" → "a modelling convenience"; per-cent claim now about lens **mass**: O'Riordan & Vegetti model mass multipoles of 1 and 3 per cent consistent with isophote departures; Stacey+ measure m=3,4 ≈ 1% of κ in three ALMA lenses. "There is no reason the mass should be more elliptical than the light" deleted. | `\citet{oriordan_vegetti_2024}`, `\citet{stacey_2024}` (CrossRef-verified bib); wording follows the reconciler's reading (S7-059/064/065) |
+| F2 / P2 | Annotation "Why two amplitudes?": "typical of lenses with visible central images" → "used as examples in this chapter (shallow enough, γ'<2, for a radial critical curve and central images to exist, Eq. mu_theta_r and Chapter ch:power_law_point_mass)"; "real, not academic, error" → "what goes wrong when they are conflated" | chapter .wl J4 (λ_r has no zero for 2 ≤ γ' < 3; zero at θE/4 for γ'=1.5) |
+| F3 / C5 | Dropped "as is now usual in the lens-modelling literature" and "A common parameterisation"; keybox three-way code-convention list removed, imperative kept and moved first ("…Eqs. mu_kappam, mu_am, mu_components are one convention among several"). C5 "kind of quantity photometrists report" → "(for isophotes, the quantity a photometric fit of Fourier modes to the contour radius returns)" | — (wording only) |
+| F4 (X5) | §8.2 "In κ, the multipole cannot be absorbed … because it averages to zero on every circle (Theorem). A fit sees only the arcs, so the absorption is limited to the partial-arc overlap of Eq. mu_arc_overlap, and it disappears once the multipole is modelled." | existing F-block checks (arc overlap) |
+| F5 (X6) | Main-text sentence before the table: "This is a linearised toy (source fixed, first order in f• and a_m); the numbers illustrate the radial ordering, not any particular lens." Annotation box kept. | — |
+| F6 (X7) | Dipole remark "Away from γ'=2" → "For γ'<2" | chapter .wl J5 (1−(3−γ')² < 0 ⇔ γ'<2; +0.75 at γ'=2.5) |
+| F7 (X4) | Ch 17 exists now: it fits a rigid power law to a PL+point-mass lens and shows the slope compensates, biasing B (and §cb_regimes: any central excess acts as a point mass). Bridge reworded to say exactly that; P5 closer applied ("a mis-specified model can be fooled, and the residuals of a correctly specified one separate the two"). | `17_Central_Mass_Bias.tex` intro + §cb_linear + §cb_regimes |
+| F8 (X8, X9) | "Theorem again" → "by the same integral ∮cos mΔφ dφ = 0 that proves Theorem…"; one-sentence bridge after eq. mu_am: a_m is an intrinsic departure from the base shape, not the m=4 content of an ellipse that §which_multipoles said matters only for q ≲ 0.75 | `08_…:868–888` |
+| N1 (S7-074) | Keybox: "Check the angle too: if a code orders the components the other way, (ε₁,ε₂) = k_m(sin mφ_m, cos mφ_m), the same two numbers put the mode at 90°/m − φ_m … Evaluate the code's own convergence and locate its peak." (code unnamed). Solutions 6(a): reversed-order answer (0.01299, −0.0075); chapter numbers read reversed give −7.5°. | problems_19.wl 6f, 6g |
+| N2 (S7-089) | §6 opening "Theorem … is *not* a statement that …" sentence deleted; section opens "Orthogonality holds under an integral over the full circle." | — |
+| N4 (S7-130) option (a) | §8.1 "A convenient reference radius is the radial critical curve of the *base*" + "A point mass can remove this curve altogether: at γ'=1.5 any f• > 27/4096 ≈ 0.0066 does so (Chapter ch:power_law_point_mass, Eq. pl_mcrit), and the inner residual then falls on the central and point-mass-induced images instead. The radial ordering below does not depend on which."; worked comparison "at the base's radial critical curve … (this f• exceeds 27/4096, so the composite lens itself has no radial critical curve)"; table header "(base)"; figure caption "θ_r of the base"; keybox "in the inner image region (at the radial critical curve if the lens still has one, otherwise at the central images)"; Solutions 5(c) parenthetical. Figure content unchanged. | chapter .wl J1 (m_crit(1.5)=27/4096 < 0.01), J2 (min λ_r = +0.1297 fixed / +0.1413 ring-matched at f•=0.01; base alone < 0), J3 (min λ_r = 0 at f•=27/4096); problems_19.wl 5i |
+| N5 (S7-156) | Keybox closer: "A global χ² cannot tell the two apart. Split the residual map …" | — |
+| N6 (optional) | Promoted to §6 main text: "Before quoting an evidence ratio for a central mass as a detection, check that the winning model fits the data to the noise level." | — |
+| N7 (optional) | "once the multipole is in the model" → "once the multipole orders actually present are in the model" | — |
+| P3, P4, P6 | P3 "the one structural fact that organises everything else" → "the result the rest of the chapter uses"; P4 keybox closer → "A multipole leaves the mass inside the Einstein ring unchanged, and a central point mass leaves the contour shapes unchanged."; P6 echo sentence deleted | — |
+
+### Verification after edits
+
+- `bash Mathematica/run_wl.sh Mathematica/19_Multipoles/multipoles_power_law.wl` — before `SUMMARY: 67 PASS, 0 FAIL  (of 67 checks)`; after `SUMMARY: 72 PASS, 0 FAIL  (of 72 checks)` (new J1–J5).
+- `bash Mathematica/run_wl.sh Solutions/19_Multipoles/problems_19.wl` — before `SUMMARY: 53 PASS, 0 FAIL  (of 53 checks)`; after `SUMMARY: 56 PASS, 0 FAIL  (of 56 checks)` (new 5i, 6f, 6g).
+- `cd Notes && ANNOT_REQUIRED=1 bash build.sh` → "all assertions passed"; student 361 pp, instructor 445 pp, annotated 567 pp.
+- Regenerated figure PDFs reverted (content unchanged).
+
+### Left open
+
+- Bender et al. 1989 (classic boxy/discy isophote reference) — not verified, not cited.
+- The O'Riordan & Vegetti / Stacey+ wording rests on the reconciler's full-text reading (S7-059/064/065); the fixer did not re-read the papers.
+- X2 notation note (optional, no action); harness Print-drop note (not a chapter defect).

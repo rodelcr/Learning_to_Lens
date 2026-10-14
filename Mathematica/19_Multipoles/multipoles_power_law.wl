@@ -26,6 +26,10 @@
               H. the inner-vs-outer residual demonstration (point mass
                  with the ring held fixed vs an m=4 multipole)
               I. the m=1, g=2 resonance
+              J. fix-pass checks (2026-10-14): f = 0.01 exceeds the
+                 radial-curve annihilation threshold 27/4096 at g = 1.5;
+                 radial critical curve only for g < 2; m = 1 sign
+                 flip only for g < 2
             Figures: kappa_4 map; radial residual comparison.
 
    Convention: polar image-plane coordinates (theta, phi); Poisson
@@ -267,6 +271,36 @@ check["I3  its gradient is a uniform unit vector: a pure source translation",
   FullSimplify[D[harm, th]^2 + (D[harm, ph]/th)^2] === 1];
 check["I4  g = 1.5: m=1 denominator = 1 - 2.25 = -1.25 (sign-flipped, large response)",
   (1 - (3 - 3/2)^2) === -5/4];
+
+(* ---------------- J. fix-pass checks (fact-critic 2026-10-14) ---------------- *)
+(* J1-J3 (N4): f = 0.01 used in the worked comparison exceeds the annihilation
+   threshold of Chapter 15 eq:pl_mcrit at g = 1.5, so the composite lens has no
+   radial critical curve; theta_r = 0.25 thE is the radial critical curve of the
+   BASE only.  (J2 fails if the composite lens still had a radial curve.) *)
+mcrit[gg_] := (2 - gg) (gg - 1)/2 ((2 - gg) (3 - gg)/2)^((3 - gg)/(gg - 1));
+check["J1  m_crit(1.5) = 27/4096 ~ 0.0066 < f = 0.01 (worked comparison is above threshold)",
+  mcrit[3/2] === 27/4096 && 27/4096 < 1/100];
+lamRfixed[t_, ff_] := (1 - D[tt^(1/2) + ff/tt, tt]) /. tt -> t;            (* thE = 1, g = 1.5, base fixed *)
+lamRring[t_, ff_]  := (1 - D[(1 - ff) tt^(1/2) + ff/tt, tt]) /. tt -> t;   (* ring matched *)
+minFixed = NMinValue[{lamRfixed[t, 1/100], 10^-4 < t < 1}, t];
+minRing  = NMinValue[{lamRring[t, 1/100], 10^-4 < t < 1}, t];
+minThr   = NMinValue[{lamRfixed[t, 27/4096], 10^-4 < t < 1}, t];
+minBase  = NMinValue[{lamRfixed[t, 0], 10^-4 < t < 1}, t];
+Print["    min lambda_r (f=0.01): fixed base ", minFixed, ", ring matched ", minRing,
+      "; at f=27/4096: ", minThr, "; base alone: ", minBase];
+check["J2  f = 0.01, g = 1.5: min lambda_r > 0 (no radial critical curve), fixed and ring-matched base; base alone < 0",
+  minFixed > 0.1 && minRing > 0.1 && minBase < 0];
+check["J3  ... and at f = 27/4096 (fixed base) min lambda_r = 0 (the threshold is where the curve disappears)",
+  Abs[minThr] < 10^-6];
+(* J4 (F2): a power law has a radial critical curve only for g < 2 *)
+check["J4  radial critical curve only for g < 2: 1 - alpha_0' = 1 - (2-g)(thE/th)^(g-1) has no zero for 2 <= g < 3",
+  FullSimplify[(1 - D[alpha0, th]) - (1 - (2 - g) (tE/th)^(g - 1)), asm] === 0 &&
+  FullSimplify[1 - (2 - g) (tE/th)^(g - 1) >= 1, {th > 0, tE > 0, 2 <= g < 3}] === True &&
+  Simplify[(1 - (2 - g) (tE/th)^(g - 1)) /. {g -> 3/2, th -> tE/4}] === 0];
+(* J5 (F6): the m = 1 prefactor 1-(3-g)^2 has the opposite sign to the m >= 2 ones only for g < 2 *)
+check["J5  m=1 denominator < 0 iff g < 2 (-1.25 at 1.5) but > 0 for g > 2 (+0.75 at 2.5, same sign as m>=2)",
+  Reduce[Xor[1 - (3 - g)^2 < 0, g < 2] && 1 < g < 3, g, Reals] === False &&
+  (1 - (3 - 5/2)^2) === 3/4 && (4 - (3 - 5/2)^2) > 0];
 
 (* ---------------- Figures ---------------- *)
 gPlot = 1.5; amPlot = 0.05; mPlot = 4;

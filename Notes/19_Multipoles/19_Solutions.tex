@@ -196,8 +196,11 @@ $f_\bullet[u^p-1-p\ln u]$, $p=3-\gp$, whose first derivative in $x$
 vanishes at the ring and whose second derivative there is
 $f_\bullet p^2$.
 
-\textbf{(c)} At $\gp=1.5$ the radial critical curve is
-$\theta_r = \thetaE(0.5)^2 = 0.25\,\thetaE$.  Using
+\textbf{(c)} At $\gp=1.5$ the radial critical curve of the base is
+$\theta_r = \thetaE(0.5)^2 = 0.25\,\thetaE$.  (With the point mass added
+the composite lens has none: $f_\bullet = 0.01 > 27/4096 \approx 0.0066$,
+Eq.~\eqref{eq:pl_mcrit}.  The linear residuals below need only the
+deflection at $\theta_r$, so they are unaffected.)  Using
 $|\delta\alpha|/\thetaE = (\theta/\thetaE)^{1/2}\times$(fractional
 residual): point mass (ring + slope) $0.02460$ at $\theta_r$ and
 $3.747\times10^{-4}$ at $1.2\,\thetaE$; $m=4$ multipole
@@ -213,7 +216,7 @@ halfway between $\theta_r$ and $\thetaE$ versus the arc region) and
 Fourier-analyse each annulus in $\varphi$: a central mass shows up as an
 inner $m=0$ excess, angular structure as an outer $m\ge1$ pattern.
 \emph{[Attested: \solnlink{19_Multipoles/problems\_19.wl}{problems\_19.wl},
-checks 5a--5h.]}
+checks 5a--5i.]}
 
 % ----- Exercise 19.6 -----
 \subsection*{Exercise~\ref{ex:mu_convention}: Bookkeeping}
@@ -222,7 +225,13 @@ checks 5a--5h.]}
 $(\epsilon_1,\epsilon_2) = 0.015(\cos120^\circ,\sin120^\circ)
 = (-0.0075,\ 0.01299)$.  Inverting: $\sqrt{\epsilon_1^2+\epsilon_2^2}
 = 0.015$ and $\tfrac14\operatorname{atan2}(\epsilon_2,\epsilon_1) =
-30^\circ$.
+30^\circ$.  This answer holds in the convention of
+Eq.~\eqref{eq:mu_components}.  A code that orders the components the
+other way, $(\epsilon_1,\epsilon_2) = k_m(\sin m\varphi_m,\cos
+m\varphi_m)$, needs $(\epsilon_1,\epsilon_2) = 0.015(\sin120^\circ,
+\cos120^\circ) = (0.01299,\ -0.0075)$ for the same $\varphi_4$; given
+$(-0.0075,\ 0.01299)$ it would put the mode at $90^\circ/4 - 30^\circ =
+-7.5^\circ$.
 
 \textbf{(b)} $|\boldsymbol\epsilon| = 0.01$ is $k_4$, so the injected
 amplitude is $a_4 = 0.01/(3-\gp) = 0.00667$ at $\gp=1.5$ and $0.00625$
@@ -235,7 +244,7 @@ orientation posteriors should be reported modulo $2\pi/m$, and a
 sampler that allows negative $k_m$ has a two-fold degeneracy unless
 $\varphi_m$ is restricted to an interval of width $\pi/m$.
 \emph{[Attested: \solnlink{19_Multipoles/problems\_19.wl}{problems\_19.wl},
-checks 6a--6e.]}
+checks 6a--6g.]}
 
 % ----- Exercise 19.7 -----
 \subsection*{Exercise~\ref{ex:mu_dipole}: The Dipole Resonance}
