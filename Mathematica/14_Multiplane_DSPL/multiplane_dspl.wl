@@ -23,6 +23,10 @@
                 by two independent methods; signs; degeneracy slope.
             (6) lens-lens coupling: the massive-first-source DSPL equation
                 is the N = 2 recursive equation; size of the coupling term.
+            Fix pass 2026-10-14 (fact-critic F1/F2/F4/F5, reconciler A/C):
+                3h radial eigenvalue g'-1 at thetaE; 4g KSB94 eq. 21b
+                orientation; 4h shear breaks critical-curve scaling; 5l-5m
+                fixed-Om vs Om-free delta w; 5n triplet-dependent orientation.
             Figure: B(z_s2) for two w values, and the fractional difference.
 
    Sources: Schneider, Ehlers & Falco (1992) Sec. 9.1.1, eqs. (9.1)-(9.3)
@@ -274,6 +278,14 @@ Module[{gg = 1.8, te1 = 1.0, te2, Bt = B0, root1, root2},
     Abs[(root1/root2)^(gg - 1) - Bt] < 1*^-10 && Abs[root2 - te2] < 1*^-10]];
 check["3g  d ln B/d g' at fixed eta = ln eta (independent of g')",
   FullSimplify[D[(g - 1) Log[eta], g] - Log[eta]] === 0];
+(* [fix pass 2026-10-14, critic F1] arc thickness as a slope anchor: for an
+   axisymmetric lens the radial eigenvalue of the Jacobian is 1 - d alpha/d theta;
+   at thetaE it equals g' - 1 for a power law, so the radial magnification
+   1/(g'-1) of an arc at the Einstein radius depends on the slope alone
+   (= 1 for the SIS). *)
+radEig = FullSimplify[(1 - D[alphaPL, t]) /. t -> tE, Assumptions -> 1 < g < 3 && tE > 0];
+check["3h  power law: radial eigenvalue 1 - d alpha/d theta at thetaE = g' - 1 (radial magnification 1/(g'-1); SIS -> 1)",
+  FullSimplify[radEig - (g - 1)] === 0 && (radEig /. g -> 2) === 1];
 
 (* =========================================================================
    Section 4: SIE -- the ratio of Einstein radii is B for any ellipticity
@@ -320,6 +332,33 @@ check["4e  area-equivalent Einstein radii of the critical curves: ratio = B (q =
 check["4f  convention change thetaE -> thetaE g(q) (e.g. sqrt q, 1/sqrt q) cancels in eta",
   FullSimplify[{(tEi[1] Sqrt[q])/(tEi[2] Sqrt[q]) - Bsym,
                 (tEi[1]/Sqrt[q])/(tEi[2]/Sqrt[q]) - Bsym}] === {0, 0}];
+
+(* [fix pass 2026-10-14, critic F4/C13] eq. mpi_siekappa is Kormann, Schneider &
+   Bartelmann (1994) eq. (21b), kappa = sqrt(f)/(2 sqrt(x1^2 + f^2 x2^2)) with
+   x = xi/xi0 (their eq. 15), once x -> theta/thetaE and the axes are swapped
+   (x1, x2) -> (theta2, theta1): the chapter puts the major axis along theta1,
+   KSB94 along x2.  The unswapped identification must FAIL. *)
+Clear[tE, x1, x2];
+kapCh   = tE Sqrt[q]/(2 Sqrt[q^2 t1^2 + t2^2]);
+kapKSB[a_, b_] := Sqrt[q]/(2 Sqrt[a^2 + q^2 b^2]);
+check["4g  chapter SIE kappa = KSB94 eq. 21b with axes rotated by 90 deg ((x1,x2) -> (theta2,theta1)); unrotated form differs",
+  FullSimplify[kapCh - kapKSB[t2/tE, t1/tE], Assumptions -> tE > 0 && 0 < q < 1] === 0 &&
+  (kapCh - kapKSB[t1/tE, t2/tE] /. {tE -> 1, q -> 1/2, t1 -> 1, t2 -> 0}) != 0];
+(* [fix pass 2026-10-14, critic F5] Ex. 7(b): with a same-plane external shear the
+   whole deflection field scales by 1/B, so the fitted thetaE PARAMETERS have ratio B
+   exactly (Solutions check 7b), but the radius of the tangential critical curve does
+   not: the SIE part of alpha is degree 0 in theta, the shear part degree 1. *)
+gS1 = 0.08`30; gS2 = 0.03`30;
+jacShear[s_] := (jacSym /. {tEs -> 1, q -> 0.7`30}) + s {{gS1, gS2}, {gS2, -gS1}};
+critRS[ph_?NumericQ, scale_?NumericQ] := Module[{jac = scale jacShear[1], detA, r},
+  detA[r_?NumericQ] := Det[IdentityMatrix[2] - (jac /. {t1 -> r Cos[ph], t2 -> r Sin[ph]})];
+  r /. Quiet[FindRoot[detA[r], {r, 1.1}, WorkingPrecision -> 30], {FindRoot::lstol, Det::luc}]];
+areaRS[scale_] := Sqrt[(2 Pi/48) Sum[critRS[k 2 Pi/48, scale]^2/2, {k, 0, 47}]/Pi];
+shRatio = areaRS[1]/areaRS[1/B0];
+Print["    SIE (q = 0.7) + shear (0.08, 0.03): area-equivalent critical-curve ratio = ",
+      N[shRatio, 6], "  vs B = ", N[B0, 6]];
+check["4h  SIE + same-plane shear scaled by 1/B: critical-curve radius ratio != B (parameter ratio = B; Soln 7b)",
+  Abs[shRatio - B0] > 1*^-3];
 
 (* =========================================================================
    Section 5: cosmological content -- S_w, S_Om at (0.5, 1.0, 2.0)
@@ -377,6 +416,33 @@ Print["    B(0.5,1,4): w=-1 -> ", Bw10, ", w=-0.7 -> ", Bw07, "  (", 100 (Bw07/B
 check["5h  raising w from -1 to -0.7 lowers B by 1.75% at z_s2 = 4 (B = 0.582 -> 0.571)",
   Bw07 < Bw10 && Abs[100 (Bw07/Bw10 - 1) - (-1.747)] < 1*^-3 &&
   Abs[Bw10 - 0.5815] < 1*^-4 && Abs[Bw07 - 0.5714] < 1*^-4];
+
+(* [fix pass 2026-10-14, reconciler fix A] the |delta w| = 0.30 of check 5g is the
+   projection at FIXED Om.  Exact fixed-Om roots of B(0.3, w)/B(0.3, -1) = 1 -/+ 1%
+   are asymmetric; letting Om move along dOm = -dw/2 doubles the shift (linear);
+   along the level curve (check 5f) it is unbounded. *)
+B0c = Bc[3/10, -1];
+wM1 = w /. FindRoot[Bc[3/10, w]/B0c - 99/100, {w, -0.7}];
+wP1 = w /. FindRoot[Bc[3/10, w]/B0c - 101/100, {w, -1.3}];
+Print["    fixed Om = 0.3: B -1% -> w = ", N[wM1, 6], " (dw = ", N[wM1 + 1, 4],
+      ");  B +1% -> w = ", N[wP1, 6], " (dw = ", N[wP1 + 1, 4], ")"];
+check["5l  fixed Om: exact -1% in B -> dw = +0.29, +1% -> dw = -0.36 (asymmetric; not the symmetric 0.30)",
+  Abs[(wM1 + 1) - 0.288] < 2*^-3 && Abs[(wP1 + 1) - (-0.359)] < 2*^-3 &&
+  Abs[Abs[wP1 + 1] - Abs[wM1 + 1]] > 0.05];
+dwAlong = 0.01/(SwA - SOmA/2);
+Print["    along dOm = -dw/2: |dw| for a 1% error in B = ", Abs[dwAlong]];
+check["5m  along dOm = -dw/2 the same 1% needs |dw| = 0.66 (2.2x the fixed-Om 0.30)",
+  Abs[Abs[dwAlong] - 0.659] < 1*^-3 && Abs[dwAlong/dw1pct] > 2];
+(* [fix pass 2026-10-14, critic F2 / reconciler fix C] the level-curve orientation
+   depends on the redshift triplet (Collett+2012 Sec. 4, p. 5) *)
+SAt[{zl_, z1_, z2_}, p_] := Module[{bb},
+  bb[Om_, w_] := Log[BF[zl, z1, z2, Om, w, 70]];
+  If[p === "w", (bb[3/10, -1 + hw] - bb[3/10, -1 - hw])/(2 hw),
+                (bb[3/10 + hO, -1] - bb[3/10 - hO, -1])/(2 hO)]];
+slopeWide = -SAt[{0.3, 0.6, 3.3}, "Om"]/SAt[{0.3, 0.6, 3.3}, "w"];
+Print["    degeneracy slope at (0.3, 0.6, 3.3): ", slopeWide, "  (vs ", degS, " at (0.5, 1, 2))"];
+check["5n  level curves of B are differently oriented for different triplets: slope -0.87 at (0.3, 0.6, 3.3) vs -1.08",
+  Abs[slopeWide - (-0.873)] < 1*^-3 && Abs[slopeWide/degS - 1] > 0.15];
 
 (* figure: B(z_s2) for w = -1 and -0.7 *)
 zgrid = Table[zz, {zz, 1.05, 4.0, 0.05}];

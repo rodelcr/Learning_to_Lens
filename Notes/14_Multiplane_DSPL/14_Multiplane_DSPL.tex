@@ -80,10 +80,10 @@ without an independent handle on the mass.
 A DSPL uses the \emph{same deflector twice}.  Two sources at redshifts
 $z_{s1}<z_{s2}$ lie behind one galaxy at $z_l$.  The galaxy's mass
 distribution is identical for both; only the geometry differs.  The
-ratio of the two Einstein radii therefore cancels the deflector mass and
-leaves a pure ratio of distances --- a dimensionless number that depends
-on the shape of the expansion history, $(\Omegam,w)$, but, as we will
-show, not on the Hubble constant.  The use of DSPLs to constrain the
+ratio of the two Einstein radii therefore cancels the deflector mass,
+leaving a dimensionless ratio of distances that depends on the shape of
+the expansion history, $(\Omegam,w)$, but, as we will show, not on the
+Hubble constant.  The use of DSPLs to constrain the
 dark-energy equation of state was developed by \citet{collett_2012};
 cosmological constraints from an observed galaxy-scale DSPL were derived
 by \citet{collett_auger_2014}.
@@ -303,9 +303,9 @@ before the next begins: the planes must be far apart compared with the
 extent of each mass distribution.  SEF (\S9 introduction) adopt this
 assumption for all astrophysically relevant cases but add that ``one
 should keep in mind that this hypothesis remains formally untested'',
-citing in a footnote a numerical two-point-mass study in which the
-approximation held very well for all rays that are not strongly
-demagnified.  For galaxy-scale DSPLs the planes are separated by
+citing in a footnote an unpublished (private-communication) numerical
+two-point-mass test in which the approximation held very well for all
+rays that are not strongly demagnified.  For galaxy-scale DSPLs the planes are separated by
 Gpc while the galaxies are tens of kpc across.
 \end{annotation}
 
@@ -366,9 +366,11 @@ source as plane $j$, and the far source as ``the'' source \annot{check 2a$'$}.
 \begin{keybox}[The DSPL distance ratio]
 $\displaystyle \Brat = \frac{D_{l,s1}\,D_{s2}}{D_{s1}\,D_{l,s2}}$
 is dimensionless, lies strictly between 0 and 1, and
-$\vecalpha_2 = \vecalpha_1/\Brat$ pointwise.  All the deflector physics
-cancels in $\Brat$; only the geometry --- hence the cosmology ---
-survives.
+$\vecalpha_2 = \vecalpha_1/\Brat$ pointwise.  The deflector's mass
+distribution cancels in the ratio $\vecalpha_2/\vecalpha_1=1/\Brat$,
+which is pure geometry.  Turning a measured ratio of Einstein radii
+into $\Brat$ still requires the deflector's slope
+(\S\ref{sec:mp_eta}).
 \end{keybox}
 
 \paragraph{Why $0<\Brat<1$.}  Insert eq.~\eqref{eq:mp_DA}.  Every
@@ -600,8 +602,9 @@ Define the logarithmic responses
   S_{\Omegam}\equiv\pderiv{\ln\Brat}{\Omegam},
   \label{eq:mp_S}
 \end{equation}
-evaluated at a reference cosmology.  A fractional error in the recovered
-distance ratio maps, to first order, to
+evaluated at a reference cosmology, each with the other parameter held
+fixed.  A fractional error in the recovered distance ratio maps, to
+first order and with the other parameter held fixed, to
 \begin{equation}
   \delta w = \frac{\delta\Brat/\Brat}{S_w},\qquad
   \delta\Omegam = \frac{\delta\Brat/\Brat}{S_{\Omegam}} .
@@ -638,12 +641,18 @@ At the illustrative geometry in flat $\Lambda$CDM ($\Omegam=0.3$, $w=-1$):
 \end{equation}
 \annot{checks 5d--5e}  Both are negative: raising $w$ or $\Omegam$ shortens
 the comoving distances unevenly, in a way that lowers $\Brat$.  Both are
-\emph{small}.  A $1\%$ error in $\Brat$ masquerades as $|\delta w|=0.30$
-at this geometry \annot{check 5g}.  That combination --- a small cosmological
-signal and a large parameter response --- is why a single DSPL gives a
-weak $w$ constraint, why populations of DSPLs are needed
-\citep{collett_2012}, and why percent-level systematics in $\Brat$ matter
-(Chapters~\ref{ch:central_mass_bias} and~\ref{ch:cosmological_sensitivity}).
+\emph{small}.  If $\Omegam$ is held fixed, a $1\%$ error in $\Brat$
+masquerades as $|\delta w|=0.30$ at this geometry \annot{check 5g}.  The
+linear estimate hides an asymmetry: solving for $w$ exactly at
+$\Omegam=0.3$, a $1\%$ deficit in $\Brat$ shifts $w$ by $+0.29$ and a $1\%$ excess by
+$-0.36$ \annot{check 5l}.  If $\Omegam$ is free to move as well, the same
+$1\%$ buys a larger shift: along $\dd\Omegam=-\tfrac12\dd w$ it takes
+$|\delta w|=0.66$ \annot{check 5m}, and along the degeneracy curve of
+\S\ref{sec:mpi_sampling} it is unbounded.  A single DSPL therefore gives
+only a weak $w$ constraint, and populations of DSPLs are needed
+\citep{collett_2012}.  For the same reason, percent-level systematics in
+$\Brat$ matter (Chapters~\ref{ch:central_mass_bias}
+and~\ref{ch:cosmological_sensitivity}).
 
 \begin{figure}[ht]
     \centering
@@ -692,7 +701,8 @@ property of the isothermal slope.
 
 \paragraph{Adding ellipticity.}  In the normalisation of
 Chapter~\ref{ch:elliptical_models} (eq.~\eqref{eq:sie_kappa}, following
-\citet{kormann_isothermal_1994}), the SIE convergence on source plane
+\citet{kormann_isothermal_1994}, whose eq.~(21b) is this form with the
+axes rotated by $90^\circ$ \annot{check 4g}), the SIE convergence on source plane
 $i$ is
 \begin{equation}
   \kappab_i(\vectheta)=\frac{\thetaE^{(i)}\sqrt{q}}{2\sqrt{q^2\theta_1^2+\theta_2^2}},
@@ -825,7 +835,8 @@ plane, with local slope
 which is $-1.08$ at the illustrative geometry \annot{check 5f; Solutions
 9a--9d}.  Breaking the degeneracy needs several lenses with different
 redshift triplets, each contributing a differently oriented band
-\citep{collett_2012}.
+\citep{collett_2012}.  \annot{check 5n: the slope is $-0.87$ at
+$(0.3,0.6,3.3)$}
 
 \begin{annotation}[Shear in a two-plane fit]
 An external shear generated by mass at $z_l$ is a deflection field at
@@ -867,11 +878,18 @@ combination $\Brat=\etamea^{\gp-1}$.  Its logarithmic differential is
         slope can masquerade as a change in cosmology even when $\etamea$
         is measured well.
 \end{enumerate}
-The parts of the data most sensitive to the inner slope are those that
-probe the mass profile at radii different from the tangential arcs ---
-most directly a radial or central image, when one is detected
-(Chapter~\ref{ch:odd_images}).  The same central region is where an
-unmodelled compact mass would act, which is why
+The slope is pinned by data that probe the mass profile away from the
+tangential arcs or across them, and three such anchors stand on an equal
+footing.  Stellar kinematics measure the mass at a different radius
+(Chapter~\ref{ch:galaxy_lensing}).  The radial thickness of extended
+arcs measures the local gradient of the deflection: for a power law the
+radial eigenvalue of the Jacobian at $\thetaE$ is $\gp-1$, so the radial
+magnification there is $1/(\gp-1)$ \annot{check 3h}.  A radial or
+central image, when one is detected, probes the inner profile directly
+(Chapter~\ref{ch:odd_images}), although Chapter~\ref{ch:odd_images}
+stresses that a central image constrains a \emph{combination} of inner
+slope and central mass, not the slope alone.  That central region is
+where an unmodelled compact mass would act, which is why
 Chapters~\ref{ch:power_law_point_mass} and~\ref{ch:central_mass_bias}
 study power-law lenses with a central point mass.
 
@@ -889,7 +907,7 @@ clean only once the radial structure of the deflector is fixed.
 \section{The Circularity Trap}
 \label{sec:mpi_circular}
 
-A tempting shortcut is fatal.  One might take a reference cosmology,
+One shortcut invalidates the inference.  One might take a reference cosmology,
 compute $\Brat_{\rm ref}$, and \emph{impose}
 $\thetaE^{(2)}=\thetaE^{(1)}\,\Brat_{\rm ref}^{-1/(\gp-1)}$ (equivalently
 $\etamea=\Brat_{\rm ref}^{1/(\gp-1)}$) as a constraint in the fit.  That
@@ -945,10 +963,12 @@ different $\Brat$ and check that the posterior moves with it.
         ellipticity, any Einstein-radius convention) and
         $\Brat=\etamea^{\gp-1}$ for a power law.
   \item $\Brat$ is only weakly sensitive to cosmology: $S_w=-0.0330$ and
-        $S_{\Omegam}=-0.0357$ at $(z_l,z_{s1},z_{s2})=(0.5,1,2)$, so a
-        $1\%$ error in $\Brat$ corresponds to $|\delta w|\approx0.3$.
-        One lens constrains a curve in $(\Omegam,w)$; a population
-        constrains a point.
+        $S_{\Omegam}=-0.0357$ at $(z_l,z_{s1},z_{s2})=(0.5,1,2)$, so,
+        with $\Omegam$ held fixed, a $1\%$ error in $\Brat$ corresponds
+        to $|\delta w|\approx0.3$.  One lens constrains a curve in
+        $(\Omegam,w)$.  Lenses at different redshift triplets give
+        differently oriented curves \citep{collett_2012}, so a sample
+        shrinks the allowed region.
   \item A DSPL fit samples the lens model plus $\Brat$ (or the cosmology
         behind it).  The inner slope controls the width of the $\Brat$
         posterior through
@@ -1047,7 +1067,9 @@ for any $f$ common to both planes.  (b) Add an external shear produced by
 mass at $z_l$.  Show that the whole lens-plane deflection field (SIE plus
 shear) scales by $1/\Brat$ between the planes, so a model in which the
 reduced shear differs between planes by that factor recovers
-$\etamea=\Brat$ exactly.  (c) Explain why a shear produced by a perturber
+$\etamea=\Brat$ exactly.  (Here $\etamea$ is the ratio of the fitted
+$\thetaE$ parameters; with shear present, radii read off the critical
+curves do not scale by exactly $1/\Brat$.)  (c) Explain why a shear produced by a perturber
 between the two source planes does not cancel.
 \end{exercise}
 
@@ -1076,6 +1098,6 @@ $\rho=+0.8$.  Propagate to $\sigma_\Brat/\Brat$ with
 eq.~\eqref{eq:mpi_twochannel}, including the covariance.  Compare the
 slope-driven and ratio-driven contributions.  Which dominates, and what
 does this say about the relative value of better astrometry and a
-detected radial image?  For a lens whose redshifts give $|S_w|=0.0330$,
+better constraint on the slope?  For a lens whose redshifts give $|S_w|=0.0330$,
 what is $\sigma_w$?
 \end{exercise}
