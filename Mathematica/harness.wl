@@ -27,17 +27,20 @@
 
 $ltlPass = 0; $ltlFail = 0;
 
+(* WriteString["stdout", ...] instead of Print: under wolframscript, Print output
+   interleaved with messages can drop lines (observed 2026-10-14); the tally is
+   unaffected either way, but the per-check lines should be reliable. *)
 check[name_String, cond_] := Module[{ok = TrueQ[cond]},
   If[ok,
-    $ltlPass++; Print["  PASS: ", name],
-    $ltlFail++; Print["  FAIL: ", name]];
+    $ltlPass++; WriteString["stdout", "  PASS: ", name, "\n"],
+    $ltlFail++; WriteString["stdout", "  FAIL: ", name, "\n"]];
   ok];
 
 report = check;
 
 summary[] := (
-  Print["========================================"];
-  Print["SUMMARY: ", $ltlPass, " PASS, ", $ltlFail, " FAIL  (of ",
-        $ltlPass + $ltlFail, " checks)"];
-  Print[If[$ltlFail == 0, "ALL CHECKS PASS", "SOME CHECKS FAILED"]];
+  WriteString["stdout", "========================================\n"];
+  WriteString["stdout", "SUMMARY: ", ToString[$ltlPass], " PASS, ", ToString[$ltlFail],
+        " FAIL  (of ", ToString[$ltlPass + $ltlFail], " checks)\n"];
+  WriteString["stdout", If[$ltlFail == 0, "ALL CHECKS PASS", "SOME CHECKS FAILED"], "\n"];
   Exit[If[$ltlFail == 0, 0, 1]]);
