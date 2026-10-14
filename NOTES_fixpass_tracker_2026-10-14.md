@@ -170,3 +170,13 @@
 - 03 V3 Ex 3.2(c): 11.3 Gyr, ~19% older. V4 Ex 3.3 table: concordance 1.605/1748; EdS 1.25/1269; open (sinh) 1.90/1583; problems_03.wl:52 DAFunc add sinh DMFunc + FindMaximum.
 - 03 V5 :1278–1281 𝒟 monotonic; efficiency peaks χ_d ≈ 0.42χ_s (z_d=0.350 for z_s=1; 0.519 for z_s=2). V6 :1320 "physical R_E"; caption :1333 peak position.
 - 03 layer N4 :932–933 → "because H(z) > H0 at z>0"; X2 → "age is a smaller fraction of t_H (0.81 vs 0.96)"; CPL box may cite CP01+Linder03.
+## critic 01d–01e (01d: 15 PASS/4 FAIL/8 SUSPECT; 01e: 14/5/6; all 8 author flags CONFIRMED; layer numbers all PASS)
+- 01d F1 E normalisation: conserved_E → E = (1−R_S/r)c² dt/dλ; normalization → −(1−R_S/r)c²ṫ²+… = −εc²; 𝓔 = ½(E²/c² − εc²); photon_orbit and b = cL/E then stand (C&K 3.76a). Rewrite units annotation + first two derivation boxes.
+- 01d F2 Sol Ex 4: 5.01e−7 → 5.02e−7; 0.1034″ → 0.1036″; 42.93 vs boxed 43.0 stands with 0.1036; annotation "rounding" → slip.
+- 01d F3 Sol Ex 5(b): "small angle" → ≈2.6 rad ≈ 149°/orbit near r≈12GM/c²; small only for r ≫ 6GM/c²; drop box sentence.
+- 01e F4 Sol Ex 2(b): first-order difference R_S r dΩ²; use isotropic radius ρ (eq isotropic_r), final metric in ρ.
+- 01e F5 eq lens_equation_preview → β = θ − α, α = (D_ds/D_s)α̂ (matches Ch 4 :275, C&K 4.26); rewrite preview annotation.
+- 01e F6 Sol: 9.58e−17 → 9.57e−17; 3.94″ → 3.95″; delete the two "rounding" annotation sentences.
+- 01e F7 Cassini → "γ_PPN − 1 = (2.1 ± 2.3)e−5 (Bertotti, Iess & Tortora 2003, Nature 425, 374, DOI 10.1038/nature01997; Will 2014)" — no bib key yet.
+- 01e F8 cluster |Φ|/c² ok as order of magnitude; optional soften "only … r ≲ 100 kpc".
+- Kerr ISCO: optional "(Bardeen, Press & Teukolsky 1972, DOI 10.1086/151796)". Prose tells listed in reports.
