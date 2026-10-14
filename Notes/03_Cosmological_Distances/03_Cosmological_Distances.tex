@@ -175,6 +175,25 @@ where $d\Omega^2 = d\theta^2 + \sin^2\!\theta\, d\phi^2$ and the
 \end{equation}
 
 
+\begin{derivation}[From $d\chi = dr/\sqrt{1-kr^2}$ to $r = S_k(\chi)$]
+Integrate from the origin: for $k = +1$, $\chi = \int_0^r dr'/\sqrt{1-r'^2}
+= \arcsin r$, so $r = \sin\chi$; for $k = -1$, $\chi = \int_0^r
+dr'/\sqrt{1+r'^2} = \operatorname{arcsinh} r$, so $r = \sinh\chi$; for $k=0$,
+$r = \chi$ (check B9).  Substituting $r = S_k(\chi)$ into the angular part
+$r^2 d\Omega^2$ gives eq.~\eqref{eq:rw_metric_chi}.
+\end{derivation}
+
+\begin{annotation}[Units trap: $k = \pm1$ makes $r$ and $\chi$ dimensionless]
+With $k \in \{-1,0,+1\}$ and a dimensionless $a$ normalised to $a(t_0) = 1$,
+the combination $kr^2$ forces $r$ (and $\chi$) to be measured in units of the
+present curvature radius $R_0$.  To get a distance in Mpc for $k \neq 0$, restore
+$R_0$: the transverse comoving distance is $D_M = R_0\,S_k(\chi/R_0)$ with $\chi$
+now in Mpc, and $R_0 = (\speedoflight/\Hubble)/\sqrt{|\Omega_k|}$ (from the
+definition of $\Omega_k$ below).  This is the form used in
+eq.~\eqref{eq:Dds_general}.  For the flat case used throughout Parts~IV--V,
+$S_k(\chi) = \chi$ and the issue disappears.
+\end{annotation}
+
 % =====================================================================
 \section{Christoffel Symbols for the FRW Metric}
 \label{sec:frw_christoffel}
@@ -241,6 +260,29 @@ where the dot denotes $d/dt$.
     \label{eq:christoffel_spatial}
 \end{align}
 
+
+\begin{derivation}[Four representative symbols from the diagonal formulas]
+Only $g_{11}$, $g_{22}$, $g_{33}$ depend on $t$ (through $a^2$), $g_{11}$ depends
+on $r$, $g_{22}$ on $r$, and $g_{33}$ on $r$ and $\theta$.  Every nonzero symbol
+comes from one of these derivatives.
+\begin{align*}
+  \christoffel{0}{2}{2} &= -\frac{1}{2g_{00}}\,\partial_t g_{22}
+    = -\frac{1}{2(-\speedoflight^2)}\,2a\dot a\,r^2
+    = \frac{a\dot a\,r^2}{\speedoflight^2},\\
+  \christoffel{2}{0}{2} &= \frac{1}{2g_{22}}\,\partial_t g_{22}
+    = \frac{2a\dot a\,r^2}{2a^2r^2} = \frac{\dot a}{a},\\
+  \christoffel{1}{1}{1} &= \frac{1}{2g_{11}}\,\partial_r g_{11}
+    = \frac{1-kr^2}{2a^2}\cdot\frac{2kr\,a^2}{(1-kr^2)^2} = \frac{kr}{1-kr^2},\\
+  \christoffel{1}{2}{2} &= -\frac{1}{2g_{11}}\,\partial_r g_{22}
+    = -\frac{1-kr^2}{2a^2}\cdot 2a^2 r = -r(1-kr^2).
+\end{align*}
+The remaining nine follow the same two patterns.  The script checks all
+thirteen against the general \texttt{computeChristoffel} and confirms there is
+no fourteenth (checks B1a--b).  Note the $1/\speedoflight^2$ in
+$\christoffel{0}{i}{i}$ and its absence in $\christoffel{i}{0}{i}$: the first
+has an upper time index (divide by $g_{00} = -\speedoflight^2$), the second a
+lower one.
+\end{derivation}
 \begin{exercise}
 \label{ex:frw_christoffel}
 Compute all nonvanishing Christoffel symbols of the RW metric by hand
@@ -300,6 +342,37 @@ The \textbf{Ricci scalar} is:
     \label{eq:ricci_scalar_frw}
 \end{equation}
 
+
+\begin{derivation}[$R_{00}$ and $R$ by hand]
+Use $R_{\mu\nu} = \partial_\lambda\christoffel{\lambda}{\mu}{\nu}
+- \partial_\nu\christoffel{\lambda}{\mu}{\lambda}
++ \christoffel{\lambda}{\lambda}{\sigma}\christoffel{\sigma}{\mu}{\nu}
+- \christoffel{\lambda}{\nu}{\sigma}\christoffel{\sigma}{\mu}{\lambda}$
+with $\mu = \nu = 0$ and $x^0 = t$.
+\begin{itemize}
+  \item $\christoffel{\lambda}{0}{0} = 0$ for every $\lambda$, so the first and
+        third terms vanish.
+  \item $\christoffel{\lambda}{0}{\lambda} = 3\dot a/a$ (three spatial
+        $\lambda$), so the second term is
+        $-\partial_t(3\dot a/a) = -3(\ddot a/a - \dot a^2/a^2)$.
+  \item The fourth term is $-\sum_{i,j}\christoffel{i}{0}{j}\christoffel{j}{0}{i}
+        = -3(\dot a/a)^2$.
+\end{itemize}
+Sum: $R_{tt} = -3\ddot a/a$ (check B2a).  This carries \emph{no}
+$1/\speedoflight^2$ when the time coordinate is $t$; the form
+$-3\ddot a/(\speedoflight^2 a)$ of eq.~\eqref{eq:R00} is the component with
+respect to $x^0 = \speedoflight t$, $R_{tt}/\speedoflight^2$ (check B2b).
+Either is fine on its own, but it must be paired with $g_{00}$ and $T_{00}$ in
+the \emph{same} coordinate: $g_{tt} = -\speedoflight^2$, $T_{tt} =
+\speedoflight^4\rho$ for $x^0 = t$ (used below), versus $g_{00} = -1$,
+$T_{00} = \speedoflight^2\rho$ for $x^0 = \speedoflight t$.
+
+\textit{Ricci scalar.}  The contraction is the same in either convention:
+$g^{tt}R_{tt} = (-1/\speedoflight^2)(-3\ddot a/a) = 3\ddot a/(\speedoflight^2 a)$
+and, from eq.~\eqref{eq:Rij_compact}, $g^{ij}R_{ij} = 3(a\ddot a + 2\dot a^2 +
+2k\speedoflight^2)/(\speedoflight^2 a^2)$ (check B2e).  Adding gives
+eq.~\eqref{eq:ricci_scalar_frw} (check B2d).
+\end{derivation}
 
 % =====================================================================
 \section{Einstein's Equations with a Perfect Fluid}
@@ -404,6 +477,34 @@ This is the \textbf{first Friedmann equation}.  It relates the expansion
 rate $\dot{a}/a$ to the energy density~$\rho$, spatial curvature~$k$,
 and cosmological constant~$\Lambda$.
 
+
+\begin{derivation}[The $(0,0)$ equation with consistent factors of $\speedoflight$]
+With $x^0 = t$: $R_{tt} = -3\ddot a/a$, $g_{tt} = -\speedoflight^2$,
+$T_{tt} = \speedoflight^4\rho$, and $R$ from eq.~\eqref{eq:ricci_scalar_frw}.
+\begin{align*}
+  R_{tt} - \tfrac12 R\,g_{tt} + \Lambda g_{tt}
+  &= -\frac{3\ddot a}{a}
+     + \frac{\speedoflight^2}{2}\cdot\frac{6}{\speedoflight^2}
+       \Bigl(\frac{\ddot a}{a} + \frac{\dot a^2}{a^2} + \frac{k\speedoflight^2}{a^2}\Bigr)
+     - \Lambda\speedoflight^2 \\
+  &= 3\Bigl(\frac{\dot a^2}{a^2} + \frac{k\speedoflight^2}{a^2}\Bigr)
+     - \Lambda\speedoflight^2
+  \qquad(\text{check B2f}).
+\end{align*}
+The $\ddot a$ terms cancel exactly; that is why the first Friedmann equation is a
+first-order (constraint) equation.  The right side is
+$(8\pi\Gnewton/\speedoflight^4)\,\speedoflight^4\rho = 8\pi\Gnewton\rho$.
+Dividing by~3 and moving terms gives eq.~\eqref{eq:friedmann_1} (check B2g).
+
+\textit{Bookkeeping check.}  Every term must have units of $\text{time}^{-2}$
+after division by~3: $\dot a^2/a^2$, $k\speedoflight^2/a^2$ (with $k$ in
+$\text{length}^{-2}$ when $a$ is dimensionless and $r$ is a length),
+$\Lambda\speedoflight^2$ ($\Lambda$ in $\text{length}^{-2}$), and
+$\Gnewton\rho$.  If one combines eq.~\eqref{eq:R00} (written for
+$x^0 = \speedoflight t$) with $g_{tt}$ and $T_{tt}$ (written for $x^0 = t$), the
+left side picks up a stray $1/\speedoflight^2$; the boxed result
+eq.~\eqref{eq:friedmann_1} is the consistent one.
+\end{derivation}
 \subsection{The Second Friedmann Equation}
 \label{sec:friedmann_2}
 
@@ -425,6 +526,35 @@ cause the expansion to \textit{decelerate} ($\ddot{a} < 0$), while a
 positive cosmological constant $\Lambda > 0$ causes \textit{acceleration}
 ($\ddot{a} > 0$).
 
+
+\begin{derivation}[The second Friedmann equation, all steps]
+\textit{Step 1 (spatial equation per unit $g_{ij}$).}  Divide
+$R_{ij} - \tfrac12 R g_{ij} + \Lambda g_{ij} = (8\pi\Gnewton/\speedoflight^4)\,p\,g_{ij}$
+by $g_{ij}$ (no sum; all three diagonal components give the same equation by
+isotropy).  Using eq.~\eqref{eq:Rij_compact} and eq.~\eqref{eq:ricci_scalar_frw},
+\[
+  \frac{a\ddot a + 2\dot a^2 + 2k\speedoflight^2}{\speedoflight^2a^2}
+  - \frac{3}{\speedoflight^2}\Bigl(\frac{\ddot a}{a} + \frac{\dot a^2}{a^2}
+  + \frac{k\speedoflight^2}{a^2}\Bigr) + \Lambda
+  = -\frac{1}{\speedoflight^2}\Bigl(\frac{2\ddot a}{a} + \frac{\dot a^2}{a^2}
+  + \frac{k\speedoflight^2}{a^2}\Bigr) + \Lambda
+  = \frac{8\pi\Gnewton p}{\speedoflight^4}
+\]
+(check B3a).  \textit{Step 2 (solve for $2\ddot a/a$).}
+$2\ddot a/a = -(\dot a^2/a^2 + k\speedoflight^2/a^2) + \Lambda\speedoflight^2
+- 8\pi\Gnewton p/\speedoflight^2$.
+\textit{Step 3 (eliminate $\dot a$ with the first equation).}
+$\dot a^2/a^2 + k\speedoflight^2/a^2 = 8\pi\Gnewton\rho/3 + \Lambda\speedoflight^2/3$, so
+\[
+  \frac{2\ddot a}{a} = -\frac{8\pi\Gnewton\rho}{3} - \frac{8\pi\Gnewton p}{\speedoflight^2}
+  + \frac{2\Lambda\speedoflight^2}{3}
+  \;\Longrightarrow\;
+  \frac{\ddot a}{a} = -\frac{4\pi\Gnewton}{3}\Bigl(\rho + \frac{3p}{\speedoflight^2}\Bigr)
+  + \frac{\Lambda\speedoflight^2}{3}
+\]
+(check B3b).  The curvature term drops out: curvature changes the expansion
+\emph{rate} but not, directly, the acceleration.
+\end{derivation}
 \begin{remark}
 The combination $\rho + 3p/\speedoflight^2$ in the second Friedmann
 equation is the key to understanding cosmic acceleration.  Pressure
@@ -453,6 +583,23 @@ the energy density decreases as the universe expands, with the rate
 depending on both $\rho$ and $p$.  The $3\dot{a}/a$ factor reflects
 the three-dimensional expansion.
 
+
+\begin{derivation}[Fluid equation from the two Friedmann equations]
+Write Friedmann~I as $\dot a^2 = a^2(8\pi\Gnewton\rho/3 + \Lambda\speedoflight^2/3)
+- k\speedoflight^2$ and differentiate in~$t$ (with $\rho = \rho(t)$, $\Lambda$ and
+$k$ constant):
+\[
+  2\dot a\ddot a = 2a\dot a\Bigl(\frac{8\pi\Gnewton\rho}{3} + \frac{\Lambda\speedoflight^2}{3}\Bigr)
+  + a^2\,\frac{8\pi\Gnewton}{3}\,\dot\rho .
+\]
+Insert Friedmann~II, $\ddot a = a[-\tfrac{4\pi\Gnewton}{3}(\rho + 3p/\speedoflight^2)
++ \Lambda\speedoflight^2/3]$, and divide by $2a\dot a$: the $\Lambda$ terms cancel,
+leaving $-\tfrac{4\pi\Gnewton}{3}(\rho + 3p/\speedoflight^2)
+= \tfrac{8\pi\Gnewton}{3}\rho + \tfrac{4\pi\Gnewton}{3}\,(a/\dot a)\,\dot\rho$.
+Multiply by $3/(4\pi\Gnewton)$ and rearrange:
+$\dot\rho = -3(\dot a/a)(\rho + p/\speedoflight^2)$ (check B4; the
+intermediate form with $k$ kept explicit is check B4b).
+\end{derivation}
 \begin{exercise}
 \label{ex:derive_friedmann}
 Derive the Friedmann equations~\eqref{eq:friedmann_1}
@@ -532,6 +679,23 @@ lensing calculations, we work with the \textbf{concordance
 cosmology}: $\Omegam = 0.3$, $\OmegaL = 0.7$, $\Hubble = 70$~km\,s$^{-1}$\,Mpc$^{-1}$.
 
 
+\begin{derivation}[The sum rule and the numbers above]
+Evaluate Friedmann~I at $t_0$ ($a = 1$, $\dot a/a = \Hubble$) and divide by
+$\Hubble^2$:
+$1 = 8\pi\Gnewton\rho_0/(3\Hubble^2) - k\speedoflight^2/\Hubble^2
++ \Lambda\speedoflight^2/(3\Hubble^2)$.  The three terms are, by definition,
+$\Omegam + \Omega_r$ (with $\rho_0 = \rho_{m,0} + \rho_{r,0}$),
+$\Omega_k$ and $\OmegaL$.  Note the sign: $\Omega_k > 0$ is an \emph{open}
+($k<0$) universe.
+
+\textit{Numbers for $\Hubble = 70$~km\,s$^{-1}$\,Mpc$^{-1}$
+($= 2.268\times10^{-18}$\,s$^{-1}$):}
+$d_H = \speedoflight/\Hubble = 4283$~Mpc $= 1.32\times10^{26}$~m;
+$t_H = 1/\Hubble = 13.97$~Gyr (equivalently $977.8/h$~Gyr with
+$h = \Hubble/100$); $\rho_{\rm cr,0} = 9.2\times10^{-27}$~kg\,m$^{-3}$
+(checks B8a--c).
+\end{derivation}
+
 % =====================================================================
 \section{Equations of State and Scale Factor Solutions}
 \label{sec:equations_of_state}
@@ -572,6 +736,35 @@ expansion).  For radiation ($w = 1/3$): $\rho_r \propto a^{-4}$ (volume
 dilution plus cosmological redshift of each photon's energy).  For
 $\Lambda$ ($w = -1$): $\rho_\Lambda = \text{constant}$.
 
+
+\begin{derivation}[Integrating the fluid equation]
+With $p = w\rho\speedoflight^2$ the fluid equation is
+$\dot\rho/\rho = -3(1+w)\,\dot a/a$.  Since $\dot a/a\,dt = da/a$, this is
+$d\ln\rho = -3(1+w)\,d\ln a$, which integrates (for constant $w$) to
+$\rho = \rho_0\,a^{-3(1+w)}$ (check B5a).
+\end{derivation}
+
+\begin{annotation}[When $w$ is not constant: the CPL form]
+Nothing above requires $w$ to be constant.  For a dark-energy component with
+$w = w(a)$ the same equation reads $d\ln\rho_{\rm DE}/d\ln a = -3[1+w(a)]$, so
+\[
+  \frac{\rho_{\rm DE}(a)}{\rho_{\rm DE,0}}
+  = \exp\!\left\{3\int_a^1 \frac{1 + w(a')}{a'}\,da'\right\}.
+\]
+The widely used two-parameter Chevallier--Polarski--Linder (CPL) form is
+$w(a) = w_0 + w_a(1-a)$, i.e.\ $w = w_0$ today and $w \to w_0 + w_a$ at early
+times.  The integral is elementary:
+$3\int_a^1 [(1+w_0+w_a)/a' - w_a]\,da' = -3(1+w_0+w_a)\ln a - 3w_a(1-a)$.
+With $a = 1/(1+z)$, $1 - a = z/(1+z)$, so
+\[
+  \zeta(z) \equiv \frac{\rho_{\rm DE}(z)}{\rho_{\rm DE,0}}
+  = (1+z)^{3(1+w_0+w_a)}\,\exp\!\Bigl(-\frac{3w_a z}{1+z}\Bigr)
+\]
+(checks B5b--e).  Sanity checks: $\zeta(0) = 1$; $w_a = 0$ gives
+$(1+z)^{3(1+w_0)}$; $(w_0,w_a) = (-1,0)$ gives $\zeta \equiv 1$, the cosmological
+constant.  In eq.~\eqref{eq:Hz} below one replaces $\OmegaL$ by
+$\Omega_{\rm DE}\,\zeta(z)$.
+\end{annotation}
 \subsection{Scale Factor Solutions}
 
 In a single-component universe with $k = 0$ (flat) and $\Lambda = 0$:
@@ -600,6 +793,15 @@ $H^2 = H_0^2\, \OmegaL$ (constant) gives de~Sitter expansion:
     \label{eq:a_lambda}
 \end{equation}
 
+
+\begin{derivation}[Separating variables]
+Matter: $\dot a = \Hubble\sqrt{\Omegam}\,a^{-1/2}$, so
+$a^{1/2}da = \Hubble\sqrt{\Omegam}\,dt$ and $\tfrac23 a^{3/2} = \Hubble\sqrt{\Omegam}\,t$
+(choosing $a(0) = 0$), which is eq.~\eqref{eq:a_matter}.  Radiation:
+$\dot a = \Hubble\sqrt{\Omega_r}\,a^{-1}$, so $\tfrac12 a^2 = \Hubble\sqrt{\Omega_r}\,t$,
+eq.~\eqref{eq:a_radiation} (checks B6a--b).  $\Lambda$: $\dot a/a$ constant
+integrates to an exponential.
+\end{derivation}
 
 % =====================================================================
 \section{Redshift and the Scale Factor}
@@ -649,6 +851,28 @@ $\Omega_r \approx 0$, $\Omega_k = 0$), this simplifies to:
 \end{equation}
 
 
+\begin{annotation}[The $H(z)$ used for compound-lens cosmography]
+For a flat universe with matter and CPL dark energy (radiation negligible below
+$z \sim 10$; $\Omega_r(1+z)^4/[\Omegam(1+z)^3] \approx 10^{-3}$ at $z = 3$ for
+the values above),
+\[
+  E(z) \equiv \frac{H(z)}{\Hubble}
+  = \sqrt{\Omegam(1+z)^3 + (1-\Omegam)\,\zeta(z)} ,
+\]
+with $\zeta(z)$ from the CPL annotation above.  Everything distance-like in the
+rest of this chapter is an integral of $1/E(z)$, so the cosmological parameters
+$(\Omegam, w_0, w_a)$ enter only through $E(z)$, while $\Hubble$ enters only as
+the overall scale $d_H = \speedoflight/\Hubble$.
+\end{annotation}
+
+\begin{bridge}[Which parameters a distance \emph{ratio} can see]
+Chapter~\ref{ch:cosmological_sensitivity} differentiates ratios of distances
+with respect to $w$.  Because every distance is $d_H$ times a functional of
+$E(z)$, any ratio of distances is independent of $\Hubble$ and depends only on
+the shape parameters $(\Omegam, w_0, w_a)$.  That is the property that makes
+double-source-plane ratios a probe of dark energy rather than of $\Hubble$.
+\end{bridge}
+
 % #########################################################################
 % PART B: DISTANCE MEASURES FOR LENSING
 % #########################################################################
@@ -690,6 +914,25 @@ $z$ & $\chi(z)$ (Mpc) \\
 \end{center}
 
 
+\begin{derivation}[From $ds^2 = 0$ to $\chi(z) = \int \speedoflight\,dz/H$]
+\textit{Step 1.}  Radial null ray: $0 = -\speedoflight^2dt^2 + a^2d\chi^2$, so
+$d\chi = \speedoflight\,dt/a$ (magnitude; the photon moves toward us).
+\textit{Step 2.}  Trade $t$ for $a$: $dt = da/\dot a = da/(aH)$, so
+$d\chi = \speedoflight\,da/(a^2H)$.
+\textit{Step 3.}  Trade $a$ for $z$: $a = 1/(1+z)$ gives $da = -dz/(1+z)^2$, so
+$da/a^2 = -dz$ (check B7) and $|d\chi| = \speedoflight\,dz/H(z)$.  Integrating
+from the observer ($z = 0$) to the source gives
+eq.~\eqref{eq:comoving_distance}.  In dimensionless form
+$\chi(z) = d_H\int_0^z dz'/E(z')$ with $d_H = 4283$~Mpc for
+$\Hubble = 70$.
+
+\textit{Numbers.}  The script gives $\chi = 418$, $1889$, $3304$, $5180$,
+$7776$~Mpc for $z = 0.1$, $0.5$, $1$, $2$, $5$; the table entries are these,
+rounded (all within $1\%$, check B11).  Low-$z$ sanity check: $\chi \approx
+\speedoflight z/\Hubble = 428$~Mpc at $z = 0.1$, already $2\%$ high because the
+expansion has been accelerating.
+\end{derivation}
+
 % =====================================================================
 \section{Angular Diameter Distance}
 \label{sec:angular_diameter_distance}
@@ -724,6 +967,33 @@ determine the mapping from physical deflection angles to angular
 positions on the sky.
 
 
+\begin{derivation}[Why the factor is $1/(1+z)$ and not $(1+z)$]
+Two ends of a rod of proper length $\ell$, both at comoving distance $\chi$, are
+separated by a small angle $\delta\theta$.  The light we receive now left the rod
+at the emission time $t_e$, when the scale factor was $a(t_e) = 1/(1+z)$.  The
+proper transverse distance between the ends \emph{at that time}, read off the
+angular part of eq.~\eqref{eq:rw_metric_chi}, is
+$\ell = a(t_e)\,S_k(\chi)\,\delta\theta$.  Hence
+$D_A = \ell/\delta\theta = S_k(\chi)/(1+z)$.  The rod has a fixed proper
+size; it is the \emph{comoving} separation it corresponds to that is
+$(1+z)$ times larger.
+\end{derivation}
+
+\begin{annotation}[The three $(1+z)$ placements to memorise]
+\begin{tabular}{@{}ll@{}}
+transverse comoving: & $D_M = S_k(\chi)$ (flat: $D_M = \chi$)\\
+angular diameter: & $D_A = D_M/(1+z)$\\
+luminosity: & $D_L = (1+z)\,D_M = (1+z)^2D_A$\\
+between two redshifts: & $D_A(z_1,z_2) = D_M(z_1,z_2)/(1+z_2)$ \quad (flat: $(\chi_2-\chi_1)/(1+z_2)$)
+\end{tabular}
+
+\smallskip
+In the last line the divisor is $1+z_2$, the redshift of the \emph{farther}
+object (the emitter); dividing by $1+z_1$ is the commonest slip in hand
+calculations of $\Dds$.  All four come from the same rule: proper size at
+emission $= a(t_{\rm emit})\times$ comoving size.
+\end{annotation}
+
 % =====================================================================
 \section{The Angular Diameter Distance Is Not Monotonic}
 \label{sec:DA_turnover}
@@ -750,6 +1020,21 @@ distance equals the fractional growth of the redshift factor
 (for $D_A$ see Carroll Sec.~8.5, eq.~8.125; the turnover is computed numerically in
 \mathlink{03_Cosmological_Distances/friedmann_equations.wl}{friedmann\_equations.wl}).
 
+
+\begin{derivation}[The turnover condition, and an exact case]
+\textit{Condition.}  By the quotient rule
+$dD_A/dz = [\chi'(z)(1+z) - \chi(z)]/(1+z)^2$ (check B12b), and
+$\chi'(z) = \speedoflight/H(z)$.  So the maximum is where
+$\speedoflight(1+z)/H(z) = \chi(z)$.  Solving numerically for the concordance
+model: $z_{\max} = 1.605$, $D_A^{\max} = 1748$~Mpc (check B12a).
+
+\textit{Einstein--de~Sitter, exactly.}  With $E = (1+z)^{3/2}$,
+$\chi = 2d_H[1 - (1+z)^{-1/2}]$ (check B12c), so
+$D_A = 2d_H(1-s)s^2$ with $s = (1+z)^{-1/2}$.  Maximise in $s$:
+$d[(1-s)s^2]/ds = 2s - 3s^2 = 0$ gives $s = 2/3$, i.e.\ $1 + z = 9/4$,
+$z_{\max} = 5/4$, and $D_A^{\max} = 2d_H\cdot\tfrac13\cdot\tfrac49 =
+(8/27)\,d_H = 1269$~Mpc (checks B12d--e).
+\end{derivation}
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.75\textwidth]{../Figures/03_Cosmological_Distances/DA_vs_z.pdf}
@@ -797,6 +1082,16 @@ theorem} (or \textbf{distance-duality relation}).  It holds for any
 metric theory of gravity in which photons travel on null geodesics and
 photon number is conserved.
 
+
+\begin{derivation}[The two factors of $(1+z)$ in $D_L$]
+Flat case.  Photons emitted isotropically now cross a sphere of proper area
+$4\pi D_M^2$ around the source (the comoving radius is $D_M = \chi$ and
+$a(t_0) = 1$).  Each photon arrives with energy reduced by $1/(1+z)$, and the
+arrival rate is reduced by $1/(1+z)$ (time dilation of the emission interval).
+So $F = L/[4\pi D_M^2(1+z)^2]$; comparing with eq.~\eqref{eq:DL_def},
+$D_L = (1+z)D_M = (1+z)^2D_A$.  Lensing uses only $D_A$; $D_L$ matters when
+converting a lensed flux to a luminosity.
+\end{derivation}
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.75\textwidth]{../Figures/03_Cosmological_Distances/distances_vs_z.pdf}
@@ -849,6 +1144,52 @@ parameter.  For the spatially flat case ($\Omega_k = 0$),
 eq.~\eqref{eq:Dds_general} reduces to eq.~\eqref{eq:Dds_flat}, which is
 exact and sufficient for the rest of these notes.
 
+
+\begin{derivation}[Eq.~\eqref{eq:Dds_general} is a subtraction formula]
+In an open universe ($\Omega_k > 0$) the comoving separation of the two planes is
+still $\chi_s - \chi_d$ along the line of sight, and the transverse comoving
+distance between them is $R_0\sinh[(\chi_s-\chi_d)/R_0]$ with
+$R_0 = D_H/\sqrt{\Omega_k}$.  Expand with
+$\sinh(x-y) = \sinh x\cosh y - \cosh x\sinh y$ and use
+$\cosh y = \sqrt{1 + \sinh^2 y}$:
+\[
+  R_0\sinh\frac{\chi_s-\chi_d}{R_0}
+  = D_M(z_s)\sqrt{1 + \frac{D_M^2(z_d)}{R_0^2}} - D_M(z_d)\sqrt{1 + \frac{D_M^2(z_s)}{R_0^2}},
+\]
+with $D_M = R_0\sinh(\chi/R_0)$ and $1/R_0^2 = \Omega_k/D_H^2$ (checks
+B10a--b).  Dividing by $1+z_s$ gives eq.~\eqref{eq:Dds_general}.  For a closed
+universe the same steps with $\sin$ and $\cos$ give the same formula with
+$\Omega_k < 0$ (check B10c).  For $\Omega_k \to 0$ the square roots tend to~1
+and the flat result is recovered.
+\end{derivation}
+
+\begin{derivation}[The full chain for flat $w_0w_a$CDM: $\chi(z) \to D_A(z_1,z_2)$]
+This is the calculation every double-source-plane analysis repeats.  Inputs:
+$\Omegam$, $w_0$, $w_a$, $\Hubble$; flatness, so $\Omega_{\rm DE} = 1-\Omegam$.
+\begin{enumerate}
+  \item Dark-energy density: $\zeta(z) = (1+z)^{3(1+w_0+w_a)}\exp[-3w_az/(1+z)]$
+        (CPL annotation in the equation-of-state section).
+  \item Expansion rate: $E(z) = \sqrt{\Omegam(1+z)^3 + (1-\Omegam)\zeta(z)}$.
+  \item Comoving distance: $\chi(z) = d_H\int_0^z dz'/E(z')$,
+        $d_H = \speedoflight/\Hubble$.  One numerical quadrature per redshift.
+  \item Flat, so comoving distances along one line of sight add:
+        $\chi(z_1,z_2) = \chi(z_2) - \chi(z_1)$.
+  \item Angular-diameter distance between the planes:
+        $D_A(z_1,z_2) = [\chi(z_2) - \chi(z_1)]/(1+z_2)$; with $z_1 = 0$ this is
+        the ordinary $D_A(z_2)$.
+\end{enumerate}
+In Mathematica, steps 2--5 are three lines:\\
+\texttt{EE[z\_] := Sqrt[om (1+z)\^{}3 + (1-om) (1+z)\^{}(3(1+w0+wa)) Exp[-3 wa z/(1+z)]]}\\
+\texttt{chi[z\_] := dH NIntegrate[1/EE[x], \{x, 0, z\}]}\\
+\texttt{DA[z1\_, z2\_] := (chi[z2] - chi[z1])/(1 + z2)}
+
+\smallskip
+\textit{Worked numbers} ($\Omegam = 0.3$, $\Hubble = 70$):
+$D_A(0.5, 2.0) = 1097$~Mpc for $(w_0,w_a) = (-1,0)$, reproducing the
+$\Lambda$CDM value below; $1072$~Mpc for $(-0.9, 0)$; $1047$~Mpc for
+$(-0.9, 0.3)$ (checks B14a--b).  A $0.1$ change in $w_0$ moves a single
+distance by about $2\%$.
+\end{derivation}
 \begin{remark}
 A common mistake is to write $\Dds = \Ds - \Dd$.  This is \textbf{wrong}
 in general.  Even in a flat universe, $\Dds \neq \Ds - \Dd$ because the
@@ -859,6 +1200,52 @@ cosmology, $\Dd \approx 1259$~Mpc, $\Ds \approx 1727$~Mpc, but
 $\Dds \approx 1097$~Mpc $\neq \Ds - \Dd \approx 468$~Mpc.
 \end{remark}
 
+
+\begin{annotation}[The subtraction trap, quantified]
+In a flat universe the exact relation between $\Dds$ and the naive difference is
+\[
+  \Dds - (\Ds - \Dd) = \frac{\chi_s - \chi_d}{1+z_s} - \frac{\chi_s}{1+z_s}
+  + \frac{\chi_d}{1+z_d}
+  = \Dd\,\frac{z_s - z_d}{1+z_s}
+  \qquad(\text{check B13c}),
+\]
+always positive: $\Ds - \Dd$ always \emph{underestimates} $\Dds$.  For the
+example above the gap is $1259 \times 1.5/3 = 630$~Mpc (check B13d), more than
+the ``answer'' $468$~Mpc itself.  It is not a small correction.
+
+\textit{Order matters.}  $D_A(z_1,z_2)$ is not symmetric:
+$D_A(z_2,z_1) = (\chi_2-\chi_1)/(1+z_1) = [(1+z_2)/(1+z_1)]\,D_A(z_1,z_2)$.  For
+$z_1 = 0.5$, $z_2 = 2$: $D_A(2\to0.5) = 2194$~Mpc, twice $\Dds$ (check B13b).
+Lensing always wants the observer-side redshift first, $\Dds = D_A(z_d,z_s)$.
+\end{annotation}
+
+\begin{bridge}[The DSPL ratio is a ratio of comoving distances]
+Chapter~\ref{ch:multiplane_dspl} measures
+$\Brat = D_{ls_1}D_{s_2}/(D_{s_1}D_{ls_2})$ for a lens at $z_l$ with sources at
+$z_{s_1} < z_{s_2}$.  In a flat universe, inserting
+$D_A(z_1,z_2) = (\chi_2-\chi_1)/(1+z_2)$ for all four distances, the
+$(1+z_{s_1})$ and $(1+z_{s_2})$ factors cancel in pairs:
+\[
+  \Brat = \frac{(\chi_{s_1} - \chi_l)\,\chi_{s_2}}{\chi_{s_1}\,(\chi_{s_2} - \chi_l)}
+  \qquad(\text{check B15a}).
+\]
+So $\Brat$ depends only on comoving distances, and (since every $\chi$ scales
+with $d_H$) not at all on $\Hubble$ (check B15c).  Example:
+$z_l = 0.3$, $z_{s_1} = 0.8$, $z_{s_2} = 2.0$, flat $\Lambda$CDM with
+$\Omegam = 0.3$ gives $\Brat = 0.743$, comfortably below~1 (check B15b).  Note
+how the subtraction trap would enter: using $D_{ls} = D_s - D_l$ would be wrong
+in both the numerator and the denominator.
+\end{bridge}
+
+\begin{bridge}[How weakly $\Brat$ depends on $w$]
+Chapter~\ref{ch:cosmological_sensitivity} needs $\partial\Brat/\partial w$.  For
+the example above, a centred finite difference of the full chain gives
+$d\ln\Brat/dw_0 = -0.032$ at $w_0 = -1$: moving $w_0$ from $-1$ to $-0.9$
+lowers $\Brat$ by only $0.3\%$ (check B15d), much less than the $\approx 2\%$
+change of a single distance (previous derivation box), because the dependence on
+$w$ largely cancels in the ratio.  This is why DSPL cosmography needs
+per-cent-level measurements of $\Brat$ to say anything about $w$.
+\end{bridge}
 
 % =====================================================================
 \section{The Distance Ratio for Lensing}
@@ -894,6 +1281,31 @@ halfway between the observer and the source in terms of comoving
 distance.
 
 
+\begin{annotation}[Which distance goes where]
+\begin{itemize}
+  \item $\Dds/\Ds$ converts the physical deflection $\alphahat$ to the
+        reduced deflection $\alpha$ seen on the sky.  It lies between 0 (lens
+        at the source) and 1 (lens at the observer).
+  \item $\Dd$ converts angles in the lens plane to physical lengths,
+        $\xi = \Dd\theta$; $\Ds$ does the same in the source plane.
+  \item $\Sigmacr = (\speedoflight^2/4\pi\Gnewton)\,\Ds/(\Dd\Dds)$: the
+        source distance is upstairs.  A handy numerical form is
+        $\Sigmacr = 1.663\times10^{12}\,\Msun\,\text{kpc}^{-2}\times
+        [\Ds/(\Dd\Dds)$ in Mpc$^{-1}]$, since
+        $\speedoflight^2/4\pi\Gnewton = 1.07\times10^{26}$~kg\,m$^{-1}$
+        (checks B17a--b).
+  \item $\thetaE = 2.85''\,(M/10^{12}\Msun)^{1/2}\,(\mathcal{D}/\text{Gpc}^{-1})^{1/2}$
+        (check B19e).
+\end{itemize}
+
+\textit{Careful with ``maximised''.}  At fixed $z_s$, $\mathcal{D} =
+\Dds/(\Dd\Ds)$ itself is \emph{not} maximised at intermediate $z_d$: it
+diverges as $z_d \to 0$ (where $\Dd \to 0$) and decreases monotonically to zero
+at $z_d = z_s$ (check B16d, for $z_s = 1$).  The quantity that peaks at
+intermediate $z_d$ is the efficiency $\Dd\Dds/\Ds = \Dd^2\mathcal{D}$ of the next
+section, i.e.\ the physical Einstein radius at fixed mass.
+\end{annotation}
+
 % =====================================================================
 \section{Lensing Efficiency}
 \label{sec:lensing_efficiency}
@@ -924,6 +1336,15 @@ $\Dd^2 \thetaE^2 \propto \Dd\,\Dds/\Ds = \mathcal{E}$.
     \label{fig:lensing_efficiency}
 \end{figure}
 
+
+\begin{derivation}[Where the efficiency peaks, and why not exactly halfway]
+Flat case: $\Dd\Dds/\Ds = \chi_d(\chi_s-\chi_d)/[(1+z_d)\chi_s]$ (check B16b;
+the $(1+z_s)$ cancels).  Without the $1/(1+z_d)$ this would be a parabola in
+$\chi_d$ peaking exactly at $\chi_d = \chi_s/2$.  The $1/(1+z_d)$ factor
+penalises distant lenses and pulls the peak toward the observer: for $z_s = 1$
+the maximum is at $z_d = 0.35$, where $\chi_d/\chi_s = 0.42$; for $z_s = 2$ it
+is at $z_d = 0.52$ (checks B16a, B16c).
+\end{derivation}
 
 % =====================================================================
 \section{Summary}

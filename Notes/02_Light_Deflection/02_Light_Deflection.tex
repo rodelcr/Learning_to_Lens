@@ -69,6 +69,33 @@ null geodesic orbit equation~\eqref{eq:photon_orbit} from Module~1d):
 where $\RS = 2\Gnewton M / \speedoflight^2$ is the Schwarzschild radius
 (Congdon \& Keeton eq.~3.87).
 
+
+\begin{derivation}[Where the orbit equation comes from]
+Module~1d works in units with $\speedoflight = 1$.  Restoring $\speedoflight$,
+the two Killing constants of a photon with affine parameter~$\lambda$ are
+\[
+    E = \left(1 - \frac{\RS}{r}\right)\speedoflight^2\,\dot t , \qquad
+    L = r^2\,\dot\phi , \qquad (\dot{} \equiv d/d\lambda),
+\]
+and the null condition $g_{\mu\nu}\dot x^\mu \dot x^\nu = 0$ in the equatorial
+plane reads
+\[
+    -\left(1 - \frac{\RS}{r}\right)\speedoflight^2\,\dot t^{\,2}
+    + \left(1 - \frac{\RS}{r}\right)^{-1}\dot r^{\,2} + r^2\dot\phi^{\,2} = 0 .
+\]
+\textit{Step 1 (eliminate $\dot t$, $\dot\phi$).}  Substitute
+$\dot t = E/[\speedoflight^2(1-\RS/r)]$ and $\dot\phi = L/r^2$ and multiply
+through by $(1-\RS/r)$:
+\[
+    \dot r^{\,2} = \frac{E^2}{\speedoflight^2}
+    - \frac{L^2}{r^2}\left(1 - \frac{\RS}{r}\right).
+\]
+\textit{Step 2 (chain rule).}  $d\phi/dr = \dot\phi/\dot r = (L/r^2)/\dot r$,
+which is eq.~\eqref{eq:photon_orbit_eq}; the $\pm$ is the sign of $\dot r$
+(incoming or outgoing leg).  The same chain rule applied to $t$ gives
+eq.~\eqref{eq:dt_dr} below: $dt/dr = \dot t/\dot r$.
+(Checked symbolically in \texttt{problems\_02.wl}, check A1.)
+\end{derivation}
 The physical setup is as follows.  A photon approaches a mass~$M$ from
 infinity, reaches a distance of closest approach~$r_0$, and then escapes
 back to infinity.  The total change in the azimuthal angle~$\phi$ is
@@ -89,6 +116,27 @@ weak-field limit,
 where $b$ is the impact parameter.  This is the fundamental result of
 gravitational lensing.
 
+
+\begin{annotation}[Units, size, and which angle this is]
+\textit{Dimensions.}  $\Gnewton M/\speedoflight^2$ is a length, so
+$\alphahat = 4\Gnewton M/(\speedoflight^2 b) = 2\RS/b$ is a pure number (radians).
+This is the fastest way to evaluate it: the Sun has $\RS \approx 2.95$~km, a
+$10^{12}\,\Msun$ galaxy has $\RS \approx 2.95\times10^{15}$~m, and the deflection
+is twice the Schwarzschild radius divided by the impact parameter.
+
+\textit{Size.}  For a galaxy at $b = 10$~kpc the expansion parameter is
+$m/b = \Gnewton M/(\speedoflight^2 b) \approx 4.8\times10^{-6}$, so every
+correction of relative order $m/b$ dropped in this chapter is utterly negligible
+for galaxy and cluster lensing; the weak-field formula is not an approximation
+anyone needs to worry about there.  (Numbers: checks A12a--d.)
+
+\textit{Which angle.}  $\alphahat$ is the \emph{physical} bending angle at the
+lens: the angle between the incoming and outgoing asymptotes of one ray.  It is
+\emph{not} the angular offset you see on the sky.  The lens equation of Module~4
+uses the \emph{reduced} deflection
+$\alpha = (\Dds/\Ds)\,\alphahat$ (eq.~\eqref{eq:reduced_deflection}), and that
+distance factor is where all of the cosmology of Module~3 enters.
+\end{annotation}
 
 % =====================================================================
 \section{Soldner's Newtonian Calculation (1801)}
@@ -126,6 +174,38 @@ eccentricity is large and $\delta \approx 1/e \ll 1$, giving
     \label{eq:soldner_deflection}
 \end{equation}
 
+
+\begin{derivation}[Soldner's orbit, step by step]
+\textit{Step 1 (Binet equation).}  For a central force per unit mass
+$-\Gnewton M/r^2$ with specific angular momentum $L = r^2\dot\phi$, the variable
+$u = 1/r$ obeys $u'' + u = \Gnewton M/L^2$ (primes are $d/d\phi$).  Its solution
+with periapse at $\phi = 0$ is
+\[
+    u(\phi) = \frac{\Gnewton M}{L^2}\,(1 + e\cos\phi)
+    \quad\Longleftrightarrow\quad
+    r(\phi) = \frac{p}{1 + e\cos\phi}, \quad p = \frac{L^2}{\Gnewton M}.
+\]
+\textit{Step 2 (energy fixes $e$).}  With $\dot r = -L\,u'$, the specific
+energy is $\mathcal{E} = \tfrac{1}{2}(\dot r^2 + r^2\dot\phi^2) - \Gnewton M u
+= \tfrac{L^2}{2}(u'^2 + u^2) - \Gnewton M u$.  Inserting $u(\phi)$, every
+$\phi$-dependence cancels and
+$\mathcal{E} = (\Gnewton M)^2(e^2-1)/(2L^2)$, i.e.
+$e^2 = 1 + 2\mathcal{E}L^2/(\Gnewton M)^2$.  For the corpuscle,
+$L = b\speedoflight$ (speed times lever arm at infinity) and
+$\mathcal{E} = \tfrac12\speedoflight^2$, so
+$e^2 = 1 + b^2\speedoflight^4/(\Gnewton M)^2$.
+
+\textit{Step 3 (asymptotes).}  $r \to \infty$ when $\cos\phi = -1/e$, i.e.\ at
+$\phi_\infty = \pm\arccos(-1/e) = \pm(\pi/2 + \delta)$ with $\sin\delta = 1/e$.
+The swept angle between the incoming and outgoing asymptotes is
+$2\arccos(-1/e) = \pi + 2\delta$, and the deflection is the excess over~$\pi$,
+$\alphahat_{\rm Newton} = 2\delta$.
+
+\textit{Step 4 (expand).}  For $e \gg 1$, $\delta = \arcsin(1/e) \approx 1/e
+\approx \Gnewton M/(b\speedoflight^2)$, giving
+eq.~\eqref{eq:soldner_deflection}.
+(Checks A16a--c.)
+\end{derivation}
 \begin{exercise}
 \label{ex:soldner}
 Derive eq.~\eqref{eq:soldner_deflection} in detail.  Start from the
@@ -165,6 +245,21 @@ $L$ by (Congdon \& Keeton eq.~3.90):
     \label{eq:impact_parameter}
 \end{equation}
 
+
+\begin{derivation}[Why $b = \speedoflight L/E$]
+Far from the mass the ray is a straight line at perpendicular distance~$b$ from
+the origin: $r\sin\phi = b$, or $u = 1/r = \sin\phi/b$.  Along that line
+$d\phi/dr \to b/r^2$ as $r \to \infty$ (because $\sin\phi \to 0$ and
+$\cos\phi \to \pm1$).  The orbit equation~\eqref{eq:photon_orbit_eq} gives,
+for $r \to \infty$ where the bracket tends to $E^2/\speedoflight^2$,
+\[
+    r^2\,\frac{d\phi}{dr} \;\longrightarrow\;
+    L\left(\frac{E^2}{\speedoflight^2}\right)^{-1/2} = \frac{\speedoflight L}{E}.
+\]
+Matching the two asymptotic forms gives $b = \speedoflight L/E$.  Note that $b$
+is defined entirely at infinity; it knows nothing about how close the ray
+actually gets.  (Check A2.)
+\end{derivation}
 \subsection{Distance of Closest Approach}
 \label{sec:closest_approach}
 
@@ -186,6 +281,29 @@ In the weak-field limit $m/r_0 \ll 1$, we can solve perturbatively:
 $r_0 \approx b\left(1 - m/b + \cdots\right)$, so to leading order
 $r_0 \approx b$.
 
+
+\begin{annotation}[Trap: impact parameter $b$ versus closest approach $r_0$]
+These are two different lengths.  $b$ is the perpendicular offset of the
+\emph{asymptote} (a property of the ray at infinity); $r_0$ is the turning point
+of the \emph{actual} curved ray.  Gravity pulls the ray in, so $r_0 < b$.
+Solving eq.~\eqref{eq:r0_implicit} order by order with the ansatz
+$r_0 = b + c_1 m + c_2 m^2/b$ (insert into $r_0^3 = b^2(r_0 - 2m)$ and set the
+$m^1$ and $m^2$ coefficients to zero) gives
+\[
+    r_0 = b - m - \frac{3}{2}\,\frac{m^2}{b} + \order{m^3/b^2}
+    \qquad (\text{check A3}).
+\]
+At first order in $m/b$ it does not matter which one you put in the
+denominator of $\alphahat$, because the difference is $\order{m^2/b^2}$.  At
+second order it does: the $m$ shift in $r_0$ converts the $\varepsilon = m/r_0$
+coefficient into the $m/b$ coefficient (see the annotation after
+eq.~\eqref{eq:deflection_second_order}).
+
+In the thin-lens formalism of Module~4 the ``impact parameter'' is the
+lens-plane position $\xi = \Dd\,\theta$ at which the ray crosses the lens plane;
+for galaxy lenses $m/b \sim 10^{-6}$, so $b$, $r_0$ and $\xi$ are
+interchangeable there.
+\end{annotation}
 \subsection{The Total Azimuthal Change}
 \label{sec:azimuthal_integral}
 
@@ -210,6 +328,20 @@ Substituting $b = \speedoflight L/E$ and simplifying
     \label{eq:delta_phi_simplified}
 \end{equation}
 
+
+\begin{derivation}[Pulling $L$ through the square root]
+Write the integrand of eq.~\eqref{eq:delta_phi_integral} as
+\[
+    \frac{L}{r^2}\left[\frac{E^2}{\speedoflight^2}
+    - \frac{L^2}{r^2}\Bigl(1 - \frac{\RS}{r}\Bigr)\right]^{-1/2}
+    = \frac{1}{r^2}\left[\frac{E^2}{\speedoflight^2L^2}
+    - \frac{1}{r^2}\Bigl(1 - \frac{\RS}{r}\Bigr)\right]^{-1/2},
+\]
+moving $L$ inside as $L = (L^2)^{1/2}$ (all quantities positive).  Then
+$E^2/(\speedoflight^2L^2) = 1/b^2$ by eq.~\eqref{eq:impact_parameter}, and
+$\RS = 2m$.  The lower limit $r_0$ is where the bracket vanishes,
+eq.~\eqref{eq:turning_point}.  (Check A4.)
+\end{derivation}
 \subsection{Change of Variables}
 \label{sec:substitution}
 
@@ -230,6 +362,24 @@ Using eq.~\eqref{eq:r0_implicit} to replace $r_0^2/b^2 = 1 - 2m/r_0$
     \label{eq:delta_phi_u2}
 \end{equation}
 
+
+\begin{derivation}[The substitution $u = r_0/r$ in full]
+\textit{Step 1 (Jacobian).}  $r = r_0/u$, so $dr = -(r_0/u^2)\,du$ and
+$1/r^2 = u^2/r_0^2$.  Hence $dr/r^2 = -du/r_0$; the minus sign is absorbed by
+swapping the limits ($r: r_0 \to \infty$ becomes $u: 1 \to 0$).
+
+\textit{Step 2 (bracket).}  $1/b^2 - (u^2/r_0^2)(1 - 2mu/r_0)$.  Pulling
+$1/r_0^2$ out of the bracket turns its $-1/2$ power into a factor $r_0$, which
+cancels the $1/r_0$ from Step~1:
+\[
+    \Delta\phi = 2\int_0^1 \frac{du}{\sqrt{r_0^2/b^2 - u^2 + 2m\,u^3/r_0}} .
+\]
+\textit{Step 3 (use the turning point).}  Replace $r_0^2/b^2 = 1 - 2m/r_0$:
+$1 - 2m/r_0 - u^2 + 2m u^3/r_0 = (1-u^2) - (2m/r_0)(1-u^3)$, which is
+eq.~\eqref{eq:delta_phi_u2}.  The point of the substitution is that the
+integration range is now fixed, $[0,1]$, and the whole $m$-dependence sits in one
+small parameter $\varepsilon = m/r_0$.  (Check A5.)
+\end{derivation}
 \subsection{Weak-Field Expansion}
 \label{sec:weak_field_expansion_deflection}
 
@@ -251,6 +401,24 @@ Therefore (Congdon \& Keeton eq.~3.94):
     \label{eq:delta_phi_expanded}
 \end{equation}
 
+
+\begin{derivation}[The first-order expansion, and why it is safe]
+Write $f = A - 2\varepsilon B$ with $A = 1-u^2$, $B = 1-u^3$.  Then
+\[
+    f^{-1/2} = A^{-1/2}\Bigl(1 - 2\varepsilon\frac{B}{A}\Bigr)^{-1/2}
+    = A^{-1/2}\Bigl(1 + \varepsilon\frac{B}{A} + \tfrac{3}{2}\varepsilon^2\frac{B^2}{A^2}
+      + \cdots\Bigr),
+\]
+using $(1-x)^{-1/2} = 1 + x/2 + 3x^2/8 + \cdots$ with $x = 2\varepsilon B/A$.
+The first-order term is $\varepsilon B/A^{3/2}$, eq.~\eqref{eq:integrand_expansion}.
+(Checks A6, A9b.)
+
+\textit{Is the expansion uniform?}  Both $A$ and $B$ vanish at the turning point
+$u = 1$, so one might worry that $x = 2\varepsilon B/A$ is not small there.  It
+is: $B/A = (1+u+u^2)/(1+u) \to 3/2$ as $u \to 1$ (check A6b), so
+$x \le 3\varepsilon$ on the whole interval.  The remaining singularity is the
+integrable $(1-u)^{-1/2}$ of the zeroth-order term, inherited by every order.
+\end{derivation}
 \subsection{Evaluating the Integrals}
 \label{sec:integral_evaluation}
 
@@ -295,6 +463,31 @@ trigonometric/hyperbolic substitution.  The Mathematica script verifies
 this symbolically.
 \end{remark}
 
+
+\begin{derivation}[The bare integral $=2$ by hand]
+Substitute $u = \sin\vartheta$, $du = \cos\vartheta\,d\vartheta$,
+$(1-u^2)^{3/2} = \cos^3\vartheta$, $\vartheta \in [0,\pi/2]$:
+\[
+    \int_0^1 \frac{1-u^3}{(1-u^2)^{3/2}}\,du
+    = \int_0^{\pi/2} \frac{1 - \sin^3\vartheta}{\cos^2\vartheta}\,d\vartheta .
+\]
+Split the numerator with $\sin^3\vartheta = \sin\vartheta(1-\cos^2\vartheta)$:
+\[
+    \frac{1-\sin^3\vartheta}{\cos^2\vartheta}
+    = \sec^2\vartheta - \frac{\sin\vartheta}{\cos^2\vartheta} + \sin\vartheta .
+\]
+Each piece has an elementary antiderivative ($\tan$, $\sec$ since
+$(\sec\vartheta)' = \sin\vartheta/\cos^2\vartheta$, and $-\cos$):
+\[
+    F(\vartheta) = \tan\vartheta - \sec\vartheta - \cos\vartheta
+    = \frac{\sin\vartheta - 1}{\cos\vartheta} - \cos\vartheta .
+\]
+At $\vartheta \to \pi/2$ the first fraction is $0/0$ but tends to $0$ (its
+numerator vanishes quadratically: $1-\sin\vartheta \approx \cos^2\vartheta/2$),
+and $\cos\vartheta \to 0$; so $F(\pi/2^-) = 0$.  At $\vartheta = 0$,
+$F = 0 - 1 - 1 = -2$.  The integral is $0 - (-2) = 2$, and $I_1 = 4$.
+(Checks A7a--d.)
+\end{derivation}
 \subsection{The Deflection Angle}
 \label{sec:deflection_result}
 
@@ -317,6 +510,55 @@ Since $r_0 \approx b$ to leading order and $m = \Gnewton M / \speedoflight^2$:
 This is the \textbf{Einstein deflection angle} for a point mass in the
 weak-field limit.
 
+
+\begin{derivation}[Same answer, the lensing way: integrate along the unperturbed ray]
+Module~1e (eq.~\eqref{eq:deflection_integral}) gives the weak-field deflection as
+the transverse gradient of the Newtonian potential integrated along the
+\emph{undeflected} straight line (the Born approximation):
+$\alphahat = (2/\speedoflight^2)\int |\nabla_\perp\Phi|\,dl$.  For a point mass
+the straight path at impact parameter~$b$ has $r = \sqrt{b^2 + l^2}$ and
+$\Phi = -\Gnewton M/r$, so
+$|\nabla_\perp \Phi| = |\partial_b \Phi| = \Gnewton M b/(b^2+l^2)^{3/2}$.  With
+$l = b\tan\psi$, $dl = b\sec^2\psi\,d\psi$:
+\[
+    \int_{-\infty}^{\infty}\frac{\Gnewton M b\,dl}{(b^2+l^2)^{3/2}}
+    = \frac{\Gnewton M}{b}\int_{-\pi/2}^{\pi/2}\cos\psi\,d\psi
+    = \frac{2\Gnewton M}{b},
+    \qquad
+    \alphahat = \frac{2}{\speedoflight^2}\cdot\frac{2\Gnewton M}{b}
+    = \frac{4\Gnewton M}{\speedoflight^2 b}.
+\]
+(Check A8.)  Two lessons.  (i) The exact-orbit route of this chapter and the
+straight-line route agree at first order; the straight-line route is what every
+lensing code uses.  (ii) The straight-line integral is \emph{linear} in~$\Phi$,
+hence linear in the mass: the deflection of a sum of masses is the sum of the
+deflections.  That linearity is what turns $\alphahat$ for one point into
+$\alphahat(\vecxi) = (4\Gnewton/\speedoflight^2)\int \Sigma(\vecxi')
+(\vecxi-\vecxi')/|\vecxi-\vecxi'|^2\,d^2\xi'$
+(eq.~\eqref{eq:deflection_integral_continuous}).
+\end{derivation}
+
+\begin{annotation}[Why replacing $r_0$ by $b$ is allowed here]
+Eq.~\eqref{eq:delta_phi_result} is written with $\varepsilon = m/r_0$, while the
+boxed result uses $m/b$.  Since $r_0 = b - m + \cdots$, the swap changes
+$4m/r_0$ by $4m^2/b^2$, which is of the same order as the terms already
+dropped.  The swap is consistent at first order and \emph{only} at first order;
+at second order it contributes, as shown after
+eq.~\eqref{eq:deflection_second_order}.
+\end{annotation}
+
+\begin{bridge}[Point-mass deflection inside a galaxy]
+Chapter~\ref{ch:power_law_point_mass} puts a central point mass (a
+supermassive black hole) inside a power-law galaxy.  Because the weak-field
+deflection is linear in the mass (previous box), the black hole simply adds its
+own $\alphahat_\bullet = 4\Gnewton M_\bullet/(\speedoflight^2\xi)$ to the galaxy's
+deflection at the same lens-plane position~$\xi$.  After the
+$\Dds/\Ds$ rescaling of Module~4 this becomes the familiar
+$\alpha_\bullet(\theta) = \thetaBH^2/\theta$, with
+$\thetaBH^2 = (4\Gnewton M_\bullet/\speedoflight^2)\,\Dds/(\Dd\Ds)$.  The
+$1/\xi$ divergence at the centre is the reason the point mass punctures the
+otherwise smooth deflection field.
+\end{bridge}
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.75\textwidth]{../Figures/02_Light_Deflection/deflection_geometry.pdf}
@@ -347,6 +589,23 @@ coordinates and identify the contributions from the time--time and
 space--space components of the metric.
 \end{exercise}
 
+
+\begin{annotation}[The factor of 2 as an index of refraction]
+In isotropic coordinates the weak-field metric is
+$ds^2 \approx -(1 - 2m/r)\speedoflight^2dt^2 + (1 + 2m/r)\,d\mathbf{x}^2$.
+Setting $ds^2 = 0$, the coordinate speed of light is
+$|d\mathbf{x}/dt| = \speedoflight\sqrt{(1-2m/r)/(1+2m/r)}$, so the effective
+index (Module~1e, eq.~\eqref{eq:refractive_index}) is
+\[
+    n = \sqrt{\frac{1 + 2m/r}{1 - 2m/r}} = 1 + \frac{2m}{r} + \order{m^2/r^2}
+    \qquad (\text{check A15a}).
+\]
+Half of the $2m/r$ comes from $g_{tt}$ and half from $g_{xx}$.  Ray optics
+bends a ray by $\int \nabla_\perp n\, dl$; for $n - 1 = 2m/r$ along the
+straight path this is $4m/b$, and for the ``$g_{tt}$ only'' index
+$n - 1 = m/r$ it is $2m/b$, Soldner's value (checks A15b, A15c).  Keep the
+square root: dropping it doubles the index and would double both numbers.
+\end{annotation}
 
 % =====================================================================
 \section{The Shapiro Time Delay}
@@ -388,6 +647,41 @@ In the weak-field limit ($m/r \ll 1$), expanding to first order gives
     \label{eq:travel_time_expanded}
 \end{equation}
 
+
+\begin{derivation}[From $dt/dr$ to eq.~\eqref{eq:travel_time_expanded}]
+\textit{Step 1 (exact integrand).}  $dt/dr = \dot t/\dot r$ with
+$\dot t = E/[\speedoflight^2(1-2m/r)]$ and $\dot r$ from the orbit derivation
+gives eq.~\eqref{eq:dt_dr}.  Eliminate $E$ and $L$ with the turning-point
+condition $E^2/\speedoflight^2 = (L^2/r_0^2)(1-2m/r_0)$:
+\[
+    \speedoflight\,\frac{dt}{dr} = \Bigl(1 - \frac{2m}{r}\Bigr)^{-1}
+    \left[1 - \frac{r_0^2}{r^2}\,\frac{1-2m/r}{1-2m/r_0}\right]^{-1/2}.
+\]
+\textit{Step 2 (expand to first order in $m$).}  Expanding the bracket and the
+prefactor separately and collecting,
+\[
+    \speedoflight\,\frac{dt}{dr} = \frac{r}{\sqrt{r^2-r_0^2}}
+    \left[1 + \frac{2m}{r} + \frac{m\,r_0}{r(r+r_0)}\right] + \order{m^2}
+    \qquad (\text{check A13a}).
+\]
+\textit{Step 3 (integrate term by term from $r_0$ to $R$).}
+\begin{align*}
+    \int_{r_0}^{R}\frac{r\,dr}{\sqrt{r^2-r_0^2}} &= \sqrt{R^2-r_0^2},\\
+    \int_{r_0}^{R}\frac{2m\,dr}{\sqrt{r^2-r_0^2}} &=
+      2m\ln\frac{R+\sqrt{R^2-r_0^2}}{r_0} \quad(= 2m\,\mathrm{arccosh}(R/r_0)),\\
+    \int_{r_0}^{R}\frac{m\,r_0\,dr}{(r+r_0)\sqrt{r^2-r_0^2}} &=
+      m\sqrt{\frac{R-r_0}{R+r_0}} ,
+\end{align*}
+the last one verified by differentiating the right side (checks A13b--d).
+Dividing by $\speedoflight$ gives eq.~\eqref{eq:travel_time_expanded}.
+
+\textit{Step 4 (what is ``excess'').}  The first term is the flat-space time
+along a straight line from closest approach to radius~$R$.  For $R \gg r_0$
+the excess is
+$\delta T(R) \approx (2m/\speedoflight)\ln(2R/r_0) + m/\speedoflight$
+(check A14a): logarithmically divergent in~$R$, which is why only
+\emph{differences} of delays are physical.
+\end{derivation}
 \subsection{The Two Components of Time Delay}
 \label{sec:delay_components}
 
@@ -411,6 +705,25 @@ $\theta_{\mathrm{ref}}$ adds the same constant to $\Delta T$ for every
 image, so it drops out of the measurable delay \emph{differences}
 between images.
 
+
+\begin{annotation}[Conventions hidden in eq.~\eqref{eq:time_delay_total}]
+\textit{The $(1+z_d)$ factor.}  Eq.~\eqref{eq:time_delay_total} is the delay in
+the rest frame of the lens.  The delay an observer measures is stretched by
+cosmological time dilation, $\Delta t_{\rm obs} = (1+z_d)\,\Delta T$; Module~6
+writes it with this factor in front (eq.~\eqref{eq:time_delay_function}).
+Forgetting it biases $\Hubble$ by $(1+z_d)$, i.e.\ by tens of per cent.
+
+\textit{Where the Shapiro coefficient comes from.}  Write the point-mass Fermat
+potential as $(\Dd\Ds/\speedoflight\Dds)[\tfrac12(\theta-\beta)^2 -
+\thetaE^2\ln|\theta|]$.  With $\thetaE^2 = (4\Gnewton M/\speedoflight^2)\,\Dds/(\Dd\Ds)$
+the distance factors cancel in the second term, leaving exactly
+$(4\Gnewton M/\speedoflight^3)\ln(1/|\theta|)$ (check A18): the Shapiro term
+knows nothing about cosmology, while the geometric term carries all of it.
+
+\textit{The reference angle.}  $\ln$ needs a dimensionless argument;
+$\theta_{\rm ref}$ supplies the unit.  Changing it adds a constant to every image's
+delay, the time-delay analogue of the freedom to add a constant to a potential.
+\end{annotation}
 \begin{remark}
 \textbf{Geometric delay:} The lensed ray follows a longer path through
 space than the direct (unlensed) ray.  This is a purely geometric effect
@@ -450,6 +763,15 @@ bouncing off a planet at distance~$R$ from the Sun.
 \end{exercise}
 
 
+\begin{annotation}[Which formula gives 240\,$\mu$s]
+With $4\Gnewton\Msun/\speedoflight^3 = 19.7~\mu$s and
+$\ln(4R_\oplus R/r_0^2) = 11.18$ for Mercury and a grazing ray, the leading-log
+formula of part~(a) gives $19.7 \times 11.18 \approx 220~\mu$s.  The quoted
+$240~\mu$s is $19.7 \times (11.18 + 1)$: it includes the non-logarithmic
+``$+1$'' that Exercise~\ref{ex:shapiro_radar} keeps (derived in the solutions).
+(Checks A14c--f.)
+\end{annotation}
+
 % =====================================================================
 \section{Deflection by the Sun}
 \label{sec:deflection_sun}
@@ -478,6 +800,14 @@ This is the Newtonian value $0.875''$ \textit{doubled} by general relativity.
 Eddington's measurements confirmed the GR prediction (within the
 substantial error bars of the time), making Einstein a global celebrity.
 
+
+\begin{annotation}[Mental arithmetic for eq.~\eqref{eq:deflection_sun}]
+Use $\alphahat = 2\RS/b$: $\RS(\Msun) = 2.95$~km and $\Rsun = 6.957\times10^5$~km,
+so $\alphahat_\odot = 5.91/(6.957\times 10^5) = 8.49\times10^{-6}$~rad; one
+radian is $206\,265''$, giving $1.75''$.  The Newtonian (Soldner) value is
+exactly half, $4.25\times10^{-6}$~rad $= 0.876''$, usually quoted as $0.87''$
+or $0.88''$.  (Checks A12a--b, A16d.)
+\end{annotation}
 \begin{example}
 \textbf{Deflection by Jupiter.}  Jupiter has $M_J = 1.898 \times 10^{27}$~kg
 and $R_J = 7.149 \times 10^{7}$~m.  The deflection for light grazing
@@ -554,6 +884,38 @@ develop this quantitatively in Modules~4--5.
 \end{remark}
 
 
+\begin{derivation}[Eq.~\eqref{eq:einstein_radius_deflection} from $\alphahat$]
+In angular coordinates the lens equation (Module~4) is
+$\beta = \theta - (\Dds/\Ds)\,\alphahat(\Dd\theta)$.  For a point mass
+$\alphahat(\xi) = 4\Gnewton M/(\speedoflight^2\xi)$ and $\xi = \Dd\theta$:
+\[
+    \beta = \theta - \frac{\Dds}{\Ds}\,\frac{4\Gnewton M}{\speedoflight^2\Dd\,\theta}.
+\]
+A source exactly behind the lens ($\beta = 0$) is imaged onto the ring
+$\theta^2 = (4\Gnewton M/\speedoflight^2)\,\Dds/(\Dd\Ds)$, which is
+eq.~\eqref{eq:einstein_radius_deflection} (check A17).  For
+$M = 10^{12}\,\Msun$, $z_d = 0.3$, $z_s = 1$ in the concordance cosmology the
+distances of Module~3 give $\thetaE \approx 2.4''$
+(Exercise~\ref{ex:einstein_radius_numerical}); ``$\sim 1''$'' above is an
+order-of-magnitude statement.
+\end{derivation}
+
+\begin{bridge}[One physical deflection, two source planes]
+In a double-source-plane lens (Chapter~\ref{ch:multiplane_dspl}) light from two
+sources at $z_{s1} < z_{s2}$ passes the same main deflector.  The physical
+deflection $\alphahat(\xi)$ at a given lens-plane position is the same for both;
+only the distance factor differs.  For a common $\alphahat$ the ratio of the two
+reduced deflections is
+\[
+    \frac{\alpha_1}{\alpha_2} = \frac{D_{ls_1}/D_{s_1}}{D_{ls_2}/D_{s_2}}
+    = \frac{D_{ls_1}D_{s_2}}{D_{s_1}D_{ls_2}} \equiv \Brat
+    \qquad(\text{check A19}),
+\]
+the cosmology-dependent ratio of four angular-diameter distances that the
+compound-lens chapters measure.  Module~3 shows how to compute each of the
+four.
+\end{bridge}
+
 % =====================================================================
 \section{Exact vs.\ Weak-Field Deflection}
 \label{sec:exact_vs_approx}
@@ -591,6 +953,40 @@ spirals into the mass) is $b_{\mathrm{crit}} = 3\sqrt{3}\,m =
 3\sqrt{3}\,\RS/2$.  This corresponds to the photon sphere derived in
 Module~1d.
 
+
+\begin{derivation}[Where $15\pi/4$ and $3\sqrt{3}\,m$ come from]
+\textit{Second order in $\varepsilon = m/r_0$.}  Keep the
+$\tfrac32\varepsilon^2B^2/A^{5/2}$ term of the expansion (derivation box after
+eq.~\eqref{eq:delta_phi_expanded}).  Its integral is finite (the integrand
+behaves as $(1-u)^{-1/2}$ at $u=1$) and
+\[
+    2\int_0^1 \frac{3}{2}\,\frac{(1-u^3)^2}{(1-u^2)^{5/2}}\,du
+    = \frac{15\pi}{4} - 4,
+    \qquad
+    \alphahat = 4\varepsilon + \Bigl(\frac{15\pi}{4} - 4\Bigr)\varepsilon^2 + \cdots
+\]
+\textit{Convert to $m/b$.}  With $r_0 = b - m - \tfrac32 m^2/b$,
+$\varepsilon = (m/b)(1 + m/b + \cdots)$, so $4\varepsilon = 4m/b + 4(m/b)^2 +
+\cdots$.  The $+4(m/b)^2$ cancels the $-4$, leaving
+eq.~\eqref{eq:deflection_second_order}: $\alphahat = 4m/b + (15\pi/4)(m/b)^2$
+(checks A9a--c).
+
+\textit{Capture.}  The turning-point condition gives
+$b^2 = r_0^3/(r_0 - 2m)$.  A ray with impact parameter $b$ has a turning point
+only if this equation has a root; $b^2(r_0)$ has its minimum where
+$d(b^2)/dr_0 = 0$, at $r_0 = 3m$ (the photon sphere), with
+$b_{\rm crit}^2 = 27m^2$, i.e.\ $b_{\rm crit} = 3\sqrt3\,m$ (checks A11a--b).
+\end{derivation}
+
+\begin{annotation}[A rule of thumb for the error of $4m/b$]
+The ratio of the second-order to the first-order term is
+$(15\pi/16)(m/b) = (15\pi/32)/(b/\RS)$.  This predicts a 1\% error at
+$b/\RS \approx 147$ and $14.7\%$ at $b/\RS = 10$; the exact numerical errors are
+$1.0\%$ (crossing $1\%$ between $b/\RS = 140$ and $150$) and $15.3\%$.  So the
+first neglected term accounts for almost all of the error, and the slow
+convergence quoted in the caption of Fig.~\ref{fig:exact_vs_approx} is just the
+large coefficient $15\pi/16 \approx 2.9$.  (Checks A10a--c.)
+\end{annotation}
 \begin{exercise}
 \label{ex:exact_vs_approx}
 For a photon passing a Schwarzschild black hole at impact parameter
