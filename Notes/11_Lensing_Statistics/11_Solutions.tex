@@ -34,6 +34,21 @@ which is Eq.~\eqref{eq:point_ymu}.  Since $\mu_p$ decreases with $y$, the
 condition $\mu_p > \mu$ is $y < y(\mu)$, so the cross-section is
 $\sigma(\mu) = \pi\thetaE^2\,y^2(\mu)$. \checkmark
 
+\begin{derivation}[Exercise~\ref{ex:point_cross}(a), the quadratic formula step]
+With $a = \mu^2-1$, $b = 4(\mu^2-1)$, $c = -4$, the discriminant is
+\begin{equation*}
+    b^2 - 4ac = 16(\mu^2-1)^2 + 16(\mu^2-1) = 16\,\mu^2(\mu^2-1)\,,
+\end{equation*}
+so $\sqrt{b^2-4ac} = 4\mu\sqrt{\mu^2-1}$ and
+\begin{equation*}
+    u = \frac{-4(\mu^2-1) \pm 4\mu\sqrt{\mu^2-1}}{2(\mu^2-1)}
+    = -2 \pm \frac{2\mu}{\sqrt{\mu^2-1}}\,.
+\end{equation*}
+The lower sign gives $u < -2$, impossible for $u = y^2$, so only the upper
+root survives.  Squaring both sides of $\mu_p(y) = \mu$ is safe because
+both sides are positive.
+\end{derivation}
+
 \textbf{(b)} For $\mu \gg 1$, expand
 $\mu/\sqrt{\mu^2-1} = (1-\mu^{-2})^{-1/2} = 1 + \tfrac12\mu^{-2} + \cdots$,
 so $y^2(\mu) = 2(\mu/\sqrt{\mu^2-1} - 1) \to \mu^{-2}$.  Equivalently
@@ -41,6 +56,27 @@ $\lim_{\mu\to\infty}\mu^2\,y^2(\mu) = 1$, hence $y^2 \sim 1/\mu^2$ and
 $\sigma \propto \mu^{-2}$. \checkmark  Since the differential probability
 is $p(\mu)\,d\mu \propto -\,(d\sigma/d\mu)\,d\mu$, this cross-section is
 the integral form of the universal $p(\mu)\propto\mu^{-3}$ tail.
+
+\begin{derivation}[Exercise~\ref{ex:point_cross}(b), one more term and the differential law]
+Binomial series: $(1-\mu^{-2})^{-1/2} = 1 + \tfrac12\mu^{-2} +
+\tfrac38\mu^{-4} + \dots$, so
+$y^2(\mu) = \mu^{-2} + \tfrac34\mu^{-4} + \order{\mu^{-6}}$.  Differentiating
+the leading term, $-d(y^2)/d\mu \to 2\mu^{-3}$, which is the $\mu^{-3}$ law.
+At the other end, $y^2(\mu) = 1$ at $\mu = 3/\sqrt5 = 1.342$: a source on the
+Einstein ring has $A = 1.34$, the threshold used throughout
+Module~\ref{ch:microlensing}.
+\end{derivation}
+
+\begin{annotation}[Cross-section is not optical depth]
+$\sigma(\mu)$ is an \emph{area} (a solid angle in the source plane) belonging
+to \emph{one} lens.  It is not a probability.  The probability that a random
+source is magnified by more than $\mu$ is the optical depth, the sum of
+these areas over all lenses along the line of sight per unit sky area
+(Eq.~\eqref{eq:optical_depth}).  As long as the cross-sections do not
+overlap, the shape of $\sigma(\mu)$ carries over to $\tau(>\mu)$; the
+normalisation comes from the lens population and the cosmological volume.
+Writing ``$P(>\mu) = y^2(\mu)$'' drops that factor.
+\end{annotation}
 
 % ----- Exercise 11.2 -----
 \subsection*{Exercise~\ref{ex:sis_stats}: SIS Flux Ratio and Magnification}
@@ -63,6 +99,15 @@ flux ratio smaller than $r$ restricts the source to $y < (r-1)/(r+1) < 1$,
 so the cross-section is bounded by the full multiple-imaging disk,
 $\sigma \le \pi\thetaE^2$. \checkmark
 
+\begin{derivation}[Exercise~\ref{ex:sis_stats}, inverting the flux ratio]
+From $(1+y)/(1-y) = r$: multiply out, $1 + y = r - ry$, so
+$y(1+r) = r-1$ and $y = (r-1)/(r+1)$.  The cross-section in units of the
+multiple-imaging disk is $\sigma/(\pi\thetaE^2) = [(r-1)/(r+1)]^2$; e.g.\
+$r = 10$ gives $y < 9/11$ and $\sigma = 0.669\,\pi\thetaE^2$.  As
+in Exercise~\ref{ex:magnification_high_z}, the absolute values matter: the signed magnifications sum
+to $\mu_+ + \mu_- = 2$, not $2/y$.
+\end{derivation}
+
 % ----- Exercise 11.3 -----
 \subsection*{Exercise~\ref{ex:bias_null}: The $\beta=1$ Null of Magnification Bias}
 
@@ -78,9 +123,41 @@ At $\beta = 1$ the numerator is
 $\int \mu\,p(\mu)\,d\mu = \langle\mu\rangle$ by the definition of the mean
 magnification, so $N(>S) = N_0(>S)$ for \emph{any} $p(\mu)$. \checkmark
 
+\begin{derivation}[Exercise~\ref{ex:bias_null}, the substitution]
+The only step is pulling $S$ out of the power law:
+$N_0(>S/\mu) = A\,(S/\mu)^{-\beta} = A\,S^{-\beta}\mu^{\beta}$, rule
+$(S/\mu)^{-\beta} = S^{-\beta}\mu^{\beta}$.  For a constant $\mu$ (a single
+lens, $p = \delta(\mu - \mu_0)$) the factor is $\mu_0^{\beta-1}$.  With the
+high-magnification tail $p \propto \mu^{-3}$, the tail of the bias
+integral is $\int^\infty \mu^{\beta-3}\,d\mu$, which equals $1/(2-\beta)$
+from $\mu = 1$ and diverges as $\beta \to 2$.  This is why the main text says
+the bias ``grows sharply as $\beta \to 2$''.
+\end{derivation}
+
+\begin{annotation}[Two meanings of $\beta$]
+In this exercise $\beta$ is the \emph{slope of the source counts}.  It is not
+the source position $\beta$ of the lens equation.  Module~\ref{ch:weak_lensing}
+calls the same slope $\alpha$ (and there $\alpha$ is not a deflection).  The
+null at slope 1 reappears there: the number-count method of breaking the
+mass-sheet degeneracy has no signal for $\alpha = 1$ counts.
+\end{annotation}
+
 \textbf{Physical reason:} magnification does two competing things.  It
 brightens each source by $\mu$ (raising it above threshold), but it also
 stretches the sky by $\mu$, diluting the surface density of sources by
 $1/\mu$.  For counts with logarithmic slope $\beta = 1$ (equal flux per
 logarithmic interval) these effects cancel exactly; steeper counts
 ($\beta>1$) are net-boosted, flatter counts ($\beta<1$) net-depleted.
+
+\begin{bridge}[What a lens statistic constrains: Chapter~\ref{ch:cosmological_sensitivity}]
+An optical depth such as $\tau \propto n_{\mathrm{com}}(\sigma_v/\speedoflight)^4
+\times(\text{volume factor})$ mixes the cosmology with the lens population.
+A change in the number density or the velocity-dispersion normalisation can
+mimic a change in the volume factor, so counts constrain a degenerate
+combination.  Chapter~\ref{ch:cosmological_sensitivity} looks at a statistic
+of a different kind: the ratio of two Einstein radii in one double-source-plane
+lens.  For an isothermal main lens $\sigma_v$ cancels in that ratio,
+$n_{\mathrm{com}}$ never enters, and what remains is a ratio of
+angular-diameter distances (corrected for the mass of the first source).  That chapter asks which direction in
+cosmological-parameter space such a ratio actually pins down.
+\end{bridge}

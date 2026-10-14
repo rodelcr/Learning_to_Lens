@@ -45,6 +45,22 @@ scale.  (Broadly distributed source redshifts also break it mildly, since
 no single $\lambda$ leaves $g$ invariant for all source redshifts
 simultaneously.)
 
+\begin{derivation}[Exercise~\ref{ex:wl_mst}(c), where $1 + 2(\alpha-1)\kappab$ comes from]
+Lensing maps a patch of sky of area $\Omega$ onto an area $\mu\Omega$ and
+brightens each source by $\mu$.  For counts $n_0(>S) \propto S^{-\alpha}$,
+\begin{equation*}
+    n(>S) = \frac{1}{\mu}\,n_0\!\left(>\frac{S}{\mu}\right)
+    = \frac{1}{\mu}\,\mu^{\alpha}\,n_0(>S) = \mu^{\alpha-1}\,n_0(>S)\,.
+\end{equation*}
+In the weak limit, $\mu^{-1} = (1-\kappab)^2 - |\gammaL|^2 = 1 - 2\kappab +
+\order{\kappab^2, \gammaL^2}$, so $\mu \simeq 1 + 2\kappab$.  The binomial
+rule $(1+\epsilon)^p \simeq 1 + p\epsilon$ then gives
+$n/n_0 \simeq 1 + 2(\alpha-1)\kappab$.  Note the null: for $\alpha = 1$ the
+counts do not respond to $\mu$ at all (the same cancellation as
+Exercise~\ref{ex:bias_null}), so this route to $\lambda$ needs a source
+population whose count slope is far from~1.
+\end{derivation}
+
 \textbf{(d)} A uniform sheet $\kappab(\vectheta) = 1-\lambda$ (constant)
 has deflection $\vecalpha = \nabla\psiL$ with
 $\nabla^2\psiL = 2\kappab = 2(1-\lambda)$, giving
@@ -53,6 +69,28 @@ $\gammaL = \tfrac{1}{2}(\psiL_{,11} - \psiL_{,22}) + \mathrm i\psiL_{,12}
 = 0$: a uniform convergence produces \textbf{no shear}.  Adding it to a
 lens contributes the constant $(1-\lambda)$ to $\kappab$ (hence ``mass
 sheet'') while leaving the observable $g$ unchanged. \checkmark
+
+\begin{annotation}[Reduced shear, shear, and what ``measuring the shear'' means]
+Under the transform, $\gammaL' = \lambda\gammaL$: the shear itself
+\emph{does} change.  Only $g$ is invariant, and only $g$ is measured.  Writing
+``the measured shear $\gammaL$'' and then using $\gammaL = \bar\kappa -
+\kappab$ hides the degeneracy.  It also hides a bias wherever $\kappab$ is not
+small.  For an SIS at $\theta = 2\thetaE$, $\kappab = \gammaL = 1/4$ but
+$g = (1/4)/(3/4) = 1/3$, so treating $g$ as $\gammaL$ there is a 33\% error.
+That is the regime of cluster outskirts and of galaxy--galaxy lensing close to
+the lens.
+\end{annotation}
+
+\begin{bridge}[The same transform in strong lensing: Chapter~\ref{ch:msd_kinematics}]
+The transform of part~(a) acts on the deflection as
+$\vecalpha' = \lambda\vecalpha + (1-\lambda)\vectheta$.  It sends the source
+position $\vecbeta \to \lambda\vecbeta$ and leaves every image position and
+flux \emph{ratio} unchanged.  So strong-lens image configurations share the
+blind spot that weak-lensing shapes have through $g$.
+Chapter~\ref{ch:msd_kinematics} follows this degeneracy into multi-plane
+lenses and shows how stellar kinematics, which respond to the true $\kappab$
+rather than to $g$, fix~$\lambda$.
+\end{bridge}
 
 % ----- Exercise 12.2 -----
 \subsection*{Exercise~\ref{ex:wl_tangential}: Tangential Shear and the Projected Mass}
@@ -79,6 +117,17 @@ tangential shear falls as $\theta^{-2}$ (its projected mass is fixed),
 whereas the SIS falls only as $\theta^{-1}$ because the SIS keeps
 accumulating projected mass linearly with radius
 ($M_{\mathrm{2D}} \propto \theta$).
+
+\begin{derivation}[Exercise~\ref{ex:wl_tangential}(b), why $\bar\kappa = \thetaE^2/\theta^2$]
+For a point mass the projected mass inside any $\theta > 0$ is all of $M$,
+so $\bar\kappa = M/(\pi\Dd^2\theta^2\Sigmacr)$.  Insert
+$\Sigmacr = \speedoflight^2\Ds/(4\pi\Gnewton\Dd\Dds)$:
+\begin{equation*}
+    \frac{M}{\pi\Dd^2\Sigmacr} = \frac{4\Gnewton M}{\speedoflight^2}\,
+    \frac{\Dds}{\Dd\Ds} = \thetaE^2\,,
+\end{equation*}
+which is the point-mass Einstein radius of Module~\ref{ch:lens_equation}.
+\end{derivation}
 
 \textbf{(c)} Multiply eq.~\eqref{eq:wl_mean_tangential} by $\Sigmacr$ and
 use $\kappab = \Sigma/\Sigmacr$, $\bar\kappa = \bar\Sigma/\Sigmacr$:
@@ -111,6 +160,25 @@ $x = 10$.  This bend near the scale radius is the signature that
 distinguishes NFW from the single power law of the SIS.  It is a change of
 slope, not a maximum (Fig.~\ref{fig:wl_tangential};
 checked in \texttt{problems\_12.wl}).
+
+\begin{derivation}[Exercise~\ref{ex:wl_tangential}(d), the two asymptotes]
+\textit{Small $x$.}  Taylor-expand $g(x) = \operatorname{arccosh}(1/x)/
+\sqrt{1-x^2} = \ln(2/x) + \order{x^2\ln x}$.  Then
+$\kappab/\kappa_s = f(x) = (1-g)/(x^2-1) \to g - 1 = \ln(2/x) - 1$, and
+(carrying the expansion of $\ln(x/2) + g$ to order $x^2$)
+$\bar\kappa/\kappa_s \to \ln(2/x) - \tfrac12$.  Both diverge like $\ln(2/x)$.
+Subtracting,
+\begin{equation*}
+    \frac{\gammaL_{\mathrm t}}{\kappa_s}
+    \to \left[\ln\frac2x - \frac12\right] - \left[\ln\frac2x - 1\right]
+    = \frac12\,.
+\end{equation*}
+\textit{Large $x$.}  Use $\arctan\sqrt{x^2-1} \to \pi/2 - 1/x$, so
+$g(x) = \pi/(2x) - 1/x^2 + \order{x^{-3}}$ and $f(x) = 1/x^2 + \order{x^{-3}}$.
+Hence $\bar\kappa/\kappa_s = (2/x^2)[\ln(x/2) + \order{1/x}]$ and
+$\gammaL_{\mathrm t}/\kappa_s \simeq (2/x^2)\ln(x/2) - 1/x^2
+= (2/x^2)[\ln(x/2) - \tfrac12]$, the form quoted.
+\end{derivation}
 
 % ----- Exercise 12.3 -----
 \subsection*{Exercise~\ref{ex:wl_ks}: The Kaiser--Squires Kernel}
@@ -196,6 +264,16 @@ $\chi = 2\epsilon/(1+|\epsilon|^2)$ (check:
 $2|\epsilon|/(1+|\epsilon|^2)$ with $|\epsilon| = (1-r)/(1+r)$ gives
 $(1-r^2)/(1+r^2) = |\chi|$). \checkmark
 
+\begin{derivation}[Exercise~\ref{ex:wl_ellipticity}(b), the ``one finds'' step]
+Put $|\chi|$ over a common denominator:
+\begin{equation*}
+    1 - |\chi|^2 = \frac{(1+r^2)^2 - (1-r^2)^2}{(1+r^2)^2}
+    = \frac{4r^2}{(1+r^2)^2}\,,
+\end{equation*}
+using the difference of squares $(1+r^2)^2 - (1-r^2)^2 = (2)(2r^2)$.  The
+positive square root (since $0 < r \le 1$) is $2r/(1+r^2)$.
+\end{derivation}
+
 \textbf{(c)} As $r \to 1$ write $r = 1 - \delta$ with $\delta \ll 1$.
 Then $|\epsilon| = \delta/(2-\delta) \approx \delta/2$ and
 $|\chi| = (2\delta - \delta^2)/(2 - 2\delta + \delta^2) \approx \delta$,
@@ -204,6 +282,24 @@ $\langle\epsilon\rangle = g \approx \gammaL$ in the weak limit
 (eq.~\ref{eq:wl_weak_chain}), and therefore
 $\langle\chi\rangle/2 \approx \langle\epsilon\rangle \approx \gammaL$.
 \checkmark
+
+\begin{derivation}[Exercise~\ref{ex:wl_ellipticity}(c), how good is $|\chi| \approx 2|\epsilon|$?]
+Exactly, with $r = 1-\delta$: $|\epsilon| = \delta/(2-\delta)$ and
+$|\chi| = (2\delta-\delta^2)/(2-2\delta+\delta^2)$.  Expanding both to second
+order, $|\chi| = \delta + \delta^2/2 + \order{\delta^3}$ and
+$2|\epsilon| = \delta + \delta^2/2 + \order{\delta^3}$.  They agree through
+\emph{second} order, so the factor 2 is better than the leading-order
+argument suggests.
+\end{derivation}
+
+\begin{annotation}[Which ellipticity, which shear]
+$\langle\epsilon\rangle = g$ holds exactly (for $|g| \le 1$) whenever the
+intrinsic orientations are random, eq.~\eqref{eq:wl_expectation_eps}.
+$\langle\chi\rangle \approx 2g$ holds only in the weak limit, and beyond it
+the mean of $\chi$ depends on the distribution of intrinsic ellipticities.  Mixing the two definitions gives a
+factor-2 error in the mass, and mixing $g$ with $\gammaL$ gives a
+$(1-\kappab)^{-1}$ error.  Before using a catalogue, check its convention.
+\end{annotation}
 
 % ----- Exercise 12.5 -----
 \subsection*{Exercise~\ref{ex:wl_cosmic}: Cosmic-Shear Correlation Functions}
@@ -245,6 +341,21 @@ too much power on large scales.  A realistic $P_\kappa$ turns over at
 small $\ell$, which keeps $\xi_\pm$ finite.  In general, a scale-free
 $P_\kappa$ gives a scale-free (power-law) correlation function.
 \checkmark
+
+\begin{derivation}[Exercise~\ref{ex:wl_cosmic}(c), the two integrals]
+\textit{Bessel integral.}  Substitute $x = \ell\theta$, $d\ell = dx/\theta$:
+$\int_0^\infty J_\nu(\ell\theta)\,d\ell = \theta^{-1}\int_0^\infty
+J_\nu(x)\,dx = 1/\theta$, using the standard result $\int_0^\infty J_\nu(x)\,dx
+= 1$ for $\nu > -1$ (here $\nu = 0$ and $4$).  So $\xi_\pm = A/(2\pi\theta)$.
+
+\textit{Consistency integral.}  Term by term,
+$\int_\theta^\infty d\vartheta/\vartheta^2 = 1/\theta$ and
+$\int_\theta^\infty d\vartheta/\vartheta^4 = 1/(3\theta^3)$, so
+\begin{equation*}
+    \frac{A}{2\pi}\left[\frac{4}{\theta} - 12\theta^2\cdot\frac{1}{3\theta^3}
+    \right] = \frac{A}{2\pi}\left[\frac4\theta - \frac4\theta\right] = 0\,.
+\end{equation*}
+\end{derivation}
 
 \textbf{(d)} The aperture-mass dispersion
 $\langle M_{\mathrm{ap}}^2\rangle(\theta)$ is $P_\kappa$ filtered by
