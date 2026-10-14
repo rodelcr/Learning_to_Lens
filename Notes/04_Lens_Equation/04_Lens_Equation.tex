@@ -17,11 +17,11 @@ $\vec\theta$ corresponding to a single source position $\vec\beta$.}
 \end{quote}
 
 \noindent
-In Module~\ref{ch:light_deflection} we derived the deflection angle
+In Chapter~\ref{ch:light_deflection} we derived the deflection angle
 $\alphahat = 4\Gnewton M / (\speedoflight^2 b)$ for a point mass, and
-in Module~\ref{ch:linearized_gravity} we showed that deflection angles
+in Chapter~\ref{ch:linearized_gravity} we showed that deflection angles
 from multiple masses superpose in the weak-field limit.  In
-Module~\ref{ch:cosmological_distances} we introduced the angular diameter
+Chapter~\ref{ch:cosmological_distances} we introduced the angular diameter
 distances $\Dd$, $\Ds$, and $\Dds$ that describe the geometry of the
 observer--lens--source system at cosmological separations.
 
@@ -120,7 +120,7 @@ $\Sigma(\vecxi)$ survives. Two lenses with very different $\rho(\vecxi, z)$ but
 the same $\Sigma$ are indistinguishable to lensing. That is why lensing
 measures projected masses, and it is why extra information such as
 stellar kinematics is needed to see the third dimension
-(Module~\ref{ch:galaxy_lensing}).
+(Chapter~\ref{ch:galaxy_lensing}).
 
 The thin-screen idealization applies to \emph{each} deflector separately. When two
 deflectors sit at very different distances (a lens galaxy and a second
@@ -181,7 +181,7 @@ these distances do not add. For the fiducial lens of this chapter
 $\Ds - \Dd = 1652 - 919 = 733$~Mpc, while $\Dds = 1055$~Mpc. In a flat
 universe the correct combination is
 $(1+z_s)\,\Dds = (1+z_s)\,\Ds - (1+z_d)\,\Dd$
-(differences of comoving distances, Module~\ref{ch:cosmological_distances}).
+(differences of comoving distances, Chapter~\ref{ch:cosmological_distances}).
 
 \emph{Classic error:} computing $\Dds$ as $\Ds - \Dd$. Here it would
 underestimate $\Dds/\Ds$, and hence every deflection, by about 30\%.
@@ -300,7 +300,7 @@ while $\xi$ carries units of length.
 \begin{bridge}[Multi-plane lensing]
 Chapter~\ref{ch:multiplane_dspl} applies eq.~\eqref{eq:lens_equation_full}
 once per plane. A deflector on plane $j$ contributes to the position of a ray on a
-later plane $k$ with weight $D_{jk}/D_k$. This is exactly the efficiency factor
+later plane $k$ with weight $D_{jk}/D_k$. This is the efficiency factor
 $\Dds/\Ds$ of this section with $(d, s) \to (j, k)$
 (Schneider, Ehlers \& Falco Sec.~9.1). For a double-source-plane lens, the ratio of the
 two efficiencies behind a common deflector,
@@ -381,13 +381,13 @@ $\Dds/\Ds$ gives eq.~\eqref{eq:alpha_angular}. The prefactor is
 with $\Sigmacr$ from eq.~\eqref{eq:sigma_cr} below. So
 $\vecalpha(\vectheta) = \frac{1}{\pi}\int\kappab(\vectheta')
 (\vectheta - \vectheta')\,|\vectheta - \vectheta'|^{-2}\,d^2\theta'$, the
-form used throughout Module~\ref{ch:magnification}. All distance factors have
+form used throughout Chapter~\ref{ch:magnification}. All distance factors have
 disappeared into $\kappab$.
 \end{derivation}
 
 \begin{remark}
 The deflection integral~\eqref{eq:deflection_integral_continuous} follows directly
-from the superposition principle derived in Module~\ref{ch:linearized_gravity}
+from the superposition principle derived in Chapter~\ref{ch:linearized_gravity}
 (eq.~\ref{eq:superposition_deflection}).  Each infinitesimal mass element
 $\Sigma(\vecxi')\, d^2\xi'$ acts as a point mass, deflecting the light
 ray by $4\Gnewton \Sigma(\vecxi')\,d^2\xi' / (\speedoflight^2\, |\vecxi -
@@ -495,9 +495,12 @@ of mass''.
 The critical surface mass density sets the boundary between weak and
 strong lensing:
 \begin{itemize}
-    \item If $\kappab < 1$ everywhere ($\Sigma < \Sigmacr$), the lens is
-          \textbf{subcritical}: it can still deflect light, but it
-          cannot produce multiple images of a generic source.
+    \item If $\kappab < 1$ everywhere ($\Sigma < \Sigmacr$), an
+          \textbf{axisymmetric} lens is \textbf{subcritical}: it can
+          still deflect light, but it cannot produce multiple images.
+          (For a non-axisymmetric lens, shear can produce multiple
+          images even with $\kappab < 1$ everywhere; Congdon \& Keeton
+          Sec.~2.5.)
     \item If $\kappab \geq 1$ somewhere ($\Sigma \geq \Sigmacr$), the
           lens is \textbf{supercritical}: it can produce multiple
           images, arcs, and Einstein rings --- this is the regime of
@@ -555,8 +558,10 @@ $2.84\times10^{3}$. The 0.1\% difference is far below the uncertainty
 in the distances.
 \end{annotation}
 \begin{bridge}[Where the source redshift enters]
-$\Sigmacr$ is the only place in single-plane lensing where the source
-redshift appears. Chapter~\ref{ch:cosmological_sensitivity} uses this fact.
+In single-plane lensing the source redshift enters only through
+$\Dds/\Ds$: in $\Sigmacr$ and, for time delays, in the time-delay distance
+$(1+z_d)\Dd\Ds/\Dds$ (Chapter~\ref{ch:fermat_time_delays}).
+Chapter~\ref{ch:cosmological_sensitivity} uses this fact.
 For two sources behind one lens, the ratio of their critical densities,
 $\Sigmacr(z_{s_2})/\Sigmacr(z_{s_1}) = \Brat$, is a ratio of four
 angular-diameter distances ($\Dd$ cancels). It depends on cosmology, but not on the lens mass or on
@@ -742,7 +747,7 @@ of strong lensing that produces multiple images and arcs.
 2 \times 10^{14}\,\Msun$ inside the Einstein radius,
 $z_d = 0.3$, $z_s = 2$):
 With $\Dd \approx 919$~Mpc, $\Ds \approx 1727$~Mpc,
-$\Dds \approx 1329$~Mpc, the point-mass formula gives:
+$\Dds \approx 1328$~Mpc, the point-mass formula gives:
 \begin{equation}
     \thetaE \approx 37'' \,.
     \label{eq:thetaE_cluster}
@@ -935,7 +940,7 @@ because an axisymmetric deflection is purely radial. Therefore
 \end{equation*}
 (Congdon \& Keeton eq.~2.23). This is the determinant of the map
 $(\theta\cos\phi, \theta\sin\phi) \mapsto (\beta\cos\phi, \beta\sin\phi)$.
-Module~\ref{ch:magnification} shows that the two factors are the eigenvalues
+Chapter~\ref{ch:magnification} shows that the two factors are the eigenvalues
 $\lambda_t = 1 - \alpha/\theta$ and $\lambda_r = 1 - d\alpha/d\theta$ of the
 Jacobian. For the point mass $\lambda_t = 1 - \thetaE^2/\theta^2$ and
 $\lambda_r = 1 + \thetaE^2/\theta^2$, whose product is the denominator
@@ -1010,7 +1015,7 @@ Several important properties follow:
 \end{itemize}
 \begin{annotation}[Signed vs.\ absolute magnification]
 The sign of $\mu$ is the \emph{parity}. A negative $\mu$ means that the image is a
-mirror image of the source (Module~\ref{ch:magnification}: $\mu = 1/\det\Amat$).
+mirror image of the source (Chapter~\ref{ch:magnification}: $\mu = 1/\det\Amat$).
 Fluxes add as $|\mu|$, so the total brightening is $|\mu_+| + |\mu_-|$, whereas
 the signed sum is identically $\mu_+ + \mu_- = 1$ (previous derivation).
 Equivalently, $|\mu_+| - |\mu_-| = 1$ exactly.
@@ -1139,9 +1144,10 @@ Compute the Einstein radius $\thetaE$ for:
           Module~3 (or the Mathematica script):
           $\Dd \approx 919$~Mpc, $\Ds \approx 1652$~Mpc,
           $\Dds \approx 1055$~Mpc.  Express the result in arcseconds.
-    \item \textbf{Cluster lensing:} $M = 10^{15}\,\Msun$, $z_d = 0.3$,
-          $z_s = 2$.  Use $\Dd \approx 919$~Mpc, $\Ds \approx 1727$~Mpc,
-          $\Dds \approx 1329$~Mpc.  Express the result in arcseconds.
+    \item \textbf{Cluster lensing:} mass $M_{\mathrm{E}} \approx
+          2\times10^{14}\,\Msun$ inside the Einstein radius (total
+          $M_{200} \sim 10^{15}\,\Msun$), $z_d = 0.3$, $z_s = 2$.  Use $\Dd \approx 919$~Mpc, $\Ds \approx 1727$~Mpc,
+          $\Dds \approx 1328$~Mpc.  Express the result in arcseconds.
 \end{enumerate}
 For each case, also compute the physical Einstein radius $\RE = \Dd\,\thetaE$
 in kpc.  Verify with

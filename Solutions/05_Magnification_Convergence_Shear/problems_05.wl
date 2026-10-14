@@ -21,6 +21,8 @@
      the annotation, derivation and bridge boxes of
      05_Magnification_Convergence_Shear.tex and 05_Solutions.tex (appended
      section at the end; ends with summary[]).
+     Fix-pass checks (2026-10-14) --- printed values / conditions changed after
+     the 2026-10-14 fact-critic report, each failing on the old printed value.
 
    Outputs: printed solutions; PASS/FAIL lines and a SUMMARY line for the
             annotated-edition checks
@@ -538,5 +540,81 @@ check["SIS from psi = tE theta: kappa = |gamma| = tE/(2 theta), kbar = tE/theta,
     Simplify[{1 - kk + gg, 1 - kk - gg}] == {1, 1 - tE/r}]];
 check["SIS: mu = 1/(1 - tE/theta) = theta/(theta - tE); kappa(tE) = 1/2 while kbar(tE) = 1",
   Simplify[1/((1 - tE/(2 r))^2 - (tE/(2 r))^2) == r/(r - tE)] && (tE/(2 r) /. r -> tE) == 1/2];
+
+(* ===== Fix-pass checks (2026-10-14, FACT_CRITIC_05_annotated_2026-10-14.md) =====
+   Printed conditions / formulas are encoded as literals (pure functions) and tested
+   against the exact answer, so restoring the old printed form makes the check fail. *)
+Print["\n--- Fix-pass checks 2026-10-14 (Module 5) ---"];
+ClearAll[fxCond, fxMag, fxPhi, fxGrid, fxStretch, fxImgs, fxPsi, fxTau, fxTauL, x, y];
+fxGrid = Flatten[Table[{kk, gg}, {kk, -1., 3.5, 0.13}, {gg, 0., 2.5, 0.11}], 1];
+
+(* F1: item 3 "magnified iff |det A| < 1, i.e. -1 < (1-k)^2 - g^2 < 1"  (old: (1-k)^2 - g^2 < 1) *)
+fxCond = Function[{kk, gg}, -1 < (1 - kk)^2 - gg^2 < 1];
+fxMag = Function[{kk, gg}, Abs[1/((1 - kk)^2 - gg^2)] > 1];
+check["F1 printed condition -1 < (1-k)^2 - |g|^2 < 1 <=> |mu| > 1 on a (kappa, |gamma|) grid",
+  Quiet@AllTrue[fxGrid, (fxCond @@ # === fxMag @@ #) &]];
+check["F1 the old upper-bound-only condition is not equivalent (det A = -1.5: |mu| = 0.67)",
+  !Quiet@AllTrue[fxGrid, (((1 - #[[1]])^2 - #[[2]]^2 < 1) === fxMag @@ #) &] &&
+  Round[1/1.5, 0.01] == 0.67];
+
+(* F2: pure convergence "1 < k < 2 still magnified; k > 2 demagnified, mu = 1/4 at k = 3" (old: "k > 1 still magnified") *)
+check["F2 pure convergence: mu = 1/(1-k)^2 > 1 exactly for 0 < k < 2 (k != 1); mu(3) = 1/4 < 1",
+  Reduce[1/(1 - kk)^2 > 1 && kk > 1, kk, Reals] === Reduce[1 < kk < 2, kk, Reals] &&
+  (1/(1 - kk)^2 /. kk -> 3) == 1/4];
+check["F2 annotation: kappa = 2 is where |1 - kappa| = 1; for kappa > 2 both |eigenvalues| > 1",
+  Solve[Abs[1 - kk] == 1 && kk > 1, kk, Reals] == {{kk -> 2}} &&
+  Reduce[Abs[1 - kk] > 1 && kk > 1, kk, Reals] === (kk > 2)];
+
+(* F3: phi_gamma = (1/2) atan2(g2, g1)  (old: (1/2) arctan(g2/g1)) *)
+fxPhi = Function[{g1, g2}, ArcTan[g1, g2]/2];               (* Mathematica ArcTan[x, y] = atan2(y, x) *)
+fxStretch = Function[{g1, g2}, Module[{es = Eigensystem[{{1 - g1, -g2}, {-g2, 1 + g1}}], v},
+   v = es[[2, Ordering[es[[1]]][[1]]]]; Mod[ArcTan[v[[1]], v[[2]]], Pi]]];
+check["F3 printed phi_gamma = (1/2) atan2(g2, g1) equals the stretch axis (mod 180 deg) in all four quadrants",
+  AllTrue[{{0.1, 0.1}, {-0.1, 0.1}, {-0.1, -0.1}, {0.1, -0.1}, {-0.2, 0.05}, {0.3, 0.}, {0., 0.2}},
+    Abs[Mod[fxPhi @@ #, Pi] - fxStretch @@ #] < 10^-9 &]];
+check["F3 the old one-argument (1/2) arctan(g2/g1) fails for g1 < 0: (-0.1, 0.1) -> -22.5 deg vs 67.5 deg",
+  Round[ArcTan[0.1/-0.1]/2/Degree, 0.1] == -22.5 && Round[fxStretch[-0.1, 0.1]/Degree, 0.1] == 67.5 &&
+  Abs[Mod[ArcTan[0.1/-0.1]/2, Pi] - fxStretch[-0.1, 0.1]] > 1];
+check["F3 equivalently gamma1 = |gamma| cos 2 phi_gamma, gamma2 = |gamma| sin 2 phi_gamma",
+  AllTrue[{{-0.1, 0.1}, {-0.1, -0.1}, {0.3, -0.2}},
+    Norm[Norm[#] {Cos[2 fxPhi @@ #], Sin[2 fxPhi @@ #]} - #] < 10^-12 &]];
+
+(* F4: kappa < 1 bullet now "axisymmetric" (C&K Sec. 2.5). Counter-example to the old
+   unqualified claim: cored isothermal psi = sqrt(1.25^2 + theta^2) (kappa <= 0.8 everywhere)
+   plus external shear 0.4 makes 3 images; without shear (axisymmetric) 1 image. *)
+fxImgs[gx_, src_] := Module[{ax, ay, sols},
+  fxPsi = 1. Sqrt[1.25^2 + x^2 + y^2] + gx (x^2 - y^2)/2;
+  ax = D[fxPsi, x]; ay = D[fxPsi, y];
+  sols = Quiet@Flatten[Table[Check[{x, y} /. FindRoot[{x - ax == src[[1]], y - ay == src[[2]]},
+        {{x, x0}, {y, y0}}], Nothing], {x0, -3, 3, 0.5}, {y0, -3, 3, 0.5}], 1];
+  sols = Select[sols, Norm[({x - ax, y - ay} /. {x -> #[[1]], y -> #[[2]]}) - src] < 10^-8 &];
+  Length[DeleteDuplicates[Round[sols, 10^-4]]]];
+check["F4 cored isothermal kappa(theta) = (2 s^2 + theta^2)/(2 (s^2 + theta^2)^(3/2)) <= kappa(0) = 1/s = 0.8",
+  Simplify[Laplacian[Sqrt[s^2 + r^2], {r, p}, "Polar"]/2 == (2 s^2 + r^2)/(2 (s^2 + r^2)^(3/2)), s > 0 && r > 0] &&
+  Reduce[(2 s^2 + r^2)/(2 (s^2 + r^2)^(3/2)) > 1/s && s > 0 && r > 0, {r, s}, Reals] === False &&
+  1/1.25 == 0.8];
+check["F4 with external shear 0.4 that kappa < 1 lens makes 3 images of beta = (0.02, 0.01); axisymmetric (no shear): 1",
+  fxImgs[0.4, {0.02, 0.01}] == 3 && fxImgs[0., {0.02, 0.01}] == 1];
+
+(* L1: multipole bridge, m = 1 (old: "a pure shift of the lens centre") *)
+check["L1 theta cos(phi) = theta_1 is a linear potential: constant deflection (1, 0), zero Hessian",
+  D[t1, {{t1, t2}}] == {1, 0} && D[t1, {{t1, t2}, 2}] == {{0, 0}, {0, 0}}];
+check["L1 shifting an isothermal lens centre by delta adds -tE delta cos(phi) (prop. theta^0), not prop. theta cos(phi)",
+  Simplify[Normal[Series[tE Sqrt[(r Cos[p] - dl)^2 + (r Sin[p])^2], {dl, 0, 1}]] - tE r, r > 0] ==
+    -tE dl Cos[p] &&
+  D[-tE dl Cos[p], r] == 0 && D[r Cos[p], r] =!= 0];
+
+(* L2: MST bridge, time delays scale by lambda (new sentence) *)
+fxTau[th_, bt_, ps_] := (th - bt).(th - bt)/2 - ps;
+check["L2 MST: tau'(theta) - lambda tau(theta) = (lambda^2 - lambda)|beta|^2/2, the same for every image, so Delta t -> lambda Delta t",
+  Simplify[fxTau[{t1, t2}, lam {s1, s2}, lam psiF[t1, t2] + (1 - lam) (t1^2 + t2^2)/2] -
+     lam fxTau[{t1, t2}, {s1, s2}, psiF[t1, t2]] == (lam^2 - lam) (s1^2 + s2^2)/2]];
+
+(* L3/L4: Solutions box "three local degrees of freedom"; pure shear changes area only at O(gamma^2) *)
+check["L4 pure shear: mu = 1/(1 - g^2) = 1 + g^2 + O(g^4) (no first-order area change)",
+  Normal[Series[1/(1 - g^2), {g, 0, 3}]] === 1 + g^2];
+check["L3 a symmetric 2x2 Jacobian has 3 free entries = kappa + (gamma1, gamma2); shapes fix only g (2 numbers)",
+  Length[Variables[{{1 - k - ga1, -ga2}, {-ga2, 1 - k + ga1}}]] == 3 &&
+  Simplify[(1 - k - ga1)/(1 - k + ga1) == (1 - ga1/(1 - k))/(1 + ga1/(1 - k)), k != 1]];
 
 summary[];

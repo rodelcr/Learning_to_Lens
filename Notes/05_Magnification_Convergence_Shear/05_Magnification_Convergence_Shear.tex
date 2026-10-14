@@ -18,7 +18,7 @@ astigmatism) into the lens mapping [\ldots]}
 \end{quote}
 
 \noindent
-In Module~\ref{ch:lens_equation} we derived the lens equation
+In Chapter~\ref{ch:lens_equation} we derived the lens equation
 $\vecbeta = \vectheta - \vecalpha(\vectheta)$ and used it to find
 image positions for a point mass lens.  We also previewed the
 magnification formula for the point mass case.  Now we develop the
@@ -86,7 +86,7 @@ derivatives give the convergence and shear.
 \section{The Effective Lensing Potential}
 \label{sec:lensing_potential}
 
-In Module~\ref{ch:lens_equation} (eq.~\ref{eq:alpha_angular}) we
+In Chapter~\ref{ch:lens_equation} (eq.~\ref{eq:alpha_angular}) we
 expressed the reduced deflection angle as an integral over the
 convergence.  Remarkably, this deflection can be written as the
 gradient of a scalar potential.
@@ -244,8 +244,9 @@ $\nabla^2 = \theta^{-1}\partial_\theta(\theta\,\partial_\theta) + \theta^{-2}\pa
     \qquad
     f = \cos m\phi \;\Rightarrow\; \kappab = \frac{(1 - m^2)\cos m\phi}{2\theta}.
 \end{equation*}
-The $m = 1$ term carries no mass at all: it is a pure shift of the lens
-centre. For $m = 2$ the factor $1 - m^2 = -3$ means that, relative to the
+The $m = 1$ term carries no mass at all: $\theta\cos\phi = \theta_1$ is a
+linear potential, a constant deflection that only shifts the unobservable
+source position. For $m = 2$ the factor $1 - m^2 = -3$ means that, relative to the
 monopole, the $\cos 2\phi$ modulation is three times stronger in $\kappab$
 than in $\psiL/\theta$. Adding $\epsilon\,\theta\cos2\phi$ to an
 isothermal $\psiL = \thetaE\theta$ makes the isodensity contours about three
@@ -260,7 +261,7 @@ common error.
 \label{sec:convergence}
 
 The convergence was already introduced in
-Module~\ref{ch:lens_equation} (eq.~\ref{eq:convergence_def}):
+Chapter~\ref{ch:lens_equation} (eq.~\ref{eq:convergence_def}):
 
 \begin{equation}
     \kappab(\vectheta) = \frac{\Sigma(\Dd\,\vectheta)}{\Sigmacr}
@@ -282,10 +283,12 @@ the lens:
     \item $\kappab = 1$ means $\Sigma = \Sigmacr$: this is the
           threshold for strong lensing.  Regions where $\kappab \geq 1$
           are \textbf{supercritical} and can produce multiple images.
-    \item $\kappab < 1$ everywhere means the lens is subcritical:
-          it can still distort images (via shear), but a single
-          mass concentration cannot produce multiple images of a
-          generic source.
+    \item For an \textbf{axisymmetric} lens, $\kappab < 1$ everywhere
+          means the lens is subcritical: it can still distort images
+          (via shear), but it cannot produce multiple images.  (For a
+          non-axisymmetric lens, $\kappab > 1$ somewhere is sufficient
+          but not necessary: shear can produce multiple images even
+          with $\kappab < 1$ everywhere; Congdon \& Keeton Sec.~2.5.)
 \end{itemize}
 
 \subsection{Convergence from the Lensing Potential}
@@ -616,7 +619,8 @@ sign is the parity.
 
     \item \textbf{Magnified images ($|\mu| > 1$):} The image
           subtends a larger solid angle than the source.  The
-          condition is $(1 - \kappab)^2 - |\gammaL|^2 < 1$.
+          condition is $|\det\Amat| < 1$, i.e.\
+          $-1 < (1 - \kappab)^2 - |\gammaL|^2 < 1$.
 
     \item \textbf{Demagnified images ($|\mu| < 1$):} The image is
           smaller than the source.
@@ -629,10 +633,10 @@ sign is the parity.
           of Module~8.
 \end{enumerate}
 \begin{annotation}[Two refinements of the list above]
-(1) \emph{Magnified means $|\det\Amat| < 1$}, i.e.\
-$-1 < (1-\kappab)^2 - |\gammaL|^2 < 1$. The upper bound alone (item~3) is
-not enough. An image with $\det\Amat = -1.5$ satisfies item~3 but has
-$|\mu| = 0.67$: it is demagnified.
+(1) \emph{Both bounds in item~3 matter.} The upper bound
+$(1-\kappab)^2 - |\gammaL|^2 < 1$ by itself is not enough. An image with
+$\det\Amat = -1.5$ satisfies it but has $|\mu| = 0.67$: it is a demagnified
+saddle-point image, excluded only by the lower bound.
 
 (2) \emph{Three kinds of image, not two.} The signs of the two eigenvalues
 classify every image (Section~\ref{sec:morse_theory}):
@@ -747,18 +751,18 @@ size is scaled by $1/(1 - \kappab)$.  The magnification is:
     \label{eq:mu_pure_convergence}
 \end{equation}
 For $\kappab < 1$, the image is magnified and has positive parity.
-For $\kappab > 1$, the image is still magnified and \textit{retains
-positive parity}: $\det\Amat = (1-\kappab)^2 > 0$ for all
+For $1 < \kappab < 2$ the image is still magnified (for $\kappab > 2$ it is
+demagnified, e.g.\ $\mu = 1/4$ at $\kappab = 3$), and for every $\kappab > 1$
+it \textit{retains positive parity}: $\det\Amat = (1-\kappab)^2 > 0$ for all
 $\kappab \neq 1$.  Although both eigenvalues $(1-\kappab)$ are
 negative when $\kappab > 1$, their product is positive --- a uniform
 negative scaling is equivalent to a $180^\circ$ rotation, which
 preserves handedness.  A genuine parity flip ($\det\Amat < 0$,
 $\mu < 0$) requires shear, so that the eigenvalues
 $\lambda_\pm = (1-\kappab) \pm |\gammaL|$ have opposite signs.
-\begin{annotation}[Magnified only for $0 < \kappab < 2$]
-For $1 < \kappab < 2$ the image is indeed magnified, but $\mu = 1/(1-\kappab)^2$
-returns to 1 at $\kappab = 2$ and drops below it for $\kappab > 2$
-($\mu = 1/4$ at $\kappab = 3$). A very dense pure-convergence region
+\begin{annotation}[Why dense regions demagnify]
+The boundary $\kappab = 2$ is where $|1-\kappab| = 1$: beyond it each eigenvalue
+exceeds 1 in magnitude, so a very dense pure-convergence region
 \emph{demagnifies}. This is the type~III case (both eigenvalues negative) of
 the annotation that follows the list of magnification properties. It is why central images of galaxies, which form where
 $\kappab$ is large, are usually very faint.
@@ -786,15 +790,18 @@ $1/(1 - |\gammaL|)$ and $1/(1 + |\gammaL|)$, so the axis ratio is:
     \label{eq:axis_ratio_pure_shear}
 \end{equation}
 The orientation of the ellipse is determined by the shear angle
-$\phi_\gamma = \frac{1}{2}\arctan(\gamma_2/\gamma_1)$.
+$\phi_\gamma = \frac{1}{2}\operatorname{atan2}(\gamma_2, \gamma_1)$, the
+two-argument arctangent (equivalently, $\gamma_1 = |\gammaL|\cos2\phi_\gamma$,
+$\gamma_2 = |\gammaL|\sin2\phi_\gamma$).  The one-argument form
+$\frac{1}{2}\arctan(\gamma_2/\gamma_1)$ of earlier printings is off by
+$90^\circ$ whenever $\gamma_1 < 0$.
 \begin{annotation}[Pure shear beyond $|\gammaL| = 1$]
 Eq.~\eqref{eq:mu_pure_shear} is Congdon \& Keeton eq.~4.50. For $|\gammaL| < 1$
 it is always $\ge 1$: $\mu = 1.10$ for $|\gammaL| = 0.3$, as in
 Figure~\ref{fig:convergence_shear_effects}. For $|\gammaL| > 1$, $\mu$ is
 negative (a saddle-type image), e.g.\ $\mu = -2.27$ at $|\gammaL| = 1.2$. It is
 demagnified ($|\mu| < 1$) once $|\gammaL| > \sqrt2$, e.g.\ $|\mu| = 0.80$ at
-$|\gammaL| = 1.5$ (C\&K Sec.~4.2.1). For the orientation, use the
-two-argument arctangent (see the earlier annotation on shear).
+$|\gammaL| = 1.5$ (C\&K Sec.~4.2.1).
 \end{annotation}
 
 \subsection{Both Convergence and Shear}
@@ -822,17 +829,18 @@ $1 - \kappab > |\gammaL|$ the axis ratio is
 obtained by dividing the numerator and denominator by $1 - \kappab$. Equivalently, the ellipticity
 $(a-b)/(a+b) = g$. The \emph{shape} of an image depends only on the
 \textbf{reduced shear} $g$, not on $\kappab$ and $\gammaL$ separately. This is
-the quantity weak lensing actually measures (Module~\ref{ch:weak_lensing}).
+the quantity weak lensing actually measures (Chapter~\ref{ch:weak_lensing}).
 \end{derivation}
 \begin{bridge}[The mass-sheet transformation, seen through $\Amat$]
 Replace $\kappab \to \lambda\kappab + (1-\lambda)$ and $\gammaL \to \lambda\gammaL$
-(the mass-sheet transformation of Module~\ref{ch:galaxy_lensing}). Then
+(the mass-sheet transformation of Chapter~\ref{ch:galaxy_lensing}). Then
 $1 - \kappab \to \lambda(1 - \kappab)$, so $\Amat \to \lambda\Amat$ and $\mu \to \mu/\lambda^2$.
 In potential form, $\psiL \to \lambda\psiL + (1-\lambda)|\vectheta|^2/2$ gives
 $\vecbeta \to \lambda\vecbeta$: image positions are unchanged, the reduced shear
 $g$ (hence every image shape) is unchanged, and the magnification ratios between
-images are unchanged. Only the unobservable source size and the absolute
-magnification change. Chapter~\ref{ch:msd_kinematics} asks how much of this
+images are unchanged. What changes is the unobservable source size, the
+absolute magnification, the time delays ($\Delta t \to \lambda\,\Delta t$) and
+the physical mass normalization. Chapter~\ref{ch:msd_kinematics} asks how much of this
 survives when there is a second source plane, and how stellar kinematics
 breaks the rest.
 \end{bridge}
@@ -861,7 +869,7 @@ breaks the rest.
 
 We now compute $\kappab$, $\gammaL$, and $\mu$ for the point mass
 lens, verifying consistency with the results of
-Module~\ref{ch:lens_equation}.
+Chapter~\ref{ch:lens_equation}.
 
 \subsection{Lensing Potential for a Point Mass}
 
@@ -957,7 +965,7 @@ case $\kappab = 0$, $\bar\kappab = \thetaE^2/\theta^2$. The overall minus
 sign is why the \emph{tangential shear} is defined as
 $\gammaL_{\mathrm t} \equiv -\operatorname{Re}(\gammaL e^{-2i\phi})$: it
 turns this into $\gammaL_{\mathrm t} = \bar\kappab - \kappab > 0$, the form used in
-Module~\ref{ch:axisymmetric_models} (eq.~\ref{eq:gamma_circular}) and in weak
+Chapter~\ref{ch:axisymmetric_models} (eq.~\ref{eq:gamma_circular}) and in weak
 lensing.
 \end{annotation}
 
@@ -1000,7 +1008,7 @@ gives:
     \label{eq:mu_point_mass}
 \end{equation}
 This is precisely eq.~\eqref{eq:magnification_pm} from
-Module~\ref{ch:lens_equation}!  Evaluating at the image positions
+Chapter~\ref{ch:lens_equation}!  Evaluating at the image positions
 $\theta_\pm$:
 \begin{equation}
     |\mu_\pm| = \frac{u^2 + 2}{2u\sqrt{u^2 + 4}} \pm \frac{1}{2} \,,
@@ -1138,7 +1146,7 @@ and one with negative parity (mirror-reflected).  These images
 appear/disappear in pairs as the source crosses a caustic, which is why
 the total number of images always changes by $\pm 2$, preserving the
 odd-number theorem (Module~6).  The full topological picture is
-developed in Module~\ref{ch:elliptical_models}.
+developed in Chapter~\ref{ch:elliptical_models}.
 \end{remark}
 
 For the point mass lens, the critical curve is the Einstein ring
@@ -1153,7 +1161,7 @@ point mass, $\beta(\thetaE) = \thetaE - \thetaE^2/\thetaE = 0$. A radial
 critical curve ($\lambda_r = 0$) maps to a \emph{circle} of radius
 $|\beta(\theta_r)|$ in the source plane (Congdon \& Keeton Sec.~2.2.3).
 Ellipticity or shear unfolds the point caustic into the four-cusp astroid of
-Module~\ref{ch:elliptical_models}.
+Chapter~\ref{ch:elliptical_models}.
 \end{annotation}
 
 

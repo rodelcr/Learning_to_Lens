@@ -121,3 +121,40 @@ critic-script bugs (details in the 04 report).
 
 Repo script: `bash Mathematica/run_wl.sh Solutions/05_Magnification_Convergence_Shear/problems_05.wl`
 → `SUMMARY: 50 PASS, 0 FAIL  (of 50 checks)`.
+
+## Resolution — fixes applied 2026-10-14
+
+Branch `wt/ann0405`. The new checks are in the "Fix-pass checks (2026-10-14)" section at the end of
+`Solutions/05_Magnification_Convergence_Shear/problems_05.wl`. Each printed condition or formula is
+encoded as a literal (a pure function) and compared with the exact answer. Each fix also has a
+companion check showing that the old printed form gives a different answer.
+
+| id | Fix | Backing |
+|----|-----|---------|
+| F1 / X1 | Item 3 ("Magnified images") now reads: "The condition is \|det A\| < 1, i.e. −1 < (1−κ)² − \|γ\|² < 1." The annotation "Two refinements", point (1), is reworded to "Both bounds in item 3 matter …". It keeps the det A = −1.5, \|μ\| = 0.67 example and no longer says that item 3 is wrong. | `F1 printed condition … <=> \|mu\| > 1 on a (kappa, \|gamma\|) grid`; `F1 the old upper-bound-only condition is not equivalent …` |
+| F2 / X2 | Pure convergence now reads: "For 1 < κ < 2 the image is still magnified (for κ > 2 it is demagnified, e.g. μ = 1/4 at κ = 3), and for every κ > 1 it retains positive parity". The annotation is retitled "Why dense regions demagnify", so it no longer repeats the visible fix. Its new content: κ = 2 is where \|1−κ\| = 1, and the type III / central-image link. | `F2 pure convergence: mu > 1 exactly for 0 < k < 2 …; mu(3) = 1/4`; `F2 annotation: kappa = 2 is where \|1 - kappa\| = 1 …` |
+| F3 / X3 | Pure shear now gives φ_γ = ½ atan2(γ₂, γ₁), "the two-argument arctangent (equivalently, γ₁ = \|γ\| cos 2φ_γ, γ₂ = \|γ\| sin 2φ_γ). The one-argument form ½ arctan(γ₂/γ₁) of earlier printings is off by 90° whenever γ₁ < 0." The pointer "For the orientation, use the two-argument arctangent" was removed from the annotation that follows, because the visible text now says it. | `F3 printed phi_gamma = (1/2) atan2 … equals the stretch axis … in all four quadrants`; `F3 the old one-argument … fails for g1 < 0`; `F3 equivalently gamma1 = \|gamma\| cos 2 phi …` |
+| F4 / X4 | The κ < 1 bullet (l.285) now reads: "For an **axisymmetric** lens, κ < 1 everywhere means … subcritical … (For a non-axisymmetric lens, κ > 1 somewhere is sufficient but not necessary: shear can produce multiple images even with κ < 1 everywhere; Congdon & Keeton Sec. 2.5.)" | C&K §2.5 (critic C5 in the 04 report). Counter-example check: `F4 cored isothermal kappa(theta) … <= kappa(0) = 1/s = 0.8`; `F4 with external shear 0.4 … 3 images …; axisymmetric (no shear): 1` |
+| L1 | Multipole bridge, m = 1: "θ cos φ = θ₁ is a linear potential, a constant deflection that only shifts the unobservable source position." | `L1 theta cos(phi) = theta_1 is a linear potential …`; `L1 shifting an isothermal lens centre by delta adds -tE delta cos(phi) (prop. theta^0) …` |
+| L2 | MST bridge: "What changes is the unobservable source size, the absolute magnification, the time delays (Δt → λΔt) and the physical mass normalization." | `L2 MST: tau' - lambda tau = (lambda^2 - lambda)\|beta\|^2/2 … so Delta t -> lambda Delta t` |
+| L3 | Solutions, "Counting degrees of freedom": "exactly three local observables" → "three local degrees of freedom" | `L3 a symmetric 2x2 Jacobian has 3 free entries …` |
+| L4 | The same box: "would only distort shapes" → "would mainly distort shapes (area changes only at second order in γ, μ = 1/(1−\|γ\|²))" | `L4 pure shear: mu = 1/(1 - g^2) = 1 + g^2 + O(g^4)` |
+| X6 | Every `Module~\ref{…}` in `05_*.tex` → `Chapter~\ref{…}` | build, no `??` |
+| Prose | "That independence is the whole argument:" → "Since the flux does not depend on ε, …" (the critic's proposed rewrite) | wording |
+
+### Verification after edits
+
+- `bash Mathematica/run_wl.sh Solutions/05_Magnification_Convergence_Shear/problems_05.wl`. Before:
+  `SUMMARY: 50 PASS, 0 FAIL  (of 50 checks)`. After: `SUMMARY: 64 PASS, 0 FAIL  (of 64 checks)`.
+- `cd Notes && ANNOT_REQUIRED=1 bash build.sh` ended with "Build complete: all assertions passed":
+  ```
+  Learning_to_Lens.pdf             360 pages  text-md5 cf083dd6bff6f8764bd7d483f4c03b0e  sentinels 0
+  Learning_to_Lens_Solutions.pdf   444 pages  text-md5 2ce29b2a9017ff54c5327563212570d8  sentinels 0
+  Learning_to_Lens_Annotated.pdf   569 pages  text-md5 0dd744acb783c619604f6668c5330f13  sentinels 511
+  ```
+
+### Left open
+
+- The hard-coded "Module~6 / Module~7 / Module~8" in the visible text are module numbers, not `\ref`s. They are not in X6's scope, so they were left as is.
+- The earlier annotation "Shear is a trace-free tensor", item (ii), still explains atan2. It sits before the visible pure-shear section, so it is not redundant at the point where it appears. It was kept.
+- The other "exactly" pointer words are flag-only and were left as is.
