@@ -20,13 +20,15 @@ theorem: a smooth, transparent lens produces an odd number of images.
 Chapter~\ref{ch:elliptical_models} then walked a source across the
 caustics of an elliptical lens and found that the image count changes
 by two at each crossing.  Yet the lenses we actually observe are
-doubles and quads.  The missing odd image is the \emph{central image},
+doubles and quads.  For a single galaxy the missing odd image is the
+\emph{central image},
 the maximum of the arrival-time surface, and this chapter is about
 where it lives, how faint it is, and what destroys it.
 
-The question is not academic.  Whether a central image exists, and how
-bright it is, depends on the innermost tenth or so of the deflector's
-Einstein radius: on the size of a core, on the steepness of a cusp, and
+Whether a central image exists, and how bright it is, depends on the
+region inside the radial critical curve, which for the cored lenses of
+this chapter lies at a quarter to a third of the deflector's Einstein
+radius \annot{checks J.4a--J.4b}: on the size of a core, on the steepness of a cusp, and
 on the mass of a central black hole.  The same topology that removes
 the central image also removes the radial critical curve, and the
 moment at which this happens --- the \emph{annihilation boundary} ---
@@ -276,8 +278,10 @@ parity appear or disappear together.  In the language of
 eq.~\eqref{eq:oi_index_sum} this is obvious: a pair with indices $+1$
 and $-1$ contributes zero to the sum, so it can be created from nothing
 without changing the winding at infinity.  The quad-plus-one
-configuration of Exercise~\ref{ex:burke_verification} has
-$n_+=3$, $n_-=2$.  A smooth cored elliptical lens with a source inside
+configuration of Exercise~\ref{ex:burke_verification}, in its
+non-singular (cored) version, has $n_+=3$, $n_-=2$; the singular SIE
+itself has no central image (the conical tip of the SIS paragraph
+below).  A smooth cored elliptical lens with a source inside
 both caustics realises exactly this pattern \annot{checks I.1--I.4; see
 Exercise~\ref{ex:oi_five_images}}.
 \end{bridge}
@@ -342,24 +346,30 @@ images, each approaching one of the point masses.  For a single point
 mass ($g=1$) the image count is \emph{even}.
 
 \begin{annotation}[Which hypothesis does a point mass break?]
-Students often say ``the point mass is not transparent''.  It is: light
-does not hit it.  What fails is (S1)/(S2) at one point: the deflection
+Students often say ``light hits the point mass''.  It does not: every
+ray passes outside it.  The word \emph{transparent} in
+Theorem~\ref{thm:odd_number} means a smooth, bounded $\Sigma$, and in
+that sense a point mass is not transparent.  Burke's own
+``transparent'' excludes black holes \citep{burke_1981}, and the
+hypotheses of Theorem~1 of
+\citet[Sect.~5.4.1]{schneider_ehlers_falco_1992} ``exclude stars and
+black holes''.  What fails is
+(S1)/(S2) at one point: the deflection
 diverges like $1/\theta$, so $\nabla\tau$ has a singularity that is
 not a zero.  The singularity is an \emph{extra term} in the index
 sum, worth $+1$.  Excise a small disc around the origin and count on
 what is left (an annulus): the winding at infinity minus the winding
 around the hole gives $n_+-n_-=1-1=0$.  Put the puncture back as a
-``phantom maximum'' and the total is odd again.  Burke's conclusion is
-not violated, it is \emph{relocated}: the odd image has become the
-singularity itself.
+``phantom maximum'' and the total is odd again: counting the puncture
+as an index-$+1$ point restores the odd total.
 \end{annotation}
 
 \paragraph{The SIS.}
 For the singular isothermal sphere, $\vecalpha=\thetaE\hat{\vectheta}$
 has constant length but its direction jumps at the origin: (S1) fails,
-(S2) holds.  The surface $\tau$ has a conical tip, a local maximum with
-no tangent plane, so it is not a stationary point and produces no
-image.  Its index depends on the source: near the origin
+(S2) holds.  The surface $\tau$ has a conical tip with no tangent plane (a local
+maximum when $|\vecbeta|<\thetaE$ \annot{check J.2}), so it is not a
+stationary point and produces no image.  Its index depends on the source: near the origin
 $\mathbf X\approx-\vecbeta-\thetaE\hat{\vectheta}$, which winds once if
 $|\vecbeta|<\thetaE$ and not at all if $|\vecbeta|>\thetaE$ \annot{checks F.1--F.2}.  This is the index-theorem reading of the SIS ``cut'': two
 images ($n_+-n_-=0$) inside it, one image ($n_+-n_-=1$) outside.
@@ -369,10 +379,17 @@ Exercise~\ref{ex:oi_sis_tip} asks you to do the computation.
 A power-law profile $\kappab\propto\theta^{1-\gp}$ with $1<\gp<2$ has an
 \emph{infinite} central convergence, so its surface density is not
 bounded.  But $\alpha\propto\theta^{2-\gp}\to0$ continuously at the
-origin, so (S1) holds, the index argument goes through, and the lens
-produces an odd number of images: it has a central image
-(Section~\ref{sec:oi_steep}).  What the counting rule really needs is
-continuity of the deflection, not finiteness of the density.
+origin, so (S1) holds.  The untruncated power law does violate (S2),
+since $\alpha\propto\theta^{2-\gp}$ grows without bound at large
+$\theta$, but $|\vecalpha|/\theta\propto\theta^{1-\gp}\to0$, so $\nabla\tau$
+still winds once at infinity.  This is the generalisation noted by
+\citet[p.~174]{schneider_ehlers_falco_1992}: the theorem holds for any
+gradient map asymptotic to the identity at infinity (a real galaxy is,
+in any case, truncated at large radius) \annot{checks J.3a--J.3c}.  The
+index argument goes through, and the lens produces an odd number of
+images: it has a central image (Section~\ref{sec:oi_steep}).  The
+counting rule needs a continuous deflection with $|\vecalpha|/\theta\to0$
+at infinity.  A finite central density is not required.
 
 
 % =====================================================================
@@ -519,20 +536,22 @@ numerical solution at $\ysrc=0.1\,\thetaE$.
 \end{figure}
 
 \begin{annotation}[Reading eq.~\eqref{eq:oi_muc}]
-Three limits make the formula memorable.  (i) $\theta_c\to0$: the NIS
+Three limits are worth checking.  (i) $\theta_c\to0$: the NIS
 becomes the SIS, $\kappab_0\to\infty$ and $\mu_c\to0$ --- the central
 image is pushed into the conical tip of Table~\ref{tab:oi_centres} with
 zero flux.  (ii) $\theta_c\to\thetaE/2$: $\kappab_0\to1$, both
 eigenvalues vanish at the centre, and the central image sits on a
-degenerate (radial) critical point, so $\mu_c\to\infty$.  (iii) In
-between, $\mu_c$ is small because $|\lambda|=\kappab_0-1$ is
+degenerate (radial) critical point, so $\mu_c\to\infty$.  (iii) For
+$\kappab_0>2$, i.e.\ $\theta_c<\thetaE/4$, $\mu_c<1$, and for
+$\kappab_0\gg1$ it is small because $|\lambda|=\kappab_0-1$ is
 \emph{large}: the summit of $\tau$ is sharply curved, and a sharply
-curved stationary point is a strongly demagnified image.  Curvature
-of $\tau$ is inverse brightness.
+curved stationary point is a strongly demagnified image.  Between
+$\theta_c=\thetaE/4$ and $\thetaE/2$ the central image is magnified
+($\mu_c=2.25$ at $\theta_c=0.3\,\thetaE$) \annot{checks J.1a--J.1c}.
 \end{annotation}
 
 \paragraph{Why central images are rarely seen.}
-Three effects conspire.  First, the demagnification of
+Three effects hide it.  First, the demagnification of
 eq.~\eqref{eq:oi_muc} for any realistically small core.  Second, the
 central image sits on top of the lens galaxy's own bright nucleus, so
 at optical wavelengths it is swamped; searches are done in the radio,
@@ -879,7 +898,8 @@ it.
 \begin{annotation}[Why the centre is a separate measurement]
 Lensing constrains the mass \emph{inside} the Einstein radius very well
 and its radial distribution there poorly.  The central image is one of
-the few probes of the innermost $\sim0.1\,\thetaE$, and
+the few probes of the region inside the radial critical curve (a
+few tenths of $\thetaE$), and
 Sections~\ref{sec:oi_central}--\ref{sec:oi_pointmass} show that it
 responds to a core, a cusp and a black hole in ways that partly cancel.
 Treat a central-image non-detection as a constraint on a
@@ -897,11 +917,13 @@ Treat a central-image non-detection as a constraint on a
           $\kappab>1+|\gammaL|$, so it can only sit near the centre of
           the lens.
 
-    \item If the deflection is continuous and bounded, the indices sum
-          to the winding at infinity: $n_+-n_-=1$ and $N=1+2n_-$
+    \item If the deflection is continuous and bounded (or, more
+          generally, $|\vecalpha|/\theta\to0$ at infinity), the indices
+          sum to the winding at infinity: $n_+-n_-=1$ and $N=1+2n_-$
           (Burke).  What matters is continuity of $\vecalpha$: a
           power-law cusp with $1<\gp<2$ has infinite central density
-          yet still obeys the theorem.
+          and unbounded $\alpha$ at large $\theta$, yet still obeys the
+          theorem.
 
     \item A point mass violates continuity and boundedness of
           $\vecalpha$ at one point.  The puncture carries index $+1$, so

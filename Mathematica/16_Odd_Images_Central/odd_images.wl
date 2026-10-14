@@ -20,6 +20,9 @@
                  mass, central image removed above it (sign change of
                  min lambda_r), small-mass inner caustic
               I  Burke count n_+ - n_- = 1 for a smooth (cored elliptical) lens
+              J  fix pass 2026-10-14: mu_c < 1 iff tc < tE/4; SIS tip is a
+                 local max iff |beta| < tE; power-law |alpha|/theta -> 0;
+                 radial critical radius 0.25-0.30 tE
             and exports the chapter figures.
 
    Sources: Schneider, Ehlers & Falco (1992) Sect. 5.4.1 (Theorem 1, index
@@ -426,5 +429,46 @@ check["FIG3 radial caustic -> NIS value as thBH -> 0 (0.4270 for tc = 0.1, 0.235
   Abs[ph1[[2, 1, 2]] - 0.42704] < 10^-3 && Abs[ph2[[2, 1, 2]] - 0.23520] < 10^-3];
 check["FIG figures exist", And @@ (FileExistsQ[FileNameJoin[{figDir, #}]] & /@
   {"arrival_time_nis_bh.pdf", "central_mag_vs_core.pdf", "central_image_phase.pdf"})];
+
+(* ================================================================= *)
+Print["\n--- J. Fix pass 2026-10-14 (critic X6-X8, N12) ---"];
+(* ================================================================= *)
+(* X8: mu_c < 1 only for kappa_0 > 2 (tc < tE/4); the old text said
+   "in between, mu_c is small" for every tc < tE/2.                    *)
+check["J.1a mu_c(y=0) < 1  <=>  tc < tE/4 (on 0 < tc < tE/2, tE = 1)",
+  Reduce[(muC0 /. tE -> 1) < 1 && 0 < tc < 1/2, tc, Reals] === Reduce[0 < tc < 1/4, tc, Reals]];
+check["J.1b tc = tE/4  <=>  kappa_0 = 2, and mu_c = 1 there",
+  (k0 /. {tE -> 1, tc -> 1/4}) == 2 && (muC0 /. {tE -> 1, tc -> 1/4}) == 1];
+check["J.1c tc = 0.3 tE: mu_c = 2.25 > 1 (the old 'in between, mu_c small' fails)",
+  (muC0 /. {tE -> 1, tc -> 3/10}) == 9/4];
+(* X7: SIS tip. tau - tau(0) = theta^2/2 - beta.theta - tE |theta|; along
+   direction phi from beta-hat, leading term r(-b Cos[phi] - tE).  The tip
+   is a local max iff this is < 0 for every phi, i.e. iff b < tE.       *)
+check["J.2a SIS: -b Cos[phi] - tE < 0 for all phi  <=>  0 <= b < tE",
+  Reduce[ForAll[c, -1 <= c <= 1, -b c - 1 < 0] && b >= 0, b, Reals] ===
+    Reduce[0 <= b < 1, b, Reals]];   (* c = Cos[phi] *)
+check["J.2b SIS tE = 1, b = 1.5: tau(-r beta-hat) > tau(0) at r = 0.01 (tip NOT a max); b = 0.5: tau < tau(0) all around",
+  Module[{tauS = Function[{p, bb}, (1/2) p . p - bb p[[1]] - Sqrt[p . p]]},
+    tauS[{-0.01, 0}, 1.5] > 0 &&
+    And @@ Table[tauS[0.01 {Cos[ph], Sin[ph]}, 0.5] < 0, {ph, 0., 2 Pi, Pi/36}]]];
+(* X6: power-law cusp. alpha = theta^(2-g) is unbounded at infinity (S2 fails
+   for the untruncated profile) but |alpha|/theta -> 0, so grad tau winds
+   once at infinity (SEF p.174: gradient maps asymptotic to the identity). *)
+check["J.3a power law 1<g<2: alpha = theta^(2-g) -> infinity as theta -> infinity (unbounded)",
+  Limit[t^(2 - gg), t -> Infinity, Assumptions -> 1 < gg < 2] === Infinity];
+check["J.3b power law 1<g<2: |alpha|/theta = theta^(1-g) -> 0 as theta -> infinity",
+  Limit[t^(1 - gg), t -> Infinity, Assumptions -> 1 < gg < 2] === 0];
+gradTauPL[gv_, yv_][p_] := p - {yv, 0} - (p . p)^((1 - gv)/2) p;
+check["J.3c power law g' = 1.5, y = 0.1: winding of grad tau around a large circle (R = 100) = +1",
+  winding[gradTauPL[1.5, 0.1], {0, 0}, 100] == 1];
+(* N12: the region controlling the central image is inside the radial
+   critical curve, at 0.25-0.30 tE for the chapter's cores (tc = 0.1, 0.2),
+   not "the innermost tenth".                                             *)
+thR[tcv_] := Module[{sr = (-tcv + Sqrt[tcv^2 + 4 tcv])/2}, Sqrt[sr^2 - tcv^2]];
+check["J.4a radial critical radius: theta_r = 0.2510 (tc = 0.1), 0.2972 (tc = 0.2), both in [1/4, 1/3] tE",
+  Abs[thR[0.1] - 0.2510] < 10^-4 && Abs[thR[0.2] - 0.2972] < 10^-4 &&
+  1/4 <= thR[0.1] <= 1/3 && 1/4 <= thR[0.2] <= 1/3];
+check["J.4b theta_r > 0.1 tE for tc in {0.05, 0.1, 0.2, 0.3}: the 'innermost tenth' understates the region",
+  And @@ (thR[#] > 0.1 & /@ {0.05, 0.1, 0.2, 0.3})];
 
 summary[];
