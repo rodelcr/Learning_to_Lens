@@ -134,3 +134,88 @@ Scratch script: `/private/tmp/claude-504/-Users-rosador-Documents-Learning-to-Le
 | D3 | B = η^{γ′−1}: symbolic α(θ) from κ; numerical root of α₂(θ) = θ with κ₂ = κ₁/B at γ′ = 1.6, 1.9, 2.0, 2.3 | ✅ PASS: (θE¹/θE²)^{γ′−1} = B to <1e-15. The inverse exponent η^{1/(γ′−1)} fails, as it should, except at γ′ = 2. η(1.9) = 0.645259, which exposed N14/N15. |
 | D4 | SIE ratio identity (KSB94-form κ, Keeton-form α): div α = 2κ; tangential critical-curve radius ratio along 4 directions, q ∈ {0.4, 0.7, 0.95}; axis crossings; SIE + same-plane shear | ✅ PASS: ratio = B exactly. With shear scaled 1/B the parameter ratio is B, but the critical-curve ratio is 0.6775 (feeds F5). |
 | D5 | S_w, S_Ωm by central FD and by differentiating under the integral; degeneracy slope; 1% → δw; along/across ratio; Ex. 10 error budget | ✅ PASS: S_w = −0.033011, S_Ωm = −0.035690 (methods agree to <1e-7), slope −1.0811, 0.01/\|S_w\| = 0.3029, across/along = 50 |
+
+## Reconciliation with the spiral project's record (2026-10-14)
+
+> Reviewer: independent reconciliation pass (RECONCILE.md). Read: digest `docs/spiral_reconciliation_2026-10-14/note1_1b_2.md`
+> (note1/note1b rows only; note2 rows go to Ch. 15), `note8_solutions.md` (no sol_note1/sol_note1b rows in it),
+> `auto_fixable_and_coverage_gaps.md` (no note1/1b rows); full SUSPECT text recovered from the packet critic's journal
+> (`wf_a10ff0a2-7f9/journal.jsonl`); spiral `theory/FACT_CRITIC_study_notes_2026-07-11.md`,
+> `theory/FACT_CRITIC_note1b_dspl_inference_2026-07-13.md`, `theory/solutions/FACT_CRITIC_SOLUTIONS_2026-07-24.md`,
+> `TESTS_AND_DIAGNOSTICS.md` rows A2/B1/C2/H0/D2, `HANDOFF_arc_2026-09-21.md` §5–6, `lit_review/VERIFIED_ANCHORS_2026-07-16.md`,
+> `Reference_papers/README.md` + S8-001. New external sources read: Collett+2012 PDF (`Reference_papers/Collett2012_DSPL_forecast.pdf`,
+> §4, p. 5); KSB94 ADS scan (`articles.adsabs.harvard.edu/pdf/1994A&A...284..285K`, pp. 287–288, eqs. 21a–d, 26–27).
+>
+> Scratch script: `/private/tmp/claude-504/-Users-rosador-Documents-Learning-to-Lens/6bf8589b-f5b2-4d91-8bc1-cdd6f6bc49b6/scratchpad/reconcile_14/reconcile14.wl`
+> (run with `bash Mathematica/run_wl.sh <path>`): **`SUMMARY: 8 PASS, 1 FAIL  (of 9 checks)`**. The FAIL is R1b, my own hypothesis
+> about the spiral's finite-difference step, and it was wrong in detail: S_w matches a step-0.05 central difference to 3e-5 (rel.),
+> S_Ωm matches a step-0.02 central difference. Companion `fdstep.wl` (same directory, print-only) tabulates both.
+> Chapter verdicts are unaffected.
+
+### Table
+
+| spiral id | claim (source note) | status in chapter | action |
+|---|---|---|---|
+| S6-003 (⚠) | "all the bending happens in a region (~100 kpc)" (note1:47) | already fixed in port: tex:308-309 "galaxies are tens of kpc across" | none |
+| S6-007 (⚠) | (0.3,0.6,3.3) called "cosmology-optimal" (note1:136) | n.a.: project triplets stripped; chapter uses generic (0.5,1,2) | none |
+| S6-012 (⚠) | "S_w ≃ −0.016, so 1/S_w ≃ −64" broken chain (note1) | already fixed: chapter quotes S_w = −0.0330 and 0.01/0.0330 = 0.30 (self-consistent; critic N10, N13) | none |
+| S6-013 / S6-056 (⚠) | 1% in B → δw ≃ 0.6 stated unconditionally; it is the fixed-Ω_m projection (note1, note1b:276) | **inherited** (same class, chapter numbers): tex:603-609 (eq. mp_propagate), tex:641-642, Summary tex:948-949, Soln:93-95 (Ex. 3c, δw = +0.40), Soln:285 (Ex. 10, "σ_w = 0.33 from this single lens") | **NEW FIX A** (below). Reconcile R3/R3b: fixed-Ω_m linear \|δw\| = 0.303; exact fixed-Ω_m roots −1% → w = −0.712, +1% → w = −1.359 (both reachable at this geometry, so the spiral's off-manifold concern does not apply here); along dΩ_m = −0.5 dw the same 1% needs \|δw\| = 0.659 (2.2×); along the level curve it is unbounded |
+| S6-018 (⚠) | DESI-DR2-like (w0,wa) = (−0.42,−1.75), no citation (note1:215) | n.a.: stripped; chapter has no w0wa model | none |
+| S6-023 (⚠) | η = 0.79 is not the project fiducial (note1 Ex. 3) | already fixed: chapter computes η = B^{1/0.9} = 0.6453 from its own B (after critic N14 fix) | none |
+| S6-024 (❌) | "δγ′ ≈ 0.03 found numerically in Note 3" (true value 0.045) (note1:248) | already fixed: Ex. 3(c) tex:1003-1005 states δγ′ = +0.03 as a hypothetical ("Suppose…"), no attribution | none |
+| S6-026 (❌, prose) | escalated paragraph, garbled "this project asks whether" closer (note1:20-29) | partly inherited: tex:80-86 keeps \emph{same deflector twice} and the em-dash appositive; the garbled closer and two other ornaments are gone. Two ornaments, below the escalation line | optional (see S6-027) |
+| S6-027 (❌, prose) | "--- a dimensionless number that depends on…" appositive (note1:25-28) | **inherited** verbatim, tex:83-86 | NEW FIX D (prose, optional) |
+| S6-028 (⚠) | keybox "All the deflector physics cancels in B" overstates: inference needs γ′ (note1:129-130) | **inherited**, keybox tex:369-371 (also "--- hence the cosmology ---" pivot) | **NEW FIX B** |
+| S6-029 (⚠, prose) | "…is the distance ratio, full stop" (note1:165) | already fixed: tex:527-529 drops "full stop" | none |
+| S6-030 (⚠, prose) | "exactly why" leverage sentence (note1:205-207) | inherited in altered form, tex:642-646; already flagged as P2 | none new (P2) |
+| S6-031 (❌) | "genuinely nonlinear … coupling vanishes and everything is analytic" (note1:94-100) | already fixed: tex:266-269 and 339-342 ("For the moment treat source 1 as massless; its mass is restored in §mp_coupling") | none |
+| S6-032 (⚠, prose) | "\textbf{Crucial trap}" (note1:70) | already fixed: bridge tex:151-165 states the trap without the label | none |
+| S6-033 (❌) | "Every symbol used later in the project appears here" (note1:15) | already fixed: no such sentence | none |
+| S6-038 / S6-039 (⚠/❌) | KSB94 "√q and elliptic-integral factors" (note1b:79); KSB94 SIE deflection is arcsin/arsinh | already fixed: tex:722-724 defines f(q) only as "whatever q-dependent factor a convention introduces". **Resolves chapter flag F4 / C13**: KSB94 eq. (21b) κ = √f/(2√(x1²+f²x2²)) with x = ξ/ξ0, ξ0 = 4π(v/c)² D_d D_ds/D_s (eq. 15). The chapter's eq. mpi_siekappa is this exactly, with the axes swapped (x1,x2)→(θ2,θ1), so the major axis lies along θ1 (reconcile R4, symbolic PASS) | close F4: C13 ⚠ → ✅ (KSB94 p. 287 eqs. 15, 21a–d). Optional: say "axes rotated by 90° relative to KSB94" |
+| S6-047 / S6-048 (❌/⚠) | Jackpot θ_E,1 ≈ 0.2–0.3″, 20–30% coupling, definitional/units conflation (note1b:202-205) | already fixed: eq. mp_couplingsize is derived from σ1/σL, not from a dimensionless ratio presented as arcsec; 0.10″ for σ1 = 100 km/s sits inside the published 0.116–0.163″ range only loosely (0.1045″) and is not labelled as the Jackpot | none |
+| S6-052 (⚠) | "the modelled middle mass partly absorbs the shift" (coin-flip evidence) (note1b:222) | n.a.: stripped | none |
+| S6-060, -066, -068, -069, -075, -087, -089 | Tier-3 C10 fit numbers, R5 label defect, autolens API, "closes the B–γ′ degeneracy" (note1b §C10) | n.a.: all C10/project content stripped (critic X11 leakage grep 0 hits) | none |
+| S6-062 (❌) | "Mpc-vs-kpc rounding" (real cause: radiation T_CMB/N_eff) (note1b:326-327) | n.a.: no code comparison in the chapter. The chapter's E(z) has no radiation term and says so implicitly (critic N4). | none |
+| S6-081 (❌) | sol_note1b Ex. 1 claimed "attested" but has no Wolfram check | already fixed: chapter Ex. 7(a) is attested by `problems_14.wl` check 7a ("any shape factor f(q,phi) common to both planes cancels"); every Soln `[Attested]` tag resolves (critic X4) | none |
+| S6-082 / S6-083 (❌, prose) | "not a spectator … the whole reason this project exists" (note1b:120-124) | already fixed: tex:530-534 states the lever arm plainly | none |
+| S6-084 (⚠) | "hundreds of sigma … no analysis omits it" (note1b:212-217) | n.a.: stripped; annotation tex:461-472 makes no survey claim | none |
+| S6-085 (⚠, prose) | "a first-order component, not a perturbation" antithesis (note1b:199-205) | inherited, tex:458-459. Already P6 ("keep") | none new. Its evidence is now on the page (9.1% / 20.5%) |
+| S6-086 (⚠, prose) | "A tempting shortcut is fatal." (note1b:283) | **inherited** verbatim, tex:892. Already P1 | none new (P1) |
+| S6-088 (❌) | "one lens gives a band; a population gives a point". False: a population gives a finite contour, and the reason it helps (orientation varies with triplet) is never stated (note1b:381) | **inherited** in the Summary, tex:950-951. The body (tex:815-828) states the mechanism correctly. The report's P3 had rated this "keep"; the spiral's FAIL is correct | **NEW FIX C** (upgrade P3 from prose to substance) |
+| S6-090 (❌) | "B = 0-notation aside" garble (note1b:201) | already fixed: tex:434-439 uses α_1 consistently and "Setting the near source's mass to zero recovers eq. mp_plane2" | none |
+| note1b 07-13 C1 | Collett & Auger 2014 used a free-slope power law, not an SIE | already fixed: tex:87-89 says only "cosmological constraints … were derived by" | none |
+| S8-001 / Ref_papers README:41 | "Schneider 2014 (A&A 568, A106)" conflation; arXiv:1409.0015 = A&A 624, A54 (2019) | already fixed: chapter cites `schneider_2014_multiplane` = A&A 568, L2 (DOI 10.1051/0004-6361/201424450), only for the question posed in its title (tex:588-592), which is that paper's actual title. The bib comment (references.bib:389-391) records the distinction. The spiral already knows the L2 paper exists (note11:201; packet critic line 70) | none |
+| 07-11 PASS "Schneider 2014 (A&A 568 A106)" | earlier spiral critic PASSed the wrong string | n.a. for chapter; spiral already retracted it via S8-001 | none |
+| TESTS A2 | θ_E2 = θ_E1 β^{−1/(γ′−1)} (and m₂ scaling) | consistent: eq. mp_etaB (tex:501-503); the m₂ scaling is not in this chapter | none |
+| TESTS B1 | α₂ = α₁/B (lenstronomy, 1e−16) | consistent: eq. mp_Bdef, check 2a | none |
+| TESTS C2 | elliptical θ_E scale f(q,γ) is code-specific; don't cross-wire | consistent: annotation tex:747-754 ("fit both planes with one code and one convention") | none |
+| TESTS H0 | B = 0.8200775769, S_w = −0.0157139331, S_Ωm = −0.0254559324 (Wolfram vs astropy < 1e−9) | n.a. (different geometry). Re-verified with the chapter's method: B reproduced to 1e−9 (R1 PASS). The derivative limit is S_w = −0.015725, S_Ωm = −0.025472. The quoted values are finite-step central differences (S_w ≈ step 0.05, S_Ωm ≈ step 0.02), 0.07% off the derivative | feedback item 2 |
+| TESTS D2 | instantaneous-w vs CPL dark-energy density | n.a.: the chapter uses constant w only and writes the correct general ζ(z) = exp[3∫(1+w)/(1+z′)dz′] (tex:145-148, check 5a). No CPL formula appears | none |
+| HANDOFF 09-21 §5–6 | retractions (θ_B/θ_BH, γ = 1.288, Ω_m ±0.3%, Horseshoe, …) | n.a.: none touch note1/note1b content that survived the port | none |
+
+**Chapter critic's flags re-checked against the spiral record:**
+- **F2 / C11** (Collett+2012 "differently oriented band"): **resolved, PASS.** Collett+2012 §4 (p. 5 of `Reference_papers/Collett2012_DSPL_forecast.pdf`) says: "the exact nature of the degeneracy between the two parameters varies with z_l, z_s1, and z_s2 … the precision could scale better or worse than √n depending on the widths and orientations of the constraints from each system." A numerical check agrees (reconcile R2b): dw/dΩ_m|_B = −1.081 at (0.5,1,2), −1.620 at (0.68,1.52,2.11), −0.873 at (0.3,0.6,3.3).
+- **F4 / C13** (KSB94 normalisation): **resolved** (see S6-038/039 row).
+- **F1, F3, F5**: the spiral record has nothing on these (SEF's private-communication footnote and the shear critical-curve caveat are chapter-specific; for F1, the spiral's S6-066 notes that its own C10 corner cell had no radial image, which does not bear on the chapter's general statement). They stay as flagged.
+- **N14/N15** (0.6452/−0.4382 rounding): chapter-only. The spiral's numbers are at different η and the issue does not arise there.
+- **X10 "two port corrections"** (α̂_i(D_iθ_i) vs the note's α̂_i(θ_i); coupling evaluated at D_s1β_1): **the spiral record does not know about these.** Packet critic, 07-11 and 07-13 reports are silent. See feedback item 1.
+
+### New fixes for the fix pass (not already in the Flagged section)
+
+- **A (S6-013 class, substantive).** Every δw quoted from δB/B is a projection at fixed Ω_m, and the chapter never says so. In its own §"Why one lens gives a curve", a single lens leaves δw unbounded along the level curve. Proposed edits:
+  (i) tex:603-609, after eq. mp_propagate: "…evaluated at a reference cosmology, each with the other parameter held fixed."
+  (ii) tex:641-642: "A 1% error in B masquerades as |δw| = 0.30 at this geometry if Ω_m is held fixed (check 5g)."
+  (iii) Summary tex:948-949: same qualifier.
+  (iv) Soln:93-95 (Ex. 3c) and Soln:285 (Ex. 10): "at fixed Ω_m". At Soln:285 replace "from this single lens" with "from this single lens, at fixed Ω_m (with Ω_m free, one lens leaves w unconstrained along the degeneracy of Exercise 9)".
+  Optionally add one sentence with the numbers from reconcile R3: the exact fixed-Ω_m roots are asymmetric (−1% → δw = +0.29, +1% → δw = −0.36), and letting Ω_m move with dΩ_m = −½dw doubles the shift (0.66).
+- **B (S6-028).** Keybox tex:369-371: "All the deflector physics cancels in B; only the geometry --- hence the cosmology --- survives" is true of the deflection ratio α_2/α_1 but not of the inference, which (§mp_eta) needs γ′. Proposed: "The deflector's mass distribution cancels in the ratio α_2/α_1 = 1/B, which is pure geometry; turning a measured Einstein-radius ratio into B still requires the deflector's slope (§\ref{sec:mp_eta})."
+- **C (S6-088, upgrades P3 from prose to substance).** Summary tex:950-951 "a population constrains a point" is false as written. Proposed: "One lens constrains a curve in (Ω_m, w). Lenses at different redshift triplets give differently oriented curves (\citep{collett_2012}), so a sample shrinks the allowed region." Collett+2012 §4 supports this (F2 resolution above).
+- **D (S6-027, prose, optional).** tex:83-86: fold the em-dash appositive into the clause: "…cancels the deflector mass, leaving a dimensionless ratio of distances that depends on the shape of the expansion history, (Ω_m, w), but, as we will show, not on the Hubble constant."
+- **E (housekeeping).** Close F2 and F4 in the verdict table (C11 ⚠ → ✅ via Collett+2012 §4 p. 5; C13 ⚠ → ✅ via KSB94 eqs. 15, 21a–d, p. 287). Optionally attach the KSB94 ADS scan to Zotero CW87FPFT (it currently has no child items). The spiral's S6-039 says it read the scan "via Zotero CW87FPFT", but no attachment exists there now.
+
+### Feedback to the spiral project (errors the spiral record does not yet know about)
+
+1. **note1_multiplane_dspl.tex:84-86 (eq:multiplane) and note1b_dspl_inference.tex:196-198 (eq:coupling): argument of the physical deflection.** Both write the physical deflection α̂_i at an angular argument: α̂_i(θ_i), and α̂_1(β_1) in note1b. SEF eq. 9.3 evaluates it at the physical impact position ξ_i = D_i θ_i. The chapter writes α̂_i(D_i θ_i) and α̂_s1(D_s1 β_1) (tex:185, 430). Its comoving ray trace through three planes with arbitrary nonlinear physical deflections reproduces that form to 8.5e-22 rad (chapter critic D1; `multiplane_dspl.wl` checks 1a–1d). The notes' form is only correct if α̂_i is read as a function of angle with D_i absorbed. This is a notation ambiguity rather than an error in any number. It matters most in note1b, whose eq:coupling mixes a reduced main-lens deflection with a physical source-1 deflection in one line.
+2. **TESTS H0 / `beta_sensitivity.py` S_w, S_Ωm are finite-step central differences, quoted to 10 digits.** At (0.68,1.52,2.11) in flat ΛCDM, Ω_m = 0.3, my quadrature reproduces B = 0.8200775769 (to 1e−9). The derivative limit, however, is S_w = −0.015725 and S_Ωm = −0.025472. The record's −0.0157139331 matches a central difference with step 0.05 in w (to 3e−5 relative); its −0.0254559324 matches step 0.02 in Ω_m (`fdstep.wl`). So the "<1e−9" agreement in H0 compares two implementations of the same finite step, not the derivative. The physics is unaffected (0.07%; 1/S_w = −63.59 vs −63.64), but the 10-digit precision is spurious, and the same digits feed `cosmology_impact.json:jacobian`. Suggest quoting S_w = −0.01572 (derivative) or labelling the step.
+3. **S6-088's fix is supported by Collett+2012.** For the note1b:178-179/381 rewrite, cite Collett+2012 §4, p. 5 ("…varies with z_l, z_s1, and z_s2 … widths and orientations of the constraints from each system"). It is in the project's own `Reference_papers/Collett2012_DSPL_forecast.pdf`. Degeneracy slopes for the record: −1.620 at the project triplet, −0.873 at (0.3,0.6,3.3).
+4. **S6-039 provenance.** The packet critic says it read KSB94 "via Zotero CW87FPFT → scanned PDF p. 288", but CW87FPFT has no attachment today. The page and equations it quotes are correct (ADS scan pp. 287–288, eqs. 21b, 26–27), so the verdict stands; only the stated path is wrong. Also, note1b's κ = (√q/2) b/√(θ1² + q²θ2²) is KSB94 21b with b ≡ ξ0-scaled length in the same orientation as KSB94, so the July "PLAUSIBLE, confirm against KSB94 §2" open item (07-13 report) can be closed.
