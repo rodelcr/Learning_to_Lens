@@ -161,3 +161,12 @@
 - V5 Sol 6.4(b) 0.771/0.493/0.336; (c) 2.38e−18. V6 Sol 7.3 distances 1055/1650 → 1.15″; (b) 1.65/−0.65/3.30/−1.30/4.60; problems_07.wl ll.124,130–138.
 - V7 Sol 7.3(d) point-mass 2.4″ replacement paragraph. V8 Sol 7.5(a) f ≃ ln(2/x) − 1. V9 Ch 07 ll.819–822 caustic sentence replacement. V10 Ex 7.4(c) strict inequalities.
 - Layer: "≈299 d" → "≈300 d"; bartelmann_1995 support unverified for κ̄ identity; "remove or split" → "remove or add a second faint image"; Bartelmann 1996 (no DOI; arXiv astro-ph/9602053) needs bib + cite; remove "flagged for correction" sentences after fixes.
+## critic 02–03 (02: 23 PASS/8 FAIL/4 SUSPECT; 03: 26/6/6; all 9 visible flags CONFIRMED + 1 new; layer FAIL: 03 N4 "accelerating")
+- 02 V1 Ex 2.2(b) ll.119–126: n = √[(1+2m/r)/(1−2m/r)] ≈ 1+2GM/(c²r); Newtonian 1+GM/(c²r); problems_02.wl ll.121–122.
+- 02 V2 Ex 2.1(b) ll.52–53: φ± = ±(π/2+δ), swept π+2δ. V3 ex:shapiro_sun ll.752–761: 220 μs (240 with +1). V4 remark ll.879–880: θ_E ≈ 2.4″.
+- 02 V6 "Shapiro 1964 measurement" (Sol:252, ch:1120, problems_02.wl:225) → Shapiro et al. 1968 PRL 20, 1265 (DOI 10.1103/PhysRevLett.20.1265); 1964 PRL 13, 789 = prediction. V8 NEW: "inferior conjunction" → "superior conjunction" (ch:760, Sol:254). V7 "200±20 μs" unverifiable; 2σ from 240 yet called "consistent".
+- 03 V1 eq R00 (:312) R₀₀ = −3ä/a; lhs_00 (:440–458) = 3(ȧ²/a²+kc²/a²) − Λc²; same in Solutions :38, 84–87; reword two layer passages after fix.
+- 03 V2 friedmann_equations.wl: R00expected = −3a''/a; make friedmann1 comparison a check[] + SUMMARY (currently prints nonzero Difference and "Verified" unconditionally).
+- 03 V3 Ex 3.2(c): 11.3 Gyr, ~19% older. V4 Ex 3.3 table: concordance 1.605/1748; EdS 1.25/1269; open (sinh) 1.90/1583; problems_03.wl:52 DAFunc add sinh DMFunc + FindMaximum.
+- 03 V5 :1278–1281 𝒟 monotonic; efficiency peaks χ_d ≈ 0.42χ_s (z_d=0.350 for z_s=1; 0.519 for z_s=2). V6 :1320 "physical R_E"; caption :1333 peak position.
+- 03 layer N4 :932–933 → "because H(z) > H0 at z>0"; X2 → "age is a smaller fraction of t_H (0.81 vs 0.96)"; CPL box may cite CP01+Linder03.
