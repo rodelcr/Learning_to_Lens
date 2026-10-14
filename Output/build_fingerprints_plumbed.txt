@@ -1,0 +1,3 @@
+Learning_to_Lens.pdf             261 pages  text-md5 e74db37f07bce777e2cb1b3b284d213b  sentinels 0
+Learning_to_Lens_Solutions.pdf   316 pages  text-md5 43dc7ec711f490a01e24bfff7d4cd6aa  sentinels 0
+Learning_to_Lens_Annotated.pdf   316 pages  text-md5 43dc7ec711f490a01e24bfff7d4cd6aa  sentinels 0

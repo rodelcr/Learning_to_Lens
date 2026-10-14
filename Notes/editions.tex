@@ -1,0 +1,69 @@
+% =============================================================================
+% editions.tex — Edition-gated environments for Learning to Lens
+% =============================================================================
+% \input by main.tex AFTER the \ifsolutions / \ifannotated switches are set and
+% AFTER \input{preamble} (needs tcolorbox, etoolbox, comment).
+%
+% Three editions are built by build.sh:
+%   student     : solutions OFF, annotations OFF
+%   instructor  : solutions ON,  annotations OFF
+%   annotated   : solutions ON,  annotations ON   ("Annotated Study Edition")
+%
+% In the student and instructor editions every environment below is a
+% comment-package exclusion: the body is skipped at the CHARACTER level and
+% produces no tokens at all, so those two PDFs are content-identical with or
+% without annotations in the sources (build.sh asserts this via text-md5
+% fingerprints and the uppercase title sentinels ANNOTATION/DERIVATION/BRIDGE).
+%
+% RULES FOR AUTHORS (linted; see VERIFICATION.md "Annotated Study Edition")
+%  R1  \begin{annotation}[title] and \end{annotation} each on their OWN line;
+%      \end{...} with NO leading whitespace; nothing else on either line.
+%      (comment.sty scans line by line: text after \begin{..} on the same line is
+%      swallowed, and an indented \end{..} is not recognised.)
+%  R2  Never inside align / gather / multline / equation / tabular / itemize.
+%      Boxes sit between paragraphs only. Inside a display use R4.
+%  R3  No \label inside an annotated block unless it is only \ref'd from other
+%      annotated blocks; never \cite a key that exists only for annotations.
+%  R4  Annotated-only material inside a DISPLAY (align/gather/equation):
+%      a `\\` inside a skipped \ifannotated branch within an alignment breaks
+%      the build ("Incomplete \iffalse"), so extra rows CANNOT be gated row-wise.
+%      Two supported mechanisms (both verified by the Phase-0 smoke test):
+%      (a) annotated-only prose between rows:  \ifannotated\intertext{...}\fi
+%          placed IMMEDIATELY AFTER the row's \\ (amsmath rule; placing it before
+%          the \\ yields an extra empty numbered row in the annotated edition)
+%      (b) extra rows: duplicate the whole display,
+%            \ifannotated
+%              \begin{align} ... \notag \\ <extra row> \notag \\ ... \label{eq:x} \end{align}
+%            \else
+%              \begin{align} ... \label{eq:x} \end{align}
+%            \fi
+%          with IDENTICAL labels and identical numbered rows in both branches
+%          (extra rows \notag) so equation numbers agree across editions.
+%  R5  Every numeric claim made inside an annotation gets a check[] in the
+%      module's Solutions/NN/problems_NN.wl (Mathematica is the source of truth).
+% =============================================================================
+
+\ifannotated
+  \ifsolutions\else
+    \errmessage{editions.tex: the annotated edition requires solutions (set \showsolutions)}%
+  \fi
+  \tcbset{ltlbox/.style={enhanced,breakable,left=5pt,right=5pt,top=4pt,bottom=4pt,
+          before skip=8pt plus 2pt,after skip=8pt plus 2pt,fonttitle=\bfseries\small}}
+  % Commentary on the surrounding text: intuition, unit checks, sign conventions,
+  % common errors, "why this matters".
+  \newtcolorbox{annotation}[1][]{ltlbox,colback=Plum!4,colframe=Plum!55,
+          title={ANNOTATION\ifblank{#1}{}{ --- #1}}}
+  % Step-by-step expansion of a derivation the main text compresses.
+  \newtcolorbox{derivation}[1][]{ltlbox,colback=gray!6,colframe=gray!60,
+          title={DERIVATION\ifblank{#1}{}{ --- #1}}}
+  % Forward link: where this result is used in Part V (compound lenses).
+  \newtcolorbox{bridge}[1][]{ltlbox,colback=ForestGreen!5,colframe=ForestGreen!55,
+          title={BRIDGE\ifblank{#1}{}{ --- #1}}}
+  % Short inline aside (TEXT MODE ONLY, never inside math).
+  \newcommand{\annot}[1]{{\color{Plum}\small\itshape[#1]}}
+\else
+  \excludecomment{annotation}
+  \excludecomment{derivation}
+  \excludecomment{bridge}
+  \newcommand{\annot}[1]{}
+\fi
