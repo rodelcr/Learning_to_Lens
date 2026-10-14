@@ -109,12 +109,12 @@ one, $1-\kappab+|\gammaL|$, must be negative:
     \boxed{\;\text{maximum of }\tau \;\Longleftrightarrow\; \kappab > 1 + |\gammaL| \;}
     \label{eq:oi_max_condition}
 \end{equation}
-(checks A.5--A.6).  A Type~III image can therefore only sit where the
+\annot{checks A.5--A.6}.  A Type~III image can therefore only sit where the
 lens is locally \emph{supercritical by more than the shear}.  In a
 galaxy this happens only near the centre, which is why the third image
 is called the central image.  By the same algebra a minimum needs
 $\kappab<1-|\gammaL|$, and a saddle needs $|1-\kappab|<|\gammaL|$
-(check A.8).
+\annot{check A.8}.
 
 \begin{annotation}[Sketching $\tau$ in your head]
 Think of $\tau$ as the sum of two surfaces.  The geometric term
@@ -278,8 +278,8 @@ and $-1$ contributes zero to the sum, so it can be created from nothing
 without changing the winding at infinity.  The quad-plus-one
 configuration of Exercise~\ref{ex:burke_verification} has
 $n_+=3$, $n_-=2$.  A smooth cored elliptical lens with a source inside
-both caustics realises exactly this pattern (checks I.1--I.4; see
-Exercise~\ref{ex:oi_five_images}).
+both caustics realises exactly this pattern \annot{checks I.1--I.4; see
+Exercise~\ref{ex:oi_five_images}}.
 \end{bridge}
 
 \subsection{What the hypotheses exclude}
@@ -324,7 +324,7 @@ the origin, and (S1)--(S2) fail there (they still hold far away, so the
 winding at infinity is still $+1$).  Near the origin
 $\mathbf X\approx-\thetaBH^2\hat{\vectheta}/\theta$ points straight
 inward, like the field around a maximum, so the puncture carries index
-$+1$ (check E.5).  The index sum therefore reads
+$+1$ \annot{check E.5}.  The index sum therefore reads
 \begin{equation}
     n_+ - n_- + g = 1, \qquad
     N = 2n_- + 1 - g ,
@@ -397,8 +397,8 @@ is
     \qquad s\equiv\sqrt{\theta^2+\theta_c^2},
     \label{eq:oi_psi_nis}
 \end{equation}
-up to an irrelevant constant (checks B.1--B.3: $\psiL'=\alpha$ and
-$\half\nabla^2\psiL=\kappab$).
+up to an irrelevant constant \annot{checks B.1--B.3: $\psiL'=\alpha$ and
+$\half\nabla^2\psiL=\kappab$}.
 
 \begin{bridge}[Back to Chapter~\ref{ch:axisymmetric_models}]
 We reuse the NIS exactly as defined in Section~\ref{sec:nis}: $\thetaE$
@@ -422,7 +422,7 @@ discarding the spurious root $\theta=0$ leaves a cubic,
     - 2\ysrc\,\thetaE\theta_c = 0
     \label{eq:oi_nis_cubic}
 \end{equation}
-(checks B.4--B.6), so the NIS has at most three images.  The radial
+\annot{checks B.4--B.6}, so the NIS has at most three images.  The radial
 critical curve is where $\lambda_r=0$; by eq.~\eqref{eq:oi_theta2lr}
 below (at $\thetaBH=0$) it is the positive root of
 $s^2+\theta_c s-\thetaE\theta_c=0$:
@@ -435,12 +435,12 @@ $s^2+\theta_c s-\thetaE\theta_c=0$:
 For $\theta_c=0.2\,\thetaE$ this gives $\theta_r=0.297\,\thetaE$ and a
 radial caustic of radius $\ysrc_r=0.235\,\thetaE$; for
 $\theta_c=0.1\,\thetaE$, $\theta_r=0.251\,\thetaE$ and
-$\ysrc_r=0.427\,\thetaE$ (checks C.1, C.9, FIG3).
+$\ysrc_r=0.427\,\thetaE$ \annot{checks C.1, C.9, FIG3}.
 
 \paragraph{The census.}
 On a grid of 149 source positions $0.01\le\ysrc/\thetaE\le1.5$, the
 script finds every root of eq.~\eqref{eq:oi_nis_cubic} and classifies
-it with eq.~\eqref{eq:oi_lambdas} (checks C.2--C.8, $\theta_c=0.2\,\thetaE$):
+it with eq.~\eqref{eq:oi_lambdas} \annot{checks C.2--C.8, $\theta_c=0.2\,\thetaE$}:
 \begin{itemize}[nosep]
     \item $\ysrc>\ysrc_r$: one image, a minimum;
     \item $\ysrc<\ysrc_r$: three images --- the minimum; a saddle on the far
@@ -492,16 +492,16 @@ axisymmetric lens):
     \;}
     \label{eq:oi_muc}
 \end{equation}
-(checks D.1--D.5).  For a source slightly off axis, linearising
+\annot{checks D.1--D.5}.  For a source slightly off axis, linearising
 $\ysrc\simeq(1-\kappab_0)\theta$ puts the central image at
 $\theta\simeq-\ysrc/(\kappab_0-1)$, on the far side and
 $\kappab_0-1$ times closer to the centre than the source, with the same
-magnification to leading order (checks D.8--D.9).  The magnification falls
+magnification to leading order \annot{checks D.8--D.9}.  The magnification falls
 as the \emph{square} of the core radius: a core one hundred times
 smaller than the Einstein radius makes the central image
 $\mu_c=1/2401$ times as bright as the unlensed source, $8.5$ magnitudes
 fainter; even a generous core, $\theta_c=0.1\,\thetaE$, gives
-$\mu_c=1/16$, $3.0$ magnitudes fainter (checks D.6--D.7).
+$\mu_c=1/16$, $3.0$ magnitudes fainter \annot{checks D.6--D.7}.
 Figure~\ref{fig:oi_muc} shows eq.~\eqref{eq:oi_muc} against a direct
 numerical solution at $\ysrc=0.1\,\thetaE$.
 
@@ -584,7 +584,7 @@ has $x\ll1$, so $\ysrc\simeq x^{2-\gp}$, i.e.\ $x\simeq\ysrc^{1/(2-\gp)}$.
 From eq.~\eqref{eq:oi_lambdas},
 $\lambda_t = 1-x^{1-\gp}$ and $\lambda_r = 1-(2-\gp)\,x^{1-\gp}$; both
 are large and negative for $x\to0$ (the image is a maximum), and
-$\lambda_t\lambda_r\simeq(2-\gp)\,x^{2(1-\gp)}$ (check G.2).  Therefore
+$\lambda_t\lambda_r\simeq(2-\gp)\,x^{2(1-\gp)}$ \annot{check G.2}.  Therefore
 \begin{equation}
     \boxed{\;
     \mu_c \simeq \frac{1}{2-\gp}\;\left(\frac{\ysrc}{\thetaE}\right)^{2(\gp-1)/(2-\gp)}
@@ -593,13 +593,13 @@ $\lambda_t\lambda_r\simeq(2-\gp)\,x^{2(1-\gp)}$ (check G.2).  Therefore
     \label{eq:oi_mu_powerlaw}
 \end{equation}
 The exponent $2(\gp-1)/(2-\gp)$ grows without bound as $\gp\to2$
-(check G.8): steepening the cusp toward isothermal drives the central
+\annot{check G.8}: steepening the cusp toward isothermal drives the central
 image to zero flux for every source inside the radial caustic.  At
 $\ysrc=0.1\,\thetaE$ the exact (numerical) values are $\mu_c=0.037$
 for $\gp=1.5$, $3.1\times10^{-3}$ for $\gp=1.6$, $7.5\times10^{-5}$ for
-$\gp=1.7$, and below $10^{-7}$ for $\gp=1.8$ (checks G.4, G.6b, G.7).  At
+$\gp=1.7$, and below $10^{-7}$ for $\gp=1.8$ \annot{checks G.4, G.6b, G.7}.  At
 $\gp=1.2$ a source at $0.1\,\thetaE$ is already outside the radial
-caustic and has no central image at all (check G.6).
+caustic and has no central image at all \annot{check G.6}.
 
 \begin{annotation}[Leading order is a poor approximation at moderate offsets]
 At $\gp=1.5$ and $\ysrc=0.1\,\thetaE$, eq.~\eqref{eq:oi_mu_powerlaw}
@@ -609,7 +609,7 @@ $x^{\gp-1}=\ysrc^{(\gp-1)/(2-\gp)}$, which for $\gp=1.5$ is
 $\ysrc$ itself.  Use eq.~\eqref{eq:oi_mu_powerlaw} for its
 \emph{scaling} with $\gp$; compute numbers from the exact root
 (Exercise~\ref{ex:oi_powerlaw}).  At $\ysrc=10^{-4}\,\thetaE$ the two
-agree to better than $1\%$ (check G.5).
+agree to better than $1\%$ \annot{check G.5}.
 \end{annotation}
 
 The physical reading is the same as for the core: the steeper the cusp,
@@ -632,7 +632,7 @@ eq.~\eqref{eq:oi_lambdas} gives
     \lambda_t = 1 - \frac{\thetaBH^2}{\theta^2}
     \label{eq:oi_pm_lambdas}
 \end{equation}
-(checks E.1--E.2).  Since $\lambda_r$ is positive \emph{everywhere}, no
+\annot{checks E.1--E.2}.  Since $\lambda_r$ is positive \emph{everywhere}, no
 point of the lens plane can host a maximum of $\tau$, and since
 $\ysrc(\theta)$ is strictly increasing on each half-line, each side of
 the lens has exactly one image.  These are the two roots
@@ -640,7 +640,7 @@ $\theta_\pm=\big(\ysrc\pm\sqrt{\ysrc^2+4\thetaBH^2}\big)/2$ of
 Chapter~\ref{ch:lens_equation}, eq.~\eqref{eq:image_positions}: a
 minimum at $\theta_+>\thetaBH$ and a saddle at $\theta_-<0$ inside the
 Einstein ring, with $n_+-n_-=0$, exactly as eq.~\eqref{eq:oi_index_pm}
-demands for $g=1$ (checks E.3--E.4).
+demands for $g=1$ \annot{checks E.3--E.4}.
 
 \subsection{A point mass inside a cored lens}
 
@@ -661,7 +661,7 @@ object.  Using $\theta^2=s^2-\theta_c^2$ it factorises neatly:
     \qquad s=\sqrt{\theta^2+\theta_c^2}
     \label{eq:oi_theta2lr}
 \end{equation}
-(check H.1).
+\annot{check H.1}.
 
 \begin{derivation}[Factorising $\theta^2\lambda_r$]
 Differentiate the NIS deflection of eq.~\eqref{eq:oi_nis}, using
@@ -686,7 +686,7 @@ For $\thetaBH=0$ the radial critical curve is $h(s)=0$ with
 $s>\theta_c$, i.e.\ $s^2+\theta_c s-\thetaE\theta_c=0$, which is
 eq.~\eqref{eq:oi_nis_radial}.  With $\thetaBH\neq0$, $h(s)+\thetaBH^2=0$
 is the cubic $s^3-(\theta_c^2+\thetaE\theta_c-\thetaBH^2)\,s+\thetaE\theta_c^2=0$
-(check H.18).
+\annot{check H.18}.
 \end{derivation}
 
 \paragraph{Two radial critical circles.}
@@ -732,12 +732,12 @@ radius
     \ysrc_{\rm in} \simeq 2\,\thetaBH\sqrt{\kappab_0-1}
     \label{eq:oi_yin}
 \end{equation}
-(check H.14).  It grows \emph{linearly} in $\thetaBH$, i.e.\ as the square
+\annot{check H.14}.  It grows \emph{linearly} in $\thetaBH$, i.e.\ as the square
 root of the black-hole mass, so even a small black hole removes the
 central image for every source closer to the axis than $\ysrc_{\rm in}$
-(check H.15).  For $\theta_c=0.1\,\thetaE$ ($\kappab_0=5$), a point mass
+\annot{check H.15}.  For $\theta_c=0.1\,\thetaE$ ($\kappab_0=5$), a point mass
 with $\thetaBH=0.082\,\thetaE$ already removes it for every source within
-$0.3\,\thetaE$ of the axis (check H.16).
+$0.3\,\thetaE$ of the axis \annot{check H.16}.
 
 \begin{derivation}[The inner caustic for a small black hole]
 Near the centre $\alpha_{\rm NIS}\simeq\kappab_0\theta$, so on the far
@@ -769,14 +769,14 @@ and $h(s_\star)=3s_\star^2-\theta_c^2-\thetaE\theta_c$, so
     \;}
     \label{eq:oi_ucrit}
 \end{equation}
-(checks H.4--H.6).  It vanishes as $\theta_c\to\thetaE/2$, where the NIS
+\annot{checks H.4--H.6}.  It vanishes as $\theta_c\to\thetaE/2$, where the NIS
 radial critical curve itself shrinks to the centre, and tends to
 $\thetaE\theta_c$ as $\theta_c/\thetaE\to0$.
 For $\theta_c=0.1\,\thetaE$ it gives $\theta_{\bullet,\rm crit}^2=0.0223\,\thetaE^2$
 ($\theta_{\bullet,\rm crit}=0.149\,\thetaE$), and for $\theta_c=0.2\,\thetaE$,
-$0.0190\,\thetaE^2$ ($0.138\,\thetaE$) (check H.7).  The closed form agrees
+$0.0190\,\thetaE^2$ ($0.138\,\thetaE$) \annot{check H.7}.  The closed form agrees
 with a direct numerical minimisation of $\theta^2\lambda_r$, and the
-minimum of $\lambda_r$ changes sign across it (checks H.8--H.9, H.11--H.12).
+minimum of $\lambda_r$ changes sign across it \annot{checks H.8--H.9, H.11--H.12}.
 
 \begin{derivation}[Evaluating $h$ at its minimum]
 Write $h(s)=s^2-\theta_c^2-\thetaE\theta_c+\thetaE\theta_c^2/s$ (expand
