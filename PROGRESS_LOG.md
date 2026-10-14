@@ -26,7 +26,19 @@ Timestamped record of major milestones and work completed.
 - **Spiral-project findings** (feedback pending): Schneider 2014 A&A 568 L2 vs 2019 A&A 624 A54 conflation;
   Burke 1981 DOI; note 2/2b/3/4/10 physics errors (listed in the handoff). Reconciliation with that project's own
   packet-level critic (`docs/spiral_reconciliation_2026-10-14/`) in progress per Rodrigo's instruction.
-- Pages: 360 student / 444 instructor / 569 annotated. Bib +11 CrossRef-verified keys (Zotero-tagged).
+- Bib +20 CrossRef-verified keys (Zotero-tagged).
+**Session 2 (same day) — reconciliation + fix pass COMPLETE.** Each Part V chapter reconciled row-by-row
+against the spiral project's own packet-level critic and test catalog (`docs/spiral_reconciliation_2026-10-14/`);
+all 7 module groups + 8 Part V chapters fixed (every confirmed error → corrected text with a non-silent note,
+a new `check[]` that fails on the old value, and a `## Resolution` table in the critic report). Full sweep of all
+55 `.wl` scripts: 0 failures, 1,949 PASS across the 35 harnessed scripts; master 28/28. Feedback (31 items)
+committed into the spiral repo. Final fingerprints:
+```
+Learning_to_Lens.pdf             363 pages  text-md5 a84ec8f14850f089ae56bf7d1965754f  sentinels 0
+Learning_to_Lens_Solutions.pdf   448 pages  text-md5 d1c73bb356827ce97027a012ddca78d3  sentinels 0
+Learning_to_Lens_Annotated.pdf   571 pages  text-md5 c50bca0df6c08feb5544721dcf48cb10  sentinels 508
+```
+
 
 ---
 
