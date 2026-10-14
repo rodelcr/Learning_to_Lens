@@ -208,7 +208,7 @@ check["3i  fixed-Om |Delta w0| is a lower bound ONLY for c in [2c*, 0] = [-1.850
   TrueQ[lbRegion /. c -> 2 cStar] && TrueQ[lbRegion /. c -> 0]];
 Print["  region: ", N[lbRegion, 6]];
 fac[c_] := Sw/(Sw + c SOm);
-check["3j  amplification factor |S_w/(S_w + c S_Om)|: 2.17 at c=-1/2, 0.649 at c=+1/2",
+check["3j  amplification factor |S_w/(S_w + c S_Om)|: 2.18 at c=-1/2, 0.649 at c=+1/2",
   near[Abs[fac[-1/2]], 2.176, 0.001] && near[Abs[fac[1/2]], 0.6490, 0.0005]];
 dl1 = 1/100;
 check["3k  delta = 1%: |Delta w0| = 0.303 (fixed Om), 0.659 (c=-1/2), 0.197 (c=+1/2)",
