@@ -19,6 +19,8 @@
      13.4 --- Peak magnification and the impact parameter u0
      13.5 --- Astrometric centroid shift, peak at u = Sqrt[2]
      13.6 --- Quasar-microlensing length and time scales
+   Annotated-edition checks (2026-10) appended at the end: every number /
+   identity in the derivation, annotation and bridge boxes of 13_Solutions.tex.
    ========================================================================= *)
 
 Print["=== Module 13: SOLUTIONS ===\n"];
@@ -259,3 +261,96 @@ Print[""];
 
 
 Print["=== End of Module 13 Solutions ==="];
+
+
+(* ===== Annotated-edition checks (2026-10) ===== *)
+(* Every identity / number in the derivation, annotation and bridge boxes of
+   Notes/13_Microlensing/13_Solutions.tex (Annotated Study Edition).  This
+   script defines report[] but not check[], so the shared harness is loaded
+   here (it rebinds report = check; nothing above is affected) and summary[]
+   closes the script. *)
+Get[FileNameJoin[{DirectoryName[$InputFileName], "..", "..", "Mathematica", "harness.wl"}]];
+Print["\n--- Annotated-edition checks ---"];
+near[a_, b_, tol_] := Abs[a - b] <= tol;
+ClearAll[u, y, A, u0, t, tE0, n, M, mu0, x];
+
+(* 13.1(b) Vieta route *)
+check["13.1(b) Vieta: y+ y- = -1, y+ + y- = u, y+ - y- = Sqrt[u^2+4]",
+  Simplify[{yPlus yMinus, yPlus + yMinus, yPlus - yMinus} - {-1, u, Sqrt[u^2 + 4]}] === {0, 0, 0}];
+check["13.1(b) lens eq => 1 - y^-2 = u/y  (y^2 - 1 = u y)",
+  Simplify[{1 - yPlus^-2 - u/yPlus, 1 - yMinus^-2 - u/yMinus}] === {0, 0}];
+check["13.1(b) (y + 1/y)^2 = u^2 + 4 ; y+ + 1/y+ = +Sqrt[u^2+4], y- + 1/y- = -Sqrt[u^2+4] (u>0)",
+  Simplify[{yPlus + 1/yPlus - Sqrt[u^2 + 4], yMinus + 1/yMinus + Sqrt[u^2 + 4]}, u > 0] === {0, 0}];
+check["13.1(b) mu_pm = +- y_pm^2/(u Sqrt[u^2+4])",
+  Simplify[{muPlus - yPlus^2/(u Sqrt[u^2 + 4]), muMinus + yMinus^2/(u Sqrt[u^2 + 4])}, u > 0] === {0, 0}];
+check["13.1(b) y+^2 + y-^2 = u^2 + 2", Simplify[yPlus^2 + yMinus^2 - (u^2 + 2)] === 0];
+check["13.1(b) signed mu+ + mu- = 1", Simplify[muPlus + muMinus - 1, u > 0] === 0];
+check["13.1(b) signed: mu+ = (A+1)/2, mu- = -(A-1)/2 ; i.e. |mu_pm| = (A +- 1)/2",
+  Simplify[{muPlus - (Amag[u] + 1)/2, muMinus + (Amag[u] - 1)/2}, u > 0] === {0, 0}];
+check["13.1(b) mu- < 0 for u > 0 (A > 1)", Simplify[Amag[u] > 1, u > 0] || And @@ (Amag[#] > 1 & /@ {0.01, 0.5, 1., 5., 50.})];
+(* 13.1(d) arithmetic *)
+check["13.1(d) 3/Sqrt[5] = 1.3416, log10 = 0.1277, x 2.5 = 0.319",
+  near[N[3/Sqrt[5]], 1.3416, 0.0001] && near[Log10[N[3/Sqrt[5]]], 0.1277, 0.0001] &&
+  near[2.5 Log10[N[3/Sqrt[5]]], 0.319, 0.0005]];
+
+(* 13.2(a) arithmetic and the parallax form *)
+check["13.2(a) 4 G M/c^2 (M = 0.3 Msun) ~ 1772 m", near[4 Gnewton Mm/cc^2, 1772, 1]];
+check["13.2(a) Dds/(Dd Ds) = 1/(8 kpc) = 1/(2.469e20 m)", near[Dd Ds/Dds, 2.469*^20, 0.001*^20]];
+check["13.2(a) thetaE = 2.68e-9 rad = 0.553 mas", near[thetaE, 2.68*^-9, 0.01*^-9] && near[thetaE radToMas, 0.553, 0.001]];
+check["13.2(a) R_E = 3.31e11 m = 2.21 AU", near[REphys, 3.31*^11, 0.01*^11] && near[REphys/AUtoM, 2.21, 0.005]];
+check["13.2(b) tE = 1.65e6 s = 19.1 d", near[tE, 1.65*^6, 0.01*^6] && near[tE/86400, 19.1, 0.05]];
+ClearAll[GGs, ccs, Ms, dd, ds, AU];
+check["13.2 Euclidean (Dds = Ds - Dd): Dds/(Dd Ds) = 1/Dd - 1/Ds",
+  Simplify[(ds - dd)/(dd ds) - (1/dd - 1/ds)] === 0];
+check["13.2 thetaE^2 = (4 G M/(c^2 AU)) pi_rel with pi_rel = AU(1/Dd - 1/Ds)",
+  Simplify[(4 GGs Ms/ccs^2) (ds - dd)/(dd ds) - (4 GGs Ms/(ccs^2 AU)) AU (1/dd - 1/ds)] === 0];
+kapMas = (4 Gnewton Msolar/(cc^2 AUtoM)) radToMas;
+check["13.2/13.5 kappa = 4 G Msun/(c^2 AU) = 3.95e-8 rad = 8.14 mas/Msun",
+  near[4 Gnewton Msolar/(cc^2 AUtoM), 3.95*^-8, 0.01*^-8] && near[kapMas, 8.14, 0.01]];
+piRel = (1/4. - 1/8.) (* 1/kpc = 1 mas *);
+check["13.2 pi_rel = 1/4 - 1/8 mas = 0.125 mas; Sqrt[8.14 x 0.3 x 0.125] = 0.553 mas",
+  piRel == 0.125 && near[Sqrt[kapMas 0.3 piRel], 0.553, 0.001]];
+check["13.2 1/kpc expressed in mas: (AU/kpc) rad ~ 1.000 mas", near[AUtoM/kpcToM radToMas, 1.000, 0.001]];
+
+(* 13.3 event rate *)
+ClearAll[nA, thE, muRel];
+tauD = nA Pi thE^2; GammaD = nA 2 thE muRel; tEang = thE/muRel;
+check["13.3 event rate Gamma = n 2 thetaE mu_rel = (2/pi) tau/tE",
+  Simplify[GammaD - (2/Pi) tauD/tEang] === 0];
+ClearAll[rho0, MM];
+check["13.3 at fixed mass density: tau ~ M^0, Gamma ~ M^-1/2",
+  Simplify[PowerExpand[((rho0/MM) Pi (k1 MM)) ]] === Pi k1 rho0 &&
+  Simplify[PowerExpand[((rho0/MM) 2 Sqrt[k1 MM] muRel)/(MM^(-1/2))]] === 2 Sqrt[k1] rho0 muRel];
+check["13.3(d) 5e-7/1.2e-7 = 4.2", near[5*^-7/1.2*^-7, 4.2, 0.05]];
+
+(* 13.4 *)
+uOfA[a_] := Sqrt[2 (a/Sqrt[a^2 - 1] - 1)];
+check["13.4(a) u0(A) = Sqrt[2(A/Sqrt[A^2-1] - 1)] inverts A(u) (same as Ex 11.1)",
+  Simplify[Amag[uOfA[a]] - a, a > 1] === 0];
+check["13.4(a) A = 5: 5/Sqrt[24] = 1.0206, u0^2 = 0.0412, u0 = 0.203",
+  near[5/Sqrt[24.], 1.0206, 0.0001] && near[uOfA[5.]^2, 0.0412, 0.0001] && near[uOfA[5.], 0.203, 0.0005] &&
+  near[uOfA[5.], u0sol, 10^-6]];
+check["13.4(b) (u^2+2)/Sqrt[u^2+4] = 1 + 3u^2/8 + O(u^4); 1/Sqrt[u^2+4] = (1 - u^2/8)/2 + O(u^4)",
+  Simplify[Normal[Series[(x^2 + 2)/Sqrt[x^2 + 4], {x, 0, 3}]] - (1 + 3 x^2/8)] === 0 &&
+  Simplify[Normal[Series[1/Sqrt[x^2 + 4], {x, 0, 3}]] - (1 - x^2/8)/2] === 0];
+check["13.2(a) thetaE^2 = 1772/2.469e20 = 7.18e-18", near[thetaE^2, 7.18*^-18, 0.01*^-18]];
+check["13.2 Ds/Dd = 2 for the Bulge event", Ds/Dd == 2];
+check["13.4(b) A(u) = 1/u + 3u/8 + O(u^3)",
+  Simplify[Normal[Series[Amag[x], {x, 0, 1}]] - (1/x + 3 x/8)] === 0];
+check["13.4(b) A(0.05) = 20.0187; 3u/8 = 0.0187; fractional error 0.094%",
+  near[Amag[0.05], 20.0187, 0.0001] && near[3 0.05/8, 0.01875, 10^-6] && near[(Amag[0.05] - 20)/Amag[0.05], 0.00094, 0.00001]];
+
+(* 13.6 *)
+check["13.6 D_d, D_s, D_ds = 1259, 1726.6, 1097 Mpc ; D_s - D_d = 468 Mpc != D_ds",
+  near[DdQ/MpcToM, 1259, 1] && near[DsQ/MpcToM, 1726.6, 0.1] && near[DdsQ/MpcToM, 1097, 1] &&
+  near[(DsQ - DdQ)/MpcToM, 468, 1]];
+ClearAll[GGs, Ms, ccs, dd, ds, dds];
+check["13.6 r_E(source plane) = Ds thetaE = Sqrt[4 G M Ds Dds/(c^2 Dd)]",
+  Simplify[ds Sqrt[4 GGs Ms dds/(ccs^2 dd ds)] - Sqrt[4 GGs Ms ds dds/(ccs^2 dd)],
+    Assumptions -> {GGs > 0, Ms > 0, ccs > 0, dd > 0, ds > 0, dds > 0}] === 0];
+check["13.6 r_E / R_E(lens plane) = Ds/Dd", Simplify[(ds th0)/(dd th0) - ds/dd] === 0];
+check["13.6 r_E(Msun, source plane) = 5.24e16 cm; lens-plane R_E = r_E Dd/Ds = 3.82e16 cm",
+  near[rEsource[1] 100, 5.24*^16, 0.01*^16] && near[rEsource[1] 100 DdQ/DsQ, 3.82*^16, 0.01*^16]];
+check["13.6(c) 1e13 m/(6e5 m/s) = 1.67e7 s = 6.3 months", near[tcross, 1.67*^7, 0.01*^7] && near[tcross/(yrToS/12), 6.3, 0.05]];
+
+summary[];

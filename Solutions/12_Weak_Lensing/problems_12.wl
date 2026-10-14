@@ -19,6 +19,8 @@
      12.3 --- The Kaiser-Squires kernel and inversion
      12.4 --- Complex-ellipticity definitions and transforms
      12.5 --- Cosmic-shear correlation functions and parity
+   Annotated-edition checks (2026-10) appended at the end: every number /
+   identity in the derivation, annotation and bridge boxes of 12_Solutions.tex.
    ========================================================================= *)
 
 Print["=== Module 12: SOLUTIONS ===\n"];
@@ -224,3 +226,73 @@ Print["    => <M_ap^2> reflects the shape of P_kappa far more directly.\n"];
 
 
 Print["=== End of Module 12 Solutions ==="];
+
+
+(* ===== Annotated-edition checks (2026-10) ===== *)
+(* Every identity / number in the derivation, annotation and bridge boxes of
+   Notes/12_Weak_Lensing/12_Solutions.tex (Annotated Study Edition).  This
+   script defines its own check[] (print-only), so the harness is NOT loaded;
+   annCheck wraps it and keeps a tally for the SUMMARY line below. *)
+Print["--- Annotated-edition checks ---\n"];
+annRes = {};
+annCheck[label_, bool_] := (check[label, bool]; AppendTo[annRes, TrueQ[bool]]);
+ClearAll[kk, gg, eps, al, lam, x, r, dl, th, v, l, A, MM, Scr0, Dd0, Ds0, Dds0, GG0, cc0];
+
+(* 12.1(c): number counts in the weak limit *)
+muWL = 1/((1 - kk)^2 - gg^2);
+annCheck["12.1(c) mu = 1 + 2 kappa + O(kappa^2, gamma^2)",
+  Normal[Series[muWL /. {kk -> eps kk, gg -> eps gg}, {eps, 0, 1}]] === 1 + 2 eps kk];
+annCheck["12.1(c) n/n0 = mu^(alpha-1) = 1 + 2(alpha-1) kappa to first order",
+  Simplify[Normal[Series[(1 + 2 eps kk)^(al - 1), {eps, 0, 1}]] - (1 + 2 (al - 1) eps kk)] === 0];
+annCheck["12.1(c) alpha = 1: n/n0 = 1 for any mu (no number-count signal)",
+  Simplify[(MM^(al - 1)) /. al -> 1] === 1];
+(* reduced-shear pitfall: SIS at theta = 2 thetaE *)
+kSIS2 = 1/(2*2); gSIS2 = 1/(2*2);
+annCheck["12.1 SIS at theta = 2 thetaE: kappa = gamma = 1/4, g = 1/3 (33% above gamma)",
+  kSIS2 == 1/4 && gSIS2/(1 - kSIS2) == 1/3 && (1/3)/(1/4) - 1 == 1/3];
+annCheck["12.1 MST: gamma' = lambda gamma differs from gamma (shear itself not invariant)",
+  Simplify[lam gam - gam] =!= 0];
+
+(* 12.2(b): thetaE^2 = M/(pi Sigma_cr Dd^2) for a point mass *)
+annCheck["12.2(b) M/(pi Sigma_cr Dd^2) = 4 G M Dds/(c^2 Dd Ds) = thetaE^2",
+  Simplify[MM/(Pi (cc0^2 Ds0/(4 Pi GG0 Dd0 Dds0)) Dd0^2) - 4 GG0 MM Dds0/(cc0^2 Dd0 Ds0)] === 0];
+
+(* 12.2(d): NFW asymptotics *)
+annCheck["12.2(d) small x: g(x) = ln(2/x) + O(x^2 ln x)",
+  Simplify[PowerExpand[Normal[Series[gNFWlo[x], {x, 0, 1}]] - Log[2/x]], x > 0] === 0];
+annCheck["12.2(d) small x: f(x) = (1-g)/(x^2-1) -> ln(2/x) - 1",
+  Simplify[PowerExpand[Normal[Series[(1 - gNFWlo[x])/(x^2 - 1), {x, 0, 1}]] - (Log[2/x] - 1)], x > 0] === 0];
+annCheck["12.2(d) small x: kbar/kappa_s -> ln(2/x) - 1/2",
+  Simplify[PowerExpand[Normal[Series[(2/x^2) (Log[x/2] + gNFWlo[x]), {x, 0, 1}]] - (Log[2/x] - 1/2)], x > 0] === 0];
+annCheck["12.2(d) large x: g(x) = pi/(2x) - 1/x^2 + O(x^-3)",
+  Simplify[Normal[Series[gNFWhi[x], {x, Infinity, 2}]] - (Pi/(2 x) - 1/x^2)] === 0];
+annCheck["12.2(d) large x: f(x) = 1/x^2 + O(x^-3)",
+  Simplify[Normal[Series[(1 - gNFWhi[x])/(x^2 - 1), {x, Infinity, 2}]] - 1/x^2] === 0];
+
+(* 12.4(b),(c) *)
+annCheck["12.4(b) 1 - |chi|^2 = 4 r^2/(1+r^2)^2",
+  Simplify[1 - chiMod^2 - 4 r^2/(1 + r^2)^2] === 0];
+annCheck["12.4(c) r = 1 - d: |eps| = d/(2-d), |chi| = (2d - d^2)/(2 - 2d + d^2)",
+  Simplify[(epsMod /. r -> 1 - dl) - dl/(2 - dl)] === 0 &&
+  Simplify[(chiMod /. r -> 1 - dl) - (2 dl - dl^2)/(2 - 2 dl + dl^2)] === 0];
+annCheck["12.4(c) |chi| and 2|eps| both = d + d^2/2 + O(d^3); difference O(d^3)",
+  Simplify[Normal[Series[(2 dl - dl^2)/(2 - 2 dl + dl^2), {dl, 0, 2}]] - (dl + dl^2/2)] === 0 &&
+  Simplify[Normal[Series[2 dl/(2 - dl), {dl, 0, 2}]] - (dl + dl^2/2)] === 0 &&
+  Normal[Series[(2 dl - dl^2)/(2 - 2 dl + dl^2) - 2 dl/(2 - dl), {dl, 0, 2}]] === 0];
+
+(* 12.5(c) *)
+annCheck["12.5(c) int_0^Inf J_0(x) dx = int_0^Inf J_4(x) dx = 1",
+  Integrate[BesselJ[0, x], {x, 0, Infinity}] === 1 && Integrate[BesselJ[4, x], {x, 0, Infinity}] === 1];
+annCheck["12.5(c) substitution x = l theta: int_0^Inf J_0(l theta) dl = 1/theta",
+  Simplify[Integrate[BesselJ[0, l th], {l, 0, Infinity}, Assumptions -> th > 0] - 1/th] === 0];
+annCheck["12.5(c) int_theta^Inf dv/v^2 = 1/theta, int_theta^Inf dv/v^4 = 1/(3 theta^3)",
+  Integrate[1/v^2, {v, th, Infinity}, Assumptions -> th > 0] === 1/th &&
+  Integrate[1/v^4, {v, th, Infinity}, Assumptions -> th > 0] === 1/(3 th^3)];
+
+(* bridge: MST keeps g; image positions too (beta -> lambda beta) *)
+annCheck["12 bridge: MST alpha' = lambda alpha + (1-lambda) theta maps beta -> lambda beta",
+  Simplify[(th - (lam aa + (1 - lam) th)) - lam (th - aa)] === 0];
+
+nA = Length[annRes]; pA = Count[annRes, True];
+Print["SUMMARY: ", pA, " PASS, ", nA - pA, " FAIL  (of ", nA, " annotated-edition checks)"];
+If[pA =!= nA, Exit[1]];

@@ -19,6 +19,8 @@
      10.3 --- Magnification of a high-redshift galaxy
      10.4 --- Einstein radii across mass scales
      10.5 --- Weak lensing mass estimate
+   Annotated-edition checks (2026-10) appended at the end: every number /
+   identity in the derivation, annotation and bridge boxes of 10_Solutions.tex.
    ========================================================================= *)
 
 Print["=== Module 10: SOLUTIONS ===\n"];
@@ -349,3 +351,143 @@ Print["    not negligible.\n"];
    ========================================================================= *)
 
 Print["=== All Module 10 solutions verified. ===\n"];
+
+
+(* ===== Annotated-edition checks (2026-10) ===== *)
+(* Every identity / number introduced in the derivation, annotation and
+   bridge boxes of Notes/10_Cluster_Lensing/10_Solutions.tex (Annotated
+   Study Edition only).  This script had no check[] of its own, so the
+   shared harness is loaded here and summary[] closes the script. *)
+Get[FileNameJoin[{DirectoryName[$InputFileName], "..", "..", "Mathematica", "harness.wl"}]];
+Print["\n--- Annotated-edition checks ---"];
+near[a_, b_, tol_] := Abs[a - b] <= tol;
+
+(* 10.1(a) rho_crit,0 and E^2(z=0.3) *)
+rhoCrit0 = 3 H0^2/(8 Pi Gnewton);
+check["10.1 rho_crit,0 = 3H0^2/(8 pi G) ~ 9.20e-27 kg/m^3", near[rhoCrit0, 9.20*^-27, 0.01*^-27]];
+check["10.1 E^2(0.3) = 0.3*1.3^3 + 0.7 = 1.3591", near[Ez03^2, 1.3591, 0.0001]];
+check["10.1 M200 = 5e14 Msun = 9.945e44 kg", near[p1["M200"], 9.945*^44, 0.001*^44]];
+(* rho_s from equating the two expressions for M200 *)
+ClearAll[rs0, rhs0, rc0, cc0];
+mOfc[c_] := Log[1 + c] - c/(1 + c);
+check["10.1 4 pi rho_s r_s^3 m(c) = (4pi/3) 200 rho_c (c r_s)^3  <=>  rho_s = (200/3) rho_c c^3/m(c)",
+  Simplify[(4 Pi ((200/3) rc0 cc0^3/mOfc[cc0]) rs0^3 mOfc[cc0]) - (4 Pi/3) 200 rc0 (cc0 rs0)^3] === 0];
+check["10.1 NFW enclosed 3D mass: int_0^{c r_s} 4 pi r^2 rho_s/[(r/r_s)(1+r/r_s)^2] dr = 4 pi rho_s r_s^3 m(c)",
+  Simplify[Integrate[4 Pi r^2 rhs0/((r/rs0) (1 + r/rs0)^2), {r, 0, cc0 rs0},
+      Assumptions -> {rs0 > 0, cc0 > 0}] - 4 Pi rhs0 rs0^3 mOfc[cc0],
+    Assumptions -> {rs0 > 0, cc0 > 0}] === 0];
+check["10.1 m(5) = ln 6 - 5/6 ~ 0.9584", near[mOfc[5.], 0.9584, 0.0001]];
+check["10.1 r200 ~ 1.478 Mpc", near[p1["r200"]/MpcToM, 1.478, 0.001]];
+check["10.1 theta_s = r_s/D_d ~ 3.218e-4 rad ~ 66.4 arcsec",
+  near[p1["thetaS"], 3.218*^-4, 0.001*^-4] && near[p1["thetaS"] radToArcsec, 66.4, 0.05]];
+check["10.1 Sigma_cr(0.3,2) ~ 4.91 kg/m^2 ~ 2.35e15 Msun/Mpc^2",
+  near[SigmaCr, 4.91, 0.01] && near[SigmaCr/Msolar MpcToM^2, 2.35*^15, 0.01*^15]];
+check["10.1 kappa_s = 2 rho_s r_s/Sigma_cr ~ 0.404", near[p1["kappaS"], 0.404, 0.001]];
+(* rho_crit,0 pitfall: redo the cluster with rho_crit,0 instead of rho_crit(z) *)
+nfwParams0[M200Msun_, c_] := Module[{M200, r200, rs, rhoS},
+  M200 = M200Msun Msolar; r200 = (3 M200/(800 Pi rhoCrit0))^(1/3); rs = r200/c;
+  rhoS = 200/3 rhoCrit0 c^3/(Log[1 + c] - c/(1 + c));
+  <|"r200" -> r200, "thetaS" -> rs/DdVal, "kappaS" -> 2 rhoS rs/SigmaCr|>];
+p0 = nfwParams0[5*^14, 5];
+xt0 = x /. FindRoot[kbarNFW[x, p0["kappaS"]] == 1, {x, 0.1}];
+thetaE0 = xt0 p0["thetaS"] radToArcsec;
+Print["  [pitfall] with rho_crit,0: r200 = ", p0["r200"]/MpcToM, " Mpc, kappa_s = ",
+  p0["kappaS"], ", theta_E = ", thetaE0, " arcsec"];
+check["10.1 pitfall: rho_crit,0 gives r200 larger by E^(2/3) = 1.108 (1.637 Mpc)",
+  near[p0["r200"]/p1["r200"], Ez03^(2/3), 10^-6] && near[p0["r200"]/MpcToM, 1.637, 0.001]];
+check["10.1 pitfall: kappa_s scales as rho_crit^(2/3): 0.404 -> 0.330",
+  near[p0["kappaS"]/p1["kappaS"], Ez03^(-4/3), 10^-6] && near[p0["kappaS"], 0.330, 0.001]];
+check["10.1 pitfall: theta_E drops from 6.9'' to ~4.3'' (-38%)", near[thetaE0, 4.31, 0.01] && near[1 - thetaE0/thetaE1, 0.38, 0.005]];
+(* 10.1(b) small-x expansion of the NFW mean convergence *)
+gLo[x_] := ArcCosh[1/x]/Sqrt[1 - x^2];
+serK = Normal[Series[Log[x/2] + gLo[x], {x, 0, 3}]];
+check["10.1(b) ln(x/2) + g(x) = (x^2/2)[ln(2/x) - 1/2] + O(x^4 ln x)",
+  Simplify[PowerExpand[serK - (x^2/2) (Log[2/x] - 1/2)], x > 0] === 0];
+xtApprox = 2 Exp[-1/p1["kappaS"] - 1/2];
+check["10.1(b) leading-order root x_t ~ 2 exp(-1/kappa_s - 1/2) ~ 0.102 (exact 0.104)",
+  near[xtApprox, 0.102, 0.001] && near[xt1, 0.104, 0.0005]];
+check["10.1(b) kbar(0.104) = 1 to 1%", near[kbarNFW[0.104, p1["kappaS"]], 1, 0.01]];
+check["10.1(b) theta_E = x_t theta_s ~ 6.90''", near[thetaE1, 6.90, 0.01]];
+(* 10.1(c) arithmetic *)
+REm = DdVal thetaE1rad;
+check["10.1(c) R_E = D_d theta_E ~ 30.7 kpc = 9.49e20 m",
+  near[REm/kpcToM, 30.7, 0.1] && near[REm, 9.49*^20, 0.02*^20]];
+check["10.1(c) pi R_E^2 ~ 2.83e42 m^2 and x Sigma_cr ~ 1.39e43 kg",
+  near[Pi REm^2, 2.83*^42, 0.02*^42] && near[Pi REm^2 SigmaCr, 1.39*^43, 0.01*^43]];
+check["10.1(c) M(theta_E) ~ 6.99e12 Msun", near[Mencl1, 6.99*^12, 0.01*^12]];
+check["10.1(d) R_E/r200 ~ 0.021", near[REm/p1["r200"], 0.021, 0.0005]];
+check["10.1(d) M(theta_E)/M200 ~ 0.014", near[fracM, 0.014, 0.0005]];
+
+(* 10.3 SIS image magnifications *)
+ClearAll[bb, tEs];
+muSISp = (bb + tEs)/bb; muSISmAbs = (tEs - bb)/bb;
+check["10.1 H0 = 70 km/s/Mpc = 2.268e-18 s^-1", near[H0, 2.268*^-18, 0.001*^-18]];
+check["10.1 D_d, D_s, D_ds = 918.8, 1726.6, 1328.5 Mpc",
+  near[DdVal/MpcToM, 918.8, 0.05] && near[DsVal/MpcToM, 1726.6, 0.05] && near[DdsVal/MpcToM, 1328.5, 0.05]];
+check["10.1 r_s = r200/5 ~ 295.6 kpc", near[p1["rs"]/kpcToM, 295.6, 0.05]];
+check["10.1(b) arccosh(1/x) = ln(2/x) - x^2/4 + O(x^4)",
+  Simplify[PowerExpand[Normal[Series[ArcCosh[1/x], {x, 0, 3}]] - (Log[2/x] - x^2/4)], x > 0] === 0];
+check["10.1(b) 1/kappa_s + 1/2 ~ 2.976", near[1/p1["kappaS"] + 1/2, 2.976, 0.001]];
+ClearAll[bb2, tE2];
+muSIS[th_] := 1/(1 - tE2/Abs[th]);
+check["10.3 SIS mu(theta_pm) = theta_pm/beta (signed), theta_pm = beta +- thetaE",
+  Simplify[{muSIS[bb2 + tE2] - (bb2 + tE2)/bb2, muSIS[bb2 - tE2] - (bb2 - tE2)/bb2},
+    Assumptions -> {0 < bb2 < tE2}] === {0, 0}];
+check["10.3 SIS |mu+| + |mu-| = 2 thetaE/beta", Simplify[muSISp + muSISmAbs - 2 tEs/bb] === 0];
+check["10.3 SIS signed mu+ + mu- = 2 (parity pitfall)", Simplify[muSISp - muSISmAbs - 2] === 0];
+check["10.3(b) log10(600) ~ 2.778 -> Delta m ~ -6.95", near[Log10[600.], 2.778, 0.001] && near[deltam, -6.95, 0.005]];
+check["10.3(c) 10^0.8 ~ 6.31 and 60/6.31 ~ 9.51 < 30 (two-image regime)",
+  near[muMin, 6.31, 0.005] && near[betaMax, 9.51, 0.005] && betaMax < thetaESIS];
+
+(* 10.4 SIS Einstein radii and masses *)
+check["10.4 D_ds/D_s ~ 0.769", near[DdsOverDs, 0.769, 0.0005]];
+check["10.4 (250/2.998e5)^2 ~ 6.954e-7; x 4 pi ~ 8.739e-6; x 0.7694 ~ 6.724e-6 rad",
+  near[(250/2.998*^5)^2, 6.954*^-7, 0.001*^-7] && near[4 Pi (250/2.998*^5)^2, 8.739*^-6, 0.001*^-6] &&
+  near[4 Pi (250*^3/cc)^2 DdsOverDs, 6.723*^-6, 0.002*^-6]];
+check["10.4 1 rad = 206265'' ; theta_E(galaxy) ~ 1.387''",
+  near[N[radToArcsec], 206264.8, 0.1] && near[thetaEs4[[1]], 1.387, 0.001]];
+ClearAll[sv, GG, cL, dd, ds, dds];
+thSIS = 4 Pi sv^2/cL^2 dds/ds;
+MthE = (cL^2/(4 GG)) (dd ds/dds) thSIS^2;
+check["10.4(e) pi (D_d theta_E)^2 Sigma_cr = (c^2/4G)(D_d D_s/D_ds) theta_E^2",
+  Simplify[Pi (dd thSIS)^2 (cL^2 ds/(4 Pi GG dd dds)) - MthE] === 0];
+check["10.4(e) SIS: M(theta_E) = 4 pi^2 sigma^4 D_d D_ds/(G c^2 D_s)",
+  Simplify[MthE - 4 Pi^2 sv^4 dd dds/(GG cL^2 ds)] === 0];
+galMass = Pi (DdVal thetaEs4[[1]]/radToArcsec)^2 SigmaCr/Msolar;
+check["10.4(e) galaxy: D_d theta_E ~ 6.18e-3 Mpc; pi(.)^2 ~ 1.20e-4 Mpc^2; M ~ 2.82e11 Msun",
+  near[DdVal thetaEs4[[1]]/radToArcsec/MpcToM, 6.18*^-3, 0.01*^-3] &&
+  near[Pi (DdVal thetaEs4[[1]]/radToArcsec/MpcToM)^2, 1.20*^-4, 0.01*^-4] && near[galMass, 2.82*^11, 0.01*^11]];
+check["10.4(e) M ratio cluster/galaxy = (1200/250)^4 = 530.8 = 23.04^2",
+  near[(1200/250.)^4, 530.8, 0.1] && near[(thetaEs4[[3]]/thetaEs4[[1]])^2, 530.8, 0.1]];
+
+(* 10.5 weak-lensing mass *)
+check["10.5 3^0.8 ~ 2.41, 5^0.8 ~ 3.62", near[3^0.8, 2.41, 0.005] && near[5^0.8, 3.62, 0.005]];
+check["10.5 1' = 2.909e-4 rad, 5' = 1.454e-3 rad",
+  near[Pi/(180 60.), 2.909*^-4, 0.001*^-4] && near[5 Pi/(180 60.), 1.454*^-3, 0.001*^-3]];
+check["10.5 Sigma_cr(0.3,1) ~ 2.83e15 Msun/Mpc^2", near[SigmaCrWL, 2.83*^15, 0.01*^15]];
+check["10.5(c) D_d theta = 1.336 Mpc ; pi(.)^2 = 5.61 Mpc^2 ; x Sigma_cr = 1.59e16 ; x 0.0276 = 4.39e14",
+  near[DdMpc thetaRad5, 1.336, 0.001] && near[Pi (DdMpc thetaRad5)^2, 5.61, 0.01] &&
+  near[Pi (DdMpc thetaRad5)^2 SigmaCrWL, 1.59*^16, 0.01*^16] && near[Mencl5, 4.39*^14, 0.01*^14]];
+check["10.5 R = D_d * 5' ~ 1.34 Mpc vs r200 = 1.48 Mpc", near[DdMpc thetaRad5, 1.34, 0.01]];
+(* pitfall: kbar ~ gamma_t.  Exact for a power law kbar = A theta^-n:
+   kappa = (1/2 theta) d(theta^2 kbar)/d theta = (1 - n/2) kbar ;
+   gamma_t = kbar - kappa = (n/2) kbar. *)
+ClearAll[AA, nn, th];
+kbarPL = AA th^-nn;
+kapPL = Simplify[D[th^2 kbarPL, th]/(2 th)];
+check["10.5 power law: kappa = (1 - n/2) kbar", Simplify[kapPL - (1 - nn/2) kbarPL] === 0];
+check["10.5 power law: gamma_t = kbar - kappa = (n/2) kbar", Simplify[kbarPL - kapPL - (nn/2) kbarPL] === 0];
+(* zeta-statistic form: kbar(theta) = 2 int_theta^Inf gamma_t dtheta'/theta' for gamma_t = B theta^-n *)
+check["10.5 kbar(theta) = 2 int_theta^Inf gamma_t dtheta'/theta' = (2/n) gamma_t for gamma_t ~ theta^-n",
+  Simplify[2 Integrate[BB tp^-nn/tp, {tp, th, Infinity}, Assumptions -> {nn > 0, th > 0}] - (2/nn) BB th^-nn,
+    Assumptions -> {nn > 0, th > 0}] === 0];
+check["10.5 n = 0.8: kbar = 2.5 gamma_t, kappa/kbar = 0.6 at every radius",
+  (2/0.8 == 2.5) && near[1 - 0.8/2, 0.6, 10^-12]];
+check["10.5 pitfall: power-law-consistent M(5') = 2.5 x 4.39e14 ~ 1.10e15 Msun",
+  near[2.5 Mencl5, 1.10*^15, 0.01*^15]];
+
+(* bridge: source-redshift dependence of Sigma_cr behind one cluster *)
+check["10 bridge: Sigma_cr(z_s=1)/Sigma_cr(z_s=2) ~ 1.21 for z_d = 0.3",
+  near[SigmaCrWL/(SigmaCr/Msolar MpcToM^2), 1.21, 0.005]];
+
+summary[];
