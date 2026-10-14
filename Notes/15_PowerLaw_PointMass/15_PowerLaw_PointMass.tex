@@ -1,12 +1,1188 @@
 % =============================================================================
 % Module 15: Power-Law Lenses with a Central Point Mass
 % =============================================================================
-% Part V — Compound Lenses, Degeneracies, and Cosmography
-% STUB created 2026-10-14 so that \ref{ch:power_law_point_mass} resolves while the chapter is
-% being written. Replace this file with the full chapter (keep the label).
+% Part V --- Compound Lenses, Degeneracies, and Cosmography
+% Sources: Meneghetti (2021) Sect. 5.2 (power-law lens, eqs. 5.38--5.44,
+%          Remark 5.3); Keeton (2001, astro-ph/0102341) eqs. (23)--(29);
+%          Narayan & Bartelmann Sect. 3.1. Ported and expanded from two
+%          analytic study notes (axisymmetric power law + point mass; broken
+%          power law, Sects. 1--4 only).
+% Mathematica: ../Mathematica/15_PowerLaw_PointMass/
+%   power_law_point_mass.wl  (power law, point mass, annihilation, SIS+PM)
+%   broken_power_law.wl      (broken power law closed forms and identities)
+% Solutions:   ../Solutions/15_PowerLaw_PointMass/problems_15.wl
 % =============================================================================
 
 \chapter{Power-Law Lenses with a Central Point Mass}
 \label{ch:power_law_point_mass}
 
-\noindent\emph{[Chapter in preparation.]}
+\noindent
+Chapter~\ref{ch:axisymmetric_models} built the circular-lens formalism
+and used it on the point mass, the singular and nonsingular isothermal
+spheres, and the NFW halo.  Chapter~\ref{ch:galaxy_lensing} then
+introduced the spherical power law $\rho\propto r^{-\gp}$ as the
+workhorse of galaxy-scale lens modeling.  This chapter puts those two
+threads together and adds one more ingredient: a \textbf{central point
+mass}, such as the supermassive black hole that sits at the centre of
+essentially every massive galaxy.
+
+The questions are concrete.  Where are the critical curves of a power
+law, and when does it have a \emph{radial} critical curve at all?  What
+does a point mass at the centre do to those curves?  The answer to the
+second question is the main result of the chapter.  A point mass has no
+radial critical curve of its own, and adding one to a profile that
+\emph{does} have one pushes the radial eigenvalue upward precisely at
+the small radii where radial images form, until, above a critical mass
+fraction, the radial critical curve is destroyed.  We derive that
+critical mass fraction in closed form.  We then solve the
+isothermal-plus-point-mass lens exactly, and finally introduce the
+\textbf{broken power law}, whose inner slope can mimic a central point
+mass so well that, outside the break radius, the two are
+\emph{identical}.
+
+By the end of the chapter you should be able to compute the critical
+curves and caustics of any axisymmetric profile plus a central point
+mass, and to say which observations could and could not tell a central
+point mass from a steeper inner density profile.
+
+\medskip
+\noindent
+\textbf{Companion Mathematica files:}
+\begin{itemize}[nosep]
+    \item \mathlink{15_PowerLaw_PointMass/power_law_point_mass.wl}{power\_law\_point\_mass.wl}
+          --- symbolic derivation of the power-law and point-mass
+          lensing quantities, the critical radii, the annihilation
+          threshold $\mBH_{\rm crit}(\gp)$, image counts, and the
+          isothermal-plus-point-mass closed form checked against a
+          numerical root solve; exports
+          Figure~\ref{fig:pl_lambda_r_annihilation}
+    \item \mathlink{15_PowerLaw_PointMass/broken_power_law.wl}{broken\_power\_law.wl}
+          --- closed-form deflection of the broken power law, its
+          normalization, the point-mass and isothermal limits, and the
+          outside-the-break identity; exports
+          Figure~\ref{fig:bpl_deflection}
+    \item \solnlink{15_PowerLaw_PointMass/problems\_15.wl}{problems\_15.wl}
+          --- worked solutions to the problems in
+          \S\ref{sec:pl_problems}
+\end{itemize}
+Bracketed labels such as ``[check 5q]'' point to the individual
+PASS/FAIL checks that verify the statement next to them: in
+\S\ref{sec:bpl_broken} they refer to \texttt{broken\_power\_law.wl},
+elsewhere to \texttt{power\_law\_point\_mass.wl}; labels beginning
+with AN refer to \texttt{problems\_15.wl}.
+
+
+% =====================================================================
+\section{The Circular Toolbox, Revisited}
+\label{sec:pl_toolbox}
+
+For an axisymmetric convergence $\kappab(\theta)$, with
+$\theta=|\vectheta|$, the deflection points radially and depends only
+on the mass enclosed within $\theta$:
+\begin{equation}
+    \alpha(\theta) = \frac{2}{\theta}\int_0^{\theta}\kappab(\theta')\,\theta'\,\dd\theta'
+                   = \bar{\kappa}(\theta)\,\theta ,
+    \qquad
+    \bar{\kappa}(\theta)\equiv\frac{2}{\theta^2}\int_0^{\theta}\kappab(\theta')\,\theta'\,\dd\theta' ,
+    \label{eq:pl_alpha_kbar}
+\end{equation}
+where $\bar\kappa$ is the mean convergence inside $\theta$.  Multiplying
+by $\theta$ and differentiating inverts this relation:
+\begin{equation}
+    \kappab(\theta) = \frac{1}{2\theta}\deriv{}{\theta}\big[\theta\,\alpha(\theta)\big] .
+    \label{eq:pl_kappa_inversion}
+\end{equation}
+The \textbf{Einstein radius} is where the mean interior convergence is
+unity, $\bar\kappa(\thetaE)=1$, equivalently $\alpha(\thetaE)=\thetaE$.
+
+\paragraph{The signed one-dimensional lens equation.}
+Source, lens centre, and images all lie on one line through the centre,
+so we let $\theta$ run over the whole real line, negative values
+denoting the side opposite the source.  The deflection is then an odd
+function, $\alpha(-\theta)=-\alpha(\theta)$, and the lens equation is
+\begin{equation}
+    \ysrc = \theta - \alpha(\theta) ,
+    \label{eq:pl_lens_eq_signed}
+\end{equation}
+with $\ysrc\ge0$ the source position.  This is
+eq.~\eqref{eq:lens_eq_1d} of Chapter~\ref{ch:axisymmetric_models}
+written for both sides of the lens at once; we use the letter $\ysrc$
+for the signed source coordinate, as in the rest of Part~V.  Every image
+of a source at $\ysrc_0$ is a root of $\ysrc(\theta)=\ysrc_0$.
+
+\paragraph{Eigenvalues.}
+The Jacobian of a circular lens is diagonal in polar coordinates, with
+a tangential and a radial eigenvalue
+\begin{equation}
+    \lambda_t(\theta) = 1-\frac{\alpha(\theta)}{\theta} = 1-\bar\kappa(\theta) ,
+    \qquad
+    \lambda_r(\theta) = 1-\deriv{\alpha}{\theta} = 1+\bar\kappa(\theta)-2\kappab(\theta) ,
+    \qquad
+    \mu = \frac{1}{\lambda_t\,\lambda_r} .
+    \label{eq:pl_eigenvalues}
+\end{equation}
+The tangential critical curve is $\lambda_t=0$ (arcs, Einstein rings);
+the radial critical curve is $\lambda_r=0$ (radially stretched images).
+The second form of $\lambda_r$ uses the identity
+\begin{equation}
+    \deriv{\alpha}{\theta} = 2\kappab(\theta)-\bar\kappa(\theta) ,
+    \label{eq:pl_dalpha}
+\end{equation}
+which holds for every axisymmetric profile.
+
+\begin{derivation}[The identity $\dd\alpha/\dd\theta = 2\kappa-\bar\kappa$]
+Write $\alpha=\bar\kappa\,\theta$ and differentiate with the product rule:
+\[
+  \deriv{\alpha}{\theta} = \bar\kappa + \theta\,\deriv{\bar\kappa}{\theta} .
+\]
+Differentiating the definition
+$\bar\kappa=2\theta^{-2}\int_0^\theta\kappab\,\theta'\,\dd\theta'$
+gives two terms, one from the prefactor and one from the upper limit:
+\[
+  \deriv{\bar\kappa}{\theta}
+  = -\frac{4}{\theta^3}\int_0^\theta\kappab\,\theta'\,\dd\theta' + \frac{2}{\theta^2}\,\kappab(\theta)\,\theta
+  = \frac{2}{\theta}\big[\kappab(\theta)-\bar\kappa(\theta)\big] .
+\]
+Substituting, $\dd\alpha/\dd\theta = \bar\kappa + 2(\kappab-\bar\kappa) = 2\kappab-\bar\kappa$.
+Then $\lambda_r = 1-2\kappab+\bar\kappa$.  Since the shear of a circular
+lens is $|\gammaL|=\bar\kappa-\kappab$, this is also
+$\lambda_r=1-\kappab+|\gammaL|$ and $\lambda_t=1-\kappab-|\gammaL|$.
+[Checks 0a--0c of \texttt{power\_law\_point\_mass.wl}.]
+\end{derivation}
+
+\begin{bridge}[Chapters~\ref{ch:magnification} and~\ref{ch:axisymmetric_models}]
+Equation~\eqref{eq:pl_eigenvalues} is
+eq.~\eqref{eq:eigenvalues_circular} of
+Chapter~\ref{ch:axisymmetric_models} (\S\ref{sec:circular_formalism}).
+In the general language of Chapter~\ref{ch:magnification}
+(eq.~\ref{eq:mu_eigenvalues}) the two eigenvalues are
+$\lambda_\mp = 1-\kappab\mp|\gammaL|$: for a circular lens the
+\emph{tangential} eigenvalue is $\lambda_t=\lambda_-$ and the
+\emph{radial} one is $\lambda_r=\lambda_+$.  Nothing new is being
+introduced; we are only specializing a result you already have.
+\end{bridge}
+
+\paragraph{Superposition.}
+Deflections add, so for a composite lens
+$\alpha=\alpha_1+\alpha_2$ the \emph{departures from unity} of the
+eigenvalues add too:
+\begin{equation}
+    \lambda_t - 1 = (\lambda_{t,1}-1) + (\lambda_{t,2}-1) ,
+    \qquad
+    \lambda_r - 1 = (\lambda_{r,1}-1) + (\lambda_{r,2}-1) .
+    \label{eq:pl_superposition}
+\end{equation}
+This one line is what makes the rest of the chapter work.
+
+\begin{keybox}[Recipe: critical curves of any axisymmetric profile plus a point mass]
+For a profile with mean convergence $\bar\kappa(\theta)$ and local
+convergence $\kappab(\theta)$, plus a central point mass of Einstein
+radius $\thetaBH$:
+\begin{align}
+    \lambda_t(\theta) &= 1-\bar\kappa(\theta)-\frac{\thetaBH^2}{\theta^2} ,
+    \label{eq:pl_recipe_lt}\\
+    \lambda_r(\theta) &= 1+\bar\kappa(\theta)-2\kappab(\theta)+\frac{\thetaBH^2}{\theta^2} .
+    \label{eq:pl_recipe_lr}
+\end{align}
+The tangential critical curve solves $\lambda_t=0$ and the radial
+critical curve(s) solve $\lambda_r=0$.  Each critical radius
+$\theta_c$ maps to a caustic at $\ysrc_c=\theta_c-\alpha(\theta_c)$.
+The point mass \emph{lowers} $\lambda_t$ and \emph{raises}
+$\lambda_r$, by the same amount $\thetaBH^2/\theta^2$.
+\end{keybox}
+
+\begin{annotation}[Reading $\lambda_r$ as the slope of the map]
+Because $\lambda_r=1-\dd\alpha/\dd\theta=\dd\ysrc/\dd\theta$, the
+radial eigenvalue is just the slope of the curve $\ysrc(\theta)$.  A
+radial critical curve is a place where that curve turns over (a local
+maximum or minimum), and the corresponding radial caustic is the value
+of $\ysrc$ there.  Sources whose $\ysrc_0$ lies beyond a turning value
+lose two roots of $\ysrc(\theta)=\ysrc_0$; sources inside gain them.
+So you can count images by eye from a plot of $\ysrc(\theta)$, the
+``image diagram'' of \citet{meneghetti_introduction_2021} (\S5.2.1).
+The tangential eigenvalue has a similar reading:
+$\lambda_t=\ysrc/\theta$, so it vanishes exactly where the map passes
+through $\ysrc=0$ away from the centre, i.e.\ on the Einstein ring.
+\end{annotation}
+
+
+% =====================================================================
+\section{The Power-Law Lens}
+\label{sec:pl_powerlaw}
+
+\subsection{Convergence and deflection}
+
+Take the spherical power law of \S\ref{sec:power_law_profile},
+$\rho\propto r^{-\gp}$.  Chapter~\ref{ch:galaxy_lensing} projected it
+along the line of sight with a Beta-function integral and found
+$\Sigma\propto R^{1-\gp}$ (finite for $\gp>1$), hence a convergence
+with the same exponent, normalized as in
+eq.~\eqref{eq:kappa_power_law}.  We take that result as our starting
+point and derive the deflection from it.  Writing the convergence as
+\begin{equation}
+    \kappab(\theta)=\frac{3-\gp}{2}\left(\frac{\thetaE}{\theta}\right)^{\gp-1} ,
+    \qquad 1<\gp<3 ,
+    \label{eq:pl_kappa}
+\end{equation}
+the enclosed-mass integral~\eqref{eq:pl_alpha_kbar} gives
+\begin{equation}
+    \boxed{\;\alpha_{\rm PL}(\theta)=\thetaE^{\,\gp-1}\,\theta^{\,2-\gp}\;}
+    \qquad\Longrightarrow\qquad
+    \bar\kappa(\theta)=\left(\frac{\thetaE}{\theta}\right)^{\gp-1} .
+    \label{eq:pl_alpha}
+\end{equation}
+The Einstein condition $\alpha(\thetaE)=\thetaE$ holds for every
+$\gp$; the prefactor $(3-\gp)/2$ in~\eqref{eq:pl_kappa} is exactly what
+makes it so.  In the isothermal case $\gp=2$ the deflection is
+constant, $\alpha=\thetaE$, and $\kappab=\thetaE/(2\theta)$: the SIS of
+\S\ref{sec:sis}.
+
+\begin{bridge}[Chapter~\ref{ch:galaxy_lensing}: where the convergence comes from]
+The projection $\rho\propto r^{-\gp}\to\Sigma\propto R^{1-\gp}$ was
+done in \S\ref{sec:power_law_profile} with the substitution $u=z/\xi$
+and the integral
+$\int_0^\infty(1+u^2)^{-\gp/2}\dd u=\tfrac12 B\big(\tfrac12,\tfrac{\gp-1}{2}\big)$,
+which is finite only for $\gp>1$.  That integral fixes the
+\emph{physical} normalization (in terms of $\rho_0$ and $r_0$).  For
+lensing we only need the shape $\kappab\propto\theta^{1-\gp}$; the
+normalization is then fixed most cleanly by demanding
+$\bar\kappa(\thetaE)=1$, as in the derivation below.  The upper limit
+$\gp<3$ is a separate requirement: it keeps the projected mass inside
+any finite radius finite.
+\end{bridge}
+
+\begin{derivation}[Deflection and normalization from the enclosed mass]
+Start from the shape $\kappab = A\,\theta^{1-\gp}$ with an unknown
+constant $A$.  The integrand of~\eqref{eq:pl_alpha_kbar} is
+$\kappab\,\theta' = A\,\theta'^{\,2-\gp}$, so
+\[
+  \int_0^\theta A\,\theta'^{\,2-\gp}\,\dd\theta' = \frac{A\,\theta^{\,3-\gp}}{3-\gp}
+  \qquad(\text{convergent at }0\text{ only if }\gp<3),
+\]
+and
+\[
+  \alpha(\theta) = \frac{2}{\theta}\cdot\frac{A\,\theta^{\,3-\gp}}{3-\gp}
+                 = \frac{2A}{3-\gp}\,\theta^{\,2-\gp} .
+\]
+Impose $\alpha(\thetaE)=\thetaE$:
+$2A\,\thetaE^{\,2-\gp}/(3-\gp)=\thetaE$, so
+$A=\tfrac{3-\gp}{2}\,\thetaE^{\,\gp-1}$.  Substituting back gives
+eq.~\eqref{eq:pl_kappa} and $\alpha=\thetaE^{\,\gp-1}\theta^{\,2-\gp}$.
+Going the other way, eq.~\eqref{eq:pl_kappa_inversion} gives
+$\theta\alpha=\thetaE^{\gp-1}\theta^{3-\gp}$,
+$\dd(\theta\alpha)/\dd\theta=(3-\gp)\thetaE^{\gp-1}\theta^{2-\gp}$, and
+dividing by $2\theta$ recovers~\eqref{eq:pl_kappa}.
+[Checks 1a--1e of \texttt{power\_law\_point\_mass.wl}.]
+\end{derivation}
+
+\paragraph{Cross-check against the literature.}
+\citet{meneghetti_introduction_2021} (\S5.2, eqs.~5.38--5.40) writes the
+same lens in units of $\thetaE$, $x=\theta/\thetaE$, through the
+dimensionless enclosed mass $m(x)=x^{3-n}$, with $n$ the 3-D slope:
+$\kappab=m'(x)/(2x)=\tfrac{3-n}{2}x^{1-n}$ and $\alpha=m/x=x^{2-n}$.
+With $n\equiv\gp$ these are eqs.~\eqref{eq:pl_kappa}
+and~\eqref{eq:pl_alpha} divided by $\thetaE$.
+\citet{keeton_2001_catalog} (eqs.~26 and~29, ``softened power law'')
+uses $\kappab=\tfrac12 b^{2-\alpha_{\rm K}}(s^2+\xi^2)^{\alpha_{\rm K}/2-1}$
+with $M_{\rm cyl}\propto r^{\alpha_{\rm K}}$ asymptotically.  Setting the
+core $s=0$, $\alpha_{\rm K}=3-\gp$, and
+$b^{\gp-1}=(3-\gp)\,\thetaE^{\gp-1}$ reproduces both of our
+expressions; Keeton's scale $b$ equals $\thetaE$ only for the
+isothermal case.  [Checks 1i--1n.]
+
+\begin{annotation}[The slope-convention trap: $\gp$ versus $s=\gp-1$]
+Three different numbers are all called ``the slope'' of the same
+power-law lens, and confusing them is the most common error in
+power-law work:
+\begin{center}
+\begin{tabular}{lll}
+  quantity & exponent & value for $\rho\propto r^{-1.5}$ \\ \hline
+  3-D density $\rho\propto r^{-\gp}$ & $\gp$ (Meneghetti's $n$) & $1.5$ \\
+  convergence $\kappab\propto\theta^{-s}$ & $s=\gp-1$ & $0.5$ \\
+  enclosed mass $M_{\rm cyl}\propto\theta^{\alpha_{\rm K}}$ & $\alpha_{\rm K}=3-\gp$ (Keeton) & $1.5$ \\
+\end{tabular}
+\end{center}
+The isothermal case is $\gp=2$, $s=1$, $\alpha_{\rm K}=1$.  Before
+using any formula, lens-modeling code, or prior range, check
+\emph{which} exponent it means.  A prior box written for $\gp$ but
+applied to $s$ (or vice versa) can silently exclude the true model: a
+fit can then fail to converge for a reason that looks, from the
+outside, exactly like a physical degeneracy.  The broken power law of
+\S\ref{sec:bpl_broken} is written in convergence slopes $t=\gp-1$, and we flag
+the trap again there.  [AN2, AN8 of \texttt{problems\_15.wl}.]
+\end{annotation}
+
+\begin{annotation}[A one-line sanity check: $\kappab(\thetaE)=(3-\gp)/2$]
+Evaluate~\eqref{eq:pl_kappa} at $\theta=\thetaE$:
+$\kappab(\thetaE)=(3-\gp)/2$.  For the SIS this is $1/2$; for
+$\gp=1.5$ it is $0.75$; it is below unity for every $\gp>1$, even
+though the \emph{mean} convergence inside $\thetaE$ is exactly $1$.
+Two useful consequences:
+\begin{itemize}
+  \item The local convergence is a fixed fraction of the mean one at
+        every radius, $\kappab=\tfrac{3-\gp}{2}\bar\kappa$, so the shear
+        is $|\gammaL|=\bar\kappa-\kappab=\tfrac{\gp-1}{2}\bar\kappa$.
+  \item The radial eigenvalue at the Einstein radius is
+        $\lambda_r(\thetaE)=\gp-1=2[1-\kappab(\thetaE)]$ (it is $0.5$
+        for $\gp=1.5$).  Since the radial magnification of arcs near
+        the Einstein ring is $1/\lambda_r$, the local convergence at
+        $\thetaE$, equivalently the slope, controls how thick the arcs
+        look.
+\end{itemize}
+If a code or a derivation gives you a power law with
+$\kappab(\thetaE)\ne(3-\gp)/2$, its $\thetaE$ is not the Einstein
+radius as defined here.  [Checks 1f--1h, 2d; numbers in AN1 of
+\texttt{problems\_15.wl}.]
+\end{annotation}
+
+\subsection{Critical curves of the power law}
+
+Inserting~\eqref{eq:pl_alpha} into~\eqref{eq:pl_eigenvalues},
+\begin{equation}
+    \lambda_t = 1-\left(\frac{\thetaE}{\theta}\right)^{\gp-1} ,
+    \qquad
+    \lambda_r = 1-(2-\gp)\left(\frac{\thetaE}{\theta}\right)^{\gp-1} .
+    \label{eq:pl_lambdas}
+\end{equation}
+
+\begin{keybox}[Critical radii of a power law]
+\begin{align}
+    \text{tangential:}\quad & \theta_t=\thetaE ,
+    \label{eq:pl_theta_t}\\
+    \text{radial:}\quad & \theta_r=\thetaE\,(2-\gp)^{1/(\gp-1)}
+    \qquad(\text{exists only for }1<\gp<2) .
+    \label{eq:pl_theta_r}
+\end{align}
+As $\gp\to2$ (isothermal), $\theta_r\to0$: the singular isothermal
+sphere has no radial critical curve.  Shallower profiles push
+$\theta_r$ outward: $\theta_r/\thetaE=0.0427$ at $\gp=1.95$, $0.217$ at
+$\gp=1.6$, $0.25$ at $\gp=1.5$, approaching $1/e$ as $\gp\to1$.
+\end{keybox}
+
+\begin{derivation}[Solving $\lambda_r=0$]
+Set the radial eigenvalue in~\eqref{eq:pl_lambdas} to zero:
+\[
+  (2-\gp)\left(\frac{\thetaE}{\theta}\right)^{\gp-1}=1
+  \;\Longrightarrow\;
+  \left(\frac{\theta}{\thetaE}\right)^{\gp-1}=2-\gp
+  \;\Longrightarrow\;
+  \theta_r=\thetaE\,(2-\gp)^{1/(\gp-1)} .
+\]
+The second step raises both sides to the power $1/(\gp-1)$, which is
+legitimate only if the base is positive and real, i.e.\ $\gp<2$.  For
+$\gp\ge2$ write $\lambda_r=1+(\gp-2)(\thetaE/\theta)^{\gp-1}\ge1$: it
+never vanishes.  For $1<\gp<2$ the base $2-\gp$ lies in $(0,1)$ and the
+exponent is positive, so $0<\theta_r<\thetaE$.  As $\gp\to2^-$ the base
+goes to $0$ with exponent $\to1$, hence $\theta_r\to0$.  As
+$\gp\to1^+$, substitute $n'=1/(\gp-1)$: $\theta_r/\thetaE=(1-1/n')^{n'}\to
+e^{-1}$, which is eq.~5.44 of \citet{meneghetti_introduction_2021}.  The
+tangential root is simpler: $\lambda_t=0$ when $(\thetaE/\theta)^{\gp-1}=1$,
+i.e.\ $\theta=\thetaE$, for every slope.  [Checks 3a--3i; AN9.]
+\end{derivation}
+
+The radial critical curve maps to a radial caustic at
+\begin{equation}
+    \ysrc_r = \theta_r-\alpha(\theta_r)
+            = -\frac{\gp-1}{2-\gp}\,\theta_r
+            = -\thetaE\,(\gp-1)(2-\gp)^{(2-\gp)/(\gp-1)} ,
+    \label{eq:pl_radial_caustic}
+\end{equation}
+which is $-\thetaE/4$ at $\gp=1.5$.  The negative sign means the
+critical point lies on the opposite side of the lens from the sources
+it serves.  As $\gp\to2^-$, $|\ysrc_r|\to\thetaE$: the radial caustic
+grows even as the radial critical curve shrinks to a point (compare the
+statement after eq.~5.44 of \citet{meneghetti_introduction_2021}).
+[Checks 3j--3k.]
+
+\begin{bridge}[Chapter~\ref{ch:axisymmetric_models}: two routes to a radial critical curve]
+In \S\ref{sec:nis} a radial critical curve appeared when the SIS was
+given a \emph{core}: the NIS has one for $\theta_c<\thetaE/2$
+(Figure~\ref{fig:nis_critical_curves}).  Here the profile has no core
+at all ($\kappab\to\infty$ at the centre) and still has a radial
+critical curve, as long as the cusp is \emph{shallower} than
+isothermal.  The common thread is eq.~\eqref{eq:pl_recipe_lr} without
+the point mass: $\lambda_r=1+\bar\kappa-2\kappab$ must change sign.
+Near the centre of a power law $2\kappab-\bar\kappa=(2-\gp)\bar\kappa$
+grows without bound when $\gp<2$, which forces $\lambda_r<0$ at small
+$\theta$; for the SIS the coefficient $2-\gp$ vanishes and the
+divergence is cancelled exactly.  ``Cuspy'' therefore does not mean
+``no radial image''; ``at least as steep as isothermal'' does.
+\end{bridge}
+
+\subsection{Reading the source-plane map}
+\label{sec:pl_reading_map}
+
+For $1<\gp<2$ the curve $\ysrc(\theta)=\theta-\alpha_{\rm PL}(\theta)$
+on the $\theta>0$ side starts at $\ysrc(0)=0$ (because
+$\alpha_{\rm PL}\propto\theta^{2-\gp}\to0$), dips negative to a minimum
+$\ysrc_r$ at $\theta_r$, returns to zero at $\theta=\thetaE$, and then
+rises.  The $\theta<0$ side is the mirror image, $\ysrc(-\theta)=-\ysrc(\theta)$.
+A source at $0<\ysrc_0<|\ysrc_r|$ therefore has three images:
+\begin{itemize}[nosep]
+  \item an outer image at $\theta>\thetaE$ (positive parity);
+  \item a counter-image on the far side, between $-\thetaE$ and
+        $-\theta_r$;
+  \item a \textbf{radial} image on the far side, between $-\theta_r$
+        and the centre.
+\end{itemize}
+Outside the radial caustic, $\ysrc_0>|\ysrc_r|$, only the outer image
+survives.  For $\gp=1.5$ ($|\ysrc_r|=\thetaE/4$) a source at
+$\ysrc_0=0.05\,\thetaE$ has three images and one at $0.3\,\thetaE$ has
+one [check 5q].  This is the familiar odd-number count for a
+nonsingular lens; Chapter~\ref{ch:odd_images} returns to it.
+
+
+% =====================================================================
+\section{The Point Mass}
+\label{sec:pl_point_mass}
+
+A point mass $M_\bullet$ at the origin puts all of its convergence into
+a delta function; away from the centre $\kappab=0$ and
+\begin{equation}
+    \alpha_\bullet(\theta)=\frac{\thetaBH^2}{\theta} ,
+    \qquad
+    \thetaBH^2=\frac{4\Gnewton M_\bullet}{\speedoflight^2}\frac{\Dds}{\Dd\Ds} ,
+    \qquad
+    \lambda_t=1-\frac{\thetaBH^2}{\theta^2} ,
+    \qquad
+    \lambda_r=1+\frac{\thetaBH^2}{\theta^2} .
+    \label{eq:pl_point_mass}
+\end{equation}
+(This is the potential $\psi=\thetaBH^2\ln\theta$ of
+\citet{keeton_2001_catalog}, eqs.~23--24.)  Two facts matter for the
+rest of the chapter.
+\begin{enumerate}
+  \item $\lambda_t=0$ at $\theta=\thetaBH$ (the point mass's own
+        Einstein ring), but $\lambda_r>0$ \emph{everywhere}:
+        \textbf{a point mass has no radial critical curve of its own.}
+  \item $\alpha_\bullet\to\infty$ as $\theta\to0$, so the point mass
+        dominates the innermost region of any lens it is added to.
+\end{enumerate}
+We measure its strength by
+\begin{equation}
+    \mBH \equiv \frac{\thetaBH^2}{\thetaE^2} = \frac{M_\bullet}{M_{\rm PL}(<\thetaE)} ,
+    \label{eq:pl_mass_fraction}
+\end{equation}
+the point mass as a fraction of the mass of the power law inside
+$\thetaE$.  The second equality uses
+$\thetaBH^2=M_\bullet/(\pi\Sigmacr\Dd^2)$, which follows from
+eq.~\eqref{eq:alpha_enclosed_mass}, together with
+$M_{\rm PL}(<\thetaE)=\pi\Sigmacr\Dd^2\thetaE^2\,\bar\kappa(\thetaE)$
+and $\bar\kappa(\thetaE)=1$ [check 4f].  Throughout this chapter
+$\thetaE$ denotes the Einstein radius of the power law \emph{alone};
+the tangential critical curve of the composite lens sits slightly
+outside it (Problem~\ref{ex:pl_tangential_shift}).  For a black hole
+in a galaxy, $\mBH\ll1$.
+
+\begin{bridge}[Chapters~\ref{ch:magnification} and~\ref{ch:axisymmetric_models}: the point mass you already know]
+Equation~\eqref{eq:pl_point_mass} is the point-mass lens of
+\S\ref{sec:point_mass_recap} (and \S\ref{sec:point_mass_example} of
+Chapter~\ref{ch:magnification}) with its Einstein radius renamed
+$\thetaBH$, so that $\thetaE$ stays free for the galaxy.  The remark in
+\S\ref{sec:point_mass_recap} already noted that
+$\lambda_r=1+\bar\kappa>0$; here $\bar\kappa=\thetaBH^2/\theta^2$.  What
+is new in this chapter is what that positive $\lambda_r$ does when it
+is \emph{added} to a profile whose own $\lambda_r$ goes negative.
+\end{bridge}
+
+
+% =====================================================================
+\section{Power Law plus Point Mass}
+\label{sec:pl_plpm}
+
+\subsection{Where the point mass acts}
+
+Apply the recipe~\eqref{eq:pl_recipe_lt}--\eqref{eq:pl_recipe_lr} to
+the power law~\eqref{eq:pl_alpha} plus the point
+mass~\eqref{eq:pl_point_mass}.  In units $u=\theta/\thetaE$,
+\begin{equation}
+    \lambda_r(u) = 1-(2-\gp)\,u^{1-\gp}+\mBH\,u^{-2} ,
+    \qquad
+    \lambda_t(u) = 1-u^{1-\gp}-\mBH\,u^{-2} .
+    \label{eq:pl_plpm_lambdas}
+\end{equation}
+The point mass enters $\lambda_r$ with a plus sign: it can only push
+the radial eigenvalue up, toward and past zero.  How hard it pushes,
+relative to the power law, depends on radius.  The ratio of the two
+terms that compete in $\lambda_r-1$ is
+\begin{equation}
+    \frac{\mBH\,u^{-2}}{(2-\gp)\,u^{1-\gp}} = \frac{\mBH}{2-\gp}\,u^{-(3-\gp)} .
+    \label{eq:pl_weight_ratio}
+\end{equation}
+Since $3-\gp>0$, the point mass gains on the power law as $u$
+decreases.  Compared with its weight at the Einstein radius, its weight
+at the radial critical curve is larger by $(\thetaE/\theta_r)^{3-\gp}$:
+a factor of $4^{3/2}=8$ for $\gp=1.5$.  And at the very centre the
+point-mass term always wins, $\lambda_r\to+\infty$, whereas the pure
+power law has $\lambda_r\to-\infty$ there [checks 5a--5e].
+
+\begin{keybox}[Why a central point mass acts precisely where radial images form]
+A point mass changes $\lambda_t$ and $\lambda_r$ by $\mp\thetaBH^2/\theta^2$.
+At the Einstein ring this is a small correction of size $\mBH$.  The
+radial critical curve, however, lives deep inside, at
+$\theta_r<\thetaE$, where the same term is larger by
+$(\thetaE/\theta_r)^2$, and larger \emph{relative to the profile's own
+contribution} by $(\thetaE/\theta_r)^{3-\gp}$.  Radial images form
+exactly in the region a central mass controls.  A black hole that
+barely moves the Einstein ring can therefore decide whether a radial
+image exists at all.
+\end{keybox}
+
+\subsection{The stationary point and the critical mass fraction}
+
+With $\mBH>0$, $\lambda_r$ is $+\infty$ at the centre and tends to $1$
+from below at large radius, so it has a minimum in between.  A radial
+critical curve exists if and only if that minimum is $\le0$.
+
+\begin{derivation}[The minimum of $\lambda_r$ and the annihilation threshold]
+\textbf{Stationary point.}  Differentiate~\eqref{eq:pl_plpm_lambdas}
+and multiply by $u^3>0$:
+\[
+  u^3\deriv{\lambda_r}{u} = (2-\gp)(\gp-1)\,u^{3-\gp}-2\mBH .
+\]
+The right-hand side increases monotonically in $u$ (its derivative is
+$(2-\gp)(\gp-1)(3-\gp)u^{2-\gp}>0$), runs from $-2\mBH$ at $u=0$ to
+$+\infty$, and so has exactly one zero:
+\[
+  u_\star=\left[\frac{2\mBH}{(2-\gp)(\gp-1)}\right]^{1/(3-\gp)} .
+\]
+This single stationary point is the global minimum.
+
+\textbf{Value at the minimum.}  At $u_\star$ the stationarity condition
+gives $\mBH u_\star^{-2}=\tfrac12(2-\gp)(\gp-1)u_\star^{1-\gp}$.
+Substituting into $\lambda_r$,
+\[
+  \lambda_r(u_\star) = 1-(2-\gp)u_\star^{1-\gp}\Big[1-\frac{\gp-1}{2}\Big]
+                     = 1-\frac{(2-\gp)(3-\gp)}{2}\,u_\star^{1-\gp} .
+\]
+
+\textbf{Threshold.}  The radial critical curve disappears when this
+minimum touches zero, $\lambda_r(u_\star)=0$, which fixes the location
+\[
+  u_c=\left[\frac{(2-\gp)(3-\gp)}{2}\right]^{1/(\gp-1)} ,
+\]
+and then the stationarity condition fixes the mass:
+$\mBH_{\rm crit}=\tfrac12(2-\gp)(\gp-1)\,u_c^{3-\gp}$, which is
+eq.~\eqref{eq:pl_mcrit}.  [Checks 5f--5j.]
+\end{derivation}
+
+\begin{keybox}[Annihilation of the radial critical curve]
+A power law with $1<\gp<2$ plus a central point mass of fractional mass
+$\mBH$ has a radial critical curve if and only if $\mBH\le\mBH_{\rm crit}(\gp)$, with
+\begin{equation}
+    \mBH_{\rm crit}(\gp)=\frac{(2-\gp)(\gp-1)}{2}
+      \left[\frac{(2-\gp)(3-\gp)}{2}\right]^{(3-\gp)/(\gp-1)} .
+    \label{eq:pl_mcrit}
+\end{equation}
+At $\gp=3/2$ this is exactly $\mBH_{\rm crit}=27/4096\approx0.0066$,
+with the merger at $u_c=9/64$.  Over the whole range $1<\gp<2$ the
+threshold never exceeds $0.0066$ (maximum at $\gp\approx1.48$), and it
+vanishes at both ends.
+\end{keybox}
+
+The numbers are worth absorbing.  A point mass carrying less than one
+per cent of the projected mass inside the Einstein radius is enough to
+remove the radial critical curve of \emph{any} power law [checks
+5k--5m].  Figure~\ref{fig:pl_lambda_r_annihilation} shows how it
+happens.  Without the point mass, $\lambda_r$ rises monotonically from
+$-\infty$ and crosses zero once, at $\theta_r$.  A small point mass
+bends the curve back up at the centre, so that $\lambda_r$ crosses zero
+\emph{twice}: there are now \textbf{two} radial critical curves, an
+inner one created by the point mass and an outer one inherited from
+the power law.  As $\mBH$ grows the two approach each other, merge at
+$u_c$ when $\mBH=\mBH_{\rm crit}$, and disappear together.  This is the
+annihilation of the radial critical curve [check 5n].
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{../Figures/15_PowerLaw_PointMass/lambda_r_annihilation.pdf}
+    \caption{Annihilation of the radial critical curve by a central
+    point mass.
+    \textbf{(a)}~Radial eigenvalue $\lambda_r(\theta)$,
+    eq.~\eqref{eq:pl_plpm_lambdas}, for a $\gp=1.5$ power law with
+    point masses $\mBH=0$, $\mBH_{\rm crit}/2$, $\mBH_{\rm crit}$, and
+    $2\mBH_{\rm crit}$ ($\mBH_{\rm crit}=27/4096$).  The dashed line marks
+    the radial critical radius $\theta_r=\thetaE/4$ of the bare power
+    law.  For $0<\mBH<\mBH_{\rm crit}$ the curve crosses zero twice (two
+    radial critical curves); at $\mBH_{\rm crit}$ it touches zero; above
+    it $\lambda_r>0$ everywhere.
+    \textbf{(b)}~The threshold $\mBH_{\rm crit}(\gp)$ of
+    eq.~\eqref{eq:pl_mcrit}.  Below the curve the lens has radial
+    critical curves; above it, none.  Generated by
+    \texttt{power\_law\_point\_mass.wl}.}
+    \label{fig:pl_lambda_r_annihilation}
+\end{figure}
+
+\begin{annotation}[Why the threshold vanishes at both ends]
+At $\gp\to2$ the power law's own radial curve has already shrunk to
+the centre ($\theta_r\to0$), so an arbitrarily small point mass, whose
+influence grows without bound inward, overwhelms it.  At $\gp\to1$ the
+power law approaches a uniform sheet with $\kappab\to1$ and
+$\lambda_r\to0$ everywhere, so its $\lambda_r$ inside $\theta_r$ is only
+marginally negative, and again an arbitrarily small push removes it.  The radial
+critical curve is most robust at intermediate slopes, but even there it
+yields to less than one per cent of the Einstein mass.  [Checks 5l,
+5m; the $0.0066$ maximum is AN5 of \texttt{problems\_15.wl}.]
+\end{annotation}
+
+\subsection{Caustics and image counts}
+
+Each radial critical curve has its own caustic.  Below threshold the
+\emph{inner} radial curve maps to a caustic of radius $|\ysrc_{\rm in}|$
+and the outer one to $|\ysrc_{\rm out}|$, with
+$|\ysrc_{\rm in}|<|\ysrc_{\rm out}|$; for $\gp=1.5$ and $\mBH=0.003$
+these are $0.234\,\thetaE$ and $0.263\,\thetaE$ [check 5r].  Reading
+the image diagram (the annotation of \S\ref{sec:pl_toolbox}) then gives
+the image count as a function of source position:
+\begin{itemize}
+  \item $\ysrc_0<|\ysrc_{\rm in}|$: \textbf{two} images, the outer
+        image and the counter-image.  The radial image is gone.
+  \item $|\ysrc_{\rm in}|<\ysrc_0<|\ysrc_{\rm out}|$: \textbf{four}
+        images: the outer image, the counter-image, the radial image,
+        and an extra faint image very close to the point mass.
+  \item $\ysrc_0>|\ysrc_{\rm out}|$: \textbf{two} images, the outer
+        image and a faint image very close to the point mass.
+\end{itemize}
+Above threshold, $\mBH>\mBH_{\rm crit}$, $\ysrc(\theta)$ is monotonic on
+each side and there are exactly two images for every source position
+[checks 5s, 5w].  Because the point mass makes the lens singular, these
+counts are even, not odd; Chapter~\ref{ch:odd_images} explains why.  At
+$\mBH=\mBH_{\rm crit}$ the two caustics coincide (at
+$|\ysrc|=9\thetaE/32$ for $\gp=1.5$) and the four-image annulus closes
+[check 5t].
+
+The inner caustic is a \textbf{zone of influence}: sources inside it
+lose their radial image.  It is large.  To leading order in small
+$\mBH$ the inner radial curve sits where the point-mass and power-law
+terms of $\lambda_r$ balance, $u_{\rm in}\simeq[\mBH/(2-\gp)]^{1/(3-\gp)}$,
+and its caustic radius is
+\begin{equation}
+    |\ysrc_{\rm in}| \simeq (3-\gp)\left(\frac{\mBH}{2-\gp}\right)^{(2-\gp)/(3-\gp)}\thetaE .
+    \label{eq:pl_zone}
+\end{equation}
+For $\gp=1.5$ this scales as $\mBH^{1/3}$: a point mass of
+$\mBH=10^{-3}$ already suppresses the radial image for every source
+within $0.17\,\thetaE$ of the axis (the leading-order formula gives
+$0.19$) [checks 5u--5v; AN4].  \citet{mao_witt_koopmans_2001} found the
+same behaviour for a cored isothermal ellipsoid with a central black
+hole: above a critical black-hole mass the central images are
+suppressed for all source positions, while below it they are
+suppressed only inside a zone of influence, and the black hole can
+create an additional image.  Chapter~\ref{ch:central_mass_bias} takes up
+what happens when such a point mass is present but left out of the
+model.
+
+\begin{derivation}[The zone-of-influence radius~\eqref{eq:pl_zone}]
+For $\mBH\to0$ the inner radial curve moves to $u\to0$, where the
+``$1$'' in $\lambda_r$ is negligible against the two power-law terms.
+Setting $(2-\gp)u^{1-\gp}=\mBH u^{-2}$ gives
+$u_{\rm in}^{3-\gp}=\mBH/(2-\gp)$.  The caustic is
+$\ysrc_{\rm in}=u_{\rm in}-u_{\rm in}^{2-\gp}-\mBH/u_{\rm in}$ (in units of
+$\thetaE$).  The first term is subleading; the third equals
+$(2-\gp)u_{\rm in}^{2-\gp}$ by the balance condition.  So
+$\ysrc_{\rm in}\simeq-(3-\gp)u_{\rm in}^{2-\gp}$, which
+is~\eqref{eq:pl_zone}.  The neglected terms are smaller by a factor of
+order $u_{\rm in}^{\gp-1}$, so convergence is slow for $\gp$ near $1$;
+Mathematica checks that the exact-to-approximate ratio tends to $1$ as
+$\mBH\to0$ for $\gp=1.3$, $1.5$, $1.7$.
+\end{derivation}
+
+\subsection{The tangential critical curve}
+
+The point mass also moves the tangential critical curve, but only
+slightly.  From~\eqref{eq:pl_plpm_lambdas}, $\lambda_t=0$ now requires
+$u^{1-\gp}+\mBH u^{-2}=1$, whose root lies just outside $u=1$:
+\begin{equation}
+    \theta_t \simeq \thetaE\left(1+\frac{\mBH}{\gp-1}\right) .
+    \label{eq:pl_theta_t_shift}
+\end{equation}
+For $\mBH\sim10^{-3}$ this is a per-mille effect, compared with the
+order-unity effect on the radial curve.  The derivation is
+Problem~\ref{ex:pl_tangential_shift} [checks 5o--5p].
+
+
+% =====================================================================
+\section{The Singular Isothermal Sphere plus a Point Mass}
+\label{sec:pl_sis_pm}
+
+The case $\gp=2$ with a central point mass is the one composite lens
+that solves in elementary closed form.  The signed lens
+equation~\eqref{eq:pl_lens_eq_signed} is
+\begin{equation}
+    \ysrc = \theta-\thetaE\,\mathrm{sgn}(\theta)-\frac{\thetaBH^2}{\theta} .
+    \label{eq:pl_sis_pm_lens_eq}
+\end{equation}
+On the $\theta>0$ branch, multiplying by $\theta$ gives a quadratic
+whose positive root is the outer image:
+\begin{equation}
+    \theta^2-(\ysrc+\thetaE)\,\theta-\thetaBH^2=0
+    \;\Longrightarrow\;
+    \theta_+=\tfrac12\Big[(\ysrc+\thetaE)+\sqrt{(\ysrc+\thetaE)^2+4\thetaBH^2}\Big] .
+    \label{eq:pl_sis_pm_plus}
+\end{equation}
+On the $\theta<0$ branch, writing $\theta=-s$ with $s>0$,
+\begin{equation}
+    s^2+(\ysrc-\thetaE)\,s-\thetaBH^2=0
+    \;\Longrightarrow\;
+    \theta_-=-\tfrac12\Big[(\thetaE-\ysrc)+\sqrt{(\thetaE-\ysrc)^2+4\thetaBH^2}\Big] .
+    \label{eq:pl_sis_pm_minus}
+\end{equation}
+As $\thetaBH\to0$ these reduce to the SIS images $\ysrc\pm\thetaE$ of
+eq.~\eqref{eq:sis_two_images} (for $\ysrc<\thetaE$).  Both closed forms
+agree with a brute-force numerical root solve of~\eqref{eq:pl_sis_pm_lens_eq}
+to better than $10^{-9}$ for $\thetaE=1$, $\thetaBH=0.08$ and
+$\ysrc=0.3$ or $1.4$ [checks 6a--6h].
+
+\begin{keybox}[SIS plus point mass: always exactly two images]
+Each quadratic has root product $-\thetaBH^2<0$, so each has exactly
+one positive root: \textbf{one image per side, two in total, for every
+source position}.  For $\ysrc<\thetaE$ these are the SIS pair, each
+pushed slightly away from the centre.  For $\ysrc>\thetaE$, where the
+bare SIS has a single image, the point mass keeps a second, faint
+image on the far side at $|\theta_-|\simeq\thetaBH^2/(\ysrc-\thetaE)$.
+There is no radial critical curve, since
+$\lambda_r=1+\thetaBH^2/\theta^2>0$, so the SIS plus point mass has no
+radial image for any $\mBH$.
+\end{keybox}
+
+\begin{annotation}[A tempting misreading]
+The $\theta>0$ quadratic~\eqref{eq:pl_sis_pm_plus} has a second,
+negative root, $\tfrac12[(\ysrc+\thetaE)-\sqrt{\cdots}]$, and since the
+product of the roots is $-\thetaBH^2$ it is tempting to call it a
+``central image seeded by the point mass''.  It is not an image: it is
+a root of the $\theta>0$ equation lying at $\theta<0$, where that
+equation does not apply.  The only valid root on the far side is the
+one from~\eqref{eq:pl_sis_pm_minus}.  The general lesson for piecewise
+lens equations: solve each branch separately, then keep only the roots
+that lie on their own branch.  [Check 6e; the $\ysrc>\thetaE$ example
+is AN7 of \texttt{problems\_15.wl}: $\theta_-\simeq-0.016\,\thetaE$ for
+$\ysrc=1.4\,\thetaE$, $\thetaBH=0.08\,\thetaE$.]
+\end{annotation}
+
+To first order in $\mBH$, both images move \emph{away} from the centre
+by $\delta\theta_\pm=\thetaBH^2/\theta_\pm^{(0)}$, where
+$\theta_\pm^{(0)}=\ysrc\pm\thetaE$ are the SIS positions
+(Problem~\ref{ex:pl_sis_pm_shift}).  This small, linear astrometric
+shift is the starting point of the bias calculations in
+Chapters~\ref{ch:central_mass_bias} and~\ref{ch:perturbative_estimators}.
+
+
+% =====================================================================
+\section{Broken Power Laws}
+\label{sec:bpl_broken}
+
+A single power law forces one slope on the whole galaxy.  The simplest
+generalization lets the inner slope differ from the outer one.  We now
+show that this extra freedom is closely related to a central point
+mass: the point mass is a limiting case of the broken power law, and
+outside the break the two are indistinguishable.
+
+\subsection{Definition and slope convention}
+\label{sec:bpl_convention}
+
+Define the broken power law directly in the convergence,
+\begin{equation}
+    \kappab(\theta)=
+    \begin{cases}
+      \kappa_B\,(\theta_B/\theta)^{t_1}, & \theta\le\theta_B ,\\[2pt]
+      \kappa_B\,(\theta_B/\theta)^{t_2}, & \theta>\theta_B ,
+    \end{cases}
+    \label{eq:bpl_kappa}
+\end{equation}
+continuous at the \textbf{break radius} $\theta_B$, with inner slope
+$t_1$ and outer slope $t_2$.  These are \emph{convergence} slopes: for
+a 3-D density $\rho\propto r^{-\gp}$ the convergence falls as
+$\theta^{-(\gp-1)}$, so
+\begin{equation}
+    t=\gp-1 .
+    \label{eq:bpl_slope_convention}
+\end{equation}
+The isothermal case is $t=1$; a $\gp=1.5$ profile has $t=0.5$.  A
+finite projected mass at the centre needs $t<2$ (i.e.\ $\gp<3$), and
+the radial images of \S\ref{sec:pl_powerlaw} need $t<1$.
+
+\begin{annotation}[The slope trap, again]
+Equation~\eqref{eq:bpl_slope_convention} is the trap of
+\S\ref{sec:pl_powerlaw} in a new form.  A broken-power-law code that
+takes convergence slopes $t$, fed a prior range meant for density
+slopes (say $1.3<t_2<2.2$), cannot represent a $\gp=1.5$ galaxy
+($t_2=0.5$) at all.  A cheap test before trusting any fit: with
+$t_1=t_2=t$ the broken power law must reproduce the single power law
+of slope $\gp=t+1$ exactly (check 2c--2d of
+\texttt{broken\_power\_law.wl}).  If a configuration known to fit the
+data is outside the prior box, no amount of sampling will find it.
+\end{annotation}
+
+\subsection{Deflection in closed form}
+\label{sec:bpl_deflection}
+
+Integrating~\eqref{eq:bpl_kappa} piecewise
+in~\eqref{eq:pl_alpha_kbar},
+\begin{align}
+    \theta\le\theta_B:\qquad
+    \alpha(\theta) &= \frac{2\kappa_B\,\theta_B^{2}}{(2-t_1)\,\theta}
+                     \left(\frac{\theta}{\theta_B}\right)^{2-t_1} ,
+    \label{eq:bpl_alpha_in}\\[4pt]
+    \theta>\theta_B:\qquad
+    \alpha(\theta) &= \frac{2\kappa_B\,\theta_B^{2}}{\theta}
+    \left[\frac{1}{2-t_1}+\frac{(\theta/\theta_B)^{2-t_2}-1}{2-t_2}\right] .
+    \label{eq:bpl_alpha_out}
+\end{align}
+
+\begin{derivation}[Integrating the broken profile]
+The deflection is $\alpha=m_{2\rm D}(\theta)/(\pi\theta)$ with
+$m_{2\rm D}(\theta)=2\pi\int_0^\theta\kappab\,\theta'\,\dd\theta'$ the
+(reduced) enclosed mass.  Inside the break,
+\[
+  m_{2\rm D}(\theta)=2\pi\kappa_B\theta_B^{t_1}\int_0^\theta\theta'^{\,1-t_1}\dd\theta'
+  =\frac{2\pi\kappa_B\theta_B^{2}}{2-t_1}\left(\frac{\theta}{\theta_B}\right)^{2-t_1} ,
+\]
+convergent at the origin because $t_1<2$; dividing by $\pi\theta$
+gives~\eqref{eq:bpl_alpha_in}.  Outside, split the integral at
+$\theta_B$.  The inner disc contributes the constant
+$2\pi\kappa_B\theta_B^2/(2-t_1)$; the annulus contributes
+\[
+  2\pi\kappa_B\theta_B^{t_2}\int_{\theta_B}^\theta\theta'^{\,1-t_2}\dd\theta'
+  =\frac{2\pi\kappa_B\theta_B^{2}}{2-t_2}\left[\left(\frac{\theta}{\theta_B}\right)^{2-t_2}-1\right] .
+\]
+Adding and dividing by $\pi\theta$ gives~\eqref{eq:bpl_alpha_out}.
+\textbf{Checks.}  At $\theta=\theta_B$ both branches equal
+$2\kappa_B\theta_B/(2-t_1)$, so $\alpha$ is continuous; since $\kappab$
+is continuous, so is $\dd\alpha/\dd\theta=2\kappab-\bar\kappa$, and
+$\lambda_r$ has no jump at the break.  With $t_1=t_2=t$ the bracket
+collapses and $\alpha=2\kappa_B\theta_B^t\theta^{1-t}/(2-t)$, the single
+power law of \S\ref{sec:pl_powerlaw} with
+$\thetaE^{t}=2\kappa_B\theta_B^t/(2-t)$.
+[Checks 1a--2d of \texttt{broken\_power\_law.wl}.]
+\end{derivation}
+
+\paragraph{Normalization.}
+Define $\thetaE$ by $\alpha(\thetaE)=\thetaE$ and write
+$\nu\equiv\theta_B/\thetaE<1$.  Then~\eqref{eq:bpl_alpha_out} fixes the
+break convergence:
+\begin{equation}
+    \kappa_B = \frac{2-t_1}{2\nu^{2}\left[1+\Delta t\,\big(\nu^{\,t_2-2}-1\big)\right]} ,
+    \qquad
+    \Delta t\equiv\frac{2-t_1}{2-t_2} .
+    \label{eq:bpl_norm}
+\end{equation}
+For $t_1=t_2=t$ this reduces to $\kappa_B=\tfrac{2-t}{2}\nu^{-t}$,
+i.e.\ $\kappab(\thetaE)=\kappa_B\nu^t=(2-t)/2=(3-\gp)/2$: the
+annotation check of \S\ref{sec:pl_powerlaw} again [checks 3a--3c].
+
+\subsection{The point mass as the corner $t_1\to2$}
+\label{sec:bpl_pm_limit}
+
+The inner slope cannot reach $t_1=2$, where the enclosed mass diverges
+logarithmically.  But it can approach it while the inner mass is held
+fixed.  Fix the projected mass inside the break,
+$m_{2\rm D}(\theta_B)=2\pi\kappa_B\theta_B^2/(2-t_1)\equiv\pi\thetaBH^2$,
+i.e.\ $\kappa_B=(2-t_1)\thetaBH^2/(2\theta_B^2)$.  Then the inner
+branch~\eqref{eq:bpl_alpha_in} is
+\begin{equation}
+    \alpha(\theta)=\frac{\thetaBH^2}{\theta}\left(\frac{\theta}{\theta_B}\right)^{2-t_1}
+    \;\xrightarrow{\;t_1\to2\;}\;\frac{\thetaBH^2}{\theta}
+    \qquad(\theta\le\theta_B) :
+    \label{eq:bpl_pm_corner}
+\end{equation}
+all of the inner mass collapses onto the centre and the inner branch
+becomes \emph{exactly} the point-mass deflection.  The same statement in
+Meneghetti's language (Remark~5.3 of
+\citet{meneghetti_introduction_2021}): the power law with 3-D slope
+$n=3$ (here $t=2$) has constant enclosed mass and \emph{is} the point
+mass.
+
+There is a subtlety.  If $\theta_B$ is held fixed, $\kappa_B\to0$
+takes the outer power law down with it, and the \emph{whole} lens
+collapses to a point mass [check 4c].  To get a galaxy \emph{plus} a
+point mass one must also hold the outer power law fixed,
+$K\equiv\kappa_B\theta_B^{t_2}$ constant.  Together with the fixed
+inner mass this forces
+\begin{equation}
+    \theta_B=\left[\frac{(2-t_1)\,\thetaBH^2}{2K}\right]^{1/(2-t_2)}
+    \;\xrightarrow{\;t_1\to2\;}\;0 ,
+    \label{eq:bpl_joint_limit}
+\end{equation}
+and in that joint limit the deflection at every fixed $\theta>0$ tends
+to $2K\theta^{1-t_2}/(2-t_2)+\thetaBH^2/\theta$: an outer power law
+plus a point mass [checks 4d--4e].  So the power-law-plus-point-mass
+model of \S\ref{sec:pl_plpm} is a boundary point of the
+broken-power-law family, reached by sending the inner slope to $2$ and
+the break radius to $0$ together.
+
+\subsection{Outside the break: a power law plus an effective point mass}
+\label{sec:bpl_identity}
+
+Compare the broken power law with the single power law of the same
+outer slope $t_2$ and the same prefactor $\kappa_B\theta_B^{t_2}$, i.e.\
+the outer branch continued all the way to the centre.  For
+$\theta>\theta_B$ the two enclosed masses differ by a constant,
+\[
+  \Delta m_{2\rm D}=2\pi\kappa_B\theta_B^2\left[\frac{1}{2-t_1}-\frac{1}{2-t_2}\right]
+                   =2\pi\kappa_B\theta_B^2\,\frac{t_1-t_2}{(2-t_1)(2-t_2)} ,
+\]
+and a constant enclosed mass is exactly what a point mass is.
+
+\begin{keybox}[Outside the break, broken power law $=$ power law $+$ point mass]
+For every $\theta>\theta_B$, exactly,
+\begin{equation}
+    \alpha_{\rm bPL}(\theta)=\frac{2\kappa_B\theta_B^{t_2}}{2-t_2}\,\theta^{1-t_2}
+      +\frac{\theta_{\rm eff}^2}{\theta} ,
+    \qquad
+    \theta_{\rm eff}^{2}=2\kappa_B\theta_B^{2}\,\frac{t_1-t_2}{(2-t_1)(2-t_2)} .
+    \label{eq:bpl_identity}
+\end{equation}
+Consequently, by the superposition rule~\eqref{eq:pl_superposition},
+outside the break $\lambda_r$ and $\lambda_t$ are those of a power law
+plus a point mass $\theta_{\rm eff}$, and everything in
+\S\ref{sec:pl_plpm} (the weight ratio, the stationary point, the
+annihilation threshold with $\mBH\to\theta_{\rm eff}^2/\thetaE^2$)
+applies unchanged to any critical curve that lies outside $\theta_B$.
+\end{keybox}
+
+This is an identity, not an approximation [checks 5a--5b, 5f--5g].
+Two properties of $\theta_{\rm eff}$ are worth stating separately.
+\begin{itemize}
+  \item \textbf{Its sign is the sign of $t_1-t_2$.}  An inner cusp
+        steeper than the outer slope ($t_1>t_2$) acts as a positive
+        point mass.  A shallower inner profile, a core ($t_1<t_2$),
+        acts as a \emph{negative} one: a mass deficit relative to the
+        continued power law [check 5c].
+  \item \textbf{It is not the total inner mass.}  With
+        $\pi\thetaBH^2\equiv2\pi\kappa_B\theta_B^2/(2-t_1)$ the mass
+        inside the break,
+        \begin{equation}
+            \frac{\theta_{\rm eff}^2}{\thetaBH^2}=\frac{t_1-t_2}{2-t_2} ,
+            \label{eq:bpl_eff_ratio}
+        \end{equation}
+        which reaches $1$ only as $t_1\to2$.  The effective point mass
+        is what the inner cusp adds \emph{over and above} what the
+        continued outer power law already puts there [checks 5d--5e].
+\end{itemize}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../Figures/15_PowerLaw_PointMass/broken_pl_deflection.pdf}
+    \caption{Deflection of a broken power law versus a single power
+    law.  All three solid curves have outer slope $t_2=0.5$
+    ($\gp=1.5$) and Einstein radius $\thetaE=1$ (vertical dotted line
+    at $1$); the broken models have $\theta_B=0.1\,\thetaE$ (dotted
+    line at $0.1$) and inner slope $t_1=1.5$ (a steep cusp, red) or
+    $t_1=0$ (a flat core, blue).  The dashed curves are
+    eq.~\eqref{eq:bpl_identity}: the continued outer power law plus
+    $\theta_{\rm eff}^2/\theta$.  Outside the break they lie exactly on
+    the broken-power-law curves; inside, they separate.  For the core,
+    $\theta_{\rm eff}^2<0$ and the dashed curve plunges to zero.
+    Generated by \texttt{broken\_power\_law.wl}.}
+    \label{fig:bpl_deflection}
+\end{figure}
+
+\subsection{Inside the break: a resolved break is necessary, not sufficient}
+\label{sec:bpl_inside}
+
+Equation~\eqref{eq:bpl_identity} settles the outside.  Inside the
+break, compare the broken power law with a point mass carrying the same
+total inner mass $\pi\thetaBH^2$.  From~\eqref{eq:bpl_pm_corner},
+\begin{equation}
+    \frac{\alpha_{\rm bPL}(\theta)}{\alpha_\bullet(\theta)}
+      =\left(\frac{\theta}{\theta_B}\right)^{2-t_1} ,
+    \qquad\theta\le\theta_B .
+    \label{eq:bpl_inner_ratio}
+\end{equation}
+The two agree at $\theta_B$ by construction and separate inward.  For
+$t_1=2$ the ratio is $1$ at every radius; for any $t_1<2$ the
+fractional difference is
+\begin{equation}
+    1-\left(\frac{\theta}{\theta_B}\right)^{2-t_1}
+      =(2-t_1)\ln\frac{\theta_B}{\theta}+\order{(2-t_1)^2} ,
+    \label{eq:bpl_log_dev}
+\end{equation}
+linear in the slope deficit $2-t_1$ and only logarithmic in radius
+[checks 6a--6d].
+
+This has a practical meaning.  Data that never reach inside $\theta_B$
+cannot tell a broken power law from a power law plus a point mass, by
+eq.~\eqref{eq:bpl_identity}; resolving the break is \emph{necessary}.
+But it is not \emph{sufficient}: inside the break the models part
+company only logarithmically.  A fractional difference $\delta$ is
+reached at
+\begin{equation}
+    \frac{\theta}{\theta_B}=(1-\delta)^{1/(2-t_1)} ,
+    \label{eq:bpl_delta_radius}
+\end{equation}
+so a $10$ per cent difference appears at $0.9\,\theta_B$ for a mild
+cusp ($2-t_1=1$) but only at $0.35\,\theta_B$ for a steep one
+($2-t_1=0.1$) [checks 6e--6f].  The observational requirement is to
+resolve the radius where the deflections differ by more than the
+astrometric precision, which can be much smaller than $\theta_B$
+itself.
+
+\begin{annotation}[Two different reasons to be indistinguishable]
+A broken power law and a power law plus point mass can look the same
+for two unrelated reasons.  (i) \emph{Resolution:} no datum lies
+inside $\theta_B$, so~\eqref{eq:bpl_identity} makes the two models
+identical where they are tested; sharper imaging fixes this.
+(ii) \emph{Degeneracy:} $t_1\to2$, so~\eqref{eq:bpl_inner_ratio} is $1$
+at every radius; no telescope fixes this, because the models are then
+the same lens.  Eq.~\eqref{eq:bpl_log_dev} sits between the two: even
+when the break is resolved, a steep cusp ($2-t_1$ small) needs a large
+logarithmic lever arm, $\ln(\theta_B/\theta)\gtrsim\delta/(2-t_1)$,
+before the difference becomes visible.  [Numbers: AN6 of
+\texttt{problems\_15.wl}.]
+\end{annotation}
+
+
+% =====================================================================
+\section{Summary}
+\label{sec:pl_summary}
+
+\begin{itemize}
+    \item For any axisymmetric lens, $\lambda_t=1-\bar\kappa$ and
+          $\lambda_r=1+\bar\kappa-2\kappab$; the departures from unity
+          add under superposition.  A central point mass adds
+          $\mp\thetaBH^2/\theta^2$ to $\lambda_{t,r}$
+          (eqs.~\ref{eq:pl_recipe_lt}--\ref{eq:pl_recipe_lr}).
+
+    \item The power law $\rho\propto r^{-\gp}$ has
+          $\alpha=\thetaE^{\gp-1}\theta^{2-\gp}$,
+          $\kappab=\tfrac{3-\gp}{2}(\thetaE/\theta)^{\gp-1}$, and
+          $\kappab(\thetaE)=(3-\gp)/2$.  Its convergence slope is
+          $t=\gp-1$; keep the conventions apart.
+
+    \item Its tangential critical curve is the Einstein ring; its
+          radial critical curve,
+          $\theta_r=\thetaE(2-\gp)^{1/(\gp-1)}$, exists only for
+          $1<\gp<2$ and shrinks to the centre as $\gp\to2$.
+
+    \item A point mass has $\lambda_r=1+\thetaBH^2/\theta^2>0$ and no
+          radial critical curve.  Added to a power law, its influence
+          relative to the profile grows inward as $\theta^{-(3-\gp)}$,
+          so it acts precisely where radial images form.
+
+    \item Below $\mBH_{\rm crit}(\gp)$ (eq.~\ref{eq:pl_mcrit}) the
+          composite has two radial critical curves; at threshold they
+          merge and annihilate.  $\mBH_{\rm crit}\le0.0066$ for every
+          $\gp$; at $\gp=1.5$ it is $27/4096$.  Below threshold the
+          inner caustic is a zone of influence of radius
+          $\propto\mBH^{(2-\gp)/(3-\gp)}$ inside which the radial image
+          is suppressed.
+
+    \item The SIS plus point mass solves in closed form and has exactly
+          two images for every source position, and no radial image.
+
+    \item The broken power law has closed-form deflections; the point
+          mass is its $t_1\to2$ corner at fixed inner mass; and outside
+          the break it is \emph{exactly} a power law plus an effective
+          point mass, $\theta_{\rm eff}^2\propto(t_1-t_2)$.  Inside the
+          break the two separate only logarithmically, so resolving the
+          break is necessary but not sufficient to tell a cusp from a
+          point mass.
+\end{itemize}
+
+
+% =====================================================================
+\section{Problems}
+\label{sec:pl_problems}
+
+\begin{exercise}
+\label{ex:pl_kappa_inversion}
+\textbf{(Power-law convergence by inversion.)}
+Starting from $\alpha_{\rm PL}=\thetaE^{\gp-1}\theta^{2-\gp}$, use
+eq.~\eqref{eq:pl_kappa_inversion} to derive
+eq.~\eqref{eq:pl_kappa}.  Then rebuild $\alpha$ from $\kappab$ with
+eq.~\eqref{eq:pl_alpha_kbar}, state where the integral converges, and
+verify $\bar\kappa(\thetaE)=1$ for every $\gp$.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:pl_point_mass_mag}
+\textbf{(Point-mass magnification.)}
+Show that a point mass has magnification
+$\mu=\theta^4/(\theta^4-\thetaBH^4)$ at image position $\theta$.
+Show that its two images, at $\theta_\pm$, have total magnification
+$|\mu_+|+|\mu_-|=(u^2+2)/(u\sqrt{u^2+4})$ with $u=\ysrc/\thetaBH$, that
+this always exceeds $1$, and that the signed magnifications sum to
+exactly $1$.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:pl_radial_radius}
+\textbf{(Radial critical radius.)}
+Derive $\theta_r=\thetaE(2-\gp)^{1/(\gp-1)}$ from $\lambda_r=0$.
+Show that $\theta_r\to0$ as $\gp\to2$ and that there is no radial
+critical curve for $\gp>2$.  Evaluate $\theta_r/\thetaE$ at
+$\gp=1.6$.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:pl_sis_pm_shift}
+\textbf{(SIS plus point mass: first-order shifts.)}
+Expand the closed-form images~\eqref{eq:pl_sis_pm_plus}
+and~\eqref{eq:pl_sis_pm_minus} to first order in
+$\mBH=\thetaBH^2/\thetaE^2$ and show that both images move away from
+the centre by $\delta\theta_\pm=\thetaBH^2/\theta_\pm^{(0)}$, with
+$\theta_\pm^{(0)}=\ysrc\pm\thetaE$.  Evaluate exact and linearized
+positions for $\thetaE=1$, $\thetaBH=0.08$, $\ysrc=0.3$.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:pl_tangential_shift}
+\textbf{(Tangential critical curve with a point mass.)}
+For a power law plus a point mass, show that the tangential critical
+curve lies at $\theta_t\simeq\thetaE[1+\mBH/(\gp-1)]$ to first order in
+$\mBH$, eq.~\eqref{eq:pl_theta_t_shift}.  Find the exact result for the
+SIS and compare.  Evaluate $\theta_t$ numerically for $\gp=1.5$,
+$\mBH=0.01$.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:pl_annihilation_15}
+\textbf{(Annihilation at $\gp=3/2$ by hand.)}
+For $\gp=3/2$ substitute $u=s^2$ in eq.~\eqref{eq:pl_plpm_lambdas} and
+show that $u^2\lambda_r=s^4-\tfrac12 s^3+\mBH$.  A double root marks
+the merger of the two radial critical curves; use this to derive
+$u_c=9/64$ and $\mBH_{\rm crit}=27/4096$ without the general
+formula~\eqref{eq:pl_mcrit}.  Find the radius of the merged radial
+caustic.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:bpl_outside}
+\textbf{(Broken power law outside the break.)}
+\begin{enumerate}[label=(\alph*)]
+  \item Compute the projected mass inside $\theta_B$ and in the annulus
+        $\theta_B<\theta'<\theta$ for the profile~\eqref{eq:bpl_kappa},
+        and hence derive eq.~\eqref{eq:bpl_alpha_out}.
+  \item Show that it is continuous with eq.~\eqref{eq:bpl_alpha_in} at
+        $\theta_B$.
+  \item Rewrite it as eq.~\eqref{eq:bpl_identity} and identify
+        $\theta_{\rm eff}^2$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\label{ex:bpl_point_mass_limit}
+\textbf{(The point-mass limit.)}
+Hold the projected mass inside the break fixed at $\pi\thetaBH^2$.
+Show that the inner branch becomes
+$\alpha=(\thetaBH^2/\theta)(\theta/\theta_B)^{2-t_1}$ and tends to the
+point-mass deflection as $t_1\to2$, even though the central convergence
+becomes more singular.  What happens to $\kappa_B$, and to
+$\theta_{\rm eff}^2$, in the same limit?
+\end{exercise}
+
+\begin{exercise}
+\label{ex:bpl_sis_limit}
+\textbf{(Isothermal limits.)}
+\begin{enumerate}[label=(\alph*)]
+  \item Show that $t_1=t_2=1$ gives a constant deflection on both
+        branches: a SIS with $\thetaE=2\kappa_B\theta_B$.
+  \item For $t_2=1$ and $1<t_1<2$, show that outside the break the
+        lens is \emph{exactly} a SIS plus a point mass, and use
+        eq.~\eqref{eq:pl_sis_pm_plus} to write the outer image of a
+        source at $\ysrc$ in closed form.  Evaluate it for
+        $\theta_B=0.1$, $\kappa_B=5$, $t_1=3/2$, $\ysrc=0.3$, and
+        confirm the image lies outside the break.
+  \item What does $t_1<1$ correspond to?
+\end{enumerate}
+\end{exercise}
