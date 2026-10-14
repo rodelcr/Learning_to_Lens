@@ -29,6 +29,36 @@ Applying~\eqref{eq:christoffel}:
 \end{align*}
 All other components vanish (verified by Mathematica).
 
+\begin{derivation}[Why all other components vanish]
+The metric is diagonal and depends only on $\theta$, so the one nonzero metric derivative is
+$\partial_\theta g_{\phi\phi} = 2R^2\sin\theta\cos\theta$. For a diagonal metric,
+\eqref{eq:christoffel} reduces to
+$\Gamma^\sigma_{\ \mu\nu} = \frac{1}{2g_{\sigma\sigma}}
+(\partial_\mu g_{\nu\sigma} + \partial_\nu g_{\sigma\mu} - \partial_\sigma g_{\mu\nu})$
+(no sum on $\sigma$). Going through the six independent components ($\Gamma$ is symmetric in its
+lower indices):
+\begin{itemize}
+    \item $\Gamma^\theta_{\ \theta\theta} = \frac{1}{2R^2}\partial_\theta g_{\theta\theta} = 0$;
+          \quad $\Gamma^\theta_{\ \theta\phi} = \frac{1}{2R^2}\partial_\phi g_{\theta\theta} = 0$;
+    \item $\Gamma^\theta_{\ \phi\phi} = -\frac{1}{2R^2}\partial_\theta g_{\phi\phi} = -\sin\theta\cos\theta$
+          (only the third term in the bracket survives);
+    \item $\Gamma^\phi_{\ \theta\theta} = \frac{1}{2g_{\phi\phi}}(2\partial_\theta g_{\theta\phi} - \partial_\phi g_{\theta\theta}) = 0$;
+    \item $\Gamma^\phi_{\ \theta\phi} = \frac{1}{2g_{\phi\phi}}(\partial_\theta g_{\phi\phi} + \partial_\phi g_{\phi\theta} - \partial_\phi g_{\theta\phi})
+          = \frac{\partial_\theta g_{\phi\phi}}{2g_{\phi\phi}} = \cot\theta$
+          (the last two terms cancel);
+    \item $\Gamma^\phi_{\ \phi\phi} = \frac{1}{2g_{\phi\phi}}\partial_\phi g_{\phi\phi} = 0$.
+\end{itemize}
+\end{derivation}
+
+\begin{annotation}[The radius drops out, and the factor of 2 comes later]
+$R$ cancels from every Christoffel symbol: multiplying a metric by a constant leaves the
+connection unchanged, because $g^{\sigma\rho}$ is divided by that constant while
+$\partial g$ is multiplied by it. Note also that $\Gamma^\phi_{\ \theta\phi}$ and
+$\Gamma^\phi_{\ \phi\theta}$ are the same symbol listed once. In any sum over both lower
+indices (the geodesic equation of Exercise~\ref{ex:geodesic_sphere}) it appears twice, which
+is where the factor $2$ comes from.
+\end{annotation}
+
 % ----- Exercise 1.2 -----
 \subsection*{Exercise~\ref{ex:christoffel_polar}: Polar Coordinates}
 
@@ -48,6 +78,39 @@ A straight line $x = a + b\lambda$, $y = c + d\lambda$ in Cartesian
 coordinates satisfies these when converted to polar coordinates
 $r = \sqrt{x^2 + y^2}$, $\phi = \arctan(y/x)$.
 
+\begin{derivation}[Parts (a)--(c) in full]
+\textbf{(a)} With $g_{rr} = 1$, $g_{\phi\phi} = r^2$, the only nonzero derivative is
+$\partial_r g_{\phi\phi} = 2r$, so
+$\Gamma^r_{\ \phi\phi} = -\tfrac12 g^{rr}\partial_r g_{\phi\phi} = -r$ and
+$\Gamma^\phi_{\ r\phi} = \tfrac12 g^{\phi\phi}\partial_r g_{\phi\phi} = \tfrac{1}{2r^2}(2r) = 1/r$.
+
+\textbf{(b)} In two dimensions the Riemann tensor has $n^2(n^2-1)/12 = 1$ independent
+component, so it suffices to compute one. From~\eqref{eq:riemann} with
+$(\rho,\sigma,\mu,\nu) = (r,\phi,r,\phi)$:
+\[
+    R^r_{\ \phi r\phi}
+    = \partial_r\Gamma^r_{\ \phi\phi} - \partial_\phi\Gamma^r_{\ r\phi}
+      + \Gamma^r_{\ r\lambda}\Gamma^\lambda_{\ \phi\phi} - \Gamma^r_{\ \phi\lambda}\Gamma^\lambda_{\ r\phi}
+    = (-1) - 0 + 0 - (-r)\Bigl(\frac{1}{r}\Bigr) = 0 \,,
+\]
+using $\Gamma^r_{\ r\lambda} = 0$ for both values of $\lambda$ and only $\lambda = \phi$ in the
+last term.
+
+\textbf{(c)} The geodesic equation $\ddot x^\mu + \Gamma^\mu_{\ \alpha\beta}\dot x^\alpha\dot x^\beta = 0$
+gives $\ddot r + \Gamma^r_{\ \phi\phi}\dot\phi^2 = \ddot r - r\dot\phi^2$ and
+$\ddot\phi + (\Gamma^\phi_{\ r\phi} + \Gamma^\phi_{\ \phi r})\dot r\dot\phi = \ddot\phi + \tfrac{2}{r}\dot r\dot\phi$.
+For the straight line $x = a + b\lambda$, $y = c + d\lambda$:
+\begin{itemize}
+    \item \emph{$\phi$-equation.} $r^2\dot\phi = x\dot y - y\dot x = ad - bc$ is constant, and
+          $\frac{d}{d\lambda}(r^2\dot\phi) = r(r\ddot\phi + 2\dot r\dot\phi)$, so
+          $\ddot\phi + \tfrac{2}{r}\dot r\dot\phi = 0$.
+    \item \emph{$r$-equation.} Differentiate $r\dot r = x\dot x + y\dot y$:
+          $\dot r^2 + r\ddot r = \dot x^2 + \dot y^2 + x\ddot x + y\ddot y = b^2 + d^2$.
+          The speed in polar form is $\dot x^2 + \dot y^2 = \dot r^2 + r^2\dot\phi^2$, so
+          $r\ddot r = r^2\dot\phi^2$, i.e.\ $\ddot r - r\dot\phi^2 = 0$.
+\end{itemize}
+\end{derivation}
+
 % ----- Exercise 1.3 -----
 \subsection*{Exercise~\ref{ex:ricci_sphere}: Curvature of the 2-Sphere}
 
@@ -63,6 +126,39 @@ $R = g^{\theta\theta}R_{\theta\theta} + g^{\phi\phi}R_{\phi\phi}
 = \frac{1}{R^2}(1) + \frac{1}{R^2\sin^2\theta}(\sin^2\theta)
 = \frac{2}{R^2}$.
 This is constant and positive --- the sphere has uniform positive curvature.
+
+\begin{derivation}[The Riemann and Ricci components explicitly]
+\textbf{(a)} With $(\rho,\sigma,\mu,\nu) = (\theta,\phi,\theta,\phi)$ in~\eqref{eq:riemann}:
+\[
+    R^\theta_{\ \phi\theta\phi}
+    = \partial_\theta\Gamma^\theta_{\ \phi\phi} - \partial_\phi\Gamma^\theta_{\ \theta\phi}
+      + \Gamma^\theta_{\ \theta\lambda}\Gamma^\lambda_{\ \phi\phi}
+      - \Gamma^\theta_{\ \phi\lambda}\Gamma^\lambda_{\ \theta\phi} \,.
+\]
+The second term is zero ($\Gamma^\theta_{\ \theta\phi} = 0$), the third is zero
+($\Gamma^\theta_{\ \theta\lambda} = 0$ for both $\lambda$), and in the fourth only
+$\lambda = \phi$ contributes:
+$\Gamma^\theta_{\ \phi\phi}\Gamma^\phi_{\ \theta\phi} = (-\sin\theta\cos\theta)\cot\theta = -\cos^2\theta$.
+The first term is $\partial_\theta(-\sin\theta\cos\theta) = -(\cos^2\theta - \sin^2\theta)$. So
+$R^\theta_{\ \phi\theta\phi} = -\cos^2\theta + \sin^2\theta + \cos^2\theta = \sin^2\theta$.
+
+\textbf{(b)} In $R_{\theta\theta} = R^\lambda_{\ \theta\lambda\theta}$ the $\lambda = \theta$ term
+is $R^\theta_{\ \theta\theta\theta} = 0$ (antisymmetric in the last two indices), leaving
+$R^\phi_{\ \theta\phi\theta} = \partial_\phi\Gamma^\phi_{\ \theta\theta} - \partial_\theta\Gamma^\phi_{\ \phi\theta}
++ \Gamma^\phi_{\ \phi\lambda}\Gamma^\lambda_{\ \theta\theta} - \Gamma^\phi_{\ \theta\lambda}\Gamma^\lambda_{\ \phi\theta}
+= 0 - \partial_\theta\cot\theta + 0 - \cot^2\theta = \csc^2\theta - \cot^2\theta = 1$.
+Likewise $R_{\phi\phi} = R^\theta_{\ \phi\theta\phi} + R^\phi_{\ \phi\phi\phi} = \sin^2\theta + 0$.
+\end{derivation}
+
+\begin{annotation}[Two different $R$'s, and which one carries the radius]
+The letter $R$ is doing double duty here: the sphere's radius and the Ricci scalar. The
+Riemann and Ricci \emph{tensor} components above contain no radius at all (the Christoffels
+do not, Exercise~\ref{ex:christoffel_sphere}); the radius enters only when indices are raised
+with $g^{\mu\nu} \propto 1/R^2$, which is why the Ricci scalar is $2/R^2$. In two dimensions the
+Gaussian curvature is half the Ricci scalar, $1/R^2$. Index placement matters: in
+$R_{\mu\nu} = R^\lambda_{\ \mu\lambda\nu}$ the contraction is on the first (upper) and third
+indices; contracting on a different pair can flip the sign.
+\end{annotation}
 
 % ----- Exercise 1.4 -----
 \subsection*{Exercise~\ref{ex:parallel_transport_sphere}: Parallel Transport}
@@ -81,6 +177,23 @@ Geometrically, the solid angle subtended by the triangular path
 (two meridians and a segment of the equator) is $\alpha$.  On a unit
 sphere, the holonomy angle equals the enclosed solid angle.
 
+\begin{derivation}[The transport equation along a meridian, component by component]
+On the meridian, parametrised by $\theta$, the tangent is $dx^\rho/d\theta = (1, 0)$, so
+\eqref{eq:parallel_transport} reads $dV^\mu/d\theta + \Gamma^\mu_{\ \theta\sigma}V^\sigma = 0$:
+\begin{itemize}
+    \item $\mu = \theta$: $\Gamma^\theta_{\ \theta\theta} = \Gamma^\theta_{\ \theta\phi} = 0$, so
+          $dV^\theta/d\theta = 0$.
+    \item $\mu = \phi$: $\Gamma^\phi_{\ \theta\theta} = 0$ and $\Gamma^\phi_{\ \theta\phi} = \cot\theta$, so
+          $dV^\phi/d\theta + \cot\theta\, V^\phi = 0$, whose solution is $V^\phi = C/\sin\theta$.
+\end{itemize}
+So $V^\theta$ is constant, but the \emph{coordinate} component $V^\phi$ is not: what stays constant
+is the orthonormal (physical) component $V^{\hat\phi} = \sqrt{g_{\phi\phi}}\,V^\phi = R\sin\theta\,V^\phi$.
+An eastward vector therefore stays eastward, perpendicular to the meridian, all the way up; $V^\phi$
+grows as $1/\sin\theta$ only because the coordinate basis vector $\partial_\phi$ shrinks to zero at
+the pole. The area of the region enclosed (the two meridians and the equator) on the unit sphere is
+$\int_0^\alpha d\phi\int_0^{\pi/2}\sin\theta\,d\theta = \alpha$.
+\end{derivation}
+
 % ----- Exercise 1.5 -----
 \subsection*{Exercise~\ref{ex:geodesic_sphere}: Great Circles as Geodesics}
 
@@ -95,3 +208,11 @@ $\phi$-equation: $0 + 2\Gamma^\phi_{\ \theta\phi} \cdot 0 \cdot 1 = 0$.  \checkm
 
 By the rotational symmetry of the sphere, any great circle can be mapped
 to the equator by a rotation, so all great circles are geodesics.
+
+\begin{annotation}[Where the factor of 2 in the $\phi$-equation comes from]
+The geodesic equation sums over both lower indices, so the $\phi$-equation contains
+$\Gamma^\phi_{\ \theta\phi}\dot\theta\dot\phi + \Gamma^\phi_{\ \phi\theta}\dot\phi\dot\theta
+= 2\cot\theta\,\dot\theta\dot\phi$. Forgetting the factor of 2 is harmless for the equator
+($\dot\theta = 0$) but gives wrong orbits for any tilted great circle. The same factor appears in
+$\ddot\phi + (2/r)\dot r\dot\phi$ of Exercise~\ref{ex:christoffel_polar}.
+\end{annotation}

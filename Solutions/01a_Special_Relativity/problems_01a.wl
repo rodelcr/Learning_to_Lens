@@ -15,6 +15,11 @@
      1.3 — Four-velocity norm proof
      1.4 — Photon energy under Lorentz boost (relativistic Doppler)
      1.5 — Electromagnetic field strength tensor operations
+   Annotated-edition checks (2026-10): a delimited section at the end of
+     this file check[]s every identity / number written in the derivation,
+     annotation and bridge boxes of the matching _Solutions.tex (Annotated
+     Study Edition).  The script ends with summary[] (exit 0 iff all PASS).
+     Run:  bash Mathematica/run_wl.sh <this file>
    ========================================================================= *)
 
 Print["=== Module 1a: SOLUTIONS ===\n"];
@@ -285,3 +290,81 @@ Print["    This is a Lorentz invariant: all observers agree on the"];
 Print["    value of B^2 - E^2 for any electromagnetic field.\n"];
 
 Print["=== End of Module 1a Solutions ==="];
+
+(* ===== Annotated-edition checks (2026-10) ===== *)
+(* Checks every identity written in the derivation / annotation / bridge boxes
+   of Notes/01a_Special_Relativity/01a_Solutions.tex (Annotated Study Edition
+   only).  Self-contained; signature (-,+,+,+) as in the chapter. *)
+Get[FileNameJoin[{DirectoryName[$InputFileName], "..", "..",
+                  "Mathematica", "harness.wl"}]];
+Print["\n--- Annotated-edition checks (Module 1a) ---"];
+
+(* Ex 1.2 *)
+Module[{p1, p2, L, v1, v2},
+  L[p_] := {{Cosh[p], -Sinh[p]}, {-Sinh[p], Cosh[p]}};
+  check["1a ann: product entries (row . column) as written",
+    Expand[L[p1].L[p2]] == {{Cosh[p1] Cosh[p2] + Sinh[p1] Sinh[p2], -Cosh[p1] Sinh[p2] - Sinh[p1] Cosh[p2]},
+       {-Sinh[p1] Cosh[p2] - Cosh[p1] Sinh[p2], Sinh[p1] Sinh[p2] + Cosh[p1] Cosh[p2]}}];
+  check["1a ann: cosh(a+b) = cosh a cosh b + sinh a sinh b",
+    TrigExpand[Cosh[p1 + p2]] == Cosh[p1] Cosh[p2] + Sinh[p1] Sinh[p2]];
+  check["1a ann: sinh(a+b) = sinh a cosh b + cosh a sinh b",
+    TrigExpand[Sinh[p1 + p2]] == Sinh[p1] Cosh[p2] + Cosh[p1] Sinh[p2]];
+  check["1a ann: tanh(a+b) = (sinh a cosh b + cosh a sinh b)/(cosh a cosh b + sinh a sinh b)",
+    Simplify[TrigExpand[Tanh[p1 + p2]] ==
+      (Sinh[p1] Cosh[p2] + Cosh[p1] Sinh[p2])/(Cosh[p1] Cosh[p2] + Sinh[p1] Sinh[p2])]];
+  check["1a ann: dividing num & den by cosh a cosh b gives (tanh a + tanh b)/(1 + tanh a tanh b)",
+    Simplify[((Sinh[p1] Cosh[p2] + Cosh[p1] Sinh[p2])/(Cosh[p1] Cosh[p2]))/
+             ((Cosh[p1] Cosh[p2] + Sinh[p1] Sinh[p2])/(Cosh[p1] Cosh[p2])) ==
+             (Tanh[p1] + Tanh[p2])/(1 + Tanh[p1] Tanh[p2])]];
+  check["1a ann: v1 = 1 gives v = 1 for any v2 (v2 != -1)",
+    Simplify[(1 + v2)/(1 + v2) == 1, v2 != -1]];
+  check["1a ann (bridge): (v1+v2)/(1+v1 v2) = v1 + v2 + O(v^3)",
+    Normal[Series[(e v1 + e v2)/(1 + e^2 v1 v2), {e, 0, 2}]] == e (v1 + v2)];
+];
+
+(* Ex 1.3 *)
+Module[{v1, v2, v3, g, U, eta = DiagonalMatrix[{-1, 1, 1, 1}]},
+  g = 1/Sqrt[1 - (v1^2 + v2^2 + v3^2)];
+  U = g {1, v1, v2, v3};
+  check["1a ann: U_mu = eta_{mu nu} U^nu = gamma(-1, v1, v2, v3)",
+    eta.U == g {-1, v1, v2, v3}];
+  check["1a ann: gamma^2 = 1/(1 - v^2) and U.U = -1",
+    Simplify[g^2 == 1/(1 - (v1^2 + v2^2 + v3^2))] &&
+    Simplify[U.eta.U == -1, v1^2 + v2^2 + v3^2 < 1]];
+  check["1a ann: with signature (+,-,-,-) the norm is +1",
+    Simplify[U.(-eta).U == 1, v1^2 + v2^2 + v3^2 < 1]];
+];
+
+(* Ex 1.4 *)
+Module[{v, E0, th, gm, Lb, p},
+  gm = 1/Sqrt[1 - v^2];
+  Lb = {{gm, -gm v, 0, 0}, {-gm v, gm, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}};
+  p = E0 {1, Cos[th], Sin[th], 0};
+  check["1a ann: E' = (Lambda p)^0 = gamma E (1 - v cos th)",
+    Simplify[(Lb.p)[[1]] == gm E0 (1 - v Cos[th])]];
+  check["1a ann: gamma (1 - v) = sqrt((1-v)/(1+v)) for 0 < v < 1",
+    Simplify[gm (1 - v) == Sqrt[(1 - v)/(1 + v)], 0 < v < 1]];
+  check["1a ann: theta = pi gives gamma (1 + v) = sqrt((1+v)/(1-v)) (blueshift)",
+    Simplify[gm (1 + v) == Sqrt[(1 + v)/(1 - v)], 0 < v < 1] &&
+    Simplify[Sqrt[(1 + v)/(1 - v)] > 1, 0 < v < 1]];
+  check["1a ann: photon stays null after the boost",
+    Simplify[(Lb.p).DiagonalMatrix[{-1, 1, 1, 1}].(Lb.p) == 0]];
+];
+
+(* Ex 1.5 *)
+Module[{e1, e2, e3, b1, b2, b3, Fd, Fu, eta = DiagonalMatrix[{-1, 1, 1, 1}], sc},
+  Fd = {{0, -e1, -e2, -e3}, {e1, 0, b3, -b2}, {e2, -b3, 0, b1}, {e3, b2, -b1, 0}};
+  Fu = eta.Fd.eta;
+  check["1a ann: matrix form eta.F.eta equals the index sum eta^{ma} eta^{nb} F_ab",
+    Fu == Table[Sum[eta[[m, a]] eta[[n, b]] Fd[[a, b]], {a, 4}, {b, 4}], {m, 4}, {n, 4}]];
+  check["1a ann: F^{0i} = -F_{0i}, F^{i0} = -F_{i0}, F^{ij} = F_{ij}",
+    And @@ Flatten[Table[Fu[[m, n]] == If[Xor[m == 1, n == 1], -1, 1] Fd[[m, n]], {m, 4}, {n, 4}]]];
+  sc = Sum[Fd[[m, n]] Fu[[m, n]], {m, 4}, {n, 4}];
+  check["1a ann: 2 sum_i F_0i F^0i = -2 E^2 and 2 sum_{i<j} F_ij F^ij = 2 B^2",
+    Simplify[2 Sum[Fd[[1, i]] Fu[[1, i]], {i, 2, 4}] == -2 (e1^2 + e2^2 + e3^2)] &&
+    Simplify[2 Sum[Fd[[i, j]] Fu[[i, j]], {i, 2, 4}, {j, i + 1, 4}] == 2 (b1^2 + b2^2 + b3^2)]];
+  check["1a ann: F_{mn}F^{mn} = Tr(Fd . Transpose[Fu]) = -Tr(Fd . Fu)",
+    Simplify[sc == Tr[Fd.Transpose[Fu]] == -Tr[Fd.Fu]]];
+];
+
+summary[];
