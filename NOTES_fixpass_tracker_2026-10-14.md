@@ -126,3 +126,20 @@
 - X11 sign of δ_i requires per-plane responses r_i to share sign — add proviso or cite Ch 25.
 - C2 optional orthogonality remark; N13 optional grid scan in F0c.
 - P1–P5 prose.
+## ch21 critic (33 PASS / 10 SUSPECT / 0 FAIL; algebra all PASS)
+- F1 radial-image leverage story holds only for source-plane/unit-weight fits (image-plane: no divergence, non-monotonic, sign change reverses at ρ*=0.065) → label statements + add 2–3 sentences.
+- F2 validity criterion too weak → add radial-image fractional shift m·a_C/(λ_C θ_C) ≈ 640 m.
+- N5 "c = 10.47" → 10.46 (or say perturbed images). X3 "returns to total-mass value" → "for the canonical triple". fig:pe_corrfactor never \ref'd. .wl header "the figure" → two.
+## ch16 critic (32 PASS / 13 SUSPECT / 0 FAIL; all 4 source-note corrections CONFIRMED)
+- X5 "point mass is transparent" contradicts Ch 6 thm:odd_number definition → drop/qualify.
+- X6 power-law cusp "continuous and bounded" — not bounded; add "|α|/θ → 0 at infinity" (SEF p.174) or truncation.
+- X7 SIS tip "local maximum" only for |β|<θ_E. X8 "μ_c small" only for κ₀>2 (θ_c<θ_E/4). X9 ex:burke_verification is singular SIE → "non-singular version". N12 "innermost tenth" unsourced (radial curves at 0.25–0.30 θ_E).
+- Harness: Print drops lines when interleaved → use WriteString["stdout",…] in harness.wl (SUMMARY tally authoritative).
+## ch17 critic (41 PASS / 7 SUSPECT / 1 FAIL; closed-form boundary CONFIRMED; source note's "transcendental" claim wrong)
+- F1 (FAIL) Sol 17.2(c) wrong reason for m_crit→0 as γ'→1 (uniform-sheet argument; replacement text in report).
+- F2 fig:cb_bias_vs_m caption: points stop at 0.35/0.25 m₁,crit; "exceeds linear by >40%" false for γ'=1.8 (×1.24) → reword or add point.
+- F3 "any central excess" → "any axisymmetric central excess". F4 Sol 17.7(b)–(c) point-mass equivalence misapplied (θ_b > θ*), mixed planes. F5 "lensing efficiency" wording vs Ch 7's 𝓔 = D_d D_ds/D_s. F7 header comment cites unchecked.
+## ch18 critic (48 PASS / 9 SUSPECT / 0 FAIL; all author flags confirmed)
+- ξ invariant is Kochanek 2020 MNRAS 493, 1725 (DOI 10.1093/mnras/staa344, arXiv 1911.05083) → add bib (CrossRef) + cite at ~512–515 and 757.
+- Eq ms_F validity needs ν>1, γ'>1, ν+γ'−2−2β_a>0. η notation clash with Ch 13 bridge (η = distance ratio there; plane numbering reversed) → fix the Ch 13 bridge box (ann0809 scope).
+- Ch 21 steepening claim "in this configuration" qualifier. eq:distance_ratio described as D_ds/D_s but defines 𝒟 = D_ds/(D_d D_s). "most common sign error" superlative.
