@@ -2,5 +2,229 @@
 % Module 16: Solutions to Exercises
 % =============================================================================
 % This file is conditionally included from main.tex via \ifsolutions
-% STUB created 2026-10-14. Replace with the full solutions file.
 % =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:oi_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{16_Odd_Images_Central/problems\_16.wl}{problems\_16.wl},
+which verifies each answer symbolically and numerically.
+
+% ----- Exercise 16.1 -----
+\subsection*{Exercise~\ref{ex:oi_gradient_hessian}: Fermat Gradient and Hessian}
+
+\textbf{(a)} The geometric term of $\tau$ has gradient
+$\vectheta-\vecbeta$ and the potential term contributes
+$-\nabla\psiL=-\vecalpha$, so
+\[
+  \nabla_{\vectheta}\tau = (\vectheta-\vecbeta)-\vecalpha ,
+\]
+and $\nabla_{\vectheta}\tau=0$ is exactly $\vecbeta=\vectheta-\vecalpha$.
+Solving $\nabla\tau=0$ for the source returns
+$\vecbeta=\vectheta-\nabla\psiL$ identically.
+
+\textbf{(b)} Differentiating once more, the geometric term gives the
+identity and the potential term $-\partial_a\partial_b\psiL$:
+\[
+  \nabla\nabla\tau = \mathbb{I}-\nabla\nabla\psiL
+  = \begin{pmatrix}1-\psiL_{,11} & -\psiL_{,12}\\ -\psiL_{,12} & 1-\psiL_{,22}\end{pmatrix}
+  = \pderiv{\vecbeta}{\vectheta} = \Amat ,
+\]
+and $\operatorname{tr}\Amat = 2-\nabla^2\psiL = 2(1-\kappab)$.
+
+\textbf{(c)} In the eigenbasis $\Amat=\operatorname{diag}(\lambda_-,\lambda_+)$
+with $\lambda_\pm=1-\kappab\pm|\gammaL|$, so
+$\det\Amat=\lambda_+\lambda_-$ and $\operatorname{tr}\Amat=\lambda_++\lambda_-$.
+Two real numbers are both positive iff their product and sum are
+positive, both negative iff the product is positive and the sum
+negative, and of opposite sign iff the product is negative.  Hence:
+minimum $\Leftrightarrow$ $\det\Amat>0$, $\operatorname{tr}\Amat>0$;
+maximum $\Leftrightarrow$ $\det\Amat>0$, $\operatorname{tr}\Amat<0$;
+saddle $\Leftrightarrow$ $\det\Amat<0$, as in Table~\ref{tab:morse_types}.
+\emph{[Attested: \solnlink{16_Odd_Images_Central/problems\_16.wl}{problems\_16.wl}, checks 1a--1h.]}
+
+% ----- Exercise 16.2 -----
+\subsection*{Exercise~\ref{ex:oi_five_images}: Five Images of a Cored Elliptical Lens}
+
+A source inside the tangential caustic has four bright images: two
+minima outside the tangential critical curve and two saddles, which
+contribute $2-2=0$ to the index sum.  The cored lens satisfies
+(S1)--(S2), so by eq.~\eqref{eq:oi_index_sum} the indices must add up to
+$1$: there is at least one more positive-parity image.  Since the source
+is also inside the radial caustic, it is the maximum of $\tau$ supported
+by the core, so $N=5$ with $n_{\min}=2$, $n_{\rm sad}=2$, $n_{\max}=1$:
+\begin{center}
+\begin{tabular}{clcc}
+\toprule
+\# & Fermat type & signs of $(\lambda_-,\lambda_+)$ & $\operatorname{sgn}\mu$\\
+\midrule
+1, 2 & minimum (Type~I)   & $(+,+)$ & $+1$\\
+3, 4 & saddle (Type~II)   & $(-,+)$ & $-1$\\
+5    & maximum (Type~III) & $(-,-)$ & $+1$\\
+\bottomrule
+\end{tabular}
+\end{center}
+and $\sum\operatorname{sgn}\mu_i=2+1-2=1$, as required.
+
+\textbf{Numerical check.}  For
+$\psiL=\sqrt{0.25^2+0.7\,\theta_1^2+1.3\,\theta_2^2}$ and
+$\vecbeta=(0.05,0.03)$, solving $\vecbeta=\vectheta-\nabla\psiL$ with
+\texttt{NSolve} gives exactly five real images.  Classifying each by
+the eigenvalues of $\Amat=\mathbb{I}-\nabla\nabla\psiL$ gives two minima
+($\mu=2.19$ and $2.35$), two saddles ($\mu=-1.51$ and $-1.21$), and one
+maximum at $|\vectheta|=0.029$ with $\mu=0.136$.  The maximum is both
+the image closest to the centre and the faintest, and the parities sum
+to $+1$.
+\emph{[Attested: \solnlink{16_Odd_Images_Central/problems\_16.wl}{problems\_16.wl}, checks 2a--2h.]}
+
+% ----- Exercise 16.3 -----
+\subsection*{Exercise~\ref{ex:oi_nis_central}: The NIS Central Image}
+
+\textbf{(a)} From eq.~\eqref{eq:oi_nis},
+$\alpha(\theta)=\thetaE\theta/(\sqrt{\theta^2+\theta_c^2}+\theta_c)
+=\tfrac{\thetaE}{2\theta_c}\,\theta+\mathcal{O}(\theta^3)$, so
+$\alpha/\theta\to\kappab_0$ and $\dd\alpha/\dd\theta\to\kappab_0$ as
+$\theta\to0$, with $\kappab_0=\thetaE/(2\theta_c)$.  By
+eq.~\eqref{eq:oi_lambdas}, $\lambda_t(0)=\lambda_r(0)=1-\kappab_0$.  Both
+are negative iff $\kappab_0>1$, i.e.\ iff $0<\theta_c<\thetaE/2$; then
+the centre (an image for $\ysrc=0$) is a maximum of $\tau$.
+
+\textbf{(b)}
+\[
+  \mu_c = \frac{1}{\lambda_t(0)\lambda_r(0)} = \frac{1}{(1-\thetaE/2\theta_c)^2}
+        = \frac{4\theta_c^2}{(\thetaE-2\theta_c)^2}
+        = \frac{4\theta_c^2}{\thetaE^2} + \mathcal{O}(\theta_c^3).
+\]
+For $\thetaE=1$: $\mu_c=1/16=0.0625$ at $\theta_c=0.1$ and
+$\mu_c=1/2401=4.16\times10^{-4}$ at $\theta_c=0.01$.
+
+\textbf{(c)} Keeping the linear term of the lens map,
+$\ysrc\simeq(1-\kappab_0)\,\theta$, so the central image lies at
+$\theta\simeq\ysrc/(1-\kappab_0)=-\ysrc/(\kappab_0-1)$: on the side of
+the lens opposite the source.  For $\theta_c=0.1\,\thetaE$
+($\kappab_0=5$) and $\ysrc=0.01\,\thetaE$ this is
+$\theta\simeq-0.0025\,\thetaE$; the exact root of
+eq.~\eqref{eq:oi_nis_cubic} agrees to better than $2\times10^{-6}\,\thetaE$.
+
+\textbf{(d)} As $\theta_c\to0$, $\alpha(\theta)\to\thetaE$ for every
+$\theta>0$: the SIS.  Then $\mu_c\to0$, and the SIS magnification along
+the far side, $\mu=1/(1-\thetaE/|\theta|)$ (with $\lambda_r=1$), tends to
+zero as $\theta\to0$.  The would-be central image has been pushed into
+the conical tip of the SIS with zero flux: the SIS shows two images,
+not three.
+\emph{[Attested: \solnlink{16_Odd_Images_Central/problems\_16.wl}{problems\_16.wl}, checks 3a--3j.]}
+
+% ----- Exercise 16.4 -----
+\subsection*{Exercise~\ref{ex:oi_puncture}: Point Masses Change the Parity of the Count}
+
+\textbf{(a)} On a circle of radius $\epsilon$ around a point mass,
+$\nabla\tau = \vectheta-\vecbeta-\vecalpha_{\rm smooth}-\thetaBH^2\hat{\vectheta}/\epsilon$.
+As $\epsilon\to0$ the last term dominates every other (they stay
+finite), so $\nabla\tau$ points radially inward all the way round: it
+winds once, index $+1$, independent of $\vecbeta$.  Numerically, the
+winding is $+1$ for $\ysrc=0.1,\,0.5,\,2,\,5\;\thetaBH$.
+
+\textbf{(b)} Draw a large circle (winding $+1$) and excise a small disc
+around each point mass.  The winding around the large circle equals the
+sum of the image indices plus the indices of the $g$ punctures:
+$n_+-n_-+g=1$, which is eq.~\eqref{eq:oi_index_pm}.  Then
+$N=n_++n_-=2n_-+1-g$.  Adding one point mass changes $1-g$ by one, so
+it flips the parity of $N$; and $N+g=2n_-+1$ is always odd.  Counting
+each puncture as a phantom image restores Burke's odd total.
+
+\textbf{(c)} For $\theta_c=0.2\,\thetaE$ and
+$\thetaBH^2=0.3\,\theta_{\bullet,\rm crit}^2$: at $\ysrc=0.1\,\thetaE$ the
+NIS alone has 3 images and the NIS with the black hole has 2; at
+$\ysrc=0.2\,\thetaE$ the counts are 3 and 4.  Both changes are odd
+($-1$ and $+1$), and with $g=1$, $N+g=3$ and $5$ are odd.  In the first
+case the central maximum has merged with the black-hole saddle (the
+source is inside the inner caustic); in the second it survives and the
+black-hole saddle has been added.
+\emph{[Attested: \solnlink{16_Odd_Images_Central/problems\_16.wl}{problems\_16.wl}, checks 4a--4c.]}
+
+% ----- Exercise 16.5 -----
+\subsection*{Exercise~\ref{ex:oi_sis_tip}: The Tip of the SIS}
+
+\textbf{(a)} On a circle of radius $\epsilon\to0$,
+$\nabla\tau\to-\vecbeta-\thetaE\hat{\vectheta}$.  As $\hat{\vectheta}$
+goes once around the unit circle, the point $-\thetaE\hat{\vectheta}$
+traces a circle of radius $\thetaE$ about the origin, and the field is
+this circle shifted by $-\vecbeta$.  It winds once around zero iff the
+shifted circle encloses the origin, i.e.\ iff $|\vecbeta|<\thetaE$;
+otherwise its winding is zero.  Numerically: winding $1$ for
+$\ysrc=0.2,\,0.5,\,0.9\,\thetaE$ and $0$ for $\ysrc=1.1,\,1.5,\,3\,\thetaE$.
+
+\textbf{(b)} For $|\vecbeta|<\thetaE$ the SIS has two images,
+$\theta_+=\ysrc+\thetaE$ with $\mu_+>0$ and $\theta_-=\ysrc-\thetaE$ with
+$\mu_-<0$: image indices sum to $0$, plus tip index $1$, total $1$.
+For $|\vecbeta|>\thetaE$ there is one image, $\mu>0$: sum $1$, plus tip
+index $0$, total $1$.  The winding at infinity is always $1$, as it must
+be.  The circle $|\vecbeta|=\thetaE$ in the source plane --- the
+\emph{cut} of the SIS --- plays the role of a caustic: crossing it
+changes the image count by one, not two, because the second ``image''
+is the singular tip, which carries index but no flux.
+\emph{[Attested: \solnlink{16_Odd_Images_Central/problems\_16.wl}{problems\_16.wl}, checks 5a--5b.]}
+
+% ----- Exercise 16.6 -----
+\subsection*{Exercise~\ref{ex:oi_critical_mass}: The Critical Black-Hole Mass}
+
+\textbf{(a)} Expanding $(\thetaE\theta_c^2/2)^{2/3}=2^{-2/3}\thetaE^{2/3}\theta_c^{4/3}$,
+\[
+  \theta_{\bullet,\rm crit}^2 = \thetaE\theta_c - 3\cdot2^{-2/3}\,\thetaE^{2/3}\theta_c^{4/3} + \theta_c^2 ,
+\]
+exactly.  Dividing by $\thetaE\theta_c$, the second and third terms
+scale as $(\theta_c/\thetaE)^{1/3}$ and $\theta_c/\thetaE$, so the ratio
+tends to $1$ as $\theta_c/\thetaE\to0$.  The approach is slow: the
+leading correction is $-3\cdot2^{-2/3}(\theta_c/\thetaE)^{1/3}$, which
+is $-0.70$ at $\theta_c=0.05\,\thetaE$.
+
+\textbf{(b)} For $\theta_c=0.05\,\thetaE$:
+$\theta_{\bullet,\rm crit}^2=0.01769\,\thetaE^2$, so
+$\theta_{\bullet,\rm crit}=0.133\,\thetaE$.
+
+\textbf{(c)} The projected mass inside $\theta$ scales as
+$\theta\,\alpha(\theta)$ for any axisymmetric lens, and as
+$\thetaBH^2$ for a point mass, with the same proportionality constant.
+For $\theta_c=0.1\,\thetaE$, $\alpha(\thetaE)=(\sqrt{1.01}-0.1)\,\thetaE=0.905\,\thetaE$,
+so the critical mass fraction is
+$\mBH=0.02228/0.905=0.0246$: a black hole with about $2.5\%$ of the
+mass inside the Einstein radius erases every central image of this lens.
+\emph{[Attested: \solnlink{16_Odd_Images_Central/problems\_16.wl}{problems\_16.wl}, checks 6a--6e.]}
+
+% ----- Exercise 16.7 -----
+\subsection*{Exercise~\ref{ex:oi_powerlaw}: A Shallow Cusp}
+
+\textbf{(a)} With $\gp=1.5$ and $\thetaE=1$, $\alpha=\operatorname{sgn}(\theta)|\theta|^{1/2}$.
+On the far side, $\theta=-x=-w^2$ ($w>0$) gives $\ysrc=w-w^2$, with roots
+\[
+  w = \frac{1\mp\sqrt{1-4\ysrc}}{2},
+\]
+both positive iff $0<\ysrc<1/4$ (the maximum of $w-w^2$ is $1/4$ at
+$w=1/2$, which is the radial caustic).  On the near side,
+$\theta=w^2$ gives $\ysrc=w^2-w$, which has exactly one positive root.
+So a source at $\ysrc<\thetaE/4$ has three images: an odd number, as
+the continuity of $\alpha$ guarantees.
+
+\textbf{(b)} The central image is the smaller far-side root,
+$w_c=(1-\sqrt{1-4\ysrc})/2$.  With $\lambda_t=1-1/w$ and
+$\lambda_r=1-1/(2w)$,
+\[
+  \mu_c = \frac{2w_c^2}{(w_c-1)(2w_c-1)} .
+\]
+At $\ysrc=0.1$: $w_c=0.1127$ and $\mu_c=0.0370$, while
+eq.~\eqref{eq:oi_mu_powerlaw} gives $2\ysrc^2=0.02$.  The leading-order
+law underestimates by a factor $1.85$, because the corrections are of
+relative order $w_c\simeq\ysrc$.
+
+\textbf{(c)} For $\gp=1.8$, $\alpha=|\theta|^{0.2}$ on each side, and
+the far-side equation $x^{0.2}-x=0.1$ is solved numerically.  The
+central image has $\mu_c=5.007\times10^{-8}$, which agrees with
+the leading-order value $5\times10^{-8}$ to $0.2\%$: here the correction
+is of relative order $\ysrc^{4}$.  The image is $18.3$ magnitudes
+fainter than the unlensed source.  Moving the slope from $1.5$ to
+$1.8$ costs almost six orders of magnitude in central-image flux at
+fixed source position: the steep cusp has suppressed it, as
+Section~\ref{sec:oi_steep} argued.
+\emph{[Attested: \solnlink{16_Odd_Images_Central/problems\_16.wl}{problems\_16.wl}, checks 7a--7d.]}
