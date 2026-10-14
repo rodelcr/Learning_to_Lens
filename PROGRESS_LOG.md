@@ -4,6 +4,32 @@ Timestamped record of major milestones and work completed.
 
 ---
 
+## 2026-10-14 — Part V (compound lenses) + Annotated Study Edition; critic phase complete
+
+**Branch `annotated-edition`** (not yet merged to main / published). Plan: `HANDOFF_annotated_edition_2026-10-14.md`.
+
+- **Third edition.** `Notes/editions.tex` gates `annotation` / `derivation` / `bridge` boxes (comment-package
+  exclusion in the student and instructor editions; `\annot{}` inline → `\unskip`). `build.sh` builds three PDFs
+  and asserts no `??`, no undefined refs, page ordering, zero sentinel leakage, text-md5 fingerprints.
+  Leakage test: student/instructor text identical with annotations present vs stripped.
+- **Part V, chapters 18–25 (module dirs 14–21)**, ported as pure textbook from the AGEL
+  `202607_Theoretical_spiral_compound` theory notes 1, 1b, 2, 2b, 4, 3, 5, 6, 9, 10: multi-plane lens equation
+  & DSPL ratio; power law + point mass (+ broken power law); odd/central images; central-mass bias; MSD in
+  multi-plane lenses + kinematics; multipoles; cosmological sensitivity; first-order estimators. 16 new `.wl`
+  scripts (all PASS), 62 exercises with attested solutions, 14 figures. Master verification 12 → 28/28.
+- **Annotation layer** on all 17 original modules (deep 01d–09; solutions-only 01a–c, 10–13): 511 boxes,
+  ~600 new `check[]`s in the `problems_NN.wl` scripts; student/instructor fingerprints unchanged.
+- **Fact-critic pass**: 25 independent reports (one per chapter / annotation group), all merged. Every Part V
+  derivation re-derived independently (0 FAIL on physics). ~60 pre-existing visible-text errors in
+  Chapters 1–17 CONFIRMED (e.g. Module 6 point-mass delay factor 2; Module 4 Ex 4.3(a); Module 7 Sol 7.3
+  distances; Module 2 refractive index; Module 3 Ex 3.3 table) — tracker: `NOTES_fixpass_tracker_2026-10-14.md`.
+- **Spiral-project findings** (feedback pending): Schneider 2014 A&A 568 L2 vs 2019 A&A 624 A54 conflation;
+  Burke 1981 DOI; note 2/2b/3/4/10 physics errors (listed in the handoff). Reconciliation with that project's own
+  packet-level critic (`docs/spiral_reconciliation_2026-10-14/`) in progress per Rodrigo's instruction.
+- Pages: 360 student / 444 instructor / 569 annotated. Bib +11 CrossRef-verified keys (Zotero-tagged).
+
+---
+
 ## 2026-09-24 — Full cleanup: epigraphs, distances, citations, May-14 audit reconciled
 
 Covers every open item from the July audit and the May pre-review handoff.

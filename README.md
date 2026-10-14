@@ -79,9 +79,10 @@ cd Learning_to_Lens
 conda env create -f environment.yml
 conda activate learning_to_lens
 
-# Build the LaTeX notes (produces two PDFs in Output/)
-#   Output/Learning_to_Lens.pdf           — student edition (199 pp)
-#   Output/Learning_to_Lens_Solutions.pdf  — instructor edition with solutions (245 pp)
+# Build the LaTeX notes (produces three PDFs in Output/)
+#   Output/Learning_to_Lens.pdf            — student edition
+#   Output/Learning_to_Lens_Solutions.pdf  — instructor edition (with solutions)
+#   Output/Learning_to_Lens_Annotated.pdf  — annotated study edition (solutions + derivation/annotation/bridge boxes)
 cd Notes && bash build.sh
 
 # Open a Mathematica notebook (macOS)
@@ -125,6 +126,30 @@ wolframscript -file Mathematica/01a_Special_Relativity/lorentz_transforms.wl
 | **10** | Cluster Lensing | NFW clusters, giant arcs, cosmic telescope, weak lensing intro |
 
 ---
+
+### Part IV: Statistical, Weak, and Micro Lensing
+
+| Module | Topic |
+|--------|-------|
+| 11 | Lensing Statistics |
+| 12 | Weak Lensing and Cosmic Shear |
+| 13 | Microlensing |
+
+### Part V: Compound Lenses, Degeneracies, and Cosmography
+
+Ported (2026-10) from the analytic study notes of the AGEL `202607_Theoretical_spiral_compound` project,
+rewritten as self-contained textbook chapters. Prerequisite chain: Parts II–III.
+
+| Module | Topic |
+|--------|-------|
+| 14 | The Multi-Plane Lens Equation and Double-Source-Plane Lenses |
+| 15 | Power-Law Lenses with a Central Point Mass (incl. broken power laws) |
+| 16 | Odd Images, Central Images, and Their Suppression |
+| 17 | How an Unmodelled Central Mass Biases a Compound Lens |
+| 18 | The Mass-Sheet Degeneracy in Multi-Plane Lenses and Kinematic Breaking |
+| 19 | Azimuthal Multipoles and the Central-Mass Confusion |
+| 20 | Cosmological Sensitivity of Compound-Lens Ratios |
+| 21 | First-Order Estimators and Multi-Plane Coherence |
 
 ## Repository Structure
 
