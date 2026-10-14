@@ -75,7 +75,8 @@ $|S_{w_0}+cS_{\Omegam}|\le|S_{w_0}|$, i.e.\ for $c$ between $0$ and
 $2c_\star=-2S_{w_0}/S_{\Omegam}=-1.850$. At $c=2c_\star$ the two are
 equal in magnitude, and for $c<2c_\star$ or $c>0$ the marginalised bias
 is smaller. ``Marginalising always makes it worse'' is true of
-statistical errors (Cram\'er--Rao), not of biases: a bias moves along
+statistical variances (the variance with a parameter fixed never exceeds
+the marginalised one), not of biases: a bias moves along
 whatever direction the other constraints leave open, and that direction
 can either amplify or suppress its component along $w_0$. The
 physically relevant comparison is with the degeneracy direction of the
@@ -95,8 +96,8 @@ $132.8^\circ$ from the $+\Omegam$ axis; along it
 $\dd w_0/\dd\Omegam=-S_{\Omegam}/S_{w_0}=-1.081$.
 
 A time delay in the same system raises the rank. It measures
-$D_{\Delta t}=\Dd\Ds/\Dds$ (eq.~\ref{eq:time_delay_recap}); any
-constant prefactor such as $(1+z_d)$ drops out of the log-derivatives.
+$D_{\Delta t}=(1+z_d)\Dd\Ds/\Dds$ (eq.~\ref{eq:time_delay_recap});
+the constant prefactor $(1+z_d)$ drops out of the log-derivatives.
 For a single source at $z_s=1$ behind the $z_d=0.5$ deflector, and at
 fixed $\Hubble$, its row is
 $\partial\ln D_{\Delta t}/\partial(\Omegam,w_0)=(-0.0174,-0.1043)$,
@@ -163,7 +164,7 @@ cosmology in the family fits.
 % ----- Exercise 20.6 -----
 \subsection*{Exercise~\ref{ex:cs_design}: Design}
 
-One well-modelled system. The argument is structural.
+One well-modelled system, for the reasons below.
 
 \textbf{Rank.} Three masked systems add three rows to $J$, so on paper
 the rank problem improves. But each masked system has lost the datum that
@@ -175,8 +176,7 @@ truth; they converge on whatever the priors agree on.
 profile and the same $\gp$ prior, their errors are not independent. The
 $\sqrt N$ intuition assumes independent draws; a shared modelling choice
 is a shared systematic, and the mean of $N$ identical biases is that
-same bias for every $N$. Three lenses analysed the same wrong way give a
-more confident wrong answer.
+same bias for every $N$.
 
 \textbf{The single well-modelled system} delivers an actual measurement,
 with a residual bias that can be quantified and propagated with the

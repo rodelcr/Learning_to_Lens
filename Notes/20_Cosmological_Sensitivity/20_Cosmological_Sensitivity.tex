@@ -5,7 +5,7 @@
 % Sources: Collett et al. (2012); Collett & Auger (2014); Schneider (2014,
 %          A&A 568, L2); Chapter 7 (cosmological distances) of these notes.
 %          CPL parametrisation: Chevallier & Polarski (2001), Linder (2003)
-%          [not in references.bib; stated without citation].
+%          [cited as chevallier_polarski_2001, linder_2003; fix pass 2026-10-14].
 % Mathematica: ../Mathematica/20_Cosmological_Sensitivity/
 % Label prefix: cs
 % =============================================================================
@@ -119,6 +119,7 @@ constant equation of state $w$, for which the fluid equation gives
 $\rho\propto a^{-3(1+w)}$ (eq.~\ref{eq:rho_scaling}). To test whether
 dark energy evolves, the standard two-parameter extension is the
 Chevallier--Polarski--Linder (CPL) form
+\citep{chevallier_polarski_2001,linder_2003}
 \begin{equation}
   w(a)=w_0+w_a\,(1-a)
   \qquad\Longleftrightarrow\qquad
@@ -485,10 +486,13 @@ label any single-parameter number with the assumption that produced it.
 \end{keybox}
 
 There \emph{is} a genuine bound, but it concerns statistical errors, not
-biases. For any Fisher matrix the error on $w_0$ with $\Omegam$ fixed,
-$1/F_{w_0w_0}$, never exceeds the marginalised error
-$(F^{-1})_{w_0w_0}$ (the Cram\'er--Rao inequality). With an $\Omegam$
-prior of width $\sigma_X$ the difference is exactly
+biases. For any Fisher matrix the variance of $w_0$ with $\Omegam$
+fixed, $1/F_{w_0w_0}$, never exceeds the marginalised variance
+$(F^{-1})_{w_0w_0}$. This is a property of every positive-definite
+matrix, not a statement about estimators. (The Cram\'er--Rao bound is
+the separate result that an unbiased estimator of $w_0$ has variance at
+least $(F^{-1})_{w_0w_0}$.) With an $\Omegam$ prior of width $\sigma_X$
+the difference of the two variances is exactly
 $\sigma_X^2S_{\Omegam}^2/S_{w_0}^2\geq0$. It is a common slip to carry
 the intuition that ``fixing parameters always underestimates'' from
 errors over to biases, where it does not hold.
@@ -498,7 +502,13 @@ Collett et al.\ \citep{collett_2012} report that the $\Omegam$--$w$
 degeneracy of DSPLs is almost orthogonal to that of the CMB and baryon
 acoustic oscillations. In the language of this section, combining with
 those probes puts the external $c$ far from $c_\star$, which keeps
-$\mathcal{A}(c)$ finite. That is the good news. The caution is that
+$\mathcal{A}(c)$ finite. Read literally, exact orthogonality of the two
+blind directions, $(c_\star,1)\cdot(c,1)=0$, gives $c=-1/c_\star=+1.081$
+and $\mathcal{A}=0.46$ at the illustrative geometry, a bias smaller than
+the fixed-$\Omegam$ number. Two qualifications apply: ``orthogonal''
+depends on how the $\Omegam$ and $w$ axes are scaled, and the statement
+of Collett et al.\ refers to their geometries, not to this one. That is
+the good news. The caution is that
 $\mathcal{A}$ depends on $c$ as well as on the lens, so the
 cosmological cost of a given $\delta$ cannot be quoted for the lens
 alone. It belongs to the \emph{combination} of probes, and must be
@@ -517,9 +527,9 @@ $\Brat(\bm{p}_0+t\,(c,1))=1.005\,\Brat_0$ are $\Delta w_0=-0.162$ and
 $-0.091$, close to the linear values $-0.151$ and $-0.098$. Along
 $c=-\tfrac12$ the linear formula predicts $\Delta w_0=-0.330$. In fact
 $\Brat$ rises by at most $0.09\%$ along that ray before falling again,
-so \emph{no} point on the ray absorbs a $0.5\%$ error. The linear answer
-is not merely inaccurate there; it describes a solution that does not
-exist.
+so \emph{no} point on the ray absorbs a $0.5\%$ error. There the linear
+formula returns a point that is not a solution of
+$\Brat=1.005\,\Brat_0$.
 
 \begin{figure}[ht]
     \centering
@@ -546,7 +556,9 @@ family $\kappab_\lambda=\lambda\kappab+(1-\lambda)$, and $\Hubble$ is
 pinned only by external information such as stellar kinematics. A
 multi-plane version of that transformation exists, and Schneider
 \citep{schneider_2014_multiplane} showed that for a two-source-plane
-system it can mimic a change of cosmological parameters. The flat
+system in which the nearer source also acts as a deflector it can mimic a
+change of cosmological parameters. (The model $\Brat=\etamea^{\gp-1}$
+of this chapter neglects that deflection.) The flat
 direction in cosmology studied here and the flat direction in the mass
 model therefore have to be broken together.
 \end{bridge}
@@ -557,7 +569,7 @@ The rank can only be raised by an observable whose row of $J$ is
 \emph{not} parallel to the DSPL row. There are three options:
 \begin{itemize}
   \item a \textbf{time delay} in the same system, which measures the
-  time-delay distance $D_{\Delta t}=\Dd\Ds/\Dds$
+  time-delay distance $D_{\Delta t}=(1+z_d)\Dd\Ds/\Dds$
   (eq.~\ref{eq:time_delay_recap}). This is a different combination of the
   same distances, and it also depends on $\Hubble$;
   \item an \textbf{external probe} in the same likelihood, as above;
@@ -641,9 +653,14 @@ $\mBH_i=\mBH_1\Brat_i$.
 For $1<\gp<3$ the exponent is positive, and $0<\Brat_i<1$, so
 $0<\mBH_i<\mBH_1$: farther planes feel a weaker but \emph{same-signed}
 perturbation. The $\delta_i$ are therefore not independent draws; they
-form a deterministic, monotone family driven by one amplitude. Write
+form a deterministic family driven by one amplitude. Write
 $\delta_i=\mBH_1 r_i$ with response vector
-$r_i\equiv\partial\ln\Brat_i/\partial\mBH_1$. Then
+$r_i\equiv\partial\ln\Brat_i/\partial\mBH_1$. The $\mBH_i$ share a
+sign, but the $\delta_i$ share a sign only if the $r_i$ do.
+Chapter~\ref{ch:perturbative_estimators} derives $r_i$ and shows that
+the responses share a sign in the baseline where the images on every
+plane respond equally strongly to the central mass; a plane whose image
+lies close enough to the centre can reverse the sign of its $r_i$. Then
 eq.~\eqref{eq:cs_biasvector} becomes
 \begin{equation}
   \Delta\bm{p}=\mBH_1\bigl(J^{\mathsf T}C^{-1}J\bigr)^{-1}
@@ -651,8 +668,8 @@ eq.~\eqref{eq:cs_biasvector} becomes
   \label{eq:cs_coherentbias}
 \end{equation}
 Whether the planes reinforce or partially cancel is decided by how
-$\bm{r}$ lines up with the poorly constrained eigendirections of $F$.
-That alignment is a computable property of the geometry.
+$\bm{r}$ lines up with the poorly constrained eigendirections of $F$,
+which can be computed from the geometry.
 
 \begin{bridge}[Back to the power-law lens]
 The scaling $\thetaE^{\gp-1}\propto\varepsilon$ used in the derivation is
@@ -663,7 +680,7 @@ two source planes: the profile shape is fixed, and only its amplitude
 scales with the lensing efficiency.
 \end{bridge}
 
-\subsection{Why coherent errors do not average down}
+\subsection{Why coherent errors do not average as $1/\sqrt{n}$}
 
 The cleanest way to see the difference is a one-parameter fit (say $w_0$
 with everything else fixed) to $n$ ratios with equal variances. The
@@ -677,8 +694,9 @@ would produce on its own. Then
 \end{equation}
 The combined bias is a weighted \emph{mean} of the per-plane biases, so
 it lies between the smallest and the largest of them, for every $n$.
-When the $b_i$ share a sign, as they do for a coherent error, adding
-planes cannot push the bias toward zero.
+When the $b_i$ share a sign, as they do for a coherent error whenever
+the $r_i$ and the $J_i$ share a sign, adding planes cannot push the bias
+toward zero.
 
 Compare independent errors of size $\delta$ on each ratio. The rms bias
 is then $\delta/\lVert J\rVert$. With equal $J_i=J$ this is
@@ -688,12 +706,23 @@ coherent to independent is $\sum_iJ_i/\lVert J\rVert$, which lies
 between $1$ and $\sqrt n$. Coherent errors never benefit from the
 $1/\sqrt n$.
 
+The weighted-mean property belongs to the one-parameter fit. With
+$\Omegam$ free as well, the planes at $z=2$ and $z=3$ of the illustrative
+system give a square $2\times2$ Jacobian in $(\Omegam,w_0)$, and the bias
+is $J^{-1}\bm{\delta}$ (the covariance drops out). For an illustrative
+$\delta_i=1\%$ on both ratios this gives $\Delta w_0=-0.687$, more than
+twice the per-plane fixed-$\Omegam$ biases $-0.303$ and $-0.219$. The
+nearly parallel rows ($5.5^\circ$ apart) that make the system
+ill-conditioned also amplify the coherent bias.
+
 \begin{keybox}[Coherent systematics]
 In an $N$-plane compound lens a single inner-profile error enters all
 $N-1$ ratios through $\mBH_i=\mBH_1\Brat_i^{(3-\gp)/(\gp-1)}$, with one
-sign. The induced bias in any one parameter is a weighted mean of the
+sign. In a one-parameter fit the induced bias is a weighted mean of the
 per-plane biases (eq.~\ref{eq:cs_convex}), so it does not shrink as
-$1/\sqrt{N}$. A many-plane system is not automatically safer than a
+$1/\sqrt{N}$. With several free parameters it can be larger than any
+single-plane bias, because nearly parallel rows of $J$ amplify it. A
+many-plane system is not automatically safer than a
 two-plane one: it is more precise, and therefore \emph{more} exposed to a
 systematic that does not average away.
 \end{keybox}
@@ -704,8 +733,8 @@ analysed with the \emph{same} modelling convention (the same rigid
 profile family, the same prior on $\gp$), a shortcoming of that
 convention is a shared systematic. Stacking such lenses averages the
 noise down as $1/\sqrt N$ but leaves the shared bias untouched, so the
-stack yields an increasingly confident wrong answer. Independence across
-lenses is a property of the \emph{analysis}, not of the sky.
+stack yields an increasingly confident wrong answer. Whether the errors
+are independent depends on how the lenses were modelled.
 \end{annotation}
 
 
@@ -745,10 +774,17 @@ them at all. The value an analyst reports is set by where their prior on
 $\gp$ sits. Calling the width of that range a ``bias'' and pushing it
 through eq.~\eqref{eq:cs_scalar} confuses two different objects.
 
+That is the exact, noise-free limit. With noise, ellipticity and a
+finite prior, the remaining images usually still exclude part of the
+range, so the slope becomes prior-dominated rather than completely
+undetermined. In a quad the surviving images can keep $\gp$ constrained
+but biased, which turns the masked case back into a bias of the kind in
+case~2.
+
 \begin{keybox}[A degeneracy is not a bias]
 A \textbf{bias} is a displacement: the data determine a value, and the
 value is wrong by $\delta$. A \textbf{degeneracy} is a surrendered
-constraint: the data determine a set, and the reported point within it is
+constraint: the data determine a set, or nearly so, and the reported point within it is
 chosen by a prior. Masking a feature that carried information creates a
 degeneracy. Report it as the span of $\Brat$ allowed by the data, name
 the prior that selects within it, and propagate it non-linearly as a
@@ -774,8 +810,14 @@ of the model family reproduces it. A naive linearisation would return
 $|0.25/S_{w_0}|=7.6$, a number with no meaning: it extrapolates a local
 derivative across an excursion over which $\Brat$ is not even monotonic.
 The correct statement is that the inferred $\Brat$ is inconsistent with
-the whole model family, and that statement does not depend on how dark
-energy is parametrised.
+the stated model family over the stated box. Freeing $w_a$ keeps flat CPL
+far from $25\%$: over $\Omegam\in[0.20,0.42]$, $w_0\in[-8,-0.1]$,
+$w_a\in[-3,3]$ the change stays within $[-3.4\%,+8.9\%]$ (grid
+evaluation). Both qualifiers still matter, because a more flexible $E(z)$
+can reach larger excursions. A flat model with $w=-1$ below $z=0.5$ and
+$w=+4$ above it, physically contrived but admissible as an $E(z)$, moves
+$\Brat$ by $+30.5\%$ at the illustrative geometry. ``No cosmology fits''
+is a statement about a named family and a named box.
 
 \begin{annotation}[Dynamic range depends on geometry]
 The numbers above belong to the illustrative geometry. The dynamic range
@@ -850,12 +892,14 @@ result.
   \item Near the blind direction the linear formula fails early, and can
   describe a solution that does not exist.
   \item In an $N$-plane lens one inner-profile error enters every ratio
-  through $\mBH_i=\mBH_1\Brat_i^{(3-\gp)/(\gp-1)}$; the resulting bias is a
-  weighted mean of per-plane biases and does not average as $1/\sqrt{N}$.
+  through $\mBH_i=\mBH_1\Brat_i^{(3-\gp)/(\gp-1)}$. In a one-parameter fit
+  the resulting bias is a weighted mean of per-plane biases and does not
+  average as $1/\sqrt{N}$; with several free parameters it can exceed
+  every single-plane bias.
   \item Masking a constraining feature creates a degeneracy, not a bias:
   report a span and the prior, not a linearised $\Delta w$. Offsets larger
-  than the dynamic range of $\Brat$ mean that no cosmology in the family
-  fits.
+  than the dynamic range of $\Brat$ mean that no cosmology in the stated
+  family and box fits.
 \end{itemize}
 
 
