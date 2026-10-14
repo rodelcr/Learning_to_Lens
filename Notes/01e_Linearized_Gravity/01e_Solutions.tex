@@ -37,6 +37,24 @@ $\eta^{i0} = 0$:
     \boxed{\christoffel{i}{0}{0} = -\half \partial_i h_{00}}
 \]
 
+\begin{derivation}[The index sum written out]
+$\eta^{i\beta}$ is nonzero only for $\beta = j$ spatial, where
+$\eta^{ij} = \delta^{ij}$ ($\eta^{i0} = 0$):
+\begin{align*}
+\christoffel{i}{0}{0}
+&= \tfrac12\sum_{\beta}\eta^{i\beta}\bigl(2\,\partial_0 h_{0\beta} - \partial_\beta h_{00}\bigr) \\
+&= \tfrac12\sum_{j}\delta^{ij}\bigl(2\,\partial_0 h_{0j} - \partial_j h_{00}\bigr)
+  && (\eta^{i0} = 0) \\
+&= \tfrac12\bigl(0 - \partial_i h_{00}\bigr)
+  && (\text{static: } \partial_0 h_{0j} = 0;\ \delta^{ij} \text{ picks } j = i) \\
+&= -\tfrac12\,\partial_i h_{00} .
+\end{align*}
+For the weak-field metric, where $h_{00} = -2\Phi/c^2$, this is
+$+\partial_i\Phi/c^2$, which points away from the mass.  The minus sign in
+the geodesic equation then turns it into an attraction.
+\end{derivation}
+
+
 \textbf{(b)} The geodesic equation for spatial components is:
 \[
     \frac{d^2 x^i}{d\tau^2}
@@ -60,12 +78,36 @@ Since $d\tau \approx dt$ for slow motion ($\gamma \approx 1$):
     \boxed{\frac{d^2 x^i}{dt^2} = \half c^2\, \partial_i h_{00}}
 \]
 
+\begin{annotation}[What was dropped, and why it is safe]
+\begin{itemize}
+    \item $\christoffel{i}{0}{j}$ terms: zero for a static field with
+          $h_{0i} = 0$.
+    \item $\christoffel{i}{j}{k}\,(dx^j/d\tau)(dx^k/d\tau)$: of size
+          $|\nabla\Phi|\,v^2/c^2$, i.e.\ smaller than the kept term by
+          $v^2/c^2$ (about $10^{-8}$ for the Earth's orbital speed).
+    \item $d\tau \approx dt$: not actually needed.  Since
+          $d^2t/d\tau^2$ is suppressed by $v/c$, $dt/d\tau$ is constant to
+          this order, and the factor $(dt/d\tau)^2$ appears on both sides
+          and cancels.
+\end{itemize}
+\end{annotation}
+
+
 \textbf{(c)} Comparing with Newton's law $d^2 x^i/dt^2 = -\partial_i \Phi$:
 \[
     -\partial_i \Phi = \half c^2\, \partial_i h_{00}
     \quad\Longrightarrow\quad
     \boxed{h_{00} = -\frac{2\Phi}{c^2}}
 \]
+
+\begin{derivation}[The integration constant]
+Equal gradients only give $\partial_i\bigl(h_{00} + 2\Phi/c^2\bigr) = 0$, so
+$h_{00} = -2\Phi/c^2 + C$.  Far from all sources the metric is Minkowski
+($h_{00} \to 0$) and the Newtonian potential is normalised to vanish
+($\Phi \to 0$), hence $C = 0$.  For a point mass:
+$h_{00} = 2GM/(c^2r) = R_S/r$.
+\end{derivation}
+
 
 % ----- Exercise 2 -----
 \subsection*{Exercise~\ref{ex:weak_field_schwarzschild}: Weak-Field Schwarzschild}
@@ -99,6 +141,47 @@ With $\Phi = -GM/r$ and $R_S = 2GM/c^2$:
     1 + \frac{R_S}{r} = 1 - \frac{2\Phi}{c^2} \,.
 \]
 This is exactly the weak-field metric~\eqref{eq:weak_field_metric}.
+
+\begin{annotation}[Careful: the shortcut in (b) is not first-order exact]
+$(1 + R_S/r)\,dr^2 + r^2d\Omega^2$ and $(1 + R_S/r)(dr^2 + r^2d\Omega^2)$ differ
+by $R_S\,r\,d\Omega^2$.  Relative to $r^2d\Omega^2$ this is $R_S/r$, i.e.\
+\emph{first} order, the same order as the terms being kept.  The final
+metric is nevertheless correct, provided the radius in it is the isotropic
+radius $\rho$ rather than the Schwarzschild $r$.  The derivation box below
+does it properly.
+\end{annotation}
+
+\begin{derivation}[Part (b) done properly: change to the isotropic radius]
+Use $r = \rho\,(1 + R_S/4\rho)^2$ (eq.~\eqref{eq:isotropic_r}).  Expanding,
+\begin{align*}
+r &= \rho + \frac{R_S}{2} + \frac{R_S^2}{16\rho},
+\qquad
+\frac{dr}{d\rho} = 1 - \frac{R_S^2}{16\rho^2}
+  && \text{(exact)} \\
+1 - \frac{R_S}{r} &= 1 - \frac{R_S}{\rho} + \order{R_S^2/\rho^2}
+  && (r = \rho + \order{R_S}) \\
+\Bigl(1 + \frac{R_S}{r}\Bigr)dr^2 &= \Bigl(1 + \frac{R_S}{\rho}\Bigr)d\rho^2
+  + \order{R_S^2/\rho^2}
+  && (dr/d\rho = 1 + \order{R_S^2}) \\
+r^2\,d\Omega^2 &= \rho^2\Bigl(1 + \frac{R_S}{\rho}\Bigr)d\Omega^2
+  + \order{R_S^2/\rho^2}
+  && \bigl(r^2 = \rho^2 + R_S\rho + \dots\bigr) .
+\end{align*}
+The shift $r = \rho + R_S/2$ supplies exactly the missing $R_S\,\rho\,d\Omega^2$:
+the radial and angular parts acquire the \emph{same} factor
+$1 + R_S/\rho$, so
+\[
+ds^2 \simeq -\Bigl(1 - \frac{R_S}{\rho}\Bigr)c^2dt^2
++ \Bigl(1 + \frac{R_S}{\rho}\Bigr)\bigl(d\rho^2 + \rho^2d\Omega^2\bigr) ,
+\]
+and $d\rho^2 + \rho^2d\Omega^2 = dx^2 + dy^2 + dz^2$ with $\rho = |\mathbf{x}|$.
+The exact isotropic metric (eq.~\eqref{eq:schwarzschild_isotropic}) follows
+from the same substitution without expanding:
+$1 - R_S/r = \bigl[(1 - R_S/4\rho)/(1 + R_S/4\rho)\bigr]^2$,
+$(dr/d\rho)^2/(1 - R_S/r) = (1 + R_S/4\rho)^4$ and
+$r^2 = (1 + R_S/4\rho)^4\rho^2$.
+\end{derivation}
+
 
 \textbf{(c)} We identify $h_{00} = -2\Phi/c^2 = R_S/r$ and
 $h_{ij} = -2\Phi/c^2\, \delta_{ij} = (R_S/r)\, \delta_{ij}$.
@@ -138,6 +221,15 @@ potential of a single solar mass is immeasurably weak; only the
 cumulative effect of $\sim 10^{11}$--$10^{12}$ stars in a galaxy
 produces observable lensing.
 
+\begin{annotation}[A one-line mental check]
+For a point mass $n - 1 = R_S/r$, and the Sun's Schwarzschild radius is
+$R_S \approx 2.95$~km.  Then $n - 1 \approx 2.95/(6.96\times10^5) =
+4.24\times10^{-6}$ at the limb, and the other two answers are this value
+scaled by $R_\odot/r$.  (Mathematica gives $9.572\times10^{-17}$ for part (c),
+so the last digit printed above is a rounding.)
+\end{annotation}
+
+
 % ----- Exercise 4 -----
 \subsection*{Exercise~\ref{ex:deflection_angle_derivation}: Deflection Angle from Null Geodesics}
 
@@ -151,12 +243,39 @@ The perpendicular gradient (in the $y$-direction) is:
     = \frac{GM\, b}{(l^2 + b^2)^{3/2}} \,.
 \]
 
+\begin{annotation}[Signs in part (a)]
+$\partial\Phi/\partial b = +GMb/(l^2 + b^2)^{3/2} > 0$: the gradient of
+$\Phi$ points \emph{away} from the mass, because $\Phi = -GM/r$ increases
+toward zero outward.  The gradient of $|\Phi| = GM/r$ is the negative of
+this and points toward the mass, which is the direction of the bend.
+Eq.~\eqref{eq:deflection_integral} needs only the magnitude, so both
+give $GMb/(l^2 + b^2)^{3/2}$.  Part~(c) below uses $\nabla_\perp\Phi$ in
+that sense.
+\end{annotation}
+
+
 \textbf{(b)} The integral is:
 \[
     \int_{-\infty}^{\infty} \frac{b\, dl}{(l^2 + b^2)^{3/2}}
     = \frac{b}{b^2} \left[\frac{l}{\sqrt{l^2 + b^2}}\right]_{-\infty}^{+\infty}
     = \frac{1}{b}(1 - (-1)) = \frac{2}{b} \,.
 \]
+
+\begin{derivation}[Where the antiderivative comes from]
+Check by differentiating with the quotient rule:
+\[
+\frac{d}{dl}\,\frac{l}{\sqrt{l^2 + b^2}}
+= \frac{\sqrt{l^2 + b^2} - l\cdot l/\sqrt{l^2 + b^2}}{l^2 + b^2}
+= \frac{(l^2 + b^2) - l^2}{(l^2 + b^2)^{3/2}}
+= \frac{b^2}{(l^2 + b^2)^{3/2}} ,
+\]
+so $\int dl\,(l^2 + b^2)^{-3/2} = l/\bigl(b^2\sqrt{l^2 + b^2}\bigr)$, and the
+prefactor $b$ gives the $b/b^2$ above.  The limits are
+$l/\sqrt{l^2 + b^2} \to \pm1$ as $l \to \pm\infty$.  To discover the
+antiderivative rather than verify it, substitute $l = b\tan\vartheta$;
+the integrand becomes $\cos\vartheta\,d\vartheta/b$.
+\end{derivation}
+
 
 \textbf{(c)} The deflection integral
 (eq.~\eqref{eq:deflection_integral}) uses $\nabla_\perp \Phi$ to denote
@@ -203,6 +322,19 @@ confirming the result.
     = \boxed{1.75''}
 \end{align*}
 This is the value confirmed by Eddington's 1919 expedition.
+
+\begin{annotation}[Scaling shortcut, and the last digit of the galaxy answer]
+Since $\alphahat \propto M/b$, every point-mass deflection follows from the
+solar one:
+\[
+\alphahat = 1.75''\,\frac{M}{\Msun}\,\frac{R_\odot}{b} .
+\]
+For $M = 10^{12}\,\Msun$ and $b = 10$~kpc,
+$1.75''\times10^{12}\times(6.96\times10^8/3.086\times10^{20}) = 3.95''$.
+Mathematica gives $1.914\times10^{-5}$~rad $= 3.949''$ for the galaxy case
+below, so its last printed digit ($3.94''$) is a rounding.
+\end{annotation}
+
 
 \textbf{(Galaxy lens.)} For $M = 10^{12}\,\Msun$ at $b = 10$~kpc
 $= 3.086 \times 10^{20}$~m:
@@ -252,3 +384,17 @@ The individual deflection angle vectors are:
 \]
 This is the deflection angle for a single mass of $2M$, as expected
 from superposition when the two masses coincide.
+
+\begin{derivation}[How fast the pair looks like a single mass (part b of the problem)]
+Divide the pair result by the single-mass value $4G(2M)/(c^2b)$:
+\[
+\frac{\hat\alpha_y}{4G(2M)/(c^2b)} = \frac{8GMb}{c^2(d^2/4 + b^2)}\cdot\frac{c^2b}{8GM}
+= \frac{b^2}{b^2 + d^2/4} = 1 - \frac{d^2}{4b^2} + \order{d^4/b^4} .
+\]
+The leading correction is $\order{d^2/b^2}$ (quadrupole).  There is no
+$\order{d/b}$ (dipole) term because the expansion is about the centre of mass
+of the pair.  At $b = 10\,d$ the ratio is $0.9975$.  This is the
+statement behind treating a galaxy group, or a galaxy plus a satellite, as
+a single deflector when seen from far enough away.
+\end{derivation}
+
