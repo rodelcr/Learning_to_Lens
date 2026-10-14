@@ -42,7 +42,7 @@ Learning_to_Lens/
 └── repo_preferences.md        # Reusable cross-project conventions
 ```
 
-## Module Curriculum (14 modules in 3 parts)
+## Module Curriculum (25 chapters in 5 parts; module ids 01a–13 + 14–21)
 
 | # | Module | Key Topics |
 |---|--------|------------|
@@ -64,10 +64,14 @@ Learning_to_Lens/
 ## Common Commands
 
 ```bash
-# Build BOTH PDFs (student + instructor editions) into Output/
-cd Notes && bash build.sh
+# Build all THREE PDFs (student + instructor + annotated study editions) into Output/
+cd Notes && bash build.sh            # asserts: no '??', no undefined refs, page ordering, no annotation leakage
 #   -> Output/Learning_to_Lens.pdf            (student)
 #   -> Output/Learning_to_Lens_Solutions.pdf  (instructor, via \def\showsolutions{})
+#   -> Output/Learning_to_Lens_Annotated.pdf  (annotated study edition, via \def\showsolutions{}\def\showannotated{})
+#   -> Output/build_fingerprints.txt          (page counts + text-md5; student/instructor must not change on annotation-only commits)
+# Run any Mathematica script through the 3-kernel semaphore (never >3 kernels at once):
+bash Mathematica/run_wl.sh Mathematica/15_PowerLaw_PointMass/power_law_point_mass.wl
 
 # Master verification — must pass 12/12 before any release
 wolframscript -file Mathematica/verify_against_textbooks.wl
@@ -106,8 +110,8 @@ The verified computation pipeline uses Mathematica built-ins plus custom functio
 ### Source-reference discipline
 Every derivation cites the textbook equation it follows (e.g., "Carroll eq. 5.42", "Congdon & Keeton eq. 3.95", "Narayan & Bartelmann eq. 7"). Reference texts are listed in `README.md`; the source PDFs themselves live in the git-ignored `Reference_Texts/`. **Do not fabricate citations** — if the closest precedent is partial, say so honestly.
 
-### Two-edition build
-`build.sh` produces both the student PDF (no solutions) and instructor PDF (with solutions) by toggling `\def\showsolutions{}` at compile time. Solution environments in the `.tex` files key off this macro. After any edit to solution content, rebuild and verify the page count on both PDFs.
+### Three-edition build
+`build.sh` produces the student PDF (no solutions), the instructor PDF (with solutions) and the **Annotated Study Edition** (solutions + an annotation layer) by passing `\def\showsolutions{}` / `\def\showannotated{}` at compile time. The switches live in `Notes/main.tex` (`\ifsolutions`, `\ifannotated`; annotated implies solutions); the per-module `NN_Solutions.tex` files are `\input` only when `\ifsolutions` is true. The annotation layer is three environments defined in `Notes/editions.tex` — `annotation`, `derivation`, `bridge` — which are `comment`-package exclusions in the other two editions, so the student and instructor PDFs are content-identical with or without annotations in the sources (`build.sh` asserts this via text-md5 fingerprints and the uppercase box-title sentinels). **Read the author rules R1–R5 in `editions.tex` before writing an annotation**; in particular a `\\` inside a skipped `\ifannotated` branch within `align` breaks the build. `keybox` and `aside` (GR reminder) in `preamble.tex` are always visible. After any edit, rebuild and check `Output/build_fingerprints.txt`.
 
 ## Important Reminders
 

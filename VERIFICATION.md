@@ -19,6 +19,46 @@ mathematical truth.
 
 ## Three Levels of Verification
 
+### Level 0: Build integrity (`Notes/build.sh` assertions, added 2026-10-14)
+
+`build.sh` builds the three editions (student / instructor / Annotated Study Edition) and
+**exits non-zero** unless all of the following hold:
+
+| Assertion | What it catches |
+|-----------|-----------------|
+| No `! ` LaTeX error, no undefined reference/citation in `main.log` (per edition) | broken `\ref`/`\cite`, missing files |
+| No literal `??` in the text of any PDF | unresolved cross-references |
+| Pages: student ≥ `MIN_STUDENT` (240), instructor > student, annotated ≥ instructor | an edition silently truncated |
+| Annotation sentinels (`ANNOTATION`/`DERIVATION`/`BRIDGE` box titles) absent from student and instructor PDFs; present in the annotated PDF when `ANNOT_REQUIRED=1` | annotation leakage; annotation layer not compiled |
+| `Output/build_fingerprints.txt`: page count + text-md5 of pages 2–end per edition | annotation-only commits must leave the student and instructor lines unchanged (page 1 excluded because of `\today`) |
+
+Phase-0 reference (stubs only, before any Part V content): `Output/build_fingerprints_phase0.txt`.
+Leakage test performed 2026-10-14: with a chapter containing every annotation construct
+(boxes, `\ifannotated`-split display, `\intertext`, `\annot`) the student and instructor
+fingerprints were byte-identical to a build with every construct stripped from the source, and
+equation numbers were identical across the three editions.
+
+#### Annotated Study Edition invariants (author rules; see `Notes/editions.tex`)
+- R1 `\begin{annotation|derivation|bridge}` and `\end{...}` alone on their own lines, `\end` un-indented.
+- R2 Never inside align / gather / multline / equation / tabular / itemize.
+- R3 No `\label` inside an annotated block unless only `\ref`'d from annotated blocks; no annotation-only `\cite` keys.
+- R4 Inside displays: `\ifannotated\intertext{...}\fi` immediately after `\\`, or duplicate the whole display in `\ifannotated ... \else ... \fi` with identical labels and `\notag` on extra rows. A `\\` inside a skipped `\ifannotated` branch within `align` breaks the build ("Incomplete \iffalse").
+- R5 Every numeric claim inside an annotation gets a `check[]` in the module's `problems_NN.wl`.
+
+Lint commands:
+```bash
+grep -nE '^\s+\\end\{(annotation|derivation|bridge)\}' Notes/*/*.tex        # R1: must be empty
+cat Notes/*/*.tex | grep -o '\\label{[^}]*}' | sort | uniq -d                # labels globally unique
+cd Notes && ANNOT_REQUIRED=1 bash build.sh && diff <(head -2 ../Output/build_fingerprints.txt) <(head -2 ../Output/build_fingerprints_phase0.txt)
+```
+
+#### Mathematica kernel cap
+Run every script through `bash Mathematica/run_wl.sh <script.wl>` — a 3-slot semaphore
+(`/tmp/ltl_wls_slot{1,2,3}`); a fourth concurrent kernel hangs on this machine. Scripts
+`Get[]` `Mathematica/harness.wl` (`check[]`, `report[]` alias, `summary[]` → exit code) so that
+`SUMMARY: p PASS, f FAIL` lines can be quoted verbatim and sweeps can rely on `$?`.
+
+
 ### Level 1: Symbolic Derivation (per-module `.wl` scripts)
 
 Each module has a dedicated Wolfram Language script that symbolically derives
