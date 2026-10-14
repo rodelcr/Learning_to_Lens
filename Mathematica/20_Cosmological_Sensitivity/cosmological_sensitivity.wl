@@ -14,18 +14,27 @@
                 direction c*, the bias ray, the external-probe projection
                 Delta w0 = delta/(S_w + c S_Om), the c-interval on which the
                 fixed-Om number is a lower bound (it is NOT one in general),
-                and the Cramer-Rao statement for statistical errors;
+                the orthogonal-degeneracy reading of Collett et al. (2012),
+                the time-delay distance with its (1+z_d) factor, and the
+                conditional-vs-marginal VARIANCE inequality for statistical
+                errors (a positive-definite-matrix property; the chapter no
+                longer calls it Cramer-Rao -- fix pass 2026-10-14, C8/N25);
             (4) the N-plane coherence identity m_i = m_1 B_i^((3-g)/(g-1)),
                 the convex-combination form of the coherent GLS bias and
-                the failure of 1/sqrt(N) averaging for coherent errors;
+                the failure of 1/sqrt(N) averaging for coherent errors, and
+                (fix pass F1) a counterexample showing that the weighted-mean
+                property holds only for a ONE-parameter fit;
             (5) the dynamic range of B over a box of cosmologies
-                (degeneracy vs bias: off-manifold errors).
+                (degeneracy vs bias: off-manifold errors), the wa-free wide
+                box, and (fix pass F3) a two-bin-w counterexample showing that
+                "off-manifold" is a statement about a family AND a box.
             Exports the two chapter figures.
 
    Sources: Angular-diameter distances: Chapter 7 of these notes
             (Notes/03_Cosmological_Distances, eqs. DA_flat, Dds_flat).
             CPL parametrisation w(a) = w0 + wa (1 - a) (Chevallier &
-            Polarski 2001; Linder 2003 -- not in references.bib).
+            Polarski 2001; Linder 2003 -- cited in the chapter as
+            chevallier_polarski_2001, linder_2003).
             DSPL ratio: Collett et al. (2012), MNRAS 424, 2864.
             Generalised least squares / Fisher bias: standard linear
             algebra (no specific source claimed).
@@ -231,11 +240,29 @@ check["3o  square invertible J: GLS reduces to Delta p = J^-1 delta (C drops out
   Simplify[Inverse[Transpose[JgSq] . DiagonalMatrix[{1/s1, 1/s2}] . JgSq] . Transpose[JgSq] .
      DiagonalMatrix[{1/s1, 1/s2}] . {e1, e2} - Inverse[JgSq] . {e1, e2}] === {0, 0}];
 
-(* Cramer-Rao: for STATISTICAL errors the fixed-parameter error is a true lower bound *)
+(* STATISTICAL errors: the fixed-parameter VARIANCE 1/F_ww never exceeds the marginal
+   variance (F^-1)_ww.  This is a property of any positive-definite matrix (Schur
+   complement), not the Cramer-Rao bound itself (fix pass C8/N25). *)
 FisherP = {{jo^2/sB^2 + 1/sO^2, jo jw/sB^2}, {jo jw/sB^2, jw^2/sB^2}};
-check["3m  statistical: marginal sigma(w0)^2 = (F^-1)_ww >= 1/F_ww (fixed-Om error)",
+check["3m  statistical: marginal variance (F^-1)_ww >= fixed-Om variance 1/F_ww; difference sO^2 S_Om^2/S_w^2",
   Simplify[Inverse[FisherP][[2, 2]] - 1/FisherP[[2, 2]],
     Assumptions -> sB > 0 && sO > 0 && jw != 0] === sO^2 jo^2/jw^2];
+
+(* C2 (fix pass): read literally, "orthogonal" blind directions (c*,1).(c,1) = 0 give
+   c = -1/c* and amplification A = 1/|1 - c/c*| < 1 (a SMALLER bias than fixed Om) *)
+cOrth = -1/cStar;
+check["3p  orthogonal external probe: c = -1/c* = +1.081, A(c) = 0.461 (< 1)",
+  near[cOrth, 1.0811, 0.0005] && near[Abs[fac[cOrth]], 0.4609, 0.0005] &&
+  near[Abs[fac[cOrth]], 1/Abs[1 - cOrth/cStar], 1*^-20]];
+
+(* X8 (fix pass): D_dt = (1+z_d) D_d D_s/D_ds (Ch. 13 eq. time_delay_recap).  In a flat
+   universe this is chi_d chi_s/(chi_s - chi_d) ONLY with the (1+z_d) factor; the old
+   text's D_d D_s/D_ds is that divided by (1+z_d). *)
+Clear[cd, cs, zd, zs];
+DdS = cd/(1 + zd); DsS = cs/(1 + zs); DdsS = (cs - cd)/(1 + zs);
+check["3q  D_dt = (1+z_d) D_d D_s/D_ds = chi_d chi_s/(chi_s - chi_d) (flat); without (1+z_d) it is not",
+  Simplify[(1 + zd) DdS DsS/DdsS - cd cs/(cs - cd)] === 0 &&
+  Simplify[DdS DsS/DdsS - cd cs/(cs - cd)] =!= 0];
 
 (* ===================================================================== *)
 Print["\n--- 4. Many planes: coherence ---"];
@@ -294,6 +321,16 @@ Bthree = {B0, BB[zlI, z1I, z3I, Sequence @@ p0]};
 check["4k  illustrative B_2 = 0.6742, B_3 = 0.6095 (both < 1)",
   near[Bthree[[1]], 0.6742, 5*^-5] && near[Bthree[[2]], 0.6095, 5*^-5]];
 
+(* F1 (fix pass): the weighted-mean property (4d-4e) is for a ONE-parameter fit.
+   With Om free the 2x2 system (planes z = 2, 3; delta_i = 1% each) gives
+   Delta p = J^-1 delta (check 3o), and Delta w0 lies OUTSIDE [min b_i, max b_i]. *)
+bPer = (1/100)/{Jan[[2]], J13[[2]]};
+dpMP = Inverse[J22] . {1/100, 1/100};
+Print["  per-plane fixed-Om biases b = ", N[bPer, 5], ";  Om-free Delta (Om, w0) = ", N[dpMP, 5]];
+check["4m  Om free, delta_i = 1%: Delta w0 = -0.687, outside the per-plane [-0.303, -0.219]",
+  near[bPer[[1]], -0.3029, 0.0005] && near[bPer[[2]], -0.2193, 0.0005] &&
+  near[dpMP[[2]], -0.687, 0.0005] && dpMP[[2]] < Min[bPer]];
+
 (* ===================================================================== *)
 Print["\n--- 5. Dynamic range of B: bias vs no cosmology at all ---"];
 (* ===================================================================== *)
@@ -313,6 +350,30 @@ check["5c  a 25% error in B lies far outside that range (off the model manifold)
   0.25 > 5 Max[Abs[bmin], Abs[bmax]]];
 check["5d  naive linearisation of a 25% span at this geometry: |0.25/S_w| = 7.57 (meaningless)",
   near[Abs[0.25/Sw], 7.573, 0.005]];
+
+(* machine-precision CPL B (fast) for wide scans; agrees with BB at the fiducial point *)
+chiM[z_?NumericQ, om_?NumericQ, w0_?NumericQ, wa_?NumericQ] :=
+  NIntegrate[1/Sqrt[om (1 + x)^3 + (1 - om) zeta[x, w0, wa]], {x, 0, z}];
+BM[om_, w0_, wa_] := Module[{cl0 = chiM[0.5, om, w0, wa]},
+  (1 - cl0/chiM[1., om, w0, wa])/(1 - cl0/chiM[2., om, w0, wa])];
+(* wa-free wide box: Om in [0.20,0.42], w0 in [-8,-0.1], wa in [-3,3] (5 x 41 x 25 grid) *)
+gridW = Flatten[Table[BM[om, w, wv]/N[B0] - 1,
+   {om, 0.2, 0.42, 0.055}, {w, -8, -0.1, 0.1975}, {wv, -3, 3, 0.25}]];
+Print["  wide CPL box excursion: [", Min[gridW], ", ", Max[gridW], "]"];
+check["5e  flat CPL with wa free (wide box, grid): B/B0 - 1 in [-3.4%, +8.9%], still << 25%",
+  near[N[BM[0.3, -1, 0]], N[B0], 1*^-8] &&
+  near[Min[gridW], -0.0336, 0.0001] && near[Max[gridW], 0.0891, 0.0001] && 0.25 > 2.5 Max[gridW]];
+
+(* F3 (fix pass): the off-manifold statement depends on the family. A flat two-bin w
+   (w = -1 for z < 0.5, w = w1 above) moves B by tens of per cent at this geometry. *)
+chi2b[z_?NumericQ, w1_?NumericQ] := NIntegrate[1/Sqrt[0.3 (1 + x)^3 +
+     0.7 If[x < 0.5, 1, ((1 + x)/1.5)^(3 (1 + w1))]], {x, 0, 0.5, z}];
+B2b[w1_] := Module[{cl0 = chi2b[0.5, w1]}, (1 - cl0/chi2b[1., w1])/(1 - cl0/chi2b[2., w1])];
+f2b = Table[B2b[w1]/N[B0] - 1, {w1, {-1, 3, 4, 5}}];
+Print["  two-bin w (w1 = -1, 3, 4, 5): B/B0 - 1 = ", f2b];
+check["5f  two-bin w (w=-1 below z=0.5, w=+4 above): B/B0 - 1 = +30.5% (LCDM limit 0; +23.4%, +36.0% for w1=3,5)",
+  near[f2b[[1]], 0, 1*^-10] && near[f2b[[3]], 0.3054, 0.0005] &&
+  near[f2b[[2]], 0.2340, 0.0005] && near[f2b[[4]], 0.3598, 0.0005]];
 
 (* ===================================================================== *)
 Print["\n--- Figures ---"];
@@ -350,8 +411,14 @@ Print["  exact Delta w0: c=0 ", tFix, ", c=+1/2 ", tPos,
       ";  max of 100(B/B0-1) along c=-1/2 ray: ", rayMaxNeg[[1]]];
 check["F0b exact solutions: Delta w0 = -0.162 (c=0), -0.091 (c=+1/2) vs linear -0.151, -0.098",
   near[tFix, -0.1616, 0.0005] && near[tPos, -0.0915, 0.0005]];
-check["F0c along c=-1/2 B rises by at most 0.09%: a 0.5% error has NO solution on that ray",
-  rayMaxNeg[[1]] < 0.1 && rayMaxNeg[[1]] > 0.08];
+(* N13 (fix pass): make F0c self-sufficient with a grid scan over the WHOLE physical ray
+   0 < Om < 1, i.e. Om = 0.3 - t/2 => t in (-1.4, 0.6); the local FindMaximum alone
+   could miss a second maximum. *)
+rayGrid = Table[ray[-0.5, t], {t, -1.38, 0.58, 0.02}];
+Print["  grid max of 100(B/B0-1) on the c=-1/2 ray over 0<Om<1: ", Max[rayGrid]];
+check["F0c along c=-1/2 B rises by at most 0.09% (local max = grid max over 0<Om<1): no 0.5% solution",
+  rayMaxNeg[[1]] < 0.1 && rayMaxNeg[[1]] > 0.08 && Max[rayGrid] <= rayMaxNeg[[1]] + 1*^-6 &&
+  Max[rayGrid] < 100 dFig];
 fig2 = Show[
   ContourPlot[fBm[om, w], {om, 0.1, 0.55}, {w, -1.6, -0.6},
     Contours -> {0, 100 dFig}, ContourShading -> None, PlotPoints -> 30, MaxRecursion -> 2,

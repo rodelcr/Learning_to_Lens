@@ -331,3 +331,36 @@ equal-c baseline (c_i = c₁), as H3 itself says. The fix should cite it with th
    sol_note9 Ex. 1). That is true as a universal statement, but the sharp version is that it **is** a lower bound for c ∈ [2c*, 0] =
    [−1.2347, 0] at the fiducial triplet (exact S values) and an upper bound outside that interval. All the negative-c directions the record
    tabulates (−½, −0.6) lie inside the interval. Consider adding the interval to note9's keybox L164–172 and to sol_note9 Ex. 1.
+
+## Resolution — fixes applied 2026-10-14
+
+Fix pass on branch `wt/ch20` (after `git merge annotated-edition`). Checks below are in
+`Mathematica/20_Cosmological_Sensitivity/cosmological_sensitivity.wl` unless noted.
+
+| id | Fix | Backing |
+|----|-----|---------|
+| C7 / X7 | `\citep{chevallier_polarski_2001,linder_2003}` added at the CPL introduction; stale "[not in references.bib]" comments updated in the .tex header (ll. 7–8) and the .wl header | bib keys `chevallier_polarski_2001`, `linder_2003` (CrossRef-confirmed by critic) |
+| C3 | Schneider 2014 paraphrase now reads "a two-source-plane system in which the nearer source also acts as a deflector", plus a parenthesis that the chapter's B = η^{γ′−1} model neglects that deflection | arXiv 1406.6152 abstract (critic C3) |
+| C8 / N25 | "error" → "variance" for 1/F_ww and (F⁻¹)_ww; the inequality is described as a positive-definite-matrix property, and Cramér–Rao is named only as the separate estimator bound. Solutions Ex. 2: "(Cramér–Rao)" → "statistical variances (the variance with a parameter fixed never exceeds the marginalised one)". .wl comment/label reworded | check 3m (unchanged algebra, relabelled) |
+| X8 | D_Δt = (1+z_d) D_d D_s/D_ds in the "Raising the rank" bullet; Solutions Ex. 3 likewise ("the constant prefactor (1+z_d) drops out") | new check 3q: (1+z_d) D_d D_s/D_ds = χ_dχ_s/(χ_s−χ_d) in flat space, and the old form is not (fails on old) |
+| X11 / F4 | Added: the m_i share a sign, but the δ_i do only if the r_i do; Chapter~\ref{ch:perturbative_estimators} shows the r_i share a sign in the equal-response (equal-c_i) baseline, and a plane-i image close to the centre can reverse it. "monotone family" → "family"; the b_i sentence now reads "whenever the r_i and the J_i share a sign" | Ch. 25 eq:pe_ri, item 3 "No cancellation", eq:pe_sign (read in this worktree) |
+| F1 | Subsection retitled "Why coherent errors do not average as 1/√n"; new paragraph scoping the weighted mean to a one-parameter fit with the counterexample (planes z = 2, 3; δ_i = 1%; Ω_m free: Δw0 = −0.687 vs per-plane −0.303, −0.219); keybox and Summary bullet rescoped ("In a one-parameter fit …; with several free parameters it can be larger than any single-plane bias") | new check 4m (Δw0 = −0.6873 < min b_i; fails on the old "weighted mean in any one parameter") |
+| F2 | Added the noisy-case paragraph after "Masking surrenders a constraint" (prior-dominated rather than undetermined; a quad can keep γ′ constrained but biased); keybox "the data determine a set, or nearly so" | prose (no numbers) |
+| F3 | "does not depend on how dark energy is parametrised" replaced by "inconsistent with the stated model family over the stated box", with the w_a-free wide box [−3.4%, +8.9%] and the two-bin-w counterexample (+30.5%); Summary bullet "no cosmology in the stated family and box fits" | new checks 5e (wide box grid: [−3.357%, +8.910%]) and 5f (two-bin w: +23.40/+30.54/+35.98% for w1 = 3/4/5; fails on the old claim) |
+| C2 (optional) | Annotation: exact orthogonality gives c = −1/c* = +1.081 and A = 0.46 (a smaller bias than fixed Ω_m), with the axis-scaling and geometry caveats | new check 3p |
+| N13 (optional) | F0c now also scans the whole physical ray 0 < Ω_m < 1 (t ∈ [−1.38, 0.58], step 0.02): grid max 0.0906% ≤ local max | check F0c (strengthened) |
+| X2 | (auto-fixed by critic) | 3j label |
+| P1 | "There the linear formula returns a point that is not a solution of B = 1.005 B₀." | prose |
+| P2 | "Whether the errors are independent depends on how the lenses were modelled." | prose |
+| P3 | Solutions duplicate "Three lenses analysed the same wrong way …" deleted (chapter annotation keeps one) | prose |
+| P4 | alignment sentence folded into the preceding one | prose |
+| P5 | "One well-modelled system, for the reasons below." | prose |
+
+**Verification after edits.** `bash Mathematica/run_wl.sh Mathematica/20_Cosmological_Sensitivity/cosmological_sensitivity.wl`:
+before `SUMMARY: 53 PASS, 0 FAIL  (of 53 checks)`, after `SUMMARY: 58 PASS, 0 FAIL  (of 58 checks)`.
+`bash Mathematica/run_wl.sh Solutions/20_Cosmological_Sensitivity/problems_20.wl`: `SUMMARY: 26 PASS, 0 FAIL  (of 26 checks)` (unchanged;
+its D_Δt already carried (1+z_l)). `cd Notes && ANNOT_REQUIRED=1 bash build.sh` → "all assertions passed"; student 360 pp, instructor 444 pp,
+annotated 568 pp.
+
+**Left open.** None of the confirmed items. Spiral-project feedback items 1–6 concern the spiral repo, not this chapter. Optional S2-139
+(Ex. 6 "not with intuition about √N" tail) not changed.
