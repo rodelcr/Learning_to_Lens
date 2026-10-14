@@ -17,6 +17,13 @@
      5.3 --- Compute gamma_1, gamma_2, |gamma| for point mass lens
      5.4 --- Show magnification formula reduces to point mass result
      5.5 --- Compute axis ratio and magnification for constant kappa, gamma
+     Annotated-edition checks (2026-10) --- every identity / number quoted in
+     the annotation, derivation and bridge boxes of
+     05_Magnification_Convergence_Shear.tex and 05_Solutions.tex (appended
+     section at the end; ends with summary[]).
+
+   Outputs: printed solutions; PASS/FAIL lines and a SUMMARY line for the
+            annotated-edition checks
    ========================================================================= *)
 
 Print["=== Module 5: SOLUTIONS ===\n"];
@@ -346,3 +353,190 @@ Do[
 Print[""];
 
 Print["=== End of Module 5 Solutions ==="];
+
+
+(* ===== Annotated-edition checks (2026-10) ===== *)
+(* Every identity and number quoted in the annotation / derivation / bridge
+   boxes of Notes/05_Magnification_Convergence_Shear/*.tex.                 *)
+
+Get[FileNameJoin[{DirectoryName[$InputFileName], "..", "..", "Mathematica", "harness.wl"}]];
+Print["\n--- Annotated-edition checks (Module 5) ---"];
+ClearAll[t1, t2, s1, s2, r, p, ep, m, k, g, ga1, ga2, ph, phg, lam, bb, tE, tB, q,
+  aH, aR, aA, aHp, aEv, aPsi, aAl, aKap, aKbar, aLr, aXp, aXm, aMuP, aMuM, aM2, aRoots];
+
+(* --- potential and Poisson equation --- *)
+check["grad ln|theta - theta'| = (theta - theta')/|theta - theta'|^2",
+  Simplify[Grad[Log[Sqrt[(t1 - s1)^2 + (t2 - s2)^2]], {t1, t2}] ==
+    {t1 - s1, t2 - s2}/((t1 - s1)^2 + (t2 - s2)^2)]];
+check["Gauss flux of grad ln r through |theta| = eps is (1/eps)(2 pi eps) = 2 pi",
+  Simplify[Integrate[({ep Cos[p], ep Sin[p]}/ep^2).{Cos[p], Sin[p]} ep, {p, 0, 2 Pi}] == 2 Pi, ep > 0]];
+check["nascent delta: Lap[(1/2) ln(r^2+eps^2)] = 2 eps^2/(r^2+eps^2)^2 with plane integral 2 pi for every eps",
+  Simplify[Laplacian[Log[t1^2 + t2^2 + ep^2]/2, {t1, t2}] == 2 ep^2/(t1^2 + t2^2 + ep^2)^2] &&
+  Simplify[Integrate[2 ep^2/(r^2 + ep^2)^2 2 Pi r, {r, 0, Infinity}, Assumptions -> ep > 0] == 2 Pi]];
+check["multipole: Lap[theta cos(m phi)] = (1-m^2) cos(m phi)/theta, so kappa = (1-m^2) cos(m phi)/(2 theta); m=1 gives 0",
+  Simplify[Laplacian[r Cos[m p], {r, p}, "Polar"] == (1 - m^2) Cos[m p]/r] &&
+  Simplify[Laplacian[r Cos[p], {r, p}, "Polar"] == 0]];
+check["multipole m=2 cross-check in Cartesian: psi = (t1^2 - t2^2)/theta -> kappa = -3 cos(2phi)/(2 theta)",
+  Simplify[Laplacian[(t1^2 - t2^2)/Sqrt[t1^2 + t2^2], {t1, t2}]/2 ==
+    -3 ((t1^2 - t2^2)/(t1^2 + t2^2))/(2 Sqrt[t1^2 + t2^2])]];
+check["m=2 on an isothermal: psi = tE theta + e theta cos2phi -> kappa = (tE - 3 e cos2phi)/(2 theta); isopotential theta = c/(tE + e cos2phi) and isodensity theta = (tE - 3e cos2phi)/(2c) both shortest at phi = 0",
+  Simplify[Laplacian[tE r + ee r Cos[2 p], {r, p}, "Polar"]/2 == (tE - 3 ee Cos[2 p])/(2 r)] &&
+  Module[{e0 = 0.05}, Ordering[Table[1/(1 + e0 Cos[2 x]), {x, 0, Pi/2, Pi/8}]][[1]] == 1 &&
+    Ordering[Table[1 - 3 e0 Cos[2 x], {x, 0, Pi/2, Pi/8}]][[1]] == 1]];
+check["linear term a.theta in psi shifts alpha by a constant and leaves the Hessian unchanged",
+  D[q1 t1 + q2 t2, {{t1, t2}, 2}] == {{0, 0}, {0, 0}}];
+
+(* --- shear as a spin-2 object --- *)
+aH = {{k + ga1, ga2}, {ga2, k - ga1}};
+aR = {{Cos[ph], -Sin[ph]}, {Sin[ph], Cos[ph]}};      (* columns = rotated basis vectors *)
+aHp = Transpose[aR].aH.aR;
+check["axes rotated by phi: H' = R^T H R gives kappa' = kappa and gamma' = e^{-2 i phi} gamma",
+  Simplify[(aHp[[1, 1]] + aHp[[2, 2]])/2 == k] &&
+  Simplify[TrigExpand[((aHp[[1, 1]] - aHp[[2, 2]])/2 + I aHp[[1, 2]]) - Exp[-2 I ph] (ga1 + I ga2)] // ExpToTrig] == 0];
+check["components: gamma1' = g1 cos2phi + g2 sin2phi, gamma2' = -g1 sin2phi + g2 cos2phi",
+  Simplify[{(aHp[[1, 1]] - aHp[[2, 2]])/2, aHp[[1, 2]]} ==
+    {ga1 Cos[2 ph] + ga2 Sin[2 ph], -ga1 Sin[2 ph] + ga2 Cos[2 ph]}]];
+
+(* --- Jacobian, eigen-decomposition --- *)
+aA = {{1 - k - g Cos[2 phg], -g Sin[2 phg]}, {-g Sin[2 phg], 1 - k + g Cos[2 phg]}};
+check["characteristic polynomial: det(A - lam I) = (1-kappa-lam)^2 - |gamma|^2",
+  Simplify[Det[aA - lam IdentityMatrix[2]] == (1 - k - lam)^2 - g^2]];
+check["A (cos phg, sin phg) = (1-kappa-|gamma|)(cos phg, sin phg); A (-sin, cos) = (1-kappa+|gamma|)(-sin, cos)",
+  Simplify[aA.{Cos[phg], Sin[phg]} == (1 - k - g) {Cos[phg], Sin[phg]}] &&
+  Simplify[aA.{-Sin[phg], Cos[phg]} == (1 - k + g) {-Sin[phg], Cos[phg]}]];
+check["quadrant: gamma = (-0.1, 0.1): (1/2)ArcTan[g2/g1] = -22.5 deg but stretch axis is (1/2)atan2 = 67.5 deg",
+  Module[{gg1 = -0.1, gg2 = 0.1, ang, A0, ev},
+    ang = ArcTan[gg1, gg2]/2;
+    A0 = {{1 - 0.3 - gg1, -gg2}, {-gg2, 1 - 0.3 + gg1}};
+    ev = Eigenvectors[A0][[Ordering[Eigenvalues[A0]][[1]]]];
+    Round[ArcTan[gg2/gg1]/2/Degree, 0.1] == -22.5 && Round[ang/Degree, 0.1] == 67.5 &&
+    Abs[Abs[Normalize[ev].{Cos[ang], Sin[ang]}] - 1] < 10^-12]];
+check["single plane: A is symmetric because alpha = grad psi (psi_12 = psi_21)",
+  Module[{f = Sin[t1] Exp[t2] + t1^3 t2^2}, D[f, t1, t2] === D[f, t2, t1]]];
+check["two planes: A = I - H1 - H2(I - b H1) is not symmetric (example), and is symmetric for b = 0",
+  Module[{H1 = {{0.3, 0.1}, {0.1, 0.2}}, H2 = {{0.1, 0.}, {0., -0.1}}, A2},
+    A2[bv_] := IdentityMatrix[2] - H1 - H2.(IdentityMatrix[2] - bv H1);
+    Abs[A2[0.5][[1, 2]] - A2[0.5][[2, 1]]] > 0.005 && Abs[A2[0][[1, 2]] - A2[0][[2, 1]]] < 10^-15]];
+
+(* --- axisymmetric special case --- *)
+aPsi = f[Sqrt[t1^2 + t2^2]];
+aEv = Simplify[Eigenvalues[D[aPsi, {{t1, t2}, 2}]] /. {t1 -> r Cos[p], t2 -> r Sin[p]}, r > 0];
+check["Hessian of a radial potential psi(theta) has eigenvalues psi'' (radial) and psi'/theta (tangential)",
+  Sort[Simplify[aEv, r > 0]] === Sort[{f''[r], f'[r]/r}] ||
+  Simplify[(aEv[[1]] - f''[r]) (aEv[[1]] - f'[r]/r)] === 0];
+check["at phi = 0: A = diag(1 - dalpha/dtheta, 1 - alpha/theta) with alpha = psi'",
+  Simplify[(IdentityMatrix[2] - D[aPsi, {{t1, t2}, 2}]) /. {t1 -> r, t2 -> 0}, r > 0] ==
+    {{1 - f''[r], 0}, {0, 1 - f'[r]/r}}];
+(* with alpha = m(theta)/theta and m' = 2 kappa theta *)
+check["alpha = m/theta, m' = 2 kappa theta  =>  dalpha/dtheta = 2 kappa - alpha/theta = 2 kappa - kbar",
+  Simplify[D[mm[r]/r, r] /. mm'[r] -> 2 kap[r] r] == Simplify[2 kap[r] - mm[r]/r^2]];
+check["kappa = (alpha' + alpha/theta)/2; gamma_1(phi=0) = (alpha' - alpha/theta)/2 = kappa - kbar",
+  Module[{al = mm[r]/r, alp},
+    alp = 2 kap[r] - mm[r]/r^2;   (* = alpha' *)
+    Simplify[(alp + al/r)/2 == kap[r]] && Simplify[(alp - al/r)/2 == kap[r] - mm[r]/r^2]]];
+check["lambda_t = 1 - kappa - |gamma| = 1 - kbar = 1 - alpha/theta; lambda_r = 1 - kappa + |gamma| = 1 - 2 kappa + kbar = 1 - alpha'",
+  Simplify[{1 - k - (kb - k), 1 - k + (kb - k)} == {1 - kb, 1 - 2 k + kb}]];
+
+(* --- power law --- *)
+aKap = (3 - g)/2 (tE/r)^(g - 1); aAl = tE (tE/r)^(g - 2);
+check["power law kappa = (3-g')/2 (tE/theta)^(g'-1): alpha = tE (tE/theta)^(g'-2) = kbar theta",
+  Simplify[Integrate[2 Pi s aKap /. r -> s, {s, 0, r}, Assumptions -> 1 < g < 3 && r > 0 && tE > 0]/(Pi r^2) r == aAl,
+    1 < g < 3 && r > 0 && tE > 0]];
+check["power law: dalpha/dtheta = 2 kappa - kbar = (2 - g')(theta/tE)^(1-g')",
+  Simplify[D[aAl, r] == 2 aKap - aAl/r && D[aAl, r] == (2 - g) (r/tE)^(1 - g), 1 < g < 3 && r > 0 && tE > 0]];
+check["power law: |gamma|/kappa = kbar/kappa - 1 = (g'-1)/(3-g'); =1 only for g' = 2 (SIS)",
+  Simplify[(aAl/r)/aKap - 1 == (g - 1)/(3 - g), r > 0 && tE > 0] && Solve[(g - 1)/(3 - g) == 1, g] == {{g -> 2}}];
+check["power law radial critical curve: lambda_r = 0 at theta_r = tE (2-g')^(1/(g'-1)); g' = 1.5 -> 0.25 tE",
+  Simplify[(1 - D[aAl, r]) /. r -> tE (2 - g)^(1/(g - 1)), 1 < g < 2 && tE > 0] == 0 &&
+  (2 - 1.5)^(1/(1.5 - 1)) == 0.25];
+aLr[th_, gg_, tb_] := 1 - (2 - gg) th^(1 - gg) + tb^2/th^2;   (* tE = 1 *)
+check["power law + point mass: d/dtheta(thetaB^2/theta) = -thetaB^2/theta^2, so lambda_r gains +thetaB^2/theta^2 and lambda_t gains -thetaB^2/theta^2",
+  D[tB^2/r, r] == -tB^2/r^2 && Simplify[1 - (tB^2/r)/r == 1 - tB^2/r^2]];
+check["power law (1<g'<2) + point mass: lambda_r -> +infinity at the centre",
+  Limit[aLr[r, 3/2, 1/20], r -> 0, Direction -> "FromAbove"] === Infinity];
+aRoots[gg_, tb_] := Length[Select[Table[aLr[10.^x, gg, tb], {x, -4, 2, 0.0005}] // Sign // Split, True &]] - 1;
+Print["  sign changes of lambda_r(theta), g'=1.5: thetaB=0.05 -> ", aRoots[1.5, 0.05],
+  ", thetaB=0.2 -> ", aRoots[1.5, 0.2], ", thetaB=0 -> ", aRoots[1.5, 0.]];
+check["g' = 1.5: lambda_r has 1 root without point mass, 2 roots for thetaB = 0.05 tE, none for thetaB = 0.2 tE",
+  aRoots[1.5, 0.] == 1 && aRoots[1.5, 0.05] == 2 && aRoots[1.5, 0.2] == 0];
+
+(* --- magnification --- *)
+check["change of variables: d^2beta = |det A| d^2theta (2x2 Jacobian determinant of beta(theta))",
+  Simplify[Det[D[{t1 - D[ps[t1, t2], t1], t2 - D[ps[t1, t2], t2]}, {{t1, t2}}]] ==
+    (1 - D[ps[t1, t2], t1, t1]) (1 - D[ps[t1, t2], t2, t2]) - D[ps[t1, t2], t1, t2]^2]];
+check["|mu| > 1 iff -1 < det A < 1; e.g. det A = -1.5 gives |mu| = 0.67 although (1-k)^2 - g^2 < 1",
+  Round[Abs[1/-1.5], 0.01] == 0.67 && Resolve[ForAll[d, d != 0, Equivalent[Abs[1/d] > 1, -1 < d < 1]], Reals] === True];
+check["pure convergence: mu = 1/(1-k)^2 is 1 at k = 2, 1/4 at k = 3: magnified only for 0 < k < 2",
+  (1/(1 - k)^2 /. k -> 2) == 1 && (1/(1 - k)^2 /. k -> 3) == 1/4 &&
+  Resolve[ForAll[k, k > 0 && k != 1, Equivalent[1/(1 - k)^2 > 1, k < 2]], Reals] === True];
+check["k > 1 + |gamma|: both eigenvalues negative, det A > 0 (type III / maximum image)",
+  Reduce[Exists[{k, g}, g >= 0 && k > 1 + g && !(1 - k - g < 0 && 1 - k + g < 0 && (1 - k)^2 - g^2 > 0)], Reals] === False];
+check["pure shear: mu(0.3) = 1.10; mu(1.2) = -2.27; |mu(1.5)| = 0.80; |mu| < 1 for g > 1 iff g > sqrt 2",
+  Round[1/(1 - 0.09), 0.01] == 1.10 && Round[1/(1 - 1.44), 0.01] == -2.27 &&
+  Round[Abs[1/(1 - 2.25)], 0.01] == 0.80 && Reduce[Abs[1/(1 - g^2)] < 1 && g > 1, g, Reals] == (g > Sqrt[2])];
+check["ellipse: b/a = (1-k-g)/(1-k+g) = (1-gr)/(1+gr), gr = g/(1-k): depends only on reduced shear",
+  Simplify[(1 - k - g)/(1 - k + g) == (1 - gr)/(1 + gr) /. gr -> g/(1 - k)]];
+check["e = (a-b)/(a+b) = g/(1-k) for 1-k > g > 0",
+  Simplify[((1/(1 - k - g) - 1/(1 - k + g))/(1/(1 - k - g) + 1/(1 - k + g))) == g/(1 - k)]];
+check["Ex 5.5(e): reduced shear 0.2/0.7 = 0.286, b/a = (1-g)/(1+g) = 5/9 = 0.556, mu = 2.22",
+  Round[0.2/0.7, 0.001] == 0.286 && (1 - 2/7)/(1 + 2/7) == 5/9 && Round[5/9., 0.001] == 0.556 &&
+  Round[1/(0.9 0.5), 0.01] == 2.22];
+
+(* --- mass-sheet transformation --- *)
+check["MST: kappa -> lam kappa + 1 - lam, gamma -> lam gamma  =>  A -> lam A, mu -> mu/lam^2",
+  Module[{A1 = {{1 - k - ga1, -ga2}, {-ga2, 1 - k + ga1}}, A2},
+    A2 = A1 /. {k -> lam k + 1 - lam, ga1 -> lam ga1, ga2 -> lam ga2};
+    Simplify[A2 == lam A1] && Simplify[1/Det[A2] == (1/Det[A1])/lam^2]]];
+check["MST: psi -> lam psi + (1-lam) theta^2/2 gives beta -> lam beta, so image positions unchanged",
+  Module[{psi2 = lam ps[t1, t2] + (1 - lam) (t1^2 + t2^2)/2},
+    Simplify[{t1, t2} - Grad[psi2, {t1, t2}] == lam ({t1, t2} - Grad[ps[t1, t2], {t1, t2}])]]];
+check["MST leaves reduced shear g/(1-k) invariant",
+  Simplify[(lam g)/(1 - (lam k + 1 - lam)) == g/(1 - k), lam != 0]];
+
+(* --- point mass --- *)
+check["point mass: M/(Sigma_cr Dd^2) = pi thetaE^2",
+  Simplify[M/((cc^2/(4 Pi GG)) Ds/(Dd Dds) Dd^2) == Pi (4 GG M/cc^2) Dds/(Dd Ds)]];
+check["2D delta scaling: Integrate DiracDelta[a x] dx = 1/a per dimension (a > 0)",
+  Integrate[DiracDelta[aa x], {x, -Infinity, Infinity}, Assumptions -> aa > 0] == 1/aa];
+check["point mass second derivatives: psi_11 = tE^2 (theta^2 - 2 theta1^2)/theta^4, psi_12 = -2 tE^2 theta1 theta2/theta^4",
+  Module[{psi = tE^2 Log[t1^2 + t2^2]/2},
+    Simplify[{D[psi, t1, t1], D[psi, t1, t2]} ==
+      {tE^2 (t1^2 + t2^2 - 2 t1^2)/(t1^2 + t2^2)^2, -2 tE^2 t1 t2/(t1^2 + t2^2)^2}]]];
+check["point mass: gamma = -(tE^2/theta^2) e^{2 i phi} = (tE^2/theta^2) e^{2 i (phi + pi/2)}",
+  Module[{psi = tE^2 Log[t1^2 + t2^2]/2, gc},
+    gc = ((D[psi, t1, t1] - D[psi, t2, t2])/2 + I D[psi, t1, t2]) /. {t1 -> r Cos[p], t2 -> r Sin[p]};
+    Simplify[ExpToTrig[gc + tE^2/r^2 Exp[2 I p]], r > 0] == 0 &&
+    Simplify[ExpToTrig[-Exp[2 I p] - Exp[2 I (p + Pi/2)]]] == 0]];
+check["tangential shear: gamma_t = -Re(gamma e^{-2 i phi}) = kbar - kappa for gamma = -(kbar - kappa) e^{2 i phi}",
+  Simplify[-ComplexExpand[Re[-(kb - k) Exp[2 I p] Exp[-2 I p]]] == kb - k]];
+check["point mass: eigenvector of the smaller eigenvalue is tangential, (-sin phi, cos phi)",
+  Module[{psi = tE^2 Log[t1^2 + t2^2]/2, A0},
+    A0 = (IdentityMatrix[2] - D[psi, {{t1, t2}, 2}]) /. {t1 -> r Cos[p], t2 -> r Sin[p]};
+    Simplify[A0.{-Sin[p], Cos[p]} == (1 - tE^2/r^2) {-Sin[p], Cos[p]}, r > 0] &&
+    Simplify[A0.{Cos[p], Sin[p]} == (1 + tE^2/r^2) {Cos[p], Sin[p]}, r > 0]]];
+aXp = (u + Sqrt[u^2 + 4])/2; aXm = (u - Sqrt[u^2 + 4])/2;
+check["shear at the images (units of tE): |gamma(theta_+)| |gamma(theta_-)| = 1; u -> inf: |gamma_+| -> 0, |gamma_-| -> inf",
+  Simplify[(1/aXp^2) (1/aXm^2) == 1] && Limit[1/aXp^2, u -> Infinity] == 0 &&
+  Limit[1/aXm^2, u -> Infinity] === Infinity];
+check["x_- = -1/x_+; x_+^2 + x_-^2 = u^2 + 2; x_+^2 - x_-^2 = u sqrt(u^2+4); mu_+ + mu_- = 1",
+  Simplify[aXm == -1/aXp, u > 0] &&
+  Simplify[{aXp^2 + aXm^2, aXp^2 - aXm^2} == {u^2 + 2, u Sqrt[u^2 + 4]}] &&
+  Simplify[aXp^4/(aXp^4 - 1) + aXm^4/(aXm^4 - 1) == 1, u > 0]];
+check["point mass caustic: beta(thetaE) = thetaE - thetaE^2/thetaE = 0", (tE - tE^2/tE) == 0];
+check["total convergence of a point mass = pi tE^2 = area of its Einstein disk x mean kappa 1",
+  Integrate[Pi tE^2 DiracDelta[x] DiracDelta[y], {x, -1, 1}, {y, -1, 1}] == Pi tE^2];
+
+(* --- SIS --- *)
+check["SIS: Sigma(Dd theta)/Sigma_cr = sigma^2/(2 G Dd theta) 4 pi G Dd Dds/(c^2 Ds) = tE/(2 theta), tE = 4 pi sigma^2 Dds/(c^2 Ds)",
+  Simplify[(sv^2/(2 GG Dd r))/((cc^2/(4 Pi GG)) Ds/(Dd Dds)) == (4 Pi sv^2 Dds/(cc^2 Ds))/(2 r)]];
+check["SIS from psi = tE theta: kappa = |gamma| = tE/(2 theta), kbar = tE/theta, lambda_r = 1, lambda_t = 1 - tE/theta",
+  Module[{psi = tE Sqrt[t1^2 + t2^2], Hs, kk, gg},
+    Hs = D[psi, {{t1, t2}, 2}] /. {t1 -> r Cos[p], t2 -> r Sin[p]};
+    kk = Simplify[(Hs[[1, 1]] + Hs[[2, 2]])/2, r > 0];
+    gg = Simplify[Sqrt[((Hs[[1, 1]] - Hs[[2, 2]])/2)^2 + Hs[[1, 2]]^2], r > 0 && tE > 0];
+    kk == tE/(2 r) && gg == tE/(2 r) &&
+    Simplify[{1 - kk + gg, 1 - kk - gg}] == {1, 1 - tE/r}]];
+check["SIS: mu = 1/(1 - tE/theta) = theta/(theta - tE); kappa(tE) = 1/2 while kbar(tE) = 1",
+  Simplify[1/((1 - tE/(2 r))^2 - (tE/(2 r))^2) == r/(r - tE)] && (tE/(2 r) /. r -> tE) == 1/2];
+
+summary[];
