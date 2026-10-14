@@ -10,7 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Guiding principle: Mathematica is the source of mathematical truth
 
-Every symbolic derivation, identity, and worked solution in this tutorial is verified **deterministically by Mathematica**, not generated probabilistically by an LLM. Claude is used for drafting LaTeX prose and Mathematica code structure; `wolframscript` running the `.wl` files is what makes a result trustworthy. See `VERIFICATION.md` for the full three-tier verification scheme (per-module → `ResourceFunction` cross-check → textbook cross-check, currently **12/12 tests passing**).
+Every symbolic derivation, identity, and worked solution in this tutorial is verified **deterministically by Mathematica**, not generated probabilistically by an LLM. Claude is used for drafting LaTeX prose and Mathematica code structure; `wolframscript` running the `.wl` files is what makes a result trustworthy. See `VERIFICATION.md` for the full three-tier verification scheme (per-module → `ResourceFunction` cross-check → textbook cross-check, currently **28/28 tests passing**).
 
 When adding or changing a derivation:
 1. Update the relevant `Mathematica/XX_ModuleName/*.wl` so its symbolic check still passes under `wolframscript`.
@@ -73,7 +73,7 @@ cd Notes && bash build.sh            # asserts: no '??', no undefined refs, page
 # Run any Mathematica script through the 3-kernel semaphore (never >3 kernels at once):
 bash Mathematica/run_wl.sh Mathematica/15_PowerLaw_PointMass/power_law_point_mass.wl
 
-# Master verification — must pass 12/12 before any release
+# Master verification — must pass 28/28 before any release (12 original + 16 Part V cross-checks)
 wolframscript -file Mathematica/verify_against_textbooks.wl
 
 # Run all per-module symbolic checks

@@ -129,7 +129,7 @@ To run the master verification:
 wolframscript -file Mathematica/verify_against_textbooks.wl
 ```
 
-**Current result: 12/12 tests pass.**
+**Current result: 28/28 tests pass** (12 original + 16 added 2026-10-14 for Part V, sections 9–13 of the script).
 
 | Test | Textbook Reference | Expected | Verified |
 |------|-------------------|----------|----------|
@@ -145,6 +145,11 @@ wolframscript -file Mathematica/verify_against_textbooks.wl
 | ∫₀¹(1-u³)/(1-u²)^{3/2} du = 2 | C&K eq. 3.95 | 2 (exact) | ✓ |
 | D_A turnover at z ~ 1.6 | Carroll Sec. 8.4 | z = 1.6 | ✓ |
 | D_ds ≠ D_s - D_d | C&K Sec. 3.5 | Confirmed | ✓ |
+| Multi-plane recursion (two point-mass planes, symbolic + numeric) | C&K 4.94–4.99; SEF 9.1 | recursion == explicit ray trace; M₁→0 → single plane; D₁₂→0 → β₁₂=0 | ✓ (5) |
+| DSPL ratio B = D_ls1 D_s2/(D_s1 D_ls2) | C&K 4.95 (one deflector) | H₀-independent; B<1; θ_E2 = θ_E1 B^(−1/(γ′−1)) | ✓ (3) |
+| Power-law lens κ, α | Meneghetti 5.39, 5.40 | κ = (3−n)/2 x^(1−n); α = x^(2−n); κ(θ_E) = (3−n)/2 | ✓ (3) |
+| Radial critical radius | Meneghetti 5.41–5.42 | x_r = (2−n)^(1/(n−1)), real only for 1<n<2 | ✓ (2) |
+| Mass-sheet transformation | C&K 4.87–4.88 | lens equation preserved; κ̃ = (1−κ₀)κ + κ₀; Jacobian × (1−κ₀) | ✓ (3) |
 
 ---
 
