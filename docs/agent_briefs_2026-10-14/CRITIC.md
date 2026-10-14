@@ -39,3 +39,10 @@ with the scratch script path and its SUMMARY line). Do not rewrite prose. Do not
 chapter's directories except to create the report. If you ran a repo `.wl`, quote its SUMMARY. Commit the
 report (and any auto-fix) on the branch of the worktree you were given. Your final message = the report's
 verdict counts + the full Flagged section + the Derivation section.
+
+## REQUIRED READING before any verdict on a Part V chapter (added 2026-10-14, Rodrigo's instruction)
+Read the spiral project's own verification record for your note(s) BEFORE finalising and reconcile every
+verdict against it: the digests in `docs/spiral_reconciliation_2026-10-14/` (from the packet-level critic
+`theory/FACT_CRITIC_STUDY_PACKET_2026-10-14.md`), plus the files listed in that directory's README.
+Add `## Reconciliation with the spiral project's record` to your report: one line per relevant spiral
+verdict/retraction with its status in the chapter (inherited / already fixed in the port / n.a.).
