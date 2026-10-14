@@ -121,7 +121,7 @@
 | Abell 1201 | cluster BCG | Nightingale+23 UMBH from lensing alone — ⚠ NO central image observed; never cite as a radial-image detection |
 
 ### Multi-plane degeneracies
-- **Schneider 2014** (A&A 568, A106): the mass-sheet transformation generalizes across N
+- **Schneider 2019** (A&A 624, A54; arXiv 1409.0015, submitted 2014 — often mis-cited as "Schneider 2014, A&A 568, A106"; the 2014 Letter is A&A 568, L2): the mass-sheet transformation generalizes across N
   planes (recursive lens equation) — the fundamental cap on DSPL precision. Modern treatment
   with lens-lens coupling: Teodori 2026 (arXiv:2602.02802). SPT companion: Schneider & Sluse.
 - **Line of sight enters 𝓑 as an inseparable convergence ratio at the ~1% level on η**
