@@ -154,3 +154,10 @@
 - 05 l.789: φγ = ½ atan2(γ₂, γ₁).
 - 05 layer FAIL L1: multipole bridge m=1 "pure shift of the lens centre" → "linear potential, constant deflection shifting only the unobservable source".
 - Layer wording suspects (both reports); Module~\ref vs Chapter~\ref mixing; Dds(0.3,2) = 1328 not 1329.
+## critic 06–07 (layer: 0 FAIL; visible items V1–V10 ALL CONFIRMED; replacement text in the two reports)
+- V1 2R_S/c: 06 tex l.856, Example ex:point_mass_numerical (≈300 d), 06_Solutions ll.119–123, time_delay_function.wl ll.185/208/209/223, problems_06.wl ll.149/155–156.
+- V2 Sol 6.3(b) table rows (0.2001 / 1.0103 / 2.0805 / 4.5912) + roundings in Sol 6.2(b–c) and Example.
+- V3 Shapiro-sign bullet (06 ~225–235) → replacement bullet in report. V4 Sol 6.3(a) argument → global-minimum argument.
+- V5 Sol 6.4(b) 0.771/0.493/0.336; (c) 2.38e−18. V6 Sol 7.3 distances 1055/1650 → 1.15″; (b) 1.65/−0.65/3.30/−1.30/4.60; problems_07.wl ll.124,130–138.
+- V7 Sol 7.3(d) point-mass 2.4″ replacement paragraph. V8 Sol 7.5(a) f ≃ ln(2/x) − 1. V9 Ch 07 ll.819–822 caustic sentence replacement. V10 Ex 7.4(c) strict inequalities.
+- Layer: "≈299 d" → "≈300 d"; bartelmann_1995 support unverified for κ̄ identity; "remove or split" → "remove or add a second faint image"; Bartelmann 1996 (no DOI; arXiv astro-ph/9602053) needs bib + cite; remove "flagged for correction" sentences after fixes.
