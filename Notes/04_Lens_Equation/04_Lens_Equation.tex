@@ -442,7 +442,7 @@ formula) and the $\pi$ that converts the uniform-disk enclosed mass to
 the line-averaged surface density.
 \end{remark}
 
-The \textbf{convergence} is then the dimensionless ratio of the actual
+The \emph{convergence} is then the dimensionless ratio of the actual
 surface mass density to the critical value:
 \begin{equation}
     \boxed{
@@ -457,11 +457,11 @@ $z_d = 0.3$: $\Sigmacr(z_s{=}2)/\Sigmacr(z_s{=}1) = 0.83$. This is the same
 number as the ratio $\Brat$ of the previous bridge, so the same $\Sigma$ gives a
 convergence $1/0.83 \approx 1.2$ times larger for the farther source.
 
-\emph{Classic error:} reusing a $\kappab$ map fitted to one source for a
-source at another redshift. Convert through $\Sigma$, or multiply by
+A common error is to reuse a $\kappab$ map fitted to one source for a
+source at another redshift; one must convert through $\Sigma$, or multiply by
 $\Sigmacr(z_{s,1})/\Sigmacr(z_{s,2})$.
 
-A useful sanity check is that, for an axisymmetric lens, the \emph{mean}
+A useful check is that, for an axisymmetric lens, the \emph{mean}
 convergence inside the Einstein radius is exactly 1
 (Narayan \& Bartelmann Sec.~2.1.4; Congdon \& Keeton eq.~2.71). This is the
 lensing version of ``the Einstein ring encloses one critical density's worth
@@ -469,25 +469,20 @@ of mass''.
 \end{annotation}
 
 The critical surface mass density sets the boundary between weak and
-strong lensing:
-\begin{itemize}
-    \item If $\kappab < 1$ everywhere ($\Sigma < \Sigmacr$), an
-          \textbf{axisymmetric} lens is \textbf{subcritical}: it can
-          still deflect light, but it cannot produce multiple images.
-          (For a non-axisymmetric lens, shear can produce multiple
-          images even with $\kappab < 1$ everywhere; Congdon \& Keeton
-          Sec.~2.5.)
-    \item If $\kappab \geq 1$ somewhere ($\Sigma \geq \Sigmacr$), the
-          lens is \textbf{supercritical}: it can produce multiple
-          images, arcs, and Einstein rings --- this is the regime of
-          \textbf{strong gravitational lensing}.
-\end{itemize}
+strong lensing.  If $\kappab < 1$ everywhere ($\Sigma < \Sigmacr$), an
+axisymmetric lens is \emph{subcritical}: it can still deflect light, but
+it cannot produce multiple images.  (For a non-axisymmetric lens, shear
+can produce multiple images even with $\kappab < 1$ everywhere; Congdon
+\& Keeton Sec.~2.5.)  If $\kappab \geq 1$ somewhere
+($\Sigma \geq \Sigmacr$), the lens is \emph{supercritical}: it can
+produce multiple images, arcs, and Einstein rings, the regime of strong
+gravitational lensing.
 \begin{annotation}[How sharp is the $\kappab = 1$ boundary?]
 For \emph{axisymmetric} lenses, $\kappab > 1$ somewhere is both necessary and
 sufficient for multiple images (Congdon \& Keeton Sec.~2.5). For general
 lenses it remains sufficient but is \emph{not} necessary (same section;
-Narayan \& Bartelmann Sec.~2.1.3 note exceptions). The first bullet above should
-therefore be read as the axisymmetric statement. Note also that $\kappab$ is
+Narayan \& Bartelmann Sec.~2.1.3 note exceptions). The first statement above should
+therefore be read as the axisymmetric statement. Also, $\kappab$ is
 local while ``multiple imaging'' is global: what matters for the Einstein
 ring is the \emph{mean} $\kappab$ inside a circle, not its value at one point.
 \end{annotation}
@@ -509,7 +504,7 @@ Substituting into eq.~\eqref{eq:sigma_cr}:
     \approx 2840~\Msun\,\text{pc}^{-2} \,.
     \label{eq:sigma_cr_numerical}
 \end{equation}
-This is a remarkably low surface mass density --- only about
+This is a low surface mass density, only about
 $5.9$~kg\,m$^{-2}$.  Nevertheless, typical galaxy and cluster lenses
 can achieve $\Sigma \geq \Sigmacr$ in their central regions, making
 strong lensing possible.  The exact value is computed and verified in
@@ -557,7 +552,7 @@ and the distances have units of length.
 \section{The Einstein Radius}
 \label{sec:einstein_radius}
 
-The lens equation simplifies dramatically for a \textbf{point mass lens}.
+The lens equation simplifies considerably for a point mass lens.
 For a mass $M$ at the origin of the lens plane, the physical deflection
 angle is (from Chapter~\ref{ch:light_deflection}):
 \begin{equation}
@@ -572,7 +567,7 @@ mass in the lens plane.  The reduced deflection angle is:
     = \frac{\thetaE^2}{\theta} \,,
     \label{eq:alpha_point}
 \end{equation}
-where we have defined the \textbf{Einstein radius}:
+where we have defined the \emph{Einstein radius}:
 \begin{equation}
     \boxed{
     \thetaE = \sqrt{\frac{4\Gnewton M}{\speedoflight^2}
@@ -581,7 +576,7 @@ where we have defined the \textbf{Einstein radius}:
     \label{eq:einstein_radius}
 \end{equation}
 
-This is \textbf{THE} characteristic angular scale of gravitational
+This is the characteristic angular scale of gravitational
 lensing.  For a circularly symmetric lens, the Einstein radius is the
 angular radius of the ring that forms when the source lies exactly
 behind the lens ($\beta = 0$).  The corresponding physical radius in the
@@ -656,7 +651,7 @@ $\theta = 0$ is not a solution of the quadratic (it would require $\thetaE = 0$)
 \end{derivation}
 
 Since $\beta^2 + 4\,\thetaE^2 > \beta^2$ for $\thetaE > 0$, both
-solutions are always real.  A point mass lens \textit{always} produces
+solutions are always real.  A point mass lens always produces
 two images, regardless of the source position.
 
 \subsection{The Einstein Ring}
@@ -668,9 +663,8 @@ image positions merge:
     \label{eq:einstein_ring_condition}
 \end{equation}
 By the circular symmetry of the lens, this corresponds to a complete
-\textbf{ring} of images at angular radius $\thetaE$ --- the
-\textbf{Einstein ring}.  This is the most spectacular manifestation of
-gravitational lensing and has been observed in numerous galaxy-scale and
+ring of images at angular radius $\thetaE$, the
+\emph{Einstein ring}, which has been observed in numerous galaxy-scale and
 cluster-scale lens systems.
 
 \begin{figure}[ht]
@@ -692,7 +686,7 @@ cluster-scale lens systems.
 \textbf{Einstein radii for typical lensing systems.}
 
 \medskip
-\noindent\textbf{(a) Stellar microlensing} ($M = 1\,\Msun$,
+\noindent\textbf{(a)} Stellar microlensing ($M = 1\,\Msun$,
 $\Dd \approx \Ds/2 \approx 5$~kpc, $\Dds \approx 5$~kpc):
 \begin{equation}
     \thetaE = \sqrt{\frac{4 \times 6.674 \times 10^{-11} \times
@@ -702,11 +696,11 @@ $\Dd \approx \Ds/2 \approx 5$~kpc, $\Dds \approx 5$~kpc):
     \label{eq:thetaE_microlensing}
 \end{equation}
 The Einstein radius for stellar microlensing is of order
-\textit{milliarcseconds} --- far too small to resolve the individual
+milliarcseconds, far too small to resolve the individual
 images, but the magnification is detectable photometrically.
 
 \medskip
-\noindent\textbf{(b) Galaxy-scale lensing} ($M = 10^{12}\,\Msun$,
+\noindent\textbf{(b)} Galaxy-scale lensing ($M = 10^{12}\,\Msun$,
 $z_d = 0.3$, $z_s = 1$):
 With $\Dd \approx 919$~Mpc, $\Ds \approx 1652$~Mpc,
 $\Dds \approx 1055$~Mpc:
@@ -714,12 +708,12 @@ $\Dds \approx 1055$~Mpc:
     \thetaE \approx 2.4'' \,.
     \label{eq:thetaE_galaxy}
 \end{equation}
-Galaxy-scale Einstein radii are of order \textit{arcseconds} ---
+Galaxy-scale Einstein radii are of order arcseconds,
 easily resolved with ground-based telescopes.  This is the regime
 of strong lensing that produces multiple images and arcs.
 
 \medskip
-\noindent\textbf{(c) Cluster-scale lensing} ($M_{\mathrm{E}} \sim
+\noindent\textbf{(c)} Cluster-scale lensing ($M_{\mathrm{E}} \sim
 2 \times 10^{14}\,\Msun$ inside the Einstein radius,
 $z_d = 0.3$, $z_s = 2$):
 With $\Dd \approx 919$~Mpc, $\Ds \approx 1727$~Mpc,
@@ -728,9 +722,9 @@ $\Dds \approx 1328$~Mpc, the point-mass formula gives:
     \thetaE \approx 37'' \,.
     \label{eq:thetaE_cluster}
 \end{equation}
-Cluster-scale Einstein radii are of order \textit{tens of arcseconds},
-producing the spectacular giant arcs observed in massive galaxy
-clusters.  Note that for an extended cluster only the mass
+Cluster-scale Einstein radii are of order tens of arcseconds,
+producing the giant arcs observed in massive galaxy
+clusters.  For an extended cluster only the mass
 \emph{within} the Einstein radius enters the point-mass-equivalent
 estimate above; the total virial mass $M_{200} \sim 10^{15}\,\Msun$
 of a typical massive cluster is much larger, but most of it lies
@@ -745,7 +739,7 @@ Interactive exploration is available in
 \mathlink{04_Lens_Equation/einstein_ring.nb}{einstein\_ring.nb}.
 \end{example}
 \begin{annotation}[Doing the numbers without losing a power of ten]
-Two intermediate values are worth memorizing: $4\Gnewton\Msun/\speedoflight^2 = 5.91\times10^{3}$~m
+Two intermediate values are useful to remember: $4\Gnewton\Msun/\speedoflight^2 = 5.91\times10^{3}$~m
 (twice the Sun's Schwarzschild radius), and $1~\mathrm{kpc} = 3.086\times10^{19}$~m.
 For case (a), $\Dds/(\Dd\Ds) = 1/(10~\mathrm{kpc})$, so
 $\thetaE^2 = 5.91\times10^{3}/3.086\times10^{20} = 1.91\times10^{-17}$ and
@@ -758,7 +752,7 @@ $\RE = \Dd\thetaE = 6.8\times10^{11}$~m $\approx 4.5$~AU. A useful scaling is
 \end{equation*}
 Check it on case (b): $\Dd\Ds/\Dds = 1439$~Mpc gives
 $0.90~\mathrm{mas}\times10^{6}\times(1.439\times10^{5})^{-1/2} = 2.4''$.
-\emph{Classic error:} quoting $\thetaE$ in radians when arcseconds were
+A common error is to quote $\thetaE$ in radians when arcseconds were
 meant ($1~\mathrm{rad} = 206265''$).
 \end{annotation}
 
@@ -779,19 +773,19 @@ units of the Einstein radius).  Then:
 \subsection{Properties of the Images}
 
 \begin{enumerate}
-    \item \textbf{$\theta_+$ is always positive} (on the same side of the
+    \item $\theta_+$ is always positive (on the same side of the
           lens as the source) and satisfies $\theta_+ > \thetaE$.  This
-          is the \textbf{primary image}, which is always located
-          \textit{outside} the Einstein radius.
+          is the \emph{primary image}, which is always located
+          outside the Einstein radius.
 
-    \item \textbf{$\theta_-$ is always negative} (on the opposite side
+    \item $\theta_-$ is always negative (on the opposite side
           of the lens from the source) and satisfies
-          $|\theta_-| < \thetaE$.  This is the \textbf{secondary image},
-          located \textit{inside} the Einstein radius.  Its negative sign
+          $|\theta_-| < \thetaE$.  This is the \emph{secondary image},
+          located inside the Einstein radius.  Its negative sign
           indicates opposite parity (the image is mirror-reflected).
 
-    \item \textbf{Sum and product:} From Vieta's formulas applied to
-          the quadratic~\eqref{eq:quadratic}:
+    \item Vieta's formulas applied to
+          the quadratic~\eqref{eq:quadratic} give
           \begin{equation}
               \theta_+ + \theta_- = \beta \,, \qquad
               \theta_+\, \theta_- = -\thetaE^2 \,.
@@ -800,7 +794,7 @@ units of the Einstein radius).  Then:
           The product relation shows that the images always straddle the
           Einstein ring: one inside, one outside.
 
-    \item \textbf{Image separation:}
+    \item The image separation is
           \begin{equation}
               \Delta\theta = \theta_+ - \theta_-
               = \sqrt{\beta^2 + 4\,\thetaE^2} \,.
@@ -828,7 +822,7 @@ $\theta_+ > \thetaE > |\theta_-|$.
 \paragraph{Source on the optical axis ($\beta \to 0$, $u \to 0$):}
 Both images approach the Einstein radius:
 $\theta_+ \to +\thetaE$, $\theta_- \to -\thetaE$.
-The two images merge into the \textbf{Einstein ring}.
+The two images merge into the Einstein ring.
 
 \paragraph{Source far from the lens ($\beta \gg \thetaE$, $u \gg 1$):}
 \begin{align}
@@ -859,7 +853,7 @@ evaluated at the unlensed position, which is what one expects from a single weak
 Chapter~\ref{ch:power_law_point_mass} puts a point mass (Einstein radius
 $\thetaBH$) at the centre of a power-law galaxy. By superposition
 (eq.~\ref{eq:superposition_deflection}) its reduced deflection
-$\thetaBH^2/\theta$, derived above, is simply added to the galaxy's.
+$\thetaBH^2/\theta$, derived above, is added to the galaxy's.
 Because this term diverges as $\theta \to 0$, it dominates exactly where the
 galaxy's own central images would form, even when $\thetaBH \ll \thetaE$.
 \end{bridge}
@@ -887,9 +881,9 @@ galaxy's own central images would form, even when $\thetaBH \ll \thetaE$.
 Gravitational lensing conserves surface brightness (a consequence of
 Liouville's theorem applied to the photon phase space), but it changes
 the \textit{solid angle} subtended by the image compared to the source.
-The ratio of image area to source area is the \textbf{magnification}
-$\mu$.  We will derive the magnification formalism rigorously in
-Chapter~\ref{ch:magnification}; here we preview the key results for the point mass lens.
+The ratio of image area to source area is the \emph{magnification}
+$\mu$.  The magnification formalism is derived in
+Chapter~\ref{ch:magnification}; here we preview the results for the point mass lens.
 
 For a circularly symmetric lens, the magnification is
 (Narayan \& Bartelmann eq.~26):

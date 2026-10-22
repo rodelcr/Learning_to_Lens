@@ -263,8 +263,8 @@ comes from one of these derivatives.
 \end{align*}
 The remaining nine follow the same two patterns.  The script checks all
 thirteen against the general \texttt{computeChristoffel} and confirms there is
-no fourteenth (checks B1a--b).  Note the $1/\speedoflight^2$ in
-$\christoffel{0}{i}{i}$ and its absence in $\christoffel{i}{0}{i}$: the first
+no fourteenth (checks B1a--b).  The $1/\speedoflight^2$ is present in
+$\christoffel{0}{i}{i}$ and absent in $\christoffel{i}{0}{i}$: the first
 has an upper time index (divide by $g_{00} = -\speedoflight^2$), the second a
 lower one.
 \end{derivation}
@@ -291,7 +291,7 @@ R_{\mu\nu}$.  The computation is lengthy but straightforward; we quote
 the results here and verify them symbolically in
 \texttt{friedmann\_equations.wl}.
 
-The nonvanishing independent components of the \textbf{Ricci tensor} are
+The nonvanishing independent components of the Ricci tensor are
 (Carroll eq.~8.45, restoring $\speedoflight$ with $x^0 = t$, so that
 $g_{00} = -\speedoflight^2$):\footnote{Earlier versions printed
 $R_{00} = -3\ddot a/(\speedoflight^2 a)$, which is the component with respect
@@ -313,7 +313,7 @@ the choice of $x^0$.}
     \left(a\ddot{a} + 2\dot{a}^2 + 2k\speedoflight^2\right) .
     \label{eq:R33}
 \end{align}
-Notice that $R_{11}$, $R_{22}$, and $R_{33}$ all share the same
+$R_{11}$, $R_{22}$, and $R_{33}$ share the same
 combination $a\ddot{a} + 2\dot{a}^2 + 2k\speedoflight^2$, which is a
 consequence of spatial isotropy.  We can write the spatial components
 compactly as:
@@ -323,7 +323,7 @@ compactly as:
     \label{eq:Rij_compact}
 \end{equation}
 
-The \textbf{Ricci scalar} is:
+The Ricci scalar is:
 \begin{equation}
     \boxed{
     \ricciS = g^{\mu\nu} R_{\mu\nu}
@@ -340,17 +340,14 @@ Use $R_{\mu\nu} = \partial_\lambda\christoffel{\lambda}{\mu}{\nu}
 - \partial_\nu\christoffel{\lambda}{\mu}{\lambda}
 + \christoffel{\lambda}{\lambda}{\sigma}\christoffel{\sigma}{\mu}{\nu}
 - \christoffel{\lambda}{\nu}{\sigma}\christoffel{\sigma}{\mu}{\lambda}$
-with $\mu = \nu = 0$ and $x^0 = t$.
-\begin{itemize}
-  \item $\christoffel{\lambda}{0}{0} = 0$ for every $\lambda$, so the first and
-        third terms vanish.
-  \item $\christoffel{\lambda}{0}{\lambda} = 3\dot a/a$ (three spatial
-        $\lambda$), so the second term is
-        $-\partial_t(3\dot a/a) = -3(\ddot a/a - \dot a^2/a^2)$.
-  \item The fourth term is $-\sum_{i,j}\christoffel{i}{0}{j}\christoffel{j}{0}{i}
-        = -3(\dot a/a)^2$.
-\end{itemize}
-Sum: $R_{tt} = -3\ddot a/a$ (check B2a), eq.~\eqref{eq:R00}.  This carries
+with $\mu = \nu = 0$ and $x^0 = t$.  Since
+$\christoffel{\lambda}{0}{0} = 0$ for every $\lambda$, the first and
+third terms vanish.  Since $\christoffel{\lambda}{0}{\lambda} = 3\dot a/a$
+(three spatial $\lambda$), the second term is
+$-\partial_t(3\dot a/a) = -3(\ddot a/a - \dot a^2/a^2)$, and the fourth
+term is $-\sum_{i,j}\christoffel{i}{0}{j}\christoffel{j}{0}{i}
+= -3(\dot a/a)^2$.  The sum is $R_{tt} = -3\ddot a/a$ (check B2a),
+eq.~\eqref{eq:R00}.  This carries
 \emph{no} $1/\speedoflight^2$ when the time coordinate is $t$; the component
 with respect to $x^0 = \speedoflight t$ is $R_{tt}/\speedoflight^2 =
 -3\ddot a/(\speedoflight^2 a)$ (check B2b).
@@ -379,9 +376,9 @@ tensor $T_{\mu\nu}$):
     = \frac{8\pi\Gnewton}{\speedoflight^4}\, T_{\mu\nu}
     \label{eq:einstein_field_frw}
 \end{equation}
-where $\Lambda$ is the \textbf{cosmological constant}.
+where $\Lambda$ is the \emph{cosmological constant}.
 
-For a \textbf{perfect fluid} at rest in the comoving frame (the natural
+For a \emph{perfect fluid} at rest in the comoving frame (the natural
 choice for a homogeneous, isotropic universe), the stress-energy tensor
 is (Carroll eq.~8.48):
 \begin{equation}
@@ -389,8 +386,8 @@ is (Carroll eq.~8.48):
     U^\mu U^\nu + p\, g^{\mu\nu}
     \label{eq:perfect_fluid_frw}
 \end{equation}
-where $\rho$ is the \textbf{mass-energy density} (energy density
-$/\speedoflight^2$), $p$ is the \textbf{pressure}, and
+where $\rho$ is the \emph{mass-energy density} (energy density
+$/\speedoflight^2$), $p$ is the \emph{pressure}, and
 $U^\mu = (1, 0, 0, 0)$ is the four-velocity of comoving
 observers [with $g_{00} = -\speedoflight^2$, the standard
 normalisation $g_{\mu\nu}U^\mu U^\nu = -\speedoflight^2$ gives
@@ -465,7 +462,7 @@ Setting these equal and rearranging:
     }
     \label{eq:friedmann_1}
 \end{equation}
-This is the \textbf{first Friedmann equation}.  It relates the expansion
+This is the \emph{first Friedmann equation}.  It relates the expansion
 rate $\dot{a}/a$ to the energy density~$\rho$, spatial curvature~$k$,
 and cosmological constant~$\Lambda$.
 
@@ -512,10 +509,10 @@ compact form~\eqref{eq:Rij_compact} and $T_{ij} = p\, g_{ij}$, give
     }
     \label{eq:friedmann_2}
 \end{equation}
-This is the \textbf{second Friedmann equation} (or \textbf{acceleration
+This is the \emph{second Friedmann equation} (or \emph{acceleration
 equation}).  It shows that matter and radiation ($\rho > 0$, $p \geq 0$)
-cause the expansion to \textit{decelerate} ($\ddot{a} < 0$), while a
-positive cosmological constant $\Lambda > 0$ causes \textit{acceleration}
+cause the expansion to decelerate ($\ddot{a} < 0$), while a
+positive cosmological constant $\Lambda > 0$ causes acceleration
 ($\ddot{a} > 0$).
 
 
@@ -549,7 +546,7 @@ $\dot a^2/a^2 + k\speedoflight^2/a^2 = 8\pi\Gnewton\rho/3 + \Lambda\speedoflight
 \end{derivation}
 \begin{remark}
 The combination $\rho + 3p/\speedoflight^2$ in the second Friedmann
-equation is the key to understanding cosmic acceleration.  Pressure
+equation is what governs cosmic acceleration.  Pressure
 contributes to gravity in GR (unlike in Newtonian gravity), and the
 factor of~3 comes from the three spatial dimensions.  For a cosmological
 constant (with equation of state $p = -\rho\speedoflight^2$), this
@@ -561,7 +558,7 @@ combination is $\rho + 3(-\rho) = -2\rho < 0$, leading to acceleration.
 
 The Friedmann equations~\eqref{eq:friedmann_1} and~\eqref{eq:friedmann_2}
 are not independent: differentiating the first and substituting the
-second yields the \textbf{fluid conservation equation} (equivalently,
+second yields the \emph{fluid conservation equation} (equivalently,
 this follows from $\nabla_\mu T^{\mu\nu} = 0$):
 \begin{equation}
     \boxed{
@@ -609,19 +606,19 @@ with
 
 \subsection{The Hubble Parameter}
 
-The \textbf{Hubble parameter} is defined as the fractional expansion
+The \emph{Hubble parameter} is defined as the fractional expansion
 rate:
 \begin{equation}
     H(t) \equiv \frac{\dot{a}(t)}{a(t)} \,.
     \label{eq:hubble_parameter}
 \end{equation}
-Its present-day value is the \textbf{Hubble constant}:
+Its present-day value is the \emph{Hubble constant}:
 \begin{equation}
     \Hubble \equiv H(t_0) \approx 70~\text{km\,s}^{-1}\,\text{Mpc}^{-1} \,.
     \label{eq:hubble_constant}
 \end{equation}
 The associated timescale is $t_H \equiv 1/\Hubble \approx 14$~Gyr, and
-the associated length scale is the \textbf{Hubble distance}:
+the associated length scale is the \emph{Hubble distance}:
 \begin{equation}
     d_H \equiv \frac{\speedoflight}{\Hubble}
     \approx 4.28~\text{Gpc}
@@ -632,8 +629,8 @@ the associated length scale is the \textbf{Hubble distance}:
 \subsection{Density Parameters}
 
 The first Friedmann equation~\eqref{eq:friedmann_1} can be rewritten in
-terms of dimensionless \textbf{density parameters}.  Define the
-\textbf{critical density} as the density required for a spatially flat
+terms of dimensionless \emph{density parameters}.  Define the
+\emph{critical density} as the density required for a spatially flat
 ($k = 0$), $\Lambda = 0$ universe:
 \begin{equation}
     \rho_{\mathrm{cr}}(t) \equiv \frac{3H^2(t)}{8\pi\Gnewton}

@@ -306,7 +306,7 @@ potential,
 \begin{equation*}
     H_{ij} \;\equiv\; \frac{\partial^2 \psiL}{\partial\theta_i\,\partial\theta_j} \,,
 \end{equation*}
-is a $2{\times}2$ real symmetric matrix --- three independent
+is a $2{\times}2$ real symmetric matrix with three independent
 components.  Every such matrix decomposes uniquely into a trace piece
 (proportional to the identity) plus a traceless symmetric piece:
 \begin{equation}
@@ -374,7 +374,7 @@ The shear magnitude and the complex shear are:
 \end{equation}
 where $\phi_\gamma$ is the orientation angle of the shear.
 \begin{annotation}[Shear is a trace-free tensor, not a vector]
-Three consequences of spin~2 trip up students. (i) $\gamma \to -\gamma$ is
+Three consequences of spin~2 are easily overlooked. (i) $\gamma \to -\gamma$ is
 \emph{not} a reversal of direction: it rotates the stretch axis by
 $90^\circ$. (ii) The orientation is
 $\phi_\gamma = \tfrac12\operatorname{atan2}(\gamma_2, \gamma_1)$, the
@@ -388,20 +388,15 @@ $\gamma_1 + i\gamma_2$, not as magnitudes.
 
 \subsection{Physical Meaning}
 
-The shear is a \textbf{spin-2 field}: it is invariant under rotations
+The shear is a spin-2 field: it is invariant under rotations
 by $180°$ (not $360°$), reflecting the fact that an ellipse looks
 the same after a half-turn.  The two components have specific geometric
-meanings:
-\begin{itemize}
-    \item $\gamma_1 > 0$: stretching along the $\theta_1$-axis,
-          compression along $\theta_2$.
-    \item $\gamma_1 < 0$: stretching along the $\theta_2$-axis,
-          compression along $\theta_1$.
-    \item $\gamma_2 > 0$: stretching along the direction at $45°$
-          to the $\theta_1$-axis.
-    \item $\gamma_2 < 0$: stretching along the direction at $135°$
-          to the $\theta_1$-axis.
-\end{itemize}
+meanings.  For $\gamma_1 > 0$ the image is stretched along the
+$\theta_1$-axis and compressed along $\theta_2$; for $\gamma_1 < 0$ it is
+stretched along the $\theta_2$-axis and compressed along $\theta_1$.  For
+$\gamma_2 > 0$ the stretching is along the direction at $45°$ to the
+$\theta_1$-axis, and for $\gamma_2 < 0$ along the direction at $135°$ to
+the $\theta_1$-axis.
 
 \begin{remark}
 The convergence and shear together account for all four independent
@@ -427,7 +422,7 @@ the traceless part):
 The lens equation $\vecbeta = \vectheta - \vecalpha(\vectheta)$
 defines a mapping from the image plane to the source plane.  The
 local properties of this mapping are encoded in its
-\textbf{Jacobian matrix}:
+\emph{Jacobian matrix}:
 \begin{equation}
     \Amat_{ij} = \frac{\partial \beta_i}{\partial \theta_j}
     = \delta_{ij} - \frac{\partial \alpha_i}{\partial \theta_j}
@@ -461,7 +456,7 @@ $\gammaL$ as its only content) must be revisited there.
 \end{bridge}
 
 Using the decomposition of the Hessian into convergence and shear
-(eq.~\ref{eq:hessian_decomposition}), the Jacobian takes the elegant
+(eq.~\ref{eq:hessian_decomposition}), the Jacobian takes the
 form (Narayan \& Bartelmann eq.~58; Congdon \& Keeton eq.~4.51):
 \begin{equation}
     \boxed{
@@ -482,7 +477,7 @@ inverse.
 \end{annotation}
 
 \begin{remark}
-The matrix $\Amat$ is sometimes called the \textbf{inverse
+The matrix $\Amat$ is sometimes called the \emph{inverse
 magnification tensor} because its inverse $\Amat^{-1}$ gives the
 magnification tensor $\Mmat$:
 \begin{equation}
@@ -554,9 +549,9 @@ shear angle $\phi_\gamma$.
 \label{sec:magnification}
 
 Gravitational lensing conserves surface brightness (a consequence of
-Liouville's theorem --- the photon phase space density is preserved
-along geodesics).  Therefore, the magnification is simply the ratio of
-the \textit{solid angle} of the image to that of the source:
+Liouville's theorem: the photon phase space density is preserved
+along geodesics).  Therefore the magnification is the ratio of
+the solid angle of the image to that of the source:
 \begin{equation}
     \mu = \frac{\text{(image area)}}{\text{(source area)}}
     = \frac{1}{\det \Amat} \,.
@@ -578,8 +573,8 @@ and therefore:
     \label{eq:magnification_formula}
 \end{equation}
 
-This is the \textbf{general magnification formula} for gravitational
-lensing.  Note that $\mu$ depends on position through
+This is the general magnification formula for gravitational
+lensing; $\mu$ depends on position through
 $\kappab(\vectheta)$ and $\gammaL(\vectheta)$.
 \begin{derivation}[Why the area ratio is $1/\det\Amat$]
 The lens map $\vectheta \mapsto \vecbeta(\vectheta)$ is a change of variables,
@@ -595,25 +590,25 @@ sign is the parity.
 \subsection{Properties of the Magnification}
 
 \begin{enumerate}
-    \item \textbf{Positive parity ($\mu > 0$):} The image has the
+    \item Positive parity ($\mu > 0$): the image has the
           same orientation (handedness) as the source.  This occurs
           when $\det \Amat > 0$.
 
-    \item \textbf{Negative parity ($\mu < 0$):} The image is
+    \item Negative parity ($\mu < 0$): the image is
           mirror-reflected relative to the source.  This occurs when
-          $\det \Amat < 0$.  The \textit{absolute} magnification is
+          $\det \Amat < 0$.  The absolute magnification is
           $|\mu|$.
 
-    \item \textbf{Magnified images ($|\mu| > 1$):} The image
+    \item Magnified images ($|\mu| > 1$): the image
           subtends a larger solid angle than the source.  The
           condition is $|\det\Amat| < 1$, i.e.\
           $-1 < (1 - \kappab)^2 - |\gammaL|^2 < 1$.
 
-    \item \textbf{Demagnified images ($|\mu| < 1$):} The image is
+    \item Demagnified images ($|\mu| < 1$): the image is
           smaller than the source.
 
-    \item \textbf{Critical curves ($\det \Amat = 0$, $\mu \to \infty$):}
-          Points where the magnification formally diverges.  In
+    \item Critical curves ($\det \Amat = 0$, $\mu \to \infty$):
+          points where the magnification formally diverges.  In
           practice, images near critical curves are very highly
           magnified (factors of 10--100), but finite source sizes
           prevent true divergences.  These curves are the subject
@@ -631,7 +626,7 @@ both positive (type~I, minimum of the arrival time, $\mu > 0$); opposite
 signs (type~II, saddle, $\mu < 0$); both negative (type~III, maximum,
 $\mu > 0$ again). Type~III requires $\kappab > 1 + |\gammaL|$, so it can only
 form where the lens is dense, near its centre. Positive $\mu$ alone does not
-tell you whether an image is type~I or type~III.
+determine whether an image is type~I or type~III.
 \end{annotation}
 \begin{bridge}[Parity and the odd-image theorem]
 Parity $= \operatorname{sign}\det\Amat$ is what Chapter~\ref{ch:odd_images}
@@ -654,15 +649,10 @@ Using the eigenvalues of $\Amat$ (eq.~\ref{eq:eigenvalues}):
 \end{equation}
 The magnification diverges when either eigenvalue vanishes, i.e.,
 when $1 - \kappab = \pm|\gammaL|$.  These conditions define the two
-families of critical curves:
-\begin{itemize}
-    \item $\lambda_- = 0$: the \textbf{tangential critical curve}
-          ($1 - \kappab = |\gammaL|$), where images are stretched
-          tangentially.
-    \item $\lambda_+ = 0$: the \textbf{radial critical curve}
-          ($1 - \kappab = -|\gammaL|$), where images are stretched
-          radially.
-\end{itemize}
+families of critical curves: the \emph{tangential critical curve},
+$\lambda_- = 0$ ($1 - \kappab = |\gammaL|$), where images are stretched
+tangentially, and the \emph{radial critical curve}, $\lambda_+ = 0$
+($1 - \kappab = -|\gammaL|$), where images are stretched radially.
 \begin{annotation}[$\lambda_\pm$ versus $\lambda_t$, $\lambda_r$]
 Much of the literature, and Part~V, writes
 $\lambda_t \equiv 1 - \kappab - \gammaL$ and $\lambda_r \equiv 1 - \kappab + \gammaL$.
@@ -740,9 +730,9 @@ size is scaled by $1/(1 - \kappab)$.  The magnification is:
 For $\kappab < 1$, the image is magnified and has positive parity.
 For $1 < \kappab < 2$ the image is still magnified (for $\kappab > 2$ it is
 demagnified, e.g.\ $\mu = 1/4$ at $\kappab = 3$), and for every $\kappab > 1$
-it \textit{retains positive parity}: $\det\Amat = (1-\kappab)^2 > 0$ for all
+it retains positive parity: $\det\Amat = (1-\kappab)^2 > 0$ for all
 $\kappab \neq 1$.  Although both eigenvalues $(1-\kappab)$ are
-negative when $\kappab > 1$, their product is positive --- a uniform
+negative when $\kappab > 1$, their product is positive: a uniform
 negative scaling is equivalent to a $180^\circ$ rotation, which
 preserves handedness.  A genuine parity flip ($\det\Amat < 0$,
 $\mu < 0$) requires shear, so that the eigenvalues
@@ -764,7 +754,7 @@ The Jacobian becomes:
     -\gamma_2 & 1 + \gamma_1
     \end{pmatrix} .
 \end{equation}
-A circular source is distorted into an \textbf{ellipse}.  The
+A circular source is distorted into an ellipse.  The
 magnification is:
 \begin{equation}
     \mu = \frac{1}{1 - |\gammaL|^2} \,.
@@ -794,11 +784,9 @@ $|\gammaL| = 1.5$ (C\&K Sec.~4.2.1).
 \subsection{Both Convergence and Shear}
 
 In general, both $\kappab$ and $\gammaL$ are nonzero.  A circular
-source is mapped to a \textit{larger ellipse}:
-\begin{itemize}
-    \item The convergence sets the overall magnification (size change).
-    \item The shear sets the ellipticity (shape change).
-\end{itemize}
+source is mapped to a larger ellipse: the convergence sets the overall
+magnification (size change) and the shear sets the ellipticity (shape
+change).
 The semi-axes of the image are $\delta/(1 - \kappab - |\gammaL|)$ and
 $\delta/(1 - \kappab + |\gammaL|)$ for a circular source of angular
 radius $\delta$.
@@ -815,7 +803,7 @@ $1 - \kappab > |\gammaL|$ the axis ratio is
 \end{equation*}
 obtained by dividing the numerator and denominator by $1 - \kappab$. Equivalently, the ellipticity
 $(a-b)/(a+b) = g$. The \emph{shape} of an image depends only on the
-\textbf{reduced shear} $g$, not on $\kappab$ and $\gammaL$ separately. This is
+\emph{reduced shear} $g$, not on $\kappab$ and $\gammaL$ separately. This is
 the quantity weak lensing actually measures (Chapter~\ref{ch:weak_lensing}).
 \end{derivation}
 \begin{bridge}[The mass-sheet transformation, seen through $\Amat$]
