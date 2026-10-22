@@ -8,9 +8,10 @@ Steps for updating and publishing the tutorial PDFs.
 cd Notes && bash build.sh
 ```
 
-This produces two files in `Output/`:
+This produces three files in `Output/`:
 - `Learning_to_Lens.pdf` — Student edition (no solutions)
 - `Learning_to_Lens_Solutions.pdf` — Instructor edition (with solutions)
+- `Learning_to_Lens_Annotated.pdf` — Annotated Study Edition (solutions + annotation layer)
 
 The build script runs `pdflatex` twice for each edition (for cross-references).
 The solutions toggle works via `\def\showsolutions{}` passed at compile time; the Annotated Study Edition adds `\def\showannotated{}` (see `Notes/editions.tex`). `build.sh` now produces three PDFs — `Learning_to_Lens.pdf`, `Learning_to_Lens_Solutions.pdf`, `Learning_to_Lens_Annotated.pdf` — and exits non-zero if any integrity assertion fails.
@@ -20,25 +21,26 @@ The solutions toggle works via `\def\showsolutions{}` passed at compile time; th
 The PDFs are hosted at:
 - https://rodelcr.github.io/assets/pdf/Learning_to_Lens.pdf
 - https://rodelcr.github.io/assets/pdf/Learning_to_Lens_Solutions.pdf
+- https://rodelcr.github.io/assets/pdf/Learning_to_Lens_Annotated.pdf
 
 To update after rebuilding:
 
 ```bash
-# 1. Clone the pages repo (or cd to existing clone)
-cd /tmp && git clone git@github.com:rodelcr/rodelcr.github.io.git
-cd rodelcr.github.io
+# 1. Use the existing clone (pull first)
+cd ~/rodelcr.github.io && git pull --ff-only
 
-# 2. Copy the updated PDFs
+# 2. Copy the updated PDFs (all three editions)
 cp /Users/rosador/Documents/Learning_to_Lens/Output/Learning_to_Lens.pdf assets/pdf/
 cp /Users/rosador/Documents/Learning_to_Lens/Output/Learning_to_Lens_Solutions.pdf assets/pdf/
+cp /Users/rosador/Documents/Learning_to_Lens/Output/Learning_to_Lens_Annotated.pdf assets/pdf/
 
 # 3. Commit and push
 git add assets/pdf/Learning_to_Lens*.pdf
 git commit -m "Update Learning to Lens PDFs"
 git push
 
-# 4. Clean up
-cd /tmp && rm -rf rodelcr.github.io
+# 4. Verify page counts match Output/build_fingerprints.txt
+for f in assets/pdf/Learning_to_Lens*.pdf; do pdfinfo "$f" | grep Pages; done
 ```
 
 GitHub Pages will rebuild automatically after the push (usually takes 1-2 minutes).
@@ -49,7 +51,7 @@ The PDFs are also tracked in the `Output/` directory of the main repo:
 
 ```bash
 cd /Users/rosador/Documents/Learning_to_Lens
-git add Output/Learning_to_Lens.pdf Output/Learning_to_Lens_Solutions.pdf
+git add Output/Learning_to_Lens.pdf Output/Learning_to_Lens_Solutions.pdf Output/Learning_to_Lens_Annotated.pdf
 git commit -m "Update compiled PDFs"
 git push
 ```
