@@ -26,25 +26,24 @@ refractive index of a weak gravitational field.
 
 In this chapter we show that the lens equation itself emerges from a
 variational principle: images form at stationary points of the
-\textbf{arrival-time surface}.  This elegant reformulation ---
-Fermat's principle for gravitational lensing --- not only provides a
-deeper understanding of image formation, but also yields
-\textbf{observable time delays} between multiple images.  These time
-delays are directly proportional to $\Hubble^{-1}$, making
-multiply-imaged variable sources (such as quasars) a powerful and
-independent probe of the Hubble constant.
+\emph{arrival-time surface}.  This reformulation, Fermat's principle for
+gravitational lensing, accounts for image formation and also yields
+observable time delays between multiple images.  These time
+delays are proportional to $\Hubble^{-1}$, so that
+multiply-imaged variable sources (such as quasars) provide an
+independent measurement of the Hubble constant.
 
 \medskip
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
-    \item \mathlink{06_Fermat_Time_Delays/time_delay_function.wl}{time\_delay\_function.wl}
-          --- symbolic computation of the Fermat potential, verification
+    \item \mathlink{06_Fermat_Time_Delays/time_delay_function.wl}{time\_delay\_function.wl}:
+          symbolic computation of the Fermat potential, verification
           that $\nabla\tau = 0$ recovers the lens equation, time delay
           formulas for point mass and SIS lenses, numerical $\Hubble$
           estimation, and publication-quality figure generation
-    \item \mathlink{06_Fermat_Time_Delays/arrival_time_surface.nb}{arrival\_time\_surface.nb}
-          --- interactive notebook: 3D arrival-time surface with slider
+    \item \mathlink{06_Fermat_Time_Delays/arrival_time_surface.nb}{arrival\_time\_surface.nb}:
+          interactive notebook: 3D arrival-time surface with slider
           for source position, contour plots with critical curves,
           time delay visualization
 \end{itemize}
@@ -56,29 +55,23 @@ independent probe of the Hubble constant.
 
 The lens equation $\vecbeta = \vectheta - \vecalpha(\vectheta)$ was
 derived in Chapter~\ref{ch:lens_equation} by tracing light rays through
-the lensing geometry.  While this approach is direct and intuitive, it
-does not explain \textit{why} light ``chooses'' particular paths through
-the lens plane, nor does it immediately reveal the relative arrival times
-of multiple images.
+the lensing geometry.  That approach is direct, but it does not explain
+why light follows particular paths through the lens plane, nor does it
+give the relative arrival times of multiple images.
 
-A deeper perspective comes from \textbf{Fermat's principle}: among all
+A more general perspective comes from \emph{Fermat's principle}: among all
 possible paths from source to observer, light follows those for which the
-travel time is \textit{stationary} (a minimum, maximum, or saddle point
+travel time is stationary (a minimum, maximum, or saddle point
 of the arrival time).  In classical optics, Fermat's principle explains
 Snell's law and the focusing properties of lenses.  In gravitational
-lensing, it does far more:
-\begin{enumerate}
-    \item It \textbf{derives} the lens equation as the stationarity
-          condition $\nabla_{\vectheta}\, t = 0$.
-    \item It \textbf{classifies} multiple images by the nature of the
-          stationary point (minimum, saddle, or maximum), which
-          determines their parity and arrival order.
-    \item It produces \textbf{observable time delays} between multiple
-          images, which can be used to measure the Hubble constant.
-\end{enumerate}
+lensing it derives the lens equation as the stationarity condition
+$\nabla_{\vectheta}\, t = 0$; it classifies multiple images by the nature
+of the stationary point (minimum, saddle, or maximum), which determines
+their parity and arrival order; and it produces observable time delays
+between multiple images, from which the Hubble constant can be measured.
 
-The key quantity is the \textbf{time delay function} (or
-\textbf{arrival-time surface}) $t(\vectheta)$, which gives the arrival
+The central quantity is the \emph{time delay function} (or
+arrival-time surface) $t(\vectheta)$, which gives the arrival
 time of a photon traveling from a source at $\vecbeta$ via the lens
 plane at $\vectheta$ to the observer.  Images form at the stationary
 points of $t(\vectheta)$, and the differences in $t$ between stationary
@@ -96,16 +89,16 @@ relative to the unperturbed (unlensed, straight-line) path consists of
 two contributions:
 
 \begin{itemize}
-    \item \textbf{Geometric delay} (extra path length): The deflected ray
+    \item \emph{Geometric delay} (extra path length): the deflected ray
           travels a longer geometric path than the straight-line ray.  In
           the small-angle, thin-lens approximation, the extra path length
           corresponds to an angular excess of $\half|\vectheta - \vecbeta|^2$
           (see Chapter~\ref{ch:lens_equation}, Section~\ref{sec:lensing_geometry}).
-    \item \textbf{Shapiro (gravitational) delay}: The photon passes
+    \item \emph{Shapiro (gravitational) delay}: the photon passes
           through the gravitational potential of the lens, experiencing the
           time delay derived in Chapter~\ref{ch:light_deflection}.  In the
           thin-lens formalism, this delay is encoded in the
-          \textbf{lensing potential} $\psiL(\vectheta)$
+          lensing potential $\psiL(\vectheta)$
           (Chapter~\ref{ch:magnification}).
 \end{itemize}
 
@@ -125,9 +118,9 @@ $\Dd$, $\Ds$, $\Dds$ are defined in Chapter~\ref{ch:cosmological_distances},
 and the constant is an irrelevant additive term that depends on the
 unperturbed travel time.
 
-The factor $(1 + z_d)$ arises from \textbf{cosmological time dilation}:
+The factor $(1 + z_d)$ arises from \emph{cosmological time dilation}:
 the geometric and Shapiro delays are computed in the rest frame of the
-lens (at redshift $z_d$), but the time delay is \textit{observed} in
+lens (at redshift $z_d$), but the time delay is observed in
 the observer's frame.  A time interval $\Delta t_{\mathrm{lens}}$ at
 the lens is stretched to
 $\Delta t_{\mathrm{obs}} = (1 + z_d)\,\Delta t_{\mathrm{lens}}$ in the
@@ -135,12 +128,12 @@ observer's frame, just as photon wavelengths are redshifted by the same
 factor (eq.~\ref{eq:redshift_scale_factor} from
 Chapter~\ref{ch:cosmological_distances}; cf.\ Schneider, Ehlers \&
 Falco 1992, Sec.~4.6, eqs.~4.65--4.67).
-The combination $\Dd\,\Ds / \Dds$ is the \textbf{effective lensing
+The combination $\Dd\,\Ds / \Dds$ is the \emph{effective lensing
 distance}, which encodes the geometry of the observer--lens--source
 system.
 
 \begin{derivation}[The two terms of eq.~\eqref{eq:time_delay_function}]
-\textbf{Geometric term (Euclidean sketch).}  Put the observer at the origin,
+\textit{Geometric term (Euclidean sketch).}  Put the observer at the origin,
 the lens plane at distance $\Dd$ and the source plane at $\Ds$, and in this
 sketch only take $\Ds = \Dd + \Dds$ (flat, static space).  A ray that crosses the
 lens plane at $\xi = \Dd\theta$ and ends at the source position
@@ -164,7 +157,7 @@ expanding universe the same form holds with angular-diameter distances
 the Euclidean sketch is only meant to show where the combination
 $\Dd\Ds/\Dds$ comes from.
 
-\textbf{Gravitational term.}  The Shapiro delay along the ray is
+\textit{Gravitational term.}  The Shapiro delay along the ray is
 $t_{\rm grav} = -(2/\speedoflight^3)\int\Phi\,dz$ (Chapter~\ref{ch:light_deflection}),
 and the lensing potential is
 $\psiL = \frac{\Dds}{\Dd\Ds}\frac{2}{\speedoflight^2}\int\Phi\,dz$
@@ -192,7 +185,7 @@ arcsec$^2$ of $\Delta\tau$ is worth $\approx 52$ days (check A15).
 physical is the \emph{shape}: $d\psiL/d\theta = \alpha > 0$ for every
 attractive axisymmetric lens (check A13), so $-\psiL$ is \emph{largest at the
 lens centre}.  Rays through the deeper part of the potential are delayed
-\emph{more} by the Shapiro term, never less --- the Shapiro effect is always
+\emph{more} by the Shapiro term, never less: the Shapiro effect is always
 a delay.
 \end{annotation}
 
@@ -205,7 +198,7 @@ The dimensionless quantity
     }
     \label{eq:fermat_potential}
 \end{equation}
-is called the \textbf{Fermat potential} (or \textbf{time delay
+is called the \emph{Fermat potential} (or \emph{time delay
 potential}).  The arrival time is proportional to $\tau$:
 \begin{equation}
     t(\vectheta) = \frac{(1 + z_d)}{\speedoflight}\,
@@ -216,32 +209,26 @@ potential}).  The arrival time is proportional to $\tau$:
 \end{definition}
 
 \begin{remark}
-The Fermat potential has a simple physical interpretation:
-\begin{itemize}[nosep]
-    \item The first term $\half|\vectheta - \vecbeta|^2$ is the
-          \textbf{geometric delay}: it penalizes paths where the ray in the
-          lens plane ($\vectheta$) is far from the straight-line direction
-          ($\vecbeta$).
-    \item The second term $-\psiL(\vectheta)$ is the
-          \textbf{gravitational (Shapiro) delay}.  Because $\psiL$ is
-          defined only up to an additive constant, its sign carries no
-          physical meaning; its shape does.  For any attractive
-          axisymmetric lens $d\psiL/d\theta = \alpha > 0$, so $-\psiL$ is
-          largest at the lens centre: photons passing through a deeper
-          part of the potential are delayed \textit{more}, as for the
-          Shapiro delay of Chapter~\ref{ch:light_deflection}.\footnote{An
-          earlier version of this remark said that $\psiL>0$ makes the
-          Shapiro term \emph{reduce} the arrival time.  That has the sign
-          backwards: the Shapiro delay $(2/\speedoflight^3)\int|\Phi|\,dl$
-          is positive and grows with $|\Phi|$
-          \citep[eq.~3]{narayan_lectures_1997}.}  For a point mass,
-          $\psiL = \thetaE^2\ln|\vectheta|$ and $-\psiL\to+\infty$ at the
-          origin, so the arrival-time surface has an infinite peak there
-          instead of a smooth maximum.
-\end{itemize}
-The competition between geometric and gravitational delay determines the
-structure of the arrival-time surface and hence the number and types of
-images.
+The Fermat potential has a simple physical interpretation.  The first
+term $\half|\vectheta - \vecbeta|^2$ is the geometric delay: it penalizes
+paths where the ray in the lens plane ($\vectheta$) is far from the
+straight-line direction ($\vecbeta$).  The second term $-\psiL(\vectheta)$
+is the gravitational (Shapiro) delay.  Because $\psiL$ is defined only up
+to an additive constant, its sign carries no physical meaning; its shape
+does.  For any attractive axisymmetric lens $d\psiL/d\theta = \alpha > 0$,
+so $-\psiL$ is largest at the lens centre: photons passing through a
+deeper part of the potential are delayed more, as for the Shapiro delay
+of Chapter~\ref{ch:light_deflection}.\footnote{An
+earlier version of this remark said that $\psiL>0$ makes the
+Shapiro term \emph{reduce} the arrival time.  That has the sign
+backwards: the Shapiro delay $(2/\speedoflight^3)\int|\Phi|\,dl$
+is positive and grows with $|\Phi|$
+\citep[eq.~3]{narayan_lectures_1997}.}  For a point mass,
+$\psiL = \thetaE^2\ln|\vectheta|$ and $-\psiL\to+\infty$ at the origin,
+so the arrival-time surface has an infinite peak there instead of a
+smooth maximum.  The competition between geometric and gravitational
+delay determines the structure of the arrival-time surface and hence the
+number and types of images.
 \end{remark}
 
 
@@ -249,7 +236,7 @@ images.
 \section{Fermat's Principle and the Lens Equation}
 \label{sec:fermat_principle}
 
-\textbf{Fermat's principle} states that images form at stationary points
+Fermat's principle states that images form at stationary points
 of the arrival time $t(\vectheta)$, or equivalently, at stationary points
 of the Fermat potential $\tau(\vectheta, \vecbeta)$:
 \begin{equation}
@@ -276,7 +263,7 @@ Setting this to zero:
 \end{equation}
 Since the reduced deflection angle is $\vecalpha(\vectheta) = \nabla\psiL(\vectheta)$
 (from Chapter~\ref{ch:magnification}), this is precisely
-the \textbf{lens equation}:
+the lens equation:
 \begin{equation}
     \boxed{
     \vecbeta = \vectheta - \vecalpha(\vectheta)
@@ -285,9 +272,9 @@ the \textbf{lens equation}:
 \end{equation}
 
 \begin{remark}
-This is a remarkable result: the lens equation, which we previously derived
-from ray-tracing geometry, follows directly from the
-\textbf{stationarity of the arrival time}.  Fermat's principle provides
+The lens equation, which we previously derived
+from ray-tracing geometry, thus follows from the
+stationarity of the arrival time.  Fermat's principle provides
 a variational derivation of the fundamental equation of gravitational
 lensing.  The connection between the gradient of the lensing potential and
 the deflection angle, $\vecalpha = \nabla\psiL$, was established in
@@ -323,14 +310,14 @@ only the stationary ones are.
 
 At each stationary point $\vectheta_i$ of the Fermat potential (i.e.,
 at each image position), we can characterize the nature of the
-stationary point by the \textbf{Hessian matrix} of $\tau$:
+stationary point by the \emph{Hessian matrix} of $\tau$:
 \begin{equation}
     T_{ab} = \frac{\partial^2 \tau}{\partial\theta_a\,\partial\theta_b}
     = \delta_{ab} - \frac{\partial^2\psiL}{\partial\theta_a\,\partial\theta_b}
     = \Amat_{ab} \,,
     \label{eq:hessian_tau}
 \end{equation}
-where $\Amat_{ab}$ is the \textbf{Jacobian matrix} of the lens mapping
+where $\Amat_{ab}$ is the Jacobian matrix of the lens mapping
 (the inverse magnification matrix, from
 Chapter~\ref{ch:magnification}).
 
@@ -353,27 +340,27 @@ image.  (\texttt{problems\_06.wl} A3b.)
 
 The eigenvalues of $T_{ab}$ at a stationary point determine the
 \textit{type} of the image.  There are exactly three possibilities,
-classified by \textbf{Morse theory}:
+classified by \emph{Morse theory}:
 
 \begin{enumerate}
-    \item \textbf{Type I image --- Minimum of $\tau$:}
+    \item \emph{Type I image (minimum of $\tau$).}
     Both eigenvalues of $T$ are positive.  Equivalently,
     $\det(\Amat) > 0$ and $\mathrm{tr}(\Amat) > 0$.  The magnification
     $\mu = 1/\det(\Amat) > 0$ (positive parity: the image is not
-    mirror-reflected).  This image corresponds to the \textit{minimum}
-    of the arrival-time surface and therefore \textbf{arrives first}.
+    mirror-reflected).  This image corresponds to the minimum
+    of the arrival-time surface and therefore arrives first.
 
-    \item \textbf{Type II image --- Saddle point of $\tau$:}
+    \item \emph{Type II image (saddle point of $\tau$).}
     One eigenvalue is positive and one is negative.  Equivalently,
     $\det(\Amat) < 0$.  The magnification $\mu = 1/\det(\Amat) < 0$
     (negative parity: the image is mirror-reflected).
 
-    \item \textbf{Type III image --- Maximum of $\tau$:}
+    \item \emph{Type III image (maximum of $\tau$).}
     Both eigenvalues of $T$ are negative.  Equivalently,
     $\det(\Amat) > 0$ and $\mathrm{tr}(\Amat) < 0$.  The magnification
     $\mu = 1/\det(\Amat) > 0$ (positive parity).  This image
-    corresponds to the \textit{maximum} of the arrival-time surface and
-    therefore \textbf{arrives last}.
+    corresponds to the maximum of the arrival-time surface and
+    therefore arrives last.
 \end{enumerate}
 
 \begin{derivation}[From eigenvalue signs to $\det\Amat$ and $\mathrm{tr}\,\Amat$]
@@ -432,7 +419,7 @@ The topology of the arrival-time surface $\tau(\vectheta)$ completely
 determines the image structure.  Each minimum, saddle, and maximum of
 $\tau$ corresponds to an image.  When a source crosses a caustic, two
 stationary points of $\tau$ merge and annihilate (or are created from
-nothing) --- always one saddle and one extremum, preserving the
+nothing), always one saddle and one extremum, preserving the
 constraint $N_{\min} + N_{\max} - N_{\mathrm{saddle}} = 1$ (a
 consequence of Morse theory on the plane).  This topological constraint
 is why images always appear and disappear in pairs with opposite parity,
@@ -441,10 +428,10 @@ as explored in detail in Chapter~\ref{ch:elliptical_models}.
 
 \begin{theorem}[Burke's Odd-Number Theorem]
 \label{thm:odd_number}
-For a \textbf{transparent} lens (i.e., a lens with a smooth, bounded
+For a \emph{transparent} lens (i.e., a lens with a smooth, bounded
 surface mass density $\Sigma(\vectheta)$ that falls off sufficiently
 rapidly at large $|\vectheta|$), the total number of images is always
-\textbf{odd}.  Specifically, if we denote by $n_{\mathrm{min}}$,
+odd.  Specifically, if we denote by $n_{\mathrm{min}}$,
 $n_{\mathrm{sad}}$, and $n_{\mathrm{max}}$ the numbers of minima,
 saddle points, and maxima of $\tau$, then:
 \begin{equation}
@@ -516,7 +503,7 @@ near that maximum, which is where Chapter~\ref{ch:odd_images} starts.
 The arrival-time surface is the three-dimensional plot of
 $\tau(\vectheta)$ as a function of the two-dimensional image-plane
 position $\vectheta = (\theta_1, \theta_2)$ for a fixed source position
-$\vecbeta$.  This is the iconic visualization of Fermat's principle in
+$\vecbeta$.  It is the standard visualization of Fermat's principle in
 gravitational lensing.
 
 \subsection{Point Mass Lens}
@@ -537,18 +524,14 @@ The Fermat potential becomes:
 For a source at $\vecbeta = (\beta, 0)$ with $\beta > 0$ (placing the
 source along the $\theta_1$-axis without loss of generality by the
 azimuthal symmetry of the lens), the arrival-time surface
-$\tau(\theta_1, \theta_2)$ has exactly \textbf{two} stationary points
-in the region $|\vectheta| > 0$:
-\begin{itemize}
-    \item A \textbf{minimum} (Type~I) at $\vectheta = (\theta_+, 0)$,
-          where $\theta_+ = (\beta + \sqrt{\beta^2 + 4\thetaE^2})/2$ is
-          the primary image from eq.~\eqref{eq:image_positions}.  This
-          image arrives \textit{first}.
-    \item A \textbf{saddle point} (Type~II) at
-          $\vectheta = (\theta_-, 0)$, where
-          $\theta_- = (\beta - \sqrt{\beta^2 + 4\thetaE^2})/2$ is the
-          secondary image.  This image arrives \textit{second}.
-\end{itemize}
+$\tau(\theta_1, \theta_2)$ has exactly two stationary points
+in the region $|\vectheta| > 0$: a minimum (Type~I) at
+$\vectheta = (\theta_+, 0)$, where
+$\theta_+ = (\beta + \sqrt{\beta^2 + 4\thetaE^2})/2$ is the primary image
+from eq.~\eqref{eq:image_positions}, which arrives first; and a saddle
+point (Type~II) at $\vectheta = (\theta_-, 0)$, where
+$\theta_- = (\beta - \sqrt{\beta^2 + 4\thetaE^2})/2$ is the secondary
+image, which arrives second.
 
 The point $\vectheta = \mathbf{0}$ is a \emph{singularity} of $\psiL$,
 not a true stationary point of $\tau$, so the point-mass lens has only
@@ -596,8 +579,8 @@ Fermat potential becomes circularly symmetric:
 \end{equation}
 The stationarity condition $d\tau/d|\vectheta| = 0$ gives
 $|\vectheta| = \thetaE$, which is the Einstein ring.  The minimum
-of $\tau$ is no longer an isolated point but a \textbf{circle} of
-stationary points --- the Einstein ring is a degenerate minimum of
+of $\tau$ is no longer an isolated point but a circle of
+stationary points: the Einstein ring is a degenerate minimum of
 the arrival-time surface.
 
 \begin{figure}[ht]
@@ -617,7 +600,7 @@ the arrival-time surface.
 \label{sec:observable_time_delays}
 
 The arrival time at each image $\vectheta_i$ is given by
-eq.~\eqref{eq:time_delay_function}.  The \textbf{time delay} between
+eq.~\eqref{eq:time_delay_function}.  The \emph{time delay} between
 two images $i$ and $j$ is the difference in their arrival times:
 \begin{equation}
     \boxed{
@@ -629,7 +612,7 @@ two images $i$ and $j$ is the difference in their arrival times:
     \label{eq:time_delay_between_images}
 \end{equation}
 
-This quantity is \textbf{directly observable}: if the source is variable
+This quantity is directly observable: if the source is variable
 (as quasars are), the light curves measured at the two image positions
 will show the same variability pattern, but shifted by $\Delta t_{ij}$.
 By cross-correlating the light curves, one can extract $\Delta t_{ij}$
@@ -638,16 +621,16 @@ to high precision.
 \begin{remark}
 The time delay $\Delta t_{ij}$ depends on three ingredients:
 \begin{enumerate}[nosep]
-    \item The \textbf{cosmological distances} $(1+z_d)\,\Dd\,\Ds/\Dds$,
+    \item The cosmological distances $(1+z_d)\,\Dd\,\Ds/\Dds$,
           which encode the expansion history of the universe.
-    \item The \textbf{image positions} $\vectheta_i$, $\vectheta_j$,
+    \item The image positions $\vectheta_i$, $\vectheta_j$,
           which are directly observed.
-    \item The \textbf{lensing potential} $\psiL(\vectheta)$, which must
+    \item The lensing potential $\psiL(\vectheta)$, which must
           be modeled from the observed lens properties (mass distribution,
           image positions, fluxes, etc.).
 \end{enumerate}
 Given items (2) and (3), a measurement of $\Delta t_{ij}$ constrains
-the distance combination in item (1) --- and hence the cosmological
+the distance combination in item (1), and hence the cosmological
 parameters.
 \end{remark}
 
@@ -665,7 +648,7 @@ before comparing numbers.
 \section{Time Delay and the Hubble Constant}
 \label{sec:time_delay_H0}
 
-The key cosmological application of time delays is the measurement of
+The principal cosmological application of time delays is the measurement of
 the Hubble constant $\Hubble$.  The distance combination
 $\Dd\,\Ds / \Dds$ is an angular diameter distance ratio that scales
 inversely with the Hubble constant:
@@ -696,7 +679,7 @@ $\Hubble$.  Hence $\Delta t\propto\Hubble^{-1}$ at fixed $\Delta\tau$.
 Comoving distances add along a line of sight in a flat universe
 ($\chi_{ds} = \chi_s-\chi_d$), but angular-diameter distances do not.  For
 $z_d=0.3$, $z_s=1$: $\Dds/(\Ds-\Dd)\approx1.44$ (check A10c).  Writing
-$\Dds = \Ds-\Dd$ is the classic error that turns a correct $\Hubble$ pipeline into
+$\Dds = \Ds-\Dd$ is the common error that turns a correct $\Hubble$ pipeline into
 a wrong one.
 \end{annotation}
 
@@ -708,10 +691,10 @@ Therefore, the time delay between images scales as:
     \label{eq:Dt_H0}
 \end{equation}
 
-This is the basis of \textbf{time-delay cosmography}: by measuring
+This is the basis of \emph{time-delay cosmography}: by measuring
 $\Delta t$ from monitoring campaigns and modeling the lens potential
-$\psiL$, one can determine $\Hubble$ \textit{independently of the
-cosmic distance ladder}.  The method is sometimes called ``one-step''
+$\psiL$, one can determine $\Hubble$ independently of the
+cosmic distance ladder.  The method is sometimes called ``one-step''
 distance measurement, because it converts an observed time delay
 directly into a physical distance.
 
@@ -961,9 +944,9 @@ Since $\theta_+^2 - \theta_-^2 = (\theta_+ + \theta_-)(\theta_+ - \theta_-)
     \frac{\Dd\,\Ds}{\Dds}\, \beta\,\thetaE \,.
     \label{eq:time_delay_SIS_simple}
 \end{equation}
-For the SIS, the time delay is proportional to the source position ---
-the further the source from the optical axis, the larger the time delay.
-This simple relation makes the SIS a useful ``first approximation'' for
+For the SIS the time delay is proportional to the source position:
+the farther the source from the optical axis, the larger the time delay.
+This relation makes the SIS a useful first approximation for
 time-delay estimates.
 
 \begin{derivation}[$\tau$ at the two SIS images]
@@ -993,51 +976,36 @@ times $\Dds/\Ds<1$.  Chapter~\ref{ch:axisymmetric_models} derives all of this.
 \section{Summary}
 \label{sec:fermat_summary}
 
-\begin{itemize}
-    \item The \textbf{time delay function}
-          $t(\vectheta) \propto \tau(\vectheta, \vecbeta)$
-          gives the arrival time of a photon passing through the lens
-          plane at $\vectheta$.  The \textbf{Fermat potential}
-          $\tau = \half|\vectheta - \vecbeta|^2 - \psiL(\vectheta)$
-          combines the geometric delay (extra path length) and the
-          Shapiro delay (gravitational time delay from the lensing
-          potential).
+The time delay function $t(\vectheta) \propto \tau(\vectheta, \vecbeta)$
+gives the arrival time of a photon passing through the lens plane at
+$\vectheta$.  The Fermat potential
+$\tau = \half|\vectheta - \vecbeta|^2 - \psiL(\vectheta)$ combines the
+geometric delay (extra path length) and the Shapiro delay (gravitational
+time delay from the lensing potential).  Fermat's principle states that
+images form at stationary points of $\tau(\vectheta)$; the condition
+$\nabla_{\vectheta}\tau = 0$ recovers the lens equation
+$\vecbeta = \vectheta - \nabla\psiL = \vectheta - \vecalpha$.  Images are
+classified by Morse theory: Type~I (minimum, positive parity, arrives
+first), Type~II (saddle, negative parity), Type~III (maximum, positive
+parity, arrives last).  Burke's theorem states that the number of images
+is always odd for a transparent lens.  The arrival-time surface
+$\tau(\theta_1, \theta_2)$ visualizes the image-forming process; for a
+point mass lens it has a minimum and a saddle point (plus a singular
+maximum at the lens center).
 
-    \item \textbf{Fermat's principle}: images form at stationary points
-          of $\tau(\vectheta)$.  The condition $\nabla_{\vectheta}\tau = 0$
-          recovers the lens equation
-          $\vecbeta = \vectheta - \nabla\psiL = \vectheta - \vecalpha$.
-
-    \item Images are classified by \textbf{Morse theory}:
-          \textbf{Type~I} (minimum, positive parity, arrives first),
-          \textbf{Type~II} (saddle, negative parity),
-          \textbf{Type~III} (maximum, positive parity, arrives last).
-          \textbf{Burke's theorem}: the number of images is always odd
-          for a transparent lens.
-
-    \item The \textbf{arrival-time surface} $\tau(\theta_1, \theta_2)$
-          visualizes the image-forming process.  For a point mass lens,
-          it has a minimum and a saddle point (plus a singular maximum
-          at the lens center).
-
-    \item The \textbf{time delay between images}
-          $\Delta t_{ij} \propto (1+z_d)\,\Dd\Ds/\Dds \times
-          [\tau(\vectheta_i) - \tau(\vectheta_j)]$
-          is directly observable by monitoring variable sources.
-
-    \item $\Delta t \propto \Hubble^{-1}$: measuring time delays and
-          modeling the lens potential gives $\Hubble$ independently of
-          the distance ladder.  This is \textbf{time-delay cosmography},
-          implemented by programs such as H0LiCOW/TDCOSMO.
-
-    \item For a point mass lens, the dimensionless time delay is
-          $\Delta\tau = y\sqrt{y^2+4}/2 + \ln[(\sqrt{y^2+4}+y)/(\sqrt{y^2+4}-y)]$,
-          where $y = \beta/\thetaE$.  The physical time delay for a
-          galaxy-mass lens is of order days to a year or so.
-
-    \item For the SIS, $\Delta t_{\mathrm{SIS}} \propto \beta\,\thetaE$,
-          a simple linear dependence on the source position.
-\end{itemize}
+The time delay between images
+$\Delta t_{ij} \propto (1+z_d)\,\Dd\Ds/\Dds \times
+[\tau(\vectheta_i) - \tau(\vectheta_j)]$ is directly observable by
+monitoring variable sources, and $\Delta t \propto \Hubble^{-1}$:
+measuring time delays and modeling the lens potential gives $\Hubble$
+independently of the distance ladder.  This is time-delay cosmography,
+implemented by programs such as H0LiCOW/TDCOSMO.  For a point mass lens
+the dimensionless time delay is
+$\Delta\tau = y\sqrt{y^2+4}/2 + \ln[(\sqrt{y^2+4}+y)/(\sqrt{y^2+4}-y)]$,
+where $y = \beta/\thetaE$, and the physical time delay for a galaxy-mass
+lens is of order days to a year or so.  For the SIS,
+$\Delta t_{\mathrm{SIS}} \propto \beta\,\thetaE$, a linear dependence on
+the source position.
 
 
 % =====================================================================

@@ -21,36 +21,29 @@ astigmatism) into the lens mapping [\ldots]}
 In Chapter~\ref{ch:lens_equation} we derived the lens equation
 $\vecbeta = \vectheta - \vecalpha(\vectheta)$ and used it to find
 image positions for a point mass lens.  We also previewed the
-magnification formula for the point mass case.  Now we develop the
-\textit{general} formalism that describes how lensing distorts images:
+magnification formula for the point mass case.  We now develop the
+general formalism that describes how lensing distorts images:
 their size, shape, and brightness relative to the unlensed source.
 
-The key players are:
-\begin{itemize}[nosep]
-    \item The \textbf{lensing potential} $\psiL(\vectheta)$, from
-          which the deflection angle derives as a gradient.
-    \item The \textbf{convergence} $\kappab(\vectheta)$, the
-          dimensionless surface mass density, which causes isotropic
-          focusing.
-    \item The \textbf{shear} $\gammaL(\vectheta)$, a spin-2 field
-          that causes anisotropic stretching.
-    \item The \textbf{Jacobian matrix} $\Amat$, which encodes
-          all local lensing distortions.
-    \item The \textbf{magnification} $\mu$, the ratio of image
-          area to source area.
-\end{itemize}
+The objects of the chapter are the lensing potential $\psiL(\vectheta)$,
+from which the deflection angle derives as a gradient; the convergence
+$\kappab(\vectheta)$, the dimensionless surface mass density, which
+causes isotropic focusing; the shear $\gammaL(\vectheta)$, a spin-2
+field that causes anisotropic stretching; the Jacobian matrix $\Amat$,
+which encodes all local lensing distortions; and the magnification
+$\mu$, the ratio of image area to source area.
 
 \medskip
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
-    \item \mathlink{05_Magnification_Convergence_Shear/lensing_potential.wl}{lensing\_potential.wl}
-          --- symbolic derivation of $\psiL$, convergence, shear,
+    \item \mathlink{05_Magnification_Convergence_Shear/lensing_potential.wl}{lensing\_potential.wl}:
+          symbolic derivation of $\psiL$, convergence, shear,
           Jacobian, and magnification for the point mass lens;
           verification of the 2D Poisson equation; publication-quality
           figure generation
-    \item \mathlink{05_Magnification_Convergence_Shear/convergence_shear_demo.nb}{convergence\_shear\_demo.nb}
-          --- interactive notebook: Manipulate for convergence and
+    \item \mathlink{05_Magnification_Convergence_Shear/convergence_shear_demo.nb}{convergence\_shear\_demo.nb}:
+          interactive notebook: Manipulate for convergence and
           shear effects on circular sources, magnification map for
           point mass lens
 \end{itemize}
@@ -60,22 +53,21 @@ The key players are:
 \section{Introduction: From Image Positions to Image Properties}
 \label{sec:mag_intro}
 
-The lens equation tells us \textit{where} images form.  But
-observations reveal much more than positions: lensed images are
-\textit{stretched}, \textit{magnified}, and sometimes
-\textit{mirror-reflected} relative to the unlensed source.  Giant arcs
-in galaxy clusters are dramatic examples --- background galaxies
-stretched into elongated curves by the cluster's gravity.
+The lens equation gives the positions of the images.  Observations
+reveal more than positions: lensed images are stretched, magnified, and
+sometimes mirror-reflected relative to the unlensed source.  Giant arcs
+in galaxy clusters, background galaxies stretched into elongated curves
+by the cluster's gravity, are the most conspicuous example.
 
-To describe these distortions quantitatively, we need to understand the
-\textit{local} properties of the lens mapping
+To describe these distortions quantitatively, we need the local
+properties of the lens mapping
 $\vecbeta(\vectheta)$.  Since the lens mapping is a smooth function
 (except at isolated singularities), its local behavior is captured by
-its \textbf{Jacobian matrix} --- the matrix of first partial
+its Jacobian matrix, the matrix of first partial
 derivatives.  This matrix encodes all information about magnification,
 stretching, and parity of each image.
 
-We begin by introducing the \textbf{effective lensing potential}
+We begin by introducing the effective lensing potential
 $\psiL(\vectheta)$, a scalar field from which the deflection angle
 can be derived as a gradient.  This potential provides a unified
 framework: its first derivatives give the deflection, and its second
@@ -88,11 +80,11 @@ derivatives give the convergence and shear.
 
 In Chapter~\ref{ch:lens_equation} (eq.~\ref{eq:alpha_angular}) we
 expressed the reduced deflection angle as an integral over the
-convergence.  Remarkably, this deflection can be written as the
+convergence.  This deflection can be written as the
 gradient of a scalar potential.
 
 \begin{definition}
-The \textbf{effective lensing potential} (or simply the lensing
+The \emph{effective lensing potential} (or lensing
 potential) is defined as
 (Narayan \& Bartelmann eq.~51; Congdon \& Keeton eq.~4.14):
 \begin{equation}
@@ -127,15 +119,15 @@ changes nothing. Adding a linear term $\mathbf{a}\cdot\vectheta$ shifts every
 deflection by the constant vector $\mathbf{a}$, and therefore every source position by
 $-\mathbf{a}$. Since the unlensed source position is never observed, this is
 unobservable too, and the Hessian, which is all that enters $\kappab$, $\gammaL$ and
-$\mu$, is unchanged. Note also that the logarithmic kernel means $\psiL$ of a
-finite mass does \emph{not} vanish at infinity. It grows like
+$\mu$, is unchanged. Because of the logarithmic kernel, $\psiL$ of a
+finite mass does not vanish at infinity. It grows like
 $\ln|\vectheta|$, as the point-mass example $\psiL = \thetaE^2\ln|\vectheta|$
-below shows. Do not try to impose $\psiL \to 0$ as a boundary condition.
+below shows, so $\psiL \to 0$ cannot be imposed as a boundary condition.
 \end{annotation}
 
 \subsection{Key Properties of the Lensing Potential}
 
-The lensing potential has two crucial properties:
+The lensing potential has two basic properties:
 
 \paragraph{(1) Its gradient gives the deflection angle.}
 Taking the gradient of eq.~\eqref{eq:lensing_potential}:
@@ -268,28 +260,23 @@ Chapter~\ref{ch:lens_equation} (eq.~\ref{eq:convergence_def}):
     \label{eq:kappa_def_review}
 \end{equation}
 
-It is the \textbf{dimensionless surface mass density} --- the ratio of
-the actual surface mass density to the critical value.  We now explore
+It is the dimensionless surface mass density, the ratio of
+the actual surface mass density to the critical value.  We now examine
 its role in image distortion.
 
 \subsection{Physical Meaning}
 
-The convergence measures the \textit{isotropic focusing} caused by
-the lens:
-\begin{itemize}
-    \item A region with $\kappab > 0$ acts as a converging lens,
-          focusing light rays and magnifying images isotropically
-          (without changing their shape).
-    \item $\kappab = 1$ means $\Sigma = \Sigmacr$: this is the
-          threshold for strong lensing.  Regions where $\kappab \geq 1$
-          are \textbf{supercritical} and can produce multiple images.
-    \item For an \textbf{axisymmetric} lens, $\kappab < 1$ everywhere
-          means the lens is subcritical: it can still distort images
-          (via shear), but it cannot produce multiple images.  (For a
-          non-axisymmetric lens, $\kappab > 1$ somewhere is sufficient
-          but not necessary: shear can produce multiple images even
-          with $\kappab < 1$ everywhere; Congdon \& Keeton Sec.~2.5.)
-\end{itemize}
+The convergence measures the isotropic focusing caused by
+the lens.  A region with $\kappab > 0$ acts as a converging lens,
+focusing light rays and magnifying images isotropically (without
+changing their shape).  The value $\kappab = 1$ means $\Sigma = \Sigmacr$,
+the threshold for strong lensing; regions where $\kappab \geq 1$ are
+supercritical and can produce multiple images.  For an axisymmetric
+lens, $\kappab < 1$ everywhere means the lens is subcritical: it can
+still distort images (via shear), but it cannot produce multiple images.
+(For a non-axisymmetric lens, $\kappab > 1$ somewhere is sufficient but
+not necessary: shear can produce multiple images even with $\kappab < 1$
+everywhere; Congdon \& Keeton Sec.~2.5.)
 
 \subsection{Convergence from the Lensing Potential}
 
@@ -301,7 +288,7 @@ From the 2D Poisson equation~\eqref{eq:poisson_2d}:
     + \frac{\partial^2 \psiL}{\partial\theta_2^2}\right) .
     \label{eq:kappa_from_psi}
 \end{equation}
-Thus the convergence is the \textit{trace} of the Hessian of the
+Thus the convergence is the trace of the Hessian of the
 lensing potential (up to a factor of $1/2$).
 
 
@@ -309,12 +296,12 @@ lensing potential (up to a factor of $1/2$).
 \section{Shear}
 \label{sec:shear}
 
-The shear describes the \textit{anisotropic distortion} of images ---
-the stretching in one direction and compression in the perpendicular
+The shear describes the anisotropic distortion of images, the
+stretching in one direction and compression in the perpendicular
 direction.
 
 The specific combinations that define $\gamma_1$ and $\gamma_2$ are
-forced by a clean geometric argument.  The Hessian of the lensing
+fixed by a geometric argument.  The Hessian of the lensing
 potential,
 \begin{equation*}
     H_{ij} \;\equiv\; \frac{\partial^2 \psiL}{\partial\theta_i\,\partial\theta_j} \,,
@@ -355,7 +342,7 @@ Forming the complex shear $\gamma \equiv \gamma_1 + i\gamma_2$,
     \gamma \;\longrightarrow\; e^{-2i\phi}\,\gamma \,,
     \label{eq:shear_spin2}
 \end{equation}
-which is the spin-2 transformation law --- the reason the shear has a
+which is the spin-2 transformation law, the reason the shear has a
 $180^\circ$ (not $360^\circ$) rotational symmetry.  The decomposition
 \eqref{eq:hessian_decomp} and the transformation law
 \eqref{eq:shear_spin2} are verified symbolically in
@@ -1007,8 +994,8 @@ gives:
     = \frac{\theta^4}{\theta^4 - \thetaE^4} \,.
     \label{eq:mu_point_mass}
 \end{equation}
-This is precisely eq.~\eqref{eq:magnification_pm} from
-Chapter~\ref{ch:lens_equation}!  Evaluating at the image positions
+This is eq.~\eqref{eq:magnification_pm} of
+Chapter~\ref{ch:lens_equation}.  Evaluating at the image positions
 $\theta_\pm$:
 \begin{equation}
     |\mu_\pm| = \frac{u^2 + 2}{2u\sqrt{u^2 + 4}} \pm \frac{1}{2} \,,
@@ -1053,8 +1040,8 @@ The convergence is:
     \label{eq:kappa_sis}
 \end{equation}
 where $\thetaE = 4\pi\sigma_v^2\Dds/(\speedoflight^2\Ds)$ is the
-Einstein radius of the SIS\@.  Note that $\kappab$ diverges at
-$\theta = 0$ (the ``singular'' in the name) and that
+Einstein radius of the SIS\@.  Here $\kappab$ diverges at
+$\theta = 0$ (the ``singular'' in the name), and
 $\kappab(\thetaE) = 1/2$.
 
 The shear magnitude for the SIS is:
@@ -1063,8 +1050,8 @@ The shear magnitude for the SIS is:
     = \kappab(\theta) \,.
     \label{eq:gamma_sis}
 \end{equation}
-Remarkably, $|\gammaL| = \kappab$ at every point for the SIS\@.  This
-equality does \textit{not} hold for general lens models --- it is a
+Thus $|\gammaL| = \kappab$ at every point for the SIS\@.  This
+equality does not hold for general lens models; it is a
 special property of the isothermal profile.
 \begin{derivation}[SIS convergence and shear]
 \emph{Convergence.} Divide eq.~\eqref{eq:sis_sigma_preview} at $\xi = \Dd\theta$
@@ -1090,13 +1077,13 @@ The magnification is:
     = \frac{\theta}{\theta - \thetaE} \,.
     \label{eq:mu_sis}
 \end{equation}
-The magnification diverges at $\theta = \thetaE$ --- this is the
-(tangential) critical curve of the SIS\@.  We will treat the SIS model
-in full detail in Chapter~\ref{ch:axisymmetric_models}.
+The magnification diverges at $\theta = \thetaE$, the
+(tangential) critical curve of the SIS\@.  The SIS model is treated
+in full in Chapter~\ref{ch:axisymmetric_models}.
 \begin{annotation}[The SIS has no radial critical curve]
 For the SIS, $\lambda_t = 1 - 2\kappab = 1 - \thetaE/\theta$ and
 $\lambda_r = 1 - \kappab + |\gammaL| = 1$ exactly: all the magnification is
-tangential (cf.\ Congdon \& Keeton, caption of Fig.~2.3). Note
+tangential (cf.\ Congdon \& Keeton, caption of Fig.~2.3). Here
 $\kappab(\thetaE) = \tfrac12$, while the mean convergence inside $\thetaE$ is
 1. A frequent slip is to locate the Einstein ring where $\kappab = 1$.
 \end{annotation}
@@ -1107,7 +1094,7 @@ $\kappab(\thetaE) = \tfrac12$, while the mean convergence inside $\thetaE$ is
 \label{sec:critical_curves_preview}
 
 \begin{definition}
-The \textbf{critical curves} are the loci in the image plane where
+The \emph{critical curves} are the loci in the image plane where
 the magnification diverges:
 \begin{equation}
     \det \Amat(\vectheta) = 0
@@ -1115,7 +1102,7 @@ the magnification diverges:
     (1 - \kappab)^2 = |\gammaL|^2 \,.
     \label{eq:critical_curve_condition}
 \end{equation}
-The \textbf{caustics} are the images of the critical curves under the
+The \emph{caustics} are the images of the critical curves under the
 lens mapping, i.e., the corresponding curves in the source plane:
 \begin{equation}
     \vecbeta_{\mathrm{caustic}} = \vectheta_{\mathrm{crit}}
@@ -1124,24 +1111,20 @@ lens mapping, i.e., the corresponding curves in the source plane:
 \end{equation}
 \end{definition}
 
-Critical curves and caustics play a central role in strong lensing:
-\begin{itemize}
-    \item When a source crosses a caustic, the number of images
-          changes by two (a pair of highly magnified images appears
-          or disappears).
-    \item Sources near caustics are very highly magnified --- this is
-          exploited in studies of distant, faint galaxies.
-    \item The topology of critical curves and caustics determines the
-          image configuration (doubly, quadruply, or multiply imaged
-          sources).
-\end{itemize}
+Critical curves and caustics play a central role in strong lensing.
+When a source crosses a caustic, the number of images changes by two
+(a pair of highly magnified images appears or disappears); sources near
+caustics are very highly magnified, which is exploited in studies of
+distant, faint galaxies; and the topology of critical curves and
+caustics determines the image configuration (doubly, quadruply, or
+multiply imaged sources).
 
 \begin{remark}[Physical intuition for critical curves]
 When $\det(\Amat) = 0$, the magnification is formally infinite.
-Physically, this means that images near a critical curve are highly
+Images near a critical curve are therefore highly
 stretched and magnified.  A small source near a \textit{caustic} (the
 mapping of the critical curve to the source plane) produces two images
-straddling the critical curve --- one with positive parity (unreflected)
+straddling the critical curve, one with positive parity (unreflected)
 and one with negative parity (mirror-reflected).  These images
 appear/disappear in pairs as the source crosses a caustic, which is why
 the total number of images always changes by $\pm 2$, preserving the
@@ -1152,7 +1135,7 @@ developed in Chapter~\ref{ch:elliptical_models}.
 For the point mass lens, the critical curve is the Einstein ring
 ($\theta = \thetaE$), and the caustic degenerates to a single point
 ($\beta = 0$).  For more complex lens models, both critical curves
-and caustics have richer structures.  We will develop the full theory
+and caustics have richer structure; the full theory is developed
 in Chapter~\ref{ch:elliptical_models}.
 \begin{annotation}[Which caustic is which, for axisymmetric lenses]
 A tangential critical curve ($\lambda_t = 0$, i.e.\ $\alpha(\theta) = \theta$)
@@ -1169,45 +1152,33 @@ Chapter~\ref{ch:elliptical_models}.
 \section{Summary}
 \label{sec:mag_summary}
 
-\begin{itemize}
-    \item The \textbf{lensing potential}
-          $\psiL(\vectheta) = (1/\pi)\int\kappab(\vectheta')\,
-          \ln|\vectheta - \vectheta'|\,d^2\theta'$ is a scalar
-          field whose gradient gives the deflection angle
-          ($\vecalpha = \nabla\psiL$) and whose Laplacian gives
-          twice the convergence ($\nabla^2\psiL = 2\kappab$).
+The lensing potential
+$\psiL(\vectheta) = (1/\pi)\int\kappab(\vectheta')\,
+\ln|\vectheta - \vectheta'|\,d^2\theta'$ is a scalar
+field whose gradient gives the deflection angle
+($\vecalpha = \nabla\psiL$) and whose Laplacian gives
+twice the convergence ($\nabla^2\psiL = 2\kappab$).  The convergence
+$\kappab = \Sigma/\Sigmacr$ causes isotropic focusing: a circular source
+remains circular but changes size.  The shear $\gammaL = \gamma_1 + i\gamma_2$
+causes anisotropic distortion: a circular source is stretched into an
+ellipse.
 
-    \item The \textbf{convergence}
-          $\kappab = \Sigma/\Sigmacr$ causes isotropic focusing:
-          a circular source remains circular but changes size.
-
-    \item The \textbf{shear} $\gammaL = \gamma_1 + i\gamma_2$
-          causes anisotropic distortion: a circular source is
-          stretched into an ellipse.
-
-    \item The \textbf{Jacobian matrix}
-          $\Amat = \bigl(\begin{smallmatrix}
-          1-\kappab-\gamma_1 & -\gamma_2 \\
-          -\gamma_2 & 1-\kappab+\gamma_1
-          \end{smallmatrix}\bigr)$
-          encodes all local lensing properties.  Its eigenvalues
-          $\lambda_\pm = 1 - \kappab \pm |\gammaL|$ give the
-          inverse magnifications along the principal axes.
-
-    \item The \textbf{magnification}
-          $\mu = 1/\det\Amat = 1/[(1-\kappab)^2 - |\gammaL|^2]$.
-          The sign of $\mu$ determines the image parity.
-
-    \item For a \textbf{point mass lens}: $\kappab = 0$ (away from
-          the origin), $|\gammaL| = \thetaE^2/\theta^2$, and the
-          general magnification formula recovers the result
-          $|\mu_\pm| = (u^2+2)/(2u\sqrt{u^2+4}) \pm 1/2$ from Chapter~\ref{ch:lens_equation},
-          with $\mu_- < 0$.
-
-    \item \textbf{Critical curves} ($\det\Amat = 0$) and their
-          mappings, \textbf{caustics}, govern the image multiplicity
-          and are the sites of maximum magnification.
-\end{itemize}
+The Jacobian matrix
+$\Amat = \bigl(\begin{smallmatrix}
+1-\kappab-\gamma_1 & -\gamma_2 \\
+-\gamma_2 & 1-\kappab+\gamma_1
+\end{smallmatrix}\bigr)$
+encodes all local lensing properties.  Its eigenvalues
+$\lambda_\pm = 1 - \kappab \pm |\gammaL|$ give the inverse magnifications
+along the principal axes, and the magnification is
+$\mu = 1/\det\Amat = 1/[(1-\kappab)^2 - |\gammaL|^2]$.  The sign of
+$\mu$ determines the image parity.  For a point mass lens, $\kappab = 0$
+(away from the origin), $|\gammaL| = \thetaE^2/\theta^2$, and the
+general magnification formula recovers the result
+$|\mu_\pm| = (u^2+2)/(2u\sqrt{u^2+4}) \pm 1/2$ from Chapter~\ref{ch:lens_equation},
+with $\mu_- < 0$.  Critical curves ($\det\Amat = 0$) and their mappings,
+caustics, govern the image multiplicity and are the sites of maximum
+magnification.
 
 
 % =====================================================================

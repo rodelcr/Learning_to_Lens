@@ -27,13 +27,11 @@ As an example, $\christoffel{0}{1}{1}$ follows from the diagonal formula:
 \]
 
 \textbf{(b)} The Ricci tensor components are given in
-eqs.~\eqref{eq:R00}--\eqref{eq:R33}.  The computation proceeds via:
-\begin{enumerate}
-    \item Compute all Riemann tensor components from the Christoffel symbols.
-    \item Contract $R_{\mu\nu} = R^\lambda_{\ \mu\lambda\nu}$.
-    \item The Ricci scalar is $\ricciS = g^{\mu\nu} R_{\mu\nu}$.
-\end{enumerate}
-The key results are:
+eqs.~\eqref{eq:R00}--\eqref{eq:R33}.  The computation proceeds by
+computing all Riemann tensor components from the Christoffel symbols,
+contracting to $R_{\mu\nu} = R^\lambda_{\ \mu\lambda\nu}$, and
+contracting once more to the Ricci scalar
+$\ricciS = g^{\mu\nu} R_{\mu\nu}$.  The results are:
 \[
     R_{00} = -\frac{3\ddot{a}}{a} \quad (x^0 = t) \,, \qquad
     R_{ij} = \frac{g_{ij}}{\speedoflight^2 a^2}
@@ -198,8 +196,8 @@ identical to the numerical integral (check B18a).
 $\Omega_k = 0.7$): $H(z) = \Hubble\sqrt{0.3(1+z)^3 + 0.7(1+z)^2}$.
 Numerical integration gives $t_0 \approx 11.3$~Gyr.  The concordance
 cosmology gives a universe that is $\sim 19\%$ older, because the
-cosmological constant accelerates the expansion at late times, effectively
-stretching the time since the Big Bang.
+cosmological constant accelerates the expansion at late times, which
+lengthens the time since the Big Bang.
 
 
 \begin{annotation}[Numbers for the open model]
@@ -230,9 +228,9 @@ Open ($\Omegam = 0.3$, $\OmegaL = 0$; $D_M$ with $\sinh$) & $1.90$ & $1583$ \\
 of the comoving distance (which increases monotonically with $z$) to
 $(1+z)$ (which also increases).  At low $z$, $\chi$ grows faster than
 $(1+z)$, so $D_A$ increases.  At high $z$, the $(1+z)$ factor dominates,
-causing $D_A$ to decrease.  Physically: photons from very distant objects
+causing $D_A$ to decrease.  Photons from very distant objects
 were emitted when the universe was much smaller, so the ``angular size
-distance'' shrinks --- the object subtends a larger angle than it would
+distance'' shrinks and the object subtends a larger angle than it would
 at an intermediate redshift.
 
 \textbf{(c)} Setting $dD_A/dz = 0$ numerically for the concordance
@@ -368,8 +366,8 @@ $4\Gnewton M/\speedoflight^2 = 2\RS$ (check B19d).
 \]
 For $\thetaE = 10''$: $M = 10^{12} \times (10/2.38)^2 \approx
 1.8 \times 10^{13}\,\Msun$.
-This is approaching a galaxy cluster mass, consistent with the fact
-that cluster lenses produce Einstein rings of $\sim 10''$--$30''$.
+This approaches a galaxy-cluster mass, consistent with the
+$\sim 10''$--$30''$ Einstein rings produced by cluster lenses.
 
 \textbf{(d)} At fixed $z_s = 1$ and $M = 10^{12}\,\Msun$, the angular
 Einstein radius $\thetaE$ \emph{decreases monotonically} with $z_d$: it
@@ -381,8 +379,8 @@ $\thetaE \approx 6.2''$ at $z_d = 0.05$ and $1.7''$ at $z_d = 0.5$.  The
 $z_d \approx 0.35$ ($\RE \approx 10.7$~kpc), a little short of the comoving
 midpoint ($\chi_d \approx 0.42\,\chi_s$).
 In practice, $\thetaE$ is very large for nearby lenses but the
-lensing cross-section becomes negligible.  The physically relevant
-quantity is the \textit{probability} of lensing, which peaks at
+lensing cross-section becomes negligible.  The relevant
+quantity is the probability of lensing, which peaks at
 intermediate $z_d$.
 
 \begin{annotation}[Why $\thetaE$ falls but $\RE$ peaks]

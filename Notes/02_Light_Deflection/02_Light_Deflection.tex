@@ -23,12 +23,10 @@ Schwarzschild spacetime, and in Chapter~\ref{ch:linearized_gravity} we obtained 
 angle $\alphahat = 4\Gnewton M / (\speedoflight^2 b)$ via the
 weak-field / Born approximation, showing how the factor of 2 over
 Newtonian gravity arises from the equal contributions of temporal and
-spatial curvature.  Now we derive this same result rigorously from the
-\textit{exact} null geodesic orbit equation in the full Schwarzschild
-metric.  This is
-the single most important result in gravitational lensing theory --- every
-lens equation, every magnification formula, and every time delay expression
-ultimately rests on it.
+spatial curvature.  We now derive the same result from the exact null
+geodesic orbit equation in the full Schwarzschild metric.  Every lens
+equation, magnification formula, and time-delay expression in the chapters
+that follow rests on it.
 
 We also derive the Shapiro time delay, which provides the second
 observable consequence of light propagation through a gravitational field,
@@ -39,12 +37,12 @@ the Sun (Eddington's 1919 test), Jupiter, and a typical galaxy lens.
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
-    \item \mathlink{02_Light_Deflection/deflection_angle.wl}{deflection\_angle.wl}
-          --- symbolic derivation of the deflection angle integral,
+    \item \mathlink{02_Light_Deflection/deflection_angle.wl}{deflection\_angle.wl}:
+          symbolic derivation of the deflection angle integral,
           weak-field expansion, numerical evaluation for Sun/Jupiter/galaxy,
           Shapiro delay, exact vs.\ approximate comparison, and figure generation
-    \item \mathlink{02_Light_Deflection/deflection_geometry.nb}{deflection\_geometry.nb}
-          --- interactive notebook: ray-bending geometry, sliders for~$M$
+    \item \mathlink{02_Light_Deflection/deflection_geometry.nb}{deflection\_geometry.nb}:
+          interactive notebook: ray-bending geometry, sliders for~$M$
           and~$b$, exact vs.\ weak-field comparison with error percentage
 \end{itemize}
 
@@ -53,7 +51,7 @@ the Sun (Eddington's 1919 test), Jupiter, and a typical galaxy lens.
 \section{Introduction: Null Geodesics and the Deflection Problem}
 \label{sec:deflection_intro}
 
-Light follows \textbf{null geodesics} in curved spacetime: paths for which
+Light follows \emph{null geodesics} in curved spacetime: paths for which
 $ds^2 = 0$ at every point.  In Chapter~\ref{ch:geodesics_orbits} we showed that for a photon in
 the equatorial plane of the Schwarzschild metric, the conserved energy~$E$
 and angular momentum~$L$ reduce the equations of motion to a single radial
@@ -100,7 +98,7 @@ The physical setup is as follows.  A photon approaches a mass~$M$ from
 infinity, reaches a distance of closest approach~$r_0$, and then escapes
 back to infinity.  The total change in the azimuthal angle~$\phi$ is
 $\Delta\phi$; in flat spacetime this would be~$\pi$ (a straight line), so
-the \textbf{deflection angle} is
+the \emph{deflection angle} is
 \begin{equation}
     \alphahat = \Delta\phi - \pi \,.
     \label{eq:deflection_def}
@@ -131,7 +129,7 @@ for galaxy and cluster lensing.  (Numbers: checks A12a--d.)
 
 \textit{Which angle.}  $\alphahat$ is the \emph{physical} bending angle at the
 lens: the angle between the incoming and outgoing asymptotes of one ray.  It is
-\emph{not} the angular offset you see on the sky.  The lens equation of Chapter~\ref{ch:lens_equation}
+not the angular offset seen on the sky.  The lens equation of Chapter~\ref{ch:lens_equation}
 uses the \emph{reduced} deflection
 $\alpha = (\Dds/\Ds)\,\alphahat$ (eq.~\eqref{eq:reduced_deflection}), and that
 distance factor is where all of the cosmology of Chapter~\ref{ch:cosmological_distances} enters.
@@ -147,9 +145,9 @@ mass~$m$ traveling at speed~$\speedoflight$.
 
 \begin{remark}
 Soldner's calculation predates general relativity by over a century.
-It is both historically important and pedagogically useful: it gives
-exactly \textit{half} the correct GR answer, and understanding
-\textit{why} illuminates the role of spatial curvature.
+It gives exactly half the GR value, and the origin of the missing half
+is the contribution of spatial curvature, which the Newtonian
+calculation omits.
 \end{remark}
 
 Consider a particle approaching a mass~$M$ on a hyperbolic trajectory with
@@ -228,14 +226,14 @@ is $\mathcal{E} = \half \speedoflight^2$.
 \label{sec:gr_deflection}
 
 We now follow Congdon \& Keeton Sec.~3.4.1 (eqs.~3.87--3.96) to derive
-the deflection angle in general relativity.  The result will be
-$\alphahat = 4\Gnewton M / (\speedoflight^2 b)$ --- exactly \textbf{twice}
+the deflection angle in general relativity.  The result is
+$\alphahat = 4\Gnewton M / (\speedoflight^2 b)$, exactly twice
 the Newtonian prediction.
 
 \subsection{The Impact Parameter}
 \label{sec:impact_parameter}
 
-The \textbf{impact parameter} $b$ is defined as the perpendicular distance
+The \emph{impact parameter} $b$ is defined as the perpendicular distance
 between the undeflected ray (the asymptotic straight line at $r \to \infty$)
 and the mass~$M$.  From the conserved quantities, it is related to $E$ and
 $L$ by (Congdon \& Keeton eq.~3.90):
@@ -255,9 +253,9 @@ for $r \to \infty$ where the bracket tends to $E^2/\speedoflight^2$,
     r^2\,\frac{d\phi}{dr} \;\longrightarrow\;
     L\left(\frac{E^2}{\speedoflight^2}\right)^{-1/2} = \frac{\speedoflight L}{E}.
 \]
-Matching the two asymptotic forms gives $b = \speedoflight L/E$.  Note that $b$
-is defined entirely at infinity; it knows nothing about how close the ray
-actually gets.  (Check A2.)
+Matching the two asymptotic forms gives $b = \speedoflight L/E$.  Since $b$
+is defined entirely at infinity, it carries no information about how close
+the ray actually comes to the mass.  (Check A2.)
 \end{derivation}
 \subsection{Distance of Closest Approach}
 \label{sec:closest_approach}
@@ -292,7 +290,7 @@ $m^1$ and $m^2$ coefficients to zero) gives
     r_0 = b - m - \frac{3}{2}\,\frac{m^2}{b} + \order{m^3/b^2}
     \qquad (\text{check A3}).
 \]
-At first order in $m/b$ it does not matter which one you put in the
+At first order in $m/b$ it does not matter which of the two appears in the
 denominator of $\alphahat$, because the difference is $\order{m^2/b^2}$.  At
 second order it does: the $m$ shift in $r_0$ converts the $\varepsilon = m/r_0$
 coefficient into the $m/b$ coefficient (see the annotation after
@@ -421,7 +419,7 @@ integrable $(1-u)^{-1/2}$ of the zeroth-order term, inherited by every order.
 \subsection{Evaluating the Integrals}
 \label{sec:integral_evaluation}
 
-\noindent\textbf{Zeroth-order integral:}  With the substitution
+The zeroth-order integral is evaluated with the substitution
 $u = \sin\theta$:
 \begin{equation}
     I_0 = 2\int_0^1 \frac{du}{\sqrt{1 - u^2}}
@@ -430,9 +428,8 @@ $u = \sin\theta$:
 \end{equation}
 This is the flat-spacetime result: no deflection.
 
-\medskip
-\noindent\textbf{First-order integral:}  We need
-(the $m/r_0$ term of Congdon \& Keeton eq.~3.94):
+The first-order integral is the coefficient of $m/r_0$ in Congdon \&
+Keeton eq.~3.94:
 \begin{equation}
     I_1 = 2\int_0^1 \frac{1 - u^3}{(1 - u^2)^{3/2}}\, du \,.
     \label{eq:I1_def}
@@ -446,7 +443,7 @@ $1 - u^2 = (1-u)(1+u)$, so
     \label{eq:integrand_factored}
 \end{equation}
 The bare integral $\int_0^1 (1-u^3)(1-u^2)^{-3/2}\, du$ evaluates
-to~$2$ (as verified in Mathematica --- see
+to~$2$ (verified in
 \mathlink{02_Light_Deflection/deflection_angle.wl}{deflection\_angle.wl}),
 so
 \begin{equation}
@@ -455,10 +452,10 @@ so
 \end{equation}
 
 \begin{remark}
-The evaluation of $\int_0^1 (1-u^3)(1-u^2)^{-3/2}\, du = 2$ is a good
-exercise in integration techniques.  One approach: split
-$1 + u + u^2 = (1 + u)^2 - u$ and evaluate each piece separately via
-trigonometric/hyperbolic substitution.  The Mathematica script verifies
+The evaluation of $\int_0^1 (1-u^3)(1-u^2)^{-3/2}\, du = 2$ is a useful
+exercise in integration.  One approach is to split
+$1 + u + u^2 = (1 + u)^2 - u$ and to evaluate each piece separately by a
+trigonometric or hyperbolic substitution.  The Mathematica script verifies
 this symbolically.
 \end{remark}
 
@@ -506,7 +503,7 @@ Since $r_0 \approx b$ to leading order and $m = \Gnewton M / \speedoflight^2$:
     }
     \label{eq:alphahat_result}
 \end{equation}
-This is the \textbf{Einstein deflection angle} for a point mass in the
+This is the \emph{Einstein deflection angle} for a point mass in the
 weak-field limit.
 
 
@@ -527,9 +524,9 @@ $l = b\tan\psi$, $dl = b\sec^2\psi\,d\psi$:
     \alphahat = \frac{2}{\speedoflight^2}\cdot\frac{2\Gnewton M}{b}
     = \frac{4\Gnewton M}{\speedoflight^2 b}.
 \]
-(Check A8.)  Two lessons.  (i) The exact-orbit route of this chapter and the
-straight-line route agree at first order; the straight-line route is what every
-lensing code uses.  (ii) The straight-line integral is \emph{linear} in~$\Phi$,
+(Check A8.)  The exact-orbit route of this chapter and the straight-line
+route agree at first order, and the straight-line route is the one every
+lensing code uses.  Moreover, the straight-line integral is linear in~$\Phi$,
 hence linear in the mass: the deflection of a sum of masses is the sum of the
 deflections.  That linearity is what turns $\alphahat$ for one point into
 $\alphahat(\vecxi) = (4\Gnewton/\speedoflight^2)\int \Sigma(\vecxi')
@@ -549,7 +546,7 @@ eq.~\eqref{eq:deflection_second_order}.
 \begin{bridge}[Point-mass deflection inside a galaxy]
 Chapter~\ref{ch:power_law_point_mass} puts a central point mass (a
 supermassive black hole) inside a power-law galaxy.  Because the weak-field
-deflection is linear in the mass (previous box), the black hole simply adds its
+deflection is linear in the mass (previous box), the black hole adds its
 own $\alphahat_\bullet = 4\Gnewton M_\bullet/(\speedoflight^2\xi)$ to the galaxy's
 deflection at the same lens-plane position~$\xi$.  After the
 $\Dds/\Ds$ rescaling of Chapter~\ref{ch:lens_equation} this becomes the familiar
@@ -610,9 +607,9 @@ square root: dropping it doubles the index and would double both numbers.
 \section{The Shapiro Time Delay}
 \label{sec:shapiro_delay}
 
-In addition to deflecting light, a gravitational field \textit{slows it
-down} --- or more precisely, causes an excess travel time relative to the
-flat-spacetime path.  This effect was predicted by Irwin Shapiro in 1964
+In addition to deflecting light, a gravitational field causes an excess
+travel time relative to the flat-spacetime path, as though the light were
+slowed.  This effect was predicted by Irwin Shapiro in 1964
 and first measured using radar echoes from Mercury and Venus.
 
 Following Congdon \& Keeton Sec.~3.4.2 (eqs.~3.97--3.110), we derive the
@@ -724,19 +721,17 @@ $\theta_{\rm ref}$ supplies the unit.  Changing it adds a constant to every imag
 delay, the time-delay analogue of the freedom to add a constant to a potential.
 \end{annotation}
 \begin{remark}
-\textbf{Geometric delay:} The lensed ray follows a longer path through
-space than the direct (unlensed) ray.  This is a purely geometric effect
-and is always positive.
-
-\textbf{Shapiro (gravitational) delay:}  The gravitational potential
-slows the effective speed of light near the lens.  Clocks near a mass run
-slower (gravitational redshift), so the signal takes longer to traverse the
-gravitational potential well.
+The geometric delay arises because the lensed ray follows a longer path
+through space than the direct (unlensed) ray; it is a purely geometric
+effect and is always positive.  The Shapiro delay arises because the
+gravitational potential lowers the effective speed of light near the lens:
+clocks near a mass run slower (gravitational redshift), so the signal takes
+longer to traverse the potential well.
 \end{remark}
 
 \begin{remark}
 The total time delay~\eqref{eq:time_delay_total} is closely related to the
-\textbf{Fermat potential}, which we will study in detail in Chapter~\ref{ch:fermat_time_delays}.  The
+\emph{Fermat potential}, which we will study in detail in Chapter~\ref{ch:fermat_time_delays}.  The
 Fermat potential $\tau(\vectheta)$ encodes both the geometric and
 gravitational delays, and its gradient gives the lens equation.  Images
 form at stationary points of the Fermat potential (Fermat's principle
@@ -800,7 +795,7 @@ Converting to arcseconds:
     }
     \label{eq:deflection_sun_arcsec}
 \end{equation}
-This is the Newtonian value $0.876''$ \textit{doubled} by general relativity.
+This is the Newtonian value $0.876''$ doubled by general relativity.
 Eddington's measurements confirmed the GR prediction (within the
 substantial error bars of the time), making Einstein a global celebrity.
 
@@ -855,10 +850,10 @@ Compute the deflection angle for light grazing the surface of:
 \section{Deflection by Galaxies}
 \label{sec:deflection_galaxies}
 
-The astrophysical power of gravitational lensing comes from the fact that
-the deflection angles produced by \textit{galaxies} are of order
-arcseconds --- large enough to produce multiple images, arcs, and rings
-that are observable with ground-based and space-based telescopes.
+Gravitational lensing is astrophysically useful because the deflection
+angles produced by galaxies are of order arcseconds, large enough to
+produce multiple images, arcs, and rings that are observable with
+ground-based and space-based telescopes.
 
 For a galaxy of mass $M = 10^{12}\,\Msun$ with a typical scale of
 $b \sim 10$~kpc~$\approx 3.09 \times 10^{20}$~m:
@@ -886,8 +881,8 @@ $z_s \sim 1$, this gives $\thetaE \approx 2.4''$
 this remark quoted $\thetaE \sim 1''$; with the concordance distances of
 Chapter~\ref{ch:cosmological_distances} ($D_d = 919$, $D_s = 1652$, $D_{ds} = 1055$~Mpc) the value is
 $2.38''$.}  Multiple images form
-whenever the source lies within $\sim \thetaE$ of the optical axis ---
-this is the regime of \textbf{strong gravitational lensing}.  We will
+whenever the source lies within $\sim \thetaE$ of the optical axis;
+this is the regime of \emph{strong gravitational lensing}.  We
 develop this quantitatively in Chapters~\ref{ch:lens_equation}--\ref{ch:magnification}.
 \end{remark}
 
@@ -991,7 +986,7 @@ $(15\pi/16)(m/b) = (15\pi/32)/(b/\RS)$.  This predicts a 1\% error at
 $b/\RS \approx 147$ and $14.7\%$ at $b/\RS = 10$; the exact numerical errors are
 $1.0\%$ (crossing $1\%$ between $b/\RS = 140$ and $150$) and $15.3\%$.  So the
 first neglected term accounts for almost all of the error, and the slow
-convergence quoted in the caption of Fig.~\ref{fig:exact_vs_approx} is just the
+convergence quoted in the caption of Fig.~\ref{fig:exact_vs_approx} is the
 large coefficient $15\pi/16 \approx 2.9$.  (Checks A10a--c.)
 \end{annotation}
 \begin{exercise}
@@ -1017,40 +1012,27 @@ $b = 10\,\RS$:
 \section{Summary}
 \label{sec:deflection_summary}
 
-\begin{itemize}
-    \item Light follows null geodesics in Schwarzschild spacetime.  The
-          orbit equation~\eqref{eq:photon_orbit_eq} reduces to an integral
-          for the total azimuthal angle change~$\Delta\phi$.
+Light follows null geodesics in Schwarzschild spacetime, and the orbit
+equation~\eqref{eq:photon_orbit_eq} reduces to an integral for the total
+azimuthal angle change~$\Delta\phi$.  The Newtonian prediction (Soldner,
+1801) is $\alphahat_{\mathrm{Newton}} = 2\Gnewton M /
+(\speedoflight^2 b)$; it accounts for only the temporal curvature of
+spacetime.  The GR prediction (Einstein, 1915) is
+$\alphahat = 4\Gnewton M / (\speedoflight^2 b)$; the factor of~$2$
+enhancement comes from spatial curvature, which contributes equally to
+the deflection.  For the Sun, $\alphahat_\odot = 1.75''$, confirmed by
+Eddington (1919) and by modern measurements to $< 0.01\%$; for
+$\sim 10^{12}\,\Msun$ galaxies at $b \sim 10$~kpc, $\alphahat \sim
+1''$--$4''$, large enough to produce multiple images, arcs, and Einstein
+rings.
 
-    \item \textbf{Newtonian prediction} (Soldner, 1801):
-          $\alphahat_{\mathrm{Newton}} = 2\Gnewton M /
-          (\speedoflight^2 b)$.  This accounts for only the
-          \textit{temporal} curvature of spacetime.
-
-    \item \textbf{GR prediction} (Einstein, 1915):
-          $\alphahat = 4\Gnewton M / (\speedoflight^2 b)$.
-          The factor of~$2$ enhancement comes from \textit{spatial}
-          curvature, which contributes equally to the deflection.
-
-    \item \textbf{Shapiro time delay:} A gravitational field causes an
-          excess travel time $\Delta T$ with geometric and gravitational
-          components.  This is connected to the Fermat potential
-          (Chapter~\ref{ch:fermat_time_delays}).
-
-    \item \textbf{Solar deflection:} $\alphahat_\odot = 1.75''$, confirmed
-          by Eddington (1919) and modern measurements to $< 0.01\%$.
-
-    \item \textbf{Galaxy-scale lensing:} $\alphahat \sim 1''$--$4''$
-          for $\sim 10^{12}\,\Msun$ galaxies at $b \sim 10$~kpc,
-          producing multiple images, arcs, and Einstein rings in strong
-          lensing.
-
-    \item The weak-field approximation $\alphahat = 4m/b$ converges
-          slowly; the error is $\sim 15\%$ at $b = 10\,\RS$ and drops
-          below $1\%$ only for $b \gtrsim 150\,\RS$.  The exact
-          deflection diverges at the photon sphere ($b_{\mathrm{crit}} =
-          3\sqrt{3}\,\RS/2$).
-\end{itemize}
+A gravitational field also causes an excess travel time $\Delta T$, the
+Shapiro delay, with geometric and gravitational components; it is
+connected to the Fermat potential of Chapter~\ref{ch:fermat_time_delays}.
+The weak-field approximation $\alphahat = 4m/b$ converges slowly: the
+error is $\sim 15\%$ at $b = 10\,\RS$ and drops below $1\%$ only for
+$b \gtrsim 150\,\RS$.  The exact deflection diverges at the photon sphere
+($b_{\mathrm{crit}} = 3\sqrt{3}\,\RS/2$).
 
 
 % =====================================================================
