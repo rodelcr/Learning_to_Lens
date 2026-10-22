@@ -67,16 +67,16 @@ drops out and $\mathcal{E} = \tfrac12(E^2 - \epsilon)$.
 \end{derivation}
 
 
-\textbf{Newtonian limit:} The last term $-GML^2/(c^2 r^3)$ is the GR
+The last term $-GML^2/(c^2 r^3)$ is the GR
 correction.  In the Newtonian limit ($c \to \infty$, or equivalently
-$R_S \to 0$), this term vanishes, leaving:
+$R_S \to 0$), this term vanishes, leaving
 \[
     V_{\mathrm{eff}}^{\mathrm{Newton}} = -\frac{GM}{r} + \frac{L^2}{2r^2} \,,
 \]
 which is the standard Newtonian effective potential.  The centrifugal
 barrier $L^2/(2r^2)$ diverges as $r \to 0$, preventing any particle from
 reaching the origin.  The GR correction term is attractive at small $r$
-and allows the barrier to be overcome --- this is why particles can plunge
+and allows the barrier to be overcome, which is why particles can plunge
 into black holes.
 
 \begin{annotation}[What ``$c \to \infty$'' means]
@@ -95,33 +95,30 @@ $\mathcal{E} = e + e^2/(2c^2)$.
 Working in $G = c = M = 1$ units, the effective potential for massive
 particles is $V_{\mathrm{eff}} = -1/r + L^2/(2r^2) - L^2/r^3$.
 
-\textbf{Step 1: Circular orbit condition.}  Setting $dV_{\mathrm{eff}}/dr = 0$:
+Step 1 is the circular orbit condition, $dV_{\mathrm{eff}}/dr = 0$:
 \begin{equation*}
     \frac{1}{r^2} - \frac{L^2}{r^3} + \frac{3L^2}{r^4} = 0
     \quad\Longrightarrow\quad
     r^2 - L^2 r + 3L^2 = 0 \,.
 \end{equation*}
-The two solutions are:
+The two solutions are
 \begin{equation*}
     r_\pm = \frac{L^2 \pm \sqrt{L^4 - 12L^2}}{2}
     = \frac{L^2}{2}\left(1 \pm \sqrt{1 - \frac{12}{L^2}}\right) \,.
 \end{equation*}
-
-\textbf{Step 2: ISCO condition.}  The ISCO occurs when the two circular
-orbits merge, i.e., when the discriminant vanishes:
+Step 2 is the ISCO condition: the ISCO occurs when the two circular
+orbits merge, i.e., when the discriminant vanishes,
 \begin{equation*}
     L^4 - 12L^2 = 0 \quad\Longrightarrow\quad L^2(L^2 - 12) = 0
     \quad\Longrightarrow\quad L = 2\sqrt{3} \,.
 \end{equation*}
-
-\textbf{Step 3: ISCO radius.}  Substituting $L^2 = 12$:
+Step 3 gives the ISCO radius; substituting $L^2 = 12$,
 \begin{equation*}
     r_{\mathrm{ISCO}} = \frac{12}{2} = \boxed{6} \quad
     \left(= \frac{6GM}{c^2} = 3\,R_S\right) \,.
 \end{equation*}
-
-\textbf{Verification via $d^2V/dr^2 = 0$:}  Alternatively, we can solve
-$dV/dr = 0$ and $d^2V/dr^2 = 0$ simultaneously:
+As a verification via $d^2V/dr^2 = 0$, we can alternatively solve
+$dV/dr = 0$ and $d^2V/dr^2 = 0$ simultaneously, with
 \begin{equation*}
     \frac{d^2 V_{\mathrm{eff}}}{dr^2} = -\frac{2}{r^3} + \frac{3L^2}{r^4}
     - \frac{12L^2}{r^5} = 0 \,.
@@ -130,7 +127,7 @@ Combined with $dV/dr = 0$, this yields $r = 6$, $L = 2\sqrt{3}$,
 confirming the result.
 
 \begin{derivation}[Solving the two conditions simultaneously]
-Multiply $dV/dr = 0$ by $r^4$ and $d^2V/dr^2 = 0$ by $r^5$:
+We multiply $dV/dr = 0$ by $r^4$ and $d^2V/dr^2 = 0$ by $r^5$:
 \begin{align*}
 r^2 - L^2r + 3L^2 &= 0 && \text{(i)} \\
 -2r^2 + 3L^2r - 12L^2 &= 0 && \text{(ii)} \\
@@ -139,7 +136,7 @@ r &= 6 && (L \neq 0) \\
 36 - 6L^2 + 3L^2 = 36 - 3L^2 &= 0 \;\Rightarrow\; L^2 = 12
   && (\text{back into (i)}) .
 \end{align*}
-Geometrically, $V' = V'' = 0$ is an inflection point: the minimum at $r_+$
+The condition $V' = V'' = 0$ marks an inflection point: the minimum at $r_+$
 and the maximum at $r_-$ have merged, which is the same condition as the
 vanishing discriminant of Step~2.
 \end{derivation}
@@ -148,12 +145,11 @@ vanishing discriminant of Step~2.
 % ----- Exercise 1.3 -----
 \subsection*{Exercise~\ref{ex:photon_sphere_derivation}: Photon Sphere}
 
-For photons ($\epsilon = 0$), the effective potential is (in $G = c = M = 1$ units):
+For photons ($\epsilon = 0$), the effective potential is (in $G = c = M = 1$ units)
 \begin{equation*}
     V_{\mathrm{eff}}^{\mathrm{photon}} = \frac{L^2}{2r^2} - \frac{L^2}{r^3} \,.
 \end{equation*}
-
-\textbf{Circular orbit:}  Setting $dV/dr = 0$:
+For the circular orbit, setting $dV/dr = 0$ gives
 \begin{equation*}
     -\frac{L^2}{r^3} + \frac{3L^2}{r^4} = 0
     \quad\Longrightarrow\quad
@@ -163,7 +159,7 @@ For photons ($\epsilon = 0$), the effective potential is (in $G = c = M = 1$ uni
     \quad\left(= \frac{3GM}{c^2} = \frac{3}{2}\,R_S\right) \,.
 \end{equation*}
 
-\textbf{Stability:}  Evaluating the second derivative at $r = 3$:
+For the stability, we evaluate the second derivative at $r = 3$:
 \begin{equation*}
     \frac{d^2 V_{\mathrm{eff}}}{dr^2}\bigg|_{r=3}
     = \left(\frac{3L^2}{r^4} - \frac{12L^2}{r^5}\right)\bigg|_{r=3}
@@ -171,8 +167,8 @@ For photons ($\epsilon = 0$), the effective potential is (in $G = c = M = 1$ uni
     = \frac{L^2}{243}(9 - 12)
     = -\frac{L^2}{81} < 0 \,.
 \end{equation*}
-Since $d^2V/dr^2 < 0$, the effective potential has a \textbf{maximum}
-at $r = 3$, confirming that the photon orbit is \textbf{unstable}.
+Since $d^2V/dr^2 < 0$, the effective potential has a maximum
+at $r = 3$, confirming that the photon orbit is unstable.
 Any perturbation causes the photon to spiral inward (capture) or
 escape to infinity.
 
@@ -182,7 +178,7 @@ $V^{\mathrm{photon}}_{\mathrm{eff}}(3) = L^2/18 - L^2/27 = L^2/54$.  A photon
 from infinity has $\mathcal{E} = \tfrac12E^2$ (with $\epsilon = 0$ there is
 no rest-mass term), so it is turned back iff $\tfrac12E^2 < L^2/54$, i.e.\
 iff $b^2 = L^2/E^2 > 27$: $b_{\mathrm{crit}} = 3\sqrt3\,GM/c^2 \approx
-2.598\,R_S$.  Note that $r = 3$ is independent of $L$; the photon orbit
+2.598\,R_S$.  The radius $r = 3$ is independent of $L$; the photon orbit
 has no analogue of the $L$-dependent pair $r_\pm$ of Exercise~\ref{ex:isco_derivation}.
 \end{annotation}
 
@@ -198,7 +194,7 @@ Using eq.~\eqref{eq:perihelion_precession} with Mercury's orbital parameters:
     e &= 0.2056
 \end{alignat*}
 
-\textbf{Step 1: Precession per orbit.}
+Step 1 is the precession per orbit:
 \begin{align*}
     \Delta\phi &= \frac{6\pi G M}{c^2\, a\,(1 - e^2)} \\
     &= \frac{6\pi \times 6.674\!\times\!10^{-11} \times 1.989\!\times\!10^{30}}
@@ -226,19 +222,19 @@ $0.1034\times415.2 = 42.9''$.)  Step~3 uses the Julian year, 365.25~days.
 \end{derivation}
 
 
-\textbf{Step 2: Convert to arcseconds.}
+Step 2 converts this to arcseconds:
 \begin{equation*}
     \Delta\phi = 5.02 \times 10^{-7} \;\text{rad}
     \times \frac{180 \times 3600}{\pi} \;\frac{\text{arcsec}}{\text{rad}}
     = 0.1036\;\text{arcsec/orbit} \,.
 \end{equation*}
 
-\textbf{Step 3: Orbits per century.}
+Step 3 counts the orbits per century:
 \begin{equation*}
     N_{\mathrm{orbits}} = \frac{100 \times 365.25}{87.97} = 415.2 \;\text{orbits/century} \,.
 \end{equation*}
 
-\textbf{Step 4: Precession per century.}
+Step 4 gives the precession per century:
 \begin{equation*}
     \Delta\phi_{\mathrm{century}}
     = 0.1036 \times 415.2
@@ -258,16 +254,13 @@ orbit radii are found by solving $dV_{\mathrm{eff}}/dr = 0$:
     r = \frac{16 \pm \sqrt{256 - 192}}{2}
     = \frac{16 \pm 8}{2} \,.
 \end{equation*}
-Therefore:
-\begin{itemize}
-    \item \textbf{Stable circular orbit} (minimum of $V_{\mathrm{eff}}$):
-          $r_+ = 12$,\quad $V_{\mathrm{eff}}(12) = -1/12 + 16/288 - 16/1728 = -1/27 \approx -0.0370$
-    \item \textbf{Unstable circular orbit} (maximum of $V_{\mathrm{eff}}$):
-          $r_- = 4$,\quad $V_{\mathrm{eff}}(4) = -1/4 + 16/32 - 16/64 = -0.25 + 0.5 - 0.25 = 0$
-    \item \textbf{ISCO} (for reference): $r_{\mathrm{ISCO}} = 6$ occurs at
-          $L = 2\sqrt{3} \approx 3.464$, which is below $L = 4$, so the two
-          circular orbits are well separated.
-\end{itemize}
+The stable circular orbit (minimum of $V_{\mathrm{eff}}$) is therefore at
+$r_+ = 12$, where $V_{\mathrm{eff}}(12) = -1/12 + 16/288 - 16/1728 = -1/27 \approx -0.0370$,
+and the unstable circular orbit (maximum of $V_{\mathrm{eff}}$) at
+$r_- = 4$, where $V_{\mathrm{eff}}(4) = -1/4 + 16/32 - 16/64 = -0.25 + 0.5 - 0.25 = 0$.
+For reference, the ISCO $r_{\mathrm{ISCO}} = 6$ occurs at
+$L = 2\sqrt{3} \approx 3.464$, which is below $L = 4$, so the two
+circular orbits are well separated.
 The plot (see \solnlink{01d_Geodesics_Orbits/problems\_01d.wl}{problems\_01d.wl})
 shows the GR potential (solid) with the Newtonian potential (dashed) for
 comparison.  The GR correction causes $V_{\mathrm{eff}} \to -\infty$ as
@@ -279,7 +272,7 @@ radius (aphelion), but the orbit does not close due to the GR correction
 term.  The perihelion advances by a large angle each orbit
 ($\approx 2.6$~rad $\approx 149^\circ$ for near-circular orbits at
 $r \approx 12\,GM/c^2$), producing a strongly precessing rosette, a
-\textbf{bound precessing ellipse} in the classification of the exercise.
+bound precessing ellipse in the classification of the exercise.
 Only for $r \gg 6GM/c^2$ does the advance become small, tending to
 $6\pi GM/(c^2 r)$ per orbit: the regime of Mercury's perihelion precession
 (Exercise~\ref{ex:mercury_precession}).
@@ -292,8 +285,8 @@ reaches the top of the barrier at $r = 4GM/c^2$.
 \end{annotation}
 
 \begin{derivation}[How big is the precession for $L = 4$? (part b, quantitatively)]
-For a nearly circular orbit at $r_c$, linearise $\ddot r = -V_{\mathrm{eff}}'(r)$
-about $r_c$: $\delta\ddot r = -V_{\mathrm{eff}}''(r_c)\,\delta r$, a radial
+For a nearly circular orbit at $r_c$, we linearise $\ddot r = -V_{\mathrm{eff}}'(r)$
+about $r_c$ to obtain $\delta\ddot r = -V_{\mathrm{eff}}''(r_c)\,\delta r$, a radial
 oscillation with $\kappa^2 = V_{\mathrm{eff}}''(r_c)$ (per unit proper time).
 The angular frequency is $\Omega = d\phi/d\tau = L/r_c^2$.  On a circular
 orbit $r_c^2 - L^2r_c + 3L^2 = 0$, i.e.\ $L^2 = r_c^2/(r_c - 3)$, and with

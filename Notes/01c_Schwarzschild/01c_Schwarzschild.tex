@@ -17,23 +17,23 @@ important spacetimes.}
 
 \noindent
 Having developed the general machinery of differential geometry in
-Chapter~\ref{ch:differential_geometry}, we now apply it to the most important exact solution in GR:
-the \textbf{Schwarzschild metric}, which describes the spacetime geometry
+Chapter~\ref{ch:differential_geometry}, we now apply it to the most important exact solution in GR,
+the \emph{Schwarzschild metric}, which describes the spacetime geometry
 outside any spherically symmetric, non-rotating mass.  This metric
 governs the gravitational field of stars, planets, and non-rotating
-black holes, and is the starting point for understanding gravitational
+black holes, and is the starting point for the treatment of gravitational
 lensing.
 
 \medskip
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
-    \item \mathlink{01c_Schwarzschild/schwarzschild_metric.wl}{schwarzschild\_metric.wl}
-          --- derive and verify the Schwarzschild metric: compute
+    \item \mathlink{01c_Schwarzschild/schwarzschild_metric.wl}{schwarzschild\_metric.wl}:
+          derive and verify the Schwarzschild metric: compute
           Christoffel symbols, Riemann tensor, verify $R_{\mu\nu} = 0$,
           and compute the Kretschmann scalar
-    \item \mathlink{01c_Schwarzschild/gravitational_redshift.nb}{gravitational\_redshift.nb}
-          --- interactive plots of gravitational redshift, time dilation,
+    \item \mathlink{01c_Schwarzschild/gravitational_redshift.nb}{gravitational\_redshift.nb}:
+          interactive plots of gravitational redshift, time dilation,
           and Flamm's paraboloid embedding diagram
 \end{itemize}
 
@@ -41,47 +41,47 @@ lensing.
 \section{The Equivalence Principle}
 \label{sec:equivalence_principle}
 
-Before diving into the Schwarzschild solution, it is worth pausing to
-ask a foundational question: \textit{why} should gravity be described
+Before deriving the Schwarzschild solution we address a prior
+question: why should gravity be described
 by the geometry of spacetime at all?  The answer lies in the
-\textbf{equivalence principle}, arguably the single most important
-physical insight behind general relativity.
+\emph{equivalence principle}, the physical principle on which general
+relativity is founded.
 
 % ---------------------------------------------------------------------
 \subsection{The Weak Equivalence Principle}
 \label{sec:weak_equivalence}
 
 The oldest form of the equivalence principle dates back to Galileo:
-\textit{all objects fall at the same rate, regardless of their
-composition or internal structure.}  More precisely, the
-\textbf{weak equivalence principle} (WEP) states that the
-\textbf{inertial mass} $m_i$ (which appears in Newton's second law,
-$F = m_i\, a$) is equal to the \textbf{gravitational mass} $m_g$
+all objects fall at the same rate, regardless of their
+composition or internal structure.  More precisely, the
+\emph{weak equivalence principle} (WEP) states that the
+\emph{inertial mass} $m_i$ (which appears in Newton's second law,
+$F = m_i\, a$) is equal to the \emph{gravitational mass} $m_g$
 (which appears in Newton's law of gravitation, $F = m_g\, g$):
 \begin{equation}
     m_i = m_g \,.
     \label{eq:wep}
 \end{equation}
-This equality has no explanation within Newtonian mechanics --- it is
-simply an empirical fact.  Yet it has been tested to extraordinary
+This equality has no explanation within Newtonian mechanics, where it is
+an empirical fact.  It has been tested to high
 precision: E\"otv\"os-type torsion-balance experiments (Dicke,
-Braginsky, and the E\"ot-Wash group) verified this to better than one
+Braginsky, and the E\"ot-Wash group) verified it to better than one
 part in $10^{13}$, and the MICROSCOPE satellite mission (2022) extended
 the limit by two orders of magnitude:
 \begin{equation}
     \frac{|m_i - m_g|}{m_g} < 10^{-15} \,.
     \label{eq:wep_precision}
 \end{equation}
-The universality of free fall is not an accident --- Einstein elevated
-it to a \textit{principle}.
+Einstein took the universality of free fall to be no accident and
+elevated it to a principle.
 
 % ---------------------------------------------------------------------
 \subsection{Einstein's Elevator}
 \label{sec:einstein_elevator}
 
-Einstein's great insight was to take the WEP seriously as a
-fundamental principle, not merely an empirical coincidence.  He
-expressed this through the famous \textbf{elevator thought experiment}:
+Einstein's step was to treat the WEP as a
+fundamental principle rather than an empirical coincidence.  He
+expressed this through the \emph{elevator thought experiment}:
 
 \begin{quote}
 \textit{An observer in a closed, windowless elevator cannot distinguish
@@ -96,13 +96,13 @@ between the following two situations:}
 
 \noindent
 Conversely, an observer in free fall in a gravitational field
-(``falling elevator'') experiences exactly the same conditions as
+(the ``falling elevator'') experiences the same conditions as
 an observer floating in empty space, far from any gravitating body.
-Dropped objects float alongside the observer; there is no local
-experiment that can detect the gravitational field.
+Dropped objects float alongside the observer, and no local
+experiment can detect the gravitational field.
 
-This equivalence between gravity and acceleration is \textit{local}:
-it holds in a sufficiently small region of spacetime where tidal
+This equivalence between gravity and acceleration is \emph{local}:
+it holds in a sufficiently small region of spacetime, in which tidal
 effects (variations of the gravitational field across the elevator)
 can be neglected.
 
@@ -111,7 +111,7 @@ can be neglected.
 \label{sec:strong_equivalence}
 
 Einstein extended the elevator argument to its fullest form as the
-\textbf{strong equivalence principle} (SEP):
+\emph{strong equivalence principle} (SEP):
 
 \begin{quote}
 \textit{The results of any local experiment (gravitational or not) in
@@ -120,13 +120,13 @@ the same experiment in special relativity.}
 \end{quote}
 
 \noindent
-This has a profound consequence.  If a freely falling observer
+If a freely falling observer
 experiences special relativity locally, then gravity cannot be a
-``force'' acting in Minkowski spacetime --- it must instead be encoded
-in the \textit{geometry} of spacetime itself.  Different freely falling
+``force'' acting in Minkowski spacetime; it must instead be encoded
+in the geometry of spacetime itself.  Different freely falling
 observers at different locations each see flat (Minkowski) spacetime
 locally, but the global structure connecting these local frames is
-curved.  Gravity \textit{is} the curvature of spacetime.
+curved.  Gravity is the curvature of spacetime.
 
 % ---------------------------------------------------------------------
 \subsection{From the Equivalence Principle to Geodesics}
@@ -134,12 +134,12 @@ curved.  Gravity \textit{is} the curvature of spacetime.
 
 The equivalence principle connects directly to the mathematical
 framework developed in Chapter~\ref{ch:differential_geometry}.  A freely falling object
-experiences no forces in its local (freely falling) frame --- it
+experiences no forces in its local (freely falling) frame, and so
 follows a ``straight line'' through its local Minkowski patch of
-spacetime.  But a straight line in a curved manifold is precisely a
-\textbf{geodesic} (Chapter~\ref{ch:differential_geometry}, Section~\ref{sec:geodesic_equation}).
+spacetime.  A straight line in a curved manifold is a
+geodesic (Chapter~\ref{ch:differential_geometry}, Section~\ref{sec:geodesic_equation}).
 
-Therefore, the equivalence principle implies that \textit{freely
+Therefore the equivalence principle implies that \emph{freely
 falling particles follow geodesics of the spacetime metric}.  This
 is the physical content of the geodesic equation:
 \begin{equation}
@@ -150,12 +150,12 @@ is the physical content of the geodesic equation:
 \end{equation}
 In Newtonian language, the Christoffel symbols $\Gamma^\mu_{\ \alpha\beta}$
 play the role of gravitational ``forces,'' but in GR they are
-geometric quantities --- they describe how the coordinate system
+geometric quantities which describe how the coordinate system
 (not the particle) is ``accelerating.''
 
 \begin{remark}
-The equivalence principle tells us that gravity \textit{curves}
-spacetime, but it does not tell us \textit{how} the curvature is
+The equivalence principle tells us that gravity curves
+spacetime, but it does not tell us how the curvature is
 related to the matter content.  That information requires Einstein's
 field equations $G_{\mu\nu} = 8\pi G\, T_{\mu\nu}/c^4$, which were
 stated in Chapter~\ref{ch:differential_geometry} and whose simplest vacuum solution ($T_{\mu\nu} = 0$)
@@ -194,7 +194,7 @@ constant $r$ have area $4\pi r^2$.
 
 We solve Einstein's vacuum equation $R_{\mu\nu} = 0$ for the
 metric~\eqref{eq:general_spherical}.  The strategy follows Carroll
-Sec.~5.1:
+Sec.~5.1.
 
 \paragraph{Step 1: Christoffel symbols.}
 The nonvanishing Christoffel symbols for~\eqref{eq:general_spherical} are
@@ -213,7 +213,7 @@ The nonvanishing Christoffel symbols for~\eqref{eq:general_spherical} are
 where primes denote $d/dr$.
 
 \paragraph{Step 2: Ricci tensor.}
-Computing the Ricci tensor components (Carroll eq.~5.14):
+The Ricci tensor components are (Carroll eq.~5.14)
 \begin{align}
     R_{tt} &= e^{2(\alpha-\beta)}\left[
         \alpha'' + (\alpha')^2 - \alpha'\beta' + \frac{2}{r}\alpha'
@@ -227,22 +227,22 @@ Computing the Ricci tensor components (Carroll eq.~5.14):
 \end{align}
 
 \paragraph{Step 3: Solve $R_{\mu\nu} = 0$.}
-From $e^{-2(\alpha-\beta)}R_{tt} + R_{rr} = 0$, we get
-$\frac{2}{r}(\alpha' + \beta') = 0$, hence (Carroll eq.~5.17):
+From $e^{-2(\alpha-\beta)}R_{tt} + R_{rr} = 0$ we obtain
+$\frac{2}{r}(\alpha' + \beta') = 0$, hence (Carroll eq.~5.17)
 \begin{equation}
     \alpha = -\beta + \text{const} \,.
     \label{eq:alpha_beta}
 \end{equation}
-By rescaling the time coordinate, we set the constant to zero:
+By rescaling the time coordinate we set the constant to zero, so that
 $\alpha = -\beta$.
 
-Setting $R_{\theta\theta} = 0$ (Carroll eq.~5.18):
+Setting $R_{\theta\theta} = 0$ then gives (Carroll eq.~5.18)
 \begin{equation}
     e^{2\alpha}(1 + 2r\alpha') = 1 \quad\Longrightarrow\quad
     \partial_r(r\, e^{2\alpha}) = 1 \,.
     \label{eq:Rthth_zero}
 \end{equation}
-Integrating:
+Integrating,
 \begin{equation}
     e^{2\alpha} = 1 - \frac{R_S}{r} \,,
     \label{eq:e2alpha}
@@ -252,7 +252,7 @@ where $R_S$ is an integration constant.
 \paragraph{Step 4: Identify $R_S$.}
 In the weak-field limit ($r \to \infty$), the metric must reduce to
 $g_{tt} \approx -(1 + 2\Phi/c^2)$ with $\Phi = -GM/r$.  Comparing with
-$g_{tt} = -(1 - R_S/r)$, we identify the \textbf{Schwarzschild radius}
+$g_{tt} = -(1 - R_S/r)$, we identify the \emph{Schwarzschild radius}
 (Carroll eq.~5.23):
 \begin{equation}
     \boxed{R_S = \frac{2GM}{c^2}}
@@ -269,7 +269,7 @@ $g_{tt} = -(1 - R_S/r)$, we identify the \textbf{Schwarzschild radius}
     \label{eq:schwarzschild_metric}
 \end{equation}
 This is the unique vacuum solution with spherical symmetry
-(\textbf{Birkhoff's theorem}; Carroll Sec.~5.2).  We verify $R_{\mu\nu} = 0$
+(Birkhoff's theorem; Carroll Sec.~5.2).  We verify $R_{\mu\nu} = 0$
 symbolically in
 \mathlink{01c_Schwarzschild/schwarzschild_metric.wl}{schwarzschild\_metric.wl}.
 
@@ -278,11 +278,11 @@ symbolically in
 \section{Birkhoff's Theorem}
 \label{sec:birkhoff}
 
-\textbf{Birkhoff's theorem} states that the Schwarzschild metric is the
-\textit{unique} spherically symmetric vacuum solution to Einstein's
-equation.  The remarkable consequence: even a \textit{time-dependent}
+\emph{Birkhoff's theorem} states that the Schwarzschild metric is the
+\emph{unique} spherically symmetric vacuum solution to Einstein's
+equation.  Consequently even a time-dependent
 spherically symmetric source (e.g., a pulsating star) produces a
-\textit{static} exterior metric (Carroll Sec.~5.2).
+static exterior metric (Carroll Sec.~5.2).
 
 This is the GR analogue of Newton's shell theorem: the gravitational
 field outside a spherically symmetric mass depends only on the total
@@ -302,8 +302,8 @@ time by (Congdon \& Keeton eq.~3.65):
     \label{eq:grav_time_dilation}
 \end{equation}
 Since $\sqrt{1 - R_S/r} < 1$ for $r > R_S$, clocks closer to the mass
-run \textit{slower} than clocks farther away.  At $r = R_S$, the
-time dilation becomes infinite --- this is the event horizon.
+run slower than clocks farther away.  At $r = R_S$ the
+time dilation becomes infinite; this surface is the event horizon.
 
 \begin{figure}[ht]
     \centering
@@ -322,7 +322,7 @@ time dilation becomes infinite --- this is the event horizon.
 
 A photon emitted at radius $r_{\mathrm{em}}$ with frequency
 $\nu_{\mathrm{em}}$ is observed at $r_{\mathrm{obs}} \to \infty$ with
-frequency:
+frequency
 \begin{equation}
     \frac{\nu_{\mathrm{obs}}}{\nu_{\mathrm{em}}}
     = \frac{\sqrt{1 - R_S/r_{\mathrm{em}}}}{\sqrt{1 - R_S/r_{\mathrm{obs}}}}
@@ -331,14 +331,14 @@ frequency:
     \label{eq:grav_redshift}
 \end{equation}
 Since $\nu_{\mathrm{obs}} < \nu_{\mathrm{em}}$, the photon is
-\textbf{redshifted} as it climbs out of the gravitational potential well.
-The gravitational redshift parameter is:
+\emph{redshifted} as it climbs out of the gravitational potential well.
+The gravitational redshift parameter is
 \begin{equation}
     z_{\mathrm{grav}} = \frac{\nu_{\mathrm{em}}}{\nu_{\mathrm{obs}}} - 1
     = \left(1 - \frac{R_S}{r_{\mathrm{em}}}\right)^{-1/2} - 1 \,.
     \label{eq:grav_redshift_z}
 \end{equation}
-In the weak-field limit ($R_S/r \ll 1$): $z_{\mathrm{grav}} \approx GM/(rc^2)$
+In the weak-field limit ($R_S/r \ll 1$) this reduces to $z_{\mathrm{grav}} \approx GM/(rc^2)$
 (Congdon \& Keeton eq.~3.63).
 
 \begin{figure}[ht]
@@ -364,27 +364,27 @@ GPS satellite corrections).
 \section{The Event Horizon and Singularities}
 \label{sec:event_horizon}
 
-The Schwarzschild metric has two apparent singularities: at $r = 0$ and
-at $r = R_S$.  Their nature is quite different (Carroll Sec.~5.3):
+The Schwarzschild metric has two apparent singularities, at $r = 0$ and
+at $r = R_S$, and their nature is quite different (Carroll Sec.~5.3).
 
 \paragraph{$r = R_S$ (coordinate singularity).}
-The metric components diverge, but this is a \textit{coordinate artifact}.
+The metric components diverge, but this is a coordinate artifact.
 The curvature remains finite, and the geometry is smooth.  In
 appropriate coordinates (e.g., Eddington--Finkelstein or Kruskal--Szekeres),
-the metric is regular at $r = R_S$.  However, $r = R_S$ is the
-\textbf{event horizon}: once a particle crosses it, it can never return.
+the metric is regular at $r = R_S$.  Nevertheless $r = R_S$ is the
+\emph{event horizon}: once a particle crosses it, it can never return.
 
 \paragraph{$r = 0$ (true singularity).}
-This is a genuine physical singularity where the curvature becomes infinite.
-We can confirm this with a curvature invariant: the
-\textbf{Kretschmann scalar}:
+This is a genuine physical singularity at which the curvature becomes infinite.
+This can be confirmed with a curvature invariant, the
+\emph{Kretschmann scalar}
 \begin{equation}
     K = R_{\mu\nu\rho\sigma}\, R^{\mu\nu\rho\sigma}
     = \frac{12\, R_S^2}{r^6}
     = \frac{48\, G^2 M^2}{c^4\, r^6} \,.
     \label{eq:kretschmann}
 \end{equation}
-This diverges as $r \to 0$ but is finite at $r = R_S$, confirming that
+which diverges as $r \to 0$ but is finite at $r = R_S$, so that
 only $r = 0$ is a true singularity.  We verify eq.~\eqref{eq:kretschmann}
 in \mathlink{01c_Schwarzschild/schwarzschild_metric.wl}{schwarzschild\_metric.wl}.
 
@@ -394,16 +394,15 @@ in \mathlink{01c_Schwarzschild/schwarzschild_metric.wl}{schwarzschild\_metric.wl
 \label{sec:dg_inside_horizon}
 
 The Schwarzschild metric~\eqref{eq:schwarzschild_metric} describes
-spacetime outside a spherical mass, but it also has something startling
-to say about the region $r < R_S$.  Understanding this interior, even
-briefly, sharpens our physical intuition about what the Schwarzschild
-radius really means.
+spacetime outside a spherical mass, but it also describes
+the region $r < R_S$.  A brief look at this interior clarifies
+what the Schwarzschild radius means physically.
 
 % ---------------------------------------------------------------------
 \subsection{The Signature Flip}
 \label{sec:dg_signature_flip}
 
-Recall the Schwarzschild line element:
+The Schwarzschild line element is
 \[
     ds^2 = -\!\left(1 - \frac{R_S}{r}\right) c^2\, dt^2
     + \left(1 - \frac{R_S}{r}\right)^{-1} dr^2
@@ -412,15 +411,11 @@ Recall the Schwarzschild line element:
 Outside the horizon ($r > R_S$), the factor $f(r) \equiv 1 - R_S/r$ is
 positive, so $g_{tt} < 0$ (timelike) and $g_{rr} > 0$ (spacelike).
 
-Inside the horizon ($r < R_S$), this factor becomes \emph{negative}:
-$f(r) < 0$.  Consequently:
-\begin{itemize}[nosep]
-    \item $g_{tt} = -f(r)\,c^2 > 0$ --- the $t$ direction is now
-          \textbf{spacelike}.
-    \item $g_{rr} = f(r)^{-1} < 0$ --- the $r$ direction is now
-          \textbf{timelike}.
-\end{itemize}
-The roles of $r$ and $t$ have swapped.  Inside the horizon, $r$ is a
+Inside the horizon ($r < R_S$), this factor becomes \emph{negative},
+$f(r) < 0$.  Consequently $g_{tt} = -f(r)\,c^2 > 0$, so the $t$ direction
+is now spacelike, while $g_{rr} = f(r)^{-1} < 0$, so the $r$ direction
+is now timelike.
+The roles of $r$ and $t$ have swapped: inside the horizon, $r$ is a
 time coordinate and $t$ is a space coordinate.
 
 % ---------------------------------------------------------------------
@@ -429,15 +424,15 @@ time coordinate and $t$ is a space coordinate.
 
 Since $r$ is timelike inside the horizon, decreasing $r$ is the
 \emph{future direction}.  Every future-directed worldline must have
-$dr < 0$; the singularity at $r = 0$ is not a place you can steer
-away from --- it is a \emph{moment in time} that all interior
+$dr < 0$; the singularity at $r = 0$ is not a place that can be steered
+away from but a \emph{moment in time} that all interior
 observers inevitably reach.
 
 \begin{remark}
-You can no more avoid the singularity at $r = 0$ (once inside the
-horizon) than you can avoid next Tuesday.  This is the precise sense
-in which a black hole traps everything: it is not that the singularity
-pulls you toward a point in space, but that the future itself points
+An observer inside the horizon can no more avoid the singularity at
+$r = 0$ than avoid next Tuesday.  This is the precise sense
+in which a black hole traps everything: the singularity does not
+pull the observer toward a point in space; rather, the future itself points
 toward $r = 0$.
 \end{remark}
 
@@ -446,7 +441,7 @@ toward $r = 0$.
 \label{sec:dg_light_cones}
 
 For radial null rays ($ds^2 = 0$, $d\Omega = 0$) in Schwarzschild
-coordinates:
+coordinates,
 \begin{equation}
     \frac{dr}{dt} = \pm\, c\left(1 - \frac{R_S}{r}\right) .
     \label{eq:radial_null}
@@ -457,10 +452,10 @@ light rays.  At $r = R_S$, both solutions give $dr/dt = 0$: light
 physical one).
 
 For $r < R_S$, the factor $(1 - R_S/r)$ is negative, so
-$dr/dt$ has the \emph{same sign} for both solutions --- both
+$dr/dt$ has the \emph{same sign} for both solutions: both
 ``outgoing'' and ``ingoing'' light rays have $dr < 0$ when $dt > 0$.
-In other words, \textbf{all future-directed light cones point toward
-smaller~$r$}.  No signal --- not even light --- can move to larger $r$
+All future-directed light cones therefore point toward
+smaller~$r$, and no signal, not even light, can move to larger $r$
 inside the horizon.
 
 % ---------------------------------------------------------------------
@@ -469,18 +464,18 @@ inside the horizon.
 
 The pathological behavior at $r = R_S$ in Schwarzschild coordinates
 is a coordinate artifact.  We can remove it by switching to
-\textbf{ingoing Eddington--Finkelstein coordinates}.  Define the
-advanced time coordinate:
+\emph{ingoing Eddington--Finkelstein coordinates}.  We define the
+advanced time coordinate
 \begin{equation}
     v = t + \frac{r_*}{c} \,, \qquad
     r_* = r + R_S \ln\!\left|\frac{r}{R_S} - 1\right| ,
     \label{eq:tortoise_and_v}
 \end{equation}
-where $r_*$ (units of length) is the \textbf{tortoise coordinate}
+where $r_*$ (units of length) is the \emph{tortoise coordinate}
 (Carroll eq.~5.108), and dividing by $c$ makes $r_*/c$ a time shift
 so that $v$ is a well-defined time coordinate in SI units.
 In terms of $(v, r, \theta, \phi)$, the Schwarzschild line element
-becomes (Carroll eq.~5.111):
+becomes (Carroll eq.~5.111)
 \begin{equation}
     \boxed{
     ds^2 = -\!\left(1 - \frac{R_S}{r}\right) c^2\, dv^2
@@ -489,12 +484,12 @@ becomes (Carroll eq.~5.111):
     \label{eq:eddington_finkelstein}
 \end{equation}
 This metric is manifestly regular at $r = R_S$: every component is
-finite and the determinant is nonzero.  The horizon is simply the
-surface where outgoing light rays have $dr/dv = 0$; ingoing rays cross
+finite and the determinant is nonzero.  The horizon is the
+surface on which outgoing light rays have $dr/dv = 0$; ingoing rays cross
 it smoothly.
 
 \begin{remark}
-The Eddington--Finkelstein form makes it transparent that the event
+In the Eddington--Finkelstein form it is evident that the event
 horizon is a \emph{one-way membrane}: ingoing light ($dv > 0$,
 $dr < 0$) crosses the horizon without incident, while outgoing light
 at $r = R_S$ remains at $r = R_S$ forever.
@@ -505,14 +500,14 @@ at $r = R_S$ remains at $r = R_S$ forever.
 \label{sec:dg_interior_relevance}
 
 \begin{remark}
-For gravitational lensing, we work exclusively in the region
-$r \gg R_S$ --- far outside the event horizon.  Galaxy-mass lenses
+For gravitational lensing we work exclusively in the region
+$r \gg R_S$, far outside the event horizon.  Galaxy-mass lenses
 have $R_S \sim 0.1$ pc, while lensing occurs at scales of kiloparsecs.
 The black hole interior is therefore not directly relevant to lensing
-calculations.  Nevertheless, understanding the interior clarifies
-\emph{why} the Schwarzschild radius is special (it is where light
-cones tip over) and deepens physical intuition about the boundary
-conditions of the exterior solution.
+calculations.  Nevertheless, the interior clarifies
+why the Schwarzschild radius is special (it is where light
+cones tip over) and what the boundary
+conditions of the exterior solution mean.
 \end{remark}
 
 
@@ -520,8 +515,8 @@ conditions of the exterior solution.
 \section{The Weak-Field Limit}
 \label{sec:weak_field}
 
-For $r \gg R_S$, the Schwarzschild metric reduces to the \textbf{weak-field}
-form (Congdon \& Keeton eq.~3.71):
+For $r \gg R_S$, the Schwarzschild metric reduces to the \emph{weak-field}
+form (Congdon \& Keeton eq.~3.71)
 \begin{equation}
     ds^2 \approx -\left(1 + \frac{2\Phi}{c^2}\right) c^2 dt^2
     + \left(1 - \frac{2\Phi}{c^2}\right)
@@ -529,16 +524,16 @@ form (Congdon \& Keeton eq.~3.71):
     \label{eq:weak_field}
 \end{equation}
 where $\Phi = -GM/r$ is the Newtonian gravitational potential.  This
-form is valid for \textit{any} weak gravitational field, not just the
+form is valid for \emph{any} weak gravitational field, not only the
 Schwarzschild case, and will be the starting point for deriving the
 deflection angle of light in Chapter~\ref{ch:light_deflection}.
 
 \begin{remark}
-The weak-field metric~\eqref{eq:weak_field} has an important feature:
+In the weak-field metric~\eqref{eq:weak_field}
 the spatial part is modified by a factor $(1 - 2\Phi/c^2)$ as well as
-the time part.  This means that gravity affects both the \textit{rate}
-of clocks (time dilation) and the \textit{curvature of space}.
-Both effects contribute equally to the bending of light --- this is why
+the time part.  Gravity therefore affects both the rate
+of clocks (time dilation) and the curvature of space.
+Both effects contribute equally to the bending of light, which is why
 GR gives twice the Newtonian deflection angle.
 \end{remark}
 
@@ -548,20 +543,20 @@ GR gives twice the Newtonian deflection angle.
 \label{sec:isotropic_coords}
 
 The standard Schwarzschild coordinates $(t, r, \theta, \phi)$ have
-an important asymmetry: the radial and angular parts of the spatial
-metric carry \textit{different} factors.  In
+an asymmetry: the radial and angular parts of the spatial
+metric carry different factors.  In
 eq.~\eqref{eq:schwarzschild_metric}, the $dr^2$ term is multiplied by
 $(1 - R_S/r)^{-1}$ while the angular part $r^2\,d\Omega^2$ has no such
 factor.  The spatial part of the Schwarzschild metric is therefore
-\textit{not} conformally flat --- it is not proportional to the
+\emph{not} conformally flat, i.e.\ not proportional to the
 flat-space metric $dr^2 + r^2\,d\Omega^2$.
 
-We can remedy this by introducing \textbf{isotropic coordinates}, in
-which the spatial metric \textit{is} conformally flat.
+This can be remedied by introducing \emph{isotropic coordinates}, in
+which the spatial metric \emph{is} conformally flat.
 
 \subsection{The Isotropic Radial Coordinate}
 
-Define a new radial coordinate $\rho$ via:
+We define a new radial coordinate $\rho$ by
 \begin{equation}
     r = \rho\left(1 + \frac{R_S}{4\rho}\right)^{\!2} .
     \label{eq:isotropic_r}
@@ -573,7 +568,7 @@ $\rho = \tfrac{1}{2}(r - R_S/2 + \sqrt{r^2 - r\,R_S})$.
 \subsection{The Schwarzschild Metric in Isotropic Form}
 
 In the coordinates $(t, \rho, \theta, \phi)$, the Schwarzschild
-metric becomes:
+metric becomes
 \begin{equation}
     \boxed{
     ds^2 = -\left(\frac{1 - R_S/(4\rho)}{1 + R_S/(4\rho)}\right)^{\!2}
@@ -583,16 +578,16 @@ metric becomes:
     }
     \label{eq:schwarzschild_isotropic}
 \end{equation}
-The crucial feature is that the spatial part is now proportional to
-the \textit{flat-space metric} $d\rho^2 + \rho^2\,d\Omega^2$ ---
-the spatial geometry is \textbf{conformally flat}.  The single
+The spatial part is now proportional to
+the flat-space metric $d\rho^2 + \rho^2\,d\Omega^2$, so
+the spatial geometry is \emph{conformally flat}.  The single
 conformal factor $(1 + R_S/(4\rho))^4$ multiplies all three spatial
 directions equally, hence the name ``isotropic.''
 
 \subsection{Weak-Field Expansion}
 
 To first order in $R_S/\rho$ (the weak-field regime $\rho \gg R_S$),
-the isotropic metric reduces to:
+the isotropic metric reduces to
 \begin{equation}
     ds^2 \approx -\left(1 - \frac{R_S}{\rho}\right) c^2\, dt^2
     + \left(1 + \frac{R_S}{\rho}\right)
@@ -601,44 +596,44 @@ the isotropic metric reduces to:
 \end{equation}
 Since $R_S = 2GM/c^2$, we have $R_S/\rho = 2GM/(\rho\, c^2) =
 -2\Phi/c^2$ where $\Phi = -GM/\rho$ is the Newtonian potential.
-Equation~\eqref{eq:isotropic_weak_field} is therefore:
+Equation~\eqref{eq:isotropic_weak_field} is therefore
 \begin{equation}
     ds^2 \approx -\left(1 + \frac{2\Phi}{c^2}\right) c^2\, dt^2
     + \left(1 - \frac{2\Phi}{c^2}\right)
     \bigl(d\rho^2 + \rho^2\, d\Omega^2\bigr) ,
     \label{eq:isotropic_newtonian}
 \end{equation}
-which is precisely the weak-field metric~\eqref{eq:weak_field} with
+which is the weak-field metric~\eqref{eq:weak_field} with
 $r$ replaced by $\rho$.  (In the weak-field regime, $r$ and $\rho$
 agree to leading order.)
 
 \subsection{Connection to the Linearized Gravity Formalism}
 
-This result provides the explicit \textbf{bridge} between the exact
-Schwarzschild solution (this chapter) and the linearized gravity
+This result connects the exact
+Schwarzschild solution (this chapter) to the linearized gravity
 approach (Chapter~\ref{ch:linearized_gravity}).  In Chapter~\ref{ch:linearized_gravity}, the weak-field metric is derived
-from first principles as a perturbation of flat spacetime:
+from first principles as a perturbation of flat spacetime,
 $g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}$ with
 $h_{00} = -2\Phi/c^2$ and $h_{ij} = -2\Phi/c^2\,\delta_{ij}$.
 The isotropic form~\eqref{eq:isotropic_newtonian} shows that the
 Schwarzschild solution, when expanded to first order, reproduces
-exactly this linearized metric.  The two descriptions --- exact
-solution in curved coordinates, and perturbation theory in nearly
-flat coordinates --- describe the \textit{same physics} in different
+this linearized metric.  The two descriptions, the exact
+solution in curved coordinates and perturbation theory in nearly
+flat coordinates, describe the same physics in different
 coordinate systems.
 
 \begin{remark}
-The isotropic form makes the connection to the parameterized
-post-Newtonian (PPN) formalism and the factor-of-2 in light
-deflection transparent.  In eq.~\eqref{eq:isotropic_newtonian}, both
+The isotropic form also exhibits the connection to the parameterized
+post-Newtonian (PPN) formalism and the factor of 2 in light
+deflection.  In eq.~\eqref{eq:isotropic_newtonian}, both
 $h_{00} = -2\Phi/c^2$ (time perturbation) and
 $h_{ij} = -2\Phi/c^2\,\delta_{ij}$ (space perturbation) are
-proportional to $R_S/\rho$, confirming that the time and space
-perturbations are \textit{equal}.  In the PPN formalism, this
+proportional to $R_S/\rho$, so the time and space
+perturbations are equal.  In the PPN formalism, this
 equality corresponds to $\gamma_{\mathrm{PPN}} = 1$, which is the GR
-prediction.  As we saw in the weak-field limit discussion, this equal
-contribution of time and space curvature is precisely why GR predicts
-\textit{twice} the Newtonian deflection angle for light.
+prediction.  As noted in the weak-field limit discussion, this equal
+contribution of time and space curvature is why GR predicts
+twice the Newtonian deflection angle for light.
 \end{remark}
 
 
@@ -660,9 +655,9 @@ Galaxy ($10^{12}\,\Msun$) & $10^{12}\,\Msun$ & $3 \times 10^{12}$ km & --- \\
 \end{tabular}
 \end{center}
 
-For a galaxy-mass lens ($M \sim 10^{12}\, \Msun$), $R_S \sim 0.1$ pc ---
-far smaller than the galaxy itself.  This confirms that the weak-field
-limit is appropriate for gravitational lensing by galaxies.
+For a galaxy-mass lens ($M \sim 10^{12}\, \Msun$), $R_S \sim 0.1$ pc,
+far smaller than the galaxy itself.  The weak-field
+limit is therefore appropriate for gravitational lensing by galaxies.
 
 
 % =====================================================================
@@ -671,18 +666,18 @@ limit is appropriate for gravitational lensing by galaxies.
 
 To visualize the spatial curvature of the Schwarzschild geometry, we can
 embed the equatorial ($\theta = \pi/2$) spatial slice in 3D Euclidean space.
-At constant time $t$, the spatial metric on the equatorial plane is:
+At constant time $t$, the spatial metric on the equatorial plane is
 \begin{equation}
     dl^2 = \left(1 - \frac{R_S}{r}\right)^{-1} dr^2 + r^2\, d\phi^2 \,.
     \label{eq:equatorial_metric}
 \end{equation}
 Embedding this as a surface of revolution $z(r)$ in cylindrical coordinates
-$(r, \phi, z)$ where $dl^2 = (1 + z'^2) dr^2 + r^2 d\phi^2$, we find:
+$(r, \phi, z)$, for which $dl^2 = (1 + z'^2) dr^2 + r^2 d\phi^2$, we find
 \begin{equation}
     z(r) = 2\sqrt{R_S}\,\sqrt{r - R_S} \,,
     \label{eq:flamm}
 \end{equation}
-which is \textbf{Flamm's paraboloid} (Figure~\ref{fig:flamm}).
+which is \emph{Flamm's paraboloid} (Figure~\ref{fig:flamm}).
 
 \begin{figure}[ht]
     \centering
@@ -701,21 +696,19 @@ which is \textbf{Flamm's paraboloid} (Figure~\ref{fig:flamm}).
 \section{Summary}
 \label{sec:schwarzschild_summary}
 
-\begin{itemize}
-    \item The Schwarzschild metric is the unique spherically symmetric
-          vacuum solution (Birkhoff's theorem).
-    \item It is parameterized by a single quantity: the mass $M$
-          (or equivalently the Schwarzschild radius $R_S = 2GM/c^2$).
-    \item Gravitational time dilation: clocks run slower in stronger
-          gravitational fields; $d\tau = \sqrt{1 - R_S/r}\, dt$.
-    \item Gravitational redshift: photons lose energy climbing out
-          of a potential well.
-    \item $r = R_S$ is a coordinate singularity (event horizon);
-          $r = 0$ is a true curvature singularity.
-    \item The weak-field limit
-          ($ds^2 \approx -(1 + 2\Phi/c^2)c^2 dt^2 + (1 - 2\Phi/c^2) d\ell^2$)
-          will be the foundation for light deflection in Chapter~\ref{ch:light_deflection}.
-\end{itemize}
+The Schwarzschild metric is the unique spherically symmetric
+vacuum solution (Birkhoff's theorem), and it is parameterized by a single
+quantity, the mass $M$
+(or equivalently the Schwarzschild radius $R_S = 2GM/c^2$).
+Clocks run slower in stronger gravitational fields,
+$d\tau = \sqrt{1 - R_S/r}\, dt$, and photons lose energy climbing out
+of a potential well; these are gravitational time dilation and
+gravitational redshift.
+The surface $r = R_S$ is a coordinate singularity (the event horizon),
+whereas $r = 0$ is a true curvature singularity.
+The weak-field limit
+($ds^2 \approx -(1 + 2\Phi/c^2)c^2 dt^2 + (1 - 2\Phi/c^2) d\ell^2$)
+will be the foundation for light deflection in Chapter~\ref{ch:light_deflection}.
 
 
 % =====================================================================

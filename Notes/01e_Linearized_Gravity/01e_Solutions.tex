@@ -79,17 +79,15 @@ Since $d\tau \approx dt$ for slow motion ($\gamma \approx 1$):
 \]
 
 \begin{annotation}[What was dropped, and why it is safe]
-\begin{itemize}
-    \item $\christoffel{i}{0}{j}$ terms: zero for a static field with
-          $h_{0i} = 0$.
-    \item $\christoffel{i}{j}{k}\,(dx^j/d\tau)(dx^k/d\tau)$: of size
-          $|\nabla\Phi|\,v^2/c^2$, i.e.\ smaller than the kept term by
-          $v^2/c^2$ (about $10^{-8}$ for the Earth's orbital speed).
-    \item $d\tau \approx dt$: not actually needed.  Since
-          $d^2t/d\tau^2$ is suppressed by $v/c$, $dt/d\tau$ is constant to
-          this order, and the factor $(dt/d\tau)^2$ appears on both sides
-          and cancels.
-\end{itemize}
+The $\christoffel{i}{0}{j}$ terms are zero for a static field with
+$h_{0i} = 0$.
+The term $\christoffel{i}{j}{k}\,(dx^j/d\tau)(dx^k/d\tau)$ is of size
+$|\nabla\Phi|\,v^2/c^2$, i.e.\ smaller than the kept term by
+$v^2/c^2$ (about $10^{-8}$ for the Earth's orbital speed).
+The approximation $d\tau \approx dt$ is not actually needed: since
+$d^2t/d\tau^2$ is suppressed by $v/c$, $dt/d\tau$ is constant to
+this order, and the factor $(dt/d\tau)^2$ appears on both sides
+and cancels.
 \end{annotation}
 
 
@@ -119,7 +117,7 @@ $\epsilon \equiv R_S/r \ll 1$:
     (1 - \epsilon)^{-1} = 1 + \epsilon + \epsilon^2 + \cdots
     \approx 1 + \frac{R_S}{r} \,.
 \]
-So the metric becomes:
+The metric then becomes
 \[
     ds^2 \approx -\left(1 - \frac{R_S}{r}\right) c^2 dt^2
     + \left(1 + \frac{R_S}{r}\right) dr^2
@@ -132,7 +130,7 @@ $(1 + R_S/r)(dr^2 + r^2 d\Omega^2)$ differ by $R_S\,r\,d\Omega^2$, which is
 \emph{first} order in $R_S/r$ relative to $r^2 d\Omega^2$.\footnote{Earlier
 versions of this solution said this difference ``only matters at second
 order in $R_S/r$''; it is first order, and the change of radius below is
-what removes it.}  Instead change to the isotropic radius $\rho$,
+what removes it.}  Instead we change to the isotropic radius $\rho$,
 $r = \rho\,(1 + R_S/4\rho)^2 \approx \rho + R_S/2$
 (eq.~\eqref{eq:isotropic_r}).  To first order in $R_S/\rho$,
 \[
@@ -162,7 +160,7 @@ expands each factor.
 \end{annotation}
 
 \begin{derivation}[Part (b) in detail: the isotropic substitution]
-Use $r = \rho\,(1 + R_S/4\rho)^2$ (eq.~\eqref{eq:isotropic_r}).  Expanding,
+We use $r = \rho\,(1 + R_S/4\rho)^2$ (eq.~\eqref{eq:isotropic_r}).  Expanding,
 \begin{align*}
 r &= \rho + \frac{R_S}{2} + \frac{R_S^2}{16\rho},
 \qquad
@@ -195,18 +193,18 @@ $r^2 = (1 + R_S/4\rho)^4\rho^2$.
 
 \textbf{(c)} We identify $h_{00} = -2\Phi/c^2 = R_S/\rho$ and
 $h_{ij} = -2\Phi/c^2\, \delta_{ij} = (R_S/\rho)\, \delta_{ij}$.
-Thus $h_{00} = h_{xx} = h_{yy} = h_{zz} = R_S/\rho$ --- the time and
+Thus $h_{00} = h_{xx} = h_{yy} = h_{zz} = R_S/\rho$: the time and
 spatial diagonal perturbations are equal in magnitude.  This equality is
-the origin of the factor-of-two in light bending.
+the origin of the factor of two in light bending.
 
 % ----- Exercise 3 -----
 \subsection*{Exercise~\ref{ex:refractive_index_prob}: Effective Refractive Index}
 
 The effective refractive index is $n - 1 = 2GM/(c^2 r)$.
 Using $G = 6.674 \times 10^{-11}$~m$^3$\,kg$^{-1}$\,s$^{-2}$,
-$M_\odot = 1.989 \times 10^{30}$~kg, $c = 2.998 \times 10^8$~m/s:
+$M_\odot = 1.989 \times 10^{30}$~kg, $c = 2.998 \times 10^8$~m/s, we obtain the following.
 
-\textbf{(a)} $r = R_\odot = 6.96 \times 10^8$~m:
+\textbf{(a)} At $r = R_\odot = 6.96 \times 10^8$~m,
 \[
     n - 1 = \frac{2 \times 6.674\!\times\!10^{-11} \times 1.989\!\times\!10^{30}}
     {(2.998\!\times\!10^{8})^2 \times 6.96\!\times\!10^{8}}
@@ -214,19 +212,19 @@ $M_\odot = 1.989 \times 10^{30}$~kg, $c = 2.998 \times 10^8$~m/s:
 \]
 The weak-field approximation is excellent ($n - 1 \sim 10^{-6}$).
 
-\textbf{(b)} $r = 1$~AU $= 1.496 \times 10^{11}$~m:
+\textbf{(b)} At $r = 1$~AU $= 1.496 \times 10^{11}$~m,
 \[
     n - 1 = \frac{2GM_\odot}{c^2 \times 1.496\!\times\!10^{11}}
     = \boxed{1.97 \times 10^{-8}}
 \]
-Even weaker field; the Sun's effect at Earth's distance is tiny.
+The field is weaker still; the Sun's effect at the Earth's distance is tiny.
 
-\textbf{(c)} $r = 1$~kpc $= 3.086 \times 10^{19}$~m:
+\textbf{(c)} At $r = 1$~kpc $= 3.086 \times 10^{19}$~m,
 \[
     n - 1 = \frac{2GM_\odot}{c^2 \times 3.086\!\times\!10^{19}}
     = \boxed{9.57 \times 10^{-17}}
 \]
-Completely negligible.  At kiloparsec scales, the gravitational
+This is negligible.  At kiloparsec scales, the gravitational
 potential of a single solar mass is immeasurably weak; only the
 cumulative effect of $\sim 10^{11}$--$10^{12}$ stars in a galaxy
 produces observable lensing.
@@ -246,7 +244,7 @@ The unperturbed photon path is $\mathbf{x}(l) = (l, b, 0)$, where
 $l$ is the coordinate along the path and $b$ is the impact parameter.
 
 \textbf{(a)} The Newtonian potential is $\Phi = -GM/r = -GM/\sqrt{l^2 + b^2}$.
-The perpendicular gradient (in the $y$-direction) is:
+The perpendicular gradient (in the $y$-direction) is
 \[
     \nabla_\perp \Phi = \frac{\partial \Phi}{\partial b}
     = \frac{GM\, b}{(l^2 + b^2)^{3/2}} \,.
@@ -263,7 +261,7 @@ that sense.
 \end{annotation}
 
 
-\textbf{(b)} The integral is:
+\textbf{(b)} The integral is
 \[
     \int_{-\infty}^{\infty} \frac{b\, dl}{(l^2 + b^2)^{3/2}}
     = \frac{b}{b^2} \left[\frac{l}{\sqrt{l^2 + b^2}}\right]_{-\infty}^{+\infty}
@@ -271,7 +269,7 @@ that sense.
 \]
 
 \begin{derivation}[Where the antiderivative comes from]
-Check by differentiating with the quotient rule:
+We check by differentiating with the quotient rule:
 \[
 \frac{d}{dl}\,\frac{l}{\sqrt{l^2 + b^2}}
 = \frac{\sqrt{l^2 + b^2} - l\cdot l/\sqrt{l^2 + b^2}}{l^2 + b^2}
@@ -296,14 +294,14 @@ same result follows from the projected (2D) lens-plane formula.
 
 Using the projected (2D) lens-plane formulation
 (Schneider, Ehlers \& Falco 1992; Congdon \& Keeton eq.~3.78), the
-deflection by a surface mass density $\Sigma$ is:
+deflection by a surface mass density $\Sigma$ is
 \[
     \boldsymbol{\hat{\alpha}} = \frac{4G}{c^2}
     \int \frac{(\vecxi - \vecxi')}{|\vecxi - \vecxi'|^2}\,
     \Sigma(\vecxi')\, d^2\xi' \,.
 \]
 For a point mass projected at the origin,
-$\Sigma = M\,\delta^{(2)}(\vecxi')$, and the integral gives directly:
+$\Sigma = M\,\delta^{(2)}(\vecxi')$, and the integral gives directly
 \[
     \boxed{\alphahat = \frac{4GM}{c^2 b}}
 \]
@@ -311,7 +309,7 @@ This is verified symbolically in
 \mathlink{01e_Linearized_Gravity/weak_field_metric.wl}{weak\_field\_metric.wl}.
 
 Equivalently, using the PPN formalism (Weinberg 1972; Will 1993),
-the deflection is:
+the deflection is
 \[
     \alphahat = \frac{1 + \gamma_{\mathrm{PPN}}}{c^2}
     \int_{-\infty}^{\infty} \nabla_\perp |\Phi|\, dl \,,
@@ -321,7 +319,7 @@ contribution).  With $\int \nabla_\perp |\Phi|\, dl = 2GM/b$ and
 $(1 + 1) = 2$, this gives $\alphahat = (2/c^2)(2GM/b) = 4GM/(c^2 b)$,
 confirming the result.
 
-\textbf{(d)} For the Sun at the solar limb:
+\textbf{(d)} For the Sun at the solar limb,
 \begin{align*}
     \alphahat &= \frac{4 \times 6.674\!\times\!10^{-11} \times
     1.989\!\times\!10^{30}}{(2.998\!\times\!10^{8})^2 \times
@@ -344,8 +342,8 @@ the galaxy case below.
 \end{annotation}
 
 
-\textbf{(Galaxy lens.)} For $M = 10^{12}\,\Msun$ at $b = 10$~kpc
-$= 3.086 \times 10^{20}$~m:
+For a galaxy lens with $M = 10^{12}\,\Msun$ at $b = 10$~kpc
+$= 3.086 \times 10^{20}$~m,
 \[
     \alphahat = \frac{4 \times 6.674\!\times\!10^{-11} \times
     10^{12} \times 1.989\!\times\!10^{30}}
@@ -357,15 +355,15 @@ $= 3.086 \times 10^{20}$~m:
 % ----- Exercise 5 -----
 \subsection*{Exercise~\ref{ex:superposition_prob}: Superposition of Deflections}
 
-\textbf{(a)} Mass $M_1$ at $(-d/2, 0)$ and mass $M_2$ at $(+d/2, 0)$.
-The photon passes at $\vecxi = (0, b)$.  The displacement vectors are:
+\textbf{(a)} Mass $M_1$ is at $(-d/2, 0)$ and mass $M_2$ at $(+d/2, 0)$,
+and the photon passes at $\vecxi = (0, b)$.  The displacement vectors are
 \begin{align*}
     \vecxi - \vecxi_1 &= (d/2,\, b) \,, &
     |\vecxi - \vecxi_1|^2 &= d^2/4 + b^2 \,, \\
     \vecxi - \vecxi_2 &= (-d/2,\, b) \,, &
     |\vecxi - \vecxi_2|^2 &= d^2/4 + b^2 \,.
 \end{align*}
-The individual deflection angle vectors are:
+and the individual deflection angle vectors are
 \begin{align*}
     \boldsymbol{\hat{\alpha}}_1 &= \frac{4GM}{c^2}
     \frac{(d/2, b)}{d^2/4 + b^2} \,, \\
@@ -373,18 +371,18 @@ The individual deflection angle vectors are:
     \frac{(-d/2, b)}{d^2/4 + b^2} \,.
 \end{align*}
 
-\textbf{(b)} Adding the vectors:
+\textbf{(b)} Adding the vectors gives
 \[
     \hat{\alpha}_x = \frac{4GM}{c^2(d^2/4 + b^2)}
     \left(\frac{d}{2} - \frac{d}{2}\right) = 0
 \]
-(the $x$-components cancel by symmetry).  The $y$-component:
+(the $x$-components cancel by symmetry), and the $y$-component is
 \[
     \boxed{\hat{\alpha}_y = \frac{4GM}{c^2(d^2/4 + b^2)} \cdot 2b
     = \frac{8GMb}{c^2(d^2/4 + b^2)}}
 \]
 
-\textbf{(c)} In the limit $d \to 0$:
+\textbf{(c)} In the limit $d \to 0$,
 \[
     \hat{\alpha}_y \to \frac{8GMb}{c^2 b^2}
     = \frac{8GM}{c^2 b}
@@ -394,7 +392,7 @@ This is the deflection angle for a single mass of $2M$, as expected
 from superposition when the two masses coincide.
 
 \begin{derivation}[How fast the pair looks like a single mass (part b of the problem)]
-Divide the pair result by the single-mass value $4G(2M)/(c^2b)$:
+We divide the pair result by the single-mass value $4G(2M)/(c^2b)$:
 \[
 \frac{\hat\alpha_y}{4G(2M)/(c^2b)} = \frac{8GMb}{c^2(d^2/4 + b^2)}\cdot\frac{c^2b}{8GM}
 = \frac{b^2}{b^2 + d^2/4} = 1 - \frac{d^2}{4b^2} + \order{d^4/b^4} .

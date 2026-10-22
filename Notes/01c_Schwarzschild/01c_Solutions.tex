@@ -24,8 +24,8 @@ The Schwarzschild metric in coordinates $(t, r, \theta, \phi)$ is
 \end{equation*}
 where $R_S = 2GM/c^2$.  We work in geometric units $c = G = 1$ so that $R_S = 2M$.
 
-\textbf{Step 1: Christoffel symbols.}
-The nonvanishing components are (using the symmetry $\Gamma^\sigma_{\ \mu\nu} = \Gamma^\sigma_{\ \nu\mu}$):
+Step 1 is to compute the Christoffel symbols.
+The nonvanishing components are (using the symmetry $\Gamma^\sigma_{\ \mu\nu} = \Gamma^\sigma_{\ \nu\mu}$)
 \begin{align*}
     \Gamma^t_{\ tr} &= \frac{R_S}{2r(r - R_S)} \,,
     &\Gamma^r_{\ tt} &= \frac{R_S(r - R_S)}{2r^3} \,, \\
@@ -39,67 +39,63 @@ The nonvanishing components are (using the symmetry $\Gamma^\sigma_{\ \mu\nu} = 
 \end{align*}
 
 \begin{derivation}[Where the Step-1 Christoffel symbols come from]
-Start from the general static, spherically symmetric result~\eqref{eq:christoffel_schwarzschild}
+We start from the general static, spherically symmetric result~\eqref{eq:christoffel_schwarzschild}
 and insert the Schwarzschild solution $e^{2\alpha} = 1 - R_S/r \equiv f(r)$, $\beta = -\alpha$
 (eqs.~\eqref{eq:alpha_beta} and~\eqref{eq:e2alpha}).
-\begin{itemize}
-    \item \emph{Logarithmic derivative} (chain rule on $\alpha = \tfrac12\ln f$):
-    $\alpha' = \dfrac{f'}{2f} = \dfrac{R_S/r^2}{2(1 - R_S/r)} = \dfrac{R_S}{2r(r - R_S)}$.
-    This is $\Gamma^t_{\ tr}$ directly.
-    \item $\Gamma^r_{\ tt} = e^{2(\alpha-\beta)}\alpha' = e^{4\alpha}\alpha' = f^2\,\dfrac{f'}{2f}
-    = \tfrac12 f f' = \left(1 - \dfrac{R_S}{r}\right)\dfrac{R_S}{2r^2} = \dfrac{R_S(r - R_S)}{2r^3}$.
-    \item $\Gamma^r_{\ rr} = \beta' = -\alpha' = -\dfrac{R_S}{2r(r - R_S)}$.
-    \item $\Gamma^r_{\ \theta\theta} = -r\,e^{-2\beta} = -r\,e^{2\alpha} = -r f = -(r - R_S)$,
-    and $\Gamma^r_{\ \phi\phi}$ is the same times $\sin^2\theta$.
-    \item The angular block $r^2(d\theta^2 + \sin^2\theta\,d\phi^2)$ does not involve $t$, so
-    $\Gamma^\theta_{\ \phi\phi}$ and $\Gamma^\phi_{\ \theta\phi}$ are exactly the 2-sphere
-    values of Chapter~\ref{ch:differential_geometry}, and
-    $\Gamma^\theta_{\ r\theta} = \tfrac12 g^{\theta\theta}\partial_r g_{\theta\theta}
-    = \tfrac{1}{2r^2}(2r) = 1/r$ (likewise $\Gamma^\phi_{\ r\phi}$).
-\end{itemize}
-As a direct check from~\eqref{eq:christoffel}: for $\Gamma^r_{\ tt}$ the bracket is
+The chain rule on $\alpha = \tfrac12\ln f$ gives the logarithmic derivative
+$\alpha' = \dfrac{f'}{2f} = \dfrac{R_S/r^2}{2(1 - R_S/r)} = \dfrac{R_S}{2r(r - R_S)}$,
+which is $\Gamma^t_{\ tr}$ directly.
+Next, $\Gamma^r_{\ tt} = e^{2(\alpha-\beta)}\alpha' = e^{4\alpha}\alpha' = f^2\,\dfrac{f'}{2f}
+= \tfrac12 f f' = \left(1 - \dfrac{R_S}{r}\right)\dfrac{R_S}{2r^2} = \dfrac{R_S(r - R_S)}{2r^3}$,
+and $\Gamma^r_{\ rr} = \beta' = -\alpha' = -\dfrac{R_S}{2r(r - R_S)}$.
+For the angular components, $\Gamma^r_{\ \theta\theta} = -r\,e^{-2\beta} = -r\,e^{2\alpha} = -r f = -(r - R_S)$,
+and $\Gamma^r_{\ \phi\phi}$ is the same times $\sin^2\theta$.
+The angular block $r^2(d\theta^2 + \sin^2\theta\,d\phi^2)$ does not involve $t$, so
+$\Gamma^\theta_{\ \phi\phi}$ and $\Gamma^\phi_{\ \theta\phi}$ are the 2-sphere
+values of Chapter~\ref{ch:differential_geometry}, and
+$\Gamma^\theta_{\ r\theta} = \tfrac12 g^{\theta\theta}\partial_r g_{\theta\theta}
+= \tfrac{1}{2r^2}(2r) = 1/r$ (likewise $\Gamma^\phi_{\ r\phi}$).
+As a direct check from~\eqref{eq:christoffel}, for $\Gamma^r_{\ tt}$ the bracket is
 $\partial_t g_{tr} + \partial_t g_{rt} - \partial_r g_{tt}$; the metric is static and diagonal,
 so only $-\partial_r g_{tt} = f'$ survives, giving
 $\Gamma^r_{\ tt} = \tfrac12 g^{rr} f' = \tfrac12 f f'$, as above.
 \end{derivation}
 
 \begin{annotation}[Three traps in Step 1]
-\textbf{The factor $\tfrac12$.} Far from the mass, $\Gamma^r_{\ tt} = \tfrac12 f f' \to R_S/(2r^2) = M/r^2$,
+The first trap is the factor $\tfrac12$. Far from the mass, $\Gamma^r_{\ tt} = \tfrac12 f f' \to R_S/(2r^2) = M/r^2$,
 the Newtonian gravitational acceleration (geodesic equation: $\ddot r \approx -\Gamma^r_{\ tt}$).
 Dropping the $\tfrac12$ in~\eqref{eq:christoffel} doubles Newtonian gravity, so this limit is a
 quick test of any hand computation.
-\textbf{The metric signature.} The Christoffel symbols are unchanged under $g_{\mu\nu} \to -g_{\mu\nu}$
+The second is the metric signature. The Christoffel symbols are unchanged under $g_{\mu\nu} \to -g_{\mu\nu}$
 (the inverse metric flips sign too), so the table is the same in the $(+,-,-,-)$ convention; what
 must be consistent is $g^{\mu\nu}$ and $g_{\mu\nu}$ \emph{within} one computation.
-\textbf{Divergence at $r = R_S$.} $\Gamma^t_{\ tr}$ and $\Gamma^r_{\ rr}$ blow up at the horizon.
+The third is the divergence at $r = R_S$: $\Gamma^t_{\ tr}$ and $\Gamma^r_{\ rr}$ blow up at the horizon.
 Christoffel symbols are not tensor components, so this alone says nothing about the physics;
 Exercise~\ref{ex:kretschmann} settles the question with a scalar.
 \end{annotation}
 
-\textbf{Step 2: Riemann and Ricci tensors.}
+Step 2 is to form the Riemann and Ricci tensors.
 Substituting into the definition of $R^\rho_{\ \sigma\mu\nu}$ and contracting
 to form $R_{\mu\nu} = R^\lambda_{\ \mu\lambda\nu}$, every component of
-$R_{\mu\nu}$ vanishes identically.  This confirms that the Schwarzschild metric
+$R_{\mu\nu}$ vanishes identically, so the Schwarzschild metric
 is a vacuum solution to Einstein's field equations ($G_{\mu\nu} = 0$).
 
 \begin{derivation}[``Every component vanishes'', written out]
-Use the Ricci components~\eqref{eq:Rtt}--\eqref{eq:Rphph} with $\beta = -\alpha$ and
-$f = e^{2\alpha}$. Define the bracket of~\eqref{eq:Rtt},
+We use the Ricci components~\eqref{eq:Rtt}--\eqref{eq:Rphph} with $\beta = -\alpha$ and
+$f = e^{2\alpha}$, and define the bracket of~\eqref{eq:Rtt},
 $B \equiv \alpha'' + (\alpha')^2 - \alpha'\beta' + \tfrac{2}{r}\alpha' = \alpha'' + 2(\alpha')^2 + \tfrac{2}{r}\alpha'$.
 Differentiating $f = e^{2\alpha}$ twice gives $f' = 2\alpha' f$ and
 $f'' = (2\alpha'' + 4\alpha'^2) f$, hence
 \[
     B = \frac{f'' + 2f'/r}{2f} \,.
 \]
-For $f = 1 - R_S/r$: $f' = R_S/r^2$, $f'' = -2R_S/r^3$, so $f'' + 2f'/r = 0$ and $B = 0$. Then
-\begin{itemize}
-    \item $R_{tt} = e^{2(\alpha-\beta)}B = 0$;
-    \item $R_{rr} = -\alpha'' - (\alpha')^2 + \alpha'\beta' + \tfrac{2}{r}\beta' = -B = 0$
-          (insert $\beta' = -\alpha'$);
-    \item $R_{\theta\theta} = e^{-2\beta}[r(\beta' - \alpha') - 1] + 1 = f(-2r\alpha' - 1) + 1
-          = -r f' - f + 1 = -\tfrac{R_S}{r} - 1 + \tfrac{R_S}{r} + 1 = 0$;
-    \item $R_{\phi\phi} = R_{\theta\theta}\sin^2\theta = 0$.
-\end{itemize}
+For $f = 1 - R_S/r$, $f' = R_S/r^2$ and $f'' = -2R_S/r^3$, so $f'' + 2f'/r = 0$ and $B = 0$. Then
+$R_{tt} = e^{2(\alpha-\beta)}B = 0$;
+$R_{rr} = -\alpha'' - (\alpha')^2 + \alpha'\beta' + \tfrac{2}{r}\beta' = -B = 0$
+after inserting $\beta' = -\alpha'$;
+$R_{\theta\theta} = e^{-2\beta}[r(\beta' - \alpha') - 1] + 1 = f(-2r\alpha' - 1) + 1
+= -r f' - f + 1 = -\tfrac{R_S}{r} - 1 + \tfrac{R_S}{r} + 1 = 0$;
+and $R_{\phi\phi} = R_{\theta\theta}\sin^2\theta = 0$.
 The off-diagonal components vanish for this static, diagonal metric (the full $4\times4$
 $R_{\mu\nu}$ is computed in the Mathematica script).
 \end{derivation}
@@ -111,28 +107,26 @@ In lensing language, a point mass has zero convergence everywhere except at its 
 it still produces shear and deflection.
 \end{annotation}
 
-\emph{Verified symbolically by Mathematica} --- see
+This result is verified symbolically in
 \solnlink{01c_Schwarzschild/problems\_01c.wl}{problems\_01c.wl}, Exercise~1.1.
 
 % ----- Exercise 1.2 -----
 \subsection*{Exercise~\ref{ex:kretschmann}: Kretschmann Scalar}
 
-The Kretschmann scalar is the full contraction of the Riemann tensor:
+The Kretschmann scalar is the full contraction of the Riemann tensor,
 \begin{equation*}
     K = R^{\alpha\beta\gamma\delta}\, R_{\alpha\beta\gamma\delta} \,.
 \end{equation*}
-
 Computing all components of $R_{\alpha\beta\gamma\delta}$ (with lowered first index)
 and fully contracting, the result simplifies to
 \begin{equation*}
     \boxed{K = \frac{12\, R_S^2}{r^6} = \frac{48\, M^2}{r^6}} \,.
 \end{equation*}
-
-\emph{Verified symbolically by Mathematica} --- see
+This is verified symbolically in
 \solnlink{01c_Schwarzschild/problems\_01c.wl}{problems\_01c.wl}, Exercise~1.2.
 
 \begin{derivation}[The full contraction, term by term]
-Work in the static orthonormal frame
+We work in the static orthonormal frame
 $e_{\hat t} = f^{-1/2}\partial_t$, $e_{\hat r} = f^{1/2}\partial_r$,
 $e_{\hat\theta} = r^{-1}\partial_\theta$, $e_{\hat\phi} = (r\sin\theta)^{-1}\partial_\phi$,
 where an orthonormal component is the coordinate component divided by
@@ -165,19 +159,17 @@ on coordinates. Two cautions. (i) A finite $K$ is \emph{consistent} with a coord
 but does not prove one; the proof is to exhibit coordinates in which the metric is regular there
 (Eddington--Finkelstein, eq.~\eqref{eq:eddington_finkelstein}). (ii) A divergent scalar, as at
 $r = 0$, \emph{is} decisive: no coordinate change can remove it.
-Note also $K(R_S) \propto M^{-4}$: the tidal curvature at the horizon of a supermassive black
+Also, $K(R_S) \propto M^{-4}$: the tidal curvature at the horizon of a supermassive black
 hole is far gentler than at a stellar-mass one.
 \end{annotation}
 
-\textbf{Behavior at the horizon ($r = R_S$):}
+At the horizon ($r = R_S$),
 \begin{equation*}
     K(r = R_S) = \frac{12}{R_S^4} \,,
 \end{equation*}
 which is \emph{finite}.  The apparent singularity in the metric at $r = R_S$ is
-merely a coordinate singularity (removable by switching to, e.g., Eddington--Finkelstein
-coordinates).
-
-\textbf{Behavior at $r = 0$:}
+a coordinate singularity (removable by switching to, e.g., Eddington--Finkelstein
+coordinates).  At the origin $r = 0$, on the other hand,
 \begin{equation*}
     K \to \infty \quad \text{as } r \to 0 \,.
 \end{equation*}
@@ -188,10 +180,10 @@ the coordinate system chosen.
 \subsection*{Exercise~\ref{ex:schwarzschild_radii}: Schwarzschild Radii for Astrophysical Objects}
 
 Using $R_S = 2GM/c^2$ with $G = 6.674\times 10^{-11}\;\text{m}^3\text{kg}^{-1}\text{s}^{-2}$
-and $c = 2.998\times 10^{8}\;\text{m/s}$:
+and $c = 2.998\times 10^{8}\;\text{m/s}$, we obtain the following.
 
 \begin{enumerate}[label=(\alph*)]
-    \item \textbf{Earth} ($M = 5.972\times 10^{24}\;\text{kg}$, $R = 6371\;\text{km}$):
+    \item For the Earth ($M = 5.972\times 10^{24}\;\text{kg}$, $R = 6371\;\text{km}$),
     \begin{equation*}
         R_S = \frac{2 \times 6.674\times 10^{-11} \times 5.972\times 10^{24}}
                    {(2.998\times 10^{8})^2}
@@ -199,21 +191,21 @@ and $c = 2.998\times 10^{8}\;\text{m/s}$:
             \approx 8.87\;\text{mm} \,.
     \end{equation*}
     The ratio $R_S/R \approx 1.4\times 10^{-9}$: GR corrections on Earth's surface
-    are of order $10^{-9}$ (important for GPS, but tiny).
+    are of order $10^{-9}$, small but important for GPS.
 
-    \item \textbf{Sun} ($M = 1.989\times 10^{30}\;\text{kg}$, $R = 6.957\times 10^{8}\;\text{m}$):
+    \item For the Sun ($M = 1.989\times 10^{30}\;\text{kg}$, $R = 6.957\times 10^{8}\;\text{m}$),
     \begin{equation*}
         R_S \approx 2954\;\text{m} \approx 2.95\;\text{km} \,.
     \end{equation*}
     The ratio $R_S/R \approx 4.25\times 10^{-6}$: small, but measurable via
     gravitational redshift and light deflection.
 
-    \item \textbf{Galaxy lens} ($M \sim 10^{12}\, M_\odot$, extent $\sim 50\;\text{kpc}$):
+    \item For a galaxy lens ($M \sim 10^{12}\, M_\odot$, extent $\sim 50\;\text{kpc}$),
     \begin{equation*}
         R_S \approx 2.95\times 10^{15}\;\text{m} \approx 0.096\;\text{pc} \,.
     \end{equation*}
     The ratio $R_S/R \approx 1.9\times 10^{-6}$: the Schwarzschild radius is
-    vastly smaller than the galaxy, justifying the weak-field/thin-lens
+    far smaller than the galaxy, which justifies the weak-field/thin-lens
     approximation used in gravitational lensing.
 \end{enumerate}
 
@@ -229,10 +221,9 @@ $50\ \text{kpc} = 5\times10^{4}$\,pc gives $R_S/R \approx 1.9\times10^{-6}$.
 % ----- Exercise 1.4 -----
 \subsection*{Exercise~\ref{ex:grav_redshift_calc}: Gravitational Redshift from a Neutron Star}
 
-Parameters: $M = 1.4\, M_\odot = 2.785\times 10^{30}\;\text{kg}$,
+The parameters are $M = 1.4\, M_\odot = 2.785\times 10^{30}\;\text{kg}$ and
 $R = 10\;\text{km} = 10^{4}\;\text{m}$.
-
-First, the Schwarzschild radius:
+The Schwarzschild radius is
 \begin{equation*}
     R_S = \frac{2GM}{c^2}
         = \frac{2 \times 6.674\times 10^{-11} \times 2.785\times 10^{30}}
@@ -240,9 +231,9 @@ First, the Schwarzschild radius:
         \approx 4137\;\text{m}
         \approx 4.14\;\text{km} \,.
 \end{equation*}
-So $R_S/R \approx 0.414$ --- a large fraction, meaning strong-field GR is essential.
+Hence $R_S/R \approx 0.414$, a large fraction, and strong-field GR is required.
 
-\textbf{(a) Gravitational redshift:}
+\textbf{(a)} The gravitational redshift is
 \begin{equation*}
     z = \frac{1}{\sqrt{1 - R_S/R}} - 1
       = \frac{1}{\sqrt{1 - 0.414}} - 1
@@ -251,25 +242,23 @@ So $R_S/R \approx 0.414$ --- a large fraction, meaning strong-field GR is essent
       \approx 0.306 \,.
 \end{equation*}
 
-\textbf{(b) Wavelength shift:}
-For a photon emitted at $\lambda_{\rm em} = 500\;\text{nm}$:
+\textbf{(b)} For a photon emitted at $\lambda_{\rm em} = 500\;\text{nm}$,
 \begin{equation*}
     \lambda_{\rm obs} = \lambda_{\rm em}(1 + z)
                       = 500 \times 1.306
                       \approx 653\;\text{nm} \,,
 \end{equation*}
-a shift of $\Delta\lambda \approx 153\;\text{nm}$ --- blue/green light is shifted
-to red/near-infrared.
+a shift of $\Delta\lambda \approx 153\;\text{nm}$; blue-green light is shifted
+to the red and near-infrared.
 
-\textbf{(c) Comparison to the Sun:}
-The Sun's surface redshift is
+\textbf{(c)} The Sun's surface redshift is
 \begin{equation*}
     z_\odot = \frac{1}{\sqrt{1 - R_S^\odot / R_\odot}} - 1
             \approx \frac{R_S^\odot}{2 R_\odot}
             \approx 2.12\times 10^{-6} \,.
 \end{equation*}
 The neutron star redshift ($z \approx 0.306$) is roughly $1.4\times 10^{5}$ times
-larger --- a dramatic difference that strongly affects observed neutron star spectra.
+larger, a difference that strongly affects observed neutron star spectra.
 
 \begin{derivation}[The approximation $z_\odot \approx R_S^\odot/(2R_\odot)$]
 With $x \equiv R_S/R$, the binomial series gives
@@ -283,7 +272,7 @@ $0.306/(2.12\times10^{-6}) \approx 1.44\times10^{5}$.
 \end{derivation}
 
 \begin{annotation}[When the weak-field expansion fails]
-For the neutron star $x = 0.414$: the first-order term gives $z \approx 0.207$, the second-order
+For the neutron star, $x = 0.414$, the first-order term gives $z \approx 0.207$, the second-order
 sum $0.271$, while the exact value is $0.306$. The series converges slowly at $x \sim 0.4$, which
 is what ``strong-field'' means operationally. For a galaxy lens $x \sim 10^{-6}$
 (Exercise~\ref{ex:schwarzschild_radii}), so the first-order (weak-field) expansion used throughout
@@ -295,32 +284,27 @@ lensing is accurate to roughly one part in $10^{6}$.
 
 We embed the equatorial spatial slice ($t = \text{const}$, $\theta = \pi/2$) of the
 Schwarzschild geometry into flat 3D Euclidean space.
-
-\textbf{The 2D slice:}
+The metric of the 2D slice is
 \begin{equation*}
     dl^2 = \frac{dr^2}{1 - R_S/r} + r^2\, d\phi^2 \,.
 \end{equation*}
-
-\textbf{3D Euclidean space in cylindrical coordinates:}
+That of 3D Euclidean space in cylindrical coordinates is
 \begin{equation*}
     dl^2_{\rm flat} = dz^2 + dr^2 + r^2\, d\phi^2 \,.
 \end{equation*}
-
 For a surface of revolution $z = z(r)$, the induced metric on the surface is
 \begin{equation*}
     dl^2 = \left(1 + \left(\frac{dz}{dr}\right)^{\!2}\right) dr^2
            + r^2\, d\phi^2 \,.
 \end{equation*}
-
-\textbf{Matching the $dr^2$ components:}
+Matching the $dr^2$ components gives
 \begin{equation*}
     1 + \left(\frac{dz}{dr}\right)^{\!2} = \frac{1}{1 - R_S/r}
     \quad\Longrightarrow\quad
     \left(\frac{dz}{dr}\right)^{\!2} = \frac{R_S/r}{1 - R_S/r}
     = \frac{R_S}{r - R_S} \,.
 \end{equation*}
-
-\textbf{Integrating:}
+Integrating,
 \begin{equation*}
     z(r) = \int \sqrt{\frac{R_S}{r - R_S}}\, dr
          = 2\sqrt{R_S}\, \sqrt{r - R_S}
@@ -329,7 +313,7 @@ For a surface of revolution $z = z(r)$, the induced metric on the surface is
 where we set $z(R_S) = 0$ at the throat.
 
 \begin{derivation}[The Flamm integral]
-Substitute $u = r - R_S$, $du = dr$:
+With the substitution $u = r - R_S$, $du = dr$, the integral is
 $\int \sqrt{R_S/u}\,du = \sqrt{R_S}\int u^{-1/2}\,du = 2\sqrt{R_S}\,u^{1/2} + C$.
 The condition $z(R_S) = 0$ (i.e.\ $u = 0$) fixes $C = 0$. Squaring
 $z = 2\sqrt{R_S(r - R_S)}$ gives $z^2 = 4R_S(r - R_S)$, a parabola in the $(r, z)$ plane;
@@ -344,17 +328,13 @@ Exercise~\ref{ex:kretschmann}: the divergence at $r = R_S$ comes from the coordi
 curvature there is finite.
 \end{annotation}
 
-This is the equation of a \textbf{paraboloid of revolution} ($z^2 = 4 R_S (r - R_S)$).
-Key features:
-\begin{itemize}
-    \item The minimum circumferential radius is $r = R_S$ (the throat), where $z = 0$.
-    \item At large $r$, $z \sim 2\sqrt{R_S\, r}$ and the surface becomes approximately flat.
-    \item The diagram illustrates spatial curvature, not gravitational potential.
-    \item The full paraboloid (including $z < 0$) represents an Einstein--Rosen bridge
-          connecting two asymptotically flat regions.
-\end{itemize}
-
-\emph{Verified symbolically by Mathematica} --- see
+This is the equation of a \emph{paraboloid of revolution} ($z^2 = 4 R_S (r - R_S)$).
+The minimum circumferential radius is $r = R_S$ (the throat), where $z = 0$;
+at large $r$, $z \sim 2\sqrt{R_S\, r}$ and the surface becomes approximately flat.
+The diagram illustrates spatial curvature, not gravitational potential.
+The full paraboloid (including $z < 0$) represents an Einstein--Rosen bridge
+connecting two asymptotically flat regions.
+The embedding is verified symbolically in
 \solnlink{01c_Schwarzschild/problems\_01c.wl}{problems\_01c.wl}, Exercise~1.5.
 
 \begin{bridge}[The central point mass of Part V]
