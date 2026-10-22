@@ -27,7 +27,7 @@ import subprocess
 import sys
 from collections import Counter
 
-DISPLAY_ENVS = r"(equation|align|gather|multline|eqnarray|alignat|flalign)\*?"
+DISPLAY_ENVS = r"((?:equation|align|gather|multline|eqnarray|alignat|flalign)\*?)"
 BOX_ENVS = ("annotation", "derivation", "bridge", "keybox", "aside")
 MACROS = (r"label|ref|eqref|cref|Cref|cite|citep|citet|citealt|citealp|citeauthor|citeyear"
           r"|mathlink|solnlink|href|includegraphics|input|include|annot")
@@ -57,13 +57,13 @@ def norm(s: str) -> str:
 def display_blocks(s: str):
     pat = re.compile(r"\\begin\{" + DISPLAY_ENVS + r"\}(.*?)\\end\{\1\}", re.S)
     blocks = [norm(m.group(0)) for m in pat.finditer(s)]
-    blocks += [norm(m.group(0)) for m in re.finditer(r"\\\[(.*?)\\\]", s, re.S)]
+    blocks += [norm(m.group(0)) for m in re.finditer(r"(?<!\\)\\\[(.*?)(?<!\\)\\\]", s, re.S)]
     return blocks
 
 
 def without_display(s: str) -> str:
     s = re.sub(r"\\begin\{" + DISPLAY_ENVS + r"\}(.*?)\\end\{\1\}", " ", s, flags=re.S)
-    s = re.sub(r"\\\[(.*?)\\\]", " ", s, flags=re.S)
+    s = re.sub(r"(?<!\\)\\\[(.*?)(?<!\\)\\\]", " ", s, flags=re.S)
     return s
 
 
@@ -87,6 +87,8 @@ def numbers(s: str):
     p = prose_only(s)
     # drop macro arguments that are references/paths (labels, file names, cites)
     p = re.sub(r"\\(" + MACROS + r")\*?(\[[^\]]*\])?\{[^}]*\}(\{[^}]*\})?", " ", p)
+    # drop environment option brackets (\begin{itemize}[leftmargin=1.2em], [nosep], [label=(\alph*)])
+    p = re.sub(r"\\begin\{[a-zA-Z*]+\}(\[[^\]]*\])", r"\\begin{x}", p)
     return [t.rstrip(".,") for t in re.findall(r"(?<![A-Za-z_\\])[0-9][0-9.,]*", p)]
 
 
