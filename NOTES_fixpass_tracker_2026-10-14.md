@@ -231,3 +231,4 @@ Still open (author's call or unverifiable here):
 - "Module~N" references in the visible text of Ch 1–14 (≈70 occurrences) name module ids (Module 3 = Chapter 7 in the PDF); flagged by the 04/05 critics as out of scope. Decision needed: leave, or convert to \ref{ch:…}.
 - 09: the Ch 21 value +15.6 is quoted, not re-derived, in problems_09.wl.
 Build after closeout: 364 / 449 / 572 pages (fingerprints in Output/build_fingerprints.txt); master verification unchanged (28/28).
+- DONE 2026-10-21: all visible "Module~N" references (179 + 4 line-broken/range cases) converted to `Chapter~\ref{ch:…}`; generic "this module" wording → "chapter" (31 lines); Ch 14 closing sentence no longer claims to end the suite. Build 364/449/572.

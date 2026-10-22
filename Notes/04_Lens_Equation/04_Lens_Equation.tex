@@ -52,17 +52,17 @@ image multiplicity, magnification, time delays, and lens modeling.
 We now have all the pieces needed to build the gravitational lens
 equation:
 \begin{enumerate}
-    \item \textbf{The deflection angle} (Modules~1e and~2):
+    \item \textbf{The deflection angle} (Chapters~\ref{ch:linearized_gravity} and~\ref{ch:light_deflection}):
           $\alphahat = 4\Gnewton M / (\speedoflight^2 b)$ for a point
           mass, and the superposition
           principle~\eqref{eq:superposition_deflection} for multiple
           masses and continuous distributions.
-    \item \textbf{The cosmological distances} (Module~3): the angular
+    \item \textbf{The cosmological distances} (Chapter~\ref{ch:cosmological_distances}): the angular
           diameter distances $\Dd$, $\Ds$, $\Dds$ relating angular
           separations on the sky to physical separations at the lens
           and source.
 \end{enumerate}
-The task of this module is to combine these into a single equation
+The task of this chapter is to combine these into a single equation
 that maps source positions $\vecbeta$ to image positions $\vectheta$.
 Remarkably, this equation can produce \textit{multiple solutions} ---
 multiple images of a single source --- which is the defining
@@ -338,7 +338,7 @@ For a continuous mass distribution described by the surface mass density
 $\Sigma(\vecxi)$ (eq.~\ref{eq:surface_mass_density_def}), the physical
 deflection angle at position $\vecxi$ in the lens plane is obtained by
 superposing the deflections from all mass elements
-(Congdon \& Keeton eq.~4.9; cf.\ Module~1e
+(Congdon \& Keeton eq.~4.9; cf.\ Chapter~\ref{ch:linearized_gravity}
 eq.~\ref{eq:continuous_deflection}):
 \begin{equation}
     \boxed{
@@ -460,7 +460,7 @@ sent to $\beta = 0$, so the sheet is a perfect lens with a single focus
 
 \begin{remark}
 The factor of $4\pi$ traces to the 2D Poisson equation
-$\nabla^2\psiL = 2\kappab$ (Module~5): the $4\pi$ in
+$\nabla^2\psiL = 2\kappab$ (Chapter~\ref{ch:magnification}): the $4\pi$ in
 eq.~\eqref{eq:sigma_cr} is the product of $4G/c^2$ (from the deflection
 formula) and the $\pi$ that converts the uniform-disk enclosed mass to
 the line-averaged surface density.
@@ -583,7 +583,7 @@ and the distances have units of length.
 
 The lens equation simplifies dramatically for a \textbf{point mass lens}.
 For a mass $M$ at the origin of the lens plane, the physical deflection
-angle is (from Module~2):
+angle is (from Chapter~\ref{ch:light_deflection}):
 \begin{equation}
     \alphahat(\xi) = \frac{4\Gnewton M}{\speedoflight^2\, \xi} \,,
     \label{eq:alphahat_point}
@@ -758,7 +758,7 @@ clusters.  Note that for an extended cluster only the mass
 \emph{within} the Einstein radius enters the point-mass-equivalent
 estimate above; the total virial mass $M_{200} \sim 10^{15}\,\Msun$
 of a typical massive cluster is much larger, but most of it lies
-outside $\thetaE$.  An NFW treatment (Module~10) yields the same
+outside $\thetaE$.  An NFW treatment (Chapter~\ref{ch:cluster_lensing}) yields the same
 answer self-consistently.
 
 \medskip
@@ -913,7 +913,7 @@ Liouville's theorem applied to the photon phase space), but it changes
 the \textit{solid angle} subtended by the image compared to the source.
 The ratio of image area to source area is the \textbf{magnification}
 $\mu$.  We will derive the magnification formalism rigorously in
-Module~5; here we preview the key results for the point mass lens.
+Chapter~\ref{ch:magnification}; here we preview the key results for the point mass lens.
 
 For a circularly symmetric lens, the magnification is
 (Narayan \& Bartelmann eq.~26):
@@ -1141,7 +1141,7 @@ Compute the Einstein radius $\thetaE$ for:
           $\Dds = 5$~kpc).  Express the result in milliarcseconds.
     \item \textbf{Galaxy lensing:} $M = 10^{12}\,\Msun$, $z_d = 0.3$,
           $z_s = 1$.  Use the angular diameter distances from
-          Module~3 (or the Mathematica script):
+          Chapter~\ref{ch:cosmological_distances} (or the Mathematica script):
           $\Dd \approx 919$~Mpc, $\Ds \approx 1652$~Mpc,
           $\Dds \approx 1055$~Mpc.  Express the result in arcseconds.
     \item \textbf{Cluster lensing:} mass $M_{\mathrm{E}} \approx

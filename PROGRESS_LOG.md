@@ -39,6 +39,12 @@ Learning_to_Lens_Solutions.pdf   448 pages  text-md5 d1c73bb356827ce97027a012ddc
 Learning_to_Lens_Annotated.pdf   571 pages  text-md5 c50bca0df6c08feb5544721dcf48cb10  sentinels 508
 ```
 
+### Addendum (2026-10-21) — chapter cross-references normalised
+- Every visible "Module~N" (module id, which did not match the PDF's chapter numbers: Module 3 = Chapter 7)
+  is now `Chapter~\ref{ch:…}`; ranges and "and" lists handled (183 references, 24 files). Generic "this module"
+  wording → "chapter" (31 lines). Chapter 14 opener/closer now say "last of Part III" instead of ending the suite.
+  Build 364 / 449 / 572, all assertions pass.
+
 ### Addendum (session 3) — orchestrator-scope critic leftovers closed
 - Fig. `precessing_orbit` (Ch 4) caption corrected: the plotted L = 4.2 orbit advances 2.07 rad (119°) per
   radial period, not "a small angle" (NDSolve + FindRoot; checks F3c/F3d in `problems_01d.wl`, 89/89).

@@ -18,8 +18,8 @@ modification of it seems impossible without destruction of the whole.}
 \end{quote}
 
 \noindent
-In Module~1d we derived the effective potential for geodesic motion in
-Schwarzschild spacetime, and in Module~1e we obtained the deflection
+In Chapter~\ref{ch:geodesics_orbits} we derived the effective potential for geodesic motion in
+Schwarzschild spacetime, and in Chapter~\ref{ch:linearized_gravity} we obtained the deflection
 angle $\alphahat = 4\Gnewton M / (\speedoflight^2 b)$ via the
 weak-field / Born approximation, showing how the factor of 2 over
 Newtonian gravity arises from the equal contributions of temporal and
@@ -54,11 +54,11 @@ the Sun (Eddington's 1919 test), Jupiter, and a typical galaxy lens.
 \label{sec:deflection_intro}
 
 Light follows \textbf{null geodesics} in curved spacetime: paths for which
-$ds^2 = 0$ at every point.  In Module~1d we showed that for a photon in
+$ds^2 = 0$ at every point.  In Chapter~\ref{ch:geodesics_orbits} we showed that for a photon in
 the equatorial plane of the Schwarzschild metric, the conserved energy~$E$
 and angular momentum~$L$ reduce the equations of motion to a single radial
 equation (cf.\ eqs.~\ref{eq:conserved_E}--\ref{eq:conserved_L} and the
-null geodesic orbit equation~\eqref{eq:photon_orbit} from Module~1d):
+null geodesic orbit equation~\eqref{eq:photon_orbit} from Chapter~\ref{ch:geodesics_orbits}):
 \begin{equation}
     \frac{d\phi}{dr} = \pm \frac{L}{r^2}
     \left[\frac{E^2}{\speedoflight^2}
@@ -71,7 +71,7 @@ where $\RS = 2\Gnewton M / \speedoflight^2$ is the Schwarzschild radius
 
 
 \begin{derivation}[Where the orbit equation comes from]
-Module~1d works in units with $\speedoflight = 1$.  Restoring $\speedoflight$,
+Chapter~\ref{ch:geodesics_orbits} works in units with $\speedoflight = 1$.  Restoring $\speedoflight$,
 the two Killing constants of a photon with affine parameter~$\lambda$ are
 \[
     E = \left(1 - \frac{\RS}{r}\right)\speedoflight^2\,\dot t , \qquad
@@ -131,10 +131,10 @@ for galaxy and cluster lensing.  (Numbers: checks A12a--d.)
 
 \textit{Which angle.}  $\alphahat$ is the \emph{physical} bending angle at the
 lens: the angle between the incoming and outgoing asymptotes of one ray.  It is
-\emph{not} the angular offset you see on the sky.  The lens equation of Module~4
+\emph{not} the angular offset you see on the sky.  The lens equation of Chapter~\ref{ch:lens_equation}
 uses the \emph{reduced} deflection
 $\alpha = (\Dds/\Ds)\,\alphahat$ (eq.~\eqref{eq:reduced_deflection}), and that
-distance factor is where all of the cosmology of Module~3 enters.
+distance factor is where all of the cosmology of Chapter~\ref{ch:cosmological_distances} enters.
 \end{annotation}
 
 % =====================================================================
@@ -298,7 +298,7 @@ second order it does: the $m$ shift in $r_0$ converts the $\varepsilon = m/r_0$
 coefficient into the $m/b$ coefficient (see the annotation after
 eq.~\eqref{eq:deflection_second_order}).
 
-In the thin-lens formalism of Module~4 the ``impact parameter'' is the
+In the thin-lens formalism of Chapter~\ref{ch:lens_equation} the ``impact parameter'' is the
 lens-plane position $\xi = \Dd\,\theta$ at which the ray crosses the lens plane;
 for galaxy lenses $m/b \sim 10^{-6}$, so $b$, $r_0$ and $\xi$ are
 interchangeable there.
@@ -511,7 +511,7 @@ weak-field limit.
 
 
 \begin{derivation}[Same answer, the lensing way: integrate along the unperturbed ray]
-Module~1e (eq.~\eqref{eq:deflection_integral}) gives the weak-field deflection as
+Chapter~\ref{ch:linearized_gravity} (eq.~\eqref{eq:deflection_integral}) gives the weak-field deflection as
 the transverse gradient of the Newtonian potential integrated along the
 \emph{undeflected} straight line (the Born approximation):
 $\alphahat = (2/\speedoflight^2)\int |\nabla_\perp\Phi|\,dl$.  For a point mass
@@ -552,7 +552,7 @@ supermassive black hole) inside a power-law galaxy.  Because the weak-field
 deflection is linear in the mass (previous box), the black hole simply adds its
 own $\alphahat_\bullet = 4\Gnewton M_\bullet/(\speedoflight^2\xi)$ to the galaxy's
 deflection at the same lens-plane position~$\xi$.  After the
-$\Dds/\Ds$ rescaling of Module~4 this becomes the familiar
+$\Dds/\Ds$ rescaling of Chapter~\ref{ch:lens_equation} this becomes the familiar
 $\alpha_\bullet(\theta) = \thetaBH^2/\theta$, with
 $\thetaBH^2 = (4\Gnewton M_\bullet/\speedoflight^2)\,\Dds/(\Dd\Ds)$.  The
 $1/\xi$ divergence at the centre is the reason the point mass punctures the
@@ -594,7 +594,7 @@ In isotropic coordinates the weak-field metric is
 $ds^2 \approx -(1 - 2m/r)\speedoflight^2dt^2 + (1 + 2m/r)\,d\mathbf{x}^2$.
 Setting $ds^2 = 0$, the coordinate speed of light is
 $|d\mathbf{x}/dt| = \speedoflight\sqrt{(1-2m/r)/(1+2m/r)}$, so the effective
-index (Module~1e, eq.~\eqref{eq:refractive_index}) is
+index (Chapter~\ref{ch:linearized_gravity}, eq.~\eqref{eq:refractive_index}) is
 \[
     n = \sqrt{\frac{1 + 2m/r}{1 - 2m/r}} = 1 + \frac{2m}{r} + \order{m^2/r^2}
     \qquad (\text{check A15a}).
@@ -708,7 +708,7 @@ between images.
 \begin{annotation}[Conventions hidden in eq.~\eqref{eq:time_delay_total}]
 \textit{The $(1+z_d)$ factor.}  Eq.~\eqref{eq:time_delay_total} is the delay in
 the rest frame of the lens.  The delay an observer measures is stretched by
-cosmological time dilation, $\Delta t_{\rm obs} = (1+z_d)\,\Delta T$; Module~6
+cosmological time dilation, $\Delta t_{\rm obs} = (1+z_d)\,\Delta T$; Chapter~\ref{ch:fermat_time_delays}
 writes it with this factor in front (eq.~\eqref{eq:time_delay_function}).
 Forgetting it biases $\Hubble$ by $(1+z_d)$, i.e.\ by tens of per cent.
 
@@ -736,7 +736,7 @@ gravitational potential well.
 
 \begin{remark}
 The total time delay~\eqref{eq:time_delay_total} is closely related to the
-\textbf{Fermat potential}, which we will study in detail in Module~6.  The
+\textbf{Fermat potential}, which we will study in detail in Chapter~\ref{ch:fermat_time_delays}.  The
 Fermat potential $\tau(\vectheta)$ encodes both the geometric and
 gravitational delays, and its gradient gives the lens equation.  Images
 form at stationary points of the Fermat potential (Fermat's principle
@@ -870,7 +870,7 @@ $b \sim 10$~kpc~$\approx 3.09 \times 10^{20}$~m:
     \label{eq:deflection_galaxy}
 \end{equation}
 The corresponding Einstein radius (which we will derive properly in
-Module~4) is a few arcseconds, depending on the distance configuration.
+Chapter~\ref{ch:lens_equation}) is a few arcseconds, depending on the distance configuration.
 
 \begin{remark}
 The Einstein radius $\thetaE$ for a point mass lens at cosmological
@@ -884,16 +884,16 @@ For a $10^{12}\,\Msun$ galaxy at $z_d \sim 0.3$ with a source at
 $z_s \sim 1$, this gives $\thetaE \approx 2.4''$
 (Exercise~\ref{ex:einstein_radius_numerical}).\footnote{Earlier versions of
 this remark quoted $\thetaE \sim 1''$; with the concordance distances of
-Module~3 ($D_d = 919$, $D_s = 1652$, $D_{ds} = 1055$~Mpc) the value is
+Chapter~\ref{ch:cosmological_distances} ($D_d = 919$, $D_s = 1652$, $D_{ds} = 1055$~Mpc) the value is
 $2.38''$.}  Multiple images form
 whenever the source lies within $\sim \thetaE$ of the optical axis ---
 this is the regime of \textbf{strong gravitational lensing}.  We will
-develop this quantitatively in Modules~4--5.
+develop this quantitatively in Chapters~\ref{ch:lens_equation}--\ref{ch:magnification}.
 \end{remark}
 
 
 \begin{derivation}[Eq.~\eqref{eq:einstein_radius_deflection} from $\alphahat$]
-In angular coordinates the lens equation (Module~4) is
+In angular coordinates the lens equation (Chapter~\ref{ch:lens_equation}) is
 $\beta = \theta - (\Dds/\Ds)\,\alphahat(\Dd\theta)$.  For a point mass
 $\alphahat(\xi) = 4\Gnewton M/(\speedoflight^2\xi)$ and $\xi = \Dd\theta$:
 \[
@@ -903,7 +903,7 @@ A source exactly behind the lens ($\beta = 0$) is imaged onto the ring
 $\theta^2 = (4\Gnewton M/\speedoflight^2)\,\Dds/(\Dd\Ds)$, which is
 eq.~\eqref{eq:einstein_radius_deflection} (check A17).  For
 $M = 10^{12}\,\Msun$, $z_d = 0.3$, $z_s = 1$ in the concordance cosmology the
-distances of Module~3 give $\thetaE \approx 2.4''$
+distances of Chapter~\ref{ch:cosmological_distances} give $\thetaE \approx 2.4''$
 (Exercise~\ref{ex:einstein_radius_numerical}; check A25).
 \end{derivation}
 
@@ -919,7 +919,7 @@ reduced deflections is
     \qquad(\text{check A19}),
 \]
 the cosmology-dependent ratio of four angular-diameter distances that the
-compound-lens chapters measure.  Module~3 shows how to compute each of the
+compound-lens chapters measure.  Chapter~\ref{ch:cosmological_distances} shows how to compute each of the
 four.
 \end{bridge}
 
@@ -958,7 +958,7 @@ result is (see, e.g., Keeton \& Petters 2005):
 The critical impact parameter below which the photon is captured (i.e.,
 spirals into the mass) is $b_{\mathrm{crit}} = 3\sqrt{3}\,m =
 3\sqrt{3}\,\RS/2$.  This corresponds to the photon sphere derived in
-Module~1d.
+Chapter~\ref{ch:geodesics_orbits}.
 
 
 \begin{derivation}[Where $15\pi/4$ and $3\sqrt{3}\,m$ come from]
@@ -1035,7 +1035,7 @@ $b = 10\,\RS$:
     \item \textbf{Shapiro time delay:} A gravitational field causes an
           excess travel time $\Delta T$ with geometric and gravitational
           components.  This is connected to the Fermat potential
-          (Module~6).
+          (Chapter~\ref{ch:fermat_time_delays}).
 
     \item \textbf{Solar deflection:} $\alphahat_\odot = 1.75''$, confirmed
           by Eddington (1919) and modern measurements to $< 0.01\%$.

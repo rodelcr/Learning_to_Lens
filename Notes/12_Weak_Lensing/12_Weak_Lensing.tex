@@ -20,12 +20,12 @@ this analysis.}
 \end{quote}
 
 \noindent
-Modules~\ref{ch:lens_equation}--\ref{ch:cluster_lensing} were concerned
+Chapters~\ref{ch:lens_equation}--\ref{ch:cluster_lensing} were concerned
 almost entirely with \textbf{strong} lensing: multiple images, giant
 arcs, Einstein rings --- phenomena in which the Jacobian
 $\Amat = \partial\vecbeta/\partial\vectheta$ differs so much from the
 identity that a single source produces strongly distorted images.
-This module treats the opposite, and far more common, regime.  In
+This chapter treats the opposite, and far more common, regime.  In
 \textbf{weak} gravitational lensing the Jacobian is very close to the
 unit matrix,
 \begin{equation*}
@@ -40,7 +40,7 @@ recovered only \textit{statistically}, by averaging the shapes of many
 faint galaxies \citep{schneider_kochanek_wambsganss_2006}.
 
 This is the natural complement to the convergence--shear formalism of
-Module~\ref{ch:magnification}.  There we \textit{defined} $\kappab$,
+Chapter~\ref{ch:magnification}.  There we \textit{defined} $\kappab$,
 $\gammaL$, and the Jacobian; here we learn how to \textit{measure} them
 from data, and what they tell us:
 \begin{itemize}[nosep]
@@ -51,11 +51,11 @@ from data, and what they tell us:
           its projected mass profile
           ($\S$\ref{sec:wl_tangential}), extending the axisymmetric
           result $|\gammaL| = \bar{\kappa} - \kappab$ of
-          Module~\ref{ch:axisymmetric_models};
+          Chapter~\ref{ch:axisymmetric_models};
     \item how the shear field can be inverted into a parameter-free map
           of the projected mass --- the Kaiser--Squires inversion
           ($\S$\ref{sec:wl_ks}) --- and why the \textit{mass-sheet
-          degeneracy} of Module~\ref{ch:galaxy_lensing} reappears here
+          degeneracy} of Chapter~\ref{ch:galaxy_lensing} reappears here
           ($\S$\ref{sec:wl_reduced_shear});
     \item how the coherent distortion imprinted by the large-scale
           structure --- \textit{cosmic shear} --- probes cosmology
@@ -65,7 +65,7 @@ from data, and what they tell us:
           ($\S$\ref{sec:wl_ggl}).
 \end{itemize}
 This chapter expands the brief weak-lensing sketch of
-$\S$\ref{sec:weak_lensing} in Module~\ref{ch:cluster_lensing} into a
+$\S$\ref{sec:weak_lensing} in Chapter~\ref{ch:cluster_lensing} into a
 self-contained treatment of the core concepts.
 
 \medskip
@@ -110,8 +110,8 @@ central technical challenge of the field
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, Sect.~3;
 \citealp{bartelmann_schneider_2001}).
 
-Throughout this module we work in the thin-lens picture of
-Module~\ref{ch:lens_equation} for individual galaxies and clusters, and
+Throughout this chapter we work in the thin-lens picture of
+Chapter~\ref{ch:lens_equation} for individual galaxies and clusters, and
 generalize to a three-dimensional deflecting mass distribution --- the
 large-scale structure --- only in $\S$\ref{sec:wl_cosmic}, where the
 lensing effect is described by an \textit{effective} surface mass density.
@@ -172,7 +172,7 @@ The phase of $\chi$ and $\epsilon$ is $2\varphi$, twice the position angle
 $\varphi$ of the major axis; the factor of two reflects the fact that an
 ellipse maps to itself under a rotation by $180^\circ$.  It is this
 ``spin-2'' character that $\chi$ and $\epsilon$ share with the shear
-(Module~\ref{ch:magnification}, eq.~\ref{eq:shear_spin2}).
+(Chapter~\ref{ch:magnification}, eq.~\ref{eq:shear_spin2}).
 
 \subsection{From Source to Image, and the Estimator}
 
@@ -269,7 +269,7 @@ vanishes by parity, $\S$\ref{sec:wl_cosmic}).
 \subsection{Mean Tangential Shear and the Projected Mass}
 
 For a \textbf{circularly symmetric} lens we already know from
-Module~\ref{ch:axisymmetric_models}
+Chapter~\ref{ch:axisymmetric_models}
 (eq.~\ref{eq:gamma_circular}) that
 $\gammaL_{\mathrm t}(\theta) = \bar\kappa(\theta) - \kappab(\theta)$,
 the mean convergence interior to $\theta$ minus the local convergence.
@@ -297,7 +297,7 @@ not.
 
 It is customary to write this in physical units.  Multiplying
 by the critical surface mass density $\Sigmacr$
-(Module~\ref{ch:lens_equation}) and using $\kappab = \Sigma/\Sigmacr$,
+(Chapter~\ref{ch:lens_equation}) and using $\kappab = \Sigma/\Sigmacr$,
 \begin{equation}
     \gammaL_{\mathrm t}(\theta)\,\Sigmacr
     = \bar\Sigma(<\theta) - \Sigma(\theta)
@@ -312,7 +312,7 @@ a projected mass profile.
 
 \begin{example}
 \textbf{Tangential shear of an SIS.}
-For the singular isothermal sphere (Module~\ref{ch:axisymmetric_models},
+For the singular isothermal sphere (Chapter~\ref{ch:axisymmetric_models},
 eqs.~\ref{eq:sis_kappa}--\ref{eq:sis_mean_kappa}) we have
 $\kappab = \thetaE/(2\theta)$ and $\bar\kappa = \thetaE/\theta$, so
 \begin{equation}
@@ -361,14 +361,14 @@ therefore
 The reduced shear --- and hence every ellipticity measurement --- is
 \textit{invariant} under~\eqref{eq:wl_mst}.  This is the weak-lensing face
 of the \textbf{mass-sheet degeneracy} introduced in
-Module~\ref{ch:galaxy_lensing}: from shear data alone the convergence is
+Chapter~\ref{ch:galaxy_lensing}: from shear data alone the convergence is
 determined only up to the one-parameter family~\eqref{eq:wl_mst}.  In the
 Kaiser--Squires inversion below it appears as an undetermined additive
 constant $\kappab_0$.
 
 The degeneracy also rescales the magnification.  With
 $\mu^{-1} = (1 - \kappab)^2 - |\gammaL|^2$
-(Module~\ref{ch:magnification},
+(Chapter~\ref{ch:magnification},
 eq.~\ref{eq:magnification_formula}), the transform~\eqref{eq:wl_mst} gives
 \begin{equation}
     \mu \;\longrightarrow\; \mu' = \lambda^{-2}\,\mu\,,
@@ -398,7 +398,7 @@ map of the projected mass}, with no assumption of symmetry
 
 The convergence and shear are both linear (second-derivative) functionals
 of the single potential $\psiL$
-(Module~\ref{ch:magnification}), so they are related to each other by a
+(Chapter~\ref{ch:magnification}), so they are related to each other by a
 non-local convolution.  Explicitly
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~41)
 \begin{equation}
@@ -505,7 +505,7 @@ concentrations by their shear alone.
     eq.~\eqref{eq:wl_mean_tangential}.  \textbf{Solid:} the singular
     isothermal sphere, $\gammaL_{\mathrm t} = \thetaE/(2\theta)$
     (eq.~\ref{eq:wl_sis_gammat}), with $\thetaE = 1$.  \textbf{Dashed:} an
-    NFW halo (Module~\ref{ch:axisymmetric_models},
+    NFW halo (Chapter~\ref{ch:axisymmetric_models},
     eq.~\ref{eq:nfw_gamma}) with $\kappa_s = 0.2$ and scale
     $\theta_s = 1$.  The NFW tangential shear decreases monotonically: it
     tends to the finite value $\kappa_s/2$ at the centre, is nearly flat
@@ -771,7 +771,7 @@ Verify with
           $\gammaL_{\mathrm t}\Sigmacr = \bar\Sigma(<\theta) -
           \Sigma(\theta)$.
     \item For an NFW halo, sketch $\gammaL_{\mathrm t}(\theta)$ using
-          Module~\ref{ch:axisymmetric_models} (eq.~\ref{eq:nfw_gamma}).
+          Chapter~\ref{ch:axisymmetric_models} (eq.~\ref{eq:nfw_gamma}).
           Show that it stays finite at the centre, and explain
           qualitatively why its logarithmic slope changes near $\theta_s$,
           unlike the single power law of the SIS.

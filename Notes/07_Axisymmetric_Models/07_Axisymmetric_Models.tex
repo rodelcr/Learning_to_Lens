@@ -17,7 +17,7 @@ one-dimensional problem.}
 \end{quote}
 
 \noindent
-In Modules~\ref{ch:lens_equation} and~\ref{ch:magnification} we
+In Chapters~\ref{ch:lens_equation} and~\ref{ch:magnification} we
 developed the general framework of gravitational lensing: the lens
 equation $\vecbeta = \vectheta - \vecalpha(\vectheta)$, the convergence
 $\kappab$, the shear $\gammaL$, and the magnification
@@ -28,18 +28,18 @@ point mass lens and briefly previewed the singular isothermal sphere
 Now we move from formalism to \textit{modeling}.  Real gravitational
 lenses --- galaxies and galaxy clusters --- have extended mass
 distributions, and to interpret observations we need specific,
-physically motivated models.  This module covers the most important
+physically motivated models.  This chapter covers the most important
 \textbf{circularly symmetric} (axisymmetric) lens models:
 \begin{itemize}[nosep]
-    \item The \textbf{point mass} (recap from Module~4),
+    \item The \textbf{point mass} (recap from Chapter~\ref{ch:lens_equation}),
     \item The \textbf{singular isothermal sphere} (SIS),
     \item The \textbf{nonsingular isothermal sphere} (NIS),
     \item The \textbf{Navarro--Frenk--White} (NFW) profile.
 \end{itemize}
 
 These models form the building blocks for more complex, non-circular
-lens models (Module~8) and for practical lens modeling applications
-(Modules~9--10).
+lens models (Chapter~\ref{ch:elliptical_models}) and for practical lens modeling applications
+(Chapters~\ref{ch:galaxy_lensing}--\ref{ch:cluster_lensing}).
 
 \medskip
 \noindent
@@ -60,7 +60,7 @@ lens models (Module~8) and for practical lens modeling applications
 \section{Introduction: From Formalism to Models}
 \label{sec:axi_intro}
 
-The general formalism of Module~\ref{ch:magnification} provides the
+The general formalism of Chapter~\ref{ch:magnification} provides the
 machinery for computing lensing observables --- but to apply it, one
 must specify a mass distribution.  In practice, the choice of mass
 model is guided by the physics of the lens:
@@ -77,11 +77,11 @@ model is guided by the physics of the lens:
           ($\S$\ref{sec:nfw}).
 \end{itemize}
 
-In this module we restrict ourselves to \textbf{circularly symmetric}
+In this chapter we restrict ourselves to \textbf{circularly symmetric}
 models, where all lensing quantities depend only on the angular radius
 $\theta = |\vectheta|$.  This simplification allows analytic progress
 and builds intuition before tackling the elliptical models of
-Module~8.
+Chapter~\ref{ch:elliptical_models}.
 
 
 % =====================================================================
@@ -133,7 +133,7 @@ and the reduced deflection angle is
 \begin{enumerate}[nosep]
   \item For an axisymmetric $\Sigma$, the projected mass outside radius $\xi$
         contributes zero net deflection (the 2D analogue of Newton's shell
-        theorem; Module~\ref{ch:lens_equation}).  So
+        theorem; Chapter~\ref{ch:lens_equation}).  So
         $\alphahat(\xi) = 4\Gnewton M(\xi)/(\speedoflight^2\xi)$.
   \item Reduced angle: $\alpha = (\Dds/\Ds)\,\alphahat$ and $\xi = \Dd\theta$, so
         $\alpha = 4\Gnewton M\Dds/(\speedoflight^2\Ds\Dd\theta)$.
@@ -147,7 +147,7 @@ and the reduced deflection angle is
 \begin{annotation}[Reduced vs physical deflection]
 $\alphahat$ is the physical bending angle at the lens and depends only on the
 mass.  $\alpha = (\Dds/\Ds)\,\alphahat$ is the angle the observer infers,
-and it depends on where the source is.  Everything in this module ($\thetaE$,
+and it depends on where the source is.  Everything in this chapter ($\thetaE$,
 $\kappab$, $\gammaL$, critical curves) uses $\alpha$.  Do not
 set $\thetaE = \alphahat$ and forget the factor $\Dds/\Ds<1$.
 \end{annotation}
@@ -226,7 +226,7 @@ well weak-lensing data recover cluster masses in practice, see
 
 \subsection{Magnification for Circular Symmetry}
 
-From Module~\ref{ch:lens_equation} (eq.~\ref{eq:magnification_circular}),
+From Chapter~\ref{ch:lens_equation} (eq.~\ref{eq:magnification_circular}),
 the magnification of a circularly symmetric lens is:
 \begin{equation}
     \mu = \frac{\theta}{\beta}\,
@@ -293,7 +293,7 @@ two eigenvalues.
 \label{sec:point_mass_recap}
 
 We briefly collect the point mass results from
-Modules~\ref{ch:lens_equation} and~\ref{ch:magnification} for
+Chapters~\ref{ch:lens_equation} and~\ref{ch:magnification} for
 comparison with the extended models.
 
 For a point mass $M$ at the origin:
@@ -416,7 +416,7 @@ one-line integral,
 and $\Sigma(\xi)$ itself follows from
 $\int_{-\infty}^{\infty}\!(\sigma_v^2/(2\pi\Gnewton))/(\xi^2+z^2)\,dz
 = \sigma_v^2/(2\Gnewton\xi)$.  Substituting into the axisymmetric
-deflection formula (eq.~\ref{eq:deflection_integral} from Module~4):
+deflection formula (eq.~\ref{eq:deflection_integral} from Chapter~\ref{ch:lens_equation}):
 \begin{equation}
     \boxed{
     \alphahat = \frac{4\pi\sigma_v^2}{\speedoflight^2}
@@ -516,7 +516,7 @@ $4\pi(250/3\times10^5)^2\times0.638 = 1.15''$ (B5a).
 
 \subsection{Convergence and Shear of the SIS}
 
-The convergence is (previewed in Module~\ref{ch:magnification},
+The convergence is (previewed in Chapter~\ref{ch:magnification},
 eq.~\ref{eq:kappa_sis}):
 \begin{equation}
     \kappab(\theta) = \frac{\Sigma(\Dd\,\theta)}{\Sigmacr}
@@ -668,7 +668,7 @@ Narayan \& Bartelmann put it this way: technically a third image with zero
 flux sits at $\theta = 0$, and it acquires a finite flux once the centre is
 given a core \citep[Sect.~3.1]{narayan_lectures_1997}.  In Fermat language,
 $\tau$ has a cone-shaped peak at the origin instead of a smooth maximum
-(Module~\ref{ch:fermat_time_delays}).
+(Chapter~\ref{ch:fermat_time_delays}).
 \end{annotation}
 
 
@@ -785,7 +785,7 @@ Integrating $\alpha$ once more gives
 $\psiL(\theta) = \thetaE\,[\,s-\theta_c\ln(\theta_c+s)\,]$ with $s = \sqrt{\theta^2+\theta_c^2}$,
 up to a constant (B10o).  It is smooth at $\theta = 0$, so $-\psiL$ has a
 genuine smooth maximum there.  That maximum becomes the Type~III central
-image of Module~\ref{ch:fermat_time_delays}.  You need this $\psiL$ to compute the
+image of Chapter~\ref{ch:fermat_time_delays}.  You need this $\psiL$ to compute the
 time delay of the central image.
 \end{annotation}
 
@@ -918,7 +918,7 @@ The \textbf{Navarro--Frenk--White} (NFW) profile is the ``universal''
 dark matter halo density profile found in cosmological $N$-body
 simulations (Navarro, Frenk \& White 1996, 1997).  It is the standard
 model for the mass distribution of galaxy clusters and is essential
-for cluster lensing (Module~10).
+for cluster lensing (Chapter~\ref{ch:cluster_lensing}).
 
 \subsection{Three-Dimensional Density Profile}
 
@@ -1274,7 +1274,7 @@ strength of an NFW halo:
 \end{itemize}
 
 The NFW model will be applied extensively to cluster lensing in
-Module~10.
+Chapter~\ref{ch:cluster_lensing}.
 
 \begin{figure}[ht]
     \centering
@@ -1298,7 +1298,7 @@ Module~10.
 \label{sec:model_comparison}
 
 Table~\ref{tab:model_comparison} summarizes the key properties of the
-four axisymmetric lens models covered in this module.
+four axisymmetric lens models covered in this chapter.
 
 \begin{table}[ht]
 \centering
