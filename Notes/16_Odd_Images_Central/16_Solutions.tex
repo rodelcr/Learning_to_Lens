@@ -68,7 +68,7 @@ by the core, so $N=5$ with $n_{\min}=2$, $n_{\rm sad}=2$, $n_{\max}=1$:
 \end{center}
 and $\sum\operatorname{sgn}\mu_i=2+1-2=1$, as required.
 
-\textbf{Numerical check.}  For
+Numerically, for
 $\psiL=\sqrt{0.25^2+0.7\,\theta_1^2+1.3\,\theta_2^2}$ and
 $\vecbeta=(0.05,0.03)$, solving $\vecbeta=\vectheta-\nabla\psiL$ with
 \texttt{NSolve} gives exactly five real images.  Classifying each by
@@ -161,8 +161,8 @@ $\theta_+=\ysrc+\thetaE$ with $\mu_+>0$ and $\theta_-=\ysrc-\thetaE$ with
 $\mu_-<0$: image indices sum to $0$, plus tip index $1$, total $1$.
 For $|\vecbeta|>\thetaE$ there is one image, $\mu>0$: sum $1$, plus tip
 index $0$, total $1$.  The winding at infinity is always $1$, as it must
-be.  The circle $|\vecbeta|=\thetaE$ in the source plane --- the
-\emph{cut} of the SIS --- plays the role of a caustic: crossing it
+be.  The circle $|\vecbeta|=\thetaE$ in the source plane, the
+cut of the SIS, plays the role of a caustic: crossing it
 changes the image count by one, not two, because the second ``image''
 is the singular tip, which carries index but no flux.
 \emph{[Attested: \solnlink{16_Odd_Images_Central/problems\_16.wl}{problems\_16.wl}, checks 5a--5b.]}

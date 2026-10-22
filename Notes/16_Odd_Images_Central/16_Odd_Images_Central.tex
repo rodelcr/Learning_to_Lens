@@ -31,37 +31,32 @@ this chapter lies at a quarter to a third of the deflector's Einstein
 radius \annot{checks J.4a--J.4b}: on the size of a core, on the steepness of a cusp, and
 on the mass of a central black hole.  The same topology that removes
 the central image also removes the radial critical curve, and the
-moment at which this happens --- the \emph{annihilation boundary} ---
+moment at which this happens, the \emph{annihilation boundary},
 is the organising idea of Chapter~\ref{ch:central_mass_bias}.  The
 degeneracy between a steep inner slope and a central point mass, both
 of which suppress the central image, is one reason the inner mass
 profile has to be pinned down by other means, the theme of
 Chapter~\ref{ch:msd_kinematics}.
 
-By the end of the chapter you should be able to:
-\begin{enumerate}[nosep]
-    \item sketch the arrival-time surface of a cored lens and locate its
-          central maximum;
-    \item state exactly which hypothesis of Burke's theorem a point mass
-          violates, and what replaces the theorem when it does;
-    \item compute the demagnification of the central image and explain
-          why observed lenses rarely show one;
-    \item see why a central point mass and a steep inner slope both
-          suppress it.
-\end{enumerate}
+The chapter provides the means to sketch the arrival-time surface of a
+cored lens and locate its central maximum; to state exactly which
+hypothesis of Burke's theorem a point mass violates, and what replaces
+the theorem when it does; to compute the demagnification of the central
+image and explain why observed lenses rarely show one; and to see why a
+central point mass and a steep inner slope both suppress it.
 
 \medskip
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
-    \item \mathlink{16_Odd_Images_Central/odd_images.wl}{odd\_images.wl}
-          --- symbolic and numerical verification of every result in this
+    \item \mathlink{16_Odd_Images_Central/odd_images.wl}{odd\_images.wl}:
+          symbolic and numerical verification of every result in this
           chapter (Fermat gradient and Hessian, index counting on source
           grids, central-image magnification, point-mass puncture,
           critical black-hole mass); exports the three figures to
           \texttt{Figures/16\_Odd\_Images\_Central/}
-    \item \solnlink{16_Odd_Images_Central/problems\_16.wl}{problems\_16.wl}
-          --- verified solutions to the Problems
+    \item \solnlink{16_Odd_Images_Central/problems\_16.wl}{problems\_16.wl}:
+          verified solutions to the Problems
 \end{itemize}
 
 
@@ -87,7 +82,7 @@ potential in checks A.1--A.4 of \texttt{odd\_images.wl}.
 Everything in this chapter is built on three results proved in
 Chapter~\ref{ch:fermat_time_delays}: images are stationary points of
 $\tau$ (Section~\ref{sec:fermat_principle}); the type of each stationary
-point --- minimum, saddle, maximum --- is read off the signs of the two
+point (minimum, saddle, maximum) is read off the signs of the two
 eigenvalues of $\Amat$ (Table~\ref{tab:morse_types}); and for a smooth
 lens $n_{\min}-n_{\rm sad}+n_{\max}=1$ (Theorem~\ref{thm:odd_number}).
 We do not re-derive them.  What is new here is (i) a proof of the
@@ -112,27 +107,27 @@ one, $1-\kappab+|\gammaL|$, must be negative:
     \label{eq:oi_max_condition}
 \end{equation}
 \annot{checks A.5--A.6}.  A Type~III image can therefore only sit where the
-lens is locally \emph{supercritical by more than the shear}.  In a
+lens is locally supercritical by more than the shear.  In a
 galaxy this happens only near the centre, which is why the third image
 is called the central image.  By the same algebra a minimum needs
 $\kappab<1-|\gammaL|$, and a saddle needs $|1-\kappab|<|\gammaL|$
 \annot{check A.8}.
 
 \begin{annotation}[Sketching $\tau$ in your head]
-Think of $\tau$ as the sum of two surfaces.  The geometric term
+Consider $\tau$ as the sum of two surfaces.  The geometric term
 $\half|\vectheta-\vecbeta|^2$ is a round bowl centred on the source.
 The potential term $-\psiL$ is a hill centred on the lens: $\psiL$ grows
 outward (like $\theta$ for an isothermal lens, $\ln\theta$ for a point
 mass), so $-\psiL$ is highest at the lens centre.  Far from the lens the
-bowl wins and $\tau$ rises like $\half\theta^2$.  Near the centre the
-hill can win \emph{if it is sharply peaked}, and its summit is then a
-local maximum of $\tau$ --- the central image.  How sharply peaked is
+bowl dominates and $\tau$ rises like $\half\theta^2$.  Near the centre the
+hill can dominate if it is sharply peaked, and its summit is then a
+local maximum of $\tau$, the central image.  How sharply peaked is
 measured by the curvature of $\psiL$, i.e.\ by $\kappab$: that is the
 content of eq.~\eqref{eq:oi_max_condition}.  A rounded summit (a core)
 gives a genuine maximum; a conical summit (SIS) gives a tip with no
 horizontal tangent plane; an infinitely tall spike (point mass) turns
 the summit into a puncture.  Between the summit and the minimum there
-must be a pass --- the saddle.
+must be a pass, the saddle.
 \end{annotation}
 
 \subsection{The one-dimensional cut}
@@ -140,7 +135,7 @@ must be a pass --- the saddle.
 
 For an axisymmetric lens every image lies on the line through the lens
 centre and the source.  Put the source at $\vecbeta=(\ysrc,0)$ with
-$\ysrc\ge 0$ and let $\theta$ be a \emph{signed} coordinate along that
+$\ysrc\ge 0$ and let $\theta$ be a signed coordinate along that
 line, so that images on the far side of the lens have $\theta<0$.  The
 deflection $\alpha(\theta)$ is then an odd function, and the cut through
 the arrival-time surface is
@@ -159,8 +154,8 @@ Chapter~\ref{ch:axisymmetric_models}, eq.~\eqref{eq:eigenvalues_circular}:
     \label{eq:oi_lambdas}
 \end{equation}
 where $\ysrc(\theta)=\theta-\alpha(\theta)$ is the one-dimensional lens
-map.  $\lambda_r$ is the curvature of $\tau$ \emph{along} the cut and
-$\lambda_t$ its curvature \emph{across} the cut.  Reading off the type
+map.  $\lambda_r$ is the curvature of $\tau$ along the cut and
+$\lambda_t$ its curvature across the cut.  Reading off the type
 of an image is therefore a two-step exercise: find where
 $\ysrc(\theta)$ crosses the source value (the image), and ask whether
 $\ysrc(\theta)$ is rising ($\lambda_r>0$) or falling ($\lambda_r<0$)
@@ -191,7 +186,7 @@ direction is perpendicular to the line through source and lens.
 
 Chapter~\ref{ch:fermat_time_delays} quoted the Morse relation
 $n_{\min}-n_{\rm sad}+n_{\max}=1$.  To see what happens when the lens
-is \emph{not} smooth we need the proof, and the cleanest one is the
+is not smooth we need the proof, and the most direct one is the
 index argument of \citet[][Sect.~5.4.1]{schneider_ehlers_falco_1992}.
 It uses only the vector field $\mathbf X(\vectheta)=\nabla\tau$.
 (The Morse-theoretic version, with Euler characteristics and the Morse
@@ -220,16 +215,14 @@ In the eigenbasis of $\Amat$ this is $(\lambda_1\,\delta\theta_1,\lambda_2\,\del
 \begin{derivation}[Index of a minimum, a maximum, a saddle]
 Take a small circle $\delta\vectheta=\epsilon(\cos\vartheta,\sin\vartheta)$.
 Then $\mathbf X=\epsilon(\lambda_1\cos\vartheta,\lambda_2\sin\vartheta)$.
-\begin{itemize}
-    \item Minimum ($\lambda_1,\lambda_2>0$): $\mathbf X$ points outward
-          and its angle increases with $\vartheta$; one loop of
-          $\vartheta$ is one loop of $\mathbf X$: index $+1$.
-    \item Maximum ($\lambda_1,\lambda_2<0$): $\mathbf X=-\epsilon(|\lambda_1|\cos\vartheta,|\lambda_2|\sin\vartheta)$
-          points inward, i.e.\ the outward field rotated by $\pi$; a
-          constant rotation does not change the winding: index $+1$.
-    \item Saddle ($\lambda_1>0>\lambda_2$): $\mathbf X\propto(|\lambda_1|\cos\vartheta,-|\lambda_2|\sin\vartheta)$,
-          whose angle \emph{decreases} as $\vartheta$ increases: index $-1$.
-\end{itemize}
+For a minimum ($\lambda_1,\lambda_2>0$), $\mathbf X$ points outward
+and its angle increases with $\vartheta$; one loop of
+$\vartheta$ is one loop of $\mathbf X$, and the index is $+1$.
+For a maximum ($\lambda_1,\lambda_2<0$), $\mathbf X=-\epsilon(|\lambda_1|\cos\vartheta,|\lambda_2|\sin\vartheta)$
+points inward, i.e.\ the outward field rotated by $\pi$; a
+constant rotation does not change the winding, so the index is again $+1$.
+For a saddle ($\lambda_1>0>\lambda_2$), $\mathbf X\propto(|\lambda_1|\cos\vartheta,-|\lambda_2|\sin\vartheta)$,
+whose angle decreases as $\vartheta$ increases, and the index is $-1$.
 A maximum is not the ``opposite'' of a minimum as far as the index is
 concerned: both have $\det\Amat>0$.  The index sees only the sign of the
 determinant, which is the image parity.
@@ -289,7 +282,7 @@ Exercise~\ref{ex:oi_five_images}}.
 \subsection{What the hypotheses exclude}
 \label{sec:oi_hypotheses}
 
-Every step above is innocent \emph{except} the claim that the images
+Every step above is sound except the claim that the images
 are the only zeros of $\mathbf X$ inside the large circle.  That claim
 needs (S1).  If $\vecalpha$ fails to be continuous at some point,
 the field $\mathbf X$ is undefined there, and that point can carry a
@@ -323,7 +316,7 @@ For a point mass $\psiL=\thetaBH^2\ln\theta$, so
 $\vecalpha=\thetaBH^2\vectheta/\theta^2$ diverges at the origin and
 $\tau\to+\infty$ there: the summit of the potential hill has become an
 infinitely tall spike.  The surface density is a Dirac delta: it is
-\emph{not bounded}, the deflection is neither continuous nor bounded at
+not bounded, the deflection is neither continuous nor bounded at
 the origin, and (S1)--(S2) fail there (they still hold far away, so the
 winding at infinity is still $+1$).  Near the origin
 $\mathbf X\approx-\thetaBH^2\hat{\vectheta}/\theta$ points straight
@@ -338,12 +331,12 @@ for a lens containing $g$ point masses.
 \citet[][Sect.~5.4.1]{schneider_ehlers_falco_1992} put it in words:
 each point mass turns what would have been a local maximum of $\tau$
 into a logarithmic spike, so the number of positive-parity images
-\emph{plus the number of point masses} exceeds the number of
+plus the number of point masses exceeds the number of
 negative-parity images by one.  The same counting formula, written as
 $N=2n_++g-1$, is Theorem~11.4 of \citet{petters_singularity_2001}, who
 also show that as the source moves far away there are $g$ saddle
 images, each approaching one of the point masses.  For a single point
-mass ($g=1$) the image count is \emph{even}.
+mass ($g=1$) the image count is even.
 
 \begin{annotation}[Which hypothesis does a point mass break?]
 Students often say ``light hits the point mass''.  It does not: every
@@ -356,7 +349,7 @@ hypotheses of Theorem~1 of
 black holes''.  What fails is
 (S1)/(S2) at one point: the deflection
 diverges like $1/\theta$, so $\nabla\tau$ has a singularity that is
-not a zero.  The singularity is an \emph{extra term} in the index
+not a zero.  The singularity is an extra term in the index
 sum, worth $+1$.  Excise a small disc around the origin and count on
 what is left (an annulus): the winding at infinity minus the winding
 around the hole gives $n_+-n_-=1-1=0$.  Put the puncture back as a
@@ -373,12 +366,12 @@ stationary point and produces no image.  Its index depends on the source: near t
 $\mathbf X\approx-\vecbeta-\thetaE\hat{\vectheta}$, which winds once if
 $|\vecbeta|<\thetaE$ and not at all if $|\vecbeta|>\thetaE$ \annot{checks F.1--F.2}.  This is the index-theorem reading of the SIS ``cut'': two
 images ($n_+-n_-=0$) inside it, one image ($n_+-n_-=1$) outside.
-Exercise~\ref{ex:oi_sis_tip} asks you to do the computation.
+The computation is Exercise~\ref{ex:oi_sis_tip}.
 
 \paragraph{Cusps that are not singular enough.}
 A power-law profile $\kappab\propto\theta^{1-\gp}$ with $1<\gp<2$ has an
-\emph{infinite} central convergence, so its surface density is not
-bounded.  But $\alpha\propto\theta^{2-\gp}\to0$ continuously at the
+infinite central convergence, so its surface density is not
+bounded.  However, $\alpha\propto\theta^{2-\gp}\to0$ continuously at the
 origin, so (S1) holds.  The untruncated power law does violate (S2),
 since $\alpha\propto\theta^{2-\gp}$ grows without bound at large
 $\theta$, but $|\vecalpha|/\theta\propto\theta^{1-\gp}\to0$, so $\nabla\tau$
@@ -456,21 +449,18 @@ $\ysrc_r=0.427\,\thetaE$ \annot{checks C.1, C.9, FIG3}.
 \paragraph{The census.}
 On a grid of 149 source positions $0.01\le\ysrc/\thetaE\le1.5$, the
 script finds every root of eq.~\eqref{eq:oi_nis_cubic} and classifies
-it with eq.~\eqref{eq:oi_lambdas} \annot{checks C.2--C.8, $\theta_c=0.2\,\thetaE$}:
-\begin{itemize}[nosep]
-    \item $\ysrc>\ysrc_r$: one image, a minimum;
-    \item $\ysrc<\ysrc_r$: three images --- the minimum; a saddle on the far
-          side \emph{outside} the radial critical circle
-          ($\theta<-\theta_r$); and a maximum on the far side
-          \emph{inside} it ($-\theta_r<\theta<0$);
-    \item in every case $n_+-n_-=1$;
-    \item at $\ysrc=0.1\,\thetaE$ the arrival order is
-          $\tau_{\min}<\tau_{\rm sad}<\tau_{\max}$: the central image
-          arrives last, as Table~\ref{tab:morse_types} leads us to
-          expect for a Type~III image;
-    \item as $\ysrc\to\ysrc_r$ from below, the saddle and the maximum
-          merge on the radial critical circle and disappear together.
-\end{itemize}
+it with eq.~\eqref{eq:oi_lambdas} \annot{checks C.2--C.8, $\theta_c=0.2\,\thetaE$}.
+For $\ysrc>\ysrc_r$ there is one image, a minimum.  For
+$\ysrc<\ysrc_r$ there are three images: the minimum, a saddle on the far
+side outside the radial critical circle
+($\theta<-\theta_r$), and a maximum on the far side
+inside it ($-\theta_r<\theta<0$).  In every case $n_+-n_-=1$.
+At $\ysrc=0.1\,\thetaE$ the arrival order is
+$\tau_{\min}<\tau_{\rm sad}<\tau_{\max}$: the central image
+arrives last, as Table~\ref{tab:morse_types} leads us to
+expect for a Type~III image.  As $\ysrc\to\ysrc_r$ from below, the
+saddle and the maximum merge on the radial critical circle and
+disappear together.
 The left column of Figure~\ref{fig:oi_arrival} shows the contours of
 $\tau$.  The contour through the saddle is a figure eight: one lobe
 encloses the central maximum, the other the minimum.
@@ -513,7 +503,7 @@ $\ysrc\simeq(1-\kappab_0)\theta$ puts the central image at
 $\theta\simeq-\ysrc/(\kappab_0-1)$, on the far side and
 $\kappab_0-1$ times closer to the centre than the source, with the same
 magnification to leading order \annot{checks D.8--D.9}.  The magnification falls
-as the \emph{square} of the core radius: a core one hundred times
+as the square of the core radius: a core one hundred times
 smaller than the Einstein radius makes the central image
 $\mu_c=1/2401$ times as bright as the unlensed source, $8.5$ magnitudes
 fainter; even a generous core, $\theta_c=0.1\,\thetaE$, gives
@@ -536,15 +526,15 @@ numerical solution at $\ysrc=0.1\,\thetaE$.
 \end{figure}
 
 \begin{annotation}[Reading eq.~\eqref{eq:oi_muc}]
-Three limits are worth checking.  (i) $\theta_c\to0$: the NIS
-becomes the SIS, $\kappab_0\to\infty$ and $\mu_c\to0$ --- the central
+Three limits serve as checks.  (i) $\theta_c\to0$: the NIS
+becomes the SIS, $\kappab_0\to\infty$ and $\mu_c\to0$; the central
 image is pushed into the conical tip of Table~\ref{tab:oi_centres} with
 zero flux.  (ii) $\theta_c\to\thetaE/2$: $\kappab_0\to1$, both
 eigenvalues vanish at the centre, and the central image sits on a
 degenerate (radial) critical point, so $\mu_c\to\infty$.  (iii) For
 $\kappab_0>2$, i.e.\ $\theta_c<\thetaE/4$, $\mu_c<1$, and for
 $\kappab_0\gg1$ it is small because $|\lambda|=\kappab_0-1$ is
-\emph{large}: the summit of $\tau$ is sharply curved, and a sharply
+large: the summit of $\tau$ is sharply curved, and a sharply
 curved stationary point is a strongly demagnified image.  Between
 $\theta_c=\thetaE/4$ and $\thetaE/2$ the central image is magnified
 ($\mu_c=2.25$ at $\theta_c=0.3\,\thetaE$) \annot{checks J.1a--J.1c}.
@@ -622,11 +612,11 @@ caustic and has no central image at all \annot{check G.6}.
 
 \begin{annotation}[Leading order is a poor approximation at moderate offsets]
 At $\gp=1.5$ and $\ysrc=0.1\,\thetaE$, eq.~\eqref{eq:oi_mu_powerlaw}
-gives $\mu_c\simeq2\ysrc^2=0.02$, while the exact root gives $0.037$
---- almost a factor of two.  The corrections are of relative order
+gives $\mu_c\simeq2\ysrc^2=0.02$, while the exact root gives $0.037$,
+almost a factor of two larger.  The corrections are of relative order
 $x^{\gp-1}=\ysrc^{(\gp-1)/(2-\gp)}$, which for $\gp=1.5$ is
-$\ysrc$ itself.  Use eq.~\eqref{eq:oi_mu_powerlaw} for its
-\emph{scaling} with $\gp$; compute numbers from the exact root
+$\ysrc$ itself.  Equation~\eqref{eq:oi_mu_powerlaw} should be used for
+its scaling with $\gp$; numbers should be computed from the exact root
 (Exercise~\ref{ex:oi_powerlaw}).  At $\ysrc=10^{-4}\,\thetaE$ the two
 agree to better than $1\%$ \annot{check G.5}.
 \end{annotation}
@@ -651,7 +641,7 @@ eq.~\eqref{eq:oi_lambdas} gives
     \lambda_t = 1 - \frac{\thetaBH^2}{\theta^2}
     \label{eq:oi_pm_lambdas}
 \end{equation}
-\annot{checks E.1--E.2}.  Since $\lambda_r$ is positive \emph{everywhere}, no
+\annot{checks E.1--E.2}.  Since $\lambda_r$ is positive everywhere, no
 point of the lens plane can host a maximum of $\tau$, and since
 $\ysrc(\theta)$ is strictly increasing on each half-line, each side of
 the lens has exactly one image.  These are the two roots
@@ -663,7 +653,7 @@ demands for $g=1$ \annot{checks E.3--E.4}.
 
 \subsection{A point mass inside a cored lens}
 
-Now put a point mass at the centre of an NIS --- a supermassive black
+Now put a point mass at the centre of an NIS, a supermassive black
 hole at the centre of a galaxy.  The one-dimensional map becomes
 \begin{equation}
     \ysrc(\theta) = \theta - \thetaE\,\frac{\sqrt{\theta^2+\theta_c^2}-\theta_c}{\theta}
@@ -671,8 +661,8 @@ hole at the centre of a galaxy.  The one-dimensional map becomes
     \label{eq:oi_nisbh_map}
 \end{equation}
 Multiplying by $\theta$ and squaring as before gives a quartic \annot{check B.4}, so there are at most four images, and by eq.~\eqref{eq:oi_index_pm}
-with $g=1$ their number is even.  The radial eigenvalue is the key
-object.  Using $\theta^2=s^2-\theta_c^2$ it factorises neatly:
+with $g=1$ their number is even.  The radial eigenvalue is the decisive
+quantity.  Using $\theta^2=s^2-\theta_c^2$ it factorises:
 \begin{equation}
     \theta^2\lambda_r = h(s) + \thetaBH^2, \qquad
     h(s) \equiv (s-\theta_c)\left(s+\theta_c-\frac{\thetaE\theta_c}{s}\right),
@@ -734,8 +724,8 @@ $\ysrc>\ysrc_{\rm out}$ & 2 & minimum; saddle next to the black hole \\
 \end{center}
 The census is verified on source grids in checks H.10--H.13, with
 $n_+-n_-=0$ throughout.  The central maximum survives only in the
-middle band, and next to it the black hole has created a \emph{second}
-faint image --- a saddle hugging the puncture, visible in the middle
+middle band, and next to it the black hole has created a second
+faint image, a saddle close to the puncture, visible in the middle
 column of Figure~\ref{fig:oi_arrival}.  This matches the picture of
 \citet{mao_witt_koopmans_2001} as summarised in Sect.~6.2.2 of
 \citet{congdon_principles_2018}: above a threshold black-hole mass an
@@ -750,7 +740,7 @@ radius
     \ysrc_{\rm in} \simeq 2\,\thetaBH\sqrt{\kappab_0-1}
     \label{eq:oi_yin}
 \end{equation}
-\annot{check H.14}.  It grows \emph{linearly} in $\thetaBH$, i.e.\ as the square
+\annot{check H.14}.  It grows linearly in $\thetaBH$, i.e.\ as the square
 root of the black-hole mass, so even a small black hole removes the
 central image for every source closer to the axis than $\ysrc_{\rm in}$
 \annot{check H.15}.  For $\theta_c=0.1\,\thetaE$ ($\kappab_0=5$), a point mass
@@ -830,7 +820,7 @@ $\thetaBH=\theta_{\bullet,\rm crit}$ (eq.~\ref{eq:oi_ucrit} for the NIS)
 they merge and annihilate.  Below the boundary a source can have four
 images (minimum, saddle, central maximum, black-hole saddle) or two;
 above it every source has exactly two (minimum and saddle), and the
-radial caustic --- with every image associated with it --- no longer
+radial caustic, with every image associated with it, no longer
 exists.  For any fixed source, the central maximum disappears earlier,
 by merging with the black-hole saddle when the inner caustic sweeps
 past the source.
@@ -849,11 +839,11 @@ subject of Chapter~\ref{ch:power_law_point_mass}.
 \end{bridge}
 
 \begin{annotation}[Two different mergers --- do not confuse them]
-For a \emph{fixed source}, increasing $\thetaBH$ first makes the inner
+For a fixed source, increasing $\thetaBH$ first makes the inner
 caustic sweep outward past the source; at that moment the central
 maximum merges with the black-hole saddle (a $+1$ and a $-1$ image
 annihilate, so $n_+-n_-$ is unchanged) and the count drops from four to
-two.  For the \emph{lens as a whole}, at $\theta_{\bullet,\rm crit}$ the
+two.  For the lens as a whole, at $\theta_{\bullet,\rm crit}$ the
 inner and radial caustics merge, so no source anywhere can have four
 images.  The first is a source crossing a fold caustic; the second is
 the disappearance of the caustic pair itself.  In
@@ -867,16 +857,13 @@ the solid curve (first merger) before the curves end (second).
 \label{sec:oi_degeneracy}
 
 Sections~\ref{sec:oi_central}--\ref{sec:oi_pointmass} identified three
-knobs that control the central image:
-\begin{itemize}[nosep]
-    \item a \textbf{core} rounds the summit of $\tau$ and makes a central
-          image with $\mu_c\propto\theta_c^2$;
-    \item a \textbf{steep cusp} sharpens the summit and suppresses the
-          image as $\gp\to2$, eq.~\eqref{eq:oi_mu_powerlaw};
-    \item a \textbf{central point mass} punctures the summit, creates an
-          inner caustic of radius $\propto\thetaBH$, and above a critical
-          mass removes the central image altogether.
-\end{itemize}
+properties of the deflector that control the central image.  A core
+rounds the summit of $\tau$ and makes a central image with
+$\mu_c\propto\theta_c^2$; a steep cusp sharpens the summit and
+suppresses the image as $\gp\to2$, eq.~\eqref{eq:oi_mu_powerlaw}; and a
+central point mass punctures the summit, creates an inner caustic of
+radius $\propto\thetaBH$, and above a critical mass removes the central
+image altogether.
 The last two act in the same direction.  A faint or absent central
 image can be produced by a steep inner profile, by a black hole in a
 shallower profile, or by a combination; the central-image flux alone
@@ -886,25 +873,25 @@ central images are demagnified by black holes, so a given central-image
 magnification is to some extent degenerate between black-hole mass and
 inner density profile.
 
-The degeneracy also reaches the images we \emph{do} see.  The radial
+The degeneracy also reaches the images that are seen.  The radial
 critical curve, whose existence is decided by the same inner mass
 distribution, controls whether a radial arc or a radial image of an
 extended source can form.  Chapter~\ref{ch:central_mass_bias}
 quantifies how a black hole that is left out of the model biases the
 inferred lens parameters, and Chapter~\ref{ch:msd_kinematics} turns to
 the mass-sheet degeneracy and to stellar kinematics, the independent
-handle on the mass profile that is needed when lensing alone cannot fix
-it.
+constraint on the mass profile that is needed when lensing alone cannot
+fix it.
 
 \begin{annotation}[Why the centre is a separate measurement]
-Lensing constrains the mass \emph{inside} the Einstein radius very well
+Lensing constrains the mass inside the Einstein radius very well
 and its radial distribution there poorly.  The central image is one of
 the few probes of the region inside the radial critical curve (a
 few tenths of $\thetaE$), and
 Sections~\ref{sec:oi_central}--\ref{sec:oi_pointmass} show that it
 responds to a core, a cusp and a black hole in ways that partly cancel.
-Treat a central-image non-detection as a constraint on a
-\emph{combination} of inner slope and central mass, not on either alone.
+A central-image non-detection must therefore be treated as a constraint
+on a combination of inner slope and central mass, not on either alone.
 \end{annotation}
 
 
@@ -912,47 +899,40 @@ Treat a central-image non-detection as a constraint on a
 \section{Summary}
 \label{sec:oi_summary}
 
-\begin{itemize}
-    \item Images are the zeros of $\nabla\tau$; each carries index
-          $\operatorname{sgn}\mu=\pm1$.  A maximum of $\tau$ requires
-          $\kappab>1+|\gammaL|$, so it can only sit near the centre of
-          the lens.
+Images are the zeros of $\nabla\tau$; each carries index
+$\operatorname{sgn}\mu=\pm1$.  A maximum of $\tau$ requires
+$\kappab>1+|\gammaL|$, so it can only sit near the centre of
+the lens.
+If the deflection is continuous and bounded (or, more
+generally, $|\vecalpha|/\theta\to0$ at infinity), the indices
+sum to the winding at infinity: $n_+-n_-=1$ and $N=1+2n_-$
+(Burke).  What matters is continuity of $\vecalpha$: a
+power-law cusp with $1<\gp<2$ has infinite central density
+and unbounded $\alpha$ at large $\theta$, yet still obeys the
+theorem.
+A point mass violates continuity and boundedness of
+$\vecalpha$ at one point.  The puncture carries index $+1$, so
+$n_+-n_-+g=1$: one point mass makes the image count even.  A
+bare point mass has $\lambda_r=1+\thetaBH^2/\theta^2>0$
+everywhere and exactly two images.
 
-    \item If the deflection is continuous and bounded (or, more
-          generally, $|\vecalpha|/\theta\to0$ at infinity), the indices
-          sum to the winding at infinity: $n_+-n_-=1$ and $N=1+2n_-$
-          (Burke).  What matters is continuity of $\vecalpha$: a
-          power-law cusp with $1<\gp<2$ has infinite central density
-          and unbounded $\alpha$ at large $\theta$, yet still obeys the
-          theorem.
-
-    \item A point mass violates continuity and boundedness of
-          $\vecalpha$ at one point.  The puncture carries index $+1$, so
-          $n_+-n_-+g=1$: one point mass makes the image count even.  A
-          bare point mass has $\lambda_r=1+\thetaBH^2/\theta^2>0$
-          everywhere and exactly two images.
-
-    \item The central image of an NIS is a maximum on the far side
-          inside the radial critical curve, arrives last, and has
-          $\mu_c=(1-\kappab_0)^{-2}\simeq4\theta_c^2/\thetaE^2$.  Small
-          cores make it many magnitudes fainter than the source, and it
-          sits on the bright galaxy nucleus.
-
-    \item Steepening a power-law cusp suppresses the central image as
-          $\mu_c\propto(\ysrc/\thetaE)^{2(\gp-1)/(2-\gp)}$, which vanishes
-          as $\gp\to2$.
-
-    \item A central point mass in a cored lens creates an inner caustic
-          of radius $\simeq2\thetaBH\sqrt{\kappab_0-1}$ inside which the
-          central image is destroyed, and above
-          $\theta_{\bullet,\rm crit}^2=\theta_c(\thetaE+\theta_c)-3(\thetaE\theta_c^2/2)^{2/3}$
-          it removes the radial critical curve and every central image.
-          This is the annihilation boundary of
-          Chapter~\ref{ch:central_mass_bias}.
-
-    \item A steep cusp and a central black hole both suppress the
-          central image: its flux constrains a combination of the two.
-\end{itemize}
+The central image of an NIS is a maximum on the far side
+inside the radial critical curve, arrives last, and has
+$\mu_c=(1-\kappab_0)^{-2}\simeq4\theta_c^2/\thetaE^2$.  Small
+cores make it many magnitudes fainter than the source, and it
+sits on the bright galaxy nucleus.
+Steepening a power-law cusp suppresses the central image as
+$\mu_c\propto(\ysrc/\thetaE)^{2(\gp-1)/(2-\gp)}$, which vanishes
+as $\gp\to2$.
+A central point mass in a cored lens creates an inner caustic
+of radius $\simeq2\thetaBH\sqrt{\kappab_0-1}$ inside which the
+central image is destroyed, and above
+$\theta_{\bullet,\rm crit}^2=\theta_c(\thetaE+\theta_c)-3(\thetaE\theta_c^2/2)^{2/3}$
+it removes the radial critical curve and every central image.
+This is the annihilation boundary of
+Chapter~\ref{ch:central_mass_bias}.
+A steep cusp and a central black hole both suppress the
+central image: its flux constrains a combination of the two.
 
 
 % =====================================================================

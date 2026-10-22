@@ -21,12 +21,12 @@ this analysis.}
 
 \noindent
 Chapters~\ref{ch:lens_equation}--\ref{ch:cluster_lensing} were concerned
-almost entirely with \textbf{strong} lensing: multiple images, giant
-arcs, Einstein rings --- phenomena in which the Jacobian
+almost entirely with strong lensing: multiple images, giant
+arcs and Einstein rings, phenomena in which the Jacobian
 $\Amat = \partial\vecbeta/\partial\vectheta$ differs so much from the
 identity that a single source produces strongly distorted images.
 This chapter treats the opposite, and far more common, regime.  In
-\textbf{weak} gravitational lensing the Jacobian is very close to the
+\emph{weak} gravitational lensing the Jacobian is very close to the
 unit matrix,
 \begin{equation*}
     \Amat = \begin{pmatrix} 1 - \kappab - \gammaL_1 & -\gammaL_2 \\
@@ -34,46 +34,39 @@ unit matrix,
     \approx \mathbb{1}\,,
     \qquad \kappab \ll 1\,, \quad |\gammaL| \ll 1\,,
 \end{equation*}
-so the distortion and magnification of any \textit{individual} background
-galaxy are tiny and cannot be recognized.  The lensing signal is
-recovered only \textit{statistically}, by averaging the shapes of many
+so the distortion and magnification of any individual background
+galaxy are small and cannot be recognized.  The lensing signal is
+recovered only statistically, by averaging the shapes of many
 faint galaxies \citep{schneider_kochanek_wambsganss_2006}.
 
 This is the natural complement to the convergence--shear formalism of
-Chapter~\ref{ch:magnification}.  There we \textit{defined} $\kappab$,
-$\gammaL$, and the Jacobian; here we learn how to \textit{measure} them
-from data, and what they tell us:
-\begin{itemize}[nosep]
-    \item how the shape of a faint galaxy provides a noisy but unbiased
-          estimate of the (reduced) shear
-          ($\S$\ref{sec:wl_shapes});
-    \item how the tangential shear around a mass concentration measures
-          its projected mass profile
-          ($\S$\ref{sec:wl_tangential}), extending the axisymmetric
-          result $|\gammaL| = \bar{\kappa} - \kappab$ of
-          Chapter~\ref{ch:axisymmetric_models};
-    \item how the shear field can be inverted into a parameter-free map
-          of the projected mass --- the Kaiser--Squires inversion
-          ($\S$\ref{sec:wl_ks}) --- and why the \textit{mass-sheet
-          degeneracy} of Chapter~\ref{ch:galaxy_lensing} reappears here
-          ($\S$\ref{sec:wl_reduced_shear});
-    \item how the coherent distortion imprinted by the large-scale
-          structure --- \textit{cosmic shear} --- probes cosmology
-          ($\S$\ref{sec:wl_cosmic}); and
-    \item how stacking foreground--background galaxy pairs measures the
-          mean mass profile of galaxies
-          ($\S$\ref{sec:wl_ggl}).
-\end{itemize}
-This chapter expands the brief weak-lensing sketch of
-$\S$\ref{sec:weak_lensing} in Chapter~\ref{ch:cluster_lensing} into a
-self-contained treatment of the core concepts.
+Chapter~\ref{ch:magnification}.  There we defined $\kappab$,
+$\gammaL$, and the Jacobian; here we ask how they are measured
+from data and what they tell us.  We first show how the shape of a
+faint galaxy provides a noisy but unbiased estimate of the (reduced)
+shear ($\S$\ref{sec:wl_shapes}), and how the tangential shear around a
+mass concentration measures its projected mass profile
+($\S$\ref{sec:wl_tangential}), which extends the axisymmetric result
+$|\gammaL| = \bar{\kappa} - \kappab$ of
+Chapter~\ref{ch:axisymmetric_models} to arbitrary deflectors.  The
+mass-sheet degeneracy of Chapter~\ref{ch:galaxy_lensing} reappears in
+this setting ($\S$\ref{sec:wl_reduced_shear}), and limits the inversion
+of the shear field into a parameter-free map of the projected mass by
+the Kaiser--Squires method ($\S$\ref{sec:wl_ks}).  The coherent
+distortion imprinted by the large-scale structure, the cosmic shear,
+probes cosmology ($\S$\ref{sec:wl_cosmic}), and stacking
+foreground--background galaxy pairs measures the mean mass profile of
+galaxies ($\S$\ref{sec:wl_ggl}).  The chapter expands the brief
+weak-lensing sketch of $\S$\ref{sec:weak_lensing} in
+Chapter~\ref{ch:cluster_lensing} into a self-contained treatment of the
+core concepts.
 
 \medskip
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
-    \item \mathlink{12_Weak_Lensing/weak_lensing.wl}{weak\_lensing.wl}
-          --- symbolic verification of the Kaiser--Squires kernel and
+    \item \mathlink{12_Weak_Lensing/weak_lensing.wl}{weak\_lensing.wl}:
+          symbolic verification of the Kaiser--Squires kernel and
           inversion, the tangential-shear relation for the SIS and point
           mass, reduced-shear invariance under the mass-sheet transform,
           and the image--ellipticity relations; tangential-shear profile
@@ -86,13 +79,13 @@ self-contained treatment of the core concepts.
 \section{Introduction: The Weak Regime}
 \label{sec:wl_intro}
 
-In strong lensing a single source tells the whole story: from the
+In strong lensing a single source suffices: from the
 positions and fluxes of a handful of multiple images one constrains the
 deflector.  In the weak regime, $\kappab \ll 1$ and $|\gammaL| \ll 1$,
 no individual source carries a recognizable signal.  Instead, one exploits
 the fact that lensing preserves surface brightness while distorting shapes:
 the observed ellipticity of each faint galaxy is a sum of its (unknown)
-intrinsic ellipticity and a small, coherent shear.  Because intrinsic
+intrinsic ellipticity and a small, coherent shear.  Since intrinsic
 ellipticities are randomly oriented, they average to zero, and the mean
 observed ellipticity of a local ensemble of galaxies estimates the shear
 \citep{schneider_kochanek_wambsganss_2006}.
@@ -101,20 +94,20 @@ The accuracy of any weak-lensing measurement is therefore set by the
 number of usable background galaxies: the statistical error on the shear
 scales as $\sigma_\epsilon/\sqrt{N}$, where $\sigma_\epsilon \approx 0.3$
 is the intrinsic ellipticity dispersion (``shape noise'') and $N$ is the
-number of galaxies averaged over.  This is why deep imaging --- reaching
+number of galaxies averaged over.  Deep imaging, reaching
 $n \sim 20$--$30$ galaxies per arcmin$^2$ in a few hours on a 4-m
-telescope --- is the fundamental
-observational requirement, and why correcting the atmospheric and
-telescope point-spread function (which circularizes small images) is the
-central technical challenge of the field
+telescope, is therefore the fundamental observational requirement, and
+the correction of the atmospheric and telescope point-spread function
+(which circularizes small images) is the central technical challenge of
+the field
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, Sect.~3;
 \citealp{bartelmann_schneider_2001}).
 
 Throughout this chapter we work in the thin-lens picture of
 Chapter~\ref{ch:lens_equation} for individual galaxies and clusters, and
-generalize to a three-dimensional deflecting mass distribution --- the
-large-scale structure --- only in $\S$\ref{sec:wl_cosmic}, where the
-lensing effect is described by an \textit{effective} surface mass density.
+generalize to a three-dimensional deflecting mass distribution (the
+large-scale structure) only in $\S$\ref{sec:wl_cosmic}, where the
+lensing effect is described by an effective surface mass density.
 
 
 % =====================================================================
@@ -123,8 +116,8 @@ lensing effect is described by an \textit{effective} surface mass density.
 
 \subsection{Complex Ellipticity}
 
-To turn shapes into shear we first need a quantitative measure of the
-shape of an image with arbitrary isophotes.  Let $I(\vectheta)$ be the
+We first require a quantitative measure of the shape of an image with
+arbitrary isophotes.  Let $I(\vectheta)$ be the
 surface-brightness distribution of an isolated image.  Its centroid is
 $\bar{\vectheta} = \int d^2\theta\, I\, q_I[I]\, \vectheta /
 \int d^2\theta\, I\, q_I[I]$ for a suitable weight $q_I$, and the tensor
@@ -178,7 +171,7 @@ ellipse maps to itself under a rotation by $180^\circ$.  It is this
 
 Under the linearized lens mapping the source and image second-moment
 tensors are related by $Q^{(s)} = \Amat\, Q\, \Amat^{\mathsf T}$, which in
-terms of the complex ellipticity $\epsilon$ and the \textbf{reduced shear}
+terms of the complex ellipticity $\epsilon$ and the \emph{reduced shear}
 $g = \gammaL/(1 - \kappab)$ becomes
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~12)
 \begin{equation}
@@ -187,14 +180,15 @@ $g = \gammaL/(1 - \kappab)$ becomes
     \label{eq:wl_eps_source}
 \end{equation}
 with the inverse obtained by $\epsilon \leftrightarrow \epsilon^{(s)}$ and
-$g \to -g$.  Now comes the key statistical assumption: faint galaxies have
-no preferred orientation, so the intrinsic ellipticity averages to zero,
+$g \to -g$.  The statistical assumption on which the method rests is that
+faint galaxies have no preferred orientation, so that the intrinsic
+ellipticity averages to zero,
 \begin{equation}
     \mathrm{E}\!\left[\epsilon^{(s)}\right] = 0\,.
     \label{eq:wl_random_orientation}
 \end{equation}
 Averaging the transformation~\eqref{eq:wl_eps_source} over intrinsic
-orientations then gives the remarkable result
+orientations then gives
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~14)
 \begin{equation}
     \boxed{
@@ -203,8 +197,8 @@ orientations then gives the remarkable result
     }
     \label{eq:wl_expectation_eps}
 \end{equation}
-\textit{Each galaxy ellipticity is an unbiased --- though very noisy ---
-estimate of the local reduced shear.}  The noise is set by the intrinsic
+Each galaxy ellipticity is therefore an unbiased, though very noisy,
+estimate of the local reduced shear.  The noise is set by the intrinsic
 dispersion $\sigma_\epsilon = \sqrt{\langle \epsilon^{(s)}\epsilon^{(s)*}
 \rangle}$: averaging over $N$ galaxies subject to the same $g$, the
 $1\sigma$ error on the mean is
@@ -226,10 +220,11 @@ $|\chi| \approx 2|\epsilon|$.
 \begin{remark}
 Shape noise is irreducible: even with perfect measurements, the finite
 intrinsic ellipticity dispersion $\sigma_\epsilon$ sets a floor on the
-achievable accuracy.  The only levers are the number density $n$ of usable
-galaxies and the survey area.  Increasing $n$ means going deeper, which
-also pushes to higher-redshift (more strongly lensed) sources --- a double
-benefit that motivates deep, wide imaging surveys.
+achievable accuracy.  The only remaining freedom lies in the number
+density $n$ of usable galaxies and in the survey area.  Increasing $n$
+requires deeper imaging, which also reaches higher-redshift (more strongly
+lensed) sources; the two gains together motivate deep, wide imaging
+surveys.
 \end{remark}
 
 
@@ -241,9 +236,9 @@ benefit that motivates deep, wide imaging surveys.
 
 The shear is not a vector: under a rotation of the coordinate frame by
 $\phi$ its complex representation is multiplied by $e^{-2\mathrm{i}\phi}$,
-not $e^{-\mathrm{i}\phi}$.  It is a \textbf{spin-2} (polar) quantity, like
+not $e^{-\mathrm{i}\phi}$.  It is a spin-2 (polar) quantity, like
 linear polarization.  Relative to a chosen direction $\phi$ one defines
-the \textbf{tangential} and \textbf{cross} components
+the \emph{tangential} and \emph{cross} components
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~17)
 \begin{equation}
     \boxed{
@@ -256,25 +251,24 @@ the \textbf{tangential} and \textbf{cross} components
 and identically for the ellipticity components $\epsilon_{\mathrm t},
 \epsilon_\times$.  Taking $\phi$ to be the polar angle of the point
 relative to a chosen center, $\gammaL_{\mathrm t} > 0$ describes a shear
-oriented \textit{tangentially} (an image stretched perpendicular to the
+oriented tangentially (an image stretched perpendicular to the
 line to the center), and $\gammaL_{\mathrm t} < 0$ a radial stretch.  The
-sign in~\eqref{eq:wl_tangential_cross} is fixed precisely so that a
-circular mass concentration --- which stretches background images
-tangentially --- produces a \textit{positive} $\gammaL_{\mathrm t}$.
+sign in~\eqref{eq:wl_tangential_cross} is chosen so that a
+circular mass concentration, which stretches background images
+tangentially, produces a positive $\gammaL_{\mathrm t}$.
 For a circularly symmetric deflector the shear is purely tangential at
 every point, so $\gammaL_\times = 0$; a non-zero cross component averaged
-over many pairs is a classic null test for systematics (its expectation
+over many pairs is a standard null test for systematics (its expectation
 vanishes by parity, $\S$\ref{sec:wl_cosmic}).
 
 \subsection{Mean Tangential Shear and the Projected Mass}
 
-For a \textbf{circularly symmetric} lens we already know from
-Chapter~\ref{ch:axisymmetric_models}
-(eq.~\ref{eq:gamma_circular}) that
+For a circularly symmetric lens, Chapter~\ref{ch:axisymmetric_models}
+(eq.~\ref{eq:gamma_circular}) gives
 $\gammaL_{\mathrm t}(\theta) = \bar\kappa(\theta) - \kappab(\theta)$,
 the mean convergence interior to $\theta$ minus the local convergence.
 \citet{bartelmann_1995} showed that a nearly identical relation
-holds for the \textit{azimuthal average} of a completely general,
+holds for the azimuthal average of a completely general,
 non-symmetric mass distribution.  Starting from Gauss's theorem applied to
 the deflection potential $\psiL$ (with $\nabla^2\psiL = 2\kappab$) and
 differentiating the enclosed dimensionless mass
@@ -304,14 +298,13 @@ by the critical surface mass density $\Sigmacr$
     \equiv \Delta\Sigma(\theta)\,,
     \label{eq:wl_DeltaSigma}
 \end{equation}
-the \textbf{excess surface mass density} $\Delta\Sigma$: the mean surface
+the \emph{excess surface mass density} $\Delta\Sigma$: the mean surface
 density inside radius $\theta$ minus that at $\theta$.  Equation
 \eqref{eq:wl_DeltaSigma} is the basic relation of cluster and galaxy--galaxy
 weak lensing: the observable tangential shear translates directly into
 a projected mass profile.
 
-\begin{example}
-\textbf{Tangential shear of an SIS.}
+\begin{example}[Tangential shear of an SIS]
 For the singular isothermal sphere (Chapter~\ref{ch:axisymmetric_models},
 eqs.~\ref{eq:sis_kappa}--\ref{eq:sis_mean_kappa}) we have
 $\kappab = \thetaE/(2\theta)$ and $\bar\kappa = \thetaE/\theta$, so
@@ -334,9 +327,9 @@ in \mathlink{12_Weak_Lensing/weak_lensing.wl}{weak\_lensing.wl}.
 \label{sec:wl_reduced_shear}
 
 Galaxy ellipticities measure not the shear $\gammaL$ but the
-\textbf{reduced shear} $g = \gammaL/(1 - \kappab)$
-(eq.~\ref{eq:wl_expectation_eps}).  This has an important consequence.
-Consider the transformation, for an arbitrary constant $\lambda$,
+reduced shear $g = \gammaL/(1 - \kappab)$
+(eq.~\ref{eq:wl_expectation_eps}).  To see the consequence,
+consider the transformation, for an arbitrary constant $\lambda$,
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~51)
 \begin{equation}
     \kappab(\vectheta) \;\longrightarrow\;
@@ -358,9 +351,9 @@ therefore
     }
     \label{eq:wl_g_invariant}
 \end{equation}
-The reduced shear --- and hence every ellipticity measurement --- is
-\textit{invariant} under~\eqref{eq:wl_mst}.  This is the weak-lensing face
-of the \textbf{mass-sheet degeneracy} introduced in
+The reduced shear, and hence every ellipticity measurement, is
+invariant under~\eqref{eq:wl_mst}.  This is the weak-lensing form
+of the \emph{mass-sheet degeneracy} introduced in
 Chapter~\ref{ch:galaxy_lensing}: from shear data alone the convergence is
 determined only up to the one-parameter family~\eqref{eq:wl_mst}.  In the
 Kaiser--Squires inversion below it appears as an undetermined additive
@@ -374,14 +367,14 @@ eq.~\ref{eq:magnification_formula}), the transform~\eqref{eq:wl_mst} gives
     \mu \;\longrightarrow\; \mu' = \lambda^{-2}\,\mu\,,
     \label{eq:wl_mu_rescale}
 \end{equation}
-which is why \textit{magnification} information --- from the lensing-induced
-change in background number counts,
+so that magnification information can in principle break the degeneracy
+that shear alone cannot.  Such information is available from the
+lensing-induced change in background number counts,
 $n(>S)/n_0(>S) \approx 1 + 2(\alpha - 1)\kappab$ in the weak limit for
 unlensed counts $n_0(>S) \propto S^{-\alpha}$ (here $\alpha$ is the count
 slope, not a deflection angle)
-(\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~27) --- can in
-principle break the degeneracy that shear alone cannot.  Both invariances
-are checked symbolically in
+(\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~27).  Both
+invariances are checked symbolically in
 \mathlink{12_Weak_Lensing/weak_lensing.wl}{weak\_lensing.wl}.
 
 
@@ -389,9 +382,9 @@ are checked symbolically in
 \section{Cluster Mass Reconstruction}
 \label{sec:wl_ks}
 
-We now come to the method that made weak lensing quantitative:
-from a measured shear field one can reconstruct a \textbf{parameter-free
-map of the projected mass}, with no assumption of symmetry
+We now turn to the method that made weak lensing quantitative:
+from a measured shear field one can reconstruct a parameter-free
+map of the projected mass, with no assumption of symmetry
 \citep{kaiser_squires_1993}.
 
 \subsection{The Kaiser--Squires Inversion}
@@ -430,7 +423,7 @@ where $\beta_\ell$ is the polar angle of $\boldsymbol\ell$.  Because
 $|\hat{\mathcal D}|^2 = \pi^2$ is a constant, the relation inverts
 trivially, $\hat\kappab = \pi^{-1}\hat\gammaL\,\hat{\mathcal D}^*$
 (for $\boldsymbol\ell \neq 0$), and transforming back to real space yields
-the \textbf{Kaiser--Squires inversion}
+the \emph{Kaiser--Squires inversion}
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~44;
 \citealp{kaiser_squires_1993})
 \begin{equation}
@@ -447,38 +440,34 @@ Since the observed shear can be estimated at galaxy positions
 a measured shear map into a mass map.
 
 \begin{remark}
-Three features of~\eqref{eq:wl_ks_inversion} deserve emphasis, all
-verified in \mathlink{12_Weak_Lensing/weak_lensing.wl}{weak\_lensing.wl}:
-\begin{enumerate}[nosep]
-    \item \textbf{The additive constant $\kappab_0$.}
-          $\hat{\mathcal D}$ is undefined at $\boldsymbol\ell = 0$, so the
-          mean (DC) mode of $\kappab$ is unconstrained.  This is exactly
-          the mass-sheet degeneracy~\eqref{eq:wl_mst}: a uniform sheet
-          produces no shear.
-    \item \textbf{Reduced shear, not shear.}
-          What is measured is $g$, not $\gammaL$; in ``weak'' weak lensing
-          $\gammaL \approx g$, but in the non-linear inner regions of
-          clusters one must solve the integral equation
-          \begin{equation*}
-              \kappab - \kappab_0 = \frac{1}{\pi}\int d^2\theta'\,
-              \left[1 - \kappab(\vectheta')\right]
-              \mathrm{Re}\!\left[\mathcal{D}^*(\vectheta - \vectheta')\,
-              g(\vectheta')\right]
-          \end{equation*}
-          iteratively
-          (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~50).
-    \item \textbf{Smoothing.}
-          A naive discrete sum over galaxies has formally infinite
-          variance (the $\theta^{-2}$ kernel); a smoothing kernel is
-          required to obtain a finite-variance mass estimator.
-\end{enumerate}
+Three properties of~\eqref{eq:wl_ks_inversion} should be kept in mind;
+all are verified in
+\mathlink{12_Weak_Lensing/weak_lensing.wl}{weak\_lensing.wl}.
+First, $\hat{\mathcal D}$ is undefined at $\boldsymbol\ell = 0$, so the
+mean (DC) mode of $\kappab$ is unconstrained and the additive constant
+$\kappab_0$ remains free.  This is the mass-sheet
+degeneracy~\eqref{eq:wl_mst}: a uniform sheet produces no shear.
+Second, what is measured is the reduced shear $g$, not $\gammaL$.  In
+the weak limit $\gammaL \approx g$, but in the non-linear inner regions
+of clusters one must solve the integral equation
+\begin{equation*}
+    \kappab - \kappab_0 = \frac{1}{\pi}\int d^2\theta'\,
+    \left[1 - \kappab(\vectheta')\right]
+    \mathrm{Re}\!\left[\mathcal{D}^*(\vectheta - \vectheta')\,
+    g(\vectheta')\right]
+\end{equation*}
+iteratively
+(\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~50).
+Third, a naive discrete sum over galaxies has formally infinite
+variance (the $\theta^{-2}$ kernel), so a smoothing kernel is
+required to obtain a finite-variance mass estimator.
 \end{remark}
 
 \subsection{Aperture Mass}
 \label{sec:wl_apmass}
 
 The undetermined constant $\kappab_0$ motivates a statistic that is
-\textit{immune} to the mass-sheet degeneracy: the \textbf{aperture mass}
+insensitive to the mass-sheet degeneracy, the \emph{aperture mass}
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~108)
 \begin{equation}
     M_{\mathrm{ap}}(\theta) = \int d^2\vartheta\;
@@ -487,13 +476,13 @@ The undetermined constant $\kappab_0$ motivates a statistic that is
 \end{equation}
 a weighted integral of the tangential shear within an aperture of radius
 $\theta$, with $Q$ a weight function of compact support.  If $Q$ is
-derived from a \textit{compensated} filter $U$ (one with
+derived from a \emph{compensated} filter $U$ (one with
 $\int d^2\vartheta\, U = 0$), then $M_{\mathrm{ap}}$ can equivalently be
-written as $\int d^2\vartheta\, U(|\vartheta|)\,\kappab(\vartheta)$: because
+written as $\int d^2\vartheta\, U(|\vartheta|)\,\kappab(\vartheta)$: since
 $U$ integrates to zero, adding a uniform sheet $\kappab_0$ contributes
 nothing, so $M_{\mathrm{ap}}$ is invariant under~\eqref{eq:wl_mst}.
 Since it is built from the observable $\gammaL_{\mathrm t}$ directly, it
-requires no inversion, and --- as we see next --- doubles as a clean
+requires no inversion, and, as shown below, it serves also as a
 cosmic-shear statistic and as a matched filter for detecting mass
 concentrations by their shear alone.
 
@@ -523,11 +512,11 @@ concentrations by their shear alone.
 \label{sec:wl_cosmic}
 
 So far the deflector has been a single, localized mass (galaxy or cluster)
-in a thin lens plane.  But light bundles from distant galaxies are
-distorted continuously by \textit{all} the inhomogeneous matter along the
-line of sight --- the large-scale structure (LSS).  This produces a weak,
+in a thin lens plane.  Light bundles from distant galaxies are, however,
+distorted continuously by all the inhomogeneous matter along the
+line of sight, the large-scale structure (LSS).  This produces a weak,
 spatially coherent distortion of galaxy shapes across the sky called
-\textbf{cosmic shear}, whose statistics directly probe the matter
+\emph{cosmic shear}, whose statistics directly probe the matter
 distribution and hence cosmology \citep{gunn_1967, blandford_1991}
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, Sect.~6).
 
@@ -551,17 +540,18 @@ efficiency
 \end{equation}
 where $w$ is comoving distance, $a$ the scale factor, $f_K$ the comoving
 angular-diameter distance, and $g(w) = \int_w^{w_h} dw'\, p_w(w')\,
-f_K(w'-w)/f_K(w')$ is the source-averaged efficiency factor.  Two features
-are worth noting: $\kappab \propto \Omegam$, because lensing responds to
-the physical density contrast $\Delta\rho \propto \Omegam\,\delta$, not to
-$\delta$ alone; and $\kappab$ can be negative, since $\delta$ can be
-(unlike the surface density of a real cluster).
+f_K(w'-w)/f_K(w')$ is the source-averaged efficiency factor.  Two
+properties of this expression follow directly: $\kappab \propto \Omegam$,
+because lensing responds to the physical density contrast
+$\Delta\rho \propto \Omegam\,\delta$, not to $\delta$ alone; and $\kappab$
+can be negative, since $\delta$ can be (unlike the surface density of a
+real cluster).
 
 \subsection{The Convergence Power Spectrum}
 
 Because $\delta$ is a realization of a random field, the observables are
 statistical.  Applying Limber's equation to the
-projection~\eqref{eq:wl_kappa_eff} relates the \textbf{convergence power
+projection~\eqref{eq:wl_kappa_eff} relates the \emph{convergence power
 spectrum} $P_\kappa(\ell)$ to the three-dimensional matter power spectrum
 $P_\delta(k)$
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~99)
@@ -587,7 +577,7 @@ so cosmic shear is a leading probe of the clustering amplitude of matter
 $P_\kappa$ is not measured directly; what one estimates from a shear
 catalogue are real-space two-point functions.  Using the tangential and
 cross components~\eqref{eq:wl_tangential_cross} defined with respect to the
-line connecting each galaxy pair, one forms the two \textbf{shear
+line connecting each galaxy pair, one forms the two \emph{shear
 correlation functions}
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eqs.~104--105)
 \begin{equation}
@@ -604,18 +594,18 @@ parity: under a reflection $\gammaL_{\mathrm t}\to\gammaL_{\mathrm t}$ but
 $\gammaL_\times \to -\gammaL_\times$, so a non-zero $\xi_\times$ (or a
 ``B-mode'' signal) flags residual systematics.  The correlation functions
 are the preferred observable because, unlike aperture statistics, they can
-be evaluated over gaps and masked regions --- one simply uses every galaxy
-pair at a given separation.  The aperture-mass dispersion
-$\langle M_{\mathrm{ap}}^2\rangle(\theta)$ built from the
-statistic~\eqref{eq:wl_Map} is a clean summary, because its
-filter is so narrow that it probes $P_\kappa$ at essentially a single
+be evaluated over gaps and masked regions; every galaxy pair at a given
+separation contributes, whatever the survey geometry.  The aperture-mass
+dispersion $\langle M_{\mathrm{ap}}^2\rangle(\theta)$ built from the
+statistic~\eqref{eq:wl_Map} is a convenient summary, because its
+filter is so narrow that it probes $P_\kappa$ at nearly a single
 multipole $\ell \approx 4$--$5/\theta$; the filter $J_4^2(\eta)/\eta^4$
 peaks at $\eta = \ell\theta \approx 4.1$
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~109 and
 Sect.~6.3, who quote $\ell \sim 5/\theta$).
 
-\begin{remark}
-\textbf{Tomography.}  Splitting the source galaxies into photometric-redshift
+\begin{remark}[Tomography]
+Splitting the source galaxies into photometric-redshift
 bins and measuring $\xi_\pm$ within and between bins gives the redshift
 evolution of the matter power spectrum through the changing efficiency
 $g(w)$ in~\eqref{eq:wl_Pkappa}.  This ``weak-lensing tomography'' turns a
@@ -628,23 +618,23 @@ the dark-energy programs of Stage-IV surveys.
 \section{Galaxy--Galaxy Lensing}
 \label{sec:wl_ggl}
 
-A single galaxy is far too weak a lens to detect individually --- the
-signal-to-noise of an SIS detection scales as $S/N \propto
+A single galaxy is far too weak a lens to be detected individually: the
+signal-to-noise ratio of an SIS detection scales as $S/N \propto
 \thetaE\sqrt{n}\,/\sigma_\epsilon$, which for a galaxy
-($\sigma_v \lesssim 200$~km\,s$^{-1}$) is hopeless
-(\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~19).  But the
-signal of \textit{many} galaxies can be stacked.  In the mean, a
+($\sigma_v \lesssim 200$~km\,s$^{-1}$) is far too small
+(\citealp{schneider_kochanek_wambsganss_2006}, Part~3, eq.~19).  The
+signals of many galaxies can, however, be stacked.  In the mean, a
 background galaxy behind a foreground (lens) galaxy is stretched
 tangentially about it, so the mean tangential ellipticity of background
 sources, binned by the foreground--background separation $\theta$,
-measures the mean tangential shear $\gammaL_{\mathrm t}(\theta)$ ---
-and hence, through eq.~\eqref{eq:wl_DeltaSigma}, the \textit{average}
+measures the mean tangential shear $\gammaL_{\mathrm t}(\theta)$,
+and hence, through eq.~\eqref{eq:wl_DeltaSigma}, the average
 projected mass profile of the lens galaxies
 (\citealp{schneider_kochanek_wambsganss_2006}, Part~3, Sect.~8.2;
 first detected by \citet{brainerd_1996}).
 
-Because a single galaxy's halo cannot be mapped, one parametrizes the
-lens population and fits.  A standard choice is a \textbf{truncated
+Since the halo of a single galaxy cannot be mapped, one parametrizes the
+lens population and fits.  A standard choice is a \emph{truncated
 isothermal sphere}: an isothermal $\rho \propto r^{-2}$ core turning to
 $\rho \propto r^{-4}$ beyond a truncation radius $s$, with the velocity
 dispersion and truncation scaled to luminosity via the
@@ -672,60 +662,54 @@ measurement transitions into a probe of the galaxy--mass cross-correlation
 \section{Summary}
 \label{sec:wl_summary}
 
-\begin{itemize}
-    \item \textbf{Weak regime:} $\kappab \ll 1$, $|\gammaL| \ll 1$, so
-          $\Amat \approx \mathbb{1}$.  No individual source shows a
-          recognizable signal; the shear is recovered only statistically,
-          by averaging galaxy shapes, with error
-          $\sim\sigma_\epsilon/\sqrt{N}$ set by shape noise.
+In the weak regime, $\kappab \ll 1$, $|\gammaL| \ll 1$, so
+$\Amat \approx \mathbb{1}$.  No individual source shows a
+recognizable signal; the shear is recovered only statistically,
+by averaging galaxy shapes, with error
+$\sim\sigma_\epsilon/\sqrt{N}$ set by shape noise.  The complex
+ellipticities $\chi, \epsilon$ (eq.~\ref{eq:wl_ellipticities}) are spin-2
+shape measures.  With randomly oriented intrinsic ellipticities,
+$\mathrm{E}[\epsilon] = g$, the reduced shear, so that each galaxy is
+an unbiased, noisy shear estimate; in the weak limit
+$\gammaL \approx g \approx \langle\epsilon\rangle \approx
+\langle\chi\rangle/2$.
 
-    \item \textbf{Shear estimator:} the complex ellipticities $\chi,
-          \epsilon$ (eq.~\ref{eq:wl_ellipticities}) are spin-2 shape
-          measures.  With randomly oriented intrinsic ellipticities,
-          $\mathrm{E}[\epsilon] = g$, the reduced shear --- each galaxy is
-          an unbiased, noisy shear estimate.  In the weak limit
-          $\gammaL \approx g \approx \langle\epsilon\rangle \approx
-          \langle\chi\rangle/2$.
+The tangential shear is $\gammaL_{\mathrm t} =
+-\mathrm{Re}(\gammaL e^{-2\mathrm i\phi})$.  Averaged on circles,
+$\langle\gammaL_{\mathrm t}\rangle = \bar\kappa -
+\langle\kappab\rangle$ for any mass distribution
+(eq.~\ref{eq:wl_mean_tangential}), so that
+$\gammaL_{\mathrm t}\Sigmacr = \Delta\Sigma$ measures the
+projected mass profile; for the SIS,
+$\gammaL_{\mathrm t} = \thetaE/(2\theta)$.  The reduced shear
+$g = \gammaL/(1-\kappab)$ is
+invariant under $\kappab \to \lambda\kappab + (1-\lambda)$,
+$\gammaL \to \lambda\gammaL$ (with $\mu \to \lambda^{-2}\mu$),
+so shear determines $\kappab$ only up to an additive constant; this is
+the mass-sheet degeneracy, which magnification (number counts) can
+break.
 
-    \item \textbf{Tangential shear:} $\gammaL_{\mathrm t} =
-          -\mathrm{Re}(\gammaL e^{-2\mathrm i\phi})$; averaged on circles,
-          $\langle\gammaL_{\mathrm t}\rangle = \bar\kappa -
-          \langle\kappab\rangle$ for \textit{any} mass distribution
-          (eq.~\ref{eq:wl_mean_tangential}), so
-          $\gammaL_{\mathrm t}\Sigmacr = \Delta\Sigma$ measures the
-          projected mass profile.  For the SIS,
-          $\gammaL_{\mathrm t} = \thetaE/(2\theta)$.
+The shear $\gammaL$ and the convergence $\kappab$ are related by
+convolution with $\mathcal{D}(\vectheta) =
+-1/(\theta_1 - \mathrm i\theta_2)^2$.  Since
+$|\hat{\mathcal D}|^2 = \pi^2$, this inverts to
+$\kappab - \kappab_0 = \pi^{-1}\!\int
+\mathrm{Re}[\mathcal D^*\gammaL]\,d^2\theta'$
+(eq.~\ref{eq:wl_ks_inversion}), the Kaiser--Squires parameter-free mass
+map.  The aperture mass $M_{\mathrm{ap}}$ is a mass-sheet-invariant
+alternative.
 
-    \item \textbf{Mass-sheet degeneracy:} $g = \gammaL/(1-\kappab)$ is
-          invariant under $\kappab \to \lambda\kappab + (1-\lambda)$,
-          $\gammaL \to \lambda\gammaL$ (with $\mu \to \lambda^{-2}\mu$),
-          so shear determines $\kappab$ only up to an additive constant.
-          Magnification (number counts) can break it.
-
-    \item \textbf{Kaiser--Squires:} $\gammaL$ and $\kappab$ are related by
-          convolution with $\mathcal{D}(\vectheta) =
-          -1/(\theta_1 - \mathrm i\theta_2)^2$; because
-          $|\hat{\mathcal D}|^2 = \pi^2$, this inverts to
-          $\kappab - \kappab_0 = \pi^{-1}\!\int
-          \mathrm{Re}[\mathcal D^*\gammaL]\,d^2\theta'$
-          (eq.~\ref{eq:wl_ks_inversion}), a parameter-free mass map.  The
-          aperture mass $M_{\mathrm{ap}}$ is a mass-sheet-invariant
-          alternative.
-
-    \item \textbf{Cosmic shear:} LSS distorts galaxy shapes coherently; the
-          effective convergence~\eqref{eq:wl_kappa_eff} has power spectrum
-          $P_\kappa \propto \Omegam^2\!\int\! (g^2/a^2)\, P_\delta$
-          (eq.~\ref{eq:wl_Pkappa}), measured via $\xi_\pm(\theta) =
-          \int (d\ell\,\ell/2\pi) J_{0,4}(\ell\theta) P_\kappa$.  Amplitude
-          $\sim \sigma_8\,\Omegam^{0.5}$; tomography adds redshift
-          information.
-
-    \item \textbf{Galaxy--galaxy lensing:} stacking foreground--background
-          pairs measures the mean $\gammaL_{\mathrm t}$ and hence the
-          average galaxy mass profile (truncated isothermal,
-          eq.~\ref{eq:wl_ggl_scaling}), extending to a probe of galaxy
-          bias on large scales.
-\end{itemize}
+The large-scale structure distorts galaxy shapes coherently.  The
+effective convergence~\eqref{eq:wl_kappa_eff} has power spectrum
+$P_\kappa \propto \Omegam^2\!\int\! (g^2/a^2)\, P_\delta$
+(eq.~\ref{eq:wl_Pkappa}), measured through $\xi_\pm(\theta) =
+\int (d\ell\,\ell/2\pi) J_{0,4}(\ell\theta) P_\kappa$; the amplitude
+scales as $\sim \sigma_8\,\Omegam^{0.5}$, and tomography adds redshift
+information.  Finally, stacking foreground--background
+pairs measures the mean $\gammaL_{\mathrm t}$ and hence the
+average galaxy mass profile (truncated isothermal,
+eq.~\ref{eq:wl_ggl_scaling}), extending to a probe of galaxy
+bias on large scales.
 
 
 % =====================================================================

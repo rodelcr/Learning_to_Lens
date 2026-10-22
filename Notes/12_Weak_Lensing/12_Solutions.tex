@@ -16,7 +16,7 @@ which verifies each answer symbolically and numerically.
 \subsection*{Exercise~\ref{ex:wl_mst}: Reduced Shear and the Mass-Sheet Degeneracy}
 
 \textbf{(a)} Under $\kappab' = \lambda\kappab + (1-\lambda)$,
-$\gammaL' = \lambda\gammaL$, note that
+$\gammaL' = \lambda\gammaL$, we have
 $1 - \kappab' = 1 - \lambda\kappab - (1-\lambda) = \lambda(1-\kappab)$.
 Hence
 \begin{equation*}
@@ -38,7 +38,7 @@ so $\mu' = \lambda^{-2}\mu$. \checkmark
 (eq.~\ref{eq:wl_expectation_eps}), which by part (a) is invariant under the
 transform.  A purely local shear measurement therefore cannot distinguish
 $\kappab$ from $\lambda\kappab + (1-\lambda)$.  The degeneracy can be
-broken with \textit{magnification} information --- since
+broken with magnification information: since
 $\mu \to \lambda^{-2}\mu$, the lensing-induced change in background number
 counts, $n(>S)/n_0(>S) \approx 1 + 2(\alpha-1)\kappab$, fixes the absolute
 scale.  (Broadly distributed source redshifts also break it mildly, since
@@ -55,7 +55,7 @@ brightens each source by $\mu$.  For counts $n_0(>S) \propto S^{-\alpha}$,
 In the weak limit, $\mu^{-1} = (1-\kappab)^2 - |\gammaL|^2 = 1 - 2\kappab +
 \order{\kappab^2, \gammaL^2}$, so $\mu \simeq 1 + 2\kappab$.  The binomial
 rule $(1+\epsilon)^p \simeq 1 + p\epsilon$ then gives
-$n/n_0 \simeq 1 + 2(\alpha-1)\kappab$.  Note the null: for $\alpha = 1$ the
+$n/n_0 \simeq 1 + 2(\alpha-1)\kappab$.  For $\alpha = 1$ the
 counts do not respond to $\mu$ at all (the same cancellation as
 Exercise~\ref{ex:bias_null}), so this route to $\lambda$ needs a source
 population whose count slope is far from~1.
@@ -66,7 +66,7 @@ has deflection $\vecalpha = \nabla\psiL$ with
 $\nabla^2\psiL = 2\kappab = 2(1-\lambda)$, giving
 $\vecalpha = (1-\lambda)\vectheta$ (a pure rescaling), and shear
 $\gammaL = \tfrac{1}{2}(\psiL_{,11} - \psiL_{,22}) + \mathrm i\psiL_{,12}
-= 0$: a uniform convergence produces \textbf{no shear}.  Adding it to a
+= 0$: a uniform convergence produces no shear.  Adding it to a
 lens contributes the constant $(1-\lambda)$ to $\kappab$ (hence ``mass
 sheet'') while leaving the observable $g$ unchanged. \checkmark
 
@@ -138,7 +138,7 @@ use $\kappab = \Sigma/\Sigmacr$, $\bar\kappa = \bar\Sigma/\Sigmacr$:
     \equiv \Delta\Sigma(\theta)\,. \quad \checkmark
 \end{equation*}
 The observable tangential shear directly gives the excess surface mass
-density --- independent of the mass-sheet constant, since a uniform sheet
+density, independent of the mass-sheet constant, since a uniform sheet
 shifts $\bar\Sigma$ and $\Sigma$ equally and cancels in the difference.
 
 \textbf{(d)} For the NFW halo,
@@ -162,7 +162,7 @@ slope, not a maximum (Fig.~\ref{fig:wl_tangential};
 checked in \texttt{problems\_12.wl}).
 
 \begin{derivation}[Exercise~\ref{ex:wl_tangential}(d), the two asymptotes]
-\textit{Small $x$.}  Taylor-expand $g(x) = \operatorname{arccosh}(1/x)/
+For small $x$, Taylor-expand $g(x) = \operatorname{arccosh}(1/x)/
 \sqrt{1-x^2} = \ln(2/x) + \order{x^2\ln x}$.  Then
 $\kappab/\kappa_s = f(x) = (1-g)/(x^2-1) \to g - 1 = \ln(2/x) - 1$, and
 (carrying the expansion of $\ln(x/2) + g$ to order $x^2$)
@@ -173,7 +173,7 @@ Subtracting,
     \to \left[\ln\frac2x - \frac12\right] - \left[\ln\frac2x - 1\right]
     = \frac12\,.
 \end{equation*}
-\textit{Large $x$.}  Use $\arctan\sqrt{x^2-1} \to \pi/2 - 1/x$, so
+For large $x$, use $\arctan\sqrt{x^2-1} \to \pi/2 - 1/x$, so
 $g(x) = \pi/(2x) - 1/x^2 + \order{x^{-3}}$ and $f(x) = 1/x^2 + \order{x^{-3}}$.
 Hence $\bar\kappa/\kappa_s = (2/x^2)[\ln(x/2) + \order{1/x}]$ and
 $\gammaL_{\mathrm t}/\kappa_s \simeq (2/x^2)\ln(x/2) - 1/x^2
@@ -208,11 +208,11 @@ $\kappab(\vectheta) - \kappab_0 = \pi^{-1}\!\int d^2\theta'\,
 eq.~\eqref{eq:wl_ks_inversion}. \checkmark
 
 \textbf{(c)} $\hat{\mathcal D}(\boldsymbol\ell)$ is undefined at
-$\boldsymbol\ell = 0$ (the ratio $0/0$), so the $\boldsymbol\ell = 0$ mode
---- the sky-averaged (DC) value of $\kappab$ --- is left unconstrained by
-the shear.  Physically, a uniform sheet produces no shear.  In this
-linear ($\gammaL \approx g$) inversion $\kappab_0$ is simply such a
-sheet.  Because only the reduced shear $g$ is actually observed, the
+$\boldsymbol\ell = 0$ (the ratio $0/0$), so the $\boldsymbol\ell = 0$ mode,
+the sky-averaged (DC) value of $\kappab$, is left unconstrained by
+the shear.  A uniform sheet produces no shear, and in this
+linear ($\gammaL \approx g$) inversion $\kappab_0$ is such a
+sheet.  Since only the reduced shear $g$ is actually observed, the
 freedom becomes the full transform of Exercise~\ref{ex:wl_mst}, which
 rescales $\kappab$ by $\lambda$ as well as adding the sheet $(1-\lambda)$.
 In the non-linear inversion, eq.~(50) of
@@ -308,8 +308,8 @@ $(1-\kappab)^{-1}$ error.  Before using a catalogue, check its convention.
 \subsection*{Exercise~\ref{ex:wl_cosmic}: Cosmic-Shear Correlation Functions}
 
 \textbf{(a)} Both $\xi_+$ and $\xi_-$ are Hankel transforms of the
-\textit{same} function $P_\kappa(\ell)$ (with $J_0$ and $J_4$
-respectively, eq.~\ref{eq:wl_xipm}).  Because the shear is a spin-2 field
+same function $P_\kappa(\ell)$ (with $J_0$ and $J_4$
+respectively, eq.~\ref{eq:wl_xipm}).  Since the shear is a spin-2 field
 derived from a single scalar potential $\psiL$, its two correlation
 functions are not independent: given $\xi_-$ on all scales one can recover
 $P_\kappa$ (by the inverse Hankel transform) and hence $\xi_+$, and vice
@@ -346,12 +346,12 @@ $P_\kappa$ gives a scale-free (power-law) correlation function.
 \checkmark
 
 \begin{derivation}[Exercise~\ref{ex:wl_cosmic}(c), the two integrals]
-\textit{Bessel integral.}  Substitute $x = \ell\theta$, $d\ell = dx/\theta$:
+For the Bessel integral, substitute $x = \ell\theta$, $d\ell = dx/\theta$:
 $\int_0^\infty J_\nu(\ell\theta)\,d\ell = \theta^{-1}\int_0^\infty
 J_\nu(x)\,dx = 1/\theta$, using the standard result $\int_0^\infty J_\nu(x)\,dx
 = 1$ for $\nu > -1$ (here $\nu = 0$ and $4$).  So $\xi_\pm = A/(2\pi\theta)$.
 
-\textit{Consistency integral.}  Term by term,
+For the consistency integral, term by term,
 $\int_\theta^\infty d\vartheta/\vartheta^2 = 1/\theta$ and
 $\int_\theta^\infty d\vartheta/\vartheta^4 = 1/(3\theta^3)$, so
 \begin{equation*}
@@ -364,9 +364,9 @@ $\int_\theta^\infty d\vartheta/\vartheta^4 = 1/(3\theta^3)$, so
 $\langle M_{\mathrm{ap}}^2\rangle(\theta)$ is $P_\kappa$ filtered by
 $W_{\mathrm{ap}}(\eta) \propto J_4^2(\eta)/\eta^4$, a very narrow,
 strongly peaked filter, so at scale $\theta$ it samples $P_\kappa$ near a
-\textit{single} multipole $\ell \approx 4$--$5/\theta$ (the filter
+single multipole $\ell \approx 4$--$5/\theta$ (the filter
 $J_4^2(\eta)/\eta^4$ peaks at $\eta = \ell\theta \approx 4.1$).  The shear dispersion
 $\langle|\bar\gammaL|^2\rangle(\theta)$ uses the top-hat filter
 $W_{\mathrm{TH}}(\eta) = 4J_1^2(\eta)/\eta^2$, which is broad and mixes a
 wide range of $\ell$.  Hence $\langle M_{\mathrm{ap}}^2\rangle$ reflects
-the \textit{shape} of the power spectrum much more directly. \checkmark
+the shape of the power spectrum much more directly. \checkmark
