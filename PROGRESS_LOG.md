@@ -4,6 +4,12 @@ Timestamped record of major milestones and work completed.
 
 ---
 
+## 2026-10-21 — Merged to main and published
+- `annotated-edition` merged into `main` (616e2af, --no-ff) and pushed. Three PDFs copied to
+  `rodelcr.github.io/assets/pdf/` (site commit afdf0b5): 364 / 449 / 572 pages; the Annotated Study Edition is
+  new at `Learning_to_Lens_Annotated.pdf`. 15 agent worktrees + `wt/*` branches removed. DEPLOYMENT.md updated
+  for three editions.
+
 ## 2026-10-14 — Part V (compound lenses) + Annotated Study Edition; critic phase complete
 
 **Branch `annotated-edition`** (not yet merged to main / published). Plan: `HANDOFF_annotated_edition_2026-10-14.md`.
