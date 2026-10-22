@@ -15,7 +15,7 @@ which verifies each answer symbolically and numerically.
 % ----- Exercise 4.1 -----
 \subsection*{Exercise~\ref{ex:derive_lens_eq}: Derivation of the Lens Equation}
 
-\textbf{(a)} From the lensing geometry (Figure~\ref{fig:lensing_geometry}),
+(a) From the lensing geometry (Figure~\ref{fig:lensing_geometry}),
 consider a light ray that passes through the lens plane at physical position
 $\vecxi$ and is deflected by the angle $\boldsymbol{\hat{\alpha}}$.  In the
 small-angle approximation, the physical position in the source plane is
@@ -43,7 +43,7 @@ argument applies to each component, and the vector $\boldsymbol{\hat{\alpha}}$
 \emph{toward} the mass.
 \end{derivation}
 
-\textbf{(b)} Substituting $\vecxi = \Dd\,\vectheta$ and
+(b) Substituting $\vecxi = \Dd\,\vectheta$ and
 $\veceta = \Ds\,\vecbeta$:
 \begin{equation*}
     \Ds\,\vecbeta = \frac{\Ds}{\Dd}\,\Dd\,\vectheta
@@ -56,7 +56,7 @@ Dividing by $\Ds$:
     - \frac{\Dds}{\Ds}\,\boldsymbol{\hat{\alpha}}(\Dd\,\vectheta) \,.
 \end{equation*}
 
-\textbf{(c)} Defining the reduced deflection angle
+(c) Defining the reduced deflection angle
 $\vecalpha(\vectheta) \equiv (\Dds/\Ds)\,
 \boldsymbol{\hat{\alpha}}(\Dd\,\vectheta)$, the lens equation becomes:
 \begin{equation*}
@@ -76,7 +76,7 @@ $\vecbeta = \dots$ is an angle.
 % ----- Exercise 4.2 -----
 \subsection*{Exercise~\ref{ex:point_mass_solve}: Point Mass Lens Equation}
 
-\textbf{(a)} For a point mass $M$ at the origin, the physical deflection
+(a) For a point mass $M$ at the origin, the physical deflection
 angle is $\alphahat = 4\Gnewton M / (\speedoflight^2 \xi)$ where
 $\xi = \Dd\,\theta$.  The reduced deflection angle is:
 \begin{equation*}
@@ -89,22 +89,22 @@ $\xi = \Dd\,\theta$.  The reduced deflection angle is:
 The lens equation is:
 $\beta = \theta - \alpha(\theta) = \theta - \thetaE^2/\theta$.
 
-\textbf{(b)} Multiplying by $\theta$:
+(b) Multiplying by $\theta$:
 $\theta^2 - \beta\,\theta - \thetaE^2 = 0$.
 By the quadratic formula:
 \begin{equation*}
     \theta_\pm = \frac{\beta \pm \sqrt{\beta^2 + 4\,\thetaE^2}}{2} \,.
 \end{equation*}
 
-\textbf{(c)} The discriminant is
+(c) The discriminant is
 $\Delta = \beta^2 + 4\,\thetaE^2 > 0$ for all $\beta$ (since $\thetaE > 0$).
 Therefore two real solutions always exist.
 
-\textbf{(d)} Vieta's formulas for $\theta^2 - \beta\,\theta - \thetaE^2 = 0$
+(d) Vieta's formulas for $\theta^2 - \beta\,\theta - \thetaE^2 = 0$
 give the sum of the roots, $\theta_+ + \theta_- = \beta$, and their
 product, $\theta_+\,\theta_- = -\thetaE^2$. \checkmark
 
-\textbf{(e)} For $\beta > 0$: since $\sqrt{\beta^2 + 4\thetaE^2} > \beta$,
+(e) For $\beta > 0$: since $\sqrt{\beta^2 + 4\thetaE^2} > \beta$,
 we have $\theta_+ > 0$.  Moreover,
 $\theta_+ = (\beta + \sqrt{\beta^2 + 4\thetaE^2})/2 > \sqrt{\thetaE^2} = \thetaE$
 because $\beta + \sqrt{\beta^2 + 4\thetaE^2} > 2\thetaE$ (square both
@@ -144,7 +144,7 @@ with $\Gnewton = 6.674 \times 10^{-11}$~m$^3$\,kg$^{-1}$\,s$^{-2}$,
 $\speedoflight = 2.998 \times 10^{8}$~m\,s$^{-1}$:
 
 \medskip
-\noindent\textbf{(a)} Stellar microlensing:
+\noindent(a) Stellar microlensing:
 $M = 1.989 \times 10^{30}$~kg, $\Dd = \Dds = 5$~kpc $= 1.543 \times 10^{20}$~m,
 $\Ds = 10$~kpc $= 3.086 \times 10^{20}$~m.
 \begin{align*}
@@ -166,7 +166,7 @@ here; the correct value is $5.906\times10^{3}$~m, twice the Sun's Schwarzschild
 radius, and the result now agrees with eq.~\eqref{eq:thetaE_microlensing}.)
 
 \medskip
-\noindent\textbf{(b)} Galaxy lensing:
+\noindent(b) Galaxy lensing:
 $M = 10^{12} \times 1.989 \times 10^{30}$~kg, $\Dd = 919$~Mpc,
 $\Ds = 1652$~Mpc, $\Dds = 1055$~Mpc.
 Converting to meters ($1~\text{Mpc} = 3.086 \times 10^{22}$~m):
@@ -180,7 +180,7 @@ Physical Einstein radius: $\RE = 919 \times 1.15 \times 10^{-5}~\text{Mpc}
 \approx 1.06 \times 10^{-2}$~Mpc $\approx 10.6$~kpc.
 
 \medskip
-\noindent\textbf{(c)} Cluster lensing:
+\noindent(c) Cluster lensing:
 $M_{\mathrm{E}} \sim 2 \times 10^{14} \times 1.989 \times 10^{30}$~kg
 (mass within the Einstein radius for a typical massive cluster),
 $\Dd = 919$~Mpc, $\Ds = 1727$~Mpc, $\Dds = 1328$~Mpc.
@@ -219,7 +219,7 @@ contribute to the deflection there (2D shell theorem, Section~\ref{sec:surface_m
 % ----- Exercise 4.4 -----
 \subsection*{Exercise~\ref{ex:sigma_cr_compute}: Critical Surface Mass Density}
 
-\textbf{(a)} Dimensional analysis of $\Sigmacr = \speedoflight^2 /
+(a) Dimensional analysis of $\Sigmacr = \speedoflight^2 /
 (4\pi\Gnewton) \times \Ds / (\Dd\,\Dds)$:
 \begin{equation*}
     [\Sigmacr] = \frac{(\text{m/s})^2}{(\text{m}^3\,\text{kg}^{-1}\,\text{s}^{-2})}
@@ -230,7 +230,7 @@ contribute to the deflection there (2D shell theorem, Section~\ref{sec:surface_m
 \end{equation*}
 So $\Sigmacr$ has units of mass per area, as required. \checkmark
 
-\textbf{(b)} For the galaxy lens ($\Dd = 919$~Mpc, $\Ds = 1652$~Mpc,
+(b) For the galaxy lens ($\Dd = 919$~Mpc, $\Ds = 1652$~Mpc,
 $\Dds = 1055$~Mpc):
 \begin{equation*}
     \Sigmacr = \frac{(2.998 \times 10^{8})^2}{4\pi \times
@@ -243,7 +243,7 @@ Converting: $5.9~\text{kg\,m}^{-2} = 0.59~\text{g\,cm}^{-2}
 \approx 2830~\Msun\,\text{pc}^{-2}$ (2840 if $\speedoflight$ is rounded to
 $3\times10^{8}$~m\,s$^{-1}$, as in eq.~\eqref{eq:sigma_cr_numerical}).
 
-\textbf{(c)} For the cluster lens ($\Dd = 919$~Mpc, $\Ds = 1727$~Mpc,
+(c) For the cluster lens ($\Dd = 919$~Mpc, $\Ds = 1727$~Mpc,
 $\Dds = 1328$~Mpc):
 \begin{equation*}
     \Sigmacr \approx 4.9~\text{kg\,m}^{-2} = 0.49~\text{g\,cm}^{-2}
@@ -264,7 +264,7 @@ $0.83\times2.83\times10^{3} \approx 2.35\times10^{3}~\Msun\,\mathrm{pc^{-2}}$ an
 $4.9$~kg\,m$^{-2}$.
 \end{derivation}
 
-\textbf{(d)} A typical elliptical galaxy with
+(d) A typical elliptical galaxy with
 $\Sigma_0 \approx 5000~\Msun\,\text{pc}^{-2}$ has
 $\kappab = \Sigma_0/\Sigmacr \approx 5000/2830 \approx 1.8 > 1$.
 It is a strong lens: the central surface mass density exceeds
@@ -281,7 +281,7 @@ relative to the caustics (Chapter~\ref{ch:elliptical_models}).
 % ----- Exercise 4.5 -----
 \subsection*{Exercise~\ref{ex:image_positions_plot}: Image Positions for a Point Mass Lens}
 
-\textbf{(a)} For $\thetaE = 1''$ and $\theta_\pm = (\beta \pm
+(a) For $\thetaE = 1''$ and $\theta_\pm = (\beta \pm
 \sqrt{\beta^2 + 4})/2$, with $|\mu_\pm| = \tfrac{1}{2}\!\left[\frac{u^2+2}{u\sqrt{u^2+4}}\pm 1\right]$
 and $u = \beta/\thetaE$ (so that $|\mu_+|-|\mu_-|=1$ is exact for all
 $u>0$):

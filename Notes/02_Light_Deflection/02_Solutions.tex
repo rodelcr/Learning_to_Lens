@@ -15,7 +15,7 @@ which verifies each answer symbolically and numerically.
 % ----- Exercise 2.1 -----
 \subsection*{Exercise~\ref{ex:soldner_full}: Soldner's Newtonian Deflection}
 
-\textbf{(a)} For a particle with speed $v_\infty = \speedoflight$ and
+(a) For a particle with speed $v_\infty = \speedoflight$ and
 impact parameter~$b$, the angular momentum is $L = b\speedoflight$ and the
 energy per unit mass is $\mathcal{E} = \half \speedoflight^2$.  The
 Newtonian orbit parameters are:
@@ -48,7 +48,7 @@ $\mathcal{E} = \tfrac12\speedoflight^2$.  Then
 $2\mathcal{E}L^2 = b^2\speedoflight^4$.  (Checks A16a--b in
 \texttt{problems\_02.wl}.)
 \end{derivation}
-\textbf{(b)} The orbit equation $r(\phi) = p/(1 + e\cos\phi)$ gives
+(b) The orbit equation $r(\phi) = p/(1 + e\cos\phi)$ gives
 $r \to \infty$ when $\cos\phi = -1/e$.  The two asymptotic angles are
 $\phi_\pm = \pm(\pi/2 + \delta)$ where $\sin\delta = 1/e$.  The swept
 angle is $\pi + 2\delta$, so the deflection angle is:
@@ -75,7 +75,7 @@ $\pi$, so the deflection is $2\delta = 2\arcsin(1/e)$.  (For $e \to \infty$,
 $\delta \to 0$ and the orbit degenerates to the straight line $r\cos\phi = p/e
 = b$.)  Check A16c verifies $\arccos(-1/e) = \pi/2 + \arcsin(1/e)$.
 \end{derivation}
-\textbf{(c)} For the Sun with $b = \Rsun$:
+(c) For the Sun with $b = \Rsun$:
 \begin{equation*}
     \alphahat_{\mathrm{Newton}} = \frac{2 \times 6.674 \times 10^{-11}
     \times 1.989 \times 10^{30}}{(2.998 \times 10^{8})^2 \times
@@ -94,7 +94,7 @@ $1.75''$.
 % ----- Exercise 2.2 -----
 \subsection*{Exercise~\ref{ex:factor_of_two}: The Factor of 2}
 
-\textbf{(a)} From $\Delta\phi = \pi + 4m/r_0$ with
+(a) From $\Delta\phi = \pi + 4m/r_0$ with
 $m = \Gnewton M / \speedoflight^2$ and $r_0 \approx b$:
 \begin{equation*}
     \alphahat = \Delta\phi - \pi = \frac{4m}{r_0}
@@ -108,7 +108,7 @@ $4m/r_0 = 4m/b + 4m^2/b^2 + \cdots$.  The correction is second order, the same
 order as the terms dropped in $\Delta\phi = \pi + 4m/r_0$; at first order the
 replacement is exact.
 \end{annotation}
-\textbf{(b)} In the weak-field limit, the Schwarzschild metric in
+(b) In the weak-field limit, the Schwarzschild metric in
 isotropic coordinates takes the form:
 \begin{equation*}
     ds^2 \approx -\!\left(1 - \frac{2\Gnewton M}{\speedoflight^2 r}\right)
@@ -162,17 +162,17 @@ spatial curvature ``contributes the other half''.
 
 Using $\alphahat = 4\Gnewton M / (\speedoflight^2 b)$:
 
-\textbf{(a)} Sun:
+(a) Sun:
 $\alphahat = 4 \times 6.674 \times 10^{-11} \times 1.989 \times 10^{30}
 / [(2.998 \times 10^{8})^2 \times 6.957 \times 10^{8}]
 = 8.49 \times 10^{-6}~\text{rad} = 1.75''$.
 
-\textbf{(b)} Jupiter:
+(b) Jupiter:
 $\alphahat = 4 \times 6.674 \times 10^{-11} \times 1.898 \times 10^{27}
 / [(2.998 \times 10^{8})^2 \times 7.149 \times 10^{7}]
 = 7.88 \times 10^{-8}~\text{rad} = 0.016'' = 16~\text{mas}$.
 
-\textbf{(c)} Galaxy ($M = 10^{12}\,\Msun$, $b = 10$~kpc):
+(c) Galaxy ($M = 10^{12}\,\Msun$, $b = 10$~kpc):
 $b = 10 \times 3.086 \times 10^{19}~\text{m} = 3.086 \times 10^{20}$~m.
 $\alphahat = 4 \times 6.674 \times 10^{-11} \times 10^{12} \times
 1.989 \times 10^{30} / [(2.998 \times 10^{8})^2 \times
@@ -189,7 +189,7 @@ $= 3.95''$.  (Checks A12a--d.)
 % ----- Exercise 2.4 -----
 \subsection*{Exercise~\ref{ex:shapiro_radar}: Shapiro Time Delay}
 
-\textbf{(a)} The round-trip time is $\Delta T_{\mathrm{round}} =
+(a) The round-trip time is $\Delta T_{\mathrm{round}} =
 2[T(R_\oplus) + T(R_{\mathrm{Merc}})] - 2(R_\oplus + R_{\mathrm{Merc}})/
 \speedoflight$.  Using eq.~\eqref{eq:travel_time_expanded} and keeping only the leading logarithmic
 term:
@@ -228,7 +228,7 @@ $\ln(2R_\oplus/r_0) + \ln(2R_{\rm Merc}/r_0) = \ln(4R_\oplus R_{\rm Merc}/r_0^2)
 Each of the four one-way legs contributes $m/\speedoflight$, and
 $4m/\speedoflight$ times~1 is the ``$+1$''.
 \end{derivation}
-\textbf{(b)} Numerically:
+(b) Numerically:
 \begin{align*}
     \frac{4\Gnewton \Msun}{\speedoflight^3}
     &= \frac{4 \times 6.674 \times 10^{-11} \times 1.989 \times 10^{30}}
@@ -251,7 +251,7 @@ $+1$ the delay is $240~\mu$s, without it $220~\mu$s (checks A14c--f).  The
 non-logarithmic term is a 9\% effect, not negligible at the precision of the
 radar experiments.
 \end{annotation}
-\textbf{(c)} The first radar measurement \citep{shapiro_1968} gave
+(c) The first radar measurement \citep{shapiro_1968} gave
 $200 \pm 20~\mu$s; the prediction is \citet{shapiro_1964}.  Our idealized point-mass value lies $2\sigma$ above it
 (check A23), so the agreement is marginal.  Several effects contribute:
 Mercury is not exactly at superior conjunction, so $r_0 > \Rsun$ and the
@@ -287,7 +287,7 @@ parameter is $\varepsilon = m/r_0$, and $r_0 < b$ due to gravitational
 attraction, so $\varepsilon > m/b$.  The second-order approximation
 $\alphahat_2 = 4m/b + (15\pi/4)(m/b)^2$ is significantly more accurate.
 
-\textbf{(d)} The first-order approximation achieves $1\%$ accuracy at
+(d) The first-order approximation achieves $1\%$ accuracy at
 approximately $b/\RS \approx 150$, as confirmed by numerical integration.
 The convergence is slow because the expansion parameter
 $\varepsilon = m/r_0$ is larger than the naive estimate $m/b = 1/(2\,b/\RS)$

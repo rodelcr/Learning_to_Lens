@@ -62,16 +62,16 @@ is where the factor $2$ comes from.
 % ----- Exercise 1.2 -----
 \subsection*{Exercise~\ref{ex:christoffel_polar}: Polar Coordinates}
 
-\textbf{(a)} For $ds^2 = dr^2 + r^2 d\phi^2$:
+(a) For $ds^2 = dr^2 + r^2 d\phi^2$:
 $\Gamma^r_{\ \phi\phi} = -r$, \quad
 $\Gamma^\phi_{\ r\phi} = 1/r$.
 
-\textbf{(b)} Computing the Riemann tensor from these Christoffel symbols gives
+(b) Computing the Riemann tensor from these Christoffel symbols gives
 $R^\rho_{\ \sigma\mu\nu} = 0$ for all index combinations.  The space is
 flat, and the nonvanishing Christoffel symbols are a
 coordinate artifact.
 
-\textbf{(c)} The geodesic equations are
+(c) The geodesic equations are
 $\ddot{r} - r\dot{\phi}^2 = 0$ and
 $\ddot{\phi} + (2/r)\dot{r}\dot{\phi} = 0$.
 A straight line $x = a + b\lambda$, $y = c + d\lambda$ in Cartesian
@@ -79,12 +79,12 @@ coordinates satisfies these when converted to polar coordinates
 $r = \sqrt{x^2 + y^2}$, $\phi = \arctan(y/x)$.
 
 \begin{derivation}[Parts (a)--(c) in full]
-\textbf{(a)} With $g_{rr} = 1$, $g_{\phi\phi} = r^2$, the only nonzero derivative is
+(a) With $g_{rr} = 1$, $g_{\phi\phi} = r^2$, the only nonzero derivative is
 $\partial_r g_{\phi\phi} = 2r$, so
 $\Gamma^r_{\ \phi\phi} = -\tfrac12 g^{rr}\partial_r g_{\phi\phi} = -r$ and
 $\Gamma^\phi_{\ r\phi} = \tfrac12 g^{\phi\phi}\partial_r g_{\phi\phi} = \tfrac{1}{2r^2}(2r) = 1/r$.
 
-\textbf{(b)} In two dimensions the Riemann tensor has $n^2(n^2-1)/12 = 1$ independent
+(b) In two dimensions the Riemann tensor has $n^2(n^2-1)/12 = 1$ independent
 component, so it suffices to compute one. From~\eqref{eq:riemann} with
 $(\rho,\sigma,\mu,\nu) = (r,\phi,r,\phi)$:
 \[
@@ -96,7 +96,7 @@ $(\rho,\sigma,\mu,\nu) = (r,\phi,r,\phi)$:
 using $\Gamma^r_{\ r\lambda} = 0$ for both values of $\lambda$ and only $\lambda = \phi$ in the
 last term.
 
-\textbf{(c)} The geodesic equation $\ddot x^\mu + \Gamma^\mu_{\ \alpha\beta}\dot x^\alpha\dot x^\beta = 0$
+(c) The geodesic equation $\ddot x^\mu + \Gamma^\mu_{\ \alpha\beta}\dot x^\alpha\dot x^\beta = 0$
 gives $\ddot r + \Gamma^r_{\ \phi\phi}\dot\phi^2 = \ddot r - r\dot\phi^2$ and
 $\ddot\phi + (\Gamma^\phi_{\ r\phi} + \Gamma^\phi_{\ \phi r})\dot r\dot\phi = \ddot\phi + \tfrac{2}{r}\dot r\dot\phi$.
 For the straight line $x = a + b\lambda$, $y = c + d\lambda$, the
@@ -112,21 +112,21 @@ $r\ddot r = r^2\dot\phi^2$, i.e.\ $\ddot r - r\dot\phi^2 = 0$.
 % ----- Exercise 1.3 -----
 \subsection*{Exercise~\ref{ex:ricci_sphere}: Curvature of the 2-Sphere}
 
-\textbf{(a)} From~\eqref{eq:riemann},
+(a) From~\eqref{eq:riemann},
 $R^\theta_{\ \phi\theta\phi} = \sin^2\theta$.
 
-\textbf{(b)} The Ricci tensor components are $R_{\theta\theta} = R^\lambda_{\ \theta\lambda\theta}
+(b) The Ricci tensor components are $R_{\theta\theta} = R^\lambda_{\ \theta\lambda\theta}
 = R^\phi_{\ \theta\phi\theta} = 1$ and
 $R_{\phi\phi} = R^\theta_{\ \phi\theta\phi} = \sin^2\theta$.
 
-\textbf{(c)} The Ricci scalar is
+(c) The Ricci scalar is
 $R = g^{\theta\theta}R_{\theta\theta} + g^{\phi\phi}R_{\phi\phi}
 = \frac{1}{R^2}(1) + \frac{1}{R^2\sin^2\theta}(\sin^2\theta)
 = \frac{2}{R^2}$.
 This is constant and positive: the sphere has uniform positive curvature.
 
 \begin{derivation}[The Riemann and Ricci components explicitly]
-\textbf{(a)} With $(\rho,\sigma,\mu,\nu) = (\theta,\phi,\theta,\phi)$ in~\eqref{eq:riemann}:
+(a) With $(\rho,\sigma,\mu,\nu) = (\theta,\phi,\theta,\phi)$ in~\eqref{eq:riemann}:
 \[
     R^\theta_{\ \phi\theta\phi}
     = \partial_\theta\Gamma^\theta_{\ \phi\phi} - \partial_\phi\Gamma^\theta_{\ \theta\phi}
@@ -140,7 +140,7 @@ $\Gamma^\theta_{\ \phi\phi}\Gamma^\phi_{\ \theta\phi} = (-\sin\theta\cos\theta)\
 The first term is $\partial_\theta(-\sin\theta\cos\theta) = -(\cos^2\theta - \sin^2\theta)$. So
 $R^\theta_{\ \phi\theta\phi} = -\cos^2\theta + \sin^2\theta + \cos^2\theta = \sin^2\theta$.
 
-\textbf{(b)} In $R_{\theta\theta} = R^\lambda_{\ \theta\lambda\theta}$ the $\lambda = \theta$ term
+(b) In $R_{\theta\theta} = R^\lambda_{\ \theta\lambda\theta}$ the $\lambda = \theta$ term
 is $R^\theta_{\ \theta\theta\theta} = 0$ (antisymmetric in the last two indices), leaving
 $R^\phi_{\ \theta\phi\theta} = \partial_\phi\Gamma^\phi_{\ \theta\theta} - \partial_\theta\Gamma^\phi_{\ \phi\theta}
 + \Gamma^\phi_{\ \phi\lambda}\Gamma^\lambda_{\ \theta\theta} - \Gamma^\phi_{\ \theta\lambda}\Gamma^\lambda_{\ \phi\theta}

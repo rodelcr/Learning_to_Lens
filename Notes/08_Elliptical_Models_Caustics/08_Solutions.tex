@@ -15,7 +15,7 @@ which verifies each answer symbolically and numerically.
 % ----- Exercise 8.1 -----
 \subsection*{Exercise~\ref{ex:sis_shear_crit}: SIS + Shear Critical Curves and Caustics}
 
-\textbf{(a)} Starting from
+(a) Starting from
 $\psiL = \thetaE|\vectheta| + \frac{1}{2}\gamma_{\mathrm{ext}}
 (\theta_1^2 - \theta_2^2)$:
 
@@ -73,7 +73,7 @@ $\theta_{\mathrm{crit}}(\phi)$ rather than a quadratic to solve.
 \end{derivation}
 
 
-\textbf{(b)} Setting $\det\Amat = 0$ in polar coordinates
+(b) Setting $\det\Amat = 0$ in polar coordinates
 ($\theta_1 = \theta\cos\phi$, $\theta_2 = \theta\sin\phi$):
 \begin{equation*}
     1 - \frac{\thetaE}{\theta} - \gamma_{\mathrm{ext}}^2
@@ -90,7 +90,7 @@ $\theta = 1.1/0.99 \approx 1.111''$.  The critical curve is an
 oval, close to an ellipse for small $\gamma_{\mathrm{ext}}$ (deviation
 $\approx 1.5\%$ here), elongated along $\theta_2$. \checkmark
 
-\textbf{(c)} Mapping through the lens equation
+(c) Mapping through the lens equation
 $\beta_i = \theta_i - \alpha_i$ at $\theta = \theta_{\mathrm{crit}}(\phi)$
 and using the result of part~(b):
 \begin{align*}
@@ -120,7 +120,7 @@ opposite side.
 \end{derivation}
 
 
-\textbf{(d)} An astroid with semi-axes $a$ and $b$ encloses an area
+(d) An astroid with semi-axes $a$ and $b$ encloses an area
 $3\pi ab/8$, so
 \begin{equation*}
     A = \frac{3\pi}{8}\,
@@ -150,7 +150,7 @@ reason (before magnification bias) why doubles outnumber quads.
 % ----- Exercise 8.2 -----
 \subsection*{Exercise~\ref{ex:sie_caustic}: SIE Tangential Caustic}
 
-\textbf{(a)} The SIE deflection angle components are:
+(a) The SIE deflection angle components are:
 \begin{align*}
     \alpha_1 &= \frac{\thetaE\sqrt{q}}{\sqrt{1-q^2}}\,
     \arctan\!\left(\frac{\theta_1\sqrt{1-q^2}}
@@ -162,7 +162,7 @@ reason (before magnification bias) why doubles outnumber quads.
 For $q = 0.7$: $\sqrt{1-q^2} = \sqrt{0.51} \approx 0.714$,
 $\sqrt{q} \approx 0.837$.
 
-\textbf{(b)} The critical curve and caustic are computed numerically
+(b) The critical curve and caustic are computed numerically
 by evaluating $\det\Amat$ on a fine grid (or parametrically) and
 mapping the critical curve through the lens equation.  The critical
 curve is the ellipse $q^2\theta_1^2 + \theta_2^2 = q\thetaE^2$, elongated \emph{along} the mass major axis $\theta_1$
@@ -190,7 +190,7 @@ the fold segments in between.
 \end{derivation}
 
 
-\textbf{(c)} The caustic area for $q = 0.7$ is approximately
+(c) The caustic area for $q = 0.7$ is approximately
 $0.066\,\mathrm{arcsec}^2$.  This is less than half the area of the
 SIS + shear astroid with an ``equivalent'' shear
 $\gamma_{\mathrm{ext}} = (1-q)/(1+q) \approx 0.176$, which by
@@ -218,7 +218,7 @@ curve, which is why the two can partly trade off in a fit.
 % ----- Exercise 8.3 -----
 \subsection*{Exercise~\ref{ex:fold_magnification}: Fold Magnification Scaling}
 
-\textbf{(a)} Near a fold caustic, we align coordinates so that the
+(a) Near a fold caustic, we align coordinates so that the
 fold is along the $\theta_\parallel$ direction and the critical
 curve crosses at $\theta_\perp = 0$.  The lens mapping perpendicular
 to the fold takes the form:
@@ -249,7 +249,7 @@ chapter (\S\ref{sec:fold_cusp}).
 \end{annotation}
 
 
-\textbf{(b)} The Jacobian of this simplified mapping is:
+(b) The Jacobian of this simplified mapping is:
 \begin{equation*}
     \frac{d\beta_\perp}{d\theta_\perp} = 2a\,\theta_\perp \,.
 \end{equation*}
@@ -263,7 +263,7 @@ Therefore $|\mu| \propto 1/\sqrt{\beta_\perp}$, which is
 $1/\sqrt{d_\perp}$ where $d_\perp$ is the distance from the
 caustic. \checkmark
 
-\textbf{(c)} The two images are at
+(c) The two images are at
 $\theta_\perp = +\sqrt{\beta_\perp/a}$ and
 $\theta_\perp = -\sqrt{\beta_\perp/a}$.  The sign of the Jacobian
 determinant is:
@@ -289,7 +289,7 @@ signature of small-scale structure (Chapter~\ref{ch:galaxy_lensing},
 % ----- Exercise 8.4 -----
 \subsection*{Exercise~\ref{ex:sie_images}: SIE Image Positions}
 
-\textbf{(a)} For $\vecbeta = (0.1, 0.2)''$ with $\thetaE = 1''$,
+(a) For $\vecbeta = (0.1, 0.2)''$ with $\thetaE = 1''$,
 $q = 0.8$: The tangential caustic of this SIE has cusps at
 $|\beta_1| \approx 0.159''$ and $|\beta_2| \approx 0.139''$.  The
 source has $\beta_2 = 0.2'' > 0.139''$, the largest $|\beta_2|$
@@ -303,7 +303,7 @@ because the diamond is not round; the caustic's extent along each axis
 \end{annotation}
 
 
-\textbf{(b)} Solving the lens equation numerically (see
+(b) Solving the lens equation numerically (see
 \texttt{problems\_08.wl}), two bright images are found: image A at
 $\vectheta_A \approx (0.36, 1.20)''$ with $\mu_A \approx +3.67$, and
 image B at $\vectheta_B \approx (-0.56, -0.55)''$ with
@@ -318,7 +318,7 @@ inside it.
 \end{annotation}
 
 
-\textbf{(c)} The magnifications are computed from
+(c) The magnifications are computed from
 $\mu = 1/\det\Amat$ at each image position: $\mu_A > 0$ (Type~I,
 positive parity) and $\mu_B < 0$ (Type~II, negative parity).  This
 gives the values quoted in~(b), $\mu_A \approx +3.67$ and
@@ -336,7 +336,7 @@ No numerical derivatives are needed.
 \end{derivation}
 
 
-\textbf{(d)} For the singular SIE the central image is swallowed
+(d) For the singular SIE the central image is swallowed
 by the singularity, so only $\mu_A$ and $\mu_B$ are observable.  In
 this example $\mu_A + \mu_B = 3.67 - 3.82 = -0.15$, small compared
 with the individual $|\mu| \approx 3.7$.  For comparison the SIS
@@ -350,7 +350,7 @@ the central image. \checkmark
 % ----- Exercise 8.5 -----
 \subsection*{Exercise~\ref{ex:burke_verification}: Burke's Odd-Number Theorem for the SIE}
 
-\textbf{(a)} Source at $\vecbeta = (0.5, 0.0)''$ (outside tangential
+(a) Source at $\vecbeta = (0.5, 0.0)''$ (outside tangential
 caustic): Two images are found numerically.  For the singular SIE,
 the central image is formally at the singularity and has zero flux.
 In the distributional sense, there are 2 observable images (even
@@ -366,12 +366,12 @@ replaced by the radial caustic, and crossing it inward creates the pair
 \end{annotation}
 
 
-\textbf{(b)} Source at $\vecbeta = (0.05, 0.05)''$ (inside tangential
+(b) Source at $\vecbeta = (0.05, 0.05)''$ (inside tangential
 caustic): Four bright images are found.  Again, for the singular SIE,
 the central image is lost at the singularity, giving 4 (even).  For
 a non-singular version, 5 images (odd). \checkmark
 
-\textbf{(c)} For the quad case: 2 Type~I images and 2 Type~II images
+(c) For the quad case: 2 Type~I images and 2 Type~II images
 (among the 4 bright images).  Adding the central Type~III image
 (for the non-singular case): 3 positive-parity images (2 Type~I +
 1 Type~III) and 2 negative-parity images (2 Type~II).  The count
@@ -387,7 +387,7 @@ has a singularity.
 \end{annotation}
 
 
-\textbf{(d)} The SIE is singular at the origin, which means the lens
+(d) The SIE is singular at the origin, which means the lens
 potential diverges and the central image is infinitely demagnified
 (effectively ``swallowed'' by the singularity).  Burke's theorem
 strictly requires a smooth, non-singular lens.  For the SIE, the

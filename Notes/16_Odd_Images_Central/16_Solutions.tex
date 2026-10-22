@@ -15,7 +15,7 @@ which verifies each answer symbolically and numerically.
 % ----- Exercise 16.1 -----
 \subsection*{Exercise~\ref{ex:oi_gradient_hessian}: Fermat Gradient and Hessian}
 
-\textbf{(a)} The geometric term of $\tau$ has gradient
+(a) The geometric term of $\tau$ has gradient
 $\vectheta-\vecbeta$ and the potential term contributes
 $-\nabla\psiL=-\vecalpha$, so
 \[
@@ -25,7 +25,7 @@ and $\nabla_{\vectheta}\tau=0$ is exactly $\vecbeta=\vectheta-\vecalpha$.
 Solving $\nabla\tau=0$ for the source returns
 $\vecbeta=\vectheta-\nabla\psiL$ identically.
 
-\textbf{(b)} Differentiating once more, the geometric term gives the
+(b) Differentiating once more, the geometric term gives the
 identity and the potential term $-\partial_a\partial_b\psiL$:
 \[
   \nabla\nabla\tau = \mathbb{I}-\nabla\nabla\psiL
@@ -34,7 +34,7 @@ identity and the potential term $-\partial_a\partial_b\psiL$:
 \]
 and $\operatorname{tr}\Amat = 2-\nabla^2\psiL = 2(1-\kappab)$.
 
-\textbf{(c)} In the eigenbasis $\Amat=\operatorname{diag}(\lambda_-,\lambda_+)$
+(c) In the eigenbasis $\Amat=\operatorname{diag}(\lambda_-,\lambda_+)$
 with $\lambda_\pm=1-\kappab\pm|\gammaL|$, so
 $\det\Amat=\lambda_+\lambda_-$ and $\operatorname{tr}\Amat=\lambda_++\lambda_-$.
 Two real numbers are both positive iff their product and sum are
@@ -82,7 +82,7 @@ to $+1$.
 % ----- Exercise 16.3 -----
 \subsection*{Exercise~\ref{ex:oi_nis_central}: The NIS Central Image}
 
-\textbf{(a)} From eq.~\eqref{eq:oi_nis},
+(a) From eq.~\eqref{eq:oi_nis},
 $\alpha(\theta)=\thetaE\theta/(\sqrt{\theta^2+\theta_c^2}+\theta_c)
 =\tfrac{\thetaE}{2\theta_c}\,\theta+\mathcal{O}(\theta^3)$, so
 $\alpha/\theta\to\kappab_0$ and $\dd\alpha/\dd\theta\to\kappab_0$ as
@@ -91,7 +91,7 @@ eq.~\eqref{eq:oi_lambdas}, $\lambda_t(0)=\lambda_r(0)=1-\kappab_0$.  Both
 are negative iff $\kappab_0>1$, i.e.\ iff $0<\theta_c<\thetaE/2$; then
 the centre (an image for $\ysrc=0$) is a maximum of $\tau$.
 
-\textbf{(b)}
+(b)
 \[
   \mu_c = \frac{1}{\lambda_t(0)\lambda_r(0)} = \frac{1}{(1-\thetaE/2\theta_c)^2}
         = \frac{4\theta_c^2}{(\thetaE-2\theta_c)^2}
@@ -100,7 +100,7 @@ the centre (an image for $\ysrc=0$) is a maximum of $\tau$.
 For $\thetaE=1$: $\mu_c=1/16=0.0625$ at $\theta_c=0.1$ and
 $\mu_c=1/2401=4.16\times10^{-4}$ at $\theta_c=0.01$.
 
-\textbf{(c)} Keeping the linear term of the lens map,
+(c) Keeping the linear term of the lens map,
 $\ysrc\simeq(1-\kappab_0)\,\theta$, so the central image lies at
 $\theta\simeq\ysrc/(1-\kappab_0)=-\ysrc/(\kappab_0-1)$: on the side of
 the lens opposite the source.  For $\theta_c=0.1\,\thetaE$
@@ -108,7 +108,7 @@ the lens opposite the source.  For $\theta_c=0.1\,\thetaE$
 $\theta\simeq-0.0025\,\thetaE$; the exact root of
 eq.~\eqref{eq:oi_nis_cubic} agrees to better than $2\times10^{-6}\,\thetaE$.
 
-\textbf{(d)} As $\theta_c\to0$, $\alpha(\theta)\to\thetaE$ for every
+(d) As $\theta_c\to0$, $\alpha(\theta)\to\thetaE$ for every
 $\theta>0$: the SIS.  Then $\mu_c\to0$, and the SIS magnification along
 the far side, $\mu=1/(1-\thetaE/|\theta|)$ (with $\lambda_r=1$), tends to
 zero as $\theta\to0$.  The would-be central image has been pushed into
@@ -119,14 +119,14 @@ not three.
 % ----- Exercise 16.4 -----
 \subsection*{Exercise~\ref{ex:oi_puncture}: Point Masses Change the Parity of the Count}
 
-\textbf{(a)} On a circle of radius $\epsilon$ around a point mass,
+(a) On a circle of radius $\epsilon$ around a point mass,
 $\nabla\tau = \vectheta-\vecbeta-\vecalpha_{\rm smooth}-\thetaBH^2\hat{\vectheta}/\epsilon$.
 As $\epsilon\to0$ the last term dominates every other (they stay
 finite), so $\nabla\tau$ points radially inward all the way round: it
 winds once, index $+1$, independent of $\vecbeta$.  Numerically, the
 winding is $+1$ for $\ysrc=0.1,\,0.5,\,2,\,5\;\thetaBH$.
 
-\textbf{(b)} Draw a large circle (winding $+1$) and excise a small disc
+(b) Draw a large circle (winding $+1$) and excise a small disc
 around each point mass.  The winding around the large circle equals the
 sum of the image indices plus the indices of the $g$ punctures:
 $n_+-n_-+g=1$, which is eq.~\eqref{eq:oi_index_pm}.  Then
@@ -134,7 +134,7 @@ $N=n_++n_-=2n_-+1-g$.  Adding one point mass changes $1-g$ by one, so
 it flips the parity of $N$; and $N+g=2n_-+1$ is always odd.  Counting
 each puncture as a phantom image restores Burke's odd total.
 
-\textbf{(c)} For $\theta_c=0.2\,\thetaE$ and
+(c) For $\theta_c=0.2\,\thetaE$ and
 $\thetaBH^2=0.3\,\theta_{\bullet,\rm crit}^2$: at $\ysrc=0.1\,\thetaE$ the
 NIS alone has 3 images and the NIS with the black hole has 2; at
 $\ysrc=0.2\,\thetaE$ the counts are 3 and 4.  Both changes are odd
@@ -147,7 +147,7 @@ black-hole saddle has been added.
 % ----- Exercise 16.5 -----
 \subsection*{Exercise~\ref{ex:oi_sis_tip}: The Tip of the SIS}
 
-\textbf{(a)} On a circle of radius $\epsilon\to0$,
+(a) On a circle of radius $\epsilon\to0$,
 $\nabla\tau\to-\vecbeta-\thetaE\hat{\vectheta}$.  As $\hat{\vectheta}$
 goes once around the unit circle, the point $-\thetaE\hat{\vectheta}$
 traces a circle of radius $\thetaE$ about the origin, and the field is
@@ -156,7 +156,7 @@ shifted circle encloses the origin, i.e.\ iff $|\vecbeta|<\thetaE$;
 otherwise its winding is zero.  Numerically: winding $1$ for
 $\ysrc=0.2,\,0.5,\,0.9\,\thetaE$ and $0$ for $\ysrc=1.1,\,1.5,\,3\,\thetaE$.
 
-\textbf{(b)} For $|\vecbeta|<\thetaE$ the SIS has two images,
+(b) For $|\vecbeta|<\thetaE$ the SIS has two images,
 $\theta_+=\ysrc+\thetaE$ with $\mu_+>0$ and $\theta_-=\ysrc-\thetaE$ with
 $\mu_-<0$: image indices sum to $0$, plus tip index $1$, total $1$.
 For $|\vecbeta|>\thetaE$ there is one image, $\mu>0$: sum $1$, plus tip
@@ -170,7 +170,7 @@ is the singular tip, which carries index but no flux.
 % ----- Exercise 16.6 -----
 \subsection*{Exercise~\ref{ex:oi_critical_mass}: The Critical Black-Hole Mass}
 
-\textbf{(a)} Expanding $(\thetaE\theta_c^2/2)^{2/3}=2^{-2/3}\thetaE^{2/3}\theta_c^{4/3}$,
+(a) Expanding $(\thetaE\theta_c^2/2)^{2/3}=2^{-2/3}\thetaE^{2/3}\theta_c^{4/3}$,
 \[
   \theta_{\bullet,\rm crit}^2 = \thetaE\theta_c - 3\cdot2^{-2/3}\,\thetaE^{2/3}\theta_c^{4/3} + \theta_c^2 ,
 \]
@@ -180,11 +180,11 @@ tends to $1$ as $\theta_c/\thetaE\to0$.  The approach is slow: the
 leading correction is $-3\cdot2^{-2/3}(\theta_c/\thetaE)^{1/3}$, which
 is $-0.70$ at $\theta_c=0.05\,\thetaE$.
 
-\textbf{(b)} For $\theta_c=0.05\,\thetaE$:
+(b) For $\theta_c=0.05\,\thetaE$:
 $\theta_{\bullet,\rm crit}^2=0.01769\,\thetaE^2$, so
 $\theta_{\bullet,\rm crit}=0.133\,\thetaE$.
 
-\textbf{(c)} The projected mass inside $\theta$ scales as
+(c) The projected mass inside $\theta$ scales as
 $\theta\,\alpha(\theta)$ for any axisymmetric lens, and as
 $\thetaBH^2$ for a point mass, with the same proportionality constant.
 For $\theta_c=0.1\,\thetaE$, $\alpha(\thetaE)=(\sqrt{1.01}-0.1)\,\thetaE=0.905\,\thetaE$,
@@ -196,7 +196,7 @@ mass inside the Einstein radius erases every central image of this lens.
 % ----- Exercise 16.7 -----
 \subsection*{Exercise~\ref{ex:oi_powerlaw}: A Shallow Cusp}
 
-\textbf{(a)} With $\gp=1.5$ and $\thetaE=1$, $\alpha=\operatorname{sgn}(\theta)|\theta|^{1/2}$.
+(a) With $\gp=1.5$ and $\thetaE=1$, $\alpha=\operatorname{sgn}(\theta)|\theta|^{1/2}$.
 On the far side, $\theta=-x=-w^2$ ($w>0$) gives $\ysrc=w-w^2$, with roots
 \[
   w = \frac{1\mp\sqrt{1-4\ysrc}}{2},
@@ -207,7 +207,7 @@ $\theta=w^2$ gives $\ysrc=w^2-w$, which has exactly one positive root.
 So a source at $\ysrc<\thetaE/4$ has three images: an odd number, as
 the continuity of $\alpha$ guarantees.
 
-\textbf{(b)} The central image is the smaller far-side root,
+(b) The central image is the smaller far-side root,
 $w_c=(1-\sqrt{1-4\ysrc})/2$.  With $\lambda_t=1-1/w$ and
 $\lambda_r=1-1/(2w)$,
 \[
@@ -218,7 +218,7 @@ eq.~\eqref{eq:oi_mu_powerlaw} gives $2\ysrc^2=0.02$.  The leading-order
 law underestimates by a factor $1.85$, because the corrections are of
 relative order $w_c\simeq\ysrc$.
 
-\textbf{(c)} For $\gp=1.8$, $\alpha=|\theta|^{0.2}$ on each side, and
+(c) For $\gp=1.8$, $\alpha=|\theta|^{0.2}$ on each side, and
 the far-side equation $x^{0.2}-x=0.1$ is solved numerically.  The
 central image has $\mu_c=5.007\times10^{-8}$, which agrees with
 the leading-order value $5\times10^{-8}$ to $0.2\%$: here the correction

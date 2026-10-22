@@ -15,7 +15,7 @@ which verifies each answer symbolically and numerically.
 % ----- Exercise 6.1 -----
 \subsection*{Exercise~\ref{ex:fermat_lens_eq}: Deriving the Lens Equation from Fermat's Principle}
 
-\textbf{(a)} The Fermat potential is
+(a) The Fermat potential is
 $\tau(\vectheta, \vecbeta) = \half|\vectheta - \vecbeta|^2
 - \psiL(\vectheta)$.  Taking the gradient with respect to $\vectheta$:
 \begin{equation*}
@@ -37,7 +37,7 @@ which is the component form of $\vecbeta = \vectheta-\vectheta/|\vectheta|^2$
 (\texttt{problems\_06.wl}, Exercise 6.1 block and A3a).
 \end{derivation}
 
-\textbf{(b)} Setting $\nabla_{\vectheta}\,\tau = 0$:
+(b) Setting $\nabla_{\vectheta}\,\tau = 0$:
 \begin{equation*}
     (\vectheta - \vecbeta) - \nabla\psiL(\vectheta) = 0
     \qquad \Longrightarrow \qquad
@@ -47,7 +47,7 @@ Since $\nabla\psiL(\vectheta) = \vecalpha(\vectheta)$ (the reduced
 deflection angle), this is the lens equation
 $\vecbeta = \vectheta - \vecalpha(\vectheta)$.  \hfill $\square$
 
-\textbf{(c)} Fermat's principle states that light follows
+(c) Fermat's principle states that light follows
 paths of stationary travel time.  Among all possible positions
 $\vectheta$ in the lens plane through which a photon could pass, only
 those for which the arrival time is stationary (not changing to first
@@ -70,7 +70,7 @@ consistent with this picture.
 % ----- Exercise 6.2 -----
 \subsection*{Exercise~\ref{ex:point_mass_arrival}: Arrival Times for a Point Mass Lens}
 
-\textbf{(a)} With $\thetaE = 1''$ and $\beta = 0.5''$, the image
+(a) With $\thetaE = 1''$ and $\beta = 0.5''$, the image
 positions are:
 \begin{align*}
     \theta_+ &= \frac{0.5 + \sqrt{0.25 + 4}}{2}
@@ -78,7 +78,7 @@ positions are:
     \theta_- &= \frac{0.5 - 2.0616}{2} = -0.7808'' \,.
 \end{align*}
 
-\textbf{(b)} In units of $\thetaE$ ($x = \theta/\thetaE$, $y = 0.5$):
+(b) In units of $\thetaE$ ($x = \theta/\thetaE$, $y = 0.5$):
 $x_+ = 1.2808$, $x_- = -0.7808$.
 \begin{align*}
     \tau(x_+) &= \half(1.2808 - 0.5)^2 - \ln(1.2808) \\
@@ -89,7 +89,7 @@ $x_+ = 1.2808$, $x_- = -0.7808$.
     = 0.8202 + 0.2475 = 1.0677 \,.
 \end{align*}
 
-\textbf{(c)} The dimensionless time delay is:
+(c) The dimensionless time delay is:
 \begin{equation*}
     \Delta\tau = \tau(x_-) - \tau(x_+) = 1.0677 - 0.0573 \approx 1.0103 \,.
 \end{equation*}
@@ -111,7 +111,7 @@ $\ln x_+ = \ln 1.28078 = 0.2475$, so $2\ln x_+ = 0.4949$,
 $\tau(x_+) = 0.0573$, and $\Delta\tau = 0.5154+0.4949 = 1.0103$ (A17a,b).
 \end{derivation}
 
-\textbf{(d)} For $M = 10^{12}\,\Msun$, $z_d = 0.3$:
+(d) For $M = 10^{12}\,\Msun$, $z_d = 0.3$:
 \begin{align*}
     \RS &= \frac{2\Gnewton M}{\speedoflight^2}
     = \frac{2 \times 6.674 \times 10^{-11} \times
@@ -141,7 +141,7 @@ days.
 % ----- Exercise 6.3 -----
 \subsection*{Exercise~\ref{ex:typeI_first}: Type~I Image Arrives First}
 
-\textbf{(a)} For a point mass lens, $\tau(x) = \half(x - y)^2 - \ln|x|$.
+(a) For a point mass lens, $\tau(x) = \half(x - y)^2 - \ln|x|$.
 The image at $x_+$ is the primary image (minimum of $\tau$), and
 $x_-$ is the secondary image (saddle point).  Since $\tau\to+\infty$
 both as $|\vectheta|\to\infty$ and as $\vectheta\to0$, $\tau$ has a global
@@ -163,7 +163,7 @@ route: $\Delta\tau(0) = 0$ and $d\Delta\tau/dy = \sqrt{y^2+4}>0$
 (\texttt{problems\_06.wl} A6h,i), so $\Delta\tau>0$ for every $y>0$.
 \end{annotation}
 
-\textbf{(b)} Numerical verification:
+(b) Numerical verification:
 
 \begin{center}
 \begin{tabular}{rcccc}
@@ -182,7 +182,7 @@ In all cases $\tau(x_+) < \tau(x_-)$.  \checkmark\ (An earlier version of
 this table had wrong entries in the $y=0.1$, $1$ and $2$ rows; the values
 above follow from $\tau(x)=\half(x-y)^2-\ln|x|$ at $x_\pm$.)
 
-\textbf{(c)} Since $t(\vectheta) \propto \tau(\vectheta)$ (with a
+(c) Since $t(\vectheta) \propto \tau(\vectheta)$ (with a
 positive proportionality constant), a smaller $\tau$ means a smaller
 arrival time.  Therefore the Type~I image (minimum of $\tau$) arrives
 before the Type~II image (saddle point of $\tau$).  The time delay
@@ -201,7 +201,7 @@ $\tau(x_+)<0$; the sign of $\tau$ has no meaning, only differences do.
 % ----- Exercise 6.4 -----
 \subsection*{Exercise~\ref{ex:H0_from_time_delay}: Measuring $\Hubble$ from Time Delays}
 
-\textbf{(a)} From the time delay formula:
+(a) From the time delay formula:
 \begin{equation*}
     \Delta t = \frac{(1 + z_d)}{\speedoflight}\,
     \frac{\Dd\,\Ds}{\Dds}\, (\tau_1 - \tau_2) \,.
@@ -230,7 +230,7 @@ redshifts (A15), close to $1.3\times1374 = 1786$\,Mpc.  The $\approx5\%$
 difference is what moves $\Hubble$ from 70 to $\approx73$.
 \end{annotation}
 
-\textbf{(b)} For a flat $\Lambda$CDM cosmology with $\Omegam = 0.3$, the
+(b) For a flat $\Lambda$CDM cosmology with $\Omegam = 0.3$, the
 distances scale as $D \propto \speedoflight / \Hubble$.  Writing the
 dimensionless comoving distance $\chi(z) = \int_0^z dz'/E(z')$ with
 $E(z) = \sqrt{\Omegam(1+z)^3 + \OmegaL}$, numerical integration gives
@@ -265,7 +265,7 @@ $\Dds\neq\Ds-\Dd$: in units of $\speedoflight/\Hubble$, $\Dd = 0.215$,
 $\Ds = 0.386$, $\Dds = 0.246$, whereas $\Ds-\Dd = 0.171$.
 \end{annotation}
 
-\textbf{(c)} Combining:
+(c) Combining:
 \begin{equation*}
     \Hubble = \frac{\speedoflight \times 0.336}
     {\Dd\,\Ds/\Dds}
@@ -311,14 +311,14 @@ The two stationary points are the image positions:
     \text{(saddle point of $\tau$)} \,.
 \end{align*}
 
-\textbf{(c)} The contour plot shows nested contours around the minimum
+(c) The contour plot shows nested contours around the minimum
 at $(\theta_+, 0) = (1.1612, 0)$, and a saddle pattern at
 $(\theta_-, 0) = (-0.8612, 0)$.  The Einstein ring
 $|\vectheta| = \thetaE = 1$ passes between the two stationary points,
 as expected (the primary image is outside $\thetaE$, the secondary
 inside).
 
-\textbf{(d)} These match the analytical predictions from the lens
+(d) These match the analytical predictions from the lens
 equation $\theta_\pm = (\beta \pm \sqrt{\beta^2 + 4\thetaE^2})/2$
 exactly.  \checkmark
 

@@ -15,7 +15,7 @@ which verifies each answer symbolically and numerically.
 % ----- Exercise 7.1 -----
 \subsection*{Exercise~\ref{ex:sis_deflection_derivation}: Derivation of the SIS Deflection Angle}
 
-\textbf{(a)} Starting from $\rho(r) = \sigma_v^2 / (2\pi\Gnewton r^2)$
+(a) Starting from $\rho(r) = \sigma_v^2 / (2\pi\Gnewton r^2)$
 with $r = \sqrt{\xi^2 + z^2}$:
 \begin{align*}
     \Sigma(\xi) &= \int_{-\infty}^{+\infty}
@@ -49,7 +49,7 @@ integral.  The same argument gives $M(\xi)\propto\sigma_v^2\xi/\Gnewton$ and a
 dimensionless $\alphahat\propto\sigma_v^2/\speedoflight^2$.
 \end{annotation}
 
-\textbf{(b)} The enclosed projected mass:
+(b) The enclosed projected mass:
 \begin{equation*}
     M(\xi) = 2\pi \int_0^\xi \frac{\sigma_v^2}{2\Gnewton\,\xi'}\,
     \xi'\, d\xi'
@@ -57,7 +57,7 @@ dimensionless $\alphahat\propto\sigma_v^2/\speedoflight^2$.
     = \frac{\pi\sigma_v^2\,\xi}{\Gnewton} \,.
 \end{equation*}
 
-\textbf{(c)} The physical deflection angle:
+(c) The physical deflection angle:
 \begin{equation*}
     \alphahat(\xi) = \frac{4\Gnewton M(\xi)}{\speedoflight^2\,\xi}
     = \frac{4\Gnewton}{\speedoflight^2\,\xi}\,
@@ -66,7 +66,7 @@ dimensionless $\alphahat\propto\sigma_v^2/\speedoflight^2$.
 \end{equation*}
 This is independent of $\xi$. \checkmark
 
-\textbf{(d)} The reduced deflection angle is
+(d) The reduced deflection angle is
 $\alpha = (\Dds/\Ds)\,\alphahat = 4\pi(\sigma_v/\speedoflight)^2\,
 \Dds/\Ds$.  Setting $\alpha = \thetaE$ (the constant deflection equals
 the Einstein radius):
@@ -86,7 +86,7 @@ definition (main-text annotation on eq.~\eqref{eq:alpha_mean_kappa}).
 % ----- Exercise 7.2 -----
 \subsection*{Exercise~\ref{ex:sis_kappa_equals_gamma}: SIS --- $\kappab = |\gammaL|$ Everywhere}
 
-\textbf{(a)} The mean convergence within $\theta$:
+(a) The mean convergence within $\theta$:
 \begin{equation*}
     \bar{\kappa}(\theta) = \frac{2}{\theta^2}
     \int_0^\theta \frac{\thetaE}{2\theta'}\, \theta'\, d\theta'
@@ -94,7 +94,7 @@ definition (main-text annotation on eq.~\eqref{eq:alpha_mean_kappa}).
     = \frac{\thetaE}{\theta} \,.
 \end{equation*}
 
-\textbf{(b)} The shear magnitude:
+(b) The shear magnitude:
 \begin{equation*}
     |\gammaL(\theta)| = \bar{\kappa}(\theta) - \kappab(\theta)
     = \frac{\thetaE}{\theta} - \frac{\thetaE}{2\theta}
@@ -102,7 +102,7 @@ definition (main-text annotation on eq.~\eqref{eq:alpha_mean_kappa}).
     = \kappab(\theta) \,. \quad \checkmark
 \end{equation*}
 
-\textbf{(c)} For the point mass, all the mass is concentrated at the
+(c) For the point mass, all the mass is concentrated at the
 origin (a delta function), so $\kappab = 0$ everywhere except at
 $\theta = 0$.  The shear $|\gammaL| = \thetaE^2/\theta^2 \neq 0$
 arises from the tidal field of the central point mass.  For the SIS,
@@ -111,7 +111,7 @@ there is a nonzero convergence at every point.  The $1/r^2$ density
 profile of the SIS is precisely the profile for which the local
 convergence equals the shear at every radius.
 
-\textbf{(d)} For $\kappab(\theta) = A\,\theta^{-n}$ with $A$ constant:
+(d) For $\kappab(\theta) = A\,\theta^{-n}$ with $A$ constant:
 \begin{equation*}
     \bar{\kappa}(\theta) = \frac{2}{\theta^2}
     \int_0^\theta A\,\theta'^{-n}\, \theta'\, d\theta'
@@ -151,7 +151,7 @@ convergence/shear half of that analysis.
 % ----- Exercise 7.3 -----
 \subsection*{Exercise~\ref{ex:sis_numerical}: SIS Numerical Example}
 
-\textbf{(a)} With $\sigma_v = 250$~km\,s$^{-1} = 2.5 \times 10^5$~m\,s$^{-1}$:
+(a) With $\sigma_v = 250$~km\,s$^{-1} = 2.5 \times 10^5$~m\,s$^{-1}$:
 \begin{equation*}
     \thetaE = 4\pi\left(\frac{2.5 \times 10^5}{3 \times 10^8}\right)^2
     \times \frac{1055}{1650}
@@ -162,7 +162,7 @@ convergence/shear half of that analysis.
 (This uses the exercise's distances $\Dds = 1055$~Mpc, $\Ds = 1650$~Mpc; an
 earlier version of this solution used $1200/1700$ and got $1.27''$.)
 
-\textbf{(b)} For $\beta = 0.5''$:
+(b) For $\beta = 0.5''$:
 
 (i) Since $\beta = 0.5'' < \thetaE \approx 1.15''$, the source is
 \textit{inside} the caustic. Two images form.
@@ -191,7 +191,7 @@ $\Dds\approx1055$\,Mpc (flat $\Lambda$CDM, $\Hubble = 70$, $\Omegam = 0.3$;
 $\thetaE = 1.15''$ (B6c), the chapter's Example value.  Also $\Ds-\Dd = 730$\,Mpc $\neq\Dds$ (B6b).
 \end{annotation}
 
-\textbf{(c)} Equal absolute magnification requires
+(c) Equal absolute magnification requires
 $|1 + \thetaE/\beta| = |1 - \thetaE/\beta|$.  For $\beta < \thetaE$
 (doubly imaged), $\mu_+ = 1 + \thetaE/\beta > 0$ and
 $|\mu_-| = \thetaE/\beta - 1$.  Setting these equal:
@@ -209,7 +209,7 @@ and positions disagree (Chapter~\ref{ch:elliptical_models} adds shear and
 ellipticity).
 \end{annotation}
 
-\textbf{(d)} The point mass Einstein radius for $M = 10^{12}\,\Msun$
+(d) The point mass Einstein radius for $M = 10^{12}\,\Msun$
 at $z_d = 0.3$, $z_s = 1$ is $\thetaE \approx 2.4''$ (from Chapter~\ref{ch:lens_equation}).
 The SIS Einstein radius depends on $\sigma_v$ rather than total mass.
 For $\sigma_v = 250$~km\,s$^{-1}$, $\thetaE \approx 1.15''$, about half
@@ -235,7 +235,7 @@ $10^{12}\,\Msun$ needs a ring about twice as large.
 % ----- Exercise 7.4 -----
 \subsection*{Exercise~\ref{ex:nis_convergence}: NIS Convergence and SIS Limit}
 
-\textbf{(a)} Using $\kappab(\theta) = \Sigma(\theta)/\Sigmacr$ with
+(a) Using $\kappab(\theta) = \Sigma(\theta)/\Sigmacr$ with
 $\Sigmacr = \speedoflight^2 \Ds / (4\pi\Gnewton \Dd \Dds)$:
 \begin{equation*}
     \kappab(\theta) = \frac{\sigma_v^2}{2\Gnewton\,\Dd\,
@@ -251,12 +251,12 @@ $2\pi\sigma_v^2 \Dds/(\speedoflight^2 \Ds) = \thetaE/2$, and:
     \,. \quad \checkmark
 \end{equation*}
 
-\textbf{(b)} As $\theta_c \to 0$:
+(b) As $\theta_c \to 0$:
 $\sqrt{\theta^2 + \theta_c^2} \to \sqrt{\theta^2} = \theta$ (for
 $\theta > 0$), so $\kappab \to \thetaE/(2\theta)$, the SIS result.
 \checkmark
 
-\textbf{(c)} Multiple images require $\kappab(0) > 1$:
+(c) Multiple images require $\kappab(0) > 1$:
 \begin{equation*}
     \kappab(0) = \frac{\thetaE}{2\theta_c} > 1
     \qquad \Longrightarrow \qquad
@@ -278,7 +278,7 @@ one image for every $\beta\neq0$, so the critical value itself does
 \emph{not} give multiple images, which is why the inequality is strict.
 \end{derivation}
 
-\textbf{(d)} For $\theta_c = 0.1\,\thetaE$:
+(d) For $\theta_c = 0.1\,\thetaE$:
 \begin{align*}
     \kappab(0) &= \frac{\thetaE}{2 \times 0.1\,\thetaE} = 5.0 \,, \\
     \kappab(\thetaE) &= \frac{\thetaE}{2\sqrt{\thetaE^2 + 0.01\,\thetaE^2}}
@@ -296,7 +296,7 @@ $0.427\,\thetaE$ (B10l).  Lensing at $\thetaE$ constrains the enclosed mass, whi
 the core shows up only through central and radial images.
 \end{annotation}
 
-\textbf{(e)} See the plot generated by
+(e) See the plot generated by
 \texttt{problems\_07.wl}. As $\theta_c$ increases, the central
 convergence decreases and the profile flattens in the core region,
 while all profiles converge to the SIS behavior $\kappab = \thetaE/(2\theta)$
@@ -306,7 +306,7 @@ at large $\theta$.
 % ----- Exercise 7.5 -----
 \subsection*{Exercise~\ref{ex:nfw_concentration}: NFW Concentration and Lensing Strength}
 
-\textbf{(a)} The function $f(x)$ has a logarithmic divergence as
+(a) The function $f(x)$ has a logarithmic divergence as
 $x \to 0$ (with $f(x) \simeq \ln(2/x) - 1$), peaks near $x \approx 0.6$
 in terms of the product $x\,f(x)$, and falls off as $f(x) \sim 1/x^2$
 for $x \gg 1$.  (An earlier version gave the small-$x$ form as
@@ -322,7 +322,7 @@ large-$x$ statement
 $f\sim1/x^2$ is right (B11k).
 \end{annotation}
 
-\textbf{(b)} For a cluster at $z_d = 0.3$ with $M_{200} = 10^{15}\,\Msun$
+(b) For a cluster at $z_d = 0.3$ with $M_{200} = 10^{15}\,\Msun$
 and $z_s = 1$: the virial radius is $r_{200} \approx 2.1$~Mpc, so
 $r_s = r_{200}/c$, $\theta_s = r_s/\Dd$.
 \begin{center}
@@ -339,12 +339,12 @@ $c$ & $r_s$ (Mpc) & $\theta_s$ (arcsec) & $\kappa_s$ \\
 (Exact values depend on the cosmological parameters used; see
 \texttt{problems\_07.wl}.)
 
-\textbf{(c)} See the plot generated by \texttt{problems\_07.wl}.
+(c) See the plot generated by \texttt{problems\_07.wl}.
 Higher concentration pushes the $\kappab = 1$ crossing to larger
 angular radii, increasing the Einstein radius and the strong-lensing
 cross-section.
 
-\textbf{(d)} (i)~The Einstein radius increases with $c$ because
+(d) (i)~The Einstein radius increases with $c$ because
 $\kappa_s$ increases faster than $\theta_s$ decreases.
 (ii)~The region where $\kappab > 1$ grows with $c$.
 (iii)~The lensing cross-section for giant arcs (proportional to the

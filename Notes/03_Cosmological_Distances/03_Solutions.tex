@@ -15,7 +15,7 @@ which verifies each answer symbolically and numerically.
 % ----- Exercise 3.1 -----
 \subsection*{Exercise~\ref{ex:friedmann_derivation}: Deriving the Friedmann Equations}
 
-\textbf{(a)} The nonvanishing Christoffel symbols of the RW metric
+(a) The nonvanishing Christoffel symbols of the RW metric
 $ds^2 = -\speedoflight^2 dt^2 + a^2(t)[dr^2/(1-kr^2) + r^2 d\Omega^2]$
 are listed in eqs.~\eqref{eq:christoffel_0ij}--\eqref{eq:christoffel_spatial}.
 As an example, $\christoffel{0}{1}{1}$ follows from the diagonal formula:
@@ -26,7 +26,7 @@ As an example, $\christoffel{0}{1}{1}$ follows from the diagonal formula:
     = \frac{a\dot{a}}{\speedoflight^2(1-kr^2)} \,.
 \]
 
-\textbf{(b)} The Ricci tensor components are given in
+(b) The Ricci tensor components are given in
 eqs.~\eqref{eq:R00}--\eqref{eq:R33}.  The computation proceeds by
 computing all Riemann tensor components from the Christoffel symbols,
 contracting to $R_{\mu\nu} = R^\lambda_{\ \mu\lambda\nu}$, and
@@ -76,7 +76,7 @@ done in the derivation box after eq.~\eqref{eq:ricci_scalar_frw}; with
 $x^0 = t$ it equals $-3\ddot a/a$, while $-3\ddot a/(\speedoflight^2 a)$ is the
 $x^0 = \speedoflight t$ component (checks B2a--b).
 \end{derivation}
-\textbf{(c)} The $(0,0)$ component of Einstein's equations
+(c) The $(0,0)$ component of Einstein's equations
 $G_{\mu\nu} + \Lambda g_{\mu\nu} = (8\pi\Gnewton/\speedoflight^4) T_{\mu\nu}$:
 \begin{align*}
     R_{00} - \half \ricciS\, g_{00} + \Lambda g_{00}
@@ -116,7 +116,7 @@ $-(1/\speedoflight^2)(2\ddot a/a + \dot a^2/a^2 + k\speedoflight^2/a^2) + \Lambd
 $8\pi\Gnewton\rho/3 + \Lambda\speedoflight^2/3$ (first Friedmann equation), multiply
 by $-\speedoflight^2/2$ and solve for $\ddot a/a$ (check B3b).
 \end{derivation}
-\textbf{(d)} Differentiate the first Friedmann equation with respect to $t$:
+(d) Differentiate the first Friedmann equation with respect to $t$:
 \[
     2\frac{\dot{a}}{a}\left(\frac{\ddot{a}}{a} - \frac{\dot{a}^2}{a^2}\right)
     = \frac{8\pi\Gnewton}{3}\dot{\rho}
@@ -153,7 +153,7 @@ $\dot\rho = -3(\dot a/a)(\rho + p/\speedoflight^2)$ (check B4).
 % ----- Exercise 3.2 -----
 \subsection*{Exercise~\ref{ex:age_of_universe}: Age of the Universe}
 
-\textbf{(a)} Einstein--de~Sitter ($\Omegam = 1$, $\OmegaL = 0$, $k=0$):
+(a) Einstein--de~Sitter ($\Omegam = 1$, $\OmegaL = 0$, $k=0$):
 $H(z) = \Hubble(1+z)^{3/2}$, so
 \[
     t_0 = \int_0^\infty \frac{dz}{(1+z)H(z)}
@@ -174,7 +174,7 @@ sign flips them back (check B18c).  For EdS, $\int_0^\infty(1+z)^{-5/2}dz = 2/3$
 $\Hubble = 1$~km\,s$^{-1}$\,Mpc$^{-1}$, so $1/\Hubble = 977.8/70 = 13.97$~Gyr and
 $t_0 = \tfrac23\times13.97 = 9.3$~Gyr (check B8b).
 \end{derivation}
-\textbf{(b)} For the concordance cosmology ($\Omegam = 0.3$,
+(b) For the concordance cosmology ($\Omegam = 0.3$,
 $\OmegaL = 0.7$), the integral must be evaluated numerically.
 Using Mathematica:
 \[
@@ -192,7 +192,7 @@ $\Hubble t_0 = \int_0^1 a^{1/2}da/\sqrt{\Omegam + \OmegaL a^3}
 For $(\Omegam,\OmegaL) = (0.3, 0.7)$ this is $0.964$, i.e.\ $13.47$~Gyr,
 identical to the numerical integral (check B18a).
 \end{derivation}
-\textbf{(c)} Open universe ($\Omegam = 0.3$, $\OmegaL = 0$,
+(c) Open universe ($\Omegam = 0.3$, $\OmegaL = 0$,
 $\Omega_k = 0.7$): $H(z) = \Hubble\sqrt{0.3(1+z)^3 + 0.7(1+z)^2}$.
 Numerical integration gives $t_0 \approx 11.3$~Gyr.  The concordance
 cosmology gives a universe that is $\sim 19\%$ older, because the
@@ -211,7 +211,7 @@ $0.96\,t_H$).
 % ----- Exercise 3.3 -----
 \subsection*{Exercise~\ref{ex:DA_turnover}: Angular Diameter Distance Turnover}
 
-\textbf{(a)} The turnover redshifts (where $dD_A/dz = 0$) are:
+(a) The turnover redshifts (where $dD_A/dz = 0$) are:
 \begin{center}
 \begin{tabular}{lcc}
 \toprule
@@ -224,7 +224,7 @@ Open ($\Omegam = 0.3$, $\OmegaL = 0$; $D_M$ with $\sinh$) & $1.90$ & $1583$ \\
 \end{tabular}
 \end{center}
 
-\textbf{(b)} The angular diameter distance $D_A = \chi/(1+z)$ is the ratio
+(b) The angular diameter distance $D_A = \chi/(1+z)$ is the ratio
 of the comoving distance (which increases monotonically with $z$) to
 $(1+z)$ (which also increases).  At low $z$, $\chi$ grows faster than
 $(1+z)$, so $D_A$ increases.  At high $z$, the $(1+z)$ factor dominates,
@@ -233,7 +233,7 @@ were emitted when the universe was much smaller, so the ``angular size
 distance'' shrinks and the object subtends a larger angle than it would
 at an intermediate redshift.
 
-\textbf{(c)} Setting $dD_A/dz = 0$ numerically for the concordance
+(c) Setting $dD_A/dz = 0$ numerically for the concordance
 cosmology gives $z_{\max} \approx 1.61$.
 
 
@@ -261,7 +261,7 @@ the flat-geometry formula applied to an open expansion history.  (The script's
 
 Using the concordance cosmology with $\Hubble = 70$~km\,s$^{-1}$\,Mpc$^{-1}$:
 
-\textbf{(a)}
+(a)
 \begin{align*}
     \Dd &= D_A(z_d = 0.36) = \frac{\chi(0.36)}{1.36}
     \approx \frac{1411}{1.36} \approx \boxed{1038~\text{Mpc}} \\
@@ -271,7 +271,7 @@ Using the concordance cosmology with $\Hubble = 70$~km\,s$^{-1}$\,Mpc$^{-1}$:
     = \frac{4194 - 1411}{2.41} \approx \boxed{1155~\text{Mpc}}
 \end{align*}
 
-\textbf{(b)} $\Ds - \Dd = 1740 - 1038 = 702$~Mpc, but
+(b) $\Ds - \Dd = 1740 - 1038 = 702$~Mpc, but
 $\Dds = 1155$~Mpc, about $1.6$ times larger.  This
 confirms that angular diameter distances do not add linearly.
 
@@ -282,7 +282,7 @@ For a flat universe $\Dds - (\Ds - \Dd) = \Dd(z_s - z_d)/(1+z_s)$ exactly
 $1038 \times 1.05/2.41 = 452$~Mpc, which is $1155 - 702$ to rounding
 (check B23a).
 \end{annotation}
-\textbf{(c)} The critical surface mass density is:
+(c) The critical surface mass density is:
 \[
     \Sigmacr = \frac{\speedoflight^2}{4\pi\Gnewton}
     \frac{\Ds}{\Dd\,\Dds}
@@ -303,7 +303,7 @@ The distance factor is $\Ds/(\Dd\Dds) = 1740/(1038\times1155)
 $\Sigmacr = 1.663\times10^{12}\times1.45\times10^{-3} = 2.4\times10^9\,\Msun\,\text{kpc}^{-2}$
 (check B17b).
 \end{derivation}
-\textbf{(d)} The Einstein radius for $M = 10^{12}\,\Msun$:
+(d) The Einstein radius for $M = 10^{12}\,\Msun$:
 \[
     \thetaE = \sqrt{\frac{4\Gnewton M}{\speedoflight^2}
     \frac{\Dds}{\Dd\Ds}}
@@ -326,7 +326,7 @@ check B19b).
 % ----- Exercise 3.5 -----
 \subsection*{Exercise~\ref{ex:einstein_radius_numerical}: Einstein Radius for a Typical Galaxy Lens}
 
-\textbf{(a)} For $z_d = 0.3$, $z_s = 1.0$:
+(a) For $z_d = 0.3$, $z_s = 1.0$:
 \begin{align*}
     \chi_d &= \int_0^{0.3} \frac{\speedoflight\, dz'}{H(z')}
     \approx 1194~\text{Mpc} \,, \\
@@ -337,7 +337,7 @@ check B19b).
     \Dds &= (\chi_s - \chi_d) / 2.0 \approx 1055~\text{Mpc} \,.
 \end{align*}
 
-\textbf{(b)} The Einstein radius:
+(b) The Einstein radius:
 \[
     \thetaE = \sqrt{\frac{4\Gnewton M}{\speedoflight^2}
     \frac{\Dds}{\Dd\,\Ds}}
@@ -360,7 +360,7 @@ so $\thetaE = 2.85''\sqrt{0.695} = 2.38''$ (check B19f).  The Schwarzschild
 radius quoted, $2.95\times10^{15}$~m $= 0.096$~pc, enters as
 $4\Gnewton M/\speedoflight^2 = 2\RS$ (check B19d).
 \end{derivation}
-\textbf{(c)} Since $\thetaE \propto \sqrt{M}$:
+(c) Since $\thetaE \propto \sqrt{M}$:
 \[
     \thetaE = 2.4'' \times \sqrt{\frac{M}{10^{12}\,\Msun}}
 \]
@@ -369,7 +369,7 @@ For $\thetaE = 10''$: $M = 10^{12} \times (10/2.38)^2 \approx
 This approaches a galaxy-cluster mass, consistent with the
 $\sim 10''$--$30''$ Einstein rings produced by cluster lenses.
 
-\textbf{(d)} At fixed $z_s = 1$ and $M = 10^{12}\,\Msun$, the angular
+(d) At fixed $z_s = 1$ and $M = 10^{12}\,\Msun$, the angular
 Einstein radius $\thetaE$ \emph{decreases monotonically} with $z_d$: it
 diverges as $z_d \to 0$ (then $\Dds/\Ds \to 1$ and
 $\thetaE \propto \Dd^{-1/2} \to \infty$, because the lens is very close) and

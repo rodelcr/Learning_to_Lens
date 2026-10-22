@@ -15,7 +15,7 @@ which verifies each answer symbolically and numerically.
 % ----- Exercise 10.1 -----
 \subsection*{Exercise~\ref{ex:nfw_cluster_einstein}: NFW Cluster Einstein Radius and Enclosed Mass}
 
-\textbf{(a)} First, compute the virial radius from $M_{200}$:
+(a) First, compute the virial radius from $M_{200}$:
 \begin{equation*}
     M_{200} = \frac{4\pi}{3}\, 200\,\rho_{\mathrm{crit}}(z_d)\, r_{200}^3
     \quad\Rightarrow\quad
@@ -91,7 +91,7 @@ $\thetaE$ falls from $6.9''$ to $4.3''$, a 38\% error from one wrong
 density.
 \end{annotation}
 
-\textbf{(b)} The tangential critical curve radius satisfies
+(b) The tangential critical curve radius satisfies
 $\bar{\kappa}(x_t) = 1$, i.e.,
 $(2\kappa_s / x_t^2)[\ln(x_t/2) + g(x_t)] = 1$
 (see eq.~\eqref{eq:nfw_alpha} in Chapter~\ref{ch:axisymmetric_models}).
@@ -123,7 +123,7 @@ $\rho_{\mathrm{crit}}$ moves a cluster's Einstein radius so much.  Then
 $\thetaE = 0.104 \times 66.4'' = 6.90''$.
 \end{derivation}
 
-\textbf{(c)} The projected mass enclosed within $\thetaE$ is
+(c) The projected mass enclosed within $\thetaE$ is
 $M(\thetaE) = \pi\,(\Dd\,\thetaE)^2\,\Sigmacr\,\bar\kappa(\thetaE)
 = \pi\,(\Dd\,\thetaE)^2\,\Sigmacr$ (since $\bar\kappa(\thetaE)=1$ by
 definition):
@@ -143,7 +143,7 @@ $1.989\ee{30}$~kg per $\Msun$ gives $6.99\ee{12}\,\Msun$.  For part~(d),
 $\RE/r_{200} = 30.7/1478 = 0.021$ and $M(\thetaE)/M_{200} = 0.014$.
 \end{derivation}
 
-\textbf{(d)} The fraction of the total virial mass within $\thetaE$:
+(d) The fraction of the total virial mass within $\thetaE$:
 \begin{equation*}
     \frac{M(\thetaE)}{M_{200}}
     \approx \frac{7.0\ee{12}}{5\ee{14}} \approx 0.014 \,.
@@ -189,7 +189,7 @@ $\beta \approx \thetaE$ images fall outside it and no image pixels are found.
 See \solnlink{10_Cluster_Lensing/problems\_10.wl}{problems\_10.wl}
 for the complete ray-tracing code and generated plots.
 
-\textbf{(d)} For a point source the length-to-width ratio of the arc is
+(d) For a point source the length-to-width ratio of the arc is
 $L/W \approx \mu_t/\mu_r$.  At $\beta = 0.1\,\thetaE$ the arc has
 $\mu_t = \theta/\beta \approx 12$ and $\mu_r \approx 2.1$, so
 $L/W \approx 6$; the $0.5''$ source is comparable to $\beta = 0.69''$, so
@@ -203,7 +203,7 @@ arc.  \checkmark
 % ----- Exercise 10.3 -----
 \subsection*{Exercise~\ref{ex:magnification_high_z}: Magnification of a High-Redshift Galaxy}
 
-\textbf{(a)} For an SIS with $\thetaE = 30''$, the magnification of a
+(a) For an SIS with $\thetaE = 30''$, the magnification of a
 point source at position $\beta$ (for $\beta < \thetaE$) is:
 \begin{equation*}
     \mu_{\mathrm{tot}} = |\mu_+| + |\mu_-|
@@ -233,12 +233,12 @@ The observed flux is set by $|\mu_-|$.  Adding the \emph{signed} values
 gives $\mu_+ + \mu_- = 2$, independent of $\beta$, a common wrong answer.
 \end{annotation}
 
-\textbf{(b)} The magnitude boost for $\mu = 600$:
+(b) The magnitude boost for $\mu = 600$:
 \begin{equation*}
     \Delta m = -2.5\,\log_{10}(600) \approx -6.9~\text{mag} \,.
 \end{equation*}
 
-\textbf{(c)} Detection requires $m - \Delta m \leq 29$, i.e.,
+(c) Detection requires $m - \Delta m \leq 29$, i.e.,
 $31 + \Delta m \leq 29$, so $\Delta m \leq -2$, requiring
 $\mu \geq 10^{0.8} \approx 6.3$.  From the SIS formula:
 \begin{equation*}
@@ -258,7 +258,7 @@ $\beta \le 2\thetaE/\mu_{\min} = 60''/6.31 = 9.51''$.  This is self-consistent:
 $9.5'' < \thetaE = 30''$, so the two-image formula used is the right one.
 \end{derivation}
 
-\textbf{(d)} Cluster lensing enables the detection of galaxies at
+(d) Cluster lensing enables the detection of galaxies at
 $z \sim 9$ that are $\sim 2$ magnitudes below the JWST detection
 limit.  The price is a reduced survey area (by factor $\mu$), but
 the steep faint-end slope of the high-$z$ luminosity function means
@@ -293,11 +293,11 @@ and cluster lines differ only by $(\sigma_v/250~\text{km\,s}^{-1})^2 =
 4$ and $23.04$.
 \end{derivation}
 
-\textbf{(d)} The ratio $\thetaE^{\text{cluster}}/\thetaE^{\text{galaxy}}
+(d) The ratio $\thetaE^{\text{cluster}}/\thetaE^{\text{galaxy}}
 = (1200/250)^2 = 23$.  The Einstein radius increases by a factor of
 $\sim$23 from galaxy to cluster.
 
-\textbf{(e)} The enclosed mass within $\thetaE$:
+(e) The enclosed mass within $\thetaE$:
 $M(\thetaE) = \pi(\Dd\,\thetaE)^2\,\Sigmacr$.  Since
 $\thetaE \propto \sigma_v^2$, we have
 $M(\thetaE) \propto \thetaE^2 \propto \sigma_v^4$.  From
@@ -326,7 +326,7 @@ $\Sigmacr = 2.35\ee{15}\,\Msun$\,Mpc$^{-2}$ gives $2.82\ee{11}\,\Msun$.
 The cluster-to-galaxy mass ratio is $(1200/250)^4 = 23.04^2 = 531$.
 \end{derivation}
 
-\textbf{(f)} Since $\thetaE \propto \sigma_v^2$, the angular scale
+(f) Since $\thetaE \propto \sigma_v^2$, the angular scale
 of lensing grows quadratically with velocity dispersion.
 Cluster lensing is therefore not a scaled-up version of galaxy
 lensing: the arcs subtend tens of arcseconds (easily resolvable with
@@ -337,7 +337,7 @@ observational signatures.  \checkmark
 % ----- Exercise 10.5 -----
 \subsection*{Exercise~\ref{ex:weak_lensing_mass}: Weak Lensing Mass Estimate}
 
-\textbf{(a)} With the approximation
+(a) With the approximation
 $\gamma_t \approx \bar{\kappa}$:
 \begin{align*}
     \bar{\kappa}(1') &\approx 0.1 \times (1)^{-0.8} = 0.1 \,, \\
@@ -347,7 +347,7 @@ $\gamma_t \approx \bar{\kappa}$:
     = 0.1 / 3.62 \approx 0.028 \,.
 \end{align*}
 
-\textbf{(b)} The enclosed mass within angle $\theta$:
+(b) The enclosed mass within angle $\theta$:
 \begin{equation*}
     M(\theta) = \pi\,(\Dd\,\theta)^2\,\Sigmacr\,\bar{\kappa}(\theta) \,.
 \end{equation*}
@@ -355,7 +355,7 @@ Converting angles to radians:
 $1' = 2.91\ee{-4}$~rad, $3' = 8.73\ee{-4}$~rad,
 $5' = 1.45\ee{-3}$~rad.
 
-\textbf{(c)} At $\theta = 5'$:
+(c) At $\theta = 5'$:
 \begin{equation*}
     M(5') = \pi \times (919 \times 1.45\ee{-3})^2
     \times 2.8\ee{15} \times 0.028
@@ -371,7 +371,7 @@ $1.59\ee{16}\,\Msun$; and multiplying by $\bar\kappa(5') = 0.1/5^{0.8} =
 0.0276$ gives $4.39\ee{14}\,\Msun$.
 \end{derivation}
 
-\textbf{(d)} This is close to a typical cluster virial mass
+(d) This is close to a typical cluster virial mass
 of $5\ee{14}\,\Msun$ (within $\sim 12\%$, though the agreement is partly
 fortuitous; see (i)).  At $\theta = 5'$ ($r \approx 1.3$~Mpc),
 we are probing close to $r_{200}$, so we expect to recover
