@@ -31,45 +31,39 @@ This chapter works through the simplest case. Massive galaxies generally
 host central supermassive black holes. A radial image, which is the
 observable that constrains the inner slope of a power-law model
 (Chapter~\ref{ch:power_law_point_mass}), forms close to the centre,
-where a black hole's deflection is largest. The question is: \emph{if a
-power law plus a central point mass is fit with a power law alone, how
-wrong is the recovered $\Brat$?}
+where a black hole's deflection is largest. The question is therefore
+how wrong the recovered $\Brat$ is when a power law plus a central
+point mass is fit with a power law alone.
 
-We answer it in five steps:
-\begin{enumerate}[nosep]
-  \item define the Einstein radius unambiguously when a point mass is
-        present (\S\ref{sec:cb_theta_e});
-  \item show that the point mass is a \emph{different} fractional
-        perturbation on the two source planes, so its effect does not
-        cancel in the ratio (\S\ref{sec:cb_differential});
-  \item split the bias in $\Brat$ into a ratio channel and a slope
-        channel, and derive a fixed-slope estimate of the ratio channel
-        (\S\ref{sec:cb_channels});
-  \item write the general linear-response formula for the parameter
-        bias and test it against an exact power-law-only fit
-        (\S\ref{sec:cb_linear});
-  \item derive in closed form the central mass at which the radial
-        image disappears (\S\ref{sec:cb_annihilation}).
-\end{enumerate}
-We then separate the hidden and detected regimes
-(\S\ref{sec:cb_regimes}) and propagate the bias to the equation of state
-$w$ (\S\ref{sec:cb_w}). All numbers in this chapter come from generic
-illustrative configurations. How large the bias is for a particular
-system is left to the Problems.
+We first define the Einstein radius unambiguously when a point mass is
+present (\S\ref{sec:cb_theta_e}), and then show that the point mass is
+a different fractional perturbation on the two source planes, so that
+its effect does not cancel in the ratio (\S\ref{sec:cb_differential}).
+The bias in $\Brat$ is then split into a ratio channel and a slope
+channel, and a fixed-slope estimate of the ratio channel is derived
+(\S\ref{sec:cb_channels}). The general linear-response formula for the
+parameter bias is written down and tested against an exact
+power-law-only fit (\S\ref{sec:cb_linear}), and the central mass at
+which the radial image disappears is derived in closed form
+(\S\ref{sec:cb_annihilation}). Finally we separate the hidden and
+detected regimes (\S\ref{sec:cb_regimes}) and propagate the bias to the
+equation of state $w$ (\S\ref{sec:cb_w}). All numbers in this chapter
+come from generic illustrative configurations; how large the bias is
+for a particular system is left to the Problems.
 
 \medskip
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
-    \item \mathlink{17_Central_Mass_Bias/central_mass_bias.wl}{central\_mass\_bias.wl}
-          --- verifies the plane-scaling identities, the total-mass
+    \item \mathlink{17_Central_Mass_Bias/central_mass_bias.wl}{central\_mass\_bias.wl},
+          which verifies the plane-scaling identities, the total-mass
           Einstein radius and its expansion, the two-channel
           decomposition, the closed-form annihilation boundary (against
           two independent numerical routes), and the linear-response bias
           against an exact power-law-only fit; exports the two figures of
           this chapter
-    \item \solnlink{17_Central_Mass_Bias/problems_17.wl}{problems\_17.wl}
-          --- worked solutions to the Problems
+    \item \solnlink{17_Central_Mass_Bias/problems_17.wl}{problems\_17.wl},
+          the worked solutions to the Problems
 \end{itemize}
 
 
@@ -116,7 +110,7 @@ started. The source distance enters only when the physical deflection
 $\alphahat$ is converted to the reduced deflection,
 $\alpha = (\Dds/\Ds)\,\alphahat$ (Chapter~\ref{ch:lens_equation}). A
 power law and a black hole in the same deflector therefore pick up the
-\emph{same} factor $\Dds/\Ds$ on each source plane, whatever their mass
+same factor $\Dds/\Ds$ on each source plane, whatever their mass
 profiles.
 \end{aside}
 
@@ -202,7 +196,7 @@ $\theta_{\mathrm{E,tot}}^{(i)}$ of
   \theta = \alpha_{\mathrm{PL},i}(\theta) + \alpha_{\bullet,i}(\theta),
   \label{eq:cb_thetatot}
 \end{equation}
-that is, the ring radius of the \emph{full} lens, inside which the mean
+that is, the ring radius of the full lens, inside which the mean
 convergence of power law plus point mass equals one. The true
 Einstein-radius ratio $\etamea_{\rm true}$ is formed from these
 total-mass radii. The bias that propagates to cosmology is measured by
@@ -217,12 +211,12 @@ Eq.~\eqref{eq:cb_dBB_def} folds the error in the ratio and the error in
 the slope into one number.
 \end{keybox}
 
-Why prefer the total-mass radius? A ring, or a pair of images close to
-it, measures the mass \emph{enclosed} by the ring. By
+The total-mass radius is the appropriate definition because a ring, or
+a pair of images close to it, measures the mass enclosed by the ring. By
 eq.~\eqref{eq:alpha_mean_kappa}, $\theta=\alpha(\theta)$ is the same
 statement as $\bar\kappa(\theta)=1$, whatever the profile inside. A
 power-law-only fit to images near the ring will therefore return a
-normalisation close to $\theta_{\mathrm{E,tot}}$, \emph{not} the true
+normalisation close to $\theta_{\mathrm{E,tot}}$, not the true
 power-law normalisation $\thetaE$. The total-mass radius is what an
 observer with no model in mind would call the Einstein radius.
 
@@ -245,16 +239,13 @@ Write $\theta/\thetaE = 1+\epsilon$ with $\epsilon = c_1\mBH + c_2\mBH^2$,
 and expand both sides of
 $(1+\epsilon)^{\gp-1} = 1 + \mBH(1+\epsilon)^{\gp-3}$ in powers of $\mBH$.
 
-\emph{First order.} The left side gives $(\gp-1)c_1\mBH$; the right side
-gives $\mBH$. Hence $c_1 = 1/(\gp-1)$.
-
-\emph{Second order.} The left side gives
-$(\gp-1)c_2 + \tfrac12(\gp-1)(\gp-2)c_1^2$; the right side gives
-$(\gp-3)c_1$. Hence
+At first order the left side gives $(\gp-1)c_1\mBH$ and the right side
+gives $\mBH$; hence $c_1 = 1/(\gp-1)$. At second order the left side
+gives $(\gp-1)c_2 + \tfrac12(\gp-1)(\gp-2)c_1^2$ and the right side
+gives $(\gp-3)c_1$; hence
 $c_2 = \big[(\gp-3)c_1 - \tfrac12(\gp-1)(\gp-2)c_1^2\big]/(\gp-1)
 = (\gp-4)/[2(\gp-1)^2]$.
-
-\emph{Check at $\gp=2$.} The quadratic $\theta^2-\thetaE\theta-\thetaBH^2=0$
+As a check, at $\gp=2$ the quadratic $\theta^2-\thetaE\theta-\thetaBH^2=0$
 has the root
 $\theta_{\mathrm{E,tot}} = \tfrac12\big(\thetaE+\sqrt{\thetaE^2+4\thetaBH^2}\big)
 = \thetaE(1+\mBH-\mBH^2+\dots)$, which matches $c_1=1$, $c_2=-1$
@@ -264,8 +255,8 @@ $\theta_{\mathrm{E,tot}} = \tfrac12\big(\thetaE+\sqrt{\thetaE^2+4\thetaBH^2}\big
 For $\gp=1.9$ and $\mBH=0.01$, the exact root of
 eq.~\eqref{eq:cb_thetatot} is $\theta_{\mathrm{E,tot}}=1.010984\,\thetaE$,
 against $1.011111\,\thetaE$ from the first-order term. The point mass
-enlarges the ring by about $1\%$. That looks small, but for comparison,
-changing $w$ by $0.3$ changes $\Brat$ by only about $1\%$
+enlarges the ring by about $1\%$. For comparison, changing $w$ by $0.3$
+changes $\Brat$ by only about $1\%$
 (\S\ref{sec:cb_w}). \annot{Verified: checks B1--B3b, F4.}
 
 \begin{annotation}[Why the shift is $\mBH/(\gp-1)$ and not $\mBH$]
@@ -287,8 +278,8 @@ ring has to move further.
 
 The black hole and the power law scale the same way between planes
 (eq.~\eqref{eq:cb_alpha_scaling}), so one might expect the black hole to
-drop out of the ratio. It does not, because the two \emph{Einstein
-radii} scale with different powers of $\Brat$. From
+drop out of the ratio. It does not, because the two Einstein radii
+scale with different powers of $\Brat$. From
 eqs.~\eqref{eq:cb_alpha_scaling}--\eqref{eq:cb_B_eta},
 \begin{equation}
   \mBH_2
@@ -299,7 +290,7 @@ eqs.~\eqref{eq:cb_alpha_scaling}--\eqref{eq:cb_B_eta},
   \label{eq:cb_m2_m1}
 \end{equation}
 The inequality holds for all $0<\Brat<1$ and $1<\gp<3$, where the
-exponent is positive. The black hole is a \emph{smaller} fractional
+exponent is positive. The black hole is a smaller fractional
 perturbation on the far plane. For $\Brat=0.8$, $\mBH_2/\mBH_1 = 0.594$
 at $\gp=1.6$ and $0.761$ at $\gp=1.9$. \annot{Verified: checks A3a--A3c.}
 
@@ -314,7 +305,7 @@ different image configurations (here only the far plane has a radial
 image), so they respond differently even to the same fractional
 perturbation. In the worked example of \S\ref{sec:cb_worked} at
 $\mBH_1=10^{-4}$, forcing $\mBH_2=\mBH_1$ makes the fitted bias $1.87$
-times \emph{larger}, not zero. \annot{Verified: check E13.}
+times larger, not zero. \annot{Verified: check E13.}
 \end{keybox}
 
 There is a second reason the black hole matters more than its mass
@@ -329,7 +320,7 @@ power law $\lambda_r = 1-(2-\gp)(\thetaE/\theta)^{\gp-1}$, so
 \end{equation}
 At $\gp=1.9$, $\theta_r = 0.077\,\thetaE$. A black hole with $\mBH=0.01$
 has $\thetaBH=\sqrt{\mBH}\,\thetaE = 0.1\,\thetaE$, which is
-\emph{larger} than $\theta_r$. A $1\%$ perturbation in mass is a
+larger than $\theta_r$. A $1\%$ perturbation in mass is a
 perturbation of order unity in deflection at the place where the radial
 image forms. (For $\gp=1.6$, $\theta_r=0.217\,\thetaE$.)
 \annot{Verified: checks A4a--A4d, A5b.}
@@ -390,7 +381,7 @@ two planes coincide (Exercise~\ref{ex:cb_two_channels}).
 \subsection{A fixed-slope, on-ring estimate}
 \label{sec:cb_boe}
 
-Suppose the slope is \emph{known}, for example from independent
+Suppose the slope is known, for example from independent
 information, so that only the ratio channel acts. Suppose also that the
 images lie close enough to the rings for the fit to return the
 total-mass radii. Applying eq.~\eqref{eq:cb_thetatot_series} on each
@@ -499,7 +490,7 @@ sides gives
   \;}
   \label{eq:cb_linear_response}
 \end{equation}
-In words: the parameter bias is the inverse of the model's Jacobian
+The parameter bias is thus the inverse of the model's Jacobian
 applied to the part of the signal the model cannot produce. Putting the
 $(\thetaE^{(1)},\thetaE^{(2)},\gp)$ components of $\delta\mathbf{p}$
 into eq.~\eqref{eq:cb_two_channels} gives $\delta\Brat/\Brat$ to first
@@ -726,7 +717,7 @@ fraction with eq.~\eqref{eq:cb_m2_m1},
 \begin{annotation}[Reading eq.~\eqref{eq:cb_thetastar}]
 Since $(3-\gp)/2<1$, eq.~\eqref{eq:cb_thetastar} can be written as
 $\theta_\star=\theta_r\,[(3-\gp)/2]^{1/(\gp-1)}<\theta_r$. When the
-critical curves merge, they do so \emph{inside} the radial critical curve
+critical curves merge, they do so inside the radial critical curve
 of the pure power law. The black hole pushes the radial curve inward
 until it meets the inner critical curve coming outward.
 \end{annotation}
@@ -751,32 +742,28 @@ $\mBH_{1,\rm crit}(\Brat=0.8)$ & 0.0156 & 0.0129 & 0.0104 & 0.0076 & 0.0046 & 0.
 
 Table~\ref{tab:cb_mcrit} and Figure~\ref{fig:cb_annihilation} show the
 consequences. (At $\gp=3/2$ everything is rational:
-$\theta_\star=9/64$ and $\mBH_{\rm crit}=27/4096$.)
-\begin{itemize}[nosep]
-  \item $\mBH_{\rm crit}\to0$ both as $\gp\to2$ (an isothermal profile has
-        no radial critical curve to destroy) and as $\gp\to1$. In between
-        it has a single maximum, $\mBH_{\rm crit}=0.0066$ at
-        $\gp\approx1.48$. For an axisymmetric lens, no slope tolerates a
-        central mass above $0.66\%$ of the power-law mass inside $\thetaE$
-        on the radial-image plane.
-        \annot{Verified: checks D7a, D7b.}
-        External shear raises the boundary. Along the axis of a shear
-        $\gamma_{\rm e}$ on the radial-image plane,
-        $\lambda_r = 1-\gamma_{\rm e}-\deriv{\alpha}{\theta}$, and
-        rescaling $\theta$ maps this onto the axisymmetric problem with
-        $\mBH_{\rm crit}$ multiplied by
-        $(1-\gamma_{\rm e})^{-(3-\gp)/(\gp-1)}$, a factor $1.28$ for
-        $\gamma_{\rm e}=0.1$ at $\gp=1.6$.
-        \annot{Verified: checks D9a, D9b.}
-  \item Near-isothermal deflectors are fragile. At $\gp=1.9$ and
-        $\Brat=0.8$, a near-plane fraction of only $0.0017$ removes the
-        far-plane radial image. The illustrative $\mBH_1=0.01$ of
-        \S\ref{sec:cb_boe} is far above the boundary: that lens has no
-        radial image, the slope-drag channel has no radial image to act
-        through, and only the ratio channel remains.
-  \item Below the boundary $\ysrc'$ has two zeros on $\theta>0$; above it,
-        none. \annot{Verified: check D8 at $\gp=1.6$.}
-\end{itemize}
+$\theta_\star=9/64$ and $\mBH_{\rm crit}=27/4096$.) We have
+$\mBH_{\rm crit}\to0$ both as $\gp\to2$ (an isothermal profile has no
+radial critical curve to destroy) and as $\gp\to1$. In between it has a
+single maximum, $\mBH_{\rm crit}=0.0066$ at $\gp\approx1.48$. For an
+axisymmetric lens, therefore, no slope tolerates a central mass above
+$0.66\%$ of the power-law mass inside $\thetaE$ on the radial-image
+plane. \annot{Verified: checks D7a, D7b.}
+External shear raises the boundary. Along the axis of a shear
+$\gamma_{\rm e}$ on the radial-image plane,
+$\lambda_r = 1-\gamma_{\rm e}-\deriv{\alpha}{\theta}$, and rescaling
+$\theta$ maps this onto the axisymmetric problem with
+$\mBH_{\rm crit}$ multiplied by $(1-\gamma_{\rm e})^{-(3-\gp)/(\gp-1)}$,
+a factor $1.28$ for $\gamma_{\rm e}=0.1$ at $\gp=1.6$.
+\annot{Verified: checks D9a, D9b.}
+
+Near-isothermal deflectors are fragile. At $\gp=1.9$ and $\Brat=0.8$, a
+near-plane fraction of only $0.0017$ removes the far-plane radial
+image. The illustrative $\mBH_1=0.01$ of \S\ref{sec:cb_boe} is far
+above the boundary: that lens has no radial image, the slope-drag
+channel has no radial image to act through, and only the ratio channel
+remains. Below the boundary $\ysrc'$ has two zeros on $\theta>0$; above
+it, none. \annot{Verified: check D8 at $\gp=1.6$.}
 
 \begin{figure}[ht]
     \centering
@@ -795,11 +782,11 @@ $\theta_\star=9/64$ and $\mBH_{\rm crit}=27/4096$.)
 \begin{remark}[Two edges of the same effect]
 The influence of central black holes on the central images of galaxy
 lenses was studied by \citet{mao_witt_koopmans_2001}. For compound-lens
-cosmography the effect cuts both ways. It \emph{limits} which systems
+cosmography the effect cuts both ways. It limits which systems
 can show a radial image at all: at fixed near-plane fraction and
 $\Brat$, the dashed curve of Figure~\ref{fig:cb_annihilation} favours
-shallower inner slopes. And a system whose radial image \emph{is}
-observed lies below the boundary, possibly close to it, where
+shallower inner slopes. A system whose radial image is observed, on
+the other hand, lies below the boundary, possibly close to it, where
 Figure~\ref{fig:cb_bias_vs_m} shows the bias growing faster than
 linearly.
 \end{remark}
@@ -811,24 +798,19 @@ linearly.
 
 Besides moving the radial image, the point mass produces its own faint
 image very close to the centre (Chapter~\ref{ch:odd_images}). How bright
-that image is decides which of two regimes the observer is in.
-\begin{itemize}
-  \item \textbf{Hidden regime.} The central image is below the detection
-        limit. The observer sees the tangential images and the radial
-        image, fits a power law, gets a perfect fit
-        (\S\ref{sec:cb_linear}), and obtains a biased $\Brat$
-        \emph{with no warning}. This is the regime that matters for
-        cosmology.
-  \item \textbf{Detected regime.} The black hole's own critical structure
-        is large enough to produce detectable extra images. The observer
-        is then \emph{forced} to add a central mass to the model, and if
-        that model is correct the bias disappears. This is one way a
-        central black hole can be detected through lensing. A black hole
-        that measurably deforms an existing image can also force a
-        central mass into the model without any extra image; the
-        Abell~1201 analysis of \citet{nightingale_2023} is a case in
-        point.
-\end{itemize}
+that image is decides which of two regimes the observer is in. In the
+\emph{hidden regime} the central image is below the detection limit.
+The observer sees the tangential images and the radial image, fits a
+power law, gets a perfect fit (\S\ref{sec:cb_linear}), and obtains a
+biased $\Brat$ with no warning. This is the regime that matters for
+cosmology. In the \emph{detected regime} the black hole's own critical
+structure is large enough to produce detectable extra images. The
+observer is then forced to add a central mass to the model, and if that
+model is correct the bias disappears. This is one way a central black
+hole can be detected through lensing. A black hole that measurably
+deforms an existing image can also force a central mass into the model
+without any extra image; the Abell~1201 analysis of
+\citet{nightingale_2023} is a case in point.
 
 \paragraph{The point mass stands for any unmodelled central excess.}
 Nothing in this chapter used the fact that the extra central mass is a
@@ -849,22 +831,22 @@ enclosed mass, so
   \big[\kappab_{\rm in}(\theta')-\kappab_{\rm PL}(\theta')\big]\theta'\,\dd\theta' ,
   \label{eq:cb_meff}
 \end{equation}
-\emph{exactly}, and $\mBH_{\rm eff}>0$ for a steeper cusp
+exactly, and $\mBH_{\rm eff}>0$ for a steeper cusp
 (Exercise~\ref{ex:cb_central_excess}). A nuclear star cluster, a
 steepened stellar cusp and a black hole all bias a rigid power law in
 the same way, provided the images lie outside the region containing the
 excess. The converse is the practical lesson: a model with one extra
 degree of freedom in the inner profile can absorb such an excess. The
-bias derived in this chapter is the bias of a \emph{rigid} power law,
+bias derived in this chapter is the bias of a rigid power law,
 and its size measures how much that rigidity costs.
 \annot{Verified: checks G1, G2.}
 
 \begin{bridge}[Back to Chapter~\ref{ch:galaxy_lensing}: a point mass is not a mass sheet]
 The mass-sheet transform of \S\ref{sec:msd} (eq.~\eqref{eq:mst_kappa})
 adds a uniform sheet, whose deflection grows as $\theta$, and rescales
-the source plane. Image positions are left \emph{exactly} unchanged, so
+the source plane. Image positions are left exactly unchanged, so
 no fit to image positions can detect it. A central point mass adds a
-deflection that falls as $1/\theta$. It \emph{does} move the images,
+deflection that falls as $1/\theta$. It does move the images,
 and no power law reproduces that change exactly; the fit can only
 compromise, and the compromise is the bias. The two problems are
 complementary. The mass sheet is invisible in the positions; the point
@@ -906,7 +888,7 @@ configurations, it tends to have the same sign, because every black hole
 adds positive central mass, although the size, and in some geometries
 the sign, of the slope response varies (\S\ref{sec:cb_worked}).
 Averaging over $N$ lenses reduces the statistical error as $N^{-1/2}$
-but leaves the \emph{mean} bias unchanged,
+but leaves the mean bias unchanged,
 so beyond a modest sample size the unmodelled central mass dominates the
 error budget (Exercise~\ref{ex:cb_coherent}). It has to be modelled, or
 bounded with independent information on the inner mass; it cannot be
@@ -918,39 +900,35 @@ averaged away.
 \section{Summary}
 \label{sec:cb_summary}
 
-\begin{itemize}
-  \item A power law plus a central point mass deflects light on two
-        source planes with the same distance factor, so
-        $\alpha_2=\alpha_1/\Brat$,
-        $\thetaE^{(2)}=\thetaE^{(1)}\Brat^{-1/(\gp-1)}$ and
-        $\Brat=\etamea^{\gp-1}$.
-  \item With a central mass present, the Einstein radius is defined from
-        the \emph{total} enclosed mass, $\theta=\alpha_{\rm PL}+\alpha_\bullet$.
-        At first order it exceeds the power-law normalisation by the
-        fraction $\mBH/(\gp-1)$, where $\mBH=\thetaBH^2/\thetaE^2$.
-  \item On the far plane the black hole is a smaller fractional
-        perturbation: $\mBH_2=\mBH_1\Brat^{(3-\gp)/(\gp-1)}$, which is
-        less than $\mBH_1$. This asymmetry is one reason the bias does not
-        cancel in the ratio; the other is that the two planes' images
-        respond differently to the fit.
-  \item The bias splits as
-        $\delta\Brat/\Brat=(\gp-1)\delta\etamea/\etamea+\ln\etamea\,\delta\gp$.
-        With the slope fixed and the images on the rings, the ratio
-        channel gives $\mBH_1(1-\Brat^{(3-\gp)/(\gp-1)})$; away from the
-        rings a fixed-slope fit can differ from this by a large factor.
-        With a free slope constrained by a radial image, the slope-drag
-        channel can be larger and of the opposite sign.
-  \item The linear-response formula $\delta\mathbf{p}=\mathsf{J}^{-1}\mathbf{s}\,\mBH_1$
-        agrees with an exact power-law-only fit up to corrections of
-        order $\mBH_1^2$. The fit residual is zero: the bias is hidden.
-  \item The radial image disappears at the double root of $\lambda_r$,
-        which has a closed form:
-        $\theta_\star=[(2-\gp)(3-\gp)/2]^{1/(\gp-1)}$ and
-        $\mBH_{\rm crit}=\tfrac12(2-\gp)(\gp-1)\theta_\star^{3-\gp}$, never
-        more than $0.0066$.
-  \item The bias propagates to $w$ through $\delta w=(\delta\Brat/\Brat)/S_w$.
-        Its mean is coherent across a sample and does not average down.
-\end{itemize}
+A power law plus a central point mass deflects light on two source
+planes with the same distance factor, so $\alpha_2=\alpha_1/\Brat$,
+$\thetaE^{(2)}=\thetaE^{(1)}\Brat^{-1/(\gp-1)}$ and
+$\Brat=\etamea^{\gp-1}$. With a central mass present, the Einstein
+radius is defined from the total enclosed mass,
+$\theta=\alpha_{\rm PL}+\alpha_\bullet$. At first order it exceeds the
+power-law normalisation by the fraction $\mBH/(\gp-1)$, where
+$\mBH=\thetaBH^2/\thetaE^2$. On the far plane the black hole is a
+smaller fractional perturbation, $\mBH_2=\mBH_1\Brat^{(3-\gp)/(\gp-1)}$,
+which is less than $\mBH_1$. This asymmetry is one reason the bias does
+not cancel in the ratio; the other is that the two planes' images
+respond differently to the fit.
+
+The bias splits as
+$\delta\Brat/\Brat=(\gp-1)\delta\etamea/\etamea+\ln\etamea\,\delta\gp$.
+With the slope fixed and the images on the rings, the ratio channel
+gives $\mBH_1(1-\Brat^{(3-\gp)/(\gp-1)})$; away from the rings a
+fixed-slope fit can differ from this by a large factor. With a free
+slope constrained by a radial image, the slope-drag channel can be
+larger and of the opposite sign. The linear-response formula
+$\delta\mathbf{p}=\mathsf{J}^{-1}\mathbf{s}\,\mBH_1$ agrees with an
+exact power-law-only fit up to corrections of order $\mBH_1^2$. The fit
+residual is zero, so the bias is hidden. The radial image disappears at
+the double root of $\lambda_r$, which has a closed form,
+$\theta_\star=[(2-\gp)(3-\gp)/2]^{1/(\gp-1)}$ and
+$\mBH_{\rm crit}=\tfrac12(2-\gp)(\gp-1)\theta_\star^{3-\gp}$, never more
+than $0.0066$. The bias propagates to $w$ through
+$\delta w=(\delta\Brat/\Brat)/S_w$. Its mean is coherent across a sample
+and does not average down.
 
 
 % =====================================================================

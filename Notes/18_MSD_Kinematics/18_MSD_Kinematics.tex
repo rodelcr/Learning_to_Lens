@@ -21,17 +21,14 @@ wider family of source-position transformations (\S\ref{sec:spt}), and showed
 that it propagates one-for-one into a time-delay Hubble constant
 (Eq.~\ref{eq:mst_H0}).  Chapter~\ref{ch:weak_lensing} met the same
 transformation as the reason a shear map determines $\kappab$ only up to a
-constant (\S\ref{sec:wl_reduced_shear}).  This chapter asks the two questions
-that matter once lenses have more than one source plane, and once one wants to
-\emph{do} something about the degeneracy:
-\begin{enumerate}[nosep]
-    \item Does a second source plane behind the same deflector break the MST?
-          (Answer: only if the distance ratio between the planes is known in
-          advance --- which, in double-source-plane cosmography, is exactly
-          what one is trying to measure.)
-    \item How does a stellar velocity dispersion fix $\lambda$, and which
-          systematic errors does it bring with it?
-\end{enumerate}
+constant (\S\ref{sec:wl_reduced_shear}).  This chapter treats the two
+questions that matter once lenses have more than one source plane, and once
+one wants to do something about the degeneracy.  The first is whether a second
+source plane behind the same deflector breaks the MST; it does so only if the
+distance ratio between the planes is known in advance, which in
+double-source-plane cosmography is exactly what one is trying to measure.  The
+second is how a stellar velocity dispersion fixes $\lambda$, and which
+systematic errors it brings with it.
 Along the way we show that a change of the power-law slope $\gp$ is, to first
 order near the Einstein radius, an MST in disguise.  That ``local MST'' is the
 mechanism through which an unmodelled central mass biases both a time-delay
@@ -42,14 +39,14 @@ $\Hubble$ and a double-source-plane distance ratio
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
-    \item \mathlink{18_MSD_Kinematics/msd_multiplane.wl}{msd\_multiplane.wl}
-          --- symbolic verification of every result in this chapter: the
+    \item \mathlink{18_MSD_Kinematics/msd_multiplane.wl}{msd\_multiplane.wl},
+          the symbolic verification of every result in this chapter: the
           single-plane MST (SIS and power law $+$ sheet), the two-source-plane
           and two-lens-plane transformations, the local MST, and the spherical
           Jeans solution for a power-law lens; exports
           Fig.~\ref{fig:ms_powerlaw_kappa}
-    \item \solnlink{18_MSD_Kinematics/problems\_18.wl}{problems\_18.wl}
-          --- worked solutions to the problems of \S\ref{sec:ms_problems}
+    \item \solnlink{18_MSD_Kinematics/problems\_18.wl}{problems\_18.wl},
+          the worked solutions to the problems of \S\ref{sec:ms_problems}
 \end{itemize}
 
 
@@ -119,21 +116,22 @@ $\vectheta$ \annot{checks s12--s13}.
 \begin{keybox}[What the MST preserves and what it changes]
 Under Eq.~\eqref{eq:ms_mst} with $\vecbeta\to\lambda\vecbeta$:
 \begin{itemize}[nosep,leftmargin=1.2em]
-    \item \textbf{Unchanged:} image positions; image shapes ($\Amat_\lambda\propto\Amat$);
-          flux ratios; critical curves (both eigenvalues $1-\kappab\pm\gammaL$
-          scale by $\lambda$, so their zeros stay put); the Einstein radius
-          (where $\bar\kappab_\lambda=\lambda\bar\kappab+1-\lambda=1$ iff
-          $\bar\kappab=1$); the reduced shear.
-    \item \textbf{Changed:} absolute magnifications $\mu\to\mu/\lambda^2$;
-          time delays $\Delta t\to\lambda\,\Delta t$, hence
+    \item Unchanged are the image positions, the image shapes
+          ($\Amat_\lambda\propto\Amat$), the flux ratios, the critical curves
+          (both eigenvalues $1-\kappab\pm\gammaL$ scale by $\lambda$, so their
+          zeros stay put), the Einstein radius (where
+          $\bar\kappab_\lambda=\lambda\bar\kappab+1-\lambda=1$ iff
+          $\bar\kappab=1$) and the reduced shear.
+    \item Changed are the absolute magnifications, $\mu\to\mu/\lambda^2$, the
+          time delays, $\Delta t\to\lambda\,\Delta t$, hence
           $\Hubble^{\rm true}=\lambda\,\Hubble^{\rm naive}$
-          (Eq.~\ref{eq:mst_H0}); the mass of the deflector itself.
+          (Eq.~\ref{eq:mst_H0}), and the mass of the deflector itself.
 \end{itemize}
 \annot{checks s6--s14}
 \end{keybox}
 
 \begin{bridge}[Magnification, time delays, and galaxy lensing]
-Every line above is a re-use.  $\Amat=\mathbb{I}-\nabla\nabla\psiL$ and its
+Every line above re-uses an earlier result.  $\Amat=\mathbb{I}-\nabla\nabla\psiL$ and its
 eigenvalues $1-\kappab\pm|\gammaL|$ are Eq.~\eqref{eq:eigenvalues} of
 Chapter~\ref{ch:magnification}; the Fermat potential and the factor that turns
 $\Delta\tau$ into $\Delta t$ are
@@ -148,20 +146,20 @@ Eq.~(51) of \citet{saha_essentials_2024}, where it is also called the
 \end{bridge}
 
 \begin{annotation}[Which way does $\Hubble$ go?]
-The relation $\Delta t\to\lambda\Delta t$ is a statement about \emph{models}
+The relation $\Delta t\to\lambda\Delta t$ is a statement about models
 at fixed $\Hubble$.  Data run the other way: the observed delay is fixed, so
 a model whose $\Delta\tau$ is larger by $\lambda$ needs a time-delay distance
 smaller by $\lambda$, i.e.\ an $\Hubble$ larger by $\lambda$.  If the truth
 contains a sheet ($\lambda<1$, a positive sheet) and one fits without it, the
 fit returns $\Hubble^{\rm naive}=\Hubble^{\rm true}/\lambda$, too high.
-Write it once as Eq.~\eqref{eq:mst_H0} and never re-derive the direction
-from memory: the direction is easy to get backwards \annot{check s14}.
+The direction is easy to get backwards, and it is safer to take it from
+Eq.~\eqref{eq:mst_H0} than to re-derive it from memory \annot{check s14}.
 \end{annotation}
 
 \subsection{Two explicit examples}
 \label{sec:ms_examples}
 
-It is worth seeing Eq.~\eqref{eq:ms_three_lines} work on actual profiles.
+Two explicit profiles show Eq.~\eqref{eq:ms_three_lines} at work.
 For an SIS (Chapter~\ref{ch:axisymmetric_models}), on the axis through the
 source, $\alpha(\theta)=\thetaE\,{\rm sgn}(\theta)$ and the images of a source
 at $0<\beta<\thetaE$ sit at $\theta_\pm=\beta\pm\thetaE$.  With a sheet,
@@ -196,11 +194,11 @@ Figure~\ref{fig:ms_powerlaw_kappa} shows three such profiles and the shared root
 \end{figure}
 
 \begin{annotation}[Reading the figure]
-A positive sheet ($\lambda<1$) makes the profile \emph{shallower}: it lowers
+A positive sheet ($\lambda<1$) makes the profile shallower: it lowers
 $\kappab$ inside the $\kappab=1$ crossing and raises it outside.  A negative
 sheet steepens it.  This is the ``steepness'' in Saha et al.'s name for the
 degeneracy, and it previews \S\ref{sec:ms_local}: near the images, adding a
-sheet looks like changing $\gp$.  Note also that the $\lambda=1.2$ profile
+sheet looks like changing $\gp$.  The $\lambda=1.2$ profile also
 goes negative at large radius.  A global MST with $\lambda>1$ is unphysical,
 but only the region the images probe has to be reproduced.
 \end{annotation}
@@ -211,24 +209,19 @@ but only the region the images probe has to be reproduced.
 \label{sec:ms_what_sheet}
 
 The parameter $\lambda$ has two physically different readings, and different
-data break them.
-\begin{itemize}
-    \item \textbf{External sheet.}  Line-of-sight structure adds a nearly
-          uniform convergence $\kappa_{\rm ext}$ across the image region; it is
-          an MST with $\lambda=1-\kappa_{\rm ext}$
-          (\S\ref{sec:external_convergence}, Eq.~\ref{eq:kappa_ext_H0}).  The
-          deflector's own mass is untouched; the sheet is real matter
-          elsewhere, estimated from galaxy counts and weak lensing of the
-          field rather than from the lens.
-    \item \textbf{Internal sheet.}  No extra matter exists; instead the
-          deflector's own profile is $\lambda\kappab+(1-\lambda)\kappab_{\rm c}$,
-          where $\kappab_{\rm c}$ is a very extended, cored component that is
-          nearly constant over the image region.  This is a re-profiling of the
-          galaxy that imaging cannot see, and field counts cannot touch it.
-          \citet{schneider_sluse_2013} argue that the formal precision of
-          time-delay $\Hubble$ rests on assuming that the profile is an exact
-          power law, which suppresses exactly this freedom.
-\end{itemize}
+data break them.  For an \emph{external sheet}, line-of-sight structure adds
+a nearly uniform convergence $\kappa_{\rm ext}$ across the image region; it is
+an MST with $\lambda=1-\kappa_{\rm ext}$ (\S\ref{sec:external_convergence},
+Eq.~\ref{eq:kappa_ext_H0}).  The deflector's own mass is untouched; the sheet
+is real matter elsewhere, estimated from galaxy counts and weak lensing of the
+field rather than from the lens.  For an \emph{internal sheet} no extra
+matter exists; instead the deflector's own profile is
+$\lambda\kappab+(1-\lambda)\kappab_{\rm c}$, where $\kappab_{\rm c}$ is a very
+extended, cored component that is nearly constant over the image region.
+This is a re-profiling of the galaxy that imaging cannot see, and field
+counts cannot touch it.  \citet{schneider_sluse_2013} argue that the formal
+precision of time-delay $\Hubble$ rests on assuming that the profile is an
+exact power law, which suppresses exactly this freedom.
 The MST is itself the exactly-degenerate, profile-independent member of the
 \emph{source-position transformations} (SPT;
 \citealp{schneider_sluse_2014}; \S\ref{sec:spt}), which remap the source plane
@@ -278,7 +271,7 @@ of the two Einstein radii,
 \end{equation}
 which follows from $\bar\kappab_2(\theta)=(\theta_{\rm E2}/\theta)^{\gp-1}$
 \annot{check s11} and $\bar\kappab_1=\Brat\,\bar\kappab_2=1$ at $\theta_{\rm E1}$.
-Throughout this chapter plane~1 is the \emph{nearer} source, so that
+Throughout this chapter plane~1 is the nearer source, so that
 $\Brat<1$ and $\etamea<1$; $\etamea$ always denotes the ratio of Einstein radii
 and $\Brat$ the distance ratio (papers that number the planes the other way
 quote $\Brat^{-1}$).
@@ -325,8 +318,8 @@ $1/\Sigma_{{\rm cr},i}$, differently on each plane.
 \subsection{Free distance ratio: the second plane does not}
 \label{sec:ms_free}
 
-In DSPL cosmography $\Brat$ is \emph{not} known; it is the measurement.  So let
-the model carry its own ratio $\Brat'$ and ask whether a pair of per-plane MSTs
+In DSPL cosmography $\Brat$ is not known; it is the measurement.  We
+therefore let the model carry its own ratio $\Brat'$ and ask whether a pair of per-plane MSTs
 $(\lambda_1,\lambda_2)$ can reproduce both image sets.  The far plane is
 transformed with $\lambda_2$, and the model's near-plane convergence is
 $\Brat'$ times the transformed far-plane one.  Demanding that this be an exact
@@ -355,28 +348,24 @@ The last identity in Eq.~\eqref{eq:ms_free} is the constant-term condition
 rewritten \annot{checks t3a--t3c, t3i}.
 \end{derivation}
 
-Three features of Eq.~\eqref{eq:ms_free} carry the physics.
-\begin{itemize}
-    \item The two planes carry \emph{different} mass-sheet parameters:
-          $\lambda_1-\lambda_2=\lambda_2(1-\lambda_2)(1-\Brat)/[\Brat(1-\lambda_2)+\lambda_2]$,
-          non-zero unless $\lambda_2=1$ \annot{check t3d}.
-    \item The two sheets are one physical sheet at the deflector:
-          $(1-\lambda_1)/(1-\lambda_2)=\Brat'$ is exactly the ratio that a
-          uniform $\Sigma_s$ at $z_d$ produces between the two planes, read
-          through the model's distance ratio.  The $\lambda_i$ differ
-          \emph{because} the sheet sits physically at the lens plane.
-    \item Each plane's Einstein radius is fixed by its own exact MST, so both
-          $\theta_{{\rm E}i}$ and $\etamea$ are unchanged \annot{check t3e}, while
-          the inferred distance ratio moves.  For $\Brat=0.7$, $\lambda_2=0.9$:
-          $\Brat'=70/97=0.7216$ and $\lambda_1=90/97=0.9278$ \annot{check t3f}.  To
-          first order,
-          \begin{equation}
-              \Brat'\simeq\Brat\,\bigl[1+(1-\Brat)(1-\lambda_2)\bigr],
-              \label{eq:ms_free_linear}
-          \end{equation}
-          so a positive sheet ($\lambda_2<1$) is mistaken for a larger
-          distance ratio \annot{check t3g}.
-\end{itemize}
+Three features of Eq.~\eqref{eq:ms_free} carry the physics.  First, the two
+planes carry different mass-sheet parameters:
+$\lambda_1-\lambda_2=\lambda_2(1-\lambda_2)(1-\Brat)/[\Brat(1-\lambda_2)+\lambda_2]$,
+non-zero unless $\lambda_2=1$ \annot{check t3d}.  Second, the two sheets are
+one physical sheet at the deflector: $(1-\lambda_1)/(1-\lambda_2)=\Brat'$ is
+exactly the ratio that a uniform $\Sigma_s$ at $z_d$ produces between the two
+planes, read through the model's distance ratio.  The $\lambda_i$ differ
+because the sheet sits physically at the lens plane.  Third, each plane's
+Einstein radius is fixed by its own exact MST, so both $\theta_{{\rm E}i}$ and
+$\etamea$ are unchanged \annot{check t3e}, while the inferred distance ratio
+moves.  For $\Brat=0.7$, $\lambda_2=0.9$: $\Brat'=70/97=0.7216$ and
+$\lambda_1=90/97=0.9278$ \annot{check t3f}.  To first order,
+\begin{equation}
+    \Brat'\simeq\Brat\,\bigl[1+(1-\Brat)(1-\lambda_2)\bigr],
+    \label{eq:ms_free_linear}
+\end{equation}
+so a positive sheet ($\lambda_2<1$) is mistaken for a larger distance ratio
+\annot{check t3g}.
 
 \begin{keybox}[A second source plane trades $\lambda$ for $\Brat$]
 For a single deflector with sources on two planes, a mass sheet at the lens
@@ -391,13 +380,13 @@ independent handle on $\lambda$ is required.
 \begin{annotation}[The argument in words]
 A sheet is a magnifying glass of fixed strength placed at the lens.  Seen from
 the far source it has convergence $1-\lambda_2$; seen from the near source,
-which sits closer behind the glass, the same glass is weaker.  If you know the
-geometry, the mismatch between the two planes exposes the glass.  If the
-geometry (the distance ratio) is what you are fitting, you can always choose a
-geometry in which the weaker near-plane sheet is exactly what an MST of the
-near plane requires, and nothing in either set of images objects.  A second
-source plane gives you a second ruler, but both rulers are read through the
-same unknown lens.
+which sits closer behind the glass, the same glass is weaker.  If the
+geometry is known, the mismatch between the two planes exposes the glass.  If
+the geometry (the distance ratio) is what is being fitted, one can always
+choose a geometry in which the weaker near-plane sheet is exactly what an MST
+of the near plane requires, and nothing in either set of images objects.  A
+second source plane provides a second ruler, but both rulers are read through
+the same unknown lens.
 \end{annotation}
 
 \subsection{How the MST reaches a power-law distance ratio}
@@ -410,8 +399,8 @@ $\etamea$ is invariant, a power-law fit can follow the shift
 $\Brat\to\Brat'$ of Eq.~\eqref{eq:ms_free} only by changing its slope,
 $\gp'-1=(\gp-1)\ln\Brat'/\ln\Brat$.  For the DSPL ratio the MST is therefore
 demoted from a normalisation systematic (as it is for $\Hubble$) to a
-\emph{profile-shape} systematic.  Anything that drags the fitted $\gp$ --- a
-sheet, a core, a central point mass --- moves $\Brat$ by
+profile-shape systematic.  Anything that drags the fitted $\gp$ (a sheet, a
+core, a central point mass) moves $\Brat$ by
 $\delta\ln\Brat=\ln\etamea\,\delta\gp$.  Section~\ref{sec:ms_local} makes the
 link between ``sheet'' and ``slope'' precise.
 
@@ -463,7 +452,7 @@ second lens is rescaled in amplitude and in scale:
 $\vecalpha_2(\vectheta_2'/\lambda)$ is the deflection of
 $\lambda^{-1}\kappab_2(\vectheta/\lambda)$ (Schneider's Eq.~13; check t4d for a
 power law).  (iii) All time delays, from sources on both planes, scale by the
-same $\lambda$, so time-delay \emph{ratios} cannot break the transformation
+same $\lambda$, so time-delay ratios cannot break the transformation
 \citep{schneider_2014_multiplane}.  The same paper shows that a change of
 cosmology, $\Brat\to\Brat'$, can be absorbed by a transformation of the same
 form (his Eqs.~18--20; checks t4e--t4f2); with the first source made massless
@@ -473,7 +462,7 @@ from plane to plane, and every time delay still scales by $\lambda$
 \citep{schneider_2019_generalized}.
 
 \begin{annotation}[Common error]
-Do not conclude from $\nu_3=1$ that the far plane is unaffected.  Its image
+It does not follow from $\nu_3=1$ that the far plane is unaffected.  Its image
 positions are unchanged, as they must be, and its source plane is not
 rescaled; but the mass in plane~2 has been rescaled and a negative sheet has
 been added.  A standard candle on the far source plane would not detect the
@@ -507,8 +496,8 @@ orders agree if and only if the power law has slope
 \end{equation}
 \annot{checks l1--l2}, and then $\theta-\alpha_{\gp_{\rm eff}}=\lambda(\theta-\alpha_{\gp})+\order{\delta^2}$:
 the steeper or shallower power law reproduces the images to first order with
-the source rescaled by $\lambda$ \annot{check l4}.  Near $\thetaE$, \emph{a change of
-slope is an MST}.
+the source rescaled by $\lambda$ \annot{check l4}.  Near $\thetaE$, therefore,
+a change of slope is an MST.
 
 \begin{derivation}[Where the two models part company]
 Subtracting the $\delta^2$ coefficient of the power law with slope
@@ -534,7 +523,7 @@ a power law, at fixed image positions,
 to better than $10^{-4}$ for $\beta=0.005\,\thetaE$ and $\gp\in\{1.6,2,2.4\}$
 \annot{check l8}.  At fixed images, then, delays scale as $\gp-1$, and two power laws
 whose slopes are related by Eq.~\eqref{eq:ms_local} have delays in the ratio
-$\lambda$ --- the MST rule again \annot{check l10}.  Expressed instead in terms of
+$\lambda$, which is the MST rule again \annot{check l10}.  Expressed instead in terms of
 the unobservable source position, $\Delta\tau\simeq2\beta\thetaE$ for every
 slope \annot{check l9}: the source position absorbs the slope.
 
@@ -568,7 +557,7 @@ imaging, which brings us to stellar kinematics.
 \section{Breaking the MST with Stellar Kinematics}
 \label{sec:ms_kinematics}
 
-Imaging fixes the \emph{total} projected mass inside the Einstein radius,
+Imaging fixes the total projected mass inside the Einstein radius,
 $M_{\rm E}=\pi\Sigmacr R_{\rm E}^2$ with $R_{\rm E}=\Dd\thetaE$
 (Eq.~\ref{eq:mass_einstein}), and this mass is MST-invariant.  For an external
 sheet the galaxy's own convergence is $\lambda\kappab$, so the galaxy's own
@@ -638,7 +627,7 @@ reduces to $\lambda$ times the SIS result \annot{check k10}; more generally
 $F(2,\nu,0)=2/(\nu\pi)$ \annot{check k10c}.
 
 \begin{derivation}[Projection and aperture average]
-(a) \emph{Line of sight.}  With $\rho_\ast\sigma_r^2\propto r^{-p}$,
+(a) Along the line of sight, with $\rho_\ast\sigma_r^2\propto r^{-p}$,
 $p=\nu+\gp-2$, the projected second moment is
 $\Sigma_\ast\sigma_{\rm los}^2(R)=2\int_R^\infty(1-\beta_aR^2/r^2)\,\rho_\ast\sigma_r^2\,r\,\dd r/\sqrt{r^2-R^2}$,
 and every term has the form
@@ -646,10 +635,10 @@ $\int_R^\infty r^{1-p}(r^2-R^2)^{-1/2}\dd r=\tfrac{\sqrt\pi}{2}R^{1-p}\Gamma(\tf
 \annot{check k4, numerically at three values of $p$}.  Hence
 $\sigma_{\rm los}^2\propto R^{2-\gp}$, linear in the mass normalisation
 \annot{check k6}.
-(b) \emph{Aperture.}  With $\Sigma_\ast\propto R^{1-\nu}$,
+(b) For the aperture average, with $\Sigma_\ast\propto R^{1-\nu}$,
 $\sigma_{\rm ap}^2=\int_0^{R_{\rm ap}}\Sigma_\ast\sigma_{\rm los}^2R\,\dd R\big/\int_0^{R_{\rm ap}}\Sigma_\ast R\,\dd R
 =\sigma_{\rm los}^2(R_{\rm ap})\,(3-\nu)/(5-\nu-\gp)$ \annot{check k7}.
-(c) \emph{Normalisation.}  The projection of $\rho_0r^{-\gp}$ gives
+(c) For the normalisation, the projection of $\rho_0r^{-\gp}$ gives
 $M_{\rm 2D}(<R)=2\pi^{3/2}\rho_0\,\Gamma(\tfrac{\gp-1}{2})/\Gamma(\tfrac{\gp}{2})\,R^{3-\gp}/(3-\gp)$
 \annot{check k8}, so $M_{\rm 3D}(r)/M_{\rm 2D}(r)=2\Gamma(\tfrac{\gp}{2})/[\sqrt\pi\,\Gamma(\tfrac{\gp-1}{2})]$,
 which is $2/\pi$ for $\gp=2$ \annot{check k9}; and the lensing condition gives
@@ -689,7 +678,7 @@ $\beta_a=-0.2$ lowers it by $8.3\%$ \annot{checks k12--k13}.  For $\nu=2.5$ the
 factors are $22/21$ and $28/29$ \annot{check k14}.  A single aperture number cannot
 separate a change of $\lambda$ from a change of $\beta_a$: this is the
 \emph{mass--anisotropy degeneracy}.  A spatially resolved $\sigma(R)$ helps
-because the anisotropy and the mass profile change the \emph{shape} of
+because the anisotropy and the mass profile change the shape of
 $\sigma_{\rm los}(R)$ differently once $\beta_a$ is allowed to vary with radius.
 
 \paragraph{Aperture and slope.}  At fixed $\sigma_{\rm ap}$,
@@ -710,7 +699,7 @@ error in $\gp$ leaks into $\lambda$.  The decoupling radius
 $R_{\rm E}\exp(\partial\ln F/\partial\gp)$ depends on both slopes.  For an
 isotropic $\nu=2$ tracer it is $0.91$, $1.09$, $1.32$, $1.47$ and
 $1.65\,R_{\rm E}$ for $\gp=1.4$, $1.6$, $1.8$, $1.9$ and $2.0$, so for shallow
-mass profiles it falls \emph{inside} $R_{\rm E}$; for $\nu=2.5$ it lies
+mass profiles it falls inside $R_{\rm E}$; for $\nu=2.5$ it lies
 between $3.6$ and $6.4\,R_{\rm E}$ over the same range of $\gp$
 \annot{check k17b}.  It has to be computed for the model at hand, not
 assumed.
@@ -785,32 +774,28 @@ second-order invariant $\xi$ of \citet{kochanek_2020}
 \section{Summary}
 \label{sec:ms_summary}
 
-\begin{itemize}
-    \item The MST $\kappab\to\lambda\kappab+(1-\lambda)$,
-          $\vecbeta\to\lambda\vecbeta$ preserves image positions, shapes, flux
-          ratios, critical curves and $\thetaE$; it scales magnifications by
-          $\lambda^{-2}$ and time delays by $\lambda$, so
-          $\Hubble^{\rm true}=\lambda\Hubble^{\rm naive}$.  The proof is
-          Eq.~\eqref{eq:ms_three_lines}.
-    \item With one deflector and two source planes, a sheet at the lens
-          acts on each plane as an MST with its own $\lambda_i$, linked by
-          Eq.~\eqref{eq:ms_free}.  The second plane breaks the MST only if
-          the distance ratio $\Brat$ is known; if $\Brat$ is fitted, the MST
-          becomes a bias on $\Brat$ while $\etamea$ and all images stay fixed.
-    \item With a massive first source the MST survives with an unscaled far
-          plane and sheets of alternating sign; all time delays scale by the
-          same $\lambda$ \citep{schneider_2014_multiplane,schneider_2019_generalized}.
-    \item Near $\thetaE$ a change of slope is an MST:
-          $\gp_{\rm eff}-1=\lambda(\gp-1)$.  Only second-order information
-          ($\xi$) tells them apart.  This is how slope drag from a central mass
-          becomes an $\Hubble$ or $\Brat$ bias.
-    \item Stellar kinematics measures the galaxy's own mass:
-          $\sigma_{\rm ap}^2\propto\lambda$ exactly (Eq.~\ref{eq:ms_sigap}), so
-          $\Delta\lambda/\lambda=2\Delta\sigma/\sigma$.  The anisotropy factor
-          (Eq.~\ref{eq:ms_aniso}), the tracer slope, and the aperture--slope
-          covariance (Eq.~\ref{eq:ms_aperture}) are the systematics; resolved
-          $\sigma(R)$ is what reduces them.
-\end{itemize}
+The MST $\kappab\to\lambda\kappab+(1-\lambda)$, $\vecbeta\to\lambda\vecbeta$
+preserves image positions, shapes, flux ratios, critical curves and
+$\thetaE$; it scales magnifications by $\lambda^{-2}$ and time delays by
+$\lambda$, so $\Hubble^{\rm true}=\lambda\Hubble^{\rm naive}$.  The proof is
+Eq.~\eqref{eq:ms_three_lines}.  With one deflector and two source planes, a
+sheet at the lens acts on each plane as an MST with its own $\lambda_i$,
+linked by Eq.~\eqref{eq:ms_free}.  The second plane breaks the MST only if
+the distance ratio $\Brat$ is known; if $\Brat$ is fitted, the MST becomes a
+bias on $\Brat$ while $\etamea$ and all images stay fixed.  With a massive
+first source the MST survives with an unscaled far plane and sheets of
+alternating sign, and all time delays scale by the same $\lambda$
+\citep{schneider_2014_multiplane,schneider_2019_generalized}.
+
+Near $\thetaE$ a change of slope is an MST, $\gp_{\rm eff}-1=\lambda(\gp-1)$,
+and only second-order information ($\xi$) tells them apart.  This is how
+slope drag from a central mass becomes an $\Hubble$ or $\Brat$ bias.
+Stellar kinematics measures the galaxy's own mass:
+$\sigma_{\rm ap}^2\propto\lambda$ exactly (Eq.~\ref{eq:ms_sigap}), so
+$\Delta\lambda/\lambda=2\Delta\sigma/\sigma$.  The anisotropy factor
+(Eq.~\ref{eq:ms_aniso}), the tracer slope, and the aperture--slope covariance
+(Eq.~\ref{eq:ms_aperture}) are the systematics, and resolved $\sigma(R)$ is
+what reduces them.
 
 
 % =====================================================================

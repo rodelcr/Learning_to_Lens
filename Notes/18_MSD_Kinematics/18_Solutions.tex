@@ -15,7 +15,7 @@ which verifies each answer symbolically and numerically.
 % ----- Exercise 18.1 -----
 \subsection*{Exercise~\ref{ex:ms_three_lines}: The MST in Three Lines}
 
-\textbf{Positions.}  With $\vecalpha_\lambda=\lambda\vecalpha+(1-\lambda)\vectheta$,
+For the positions, with $\vecalpha_\lambda=\lambda\vecalpha+(1-\lambda)\vectheta$,
 \[
 \vectheta-\vecalpha_\lambda=\vectheta-\lambda\vecalpha-(1-\lambda)\vectheta
 =\lambda(\vectheta-\vecalpha)=\lambda\vecbeta ,
@@ -23,7 +23,7 @@ which verifies each answer symbolically and numerically.
 so every image of the source at $\vecbeta$ is an image of the source at
 $\lambda\vecbeta$ in the transformed lens.
 
-\textbf{Jacobian.}  The transformed potential
+For the Jacobian, the transformed potential
 $\psiL_\lambda=\lambda\psiL+\tfrac{1-\lambda}{2}|\vectheta|^2$ has Hessian
 $\lambda\nabla\nabla\psiL+(1-\lambda)\mathbb{I}$, hence
 $\Amat_\lambda=\mathbb{I}-\lambda\nabla\nabla\psiL-(1-\lambda)\mathbb{I}=\lambda\Amat$.
@@ -31,7 +31,7 @@ In two dimensions $\det(\lambda\Amat)=\lambda^2\det\Amat$, so
 $\mu_\lambda=\mu/\lambda^2$.  The factor is common to every image, so
 $\mu^{(1)}_\lambda/\mu^{(2)}_\lambda=\mu^{(1)}/\mu^{(2)}$.
 
-\textbf{Eigenvalues.}  $\kappab_\lambda=\lambda\kappab+1-\lambda$ and
+For the eigenvalues, $\kappab_\lambda=\lambda\kappab+1-\lambda$ and
 $\gammaL_\lambda=\lambda\gammaL$ (the sheet's Hessian is isotropic), so
 $1-\kappab_\lambda\mp\gammaL_\lambda=\lambda(1-\kappab\mp\gammaL)$.  The zeros,
 i.e.\ the critical curves, are unchanged.
@@ -92,11 +92,12 @@ $\lambda_1=0.9/(0.07+0.9)=90/97=0.92784$; $\Brat$ is overestimated by $3.09\%$.
 
 \textbf{(c)} With $\gp=2$, $\etamea=\Brat=0.7$.  A power law reproducing
 $\Brat'$ at the same $\etamea$ needs
-$\gp'-1=\ln\Brat'/\ln\etamea=0.914602$, i.e.\ $\gp'=1.9146$.  In words: a
-sheet at the lens is seen more weakly from the nearer source, and if the
-distance ratio is free one can always choose it so that the weaker near-plane
-sheet is itself an exact MST; both image sets and $\etamea$ then stay fixed,
-and only the inferred distance ratio (or, in a power-law fit, the slope) moves.
+$\gp'-1=\ln\Brat'/\ln\etamea=0.914602$, i.e.\ $\gp'=1.9146$.  The second
+plane does not break the MST because a sheet at the lens is seen more weakly
+from the nearer source, and if the distance ratio is free one can always
+choose it so that the weaker near-plane sheet is itself an exact MST; both
+image sets and $\etamea$ then stay fixed, and only the inferred distance
+ratio (or, in a power-law fit, the slope) moves.
 \emph{[Attested: \solnlink{18_MSD_Kinematics/problems\_18.wl}{problems\_18.wl}, checks 3a--3f.]}
 
 % ----- Exercise 18.4 -----
@@ -153,9 +154,9 @@ $\gp=1.9$ power law.
 % ----- Exercise 18.7 -----
 \subsection*{Exercise~\ref{ex:ms_aperture}: Where to Put the Aperture}
 
-Proxy: at fixed $M_{\rm 2D,gal}(<R)$, $\ln\lambda=\text{const}-(3-\gp)\ln(R/R_{\rm E})$,
+With the proxy, at fixed $M_{\rm 2D,gal}(<R)$, $\ln\lambda=\text{const}-(3-\gp)\ln(R/R_{\rm E})$,
 so $\partial\ln\lambda/\partial\gp=\ln(R/R_{\rm E})$, zero at $R=R_{\rm E}$.
-Jeans (Eq.~\ref{eq:ms_aperture} with $\partial\ln F/\partial\gp=1/2$):
+With the Jeans result (Eq.~\ref{eq:ms_aperture} with $\partial\ln F/\partial\gp=1/2$),
 $\partial\ln\lambda/\partial\gp=\ln0.5-0.5=-1.193$ at $R_{\rm ap}=0.5\,R_{\rm E}$.
 A slope error $\delta\gp=+0.1$ therefore biases $\lambda$ by $-11.9\%$.  The
 covariance vanishes at $R_{\rm ap}=e^{1/2}R_{\rm E}=1.649\,R_{\rm E}$, not at

@@ -34,19 +34,19 @@ so $c=(a_1-a_2)/(b_1-b_2)$, and back-substitution gives
 $\delta\ysrc=\mBH a_1-\epsilon b_1$. The general regression formula
 reduces to the same difference quotient for $n=2$.
 
-\textbf{Why the residual vanishes.} A square system that is
+The residual vanishes because a square system that is
 non-singular ($b_1\neq b_2$, i.e.\ the two images are not at the same
 signed position) has an exact solution, so the least-squares minimum is
 zero. With three images there are three equations for the same two
 unknowns; the point-mass shape $a_j\propto1/\theta_j$ is generically
-\emph{not} a linear combination of $b_j$ and a constant, and no choice
+not a linear combination of $b_j$ and a constant, and no choice
 of $(\epsilon,\delta\ysrc)$ annihilates all three residuals. For the
 canonical triple at $\rho=0.1$, $\gp=1.5$ the minimum residual is
 strictly positive; it vanishes only in the degenerate limit $\rho=1$.
 
-\textbf{What it tells you.} The leftover residual is the
-\emph{only} part of the central mass's signal that the model cannot
-absorb: it is the evidence that a central mass is present. A plane with
+The leftover residual is the only part of the central mass's signal
+that the model cannot absorb: it is the evidence that a central mass is
+present. A plane with
 two images can be biased by a central mass but can never detect one; a
 plane with a radial image can, if the slope is held fixed. With the
 slope free, a single three-image plane gives three equations for three
@@ -59,7 +59,7 @@ the slope.
 % ----- Exercise: intercept -----
 \subsection*{Exercise~\ref{ex:pe_intercept}: Why the Intercept Matters}
 
-The response coefficient is built from \emph{centred} weighted moments,
+The response coefficient is built from centred weighted moments,
 \[
   c=\frac{\sum_jw_j(a_j-\bar a)(b_j-\bar b)}{\sum_jw_j(b_j-\bar b)^2}.
 \]
@@ -69,12 +69,12 @@ $c$. The intercept absorbs the shift: from
 $\delta\ysrc=\mBH(\bar a-c\bar b)$, $\delta\ysrc\to\delta\ysrc+\mBH\kappa$,
 while $\epsilon$ is unchanged.
 
-\textbf{Physical content.} A constant added to every deflection on a
+The physical content is that a constant added to every deflection on a
 plane is exactly a uniform shift of that plane's source, and the source
 position is not observable. The invariance says that the estimator uses
 only observable information.
 
-\textbf{Fixing the intercept.} Setting $\delta\ysrc=0$ and regressing
+If the intercept is fixed, setting $\delta\ysrc=0$ and regressing
 through the origin gives $c_{\rm fixed}=\sum_ja_jb_j/\sum_jb_j^2$. For
 the canonical triple at $\rho=0.1$, $\gp=1.5$ this differs from
 Eq.~\eqref{eq:pe_cclosed}. Fixing the source would let a pure source
@@ -131,9 +131,9 @@ two-image floor. The radial image has merged with a tangential one.
 and a direct numerical regression on $\theta=(1,-1,0.03)$ also gives
 $5.859$. The asymptote is $42\%$ low (the true value is $1.73$ times
 it), an error that would propagate unchanged into any bias built on
-$c$; the one-term form is high by only $0.2\%$. Carry the exact
-Eq.~\eqref{eq:pe_cclosed}; quote the one-term form only when a formula
-with visible structure is wanted. For a real lens with an asymmetric
+$c$; the one-term form is high by only $0.2\%$. The exact
+Eq.~\eqref{eq:pe_cclosed} is the one to carry; the one-term form is
+quoted only when a formula with visible structure is wanted. For a real lens with an asymmetric
 pair, neither replaces the general regression on the actual images
 (\S\ref{sec:pe_beyond_canonical}).
 \emph{[Attested: \solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl}, checks 3a--3k.]}
@@ -157,7 +157,7 @@ floor (\S\ref{sec:pe_beyond_canonical}). The sign of the cosmological
 bias is controlled by where the radial images sit and by how the fit
 weights them.
 
-\textbf{Why the shortcut cannot.} Setting both $c_i$ to the floor gives
+The shortcut cannot reproduce this because setting both $c_i$ to the floor gives
 $\mBH_1(1-\Brat^{k})=\mBH_1(1-e^{-kL})>0$ for every $0<\Brat<1$. It
 contains no image positions and has a fixed sign, so it cannot track a
 sign that is set by image geometry.
@@ -173,7 +173,7 @@ $\Brat_i\to0$, so
 \]
 independent of $c_i$ and of which plane was chosen.
 
-\textbf{Interpretation.} In this limit the central-mass fraction seen by
+In this limit the central-mass fraction seen by
 plane $i$, $\mBH_i=\mBH_1\Brat_i^{k}$, tends to zero: plane $i$ is
 effectively unperturbed and contributes nothing of its own. What
 survives is plane~1's error. The distant plane acts as a clean
@@ -181,7 +181,7 @@ reference, and the ratio measures plane~1's contamination in full.
 Adding such planes does not dilute the systematic; every ratio inherits
 the same $c_1$.
 
-\textbf{Reach.} Since $\Brat_i=d_1/d_i$ and every distance factor
+As to how closely the limit can be approached, since $\Brat_i=d_1/d_i$ and every distance factor
 $d_i=D_{{\rm d}s_i}/D_{s_i}<1$, we have $\Brat_i>d_1$. Even a source at
 infinite redshift leaves $\Brat_i$ above $d_1$, so the limit is
 approached but not reached; it is approached fastest for shallow slopes,
@@ -192,29 +192,26 @@ monotonically as $\Brat_i$ decreases.
 % ----- Exercise: design -----
 \subsection*{Exercise~\ref{ex:pe_design}: Design}
 
-\textbf{Neither move improves accuracy; both improve precision.}
-\begin{itemize}
-    \item \textbf{Halving the per-ratio error.} For $C=\sigma^2I$ the bias
-          $(J^{\mathsf T}C^{-1}J)^{-1}J^{\mathsf T}C^{-1}\boldsymbol\delta$
-          does not depend on $\sigma$, while the marginal errors scale
-          as $\sigma$. Halving $\sigma$ leaves the bias unchanged and
-          halves the error, so $\mathcal{S}$ \emph{doubles}.
-    \item \textbf{Adding a plane.} In the equal-sensitivity toy with a
-          coherent shift, $\mathcal{S}_N=\sqrt N\,\mathcal{S}_1$; going
-          from three to four ratios raises $\mathcal{S}$ by
-          $\sqrt{4/3}\approx1.15$.
-\end{itemize}
-Both make the result \emph{more precisely wrong}. The quantity to
+Neither move improves accuracy; both improve precision. Halving the
+per-ratio error: for $C=\sigma^2I$ the bias
+$(J^{\mathsf T}C^{-1}J)^{-1}J^{\mathsf T}C^{-1}\boldsymbol\delta$
+does not depend on $\sigma$, while the marginal errors scale as
+$\sigma$, so halving $\sigma$ leaves the bias unchanged and halves the
+error, and $\mathcal{S}$ doubles. Adding a plane: in the
+equal-sensitivity toy with a coherent shift,
+$\mathcal{S}_N=\sqrt N\,\mathcal{S}_1$, so going from three to four
+ratios raises $\mathcal{S}$ by $\sqrt{4/3}\approx1.15$.
+Both make the result more precisely wrong. The quantity to
 optimise is $\mathcal{S}$, not the statistical error, and the only lever
 that lowers $\mathcal{S}$ is the modelling one: give the deflector's
 inner profile enough freedom to represent a central mass, or resolve the
 radial image well enough to constrain it.
 
-\textbf{The caveat that keeps this honest.} A new plane adds an
+One caveat is needed. A new plane adds an
 independent row to the Jacobian and can break parameter degeneracies,
 which is a genuine gain that the toy model ignores. The correct
 statement is that extra planes buy constraining power but no
-\emph{protection}: unless the modelling systematic is addressed first,
+protection: unless the modelling systematic is addressed first,
 the added power is spent sharpening a biased answer.
 \emph{[Attested: \solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl}, checks 6a--6d; the degeneracy-breaking caveat is conceptual.]}
 
@@ -241,12 +238,12 @@ $1/(\gp-1)$ (there $a=b/(\gp-1)$ again). Solving the total lens equation
 at first order gives $\thetaE^{\rm tot}=\thetaE[1+\kappa/(\gp-1)]$, the
 same floor: the pair measures the total enclosed mass whatever its
 form. At $\rho=0.05$, $\gp=1.6$: $c_{\rm sheet}=1.626$, slightly
-\emph{below} the floor $1.667$, while the point-mass $c=4.87$.
+below the floor $1.667$, while the point-mass $c=4.87$.
 
-\textbf{Why.} Leverage comes from where the omitted shape and the
+The reason is that leverage comes from where the omitted shape and the
 model's direction differ most. A point mass's deflection $1/\theta$ is
 largest at the centre, exactly where the power law's $b$ vanishes. A
-sheet's deflection $\kappa\theta$ \emph{vanishes} at the centre too, so
+sheet's deflection $\kappa\theta$ vanishes at the centre too, so
 at the radial image both shapes are small and the radial image carries
 almost no information about a sheet. Leverage is a property of the pair
 (omitted component, datum), not of the datum alone.
