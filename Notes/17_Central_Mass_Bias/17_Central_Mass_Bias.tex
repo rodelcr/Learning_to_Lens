@@ -356,23 +356,19 @@ with respect to the two fitted quantities:
   \label{eq:cb_two_channels}
 \end{equation}
 \annot{Verified: checks C1--C2.} The two terms have different physical
-origins.
-\begin{description}[leftmargin=1.5em]
-  \item[Ratio channel.] $(\gp-1)\,\delta\etamea/\etamea$. The black hole
-        moves the two Einstein radii by different fractions
-        (\S\ref{sec:cb_differential}), so the ratio itself changes. The
-        near ring moves out more, so this channel tends to increase
-        $\etamea$ and therefore $\Brat$.
-  \item[Slope-drag channel.] $\ln\etamea\,\delta\gp$. The fitted slope is
-        set mainly by the radial image
-        (Chapter~\ref{ch:power_law_point_mass}), which forms where the
-        black hole's deflection is comparable to the power law's. With
-        the black hole missing from the model, the fit accounts for the
-        extra central deflection by changing $\gp$. The map
-        $\etamea\mapsto\Brat$ depends on the slope, so that error passes
-        straight into $\Brat$. Because $\ln\etamea<0$, a \emph{steeper}
-        fitted slope ($\delta\gp>0$) \emph{lowers} $\Brat$.
-\end{description}
+origins. The first, $(\gp-1)\,\delta\etamea/\etamea$, is the
+\emph{ratio channel}: the black hole moves the two Einstein radii by
+different fractions (\S\ref{sec:cb_differential}), so the ratio itself
+changes. Since the near ring moves out more, this channel tends to
+increase $\etamea$ and therefore $\Brat$. The second,
+$\ln\etamea\,\delta\gp$, is the \emph{slope-drag channel}. The fitted
+slope is set mainly by the radial image
+(Chapter~\ref{ch:power_law_point_mass}), which forms where the black
+hole's deflection is comparable to the power law's. With the black hole
+missing from the model, the fit accounts for the extra central
+deflection by changing $\gp$. The map $\etamea\mapsto\Brat$ depends on
+the slope, so that error passes straight into $\Brat$. Because
+$\ln\etamea<0$, a steeper fitted slope ($\delta\gp>0$) lowers $\Brat$.
 The two channels can have opposite signs. Which one wins depends on the
 configuration, in particular on how far $\etamea$ is from unity: the
 slope channel carries the factor $\ln\etamea$, which vanishes when the
@@ -409,25 +405,22 @@ here the linearisation in $\mBH$ is accurate to $3\%$.
 \begin{keybox}[Limits of the fixed-slope estimate]
 Eq.~\eqref{eq:cb_boe} gives the ratio channel for images on the rings.
 It does not predict the bias of a real fit, and need not even give its
-order of magnitude, for three reasons.
-\begin{enumerate}[nosep]
-  \item It contains only the ratio channel. When the slope is free and
-        constrained by a radial image, the slope-drag channel can be
-        larger and of opposite sign (\S\ref{sec:cb_linear}).
-  \item It assumes the fit recovers the total-mass radii, which is
-        exactly true only for images on the ring. For the lens of the
-        worked example in \S\ref{sec:cb_worked}, a fixed-slope fit to the
-        tangential image pairs agrees with eq.~\eqref{eq:cb_boe} to
-        $0.3\%$ when each source is $0.02$ of its plane's $\thetaE$ off
-        axis. The disagreement grows steadily with the offset and reaches
-        a factor of $1.75$ at $0.3\,\thetaE$. When the two sources sit at
-        \emph{different} fractional offsets, the per-plane shifts can
-        nearly cancel: at the offsets of the worked example ($0.15$ and
-        $0.3$), a fixed-slope fit returns only $0.084$ of
-        eq.~\eqref{eq:cb_boe}.
-  \item It is first order in $\mBH$. Near the annihilation boundary of
-        \S\ref{sec:cb_annihilation} the response is strongly nonlinear.
-\end{enumerate}
+order of magnitude, for three reasons. First, it contains only the
+ratio channel; when the slope is free and constrained by a radial
+image, the slope-drag channel can be larger and of opposite sign
+(\S\ref{sec:cb_linear}). Second, it assumes the fit recovers the
+total-mass radii, which is exactly true only for images on the ring.
+For the lens of the worked example in \S\ref{sec:cb_worked}, a
+fixed-slope fit to the tangential image pairs agrees with
+eq.~\eqref{eq:cb_boe} to $0.3\%$ when each source is $0.02$ of its
+plane's $\thetaE$ off axis. The disagreement grows steadily with the
+offset and reaches a factor of $1.75$ at $0.3\,\thetaE$. When the two
+sources sit at different fractional offsets, the per-plane shifts can
+nearly cancel: at the offsets of the worked example ($0.15$ and
+$0.3$), a fixed-slope fit returns only $0.084$ of
+eq.~\eqref{eq:cb_boe}. Third, it is first order in $\mBH$; near the
+annihilation boundary of \S\ref{sec:cb_annihilation} the response is
+strongly nonlinear.
 A systematic treatment of first-order estimators and their range of
 validity is the subject of Chapter~\ref{ch:perturbative_estimators}.
 \annot{Verified: checks E9a--E9b, E9d, E9e.}
@@ -440,15 +433,13 @@ validity is the subject of Chapter~\ref{ch:perturbative_estimators}.
 
 The general tool for working out what a misspecified model does is
 linear response. Collect the observed image positions in a vector
-$\mathbf{o}$, and \emph{all} the parameters of the power-law-only model,
+$\mathbf{o}$, and all the parameters of the power-law-only model,
 including the unobserved source positions, in $\mathbf{p}$. For our
-axisymmetric compound lens,
-\begin{itemize}[nosep]
-  \item $\mathbf{o}=(\theta_{A1},\theta_{B1},\theta_{A2},\theta_{B2},\theta_{R2})$:
-        the main image and counter-image on each plane, plus the radial
-        image on the far plane;
-  \item $\mathbf{p}=(\thetaE^{(1)},\thetaE^{(2)},\gp,\ysrc_1,\ysrc_2)$.
-\end{itemize}
+axisymmetric compound lens the data vector is
+$\mathbf{o}=(\theta_{A1},\theta_{B1},\theta_{A2},\theta_{B2},\theta_{R2})$,
+the main image and counter-image on each plane together with the radial
+image on the far plane, and the parameter vector is
+$\mathbf{p}=(\thetaE^{(1)},\thetaE^{(2)},\gp,\ysrc_1,\ysrc_2)$.
 The central image produced by the black hole is assumed too faint to
 detect (\S\ref{sec:cb_regimes}).
 
@@ -456,7 +447,7 @@ detect (\S\ref{sec:cb_regimes}).
 For a power law with $\gp<2$, a source inside the radial caustic has a
 main image, a counter-image and a radial image
 (Chapter~\ref{ch:power_law_point_mass}). The black hole changes this.
-The radial image now exists only for sources in an \emph{annulus} of the
+The radial image now exists only for sources in an annulus of the
 source plane, and it comes with a faint central image next to the black
 hole. For a source inside the inner edge of the annulus, the radial and
 central images have merged and vanished. The annulus narrows as $\mBH$
@@ -509,16 +500,13 @@ the source position. Differentiate with respect to any quantity $q$:
   = \frac{1}{\ysrc_i'(\theta_k)}
     \left(\pderiv{\ysrc_i}{q}\bigg|_{\rm source}-\pderiv{\ysrc_i(\theta_k)}{q}\right).
 \end{equation*}
-\emph{Black hole} ($q=\mBH_1$, source fixed). In units
+For the black hole ($q=\mBH_1$, source fixed), in units
 $\thetaE^{(1)}=1$, eq.~\eqref{eq:cb_alpha_scaling} gives
 $\partial\ysrc_i(\theta)/\partial\mBH_1 = -1/\theta$ on plane~1 and
-$-1/(\Brat\theta)$ on plane~2.
-
-\emph{Model parameters.} The source term is $1$ when $q$ is that plane's
-source position and $0$ otherwise; the lens term is the derivative of
-$\ysrc_{\rm PL}$ with respect to $\thetaE^{(i)}$ or $\gp$.
-
-Every row is divided by $\ysrc_i'(\theta_k)$, which in axisymmetry is
+$-1/(\Brat\theta)$ on plane~2. For the model parameters, the source
+term is $1$ when $q$ is that plane's source position and $0$ otherwise,
+and the lens term is the derivative of $\ysrc_{\rm PL}$ with respect to
+$\thetaE^{(i)}$ or $\gp$. Every row is divided by $\ysrc_i'(\theta_k)$, which in axisymmetry is
 exactly the radial eigenvalue $\lambda_r = 1-\deriv{\alpha}{\theta}$ at
 the image.
 \end{derivation}
@@ -582,34 +570,34 @@ $\delta\gp$ (exact fit)         & $0.0016$   & $0.0048$   & $0.0166$   & $0.0600
 \end{tabular}
 \end{table}
 
-\noindent Four things are worth noticing.
-\begin{enumerate}[nosep]
-  \item \emph{The formula is right to the order claimed.} At
-        $\mBH_1=10^{-4}$ the exact and linear biases agree to $0.5\%$.
-        The difference grows as $\mBH_1^2$: tripling $\mBH_1$ multiplies
-        it by about nine. The coefficient $\mathsf{J}^{-1}\mathbf{s}$
-        also agrees with a finite-difference derivative of the exact fit
-        to better than one part in $10^{5}$.
-        \annot{Verified: checks E3a$'$, E3c, E4.}
-  \item \emph{Signs, in this configuration.} The fitted slope steepens
-        ($\delta\gp>0$). The ratio channel is positive, as
-        \S\ref{sec:cb_boe} anticipated. The slope channel is negative and
-        nearly four times larger, so it sets the sign: $\Brat$ is biased
-        \emph{low}. The two channels add up exactly to the linear total.
-        \annot{Verified: checks E5--E7.}
-  \item \emph{The bias depends on the image geometry, not only on
-        $\mBH_1$.} Moving the far source to $\ysrc_2=0.2\,\thetaE^{(2)}$
-        changes the coefficient from $-4.26$ to $-17.8$. Nothing in the
-        lens has changed; the radial image has moved closer to the
-        centre, where the black hole's deflection is relatively larger.
-        \annot{Verified: check E8.}
-  \item \emph{It is much larger than the fixed-slope estimate.}
-        Eq.~\eqref{eq:cb_boe} gives $\delta\Brat/\Brat=+0.041\%$ at
-        $\mBH_1=10^{-3}$: the opposite sign, and an order of magnitude
-        smaller than the exact $-0.449\%$. What makes the black hole
-        dangerous is a free slope constrained by a radial image.
-        \annot{Verified: check E9c.}
-\end{enumerate}
+\noindent The table shows, first, that the formula is right to the
+order claimed. At $\mBH_1=10^{-4}$ the exact and linear biases agree to
+$0.5\%$. The difference grows as $\mBH_1^2$: tripling $\mBH_1$
+multiplies it by about nine. The coefficient $\mathsf{J}^{-1}\mathbf{s}$
+also agrees with a finite-difference derivative of the exact fit to
+better than one part in $10^{5}$.
+\annot{Verified: checks E3a$'$, E3c, E4.}
+
+Second, in this configuration the fitted slope steepens
+($\delta\gp>0$). The ratio channel is positive, as \S\ref{sec:cb_boe}
+anticipated. The slope channel is negative and nearly four times
+larger, so it sets the sign: $\Brat$ is biased low. The two channels
+add up exactly to the linear total.
+\annot{Verified: checks E5--E7.}
+
+Third, the bias depends on the image geometry, not only on $\mBH_1$.
+Moving the far source to $\ysrc_2=0.2\,\thetaE^{(2)}$ changes the
+coefficient from $-4.26$ to $-17.8$. Nothing in the lens has changed;
+the radial image has moved closer to the centre, where the black hole's
+deflection is relatively larger.
+\annot{Verified: check E8.}
+
+Fourth, the bias is much larger than the fixed-slope estimate.
+Eq.~\eqref{eq:cb_boe} gives $\delta\Brat/\Brat=+0.041\%$ at
+$\mBH_1=10^{-3}$: the opposite sign, and an order of magnitude smaller
+than the exact $-0.449\%$. What makes the black hole dangerous is a
+free slope constrained by a radial image.
+\annot{Verified: check E9c.}
 
 \begin{figure}[ht]
     \centering
@@ -635,7 +623,7 @@ $\delta\gp$ (exact fit)         & $0.0016$   & $0.0048$   & $0.0166$   & $0.0600
 \begin{annotation}[What the worked example does and does not show]
 It shows that the mechanism works, that
 eq.~\eqref{eq:cb_linear_response} is correct at first order, and that
-the slope channel can dominate. It does \emph{not} give a typical bias
+the slope channel can dominate. It does not give a typical bias
 for real lenses. The axisymmetric, exactly determined fit is an extreme
 case in which the radial image alone fixes $\gp$. Real fits include
 ellipticity, shear and extended arcs, and the size of the slope response
