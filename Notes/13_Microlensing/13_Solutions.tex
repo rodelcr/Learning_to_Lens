@@ -24,13 +24,38 @@ The separation is $y_+ - y_- = \sqrt{u^2+4}$. \checkmark
 
 \textbf{(b)} With $\mu = [1 - y^{-4}]^{-1}$ evaluated at $y_\pm$ one finds
 \begin{equation*}
-    \mu_\pm = \frac{1}{2}\left[\frac{u^2+2}{u\sqrt{u^2+4}} \pm 1\right] \,,
+    \mu_\pm = \pm\frac{1}{2}\left[\frac{u^2+2}{u\sqrt{u^2+4}} \pm 1\right] \,,
 \end{equation*}
 so $\mu_+ > 0$, $\mu_- < 0$, and (adding the absolute values)
 \begin{equation*}
     A(u) = |\mu_+| + |\mu_-| = \mu_+ - \mu_-
     = \frac{u^2 + 2}{u\sqrt{u^2 + 4}} \,. \quad \checkmark
 \end{equation*}
+
+\begin{derivation}[Exercise~\ref{ex:micro_magnification}(b), the ``one finds'' step]
+Use only the lens equation and the root relations (Vieta's formulas for
+$y^2 - uy - 1 = 0$): $y_+y_- = -1$, $y_+ + y_- = u$, $y_+ - y_- = \sqrt{u^2+4}$.
+
+\textit{Step 1 (factor).}  $\mu^{-1} = 1 - y^{-4} = (1 - y^{-2})(1 + y^{-2})$.
+
+\textit{Step 2 (first factor from the lens equation).}  $y^2 - 1 = uy$, so
+$1 - y^{-2} = u/y$.
+
+\textit{Step 3 (second factor).}  $(y + 1/y)^2 = (y - 1/y)^2 + 4 = u^2 + 4$, and
+$y + 1/y = +\sqrt{u^2+4}$ for $y_+ > 0$, $-\sqrt{u^2+4}$ for $y_- < 0$.  So
+$1 + y^{-2} = (y + 1/y)/y = \pm\sqrt{u^2+4}/y$.
+
+\textit{Step 4 (combine).}  $\mu_\pm^{-1} = \pm u\sqrt{u^2+4}/y_\pm^2$, i.e.
+\begin{equation*}
+    \mu_\pm = \pm\frac{y_\pm^2}{u\sqrt{u^2+4}}\,.
+\end{equation*}
+\textit{Step 5 (add and subtract).}  $y_+^2 + y_-^2 = (y_+ + y_-)^2 - 2y_+y_- =
+u^2 + 2$ gives $A = \mu_+ - \mu_- = (u^2+2)/(u\sqrt{u^2+4})$.  Also
+$y_+^2 - y_-^2 = (y_+ - y_-)(y_+ + y_-) = u\sqrt{u^2+4}$ gives
+$\mu_+ + \mu_- = 1$.  Together, $\mu_+ = (A+1)/2 > 0$ and
+$\mu_- = -(A-1)/2 < 0$; this is the bracket formula above, with its
+leading sign giving the parity.
+\end{derivation}
 
 \textbf{(c)} As $u\to0$, $A(u) \simeq 2/(u\cdot2) = 1/u \to \infty$
 (high magnification).  As $u\to\infty$, $A(u) \simeq u^2/(u\cdot u) = 1$
@@ -40,6 +65,12 @@ so $\mu_+ > 0$, $\mu_- < 0$, and (adding the absolute values)
 \begin{equation*}
     \Delta m = 2.5\log_{10}A(1) \approx 0.32~\text{mag} \,. \quad \checkmark
 \end{equation*}
+
+\begin{derivation}[Exercise~\ref{ex:micro_magnification}(d), the arithmetic]
+$3/\sqrt5 = 1.3416$; $\log_{10}1.3416 = 0.1277$; multiplying by $2.5$ gives
+$0.319$~mag.  ($\Delta m$ here is the brightening, so it is positive; with the
+sign convention of Exercise~\ref{ex:magnification_high_z} it would be written $-0.32$.)
+\end{derivation}
 
 
 % ----- Exercise 13.2 -----
@@ -53,6 +84,40 @@ $M = 0.3\,\Msun$, eq.~\eqref{eq:micro_thetaE} gives
     \qquad
     \RE = \Dd\,\thetaE \approx 2.2~\text{AU} \,.
 \end{equation*}
+
+\begin{derivation}[Exercise~\ref{ex:micro_timescale}(a), the numbers, and a faster route]
+\textit{Direct.}  $4\Gnewton M/\speedoflight^2 = 1772$~m for $M = 0.3\,\Msun$.
+$\Dds/(\Dd\Ds) = 4/(4\times8)$~kpc$^{-1} = 1/(2.469\ee{20}~\text{m})$.  So
+$\thetaE^2 = 1772/2.469\ee{20} = 7.18\ee{-18}$ and
+$\thetaE = 2.68\ee{-9}$~rad $= 0.553$~mas.  Then
+$\RE = \Dd\thetaE = 3.31\ee{11}$~m $= 2.21$~AU.  For part~(b),
+$t_{\mathrm E} = 3.31\ee{11}/2\ee{5} = 1.65\ee{6}$~s $= 19.1$~days.
+
+\textit{Parallax form.}  Inside the Galaxy, $\Dds = \Ds - \Dd$, so
+$\Dds/(\Dd\Ds) = 1/\Dd - 1/\Ds$ and
+\begin{equation*}
+    \thetaE^2 = \kappa\,M\,\pi_{\mathrm{ds}}\,,\qquad
+    \kappa \equiv \frac{4\Gnewton\,\Msun}{\speedoflight^2\,\mathrm{AU}}
+    = 8.14~\text{mas}\,\Msun^{-1}\,,\qquad
+    \pi_{\mathrm{ds}} = \mathrm{AU}\left(\frac1\Dd - \frac1\Ds\right).
+\end{equation*}
+Since $1~\mathrm{AU}/1~\mathrm{kpc} = 1$~mas,
+$\pi_{\mathrm{ds}} = 1/4 - 1/8 = 0.125$~mas, and
+$\thetaE = \sqrt{8.14\times0.3\times0.125} = 0.553$~mas.  This is the same
+relation that gives the mass coefficient $1/\kappa = 0.123$ of
+Exercise~\ref{ex:micro_astrometric}.
+\end{derivation}
+
+\begin{annotation}[Three ``Einstein radii'']
+The same lens has an \emph{angular} Einstein radius $\thetaE$, a
+\emph{lens-plane} radius $\RE = \Dd\thetaE$ (used here, $2.2$~AU), and a
+\emph{source-plane} radius $\Ds\thetaE$ (used for quasars in
+Exercise~\ref{ex:micro_quasar}).  The two physical radii differ by
+$\Ds/\Dd$: a factor of 2 for this Bulge event.  Timescales must pair the
+radius with the velocity measured in the \emph{same} plane.  Also,
+$\Dds = \Ds - \Dd$ is valid here only because Galactic distances are
+Euclidean; it fails at cosmological distances (Exercise~\ref{ex:micro_quasar}).
+\end{annotation}
 
 \textbf{(b)} With $v_\perp = 200$~km\,s$^{-1}$,
 \begin{equation*}
@@ -100,6 +165,19 @@ using $\Sigmacr = \speedoflight^2\Ds/(4\pi\Gnewton\Dd\Dds)$. \checkmark
 stars must be monitored to expect one lensed above the $u=1$ threshold at any
 instant --- of order a few million. \checkmark
 
+\begin{annotation}[Optical depth, cross-section, event rate]
+$\tau$ is an \emph{instantaneous} probability: the sky fraction inside some
+Einstein disk (cross-section $\pi\thetaE^2$ per lens) right now.  It does not
+depend on $M$.  The \emph{event rate} does.  A source sweeps out a strip of
+width $2\thetaE$ at relative angular speed $\mu_{\mathrm{rel}}$, so
+$\Gamma = n_{\mathrm{ang}}\,2\thetaE\,\mu_{\mathrm{rel}}
+= (2/\pi)\,\tau/t_{\mathrm E}$ with $t_{\mathrm E} = \thetaE/\mu_{\mathrm{rel}}$.
+At fixed mass density $n \propto M^{-1}$ and $\thetaE \propto M^{1/2}$, so
+$\Gamma \propto M^{-1/2}$: lighter MACHOs give more but shorter events.
+Survey limits therefore depend on mass through the rate and the timescale
+window, even though $\tau$ does not.
+\end{annotation}
+
 \textbf{(d)} The measured $\tau_{\mathrm{LMC}}\approx1.2\times10^{-7}$ is about
 $4$--$5$ times smaller than the value expected if the entire halo were compact
 objects.  Combined with the small number of detected events, this limits
@@ -116,8 +194,27 @@ dominant dark matter. \checkmark
 \textbf{(a)} Solving $A(u_0) = (u_0^2+2)/(u_0\sqrt{u_0^2+4}) = 5$ numerically
 gives $u_0 \approx 0.203$.
 
+\begin{derivation}[Exercise~\ref{ex:micro_peak}(a), in closed form]
+$A(u)$ is the point-mass $\mu_p(y)$ of Chapter~\ref{ch:lensing_statistics}, so
+its inverse is Eq.~\eqref{eq:point_ymu}:
+$u_0^2 = 2\left(A/\sqrt{A^2-1} - 1\right)$.  For $A = 5$:
+$5/\sqrt{24} = 1.0206$, $u_0^2 = 0.0412$, $u_0 = 0.203$, which agrees with
+the numerical root.
+\end{derivation}
+
 \textbf{(b)} For $u_0 = 0.05$, $A(u_0) = 20.02\ldots$ while $1/u_0 = 20$; the
 fractional error is $\sim\!0.1\%$, well under $1\%$. \checkmark
+
+\begin{derivation}[Exercise~\ref{ex:micro_peak}(b), why the error is so small]
+Expand for $u \ll 1$:
+$(u^2+2)/\sqrt{u^2+4} = (u^2+2)\cdot\tfrac12(1 - u^2/8 + \dots) = 1 + 3u^2/8
++ \order{u^4}$, so
+\begin{equation*}
+    A(u) = \frac1u + \frac{3u}{8} + \order{u^3}\,.
+\end{equation*}
+The fractional error of $1/u$ is $\approx 3u^2/8$: at $u_0 = 0.05$ the
+correction is $0.0187$, $A = 20.0187$, a $0.094\%$ error.
+\end{derivation}
 
 \textbf{(c)} The threshold $u = 1$ is reached when
 $u_0^2 + (t-t_0)^2/t_{\mathrm{E}}^2 = 1$, i.e.
@@ -169,6 +266,17 @@ $\Dds \neq \Ds - \Dd$ for angular-diameter distances),
 $r_{\mathrm{E}} \approx 5\times10^{16}$~cm, of order $10^{16}$~cm and
 consistent with eq.~\eqref{eq:micro_qso_rE}. \checkmark
 
+\begin{derivation}[Exercise~\ref{ex:micro_quasar}(a), the distances and the plane]
+Flat $\Omegam = 0.3$, $H_0 = 70$: $\Dd = 1259$~Mpc, $\Ds = 1727$~Mpc,
+$\Dds = (D_C(2) - D_C(0.5))/(1+z_s) = 1097$~Mpc, whereas
+$\Ds - \Dd = 468$~Mpc.  The source-plane radius is
+$r_{\mathrm E} = \Ds\thetaE = \sqrt{4\Gnewton M\Ds\Dds/(\speedoflight^2\Dd)}$
+(multiply $\thetaE^2$ by $\Ds^2$).  This gives $5.24\ee{16}$~cm for
+$M = \Msun$.  The lens-plane value $\Dd\thetaE$ would be smaller by
+$\Dd/\Ds$, i.e.\ $3.82\ee{16}$~cm.  Part~(c): $10^{13}~\text{m}/(6\ee{5}~
+\text{m\,s}^{-1}) = 1.67\ee{7}$~s $= 6.3$~months.
+\end{derivation}
+
 \textbf{(b)} All mass-independent factors are fixed, so
 $r_{\mathrm{E}} \propto \sqrt{M}$; $r_{\mathrm{E}}(4M)/r_{\mathrm{E}}(M) = 2$.
 \checkmark
@@ -192,3 +300,14 @@ source plane, rather than the isolated, well-separated point caustics of a
 single Galactic lens.  The source is therefore microlensed continuously by the
 ensemble, and its light curve reflects the caustic network it drifts across.
 \checkmark
+
+\begin{bridge}[Point-mass caustics versus central images: Chapter~\ref{ch:odd_images}]
+An isolated point mass always gives exactly two images, an even number.  This
+does not violate the odd-number theorem: the theorem assumes a smooth mass
+distribution, and the point mass is singular.  Its caustic is a single
+degenerate point at $u = 0$.  A binary lens or a star field at $\kappab \sim 1$
+(part d) turns that point into extended fold and cusp caustics.
+Chapter~\ref{ch:odd_images} asks the complementary question for a galaxy: what
+a central point mass (a supermassive black hole) does to the third, central
+image that a smooth galaxy core would otherwise produce.
+\end{bridge}

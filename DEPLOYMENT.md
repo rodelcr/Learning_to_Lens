@@ -13,7 +13,7 @@ This produces two files in `Output/`:
 - `Learning_to_Lens_Solutions.pdf` — Instructor edition (with solutions)
 
 The build script runs `pdflatex` twice for each edition (for cross-references).
-The solutions toggle works via `\def\showsolutions{}` passed at compile time.
+The solutions toggle works via `\def\showsolutions{}` passed at compile time; the Annotated Study Edition adds `\def\showannotated{}` (see `Notes/editions.tex`). `build.sh` now produces three PDFs — `Learning_to_Lens.pdf`, `Learning_to_Lens_Solutions.pdf`, `Learning_to_Lens_Annotated.pdf` — and exits non-zero if any integrity assertion fails.
 
 ## Publishing to GitHub Pages (rodelcr.github.io)
 

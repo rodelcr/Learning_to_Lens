@@ -73,6 +73,17 @@ magnifications (×1/λ²), time delays (×λ), and inferred H₀ (×1/λ). Break
 requires stellar kinematics, multiple source planes, or standardizable
 magnifications.
 
+### Compound-Lens Cosmography
+DSPLs measure the H₀-free ratio 𝓑 = (D_ls1·D_s2)/(D_s1·D_ls2) = η^(γ′−1).
+Empirical state of the art (2026): lensing-only DSPL cosmology is
+mass-model-fragile; a stellar-kinematics likelihood is the stabiliser; per-plane
+slope errors are coherent (they stack, not average down); line of sight enters
+𝓑 at the ~1% level. See the "Compound-Lens (DSPL) Cosmography" section of
+`references/domain-knowledge.md` for the benchmark systems (J0946, Carousel,
+AGEL DSPLs) and the notation/identity traps.
+
+The generic derivations behind this section are now textbook chapters: Learning to Lens Part V (PDF chapters 18–25, module dirs 14–21), each with a Wolfram-attested script.
+
 ## Workflow
 
 1. **Identify the physical regime** — weak-field vs. strong-field, galaxy-scale

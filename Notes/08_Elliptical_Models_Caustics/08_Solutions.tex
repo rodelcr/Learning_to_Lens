@@ -53,6 +53,26 @@ The determinant is:
     \frac{\theta_1^2 - \theta_2^2}{\theta^2} \,.
 \end{equation*}
 
+\begin{derivation}[From the matrix to $\det\Amat$]
+Each SIS entry comes from
+$\partial_j(\thetaE\theta_i/\theta) = \thetaE(\delta_{ij}\theta^2 - \theta_i\theta_j)/\theta^3$,
+so $1 - \partial_1\alpha_1 = 1 - \thetaE\theta_2^2/\theta^3 - g$, and so on
+($g \equiv \gamma_{\mathrm{ext}}$).  Multiply out:
+\begin{align*}
+  \det\Amat
+  &= \Big(1-g-\tfrac{\thetaE\theta_2^2}{\theta^3}\Big)\Big(1+g-\tfrac{\thetaE\theta_1^2}{\theta^3}\Big)
+     - \tfrac{\thetaE^2\theta_1^2\theta_2^2}{\theta^6}\\
+  &= 1 - g^2 - \tfrac{\thetaE}{\theta^3}\big[(1+g)\theta_2^2 + (1-g)\theta_1^2\big]
+     + \tfrac{\thetaE^2\theta_1^2\theta_2^2}{\theta^6} - \tfrac{\thetaE^2\theta_1^2\theta_2^2}{\theta^6}\\
+  &= 1 - g^2 - \tfrac{\thetaE}{\theta} + \tfrac{\thetaE}{\theta}\,g\,\tfrac{\theta_1^2-\theta_2^2}{\theta^2}.
+\end{align*}
+The last step uses $\theta_1^2 + \theta_2^2 = \theta^2$.  The $\thetaE^2$ terms
+cancel identically because the SIS Hessian is rank one, so $\det\Amat$ is
+\emph{linear} in $\thetaE/\theta$.  That is why part~(b) gives a closed-form
+$\theta_{\mathrm{crit}}(\phi)$ rather than a quadratic to solve.
+\end{derivation}
+
+
 \textbf{(b)} Setting $\det\Amat = 0$ in polar coordinates
 ($\theta_1 = \theta\cos\phi$, $\theta_2 = \theta\sin\phi$):
 \begin{equation*}
@@ -67,7 +87,8 @@ Solving for $\theta$:
 For $\thetaE = 1''$, $\gamma_{\mathrm{ext}} = 0.1$: at $\phi = 0$,
 $\theta = 0.9/0.99 \approx 0.909''$; at $\phi = \pi/2$,
 $\theta = 1.1/0.99 \approx 1.111''$.  The critical curve is an
-ellipse elongated along $\theta_2$. \checkmark
+oval, close to an ellipse for small $\gamma_{\mathrm{ext}}$ (deviation
+$\approx 1.5\%$ here), elongated along $\theta_2$. \checkmark
 
 \textbf{(c)} Mapping through the lens equation
 $\beta_i = \theta_i - \alpha_i$ at $\theta = \theta_{\mathrm{crit}}(\phi)$
@@ -87,6 +108,18 @@ This traces out a diamond (astroid) with four cusps at $\phi = 0,
 $\beta_1 = \pm 0.2/1.1 \approx \pm 0.182''$
 and $\beta_2 = \pm 0.2/0.9 \approx \pm 0.222''$. \checkmark
 
+\begin{derivation}[The step ``using the result of part~(b)'']
+$(1-g)\theta_{\mathrm{crit}} = \thetaE(1-g\cos2\phi)/(1+g)$, so
+$\beta_1 = \thetaE\cos\phi\,[(1-g\cos2\phi) - (1+g)]/(1+g)
+= -g\thetaE\cos\phi\,(1+\cos2\phi)/(1+g) = -2g\thetaE\cos^3\phi/(1+g)$.
+Likewise $(1+g)\theta_{\mathrm{crit}} = \thetaE(1-g\cos2\phi)/(1-g)$ gives
+$\beta_2 = g\thetaE\sin\phi\,(1-\cos2\phi)/(1-g) = 2g\thetaE\sin^3\phi/(1-g)$.
+The cusps are where $d\vecbeta/d\phi = 0$, i.e.\ $\sin\phi\cos\phi = 0$.  The
+$\phi = 0$ critical point maps to the cusp at $\beta_1 = -0.182''$, on the
+opposite side.
+\end{derivation}
+
+
 \textbf{(d)} An astroid with semi-axes $a$ and $b$ encloses an area
 $3\pi ab/8$, so
 \begin{equation*}
@@ -98,6 +131,21 @@ $3\pi ab/8$, so
 \end{equation*}
 for $\gamma_{\mathrm{ext}} = 0.1$, matching the shoelace-formula area
 computed numerically in \texttt{problems\_08.wl}.
+
+\begin{derivation}[The astroid area $3\pi ab/8$]
+For $\beta_1 = a\cos^3\phi$, $\beta_2 = b\sin^3\phi$ (the sign of $\beta_1$
+only reverses the orientation), $d\beta_2 = 3b\sin^2\phi\cos\phi\,d\phi$ and
+\[
+  \text{Area} = \Big|\oint\beta_1\,d\beta_2\Big|
+  = 3ab\int_0^{2\pi}\cos^4\phi\,\sin^2\phi\,d\phi = 3ab\cdot\frac{\pi}{8}.
+\]
+With $a = 2g\thetaE/(1+g)$ and $b = 2g\thetaE/(1-g)$,
+$ab = 4g^2\thetaE^2/(1-g^2)$, which gives the expression above:
+$0.0476$~arcsec$^2$ for $g = 0.1$.  Compare the area of the critical curve,
+$\approx\pi\thetaE^2$.  The quad region is only about $1.5\%$ of that, one
+reason (before magnification bias) why doubles outnumber quads.
+\end{derivation}
+
 
 % ----- Exercise 8.2 -----
 \subsection*{Exercise~\ref{ex:sie_caustic}: SIE Tangential Caustic}
@@ -117,13 +165,30 @@ $\sqrt{q} \approx 0.837$.
 \textbf{(b)} The critical curve and caustic are computed numerically
 by evaluating $\det\Amat$ on a fine grid (or parametrically) and
 mapping the critical curve through the lens equation.  The critical
-curve is an oval elongated \emph{along} the mass major axis $\theta_1$
+curve is the ellipse $q^2\theta_1^2 + \theta_2^2 = q\thetaE^2$, elongated \emph{along} the mass major axis $\theta_1$
 (crossing $\theta_1$ at $\pm\thetaE/\sqrt{q}$, $\theta_2$ at
 $\pm\thetaE\sqrt{q}$), and its image in the source plane is the
 diamond (astroid) caustic, also elongated along $\beta_1$ for $q < 1$.
 For $q = 0.7$ the cusps lie at
 $|\beta_1| \approx 0.263\,\thetaE$ on the $\beta_1$-axis and
 $|\beta_2| \approx 0.213\,\thetaE$ on the $\beta_2$-axis.
+
+\begin{derivation}[Cusp positions in closed form]
+The critical curve is the ellipse $q^2\theta_1^2 + \theta_2^2 = q\thetaE^2$
+(chapter, \S\ref{sec:sie}), so its axis points are
+$(\thetaE/\sqrt{q}, 0)$ and $(0, \thetaE\sqrt{q})$.  There $F = \thetaE\sqrt{q}$
+and the arctan/arctanh arguments are $k/q$ and $k$ ($k = \sqrt{1-q^2} = 0.714$).
+Hence
+\begin{align*}
+  \beta_1^{\mathrm{cusp}} &= \tfrac{1}{\sqrt{0.7}} - \tfrac{\sqrt{0.7}}{0.714}\arctan\tfrac{0.714}{0.7}
+  = 1.195 - 0.932 = 0.263,\\
+  \beta_2^{\mathrm{cusp}} &= \sqrt{0.7} - \tfrac{\sqrt{0.7}}{0.714}\operatorname{arctanh}0.714
+  = 0.837 - 1.049 = -0.213
+\end{align*}
+(in units of $\thetaE$).  No root-finding is needed for the cusps, only for
+the fold segments in between.
+\end{derivation}
+
 
 \textbf{(c)} The caustic area for $q = 0.7$ is approximately
 $0.066\,\mathrm{arcsec}^2$.  This is less than half the area of the
@@ -135,6 +200,20 @@ $3\pi\gamma_{\mathrm{ext}}^2\thetaE^2/[2(1-\gamma_{\mathrm{ext}}^2)]
 correspondence $\gamma_{\mathrm{ext}} = (1-q)/(1+q)$ between ellipticity
 and shear is only rough; see \texttt{problems\_08.wl} for numerical
 details.
+
+\begin{annotation}[Equivalent shear: magnitude rough, direction perpendicular]
+Two cautions about ``equivalent shear''.  First, the magnitude:
+using $(1-q)/(1+q)$ as a shear overestimates the caustic area by a factor
+$1/0.433 = 2.3$ here, so treat the mapping as a rough heuristic.
+Second, the direction: the
+SIE elongated along $\theta_1$ has a \emph{negative} $\cos2\phi$ term in its
+potential ($-0.059\,\thetaE$ for $q = 0.7$), so the shear that mimics it has
+$\phi_\gamma = \phi_q + 90^\circ$.  The SIS$+$shear critical curve is
+elongated \emph{perpendicular} to $\phi_\gamma$, which is the SIE major axis.
+Ellipticity and a perpendicular shear act in the same sense on the critical
+curve, which is why the two can partly trade off in a fit.
+\end{annotation}
+
 
 % ----- Exercise 8.3 -----
 \subsection*{Exercise~\ref{ex:fold_magnification}: Fold Magnification Scaling}
@@ -156,6 +235,19 @@ on each side of the critical curve.
 
 For $\beta_\perp < 0$ (source on the single-image side): no real
 solutions.  The images have merged and disappeared. \checkmark
+
+\begin{annotation}[Why the linear term vanishes, and why this is not the whole map]
+Expand the lens map about a point $\vectheta_0$ on the critical curve:
+$\vecbeta - \vecbeta_0 = \Amat(\vectheta_0)(\vectheta-\vectheta_0) + O(|\vectheta-\vectheta_0|^2)$.
+On the critical curve $\Amat$ has a zero eigenvalue.  Along that eigenvector
+the linear term is absent, and the first surviving term is quadratic.  Along
+the other eigenvector the map stays linear, $\beta_\parallel \simeq
+c\,\theta_\parallel$, which only contributes a finite factor $1/|c|$ to
+$|\mu|$.  The one-dimensional model of this exercise captures exactly the
+divergent factor.  The full two-dimensional version is the fold box in the
+chapter (\S\ref{sec:fold_cusp}).
+\end{annotation}
+
 
 \textbf{(b)} The Jacobian of this simplified mapping is:
 \begin{equation*}
@@ -184,23 +276,48 @@ Since the two images have $\theta_\perp$ values with opposite signs,
 they have opposite signs of $\det\Amat$ and hence opposite
 parities. \checkmark
 
+\begin{annotation}[A corollary worth remembering]
+Because $\mu_\pm = \pm 1/(2\sqrt{a\beta_\perp})$, the two merging images have
+equal flux and their \emph{signed} magnifications cancel: $\mu_+ + \mu_- = 0$
+at leading order.  This is the fold relation.  An observed fold pair with very
+unequal fluxes, measured in a band free of microlensing and dust, is the
+signature of small-scale structure (Chapter~\ref{ch:galaxy_lensing},
+\S\ref{sec:flux_anomaly}).
+\end{annotation}
+
+
 % ----- Exercise 8.4 -----
 \subsection*{Exercise~\ref{ex:sie_images}: SIE Image Positions}
 
 \textbf{(a)} For $\vecbeta = (0.1, 0.2)''$ with $\thetaE = 1''$,
 $q = 0.8$: The tangential caustic of this SIE has cusps at
-approximately $\beta \approx 0.1''$.  The source at
-$|\vecbeta| \approx 0.224''$ is outside the tangential caustic,
-so we expect a \textbf{double} (2 bright images).
+$|\beta_1| \approx 0.159''$ and $|\beta_2| \approx 0.139''$.  The
+source has $\beta_2 = 0.2'' > 0.139''$, the largest $|\beta_2|$
+anywhere on the caustic, so it lies outside the tangential caustic
+but well inside the cut: a \textbf{double} (2 bright images).
+
+\begin{annotation}[A sharper inside/outside test]
+Comparing $|\vecbeta|$ with a single ``cusp radius'' is only a rough guide,
+because the diamond is not round; the caustic's extent along each axis
+(here the maximum $|\beta_2|$, reached at the cusp) is the cleaner test.
+\end{annotation}
+
 
 \textbf{(b)} Solving the lens equation numerically (see
 \texttt{problems\_08.wl}), two bright images are found:
 \begin{itemize}
-    \item Image A: $\vectheta_A \approx (0.53, 0.79)''$
-    \item Image B: $\vectheta_B \approx (-0.37, -0.52)''$
+    \item Image A: $\vectheta_A \approx (0.36, 1.20)''$, $\mu_A \approx +3.67$
+    \item Image B: $\vectheta_B \approx (-0.56, -0.55)''$, $\mu_B \approx -3.82$
 \end{itemize}
-(Exact values depend on the numerical solver and are verified in
-the Mathematica script.)
+
+\begin{annotation}[What the script actually returns]
+\texttt{problems\_08.wl} also prints the lens-equation residuals
+($\sim10^{-16}$).  Sanity check: the positive-parity image lies on the same
+side as the source $(0.1, 0.2)''$, roughly along its direction, and outside
+the critical ellipse; the negative-parity image lies on the opposite side,
+inside it.
+\end{annotation}
+
 
 \textbf{(c)} The magnifications are computed from
 $\mu = 1/\det\Amat$ at each image position:
@@ -208,16 +325,31 @@ $\mu = 1/\det\Amat$ at each image position:
     \item $\mu_A > 0$ (Type~I, positive parity)
     \item $\mu_B < 0$ (Type~II, negative parity)
 \end{itemize}
-Exact values are in \texttt{problems\_08.wl}.
+This gives the values quoted in~(b), $\mu_A \approx +3.67$ and
+$\mu_B \approx -3.82$ (\texttt{problems\_08.wl}).
 
-\textbf{(d)} For the singular SIE, the signed magnification sum
-$\mu_A + \mu_B$ may be slightly negative because the ``missing''
-central image (swallowed by the singularity) would contribute a
-small positive magnification.  For a non-singular lens, the sum
-over \textit{all} images (including the central one) satisfies
-$\sum_i \mu_i > 0$.  In this example, the sum of the two
-observable images is close to zero, consistent with the central
-image having small positive $|\mu|$. \checkmark
+\begin{derivation}[Magnifications by hand from $\mu = 1/(1-2\kappab)$]
+For any isothermal lens $\det\Amat = 1-2\kappab$ (chapter,
+\S\ref{sec:sie_deflection}), with $2\kappab = \sqrt{q}/\sqrt{q^2\theta_1^2+\theta_2^2}$
+for $\thetaE = 1''$.  For $q = 0.8$:
+\begin{align*}
+  (0.358, 1.195):&\quad F = 1.229,\ 2\kappab = 0.728,\ \mu = 1/0.272 = +3.67,\\
+  (-0.564, -0.547):&\quad F = 0.709,\ 2\kappab = 1.262,\ \mu = 1/(-0.262) = -3.82 .
+\end{align*}
+No numerical derivatives are needed.
+\end{derivation}
+
+
+\textbf{(d)} For the singular SIE the central image is swallowed
+by the singularity, so only $\mu_A$ and $\mu_B$ are observable.  In
+this example $\mu_A + \mu_B = 3.67 - 3.82 = -0.15$, small compared
+with the individual $|\mu| \approx 3.7$.  For comparison the SIS
+gives $\mu_+ + \mu_- = (1 + 1/y) + (1 - 1/y) = +2$ for every double
+($0 < y < 1$), with the same missing central image, so the
+two-image sum is model-dependent and not by itself evidence about
+the central image. \checkmark
+
+
 
 % ----- Exercise 8.5 -----
 \subsection*{Exercise~\ref{ex:burke_verification}: Burke's Odd-Number Theorem for the SIE}
@@ -228,6 +360,15 @@ the central image is formally at the singularity and has zero flux.
 In the distributional sense, there are 2 observable images (even
 number).  For a regularized (non-singular) version, a faint third
 image would appear near the center, giving 3 (odd). \checkmark
+
+\begin{annotation}[Where the image count changes for this lens]
+For $q = 0.7$ the source $(0.5, 0)''$ lies between the tangential caustic
+(cusp at $0.263''$) and the cut ($0.932''$ on this axis): two bright images.
+Moving it beyond $0.932''$ would leave one.  In a cored version, the cut is
+replaced by the radial caustic, and crossing it inward creates the pair
+(Type~II $+$ the faint Type~III) that turns $1 \to 3$.
+\end{annotation}
+
 
 \textbf{(b)} Source at $\vecbeta = (0.05, 0.05)''$ (inside tangential
 caustic): Four bright images are found.  Again, for the singular SIE,
@@ -240,6 +381,15 @@ a non-singular version, 5 images (odd). \checkmark
 1 Type~III) and 2 negative-parity images (2 Type~II).  The count
 of positive-parity minus negative-parity images is $3 - 2 = 1$.
 \checkmark
+
+\begin{annotation}[Checking the parity count without the central image]
+With only the bright images the singular SIE gives $N_+ - N_- = 2 - 2 = 0$
+(quad) and $1 - 1 = 0$ (double).  The ``missing'' $+1$ is precisely the
+Type~III image that the singularity removes.  This is a quick diagnostic: a
+smooth model returning $N_+ - N_- \neq 1$ has lost an image in the solver or
+has a singularity.
+\end{annotation}
+
 
 \textbf{(d)} The SIE is singular at the origin, which means the lens
 potential diverges and the central image is infinitely demagnified

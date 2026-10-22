@@ -1,0 +1,296 @@
+% =============================================================================
+% Module 14: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included from main.tex via \ifsolutions
+% Every number is attested by Solutions/14_Multiplane_DSPL/problems_14.wl
+% \annot{check ids quoted in each [Attested: ...] line}.
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:mp_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
+which verifies each answer symbolically and numerically.  Distances are
+computed in the script from the comoving-distance integral of
+eq.~\eqref{eq:mp_DA} for flat cosmologies, with
+$\Hubble=70$\,km\,s$^{-1}$\,Mpc$^{-1}$ wherever an absolute distance is
+quoted.  We write $\chi_x\equiv\chi(z_x)$.
+
+% ----- Exercise 14.1 -----
+\subsection*{Exercise~\ref{ex:mp_hubble_free}: $\Brat$ Is Hubble-Free}
+
+The two observer-to-source distances start at $\chi(0)=0$; the two
+lens-to-source distances start at $\chi_l$:
+\begin{align*}
+  D_{s1} &= \frac{c}{\Hubble}\,\frac{\tilde\chi_{s1}}{1+z_{s1}}, &
+  D_{s2} &= \frac{c}{\Hubble}\,\frac{\tilde\chi_{s2}}{1+z_{s2}}, \\
+  D_{l,s1} &= \frac{c}{\Hubble}\,\frac{\tilde\chi_{s1}-\tilde\chi_l}{1+z_{s1}}, &
+  D_{l,s2} &= \frac{c}{\Hubble}\,\frac{\tilde\chi_{s2}-\tilde\chi_l}{1+z_{s2}},
+\end{align*}
+with $\tilde\chi=\int_0^z\dd z'/E$.  The $(1+z)$ in each denominator is
+set by the \emph{far} endpoint, so $D_{s1}$ and $D_{l,s1}$ both carry
+$(1+z_{s1})^{-1}$, and $D_{s2}$ and $D_{l,s2}$ both carry
+$(1+z_{s2})^{-1}$.  In
+$\Brat=D_{l,s1}D_{s2}/(D_{s1}D_{l,s2})$ the numerator and the
+denominator each contain two factors of $c/\Hubble$, one of
+$(1+z_{s1})^{-1}$ and one of $(1+z_{s2})^{-1}$.  They cancel, leaving
+\begin{equation*}
+  \Brat = \frac{(\chi_{s1}-\chi_l)\,\chi_{s2}}{\chi_{s1}\,(\chi_{s2}-\chi_l)} .
+\end{equation*}
+The lens redshift never appears in a prefactor because no distance in
+$\Brat$ \emph{ends} at the lens; $z_l$ enters only through $\chi_l$.
+Because $\Hubble$ multiplies every $\chi$ by the same constant, only the
+\emph{shape} of $E(z)$ survives.  Numerically, at the illustrative
+geometry, $\Brat=0.6742$ for $\Hubble=50$, 70 and 100 alike.
+
+\emph{[Attested: \solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
+checks 1a--1e.]}
+
+% ----- Exercise 14.2 -----
+\subsection*{Exercise~\ref{ex:mp_isothermal}: The Isothermal Ruler}
+
+With $\gp=2$ the exponent in $\Brat=\etamea^{\gp-1}$ is one, so
+$\Brat=\etamea$.  Directly: for $\gp=2$, eq.~\eqref{eq:mp_plaw} gives
+$\alpha_i(\theta)=\thetaE^{(i)}$, a constant.  The pointwise relation
+$\alpha_2=\alpha_1/\Brat$ then reads $\thetaE^{(2)}=\thetaE^{(1)}/\Brat$,
+i.e.\ $\etamea=\Brat$.
+
+\textbf{Geometry.}  An SIS bends every ray by the same physical angle
+$\alphahat=4\pi\sigma_v^2/c^2$.  The reduced deflection on plane $i$ is
+that angle times the efficiency, $\alpha_i=(D_{l,si}/D_{si})\alphahat$,
+and for a constant-deflection lens the Einstein radius equals the
+reduced deflection: the ray that lands on the ring is the one carried
+exactly to the optical axis.  The deflector physics $\alphahat$ is common
+to both planes and cancels:
+\begin{equation*}
+  \etamea=\frac{\alpha_1}{\alpha_2}
+        =\frac{D_{l,s1}/D_{s1}}{D_{l,s2}/D_{s2}}=\Brat .
+\end{equation*}
+At $\gp=2$ the ratio of Einstein radii is the ratio of two lensing
+efficiencies, with no residual dependence on $\sigma_v$.
+
+\emph{[Attested: \solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
+checks 2a--2c.]}
+
+% ----- Exercise 14.3 -----
+\subsection*{Exercise~\ref{ex:mp_slope_lever}: The Slope Lever Arm}
+
+\textbf{(a)} $\ln\Brat=(\gp-1)\ln\etamea$, so
+\begin{equation*}
+  \pderiv{\ln\Brat}{\gp}\bigg|_{\etamea}=\ln\etamea ,
+\end{equation*}
+which contains no $\gp$.  Since $\etamea<1$ it is negative: a steeper
+fitted slope lowers $\Brat$.
+
+\textbf{(b)} $\etamea=\Brat^{1/(\gp-1)}=0.6742^{1/0.9}=0.6453$ and
+$\ln\etamea=-0.4381$.  A $1\%$ error requires
+$|\delta\gp|=0.01/|\ln\etamea|=0.0228$.
+
+\textbf{(c)} $\delta\Brat/\Brat=\ln\etamea\,\delta\gp=-0.4381\times0.03
+=-1.31\%$.  With $S_w=-0.0330$, eq.~\eqref{eq:mp_propagate} gives, at
+fixed $\Omegam$, $\delta w=(-0.0131)/(-0.0330)=+0.40$.  A slope bias of a few hundredths,
+with a perfectly measured $\etamea$, is enough to move the inferred $w$
+by several tenths at this geometry.
+
+\emph{[Attested: \solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
+checks 3a--3f.]}
+
+% ----- Exercise 14.4 -----
+\subsection*{Exercise~\ref{ex:mp_naive_distance}: The Cost of $D_{ds}=D_s-D_d$}
+
+\textbf{(a)} In a flat universe
+$D_d=\chi_d/(1+z_d)$, $D_s=\chi_s/(1+z_s)$ and
+$D_{ds}=(\chi_s-\chi_d)/(1+z_s)$.  Comoving distances subtract, but the
+naive difference divides the two comoving pieces by different factors:
+\begin{equation*}
+  (D_s-D_d)-D_{ds}=\frac{\chi_d}{1+z_s}-\frac{\chi_d}{1+z_d}
+  =\chi_d\Big[\frac{1}{1+z_s}-\frac{1}{1+z_d}\Big],
+\end{equation*}
+which is strictly negative for every $z_s>z_d>0$ (it vanishes only in the
+trivial limits $z_d\to0$ or $z_d\to z_s$).
+
+\textbf{(b)} $D_d=1259.08$\,Mpc, $D_s=1726.62$\,Mpc, $D_{ds}=1097.08$\,Mpc,
+while $D_s-D_d=467.54$\,Mpc.  The naive value is wrong by $629.54$\,Mpc,
+more than half of the true $D_{ds}$.
+
+\textbf{(c)} At $(0.5,1.0,2.0)$ the naive ``ratio'' is $0.8782$ against
+the true $\Brat=0.6742$, an error of $+30.3\%$.  Read through
+eq.~\eqref{eq:mp_propagate} this would be a shift of order $8$ in $w$ ---
+far outside the linear regime, and far larger than any physical signal
+in $\Brat$.
+
+\emph{[Attested: \solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
+checks 4a--4f.]}
+
+% ----- Exercise 14.5 -----
+\subsection*{Exercise~\ref{ex:mp_limits}: Limits of $\Brat$}
+
+\textbf{(a)} Setting $\chi_{s1}=\chi_l$ in eq.~\eqref{eq:mp_Bchi} gives
+$\Brat=0$: a source on the lens plane is not lensed at all, so the ratio
+of efficiencies vanishes.  Setting $\chi_{s2}=\chi_{s1}$ gives $\Brat=1$:
+two coincident sources have equal efficiencies and carry no
+cosmological information.
+
+\textbf{(b)}
+$\partial\Brat/\partial\chi_{s2}=-\Brat\,\chi_l/[\chi_{s2}(\chi_{s2}-\chi_l)]$,
+negative for $0<\chi_l<\chi_{s2}$.
+
+\textbf{(c)} For flat $\Lambda$CDM with $\Omegam=0.3$,
+$\chi(\infty)=3.305\,c/\Hubble$; the integrand $1/E$ falls as
+$(1+z)^{-3/2}$, so the integral converges.  Hence
+$\Brat(0.5,1.0,z_{s2}\to\infty)=0.4943$: even an infinitely distant
+second source gives a finite ratio, below the $0.6742$ of
+$z_{s2}=2$.
+
+\emph{[Attested: \solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
+checks 5a--5d.]}
+
+% ----- Exercise 14.6 -----
+\subsection*{Exercise~\ref{ex:mp_coupling}: How Big Is Lens--Lens Coupling?}
+
+\textbf{(a)} An SIS of dispersion $\sigma$ deflects every ray by
+$4\pi\sigma^2/c^2$.  Reduced to the far-source plane, the main lens gives
+$\theta_{\rm E}(l\to s2)=4\pi(\sigma_L^2/c^2)\,D_{l,s2}/D_{s2}$ and the
+near source gives
+$\theta_{\rm E}(s1\to s2)=4\pi(\sigma_1^2/c^2)\,D_{s1,s2}/D_{s2}$.
+Their ratio is
+$(\sigma_1/\sigma_L)^2\,D_{s1,s2}/D_{l,s2}$; in a flat universe both
+distances end at $z_{s2}$, so the $(1+z_{s2})$ factors cancel and the
+ratio is $(\sigma_1/\sigma_L)^2(\chi_{s2}-\chi_{s1})/(\chi_{s2}-\chi_l)$.
+
+\textbf{(b)} As $\chi_{s1}\to\chi_{s2}$ the numerator vanishes: a mass
+on the far-source plane cannot deflect that source's light.  As
+$\chi_{s1}\to\chi_l$ the geometric factor tends to one and the two
+galaxies act as one plane, with the deflections in the ratio of
+$\sigma^2$.
+
+\textbf{(c)} At $(0.5,1.0,2.0)$ the geometric factor is $0.570$.  For
+$\sigma_1/\sigma_L=0.4$ the coupling deflection is $9.1\%$ of the main
+lens's; for $0.6$ it is $20.5\%$.
+
+\emph{[Attested: \solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
+checks 6a--6d.]}
+
+% ----- Exercise 14.7 -----
+\subsection*{Exercise~\ref{ex:mpi_shape_shear}: What Cancels in $\etamea$}
+
+\textbf{(a)} Write
+$\thetaE^{(i)}=[4\pi\sigma_v^2/c^2]\,f(q,\varphi)\,D_{l,si}/D_{si}$.  The
+mass factor and $f$ are properties of the deflector, identical for $i=1,2$,
+so
+$\etamea=(D_{l,s1}/D_{s1})/(D_{l,s2}/D_{s2})=\Brat$ for \emph{any} $f$.
+The argument never used the specific form of $f$, only that the ellipse
+does not know where the source sits.  It also shows the ratio is
+convention-free.
+
+\textbf{(b)} Let the lens-plane mass consist of the SIE plus a perturber
+at $z_l$ that produces, near the lens, a constant shear.  Reduced to
+plane $i$ the total deflection is
+\begin{equation*}
+  \vecalpha^{(i)}(\vectheta)=\frac{D_{l,si}}{D_{si}}
+  \Big[\hat{\vecalpha}_{\rm SIE}(\vectheta)+\Gamma\vectheta\Big],
+  \qquad
+  \Gamma=\begin{pmatrix}\gamma_1&\gamma_2\\ \gamma_2&-\gamma_1\end{pmatrix},
+\end{equation*}
+with one efficiency per plane because both components sit at $z_l$.
+Hence $\vecalpha^{(2)}=\vecalpha^{(1)}/\Brat$ exactly, and the reduced
+shear itself scales as $\gamma^{(2)}=\gamma^{(1)}/\Brat$.  A model that
+gives each plane its own reduced shear, related by the same factor
+$1/\Brat$ as the SIE normalisation, reproduces both image systems with
+$\etamea=\Brat$, where $\etamea$ is the ratio of the fitted $\thetaE$
+parameters.  The radii of the critical curves do not share this exact
+scaling: the SIE deflection is of degree zero in $\vectheta$ and the
+shear term of degree one, so the critical curve on plane 2 is not a
+rescaled copy of the one on plane 1.  If instead a fit forces one shear value on both
+planes, it is mis-specified, and the resulting ratio of Einstein radii
+is only approximately $\Brat$.
+
+\textbf{(c)} A perturber at $\chi_{s1}<\chi_p<\chi_{s2}$ lies behind
+source 1, so its efficiency towards plane 1 is zero, while towards plane
+2 it is $(\chi_{s2}-\chi_p)/\chi_{s2}>0$.  It deflects the far source
+only.  Its effect is not a common multiple of the main lens's
+efficiencies and leaves a genuine plane-to-plane residual in $\etamea$;
+the same holds, less dramatically, for any perturber not at $z_l$.
+
+\emph{[Attested: \solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
+checks 7a--7d; \texttt{multiplane\_dspl.wl} check 4h.]}
+
+% ----- Exercise 14.8 -----
+\subsection*{Exercise~\ref{ex:mpi_two_channel}: Two Channels}
+
+From $\ln\Brat=(\gp-1)\ln\etamea$, the total differential, treating
+$\etamea$ and $\gp$ as independent, is
+\begin{equation*}
+  \dd\ln\Brat=(\gp-1)\,\frac{\dd\etamea}{\etamea}+\ln\etamea\,\dd\gp ,
+\end{equation*}
+which is eq.~\eqref{eq:mpi_twochannel}.  For $0<\etamea<1$,
+$\ln\etamea<0$; for $\gp>1$, $\gp-1>0$.  The ratio channel and the slope
+channel have opposite signs.  Even at $\gp=2$, where $\Brat=\etamea$, the
+slope coefficient $\ln\etamea$ is nonzero: the identity holds at the
+isothermal point but is not protected against slope errors.
+
+\emph{[Attested: \solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
+checks 8a--8d.]}
+
+% ----- Exercise 14.9 -----
+\subsection*{Exercise~\ref{ex:mpi_degeneracy}: The Single-Lens Degeneracy}
+
+In parametrisation (b), each likelihood call computes
+$\Brat(\Omegam,w)$ and feeds only that number into
+eq.~\eqref{eq:mpi_plane2fit}.  So
+$\chi^2(\mathbf{p}_{\rm mod},\Omegam,w)=\chi^2(\mathbf{p}_{\rm mod},\Brat(\Omegam,w))$,
+and two cosmologies with equal $\Brat$ give identical $\chi^2$ for every
+$\mathbf{p}_{\rm mod}$: the likelihood is constant along each level
+curve.  On a level curve,
+\begin{equation*}
+  \dd\Brat=\pderiv{\Brat}{\Omegam}\dd\Omegam+\pderiv{\Brat}{w}\dd w=0
+  \;\Longrightarrow\;
+  \deriv{w}{\Omegam}\bigg|_{\Brat}
+  =-\frac{\partial\Brat/\partial\Omegam}{\partial\Brat/\partial w}
+  =-\frac{S_{\Omegam}}{S_w},
+\end{equation*}
+the factor $\Brat$ cancelling between numerator and denominator.  At the
+illustrative geometry $S_{\Omegam}=-0.0357$ and $S_w=-0.0330$, so the
+slope is $-1.08$: raising $\Omegam$ (which lowers $\Brat$) must be
+compensated by lowering $w$ (which raises it).  Numerically, a step of
+$0.01$ in $\Omegam$ along this direction changes $\ln\Brat$ more than
+$40$ times less than the same step taken perpendicular to it.
+
+\emph{[Attested: \solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
+checks 9a--9d.]}
+
+% ----- Exercise 14.10 -----
+\subsection*{Exercise~\ref{ex:mpi_error_budget}: Where to Spend Observing Time}
+
+The coefficients of eq.~\eqref{eq:mpi_twochannel} are
+$c_\eta=\gp-1=0.60$ and $c_\gamma=\ln\etamea=\ln0.72=-0.3285$.  With
+$\sigma_\eta/\etamea=0.01/0.72$ and $\sigma_{\gp}=0.05$:
+\begin{equation*}
+  \text{ratio channel } c_\eta\frac{\sigma_\eta}{\etamea}=0.00833,\qquad
+  \text{slope channel } c_\gamma\sigma_{\gp}=-0.01643 .
+\end{equation*}
+The variance is
+\begin{equation*}
+  \Big(\frac{\sigma_\Brat}{\Brat}\Big)^2
+  =c_\eta^2\Big(\frac{\sigma_\eta}{\etamea}\Big)^2+c_\gamma^2\sigma_{\gp}^2
+  +2\rho\,c_\eta c_\gamma\frac{\sigma_\eta}{\etamea}\sigma_{\gp},
+\end{equation*}
+and because $c_\gamma<0<c_\eta$ with $\rho>0$, the cross term is
+negative, $-2.190\times10^{-4}$.  The total is
+$\sigma_\Brat/\Brat=1.10\%$; without the correlation it would be
+$1.84\%$, so the positive correlation reduces the error by $40\%$.
+
+The slope channel carries $3.9$ times the variance of the ratio channel.
+Better astrometry shrinks only the smaller, ratio channel; pinning the
+slope attacks the dominant term.  Stellar kinematics, the radial
+thickness of extended arcs and a detected radial or central image are
+all ways to do that (\S\ref{sec:mpi_degeneracy}).  For $|S_w|=0.0330$
+the result maps to $\sigma_w=0.0110/0.0330=0.33$ from this single lens,
+at fixed $\Omegam$.  With $\Omegam$ free, one lens leaves $w$
+unconstrained along the degeneracy of
+Exercise~\ref{ex:mpi_degeneracy}.
+
+\emph{[Attested: \solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
+checks 10a--10g and 9a--9d.]}

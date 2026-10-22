@@ -40,15 +40,88 @@ $\Sigmacr \approx 4.91$~kg\,m$^{-2}$ for these distances):
     \kappa_s &= 2\rho_s\, r_s / \Sigmacr \approx 0.40 \,.
 \end{align*}
 
+\begin{derivation}[Exercise~\ref{ex:nfw_cluster_einstein}(a), the NFW numbers line by line]
+\textit{Critical density.} With $H_0 = 70$~km\,s$^{-1}$\,Mpc$^{-1}
+= 2.268\ee{-18}$~s$^{-1}$, the definition
+$\rho_{\mathrm{crit},0} = 3H_0^2/(8\pi\Gnewton)$ gives
+$9.20\ee{-27}$~kg\,m$^{-3}$.  For flat $\Omegam = 0.3$,
+$E^2(z) = \Omegam(1+z)^3 + \OmegaL$, so
+$E^2(0.3) = 0.3 \times 1.3^3 + 0.7 = 0.3\times2.197 + 0.7 = 1.3591$.
+
+\textit{Virial radius.} $M_{200} = 5\ee{14} \times 1.989\ee{30}
+= 9.945\ee{44}$~kg.  Inverting the definition of $M_{200}$ (cube root of
+both sides) gives $r_{200} = 1.478$~Mpc, and $r_s = r_{200}/c = 295.6$~kpc.
+
+\textit{Characteristic density (rule: equate two expressions for the same
+mass).}  Integrating the NFW profile,
+\begin{equation*}
+    M(<r_{200}) = \int_0^{c r_s} \frac{4\pi r^2\,\rho_s\,dr}
+    {(r/r_s)(1+r/r_s)^2}
+    = 4\pi\rho_s r_s^3\left[\ln(1+c) - \frac{c}{1+c}\right]
+    \equiv 4\pi\rho_s r_s^3\, m(c)\,,
+\end{equation*}
+and setting this equal to $\tfrac{4\pi}{3}\,200\,\rho_{\mathrm{crit}}
+(c\,r_s)^3$ cancels $4\pi r_s^3$ and leaves
+$\rho_s = \tfrac{200}{3}\rho_{\mathrm{crit}}\,c^3/m(c)$, the formula quoted.
+With $m(5) = \ln 6 - 5/6 = 0.9584$ this is $1.09\ee{-22}$~kg\,m$^{-3}$.
+
+\textit{Angular and dimensionless versions.}  With $\Dd = 918.8$~Mpc,
+$\theta_s = r_s/\Dd = 3.218\ee{-4}$~rad, and multiplying by
+$206265''$/rad gives $66.4''$.  $\Sigmacr = (\speedoflight^2/4\pi\Gnewton)\,
+\Ds/(\Dd\Dds) = 4.91$~kg\,m$^{-2}$ ($= 2.35\ee{15}\,\Msun$\,Mpc$^{-2}$) for
+$\Dd, \Ds, \Dds = 918.8, 1726.6, 1328.5$~Mpc.  Finally
+$\kappa_s = 2\rho_s r_s/\Sigmacr = 0.404$.  The factor~2 is this text's
+convention ($\kappab = \kappa_s f(x)$, Chapter~\ref{ch:axisymmetric_models});
+references that write $\kappab = 2\kappa_s f(x)$ define
+$\kappa_s = \rho_s r_s/\Sigmacr$, which is half as large.  Check which one
+a paper uses before you compare $\kappa_s$ values.
+\end{derivation}
+
+\begin{annotation}[$\rho_{\mathrm{crit}}(z)$ versus $\rho_{\mathrm{crit},0}$]
+$M_{200}$ is defined against the critical density \emph{at the lens
+redshift}, $\rho_{\mathrm{crit}}(z_d) = \rho_{\mathrm{crit},0}E^2(z_d)$.
+Using $\rho_{\mathrm{crit},0}$ instead is a common slip and it is not
+small.  At fixed $M_{200}$, $r_{200} \propto \rho_{\mathrm{crit}}^{-1/3}$
+grows by $E^{2/3}(0.3) = 1.108$ (to $1.64$~Mpc).  Since
+$\rho_s \propto \rho_{\mathrm{crit}}$ and $r_s \propto
+\rho_{\mathrm{crit}}^{-1/3}$, $\kappa_s \propto \rho_s r_s \propto
+\rho_{\mathrm{crit}}^{2/3}$ drops from $0.404$ to $0.329$.  Because the NFW
+Einstein radius depends exponentially on $1/\kappa_s$ (next box),
+$\thetaE$ falls from $6.9''$ to $4.3''$, a 38\% error from one wrong
+density.
+\end{annotation}
+
 \textbf{(b)} The tangential critical curve radius satisfies
 $\bar{\kappa}(x_t) = 1$, i.e.,
 $(2\kappa_s / x_t^2)[\ln(x_t/2) + g(x_t)] = 1$
-(see eq.~\eqref{eq:nfw_alpha} in Module~7).
+(see eq.~\eqref{eq:nfw_alpha} in Chapter~\ref{ch:axisymmetric_models}).
 Solving numerically (see \texttt{problems\_10.wl}) gives
 $x_t \approx 0.104$, so:
 \begin{equation*}
     \thetaE = x_t\, \theta_s \approx 0.104 \times 66.4'' \approx 6.9'' \,.
 \end{equation*}
+
+\begin{derivation}[Exercise~\ref{ex:nfw_cluster_einstein}(b), why $x_t$ is so small]
+For $x \ll 1$, expand $g(x) = \operatorname{arccosh}(1/x)/\sqrt{1-x^2}$
+(Taylor series of each factor in $x$; $\operatorname{arccosh}(1/x) =
+\ln(2/x) - x^2/4 + \dots$).  The $\ln$ terms cancel at leading order and
+\begin{equation*}
+    \ln\frac{x}{2} + g(x) = \frac{x^2}{2}\left[\ln\frac{2}{x}
+    - \frac12\right] + \order{x^4\ln x}\,,
+    \qquad\text{so}\qquad
+    \bar\kappa(x) \simeq \kappa_s\left[\ln\frac{2}{x} - \frac12\right].
+\end{equation*}
+Setting $\bar\kappa(x_t) = 1$ and exponentiating,
+\begin{equation*}
+    \ln\frac{2}{x_t} = \frac{1}{\kappa_s} + \frac12
+    \quad\Longrightarrow\quad
+    x_t \simeq 2\,e^{-1/\kappa_s - 1/2} = 2\,e^{-2.976} = 0.102\,,
+\end{equation*}
+within 2\% of the numerical root $0.104$.  The exponential sensitivity to
+$1/\kappa_s$ is why a modest change in concentration or in
+$\rho_{\mathrm{crit}}$ moves a cluster's Einstein radius so much.  Then
+$\thetaE = 0.104 \times 66.4'' = 6.90''$.
+\end{derivation}
 
 \textbf{(c)} The projected mass enclosed within $\thetaE$ is
 $M(\thetaE) = \pi\,(\Dd\,\thetaE)^2\,\Sigmacr\,\bar\kappa(\thetaE)
@@ -60,6 +133,16 @@ definition):
     \approx 7.0\ee{12}\,\Msun \,.
 \end{equation*}
 
+\begin{derivation}[Exercise~\ref{ex:nfw_cluster_einstein}(c), the arithmetic]
+Convert to radians first ($1'' = 4.848\ee{-6}$~rad):
+$\RE = \Dd\thetaE = 918.8~\text{Mpc}\times 6.90\times4.848\ee{-6}
+= 30.7~\text{kpc} = 9.49\ee{20}$~m.  Then
+$\pi\RE^2 = 2.83\ee{42}$~m$^2$; multiplying by
+$\Sigmacr = 4.91$~kg\,m$^{-2}$ gives $1.39\ee{43}$~kg, and dividing by
+$1.989\ee{30}$~kg per $\Msun$ gives $6.99\ee{12}\,\Msun$.  For part~(d),
+$\RE/r_{200} = 30.7/1478 = 0.021$ and $M(\thetaE)/M_{200} = 0.014$.
+\end{derivation}
+
 \textbf{(d)} The fraction of the total virial mass within $\thetaE$:
 \begin{equation*}
     \frac{M(\thetaE)}{M_{200}}
@@ -69,8 +152,11 @@ About $1.4\%$ of the virial mass lies inside the Einstein radius.
 The Einstein radius corresponds to a physical radius
 $R_E = \Dd \thetaE \approx 31$~kpc, which is only $\sim 2\%$ of
 $r_{200}$.  Despite the NFW profile being centrally concentrated, the
-$1/r$ inner-density slope means $M(<r) \propto r$ at small $r$, so
-only a small fraction of the virial mass is enclosed at $R_E$.
+shallow $1/r$ inner density cusp gives $M_{\rm 3D}(<r) \propto r^2$ (and a
+projected mass $M_{\rm 2D}(<R) \propto R^2\ln(2r_s/R)$) at small radii, so
+only a small fraction of the virial mass is enclosed at $R_E$.  (An earlier
+version stated $M(<r) \propto r$, which is the scaling of an isothermal
+$\rho \propto r^{-2}$ profile, not of the NFW cusp.)
 \checkmark
 
 
@@ -84,20 +170,34 @@ the NFW deflection angle.  Pixels whose mapped source positions fall
 within the circular source disk are colored.
 
 For a source at $\beta = 0$: a complete \textbf{Einstein ring} forms
-at $\theta \approx \thetaE$.  For $\beta = 0.5\,\thetaE$: two arcs
-form, one bright (on the same side as the source) and one fainter
-(the counter-image).  For $\beta = \thetaE$ (at the tangential
-caustic): a highly stretched \textbf{giant arc} forms near the
-critical curve, with extreme tangential magnification.
+at $\theta \approx \thetaE$.  For a circular lens the tangential critical
+curve maps to the single point $\beta = 0$, and the radial caustic of this
+cluster is small, $\beta_r \approx 1.0'' \approx 0.15\,\thetaE$ (radial
+critical curve at $\theta_r \approx 2.5''$).  For $\beta = 0.5\,\thetaE$
+the source lies well outside the radial caustic, so the lens forms a
+\emph{single}, tangentially stretched image at $\theta \approx 13.5''$
+($\approx 2\thetaE$), with no counter-image.  For $\beta = 0.1\,\thetaE$
+the source lies inside the radial caustic and there are three images: a
+\textbf{giant arc} at $\theta \approx 8.5''$ ($1.23\,\thetaE$) on the source
+side, a \textbf{counter-image} at $\approx 4.8''$ on the opposite side, and a
+faint radial image near the centre ($\approx 0.8''$).  For comparison, a
+source at $\beta = \thetaE$ gives a single image at $\theta \approx 18.5''$
+($\approx 2.7\,\thetaE$).  The ray-tracing box must therefore extend to
+$\approx 3\,\thetaE$; with $\pm1.5\,\thetaE$ the $\beta = 0.5\,\thetaE$ and
+$\beta \approx \thetaE$ images fall outside it and no image pixels are found.
 
 See \solnlink{10_Cluster_Lensing/problems\_10.wl}{problems\_10.wl}
 for the complete ray-tracing code and generated plots.
 
-\textbf{(d)} For the source at $\beta = \thetaE$, the arc
-length-to-width ratio depends on the source size relative to the
-caustic curvature.  For a $0.5''$ source near the critical curve of
-$\thetaE \approx 6.9''$ (this cluster), the tangential magnification is
-large ($\mu_t \sim 5$--$10$), giving $L/W \sim 5$--$10$.  \checkmark
+\textbf{(d)} For a point source the length-to-width ratio of the arc is
+$L/W \approx \mu_t/\mu_r$.  At $\beta = 0.1\,\thetaE$ the arc has
+$\mu_t = \theta/\beta \approx 12$ and $\mu_r \approx 2.1$, so
+$L/W \approx 6$; the $0.5''$ source is comparable to $\beta = 0.69''$, so
+the simulated arc is smeared around this value.  $L/W \approx 5$--$10$
+requires $\beta \approx 0.05$--$0.12\,\thetaE$, i.e.\ a source near the
+(point) tangential caustic.  By contrast, $\beta = \thetaE$ gives
+$\mu_t \approx 2.7$ and $\mu_r \approx 1.4$, so $L/W \approx 2$: not a giant
+arc.  \checkmark
 
 
 % ----- Exercise 10.3 -----
@@ -115,6 +215,26 @@ point source at position $\beta$ (for $\beta < \thetaE$) is:
     \item $\beta = 0.1''$: $\mu = 2 \times 30/0.1 = 600$.
 \end{itemize}
 
+\begin{derivation}[Exercise~\ref{ex:magnification_high_z}(a), where $2\thetaE/\beta$ comes from]
+For an SIS with $\beta < \thetaE$ the images sit at
+$\theta_\pm = \beta \pm \thetaE$ (signed, along the source direction), and
+the magnification is $\mu = (1 - \thetaE/|\theta|)^{-1}$, which for an SIS
+equals $\theta/\beta$ with $\theta$ signed, so $|\mu| = |\theta|/\beta$ (the
+radial eigenvalue is 1; the tangential one is $\beta/\theta$).  Hence
+$\mu_+ = (\beta+\thetaE)/\beta$ and $\mu_- = -(\thetaE-\beta)/\beta$, and
+adding absolute values,
+\begin{equation*}
+    |\mu_+| + |\mu_-| = \frac{(\thetaE+\beta) + (\thetaE-\beta)}{\beta}
+    = \frac{2\thetaE}{\beta}\,.
+\end{equation*}
+\end{derivation}
+
+\begin{annotation}[Signed versus absolute magnifications]
+The counter-image is a saddle point with negative parity, $\mu_- < 0$.
+The flux you observe is set by $|\mu_-|$.  Adding the \emph{signed} values
+gives $\mu_+ + \mu_- = 2$, independent of $\beta$, a common wrong answer.
+\end{annotation}
+
 \textbf{(b)} The magnitude boost for $\mu = 600$:
 \begin{equation*}
     \Delta m = -2.5\,\log_{10}(600) \approx -6.9~\text{mag} \,.
@@ -129,6 +249,16 @@ $\mu \geq 10^{0.8} \approx 6.3$.  From the SIS formula:
 \end{equation*}
 Sources within $\sim 9.5''$ of the cluster center are sufficiently
 magnified.
+
+\begin{derivation}[Exercise~\ref{ex:magnification_high_z}(c), magnitudes to magnification]
+Magnitudes are $m = -2.5\log_{10}F + \text{const}$, so a flux boost by
+$\mu$ shifts the magnitude by $\Delta m = -2.5\log_{10}\mu$.  For
+$\mu = 600$, $\log_{10}600 = 2.778$, so $\Delta m = -6.95$ (part~b).
+Detection needs $31 - 2.5\log_{10}\mu \le 29$, i.e.\
+$\log_{10}\mu \ge 2/2.5 = 0.8$, so $\mu \ge 10^{0.8} = 6.31$, and
+$\beta \le 2\thetaE/\mu_{\min} = 60''/6.31 = 9.51''$.  This is self-consistent:
+$9.5'' < \thetaE = 30''$, so the two-image formula used is the right one.
+\end{derivation}
 
 \textbf{(d)} Cluster lensing enables the detection of galaxies at
 $z \sim 9$ that are $\sim 2$ magnitudes below the JWST detection
@@ -157,6 +287,14 @@ see \texttt{problems\_10.wl} for the exact computation):
     \approx 1.55\ee{-4}~\text{rad} \approx 32.0'' \,.
 \end{align*}
 
+\begin{derivation}[Exercise~\ref{ex:einstein_radius_comparison}, one line of the arithmetic]
+For the galaxy, $(250/2.998\ee{5})^2 = 6.954\ee{-7}$; multiplying by
+$4\pi$ gives $8.739\ee{-6}$, and by $\Dds/\Ds = 1328.5/1726.6 = 0.7694$ gives
+$6.72\ee{-6}$~rad.  Multiplying by $206265''$/rad gives $1.39''$.  The group
+and cluster lines differ only by $(\sigma_v/250~\text{km\,s}^{-1})^2 =
+4$ and $23.04$.
+\end{derivation}
+
 \textbf{(d)} The ratio $\thetaE^{\text{cluster}}/\thetaE^{\text{galaxy}}
 = (1200/250)^2 = 23$.  The Einstein radius increases by a factor of
 $\sim$23 from galaxy to cluster.
@@ -171,6 +309,24 @@ $M(\thetaE) \propto \thetaE^2 \propto \sigma_v^4$.  From
     M(\thetaE)^{\text{group}} &\approx 4.5\ee{12}\,\Msun \,, \\
     M(\thetaE)^{\text{cluster}} &\approx 1.5\ee{14}\,\Msun \,.
 \end{align*}
+
+\begin{derivation}[Exercise~\ref{ex:einstein_radius_comparison}(e), the $\sigma_v^4$ law in closed form]
+Insert $\Sigmacr = \speedoflight^2\Ds/(4\pi\Gnewton\Dd\Dds)$:
+\begin{equation*}
+    M(\thetaE) = \pi\Dd^2\thetaE^2\,\Sigmacr
+    = \frac{\speedoflight^2}{4\Gnewton}\,\frac{\Dd\Ds}{\Dds}\,\thetaE^2\,.
+\end{equation*}
+Then substitute the SIS radius $\thetaE = 4\pi(\sigma_v/\speedoflight)^2
+\Dds/\Ds$, so $\thetaE^2 = 16\pi^2\sigma_v^4\Dds^2/(\speedoflight^4\Ds^2)$:
+\begin{equation*}
+    M(\thetaE) = \frac{4\pi^2\,\sigma_v^4}{\Gnewton\,\speedoflight^2}\,
+    \frac{\Dd\Dds}{\Ds}\,.
+\end{equation*}
+Numerically for the galaxy: $\Dd\thetaE = 6.18\ee{-3}$~Mpc,
+$\pi(\Dd\thetaE)^2 = 1.20\ee{-4}$~Mpc$^2$, and multiplying by
+$\Sigmacr = 2.35\ee{15}\,\Msun$\,Mpc$^{-2}$ gives $2.82\ee{11}\,\Msun$.
+The cluster-to-galaxy mass ratio is $(1200/250)^4 = 23.04^2 = 531$.
+\end{derivation}
 
 \textbf{(f)} Since $\thetaE \propto \sigma_v^2$, the angular scale
 of lensing grows \textit{quadratically} with velocity dispersion.
@@ -208,12 +364,56 @@ $5' = 1.45\ee{-3}$~rad.
     \approx 4.4\ee{14}\,\Msun \,.
 \end{equation*}
 
+\begin{derivation}[Exercise~\ref{ex:weak_lensing_mass}(c), the arithmetic]
+$\Sigmacr$ here is for $z_s = 1$: $2.83\ee{15}\,\Msun$\,Mpc$^{-2}$ (not the
+$z_s = 2$ value of Exercise~\ref{ex:nfw_cluster_einstein}).  Then
+$\Dd\theta = 918.8~\text{Mpc}\times1.454\ee{-3} = 1.336$~Mpc;
+$\pi(1.336)^2 = 5.61$~Mpc$^2$; multiplying by $\Sigmacr$ gives
+$1.59\ee{16}\,\Msun$; and multiplying by $\bar\kappa(5') = 0.1/5^{0.8} =
+0.0276$ gives $4.39\ee{14}\,\Msun$.
+\end{derivation}
+
 \textbf{(d)} This is close to a typical cluster virial mass
-of $5\ee{14}\,\Msun$ (within $\sim 10\%$).  At $\theta = 5'$ ($r \approx 1.3$~Mpc),
+of $5\ee{14}\,\Msun$ (within $\sim 12\%$, though the agreement is partly
+fortuitous; see (i)).  At $\theta = 5'$ ($r \approx 1.3$~Mpc),
 we are probing close to $r_{200}$, so we expect to recover
 $\sim M_{200}$.  The main assumptions affecting accuracy are:
-(i)~the approximation $\gamma_t \approx \bar{\kappa}$ (valid at
-large radii where $\kappab \ll \bar{\kappa}$);
+(i)~the approximation $\gamma_t \approx \bar{\kappa}$, which for this
+power law fails at every radius: $\gamma_t \propto \theta^{-0.8}$ implies
+$\kappab/\bar\kappa = 1 - 0.8/2 = 0.6$, so $\bar\kappa = 2.5\,\gamma_t$ and
+the self-consistent mass is $M(5') \approx 1.1\ee{15}\,\Msun$;
 (ii)~the power-law shear profile (which may not hold at all radii);
 (iii)~the assumed $\Sigmacr$ (which depends on the source redshift
 distribution).  \checkmark
+
+\begin{annotation}[How good is $\gammaL_{\mathrm t} \approx \bar\kappa$?]
+The exact relation is $\gammaL_{\mathrm t} = \bar\kappa - \kappab$, and
+$\kappab > 0$, so setting $\bar\kappa = \gammaL_{\mathrm t}$ always
+\emph{underestimates} the mass.  For the profile given here it is not a
+small error.  If $\bar\kappa = A\theta^{-n}$, then
+$\kappab = (2\theta)^{-1}\,d(\theta^2\bar\kappa)/d\theta = (1 - n/2)\,\bar\kappa$
+and $\gammaL_{\mathrm t} = (n/2)\,\bar\kappa$ at \emph{every} radius.
+Equivalently, integrating $d\bar\kappa/d\ln\theta = -2\gammaL_{\mathrm t}$
+outward,
+$\bar\kappa(\theta) = 2\int_\theta^\infty \gammaL_{\mathrm t}\,
+d\theta'/\theta' = (2/n)\,\gammaL_{\mathrm t}$.  With $n = 0.8$ this gives
+$\bar\kappa = 2.5\,\gammaL_{\mathrm t}$ ($\kappab/\bar\kappa = 0.6$ at all
+radii), so a self-consistent power law implies
+$M(5') \approx 1.1\ee{15}\,\Msun$.  The approximation becomes accurate only where
+$\bar\kappa$ approaches the point-mass fall-off $\theta^{-2}$ ($n \to 2$,
+$\kappab \to 0$).
+Two further traps: galaxy shapes measure the reduced shear
+$g = \gammaL/(1-\kappab)$, not $\gammaL$ (Chapter~\ref{ch:weak_lensing}); and
+any uniform sheet $\kappab_0$ is invisible to $\gammaL_{\mathrm t}$, which is
+the mass-sheet degeneracy.
+\end{annotation}
+
+\begin{bridge}[Source redshift is a lever: Chapter~\ref{ch:multiplane_dspl}]
+The same cluster has $\Sigmacr = 2.35\ee{15}$ for $z_s = 2$ but
+$2.83\ee{15}\,\Msun$\,Mpc$^{-2}$ for $z_s = 1$, a ratio of $1.21$ set
+entirely by distances.  Behind a cluster, arcs at different redshifts see
+the same mass scaled by different $\Dds/\Ds$.
+Chapter~\ref{ch:multiplane_dspl} turns this ratio into an observable: with
+two source planes, it becomes the DSPL distance ratio, and the nearer
+source also deflects the light of the farther one.
+\end{bridge}

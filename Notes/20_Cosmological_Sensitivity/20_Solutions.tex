@@ -1,0 +1,205 @@
+% =============================================================================
+% Module 20: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included from main.tex via \ifsolutions
+% Attested by Solutions/20_Cosmological_Sensitivity/problems_20.wl
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:cs_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{20_Cosmological_Sensitivity/problems\_20.wl}{problems\_20.wl},
+which verifies each answer symbolically and numerically. The script
+computes all distances itself from the flat CPL Friedmann equation, with
+an implementation independent of the chapter's companion script. At the
+illustrative geometry $(z_d,z_1,z_2)=(0.5,1,2)$ and
+$(\Omegam,w_0,w_a)=(0.3,-1,0)$ it finds
+$J=(S_{\Omegam},S_{w_0},S_{w_a})=(-0.03569,-0.03301,-0.007255)$, in
+agreement with eq.~\eqref{eq:cs_J_values}.
+\emph{[Attested: \solnlink{20_Cosmological_Sensitivity/problems\_20.wl}{problems\_20.wl}, check 0a.]}
+
+% ----- Exercise 20.1 -----
+\subsection*{Exercise~\ref{ex:cs_cpl}: The CPL Density}
+
+\textbf{(a)} With $\ln a=-\ln(1+z)$, $\dd\ln a=-\dd z/(1+z)$ and the
+fluid equation becomes $\dd\ln\rho/\dd z=3[1+w(z)]/(1+z)$, with
+$w(z)=w_0+w_az/(1+z)$. Integrating,
+\begin{align*}
+  \ln\zeta(z)
+  &=3(1+w_0)\int_0^z\frac{\dd z'}{1+z'}
+   +3w_a\int_0^z\frac{z'\,\dd z'}{(1+z')^2}\\
+  &=3(1+w_0)\ln(1+z)+3w_a\Bigl[\ln(1+z)-\frac{z}{1+z}\Bigr],
+\end{align*}
+which exponentiates to eq.~\eqref{eq:cs_zeta}.
+
+\textbf{(b)} As $z\to\infty$, $z/(1+z)\to1$, so
+$\exp[-3w_az/(1+z)]\to e^{-3w_a}$ and
+$\zeta\to e^{-3w_a}(1+z)^{3(1+w_0+w_a)}$. The exponent is that of a
+constant-$w$ fluid with $w=w_0+w_a$, the high-redshift limit of
+eq.~\eqref{eq:cs_cpl_w}.
+
+\textbf{(c)} $\zeta(1)=2^{3(1-0.9-0.3)}\,e^{-3(-0.3)/2}
+=2^{-0.6}\,e^{0.45}=1.0347$. The dark-energy density at $z=1$ is only
+$3.5\%$ above its present value: $w(z)$ crosses $-1$ at $z=0.5$, so the
+density rises going back from $z=0$ to $0.5$ (where $w>-1$) and falls
+again beyond (where $w<-1$).
+
+\textbf{(d)} $w_a$ enters only through $w_az/(1+z)$, and
+$z/(1+z)\le1/2$ for $z\le1$ and $\le2/3$ for $z\le2$. Over the
+redshifts that set $\chi_d$ and $\chi_1$, a unit change in $w_a$ is
+therefore equivalent to a much smaller change in $w_0$. At the
+illustrative geometry $S_{w_a}/S_{w_0}=0.22$.
+\emph{[Attested: \solnlink{20_Cosmological_Sensitivity/problems\_20.wl}{problems\_20.wl}, checks 1a--1f.]}
+
+% ----- Exercise 20.2 -----
+\subsection*{Exercise~\ref{ex:cs_projection}: Projection}
+
+For one plane $J=(S_{\Omegam},S_{w_0})$ and $J\cdot\Delta\bm{p}=\delta$
+is one equation in two unknowns. For any $\hat{\bm{u}}$ with
+$J\cdot\hat{\bm{u}}\neq0$, $\Delta\bm{p}=\delta\hat{\bm{u}}/(J\cdot
+\hat{\bm{u}})$ satisfies $J\cdot\Delta\bm{p}=\delta$ identically. With
+$\hat{\bm{u}}=(0,1)$, $J\cdot\hat{\bm{u}}=S_{w_0}$ and
+$\Delta\bm{p}=(0,\delta/S_{w_0})$. With $\hat{\bm{u}}\propto(c,1)$,
+\[
+  \Delta w_0=\frac{\delta}{S_{w_0}+cS_{\Omegam}} .
+\]
+At $\delta=1\%$: $|\Delta w_0|=0.303$ at $c=0$, $0.197$ at
+$c=+\tfrac12$ and $0.659$ at $c=-\tfrac12$. Both sensitivities are
+negative, so a positive $c$ enlarges the denominator and shrinks the
+bias, while a negative $c$ partially cancels $S_{w_0}$ and inflates it.
+
+The fixed-$\Omegam$ value is a lower bound only when
+$|S_{w_0}+cS_{\Omegam}|\le|S_{w_0}|$, i.e.\ for $c$ between $0$ and
+$2c_\star=-2S_{w_0}/S_{\Omegam}=-1.850$. At $c=2c_\star$ the two are
+equal in magnitude, and for $c<2c_\star$ or $c>0$ the marginalised bias
+is smaller. ``Marginalising always makes it worse'' is true of
+statistical variances (the variance with a parameter fixed never exceeds
+the marginalised one), not of biases: a bias moves along
+whatever direction the other constraints leave open, and that direction
+can either amplify or suppress its component along $w_0$. The
+physically relevant comparison is with the degeneracy direction of the
+probe combination actually used.
+\emph{[Attested: \solnlink{20_Cosmological_Sensitivity/problems\_20.wl}{problems\_20.wl}, checks 2a--2e.]}
+
+% ----- Exercise 20.3 -----
+\subsection*{Exercise~\ref{ex:cs_rank}: Rank}
+
+With one plane, $C^{-1}=1/\sigma^2$ and
+$J^{\mathsf T}C^{-1}J=\sigma^{-2}J^{\mathsf T}J$ is an outer product
+of one vector with itself. Its column space is spanned by $J^{\mathsf T}$
+alone, so its rank is $1$ whether $J$ has two or three components. The
+null direction in the $(\Omegam,w_0)$ plane is
+$\bm{n}\propto(S_{w_0},-S_{\Omegam})=(-0.03301,+0.03569)$, at
+$132.8^\circ$ from the $+\Omegam$ axis; along it
+$\dd w_0/\dd\Omegam=-S_{\Omegam}/S_{w_0}=-1.081$.
+
+A time delay in the same system raises the rank. It measures
+$D_{\Delta t}=(1+z_d)\Dd\Ds/\Dds$ (eq.~\ref{eq:time_delay_recap});
+the constant prefactor $(1+z_d)$ drops out of the log-derivatives.
+For a single source at $z_s=1$ behind the $z_d=0.5$ deflector, and at
+fixed $\Hubble$, its row is
+$\partial\ln D_{\Delta t}/\partial(\Omegam,w_0)=(-0.0174,-0.1043)$,
+which makes an angle of $38^\circ$ with the DSPL row. The two rows are
+independent, so together they have rank~$2$. (The time delay also
+depends on $\Hubble$, which then has to be fitted too.) An external
+probe in the same likelihood, or a second lens at a different $z_d$,
+would also add an independent row; more images of the same two source
+planes would not.
+\emph{[Attested: \solnlink{20_Cosmological_Sensitivity/problems\_20.wl}{problems\_20.wl}, checks 3a--3c.]}
+
+% ----- Exercise 20.4 -----
+\subsection*{Exercise~\ref{ex:cs_coherence}: Coherence}
+
+At $\gp=1.6$ the exponent is $(3-1.6)/(1.6-1)=7/3$, so
+\[
+  \frac{\mBH_2}{\mBH_1}=0.7^{7/3}=0.43507,\qquad
+  \frac{\mBH_3}{\mBH_1}=0.5^{7/3}=0.19843 .
+\]
+Both are positive and $0<\mBH_3/\mBH_1<\mBH_2/\mBH_1<1$: the three
+fractions share the sign of the underlying central mass, and farther
+planes feel a weaker version of the same perturbation. They are one
+physical error seen at three lever arms, not three independent draws.
+
+By eq.~\eqref{eq:cs_convex} the combined bias in a single parameter is a
+weighted mean, with positive weights, of the per-plane biases $b_i$. A
+weighted mean of same-signed numbers lies between the smallest and the
+largest of them, so the planes cannot cancel each other: the combined
+bias is at least as large as the smallest single-plane bias. In the
+multi-parameter case the outcome depends on how $\bm{r}$ aligns with the
+eigendirections of $F$ (eq.~\ref{eq:cs_coherentbias}), but the
+$1/\sqrt{N}$ reduction of independent errors is never available.
+\emph{[Attested: \solnlink{20_Cosmological_Sensitivity/problems\_20.wl}{problems\_20.wl}, checks 4a--4d.]}
+
+% ----- Exercise 20.5 -----
+\subsection*{Exercise~\ref{ex:cs_nonlinear}: Non-linearity}
+
+The arithmetic gives $0.25/|S_{w_0}|=7.57$ at the illustrative geometry,
+and the number is meaningless for two separate reasons.
+
+\textbf{It is not a displacement.} With the radial image masked, the data
+do not determine $\gp$, and through $\Brat=\etamea^{\gp-1}$ they do not
+determine $\Brat$ either. The $25\%$ is the span $\Brat$ may occupy, and
+where the analysis lands inside it is set by the $\gp$ prior. There is
+no bias to propagate, because there is no measurement of $\Brat$ to be
+biased.
+
+\textbf{It is off the model manifold.} Over the box
+$\Omegam\in[0.2,0.4]$, $w_0\in[-2.5,-0.5]$ ($w_a=0$), $\Brat$ varies by
+only $[-1.7\%,+3.3\%]$ at this geometry, about eight times less than
+$25\%$; and along $\Omegam=0.3$ it is not even monotonic in $w_0$. A
+first-order coefficient evaluated at $w_0=-1$ cannot be extrapolated
+across such an excursion.
+
+\textbf{What to report:} the span of $\Brat$ together with the prior
+that selects within it, and the statement that the system's cosmological
+constraint has been given up rather than shifted. If a parameter-space
+statement is wanted, solve $\Brat(\bm{p})=\Brat_{\rm obs}$ non-linearly
+over the span and show the resulting region. If part of the span lies
+outside every model prediction, say so: that is a statement that no
+cosmology in the family fits.
+\emph{[Attested: \solnlink{20_Cosmological_Sensitivity/problems\_20.wl}{problems\_20.wl}, checks 5a--5b.]}
+
+% ----- Exercise 20.6 -----
+\subsection*{Exercise~\ref{ex:cs_design}: Design}
+
+One well-modelled system, for the reasons below.
+
+\textbf{Rank.} Three masked systems add three rows to $J$, so on paper
+the rank problem improves. But each masked system has lost the datum that
+fixes $\gp$, so each contributes a span of $\Brat$ rather than a value.
+Three spans, each selected by a $\gp$ prior, do not converge on the
+truth; they converge on whatever the priors agree on.
+
+\textbf{Coherence.} If the three are analysed with the same rigid
+profile and the same $\gp$ prior, their errors are not independent. The
+$\sqrt N$ intuition assumes independent draws; a shared modelling choice
+is a shared systematic, and the mean of $N$ identical biases is that
+same bias for every $N$.
+
+\textbf{The single well-modelled system} delivers an actual measurement,
+with a residual bias that can be quantified and propagated with the
+machinery of this chapter. The design lesson is to invest in resolving
+and modelling the radial image, rather than in collecting more systems
+whose radial images will be masked.
+\emph{[Attested: \solnlink{20_Cosmological_Sensitivity/problems\_20.wl}{problems\_20.wl}, check 6a (shared-bias mean); the rest is conceptual.]}
+
+% ----- Exercise 20.7 -----
+\subsection*{Exercise~\ref{ex:cs_newgeom}: A Second Geometry}
+
+With the same code as for the illustrative geometry, at
+$(z_d,z_1,z_2)=(0.3,0.8,3.0)$:
+\[
+  \Brat=0.7038,\qquad
+  J=(-0.03960,\;-0.04086,\;-0.007386),\qquad
+  c_\star=-1.032 .
+\]
+Compared with $(0.5,1,2)$, the sensitivity to $w_0$ is about $24\%$
+larger, and the blind direction has rotated from $c_\star=-0.925$ to
+$-1.032$. Neither the size of $S_w$ nor the orientation of the
+degeneracy is a property of DSPLs in general; both belong to the
+redshift configuration. A conversion factor such as $1/S_w$, or an
+amplification factor $\mathcal{A}(c)$, must be recomputed for every
+system and never borrowed from another.
+\emph{[Attested: \solnlink{20_Cosmological_Sensitivity/problems\_20.wl}{problems\_20.wl}, checks 7a--7d.]}

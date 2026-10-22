@@ -39,6 +39,11 @@
     filecolor=Plum
 ]{hyperref}
 
+% --- Boxed environments (Part V key results, GR reminders, annotated edition) ---
+\usepackage{tcolorbox}          % loads tikz, environ, etoolbox, verbatim
+\tcbuselibrary{breakable,skins}
+\usepackage{comment}            % \excludecomment: zero-output environments in non-annotated editions (editions.tex)
+
 % --- Code listings (for Mathematica snippets) ---
 \usepackage{listings}
 \lstdefinestyle{mathematica}{
@@ -138,3 +143,31 @@
 \newcommand{\mathlink}[2]{\href{https://github.com/rodelcr/Learning_to_Lens/blob/main/Mathematica/#1}{\texttt{#2}}}
 % Usage: \solnlink{01a_Special_Relativity/problems_01a.wl}{Solutions script}
 \newcommand{\solnlink}[2]{\href{https://github.com/rodelcr/Learning_to_Lens/blob/main/Solutions/#1}{\texttt{#2}}}
+
+% =============================================================================
+% Part V macros — compound lenses, DSPL, central point masses
+% =============================================================================
+% Ported 2026-10-14 from AGEL/202607_Theoretical_spiral_compound/theory/
+% preamble_theory.tex. Everything defined above (\vectheta, \Dd, \thetaE,
+% \kappab, \Amat, \Omegam, ...) is shared with that preamble by construction and
+% is NOT redefined here. \dd is NOT defined here either: the physics package
+% (loaded above) already provides \dd = \mathrm{d}; note that physics parses
+% \dd(x), \dd[n]{x} as delimited forms — write \dd\theta, \dd^2\xi', never \dd(...).
+% =============================================================================
+\newcommand{\Brat}{\mathcal{B}}          % DSPL distance ratio  D_{ls1} D_{s2} / (D_{s1} D_{ls2})  (< 1)
+\newcommand{\gp}{\gamma'}                % total (3-D) density slope, rho ~ r^{-gamma'}
+\newcommand{\thetaBH}{\theta_{\bullet}}  % point-mass (SMBH) Einstein radius
+\newcommand{\mBH}{m}                     % central-mass fraction  M_BH / M(<theta_E)
+\newcommand{\etamea}{\eta}               % measured Einstein-radius ratio  theta_E1 / theta_E2
+\newcommand{\ysrc}{y}                    % signed 1-D source position
+\newcommand{\Dls}[2]{D_{#1#2}}           % D_{ls1}-style angular-diameter distance between two planes
+\newcommand{\deriv}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+
+% --- Boxed content environments (ALWAYS visible, all editions) ---
+% \begin{keybox}[Title] ... \end{keybox}     key result
+% \begin{aside}[Title]  ... \end{aside}      "GR reminder" for Carroll-level readers
+\newtcolorbox{keybox}[1][]{enhanced,breakable,colback=Yellow!8,colframe=BrickRed!70,
+    title={#1},fonttitle=\bfseries}
+\newtcolorbox{aside}[1][]{enhanced,breakable,colback=NavyBlue!4,colframe=NavyBlue!50,
+    fonttitle=\bfseries,title={GR reminder\ifblank{#1}{}{ --- #1}}}

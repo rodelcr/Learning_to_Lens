@@ -17,11 +17,11 @@ $\vec\theta$ corresponding to a single source position $\vec\beta$.}
 \end{quote}
 
 \noindent
-In Module~\ref{ch:light_deflection} we derived the deflection angle
+In Chapter~\ref{ch:light_deflection} we derived the deflection angle
 $\alphahat = 4\Gnewton M / (\speedoflight^2 b)$ for a point mass, and
-in Module~\ref{ch:linearized_gravity} we showed that deflection angles
+in Chapter~\ref{ch:linearized_gravity} we showed that deflection angles
 from multiple masses superpose in the weak-field limit.  In
-Module~\ref{ch:cosmological_distances} we introduced the angular diameter
+Chapter~\ref{ch:cosmological_distances} we introduced the angular diameter
 distances $\Dd$, $\Ds$, and $\Dds$ that describe the geometry of the
 observer--lens--source system at cosmological separations.
 
@@ -52,17 +52,17 @@ image multiplicity, magnification, time delays, and lens modeling.
 We now have all the pieces needed to build the gravitational lens
 equation:
 \begin{enumerate}
-    \item \textbf{The deflection angle} (Modules~1e and~2):
+    \item \textbf{The deflection angle} (Chapters~\ref{ch:linearized_gravity} and~\ref{ch:light_deflection}):
           $\alphahat = 4\Gnewton M / (\speedoflight^2 b)$ for a point
           mass, and the superposition
           principle~\eqref{eq:superposition_deflection} for multiple
           masses and continuous distributions.
-    \item \textbf{The cosmological distances} (Module~3): the angular
+    \item \textbf{The cosmological distances} (Chapter~\ref{ch:cosmological_distances}): the angular
           diameter distances $\Dd$, $\Ds$, $\Dds$ relating angular
           separations on the sky to physical separations at the lens
           and source.
 \end{enumerate}
-The task of this module is to combine these into a single equation
+The task of this chapter is to combine these into a single equation
 that maps source positions $\vecbeta$ to image positions $\vectheta$.
 Remarkably, this equation can produce \textit{multiple solutions} ---
 multiple images of a single source --- which is the defining
@@ -109,6 +109,24 @@ $\rho$ along the line of sight:
 \end{equation}
 where $\vecxi$ is the two-dimensional position in the lens plane and $z$
 is the coordinate along the line of sight.
+\begin{annotation}[What the thin screen throws away]
+Two things are discarded, and it is worth knowing which. (i) \emph{Where along
+the line of sight} the deflection happens: a ray crossing a galaxy is bent
+gradually over $|z| \lesssim 100$~kpc, but because that path is
+$\sim 10^{-4}$ of $\Dd$ (eq.~\ref{eq:thin_screen_ratio}), replacing the gradual
+bend by one kink at $z = 0$ changes positions at the same relative level.
+(ii) \emph{How the mass is distributed along $z$}: only the projection
+$\Sigma(\vecxi)$ survives. Two lenses with very different $\rho(\vecxi, z)$ but
+the same $\Sigma$ are indistinguishable to lensing. That is why lensing
+measures projected masses, and it is why extra information such as
+stellar kinematics is needed to see the third dimension
+(Chapter~\ref{ch:galaxy_lensing}).
+
+The thin-screen idealization applies to \emph{each} deflector separately. When two
+deflectors sit at very different distances (a lens galaxy and a second
+galaxy behind it), one screen is not enough and each gets its own plane. That is
+the multi-plane problem of Part~V.
+\end{annotation}
 
 
 % =====================================================================
@@ -152,6 +170,22 @@ angular positions by:
 where $\vecxi$ is the position in the lens plane and $\veceta$ is the
 position in the source plane
 (Narayan \& Bartelmann eq.~15; Congdon \& Keeton Sec.~2.2.2).
+\begin{annotation}[Angular-diameter distances, and why $\Dds \neq \Ds - \Dd$]
+Equations~\eqref{eq:xi_theta}--\eqref{eq:eta_beta} are not approximations to
+be justified; they are the \emph{definition} of angular-diameter distance,
+``separation $=$ angle $\times$ distance'' (Narayan \& Bartelmann eq.~15).
+The lens-to-source distance $\Dds$ is defined the same way, but for an
+observer sitting at the lens. Because space expands while the light travels,
+these distances do not add. For the fiducial lens of this chapter
+($z_d = 0.3$, $z_s = 1$, flat $\Lambda$CDM with $\Omegam = 0.3$):
+$\Ds - \Dd = 1652 - 919 = 733$~Mpc, while $\Dds = 1055$~Mpc. In a flat
+universe the correct combination is
+$(1+z_s)\,\Dds = (1+z_s)\,\Ds - (1+z_d)\,\Dd$
+(differences of comoving distances, Chapter~\ref{ch:cosmological_distances}).
+
+\emph{Classic error:} computing $\Dds$ as $\Ds - \Dd$. Here it would
+underestimate $\Dds/\Ds$, and hence every deflection, by about 30\%.
+\end{annotation}
 
 \begin{figure}[ht]
     \centering
@@ -199,6 +233,36 @@ and dividing by $\Ds$:
     }
     \label{eq:lens_equation_full}
 \end{equation}
+\begin{derivation}[Reading eq.~\eqref{eq:eta_physical} off the geometry]
+Follow the ray \emph{backwards} from the observer, who sees it arrive from
+direction $\vectheta$.
+\begin{enumerate}
+    \item \emph{Observer to lens plane.} The ray travels in a straight line and
+          meets the lens plane at transverse position $\vecxi = \Dd\vectheta$
+          (definition of $\Dd$).
+    \item \emph{If there were no lens,} the same straight line would reach the
+          source plane at $\Ds\vectheta = (\Ds/\Dd)\,\vecxi$ (definition of $\Ds$).
+    \item \emph{The kink.} At the lens plane the ray was bent by
+          $|\alphahat|$ toward the mass. With the sign convention of
+          eq.~\eqref{eq:deflection_integral_continuous}, the vector
+          $\boldsymbol{\hat{\alpha}}$ points from the mass toward the ray
+          (along $\vecxi - \vecxi'$). The true ray therefore leaves the lens
+          plane tilted by $-\boldsymbol{\hat{\alpha}}$ relative to the straight
+          continuation.
+    \item \emph{Lens plane to source plane.} Two lines leaving the same point
+          with angular separation $|\alphahat|$ are $\Dds|\alphahat|$ apart at
+          the source plane (definition of $\Dds$). Hence
+          $\veceta = (\Ds/\Dd)\vecxi - \Dds\boldsymbol{\hat{\alpha}}$, which is
+          eq.~\eqref{eq:eta_physical}.
+\end{enumerate}
+The exact flat-geometry relation is
+$\Ds\tan\beta = \Ds\tan\theta - \Dds\tan\alphahat$ (Congdon \& Keeton
+eq.~2.15). Since $\tan x / x = 1 + x^2/3 + \mathcal{O}(x^4)$, the
+small-angle replacement $\tan x \to x$ is wrong only at relative order
+$x^2/3$: below $2\times10^{-8}$ even for a $37''$ cluster Einstein radius.
+Dividing by $\Ds$ then gives eq.~\eqref{eq:lens_equation_full} with no
+further approximation.
+\end{derivation}
 
 This is the \textbf{gravitational lens equation} in terms of the physical
 deflection angle $\boldsymbol{\hat{\alpha}}$.  It is convenient to define
@@ -217,6 +281,33 @@ so that the lens equation takes the elegant form:
     }
     \label{eq:lens_equation}
 \end{equation}
+\begin{annotation}[Physical vs.\ reduced deflection]
+$\alphahat$ is the actual bend of the ray at the lens. It depends only on the
+mass and the \emph{physical} impact parameter $\xi$, and it knows nothing
+about where the source is. $\vecalpha$ is the \emph{apparent} angular shift
+seen from Earth, a fraction $\Dds/\Ds$ of the bend: a kink close to the
+source (small $\Dds/\Ds$) hardly moves the image. For the fiducial lens
+($z_d = 0.3$) this ``lensing efficiency'' is $\Dds/\Ds = 0.64$ for $z_s = 1$
+and $0.77$ for $z_s = 2$. The same galaxy deflects the more distant source
+through a larger apparent angle.
+
+\emph{Classic errors:} (i) inserting $\alphahat = 4\Gnewton M/(\speedoflight^2 b)$
+directly into $\vecbeta = \vectheta - \vecalpha$ without the factor $\Dds/\Ds$;
+(ii) evaluating $\alphahat$ at the angle $\theta$ instead of the physical
+radius $\xi = \Dd\theta$. Both $\alpha$ and $\alphahat$ are in radians,
+while $\xi$ carries units of length.
+\end{annotation}
+\begin{bridge}[Multi-plane lensing]
+Chapter~\ref{ch:multiplane_dspl} applies eq.~\eqref{eq:lens_equation_full}
+once per plane. A deflector on plane $j$ contributes to the position of a ray on a
+later plane $k$ with weight $D_{jk}/D_k$. This is the efficiency factor
+$\Dds/\Ds$ of this section with $(d, s) \to (j, k)$
+(Schneider, Ehlers \& Falco Sec.~9.1). For a double-source-plane lens, the ratio of the
+two efficiencies behind a common deflector,
+$\Brat = (D_{ds_1}/D_{s_1})/(D_{ds_2}/D_{s_2})$, is the cosmology-sensitive
+observable. For $z_d = 0.3$, $z_{s_1} = 1$, $z_{s_2} = 2$ it is
+$\Brat = 0.83$.
+\end{bridge}
 
 \begin{remark}
 Equation~\eqref{eq:lens_equation} is \textbf{THE} fundamental equation
@@ -247,7 +338,7 @@ For a continuous mass distribution described by the surface mass density
 $\Sigma(\vecxi)$ (eq.~\ref{eq:surface_mass_density_def}), the physical
 deflection angle at position $\vecxi$ in the lens plane is obtained by
 superposing the deflections from all mass elements
-(Congdon \& Keeton eq.~4.9; cf.\ Module~1e
+(Congdon \& Keeton eq.~4.9; cf.\ Chapter~\ref{ch:linearized_gravity}
 eq.~\ref{eq:continuous_deflection}):
 \begin{equation}
     \boxed{
@@ -269,10 +360,34 @@ $\vecxi = \Dd\,\vectheta$, the reduced deflection angle becomes:
     {|\vectheta - \vectheta'|^2}\, d^2\theta' \,.
     \label{eq:alpha_angular}
 \end{equation}
+\begin{derivation}[From $\vecxi$ to $\vectheta$ in the deflection integral]
+Substitute $\vecxi = \Dd\vectheta$ and $\vecxi' = \Dd\vectheta'$ in
+eq.~\eqref{eq:deflection_integral_continuous}, term by term:
+\begin{itemize}
+    \item numerator: $\vecxi - \vecxi' = \Dd(\vectheta - \vectheta')$;
+    \item denominator: $|\vecxi - \vecxi'|^2 = \Dd^2|\vectheta - \vectheta'|^2$;
+    \item area element: $d^2\xi' = \Dd^2\, d^2\theta'$ (each of the two
+          coordinates scales by $\Dd$).
+\end{itemize}
+The powers of $\Dd$ combine as $\Dd \cdot \Dd^2 / \Dd^2 = \Dd$, so
+$\alphahat = (4\Gnewton\Dd/\speedoflight^2)\int(\vectheta - \vectheta')
+\Sigma(\Dd\vectheta')\,|\vectheta - \vectheta'|^{-2}\,d^2\theta'$. Multiplying by
+$\Dds/\Ds$ gives eq.~\eqref{eq:alpha_angular}. The prefactor is
+\begin{equation*}
+    \frac{\Dds}{\Ds}\,\frac{4\Gnewton}{\speedoflight^2}\,\Dd
+    = \frac{1}{\pi}\,\frac{4\pi\Gnewton}{\speedoflight^2}\,\frac{\Dd\Dds}{\Ds}
+    = \frac{1}{\pi\,\Sigmacr}
+\end{equation*}
+with $\Sigmacr$ from eq.~\eqref{eq:sigma_cr} below. So
+$\vecalpha(\vectheta) = \frac{1}{\pi}\int\kappab(\vectheta')
+(\vectheta - \vectheta')\,|\vectheta - \vectheta'|^{-2}\,d^2\theta'$, the
+form used throughout Chapter~\ref{ch:magnification}. All distance factors have
+disappeared into $\kappab$.
+\end{derivation}
 
 \begin{remark}
 The deflection integral~\eqref{eq:deflection_integral_continuous} follows directly
-from the superposition principle derived in Module~\ref{ch:linearized_gravity}
+from the superposition principle derived in Chapter~\ref{ch:linearized_gravity}
 (eq.~\ref{eq:superposition_deflection}).  Each infinitesimal mass element
 $\Sigma(\vecxi')\, d^2\xi'$ acts as a point mass, deflecting the light
 ray by $4\Gnewton \Sigma(\vecxi')\,d^2\xi' / (\speedoflight^2\, |\vecxi -
@@ -280,6 +395,17 @@ ray by $4\Gnewton \Sigma(\vecxi')\,d^2\xi' / (\speedoflight^2\, |\vecxi -
 Superposition (valid because we are in the weak-field regime) gives the
 total deflection as the integral over the lens plane.
 \end{remark}
+\begin{annotation}[The two-dimensional shell theorem]
+For a circularly symmetric $\Sigma$ the integral collapses. Put the ray at
+$(\xi, 0)$ and a ring of mass at radius $r$. The angular integral of the
+$x$-component of the kernel is
+$\int_0^{2\pi}(\xi - r\cos\phi)/(\xi^2 + r^2 - 2\xi r\cos\phi)\,d\phi = 2\pi/\xi$
+for $r < \xi$ and $0$ for $r > \xi$. Rings outside the ray exert no net pull,
+and rings inside act as if their mass sat at the centre. Hence
+$\alphahat(\xi) = 4\Gnewton M(<\xi)/(\speedoflight^2\xi)$, where $M(<\xi)$ is the
+projected mass inside $\xi$. The next section uses this result for the uniform
+disk.
+\end{annotation}
 
 
 % =====================================================================
@@ -313,10 +439,28 @@ of $\theta$ and gives $\Sigma = \Sigmacr$ with
     \,\frac{\Ds}{\Dd\, \Dds} \,.}
     \label{eq:sigma_cr}
 \end{equation}
+\begin{derivation}[The focusing condition, line by line]
+By the shell theorem (previous annotation), a uniform disk deflects a ray at
+$\xi$ as if the enclosed mass $M_{\mathrm{2D}} = \pi\xi^2\Sigma$ sat at the
+centre:
+\begin{align*}
+    \alpha(\theta)
+    &= \frac{\Dds}{\Ds}\,\frac{4\Gnewton\,(\pi\xi^2\Sigma)}{\speedoflight^2\,\xi}
+       && \text{(reduced deflection of the enclosed mass)}\\
+    &= \frac{\Dds}{\Ds}\,\frac{4\pi\Gnewton\Sigma}{\speedoflight^2}\,\Dd\,\theta
+       && (\xi = \Dd\theta).
+\end{align*}
+Setting $\alpha(\theta) = \theta$ and cancelling $\theta$ (possible because
+$\alpha \propto \theta$ for a uniform sheet) gives
+$1 = 4\pi\Gnewton\Sigma\Dd\Dds/(\speedoflight^2\Ds)$, i.e.\
+$\Sigma = \speedoflight^2\Ds/(4\pi\Gnewton\Dd\Dds) = \Sigmacr$. Every ray is
+sent to $\beta = 0$, so the sheet is a perfect lens with a single focus
+(Narayan \& Bartelmann Sec.~2.1.3).
+\end{derivation}
 
 \begin{remark}
 The factor of $4\pi$ traces to the 2D Poisson equation
-$\nabla^2\psiL = 2\kappab$ (Module~5): the $4\pi$ in
+$\nabla^2\psiL = 2\kappab$ (Chapter~\ref{ch:magnification}): the $4\pi$ in
 eq.~\eqref{eq:sigma_cr} is the product of $4G/c^2$ (from the deflection
 formula) and the $\pi$ that converts the uniform-disk enclosed mass to
 the line-averaged surface density.
@@ -330,18 +474,47 @@ surface mass density to the critical value:
     }
     \label{eq:convergence_def}
 \end{equation}
+\begin{annotation}[$\kappab$ is a property of the lens \emph{and} the source]
+$\Sigma$ belongs to the lens, but $\Sigmacr$ contains $\Ds$ and $\Dds$, so the
+same galaxy has a different $\kappab$ for every source redshift. For
+$z_d = 0.3$: $\Sigmacr(z_s{=}2)/\Sigmacr(z_s{=}1) = 0.83$. This is the same
+number as the ratio $\Brat$ of the previous bridge, so the same $\Sigma$ gives a
+convergence $1/0.83 \approx 1.2$ times larger for the farther source.
+
+\emph{Classic error:} reusing a $\kappab$ map fitted to one source for a
+source at another redshift. Convert through $\Sigma$, or multiply by
+$\Sigmacr(z_{s,1})/\Sigmacr(z_{s,2})$.
+
+A useful sanity check is that, for an axisymmetric lens, the \emph{mean}
+convergence inside the Einstein radius is exactly 1
+(Narayan \& Bartelmann Sec.~2.1.4; Congdon \& Keeton eq.~2.71). This is the
+lensing version of ``the Einstein ring encloses one critical density's worth
+of mass''.
+\end{annotation}
 
 The critical surface mass density sets the boundary between weak and
 strong lensing:
 \begin{itemize}
-    \item If $\kappab < 1$ everywhere ($\Sigma < \Sigmacr$), the lens is
-          \textbf{subcritical}: it can still deflect light, but it
-          cannot produce multiple images of a generic source.
+    \item If $\kappab < 1$ everywhere ($\Sigma < \Sigmacr$), an
+          \textbf{axisymmetric} lens is \textbf{subcritical}: it can
+          still deflect light, but it cannot produce multiple images.
+          (For a non-axisymmetric lens, shear can produce multiple
+          images even with $\kappab < 1$ everywhere; Congdon \& Keeton
+          Sec.~2.5.)
     \item If $\kappab \geq 1$ somewhere ($\Sigma \geq \Sigmacr$), the
           lens is \textbf{supercritical}: it can produce multiple
           images, arcs, and Einstein rings --- this is the regime of
           \textbf{strong gravitational lensing}.
 \end{itemize}
+\begin{annotation}[How sharp is the $\kappab = 1$ boundary?]
+For \emph{axisymmetric} lenses, $\kappab > 1$ somewhere is both necessary and
+sufficient for multiple images (Congdon \& Keeton Sec.~2.5). For general
+lenses it remains sufficient but is \emph{not} necessary (same section;
+Narayan \& Bartelmann Sec.~2.1.3 note exceptions). The first bullet above should
+therefore be read as the axisymmetric statement. Note also that $\kappab$ is
+local while ``multiple imaging'' is global: what matters for the Einstein
+ring is the \emph{mean} $\kappab$ inside a circle, not its value at one point.
+\end{annotation}
 
 \begin{example}
 \textbf{Numerical value of $\Sigmacr$.}
@@ -366,6 +539,34 @@ can achieve $\Sigma \geq \Sigmacr$ in their central regions, making
 strong lensing possible.  The exact value is computed and verified in
 \mathlink{04_Lens_Equation/lens_equation.wl}{lens\_equation.wl}.
 \end{example}
+\begin{annotation}[Units of $\Sigmacr$, and a formula to remember]
+\emph{Dimensions:} $[\speedoflight^2/\Gnewton] = \mathrm{kg\,m^{-1}}$ and
+$[\Ds/(\Dd\Dds)] = \mathrm{m^{-1}}$, so $[\Sigmacr] = \mathrm{kg\,m^{-2}}$.
+\emph{Conversions:} $1~\Msun\,\mathrm{pc}^{-2} = 2.09\times10^{-3}~\mathrm{kg\,m^{-2}}
+= 2.09\times10^{-4}~\mathrm{g\,cm^{-2}}$, so
+$1~\mathrm{g\,cm^{-2}} \approx 4.79\times10^{3}~\Msun\,\mathrm{pc}^{-2}$.
+\emph{Pocket formula} (Narayan \& Bartelmann eq.~17):
+$\Sigmacr = 0.35~\mathrm{g\,cm^{-2}}\,(D/1~\mathrm{Gpc})^{-1}$ with
+$D = \Dd\Dds/\Ds$ (their eq.~18). For the lens above $D = 587$~Mpc, giving
+$0.59~\mathrm{g\,cm^{-2}}$, in agreement with
+eq.~\eqref{eq:sigma_cr_numerical}.
+
+\emph{Precision note:} with $\speedoflight = 2.998\times10^{8}$~m\,s$^{-1}$ the
+value is $5.92$~kg\,m$^{-2}$ $= 2.83\times10^{3}~\Msun\,\mathrm{pc}^{-2}$. The
+rounded $\speedoflight = 3\times10^{8}$ used in the display gives
+$2.84\times10^{3}$. The 0.1\% difference is far below the uncertainty
+in the distances.
+\end{annotation}
+\begin{bridge}[Where the source redshift enters]
+In single-plane lensing the source redshift enters only through
+$\Dds/\Ds$: in $\Sigmacr$ and, for time delays, in the time-delay distance
+$(1+z_d)\Dd\Ds/\Dds$ (Chapter~\ref{ch:fermat_time_delays}).
+Chapter~\ref{ch:cosmological_sensitivity} uses this fact.
+For two sources behind one lens, the ratio of their critical densities,
+$\Sigmacr(z_{s_2})/\Sigmacr(z_{s_1}) = \Brat$, is a ratio of four
+angular-diameter distances ($\Dd$ cancels). It depends on cosmology, but not on the lens mass or on
+$H_0$, which cancels in every ratio of distances.
+\end{bridge}
 
 \begin{exercise}
 \label{ex:sigma_cr_units}
@@ -382,7 +583,7 @@ and the distances have units of length.
 
 The lens equation simplifies dramatically for a \textbf{point mass lens}.
 For a mass $M$ at the origin of the lens plane, the physical deflection
-angle is (from Module~2):
+angle is (from Chapter~\ref{ch:light_deflection}):
 \begin{equation}
     \alphahat(\xi) = \frac{4\Gnewton M}{\speedoflight^2\, \xi} \,,
     \label{eq:alphahat_point}
@@ -415,6 +616,24 @@ lens plane is:
     \frac{\Dd\, \Dds}{\Ds}} \,.
     \label{eq:einstein_radius_physical}
 \end{equation}
+\begin{derivation}[Einstein radius: three equivalent definitions]
+(1) \emph{From the deflection.} Insert $\xi = \Dd\theta$ into
+eq.~\eqref{eq:alphahat_point} and multiply by $\Dds/\Ds$:
+$\alpha = \frac{\Dds}{\Ds}\frac{4\Gnewton M}{\speedoflight^2\Dd\theta}
+= \frac{1}{\theta}\Big[\frac{4\Gnewton M}{\speedoflight^2}\frac{\Dds}{\Dd\Ds}\Big]$.
+The bracket has dimensions of angle$^2$; call it $\thetaE^2$.
+
+(2) \emph{From the ring.} Set $\beta = 0$ in
+$\beta = \theta - \thetaE^2/\theta$: the solution is $\theta = \thetaE$.
+
+(3) \emph{From the mean density.} The mass that a disk of radius
+$\RE = \Dd\thetaE$ would contain at the critical density is
+$\pi(\Dd\thetaE)^2\Sigmacr
+= \pi\Dd^2\cdot\frac{4\Gnewton M}{\speedoflight^2}\frac{\Dds}{\Dd\Ds}
+\cdot\frac{\speedoflight^2\Ds}{4\pi\Gnewton\Dd\Dds} = M$.
+The Einstein circle encloses mean convergence exactly 1. This is the
+definition that generalizes to extended lenses.
+\end{derivation}
 
 \subsection{The Point Mass Lens Equation}
 
@@ -442,6 +661,23 @@ The two solutions are:
     }
     \label{eq:image_positions}
 \end{equation}
+\begin{derivation}[Why one dimension suffices, and the quadratic]
+\emph{Reduction to 1D.} For a point mass $\vecalpha = \thetaE^2\vectheta/|\vectheta|^2$
+is parallel to $\vectheta$. Then $\vecbeta = \vectheta(1 - \thetaE^2/|\vectheta|^2)$
+is parallel (or antiparallel) to $\vectheta$, so every image lies on the
+line through the lens and the source. Measure $\theta$ as a \emph{signed}
+coordinate along that line, positive on the source's side. A negative
+$\theta$ means ``on the opposite side of the lens''.
+
+\emph{Quadratic.} For $\theta \neq 0$, multiply
+$\beta = \theta - \thetaE^2/\theta$ by $\theta$:
+$\theta^2 - \beta\theta - \thetaE^2 = 0$. This is $a\theta^2 + b\theta + c = 0$
+with $a = 1$, $b = -\beta$, $c = -\thetaE^2$, so
+$\theta = [-b \pm \sqrt{b^2 - 4ac}]/(2a) = [\beta \pm \sqrt{\beta^2 + 4\thetaE^2}]/2$.
+The discriminant $\beta^2 + 4\thetaE^2$ is a sum of squares, so both roots
+are always real. Multiplying by $\theta$ introduced no spurious root because
+$\theta = 0$ is not a solution of the quadratic (it would require $\thetaE = 0$).
+\end{derivation}
 
 Since $\beta^2 + 4\,\thetaE^2 > \beta^2$ for $\thetaE > 0$, both
 solutions are always real.  A point mass lens \textit{always} produces
@@ -511,7 +747,7 @@ of strong lensing that produces multiple images and arcs.
 2 \times 10^{14}\,\Msun$ inside the Einstein radius,
 $z_d = 0.3$, $z_s = 2$):
 With $\Dd \approx 919$~Mpc, $\Ds \approx 1727$~Mpc,
-$\Dds \approx 1329$~Mpc, the point-mass formula gives:
+$\Dds \approx 1328$~Mpc, the point-mass formula gives:
 \begin{equation}
     \thetaE \approx 37'' \,.
     \label{eq:thetaE_cluster}
@@ -522,7 +758,7 @@ clusters.  Note that for an extended cluster only the mass
 \emph{within} the Einstein radius enters the point-mass-equivalent
 estimate above; the total virial mass $M_{200} \sim 10^{15}\,\Msun$
 of a typical massive cluster is much larger, but most of it lies
-outside $\thetaE$.  An NFW treatment (Module~10) yields the same
+outside $\thetaE$.  An NFW treatment (Chapter~\ref{ch:cluster_lensing}) yields the same
 answer self-consistently.
 
 \medskip
@@ -532,6 +768,23 @@ These values are computed and verified in
 Interactive exploration is available in
 \mathlink{04_Lens_Equation/einstein_ring.nb}{einstein\_ring.nb}.
 \end{example}
+\begin{annotation}[Doing the numbers without losing a power of ten]
+Two intermediate values are worth memorizing: $4\Gnewton\Msun/\speedoflight^2 = 5.91\times10^{3}$~m
+(twice the Sun's Schwarzschild radius), and $1~\mathrm{kpc} = 3.086\times10^{19}$~m.
+For case (a), $\Dds/(\Dd\Ds) = 1/(10~\mathrm{kpc})$, so
+$\thetaE^2 = 5.91\times10^{3}/3.086\times10^{20} = 1.91\times10^{-17}$ and
+$\thetaE = 4.38\times10^{-9}$~rad $= 0.90$~mas. The physical radius is
+$\RE = \Dd\thetaE = 6.8\times10^{11}$~m $\approx 4.5$~AU. A useful scaling is
+\begin{equation*}
+    \thetaE \simeq 0.90~\mathrm{mas}\,
+    \Big(\frac{M}{\Msun}\Big)^{1/2}
+    \Big(\frac{\Dd\Ds/\Dds}{10~\mathrm{kpc}}\Big)^{-1/2}.
+\end{equation*}
+Check it on case (b): $\Dd\Ds/\Dds = 1439$~Mpc gives
+$0.90~\mathrm{mas}\times10^{6}\times(1.439\times10^{5})^{-1/2} = 2.4''$.
+\emph{Classic error:} quoting $\thetaE$ in radians when arcseconds were
+meant ($1~\mathrm{rad} = 206265''$).
+\end{annotation}
 
 
 % =====================================================================
@@ -580,6 +833,19 @@ units of the Einstein radius).  Then:
           The minimum separation occurs at $\beta = 0$
           (Einstein ring configuration), where $\Delta\theta = 2\,\thetaE$.
 \end{enumerate}
+\begin{annotation}[Vieta in practice]
+The product relation $\theta_+|\theta_-| = \thetaE^2$ does not depend on
+$\beta$. For a point-mass lens, the Einstein radius is the
+\emph{geometric mean} of the two image distances from the lens, and it can be read
+off without knowing where the source is. The sum relation gives the source
+position, $\beta = \theta_+ + \theta_- = \theta_+ - |\theta_-|$.
+
+\emph{A one-line proof of the ordering in item~1--2:} the product is
+negative, so the roots have opposite signs. The sum $\beta > 0$ makes the
+positive root the larger in magnitude. Two numbers whose product of magnitudes
+is $\thetaE^2$ and which are unequal must straddle $\thetaE$:
+$\theta_+ > \thetaE > |\theta_-|$.
+\end{annotation}
 
 \subsection{Limiting Cases}
 
@@ -600,6 +866,27 @@ The two images merge into the \textbf{Einstein ring}.
 In this limit the primary image is essentially at the unlensed source
 position (negligible lensing), and the secondary image is extremely
 close to the lens and too faint to observe.
+\begin{derivation}[The next order in eqs.~\eqref{eq:theta_plus_limit}--\eqref{eq:theta_minus_limit}]
+Write $\sqrt{\beta^2 + 4\thetaE^2} = \beta\sqrt{1 + 4\thetaE^2/\beta^2}$ and
+expand $\sqrt{1+x} = 1 + x/2 - x^2/8 + \dots$ with $x = 4\thetaE^2/\beta^2$:
+$\sqrt{\beta^2 + 4\thetaE^2} = \beta + 2\thetaE^2/\beta - 2\thetaE^4/\beta^3 + \dots$
+Halving the sum and difference with $\beta$:
+\begin{equation*}
+    \theta_+ = \beta + \frac{\thetaE^2}{\beta} - \frac{\thetaE^4}{\beta^3} + \dots,
+    \qquad
+    \theta_- = -\frac{\thetaE^2}{\beta} + \frac{\thetaE^4}{\beta^3} + \dots
+\end{equation*}
+The leading correction to $\theta_+$ is the deflection $\alpha(\beta) = \thetaE^2/\beta$
+evaluated at the unlensed position, which is what one expects from a single weak kink.
+\end{derivation}
+\begin{bridge}[Adding a point mass to a smooth lens]
+Chapter~\ref{ch:power_law_point_mass} puts a point mass (Einstein radius
+$\thetaBH$) at the centre of a power-law galaxy. By superposition
+(eq.~\ref{eq:superposition_deflection}) its reduced deflection
+$\thetaBH^2/\theta$, derived above, is simply added to the galaxy's.
+Because this term diverges as $\theta \to 0$, it dominates exactly where the
+galaxy's own central images would form, even when $\thetaBH \ll \thetaE$.
+\end{bridge}
 
 \begin{figure}[ht]
     \centering
@@ -626,7 +913,7 @@ Liouville's theorem applied to the photon phase space), but it changes
 the \textit{solid angle} subtended by the image compared to the source.
 The ratio of image area to source area is the \textbf{magnification}
 $\mu$.  We will derive the magnification formalism rigorously in
-Module~5; here we preview the key results for the point mass lens.
+Chapter~\ref{ch:magnification}; here we preview the key results for the point mass lens.
 
 For a circularly symmetric lens, the magnification is
 (Narayan \& Bartelmann eq.~26):
@@ -637,6 +924,28 @@ For a circularly symmetric lens, the magnification is
 The first factor accounts for the tangential stretching of the image
 (the image is at a different angular radius than the source), and
 the second factor accounts for the radial stretching.
+\begin{derivation}[Where $\mu = (\theta/\beta)(d\theta/d\beta)$ comes from]
+Surface brightness is conserved, so flux ratio $=$ solid-angle ratio. In polar
+coordinates centred on the lens, an image element has area
+$\theta\,d\theta\,d\phi$ and the corresponding source element
+$\beta\,d\beta\,d\phi$. The polar angle $d\phi$ is the \emph{same} in both
+because an axisymmetric deflection is purely radial. Therefore
+\begin{equation*}
+    \mu = \frac{\theta\,d\theta\,d\phi}{\beta\,d\beta\,d\phi}
+        = \underbrace{\frac{\theta}{\beta}}_{\text{tangential}}\;
+          \underbrace{\frac{d\theta}{d\beta}}_{\text{radial}},
+    \qquad
+    \mu^{-1} = \frac{\beta}{\theta}\,\frac{d\beta}{d\theta}
+    = \Big(1 - \frac{\alpha}{\theta}\Big)\Big(1 - \frac{d\alpha}{d\theta}\Big)
+\end{equation*}
+(Congdon \& Keeton eq.~2.23). This is the determinant of the map
+$(\theta\cos\phi, \theta\sin\phi) \mapsto (\beta\cos\phi, \beta\sin\phi)$.
+Chapter~\ref{ch:magnification} shows that the two factors are the eigenvalues
+$\lambda_t = 1 - \alpha/\theta$ and $\lambda_r = 1 - d\alpha/d\theta$ of the
+Jacobian. For the point mass $\lambda_t = 1 - \thetaE^2/\theta^2$ and
+$\lambda_r = 1 + \thetaE^2/\theta^2$, whose product is the denominator
+$1 - \thetaE^4/\theta^4$ of eq.~\eqref{eq:magnification_pm}.
+\end{derivation}
 
 For the point mass lens equation $\beta = \theta - \thetaE^2/\theta$,
 we have $d\beta/d\theta = 1 + \thetaE^2/\theta^2$, and the
@@ -656,6 +965,28 @@ simplify to (Narayan \& Bartelmann eq.~27):
     }
     \label{eq:magnification_u}
 \end{equation}
+\begin{derivation}[From eq.~\eqref{eq:magnification_pm} to eq.~\eqref{eq:magnification_u}]
+Let $x_\pm = \theta_\pm/\thetaE = (u \pm \sqrt{u^2+4})/2$, so
+$\mu(x) = x^4/(x^4 - 1)$.
+\begin{enumerate}
+    \item Vieta for $x^2 - ux - 1 = 0$: $x_+x_- = -1$, so $x_- = -1/x_+$ and
+          $x_-^4 = 1/x_+^4$.
+    \item Hence $\mu_- = \frac{x_+^{-4}}{x_+^{-4} - 1} = \frac{1}{1 - x_+^4}$
+          and the \emph{signed} magnifications add to one:
+          $\mu_+ + \mu_- = \frac{x_+^4 - 1}{x_+^4 - 1} = 1$.
+    \item Their difference is
+          $\mu_+ - \mu_- = \frac{x_+^4 + 1}{x_+^4 - 1}
+          = \frac{x_+^2 + x_-^2}{x_+^2 - x_-^2}$
+          (divide top and bottom by $x_+^2$, use $x_+^{-2} = x_-^2$).
+    \item From the sum $x_+ + x_- = u$ and the difference
+          $x_+ - x_- = \sqrt{u^2+4}$:
+          $x_+^2 + x_-^2 = (x_+ + x_-)^2 - 2x_+x_- = u^2 + 2$ and
+          $x_+^2 - x_-^2 = (x_+ + x_-)(x_+ - x_-) = u\sqrt{u^2+4}$.
+    \item So $\mu_\pm = \tfrac12[(\mu_+ + \mu_-) \pm (\mu_+ - \mu_-)]
+          = \tfrac12 \pm \frac{u^2+2}{2u\sqrt{u^2+4}}$ (signed), i.e.\
+          $|\mu_\pm| = \frac{u^2+2}{2u\sqrt{u^2+4}} \pm \tfrac12$.
+\end{enumerate}
+\end{derivation}
 
 Several important properties follow:
 \begin{itemize}
@@ -682,6 +1013,31 @@ Several important properties follow:
     \item As $u \to \infty$, $\mu_+ \to 1$ (unlensed) and
           $|\mu_-| \to 0$ (secondary image disappears).
 \end{itemize}
+\begin{annotation}[Signed vs.\ absolute magnification]
+The sign of $\mu$ is the \emph{parity}. A negative $\mu$ means that the image is a
+mirror image of the source (Chapter~\ref{ch:magnification}: $\mu = 1/\det\Amat$).
+Fluxes add as $|\mu|$, so the total brightening is $|\mu_+| + |\mu_-|$, whereas
+the signed sum is identically $\mu_+ + \mu_- = 1$ (previous derivation).
+Equivalently, $|\mu_+| - |\mu_-| = 1$ exactly.
+\emph{Numbers to remember:} at $u = 1$ (source on the Einstein circle)
+$|\mu_+| = 1.171$, $|\mu_-| = 0.171$, total $1.342$ (Narayan \& Bartelmann
+eq.~29). This is the classic microlensing detection threshold. As $u \to 0$ the
+total grows as $1/u$, the point-source divergence that a finite source
+regularizes.
+
+\emph{Classic error:} adding signed magnifications to get the total flux.
+That always gives exactly 1, which is a good check of your signs but not a flux.
+\end{annotation}
+\begin{bridge}[Parity, and a lens with an even number of images]
+The point mass produces \emph{two} images, one of each parity. A smooth,
+non-singular lens always produces an \emph{odd} number (for a source not on
+a caustic). The point mass
+escapes that theorem because its density is singular: the would-be third
+image is swallowed at $\theta = 0$. Chapter~\ref{ch:odd_images} uses exactly
+this mechanism. A central point mass in a galaxy punctures the smooth
+$\Sigma$ that the odd-number theorem assumes, and can suppress the faint
+central image.
+\end{bridge}
 
 
 % =====================================================================
@@ -785,12 +1141,13 @@ Compute the Einstein radius $\thetaE$ for:
           $\Dds = 5$~kpc).  Express the result in milliarcseconds.
     \item \textbf{Galaxy lensing:} $M = 10^{12}\,\Msun$, $z_d = 0.3$,
           $z_s = 1$.  Use the angular diameter distances from
-          Module~3 (or the Mathematica script):
+          Chapter~\ref{ch:cosmological_distances} (or the Mathematica script):
           $\Dd \approx 919$~Mpc, $\Ds \approx 1652$~Mpc,
           $\Dds \approx 1055$~Mpc.  Express the result in arcseconds.
-    \item \textbf{Cluster lensing:} $M = 10^{15}\,\Msun$, $z_d = 0.3$,
-          $z_s = 2$.  Use $\Dd \approx 919$~Mpc, $\Ds \approx 1727$~Mpc,
-          $\Dds \approx 1329$~Mpc.  Express the result in arcseconds.
+    \item \textbf{Cluster lensing:} mass $M_{\mathrm{E}} \approx
+          2\times10^{14}\,\Msun$ inside the Einstein radius (total
+          $M_{200} \sim 10^{15}\,\Msun$), $z_d = 0.3$, $z_s = 2$.  Use $\Dd \approx 919$~Mpc, $\Ds \approx 1727$~Mpc,
+          $\Dds \approx 1328$~Mpc.  Express the result in arcseconds.
 \end{enumerate}
 For each case, also compute the physical Einstein radius $\RE = \Dd\,\thetaE$
 in kpc.  Verify with

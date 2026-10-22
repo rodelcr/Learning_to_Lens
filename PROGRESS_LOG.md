@@ -4,6 +4,79 @@ Timestamped record of major milestones and work completed.
 
 ---
 
+## 2026-10-14 — Part V (compound lenses) + Annotated Study Edition; critic phase complete
+
+**Branch `annotated-edition`** (not yet merged to main / published). Plan: `HANDOFF_annotated_edition_2026-10-14.md`.
+
+- **Third edition.** `Notes/editions.tex` gates `annotation` / `derivation` / `bridge` boxes (comment-package
+  exclusion in the student and instructor editions; `\annot{}` inline → `\unskip`). `build.sh` builds three PDFs
+  and asserts no `??`, no undefined refs, page ordering, zero sentinel leakage, text-md5 fingerprints.
+  Leakage test: student/instructor text identical with annotations present vs stripped.
+- **Part V, chapters 18–25 (module dirs 14–21)**, ported as pure textbook from the AGEL
+  `202607_Theoretical_spiral_compound` theory notes 1, 1b, 2, 2b, 4, 3, 5, 6, 9, 10: multi-plane lens equation
+  & DSPL ratio; power law + point mass (+ broken power law); odd/central images; central-mass bias; MSD in
+  multi-plane lenses + kinematics; multipoles; cosmological sensitivity; first-order estimators. 16 new `.wl`
+  scripts (all PASS), 62 exercises with attested solutions, 14 figures. Master verification 12 → 28/28.
+- **Annotation layer** on all 17 original modules (deep 01d–09; solutions-only 01a–c, 10–13): 511 boxes,
+  ~600 new `check[]`s in the `problems_NN.wl` scripts; student/instructor fingerprints unchanged.
+- **Fact-critic pass**: 25 independent reports (one per chapter / annotation group), all merged. Every Part V
+  derivation re-derived independently (0 FAIL on physics). ~60 pre-existing visible-text errors in
+  Chapters 1–17 CONFIRMED (e.g. Module 6 point-mass delay factor 2; Module 4 Ex 4.3(a); Module 7 Sol 7.3
+  distances; Module 2 refractive index; Module 3 Ex 3.3 table) — tracker: `NOTES_fixpass_tracker_2026-10-14.md`.
+- **Spiral-project findings** (feedback pending): Schneider 2014 A&A 568 L2 vs 2019 A&A 624 A54 conflation;
+  Burke 1981 DOI; note 2/2b/3/4/10 physics errors (listed in the handoff). Reconciliation with that project's own
+  packet-level critic (`docs/spiral_reconciliation_2026-10-14/`) in progress per Rodrigo's instruction.
+- Bib +20 CrossRef-verified keys (Zotero-tagged).
+**Session 2 (same day) — reconciliation + fix pass COMPLETE.** Each Part V chapter reconciled row-by-row
+against the spiral project's own packet-level critic and test catalog (`docs/spiral_reconciliation_2026-10-14/`);
+all 7 module groups + 8 Part V chapters fixed (every confirmed error → corrected text with a non-silent note,
+a new `check[]` that fails on the old value, and a `## Resolution` table in the critic report). Full sweep of all
+55 `.wl` scripts: 0 failures, 1,949 PASS across the 35 harnessed scripts; master 28/28. Feedback (31 items)
+committed into the spiral repo. Final fingerprints:
+```
+Learning_to_Lens.pdf             363 pages  text-md5 a84ec8f14850f089ae56bf7d1965754f  sentinels 0
+Learning_to_Lens_Solutions.pdf   448 pages  text-md5 d1c73bb356827ce97027a012ddca78d3  sentinels 0
+Learning_to_Lens_Annotated.pdf   571 pages  text-md5 c50bca0df6c08feb5544721dcf48cb10  sentinels 508
+```
+
+### Addendum (2026-10-21) — chapter cross-references normalised
+- Every visible "Module~N" (module id, which did not match the PDF's chapter numbers: Module 3 = Chapter 7)
+  is now `Chapter~\ref{ch:…}`; ranges and "and" lists handled (183 references, 24 files). Generic "this module"
+  wording → "chapter" (31 lines). Chapter 14 opener/closer now say "last of Part III" instead of ending the suite.
+  Build 364 / 449 / 572, all assertions pass.
+
+### Addendum (session 3) — orchestrator-scope critic leftovers closed
+- Fig. `precessing_orbit` (Ch 4) caption corrected: the plotted L = 4.2 orbit advances 2.07 rad (119°) per
+  radial period, not "a small angle" (NDSolve + FindRoot; checks F3c/F3d in `problems_01d.wl`, 89/89).
+- Four CrossRef/arXiv-verified bib keys added and Zotero-tagged (`bartelmann_1996`, `wright_brainerd_2000`,
+  `keeton_2003`, `nightingale_2023`); six plain-text citations converted to keys (01e, 02, 07); two wording
+  fixes (01c "perfectly smooth", 10 Ex 10.2(ii)). Per-report "Session-3 closeout" notes; tracker updated.
+- Build: 364 / 449 / 572 pages, all assertions pass. Remaining open items listed in
+  `NOTES_fixpass_tracker_2026-10-14.md` "Session 3 closeout".
+
+### Addendum (session 3) — Wolfram MCP servers added to the toolkit
+
+- Registered two MCP servers at user scope: `Wolfram` (local `Wolfram/AgentTools` v2.2.0 server,
+  persistent Mathematica 15.0 kernel with repo access; tools `WolframLanguageEvaluator`,
+  `WolframLanguageContext`, `SymbolDefinition`, `CodeInspector`, `TestReport`, `ReadNotebook`,
+  `WriteNotebook`) and `WolframCloud` (hosted `https://agenttools.wolfram.com/mcp`, no auth,
+  stateless cloud kernel, no filesystem; `WolframAlpha`, `WolframContext`). Paclet installed via
+  `PacletInstall["Wolfram/AgentTools"]`; config written by `InstallMCPServer["ClaudeCode","WolframLanguage"]`.
+- Probed the local server over stdio: cold start 4.3 s, subsequent evaluations < 0.1 s; definitions
+  persist only when the same `session` argument is passed. Two gotchas found and fixed in
+  `Mathematica/harness.wl`: the evaluator does not capture `WriteString["stdout"]` (PASS/FAIL lines
+  vanished) and `summary[]`'s `Exit[]` killed the server kernel. Harness now detects
+  `MCP_SERVER_NAME` and uses `Print` + a non-exiting `summary[]`; added `resetChecks[]`.
+- Regression after the harness change: `power_law_point_mass.wl` 75/75 and master
+  `verify_against_textbooks.wl` 28/28 under `wolframscript` (unchanged); the same chapter script run
+  via `Get[]` inside the MCP kernel prints all 75 PASS lines and the kernel survives `summary[]`.
+- Policy recorded in CLAUDE.md and VERIFICATION.md: MCP evaluations are scratch; the committed
+  `.wl` under `wolframscript` remains the source of truth; the MCP kernel counts as one of the
+  three allowed kernels.
+
+
+---
+
 ## 2026-09-24 — Full cleanup: epigraphs, distances, citations, May-14 audit reconciled
 
 Covers every open item from the July audit and the May pre-review handoff.

@@ -10,15 +10,22 @@
 % Load shared preamble (packages, macros, notation)
 \input{preamble}
 
-% --- Solutions toggle ---
-% Set \solutionstrue to include solutions; \solutionsfalse to omit them.
-% The build script (build.sh) compiles both versions automatically.
-% Usage: \ifsolutions ... \fi around solution content
+% --- Edition toggles ---
+% build.sh passes  \def\showsolutions{}                       (instructor edition)
+%             or   \def\showsolutions{}\def\showannotated{}   (Annotated Study Edition).
+% Usage in content: \ifsolutions ... \fi ; \ifannotated ... \fi (see editions.tex, rule R4)
 \newif\ifsolutions
-% Default: solutions OFF (overridden by build.sh via \def\showsolutions{})
+\newif\ifannotated
 \ifdefined\showsolutions
     \solutionstrue
 \fi
+\ifdefined\showannotated
+    \annotatedtrue
+    \solutionstrue      % INVARIANT: annotated => solutions (enforced here, not in build.sh)
+\fi
+% Edition-gated environments (annotation / derivation / bridge). Must come AFTER
+% the \newif's above and AFTER \input{preamble} (needs tcolorbox + comment).
+\input{editions}
 
 % --- Page geometry ---
 \usepackage[margin=1in,headheight=14.5pt]{geometry}
@@ -60,9 +67,11 @@
     P.~Saha, D.~Sluse, J.~Wagner \& L.~L.~R.~Williams, \textit{Essentials of Strong Gravitational Lensing} (2024) \\
     P.~Schneider, C.~S.~Kochanek \& J.~Wambsganss, \textit{Gravitational Lensing: Strong, Weak and Micro} (2006)
     \\[0.5cm]}
-    \ifsolutions
+    \ifannotated
+        {\normalsize\color{Plum}\textbf{--- Annotated Study Edition (Solutions + Commentary) ---}}
+    \else\ifsolutions
         {\normalsize\color{BrickRed}\textbf{--- Instructor Edition (with Solutions) ---}}
-    \fi
+    \fi\fi
 }
 \author{
     Rodrigo C\'{o}rdova Rosado \\
@@ -294,6 +303,38 @@ and scripts in the \texttt{Mathematica/} directory of this repository.
 
 \include{13_Microlensing/13_Microlensing}
 \ifsolutions\input{13_Microlensing/13_Solutions}\fi
+
+% =============================================================================
+% Part V: Compound Lenses, Degeneracies, and Cosmography
+% =============================================================================
+% Ported (2026-10) from the analytic study notes of the AGEL project
+% 202607_Theoretical_spiral_compound, rewritten as self-contained textbook
+% chapters. Chapter numbers 18-25 (PDF chapter = position in this list).
+\part{Compound Lenses, Degeneracies, and Cosmography}
+
+\include{14_Multiplane_DSPL/14_Multiplane_DSPL}
+\ifsolutions\input{14_Multiplane_DSPL/14_Solutions}\fi
+
+\include{15_PowerLaw_PointMass/15_PowerLaw_PointMass}
+\ifsolutions\input{15_PowerLaw_PointMass/15_Solutions}\fi
+
+\include{16_Odd_Images_Central/16_Odd_Images_Central}
+\ifsolutions\input{16_Odd_Images_Central/16_Solutions}\fi
+
+\include{17_Central_Mass_Bias/17_Central_Mass_Bias}
+\ifsolutions\input{17_Central_Mass_Bias/17_Solutions}\fi
+
+\include{18_MSD_Kinematics/18_MSD_Kinematics}
+\ifsolutions\input{18_MSD_Kinematics/18_Solutions}\fi
+
+\include{19_Multipoles/19_Multipoles}
+\ifsolutions\input{19_Multipoles/19_Solutions}\fi
+
+\include{20_Cosmological_Sensitivity/20_Cosmological_Sensitivity}
+\ifsolutions\input{20_Cosmological_Sensitivity/20_Solutions}\fi
+
+\include{21_Perturbative_Estimators/21_Perturbative_Estimators}
+\ifsolutions\input{21_Perturbative_Estimators/21_Solutions}\fi
 
 % =============================================================================
 % Bibliography

@@ -182,7 +182,8 @@ Print[""];
 (* =========================================================================
    Section 5: Numerical Example -- Physical Time Delay
 
-   Delta_t = (R_S / c) * (1 + z_d) * Delta_tau
+   Delta_t = (2 R_S / c) * (1 + z_d) * Delta_tau   (2 R_S/c = 4GM/c^3;
+   fixed 2026-10-14, earlier versions wrote R_S/c)
    for point mass: R_S = 2*G*M / c^2
    ========================================================================= *)
 
@@ -205,8 +206,8 @@ dtauVal = deltaTauAnalytic[ySource];
 Print["Source at y = beta/thetaE = ", ySource];
 Print["  Delta_tau = ", NumberForm[dtauVal, {5, 4}]];
 
-deltaT = RS / cc * (1 + zd) * dtauVal;
-Print["  Delta_t = R_S/c * (1+z_d) * Delta_tau"];
+deltaT = 2 RS / cc * (1 + zd) * dtauVal;
+Print["  Delta_t = 2 R_S/c * (1+z_d) * Delta_tau"];
 Print["         = ", ScientificForm[deltaT, 4], " s"];
 Print["         = ", NumberForm[deltaT / dayToSec, {5, 1}], " days\n"];
 
@@ -220,7 +221,7 @@ Print[StringForm["  ``    ``         ``",
 Print["  ", StringJoin[Table["-", 38]]];
 Do[
     dt = deltaTauAnalytic[y];
-    dtPhys = RS / cc * (1 + zd) * dt / dayToSec;
+    dtPhys = 2 RS / cc * (1 + zd) * dt / dayToSec;
     Print[StringForm["  ``    ``         ``",
         PaddedForm[y, {4, 1}],
         PaddedForm[dt, {10, 4}],

@@ -20,6 +20,14 @@
      G     = 6.674e-11 m^3/(kg s^2)
      c     = 2.998e8 m/s
      Msun  = 1.989e30 kg
+   Annotated-edition checks (2026-10): a delimited section at the end of
+     this file check[]s every identity / number written in the derivation,
+     annotation and bridge boxes of the matching _Solutions.tex (Annotated
+     Study Edition).  The script ends with summary[] (exit 0 iff all PASS).
+   Fix pass (2026-10-14): checks backing the fact-critic fixes of the
+     2026-10-14 reports (Notes/01?_*/FACT_CRITIC_*_annotated_2026-10-14.md);
+     each fails on the old (pre-fix) value.
+     Run:  bash Mathematica/run_wl.sh <this file>
    ========================================================================= *)
 
 Print["=== Module 1c: SOLUTIONS ===\n"];
@@ -393,3 +401,146 @@ Print["  4. The throat connects two asymptotically flat regions"];
 Print["     (Einstein-Rosen bridge), though this is not traversable.\n"];
 
 Print["=== End of Module 1c Solutions ==="];
+
+(* ===== Annotated-edition checks (2026-10) ===== *)
+(* Checks every identity and number written in the derivation / annotation /
+   bridge boxes of Notes/01c_Schwarzschild/01c_Solutions.tex (Annotated Study
+   Edition only).  Self-contained: own Christoffel/Riemann helpers, using the
+   chapter conventions eq:christoffel and eq:riemann (Carroll eqs. 3.27, 3.4). *)
+Get[FileNameJoin[{DirectoryName[$InputFileName], "..", "..",
+                  "Mathematica", "harness.wl"}]];
+Print["\n--- Annotated-edition checks (Module 1c) ---"];
+
+annChr[g_, x_] := Module[{gi = Simplify[Inverse[g]], n = Length[x]},
+  Table[Simplify[1/2 Sum[gi[[s, l]] (D[g[[n2, l]], x[[m]]] + D[g[[l, m]], x[[n2]]]
+        - D[g[[m, n2]], x[[l]]]), {l, n}]], {s, n}, {m, n}, {n2, n}]];
+(* R^r_{s m n} = d_m G^r_{n s} - d_n G^r_{m s} + G^r_{m l} G^l_{n s} - G^r_{n l} G^l_{m s} *)
+annRiem[G_, x_] := Module[{n = Length[x]},
+  Table[Simplify[D[G[[r, nn, s]], x[[m]]] - D[G[[r, m, s]], x[[nn]]]
+     + Sum[G[[r, m, l]] G[[l, nn, s]] - G[[r, nn, l]] G[[l, m, s]], {l, n}]],
+   {r, n}, {s, n}, {m, n}, {nn, n}]];
+
+Module[{t, r, th, ph, RS, x, f, g, G, al, be, Riem, Rlow, gi, K, cond,
+        bracket},
+  cond = r > RS > 0 && 0 < th < Pi;
+  x = {t, r, th, ph}; f = 1 - RS/r;
+  g = DiagonalMatrix[{-f, 1/f, r^2, r^2 Sin[th]^2}];
+  G = annChr[g, x];
+  (* Ex 1.1: Christoffels from alpha = (1/2) ln f, beta = -alpha *)
+  al = Log[f]/2; be = -al;
+  check["1c ann: alpha' = RS/(2 r (r-RS))", Simplify[D[al, r] == RS/(2 r (r - RS))]];
+  check["1c ann: Gamma^t_tr = alpha'", Simplify[G[[1, 1, 2]] == D[al, r]]];
+  check["1c ann: Gamma^r_tt = e^{2(alpha-beta)} alpha' = RS (r-RS)/(2 r^3)",
+    Simplify[G[[2, 1, 1]] == Exp[2 (al - be)] D[al, r] == RS (r - RS)/(2 r^3), cond]];
+  check["1c ann: e^{2(alpha-beta)} = f^2", Simplify[Exp[2 (al - be)] == f^2, cond]];
+  check["1c ann: Gamma^r_rr = beta' = -Gamma^t_tr",
+    Simplify[G[[2, 2, 2]] == D[be, r] == -G[[1, 1, 2]]]];
+  check["1c ann: Gamma^r_thth = -r e^{-2 beta} = -(r - RS)",
+    Simplify[G[[2, 3, 3]] == -r Exp[-2 be] == -(r - RS), cond]];
+  check["1c ann: Gamma^r_phph = -(r-RS) sin^2",
+    Simplify[G[[2, 4, 4]] == -(r - RS) Sin[th]^2]];
+  check["1c ann: Gamma^th_rth = Gamma^ph_rph = 1/r",
+    Simplify[G[[3, 2, 3]] == G[[4, 2, 4]] == 1/r]];
+  check["1c ann: Gamma^th_phph = -sin cos, Gamma^ph_thph = cot",
+    Simplify[G[[3, 4, 4]] == -Sin[th] Cos[th] && G[[4, 3, 4]] == Cot[th]]];
+  check["1c ann: Gamma^t_tr diverges at r -> RS (coordinate artefact)",
+    Limit[G[[1, 1, 2]], r -> RS, Direction -> "FromAbove"] === Infinity ||
+    Limit[G[[1, 1, 2]] /. RS -> 1, r -> 1, Direction -> "FromAbove"] === Infinity];
+  check["1c ann: Gamma^r_tt = -(1/2) g^rr d_r g_tt (single surviving term)",
+    Simplify[G[[2, 1, 1]] == -1/2 (1/g[[2, 2]]) D[g[[1, 1]], r]]];
+  check["1c ann: Gamma^r_tt -> RS/(2 r^2) = M/r^2 for r >> RS (Newtonian accel.)",
+    Simplify[Limit[r^2 G[[2, 1, 1]], r -> Infinity] == RS/2] &&
+    Simplify[(RS/(2 r^2) /. RS -> 2 M) == M/r^2]];
+  check["1c ann: Christoffels unchanged under g -> -g (signature flip)",
+    Simplify[annChr[-g, x] == G]];
+  (* Ricci components via the chapter formulas eq:Rtt, eq:Rrr, eq:Rthth *)
+  bracket = D[al, {r, 2}] + D[al, r]^2 - D[al, r] D[be, r] + 2/r D[al, r];
+  check["1c ann: with beta=-alpha, bracket = (f'' + 2 f'/r)/(2 f)",
+    Simplify[bracket == (D[f, {r, 2}] + 2/r D[f, r])/(2 f), cond]];
+  check["1c ann: f'' + 2 f'/r = 0 for f = 1 - RS/r",
+    Simplify[D[f, {r, 2}] + 2/r D[f, r] == 0]];
+  check["1c ann: R_tt (eq:Rtt) = 0",
+    Simplify[Exp[2 (al - be)] bracket == 0, cond]];
+  check["1c ann: R_rr (eq:Rrr) = -bracket = 0",
+    Simplify[(-D[al, {r, 2}] - D[al, r]^2 + D[al, r] D[be, r] + 2/r D[be, r]) == -bracket
+      && bracket == 0, cond]];
+  check["1c ann: R_thth (eq:Rthth) = -r f' - f + 1 = 0",
+    Simplify[Exp[-2 be] (r (D[be, r] - D[al, r]) - 1) + 1 == -r D[f, r] - f + 1 == 0, cond]];
+  (* Ex 1.2: Kretschmann via orthonormal-frame components *)
+  Riem = annRiem[G, x];
+  Rlow = Table[Simplify[Sum[g[[a, e]] Riem[[e, b, c, d]], {e, 4}]], {a, 4}, {b, 4}, {c, 4}, {d, 4}];
+  (* orthonormal component = coordinate component / sqrt|g_aa g_bb g_cc g_dd| *)
+  check["1c ann: R_(t r t r) orthonormal = -RS/r^3",
+    Simplify[Rlow[[1, 2, 1, 2]] == -RS/r^3, cond]];
+  check["1c ann: R_(t th t th) = R_(t ph t ph) = RS/(2 r^3)  (orthonormal)",
+    Simplify[Rlow[[1, 3, 1, 3]]/(f r^2) == RS/(2 r^3) &&
+             Rlow[[1, 4, 1, 4]]/(f r^2 Sin[th]^2) == RS/(2 r^3), cond]];
+  check["1c ann: R_(r th r th) = R_(r ph r ph) = -RS/(2 r^3)  (orthonormal)",
+    Simplify[Rlow[[2, 3, 2, 3]] f/r^2 == -RS/(2 r^3) &&
+             Rlow[[2, 4, 2, 4]] f/(r^2 Sin[th]^2) == -RS/(2 r^3), cond]];
+  check["1c ann: R_(th ph th ph) = RS/r^3  (orthonormal)",
+    Simplify[Rlow[[3, 4, 3, 4]]/(r^4 Sin[th]^2) == RS/r^3, cond]];
+  check["1c ann: 4 x sum of squares of the 6 pair components = 12 RS^2/r^6",
+    Simplify[4 ((RS/r^3)^2 + 2 (RS/(2 r^3))^2 + 2 (RS/(2 r^3))^2 + (RS/r^3)^2) == 12 RS^2/r^6]];
+  gi = Inverse[g];
+  K = Simplify[Sum[Rlow[[a, b, c, d]]^2 gi[[a, a]] gi[[b, b]] gi[[c, c]] gi[[d, d]],
+        {a, 4}, {b, 4}, {c, 4}, {d, 4}], cond];
+  check["1c ann: full contraction K = 12 RS^2/r^6 (independent recomputation)",
+    Simplify[K == 12 RS^2/r^6]];
+  check["1c ann: K(RS) = 12/RS^4 = 3/(4 M^4) with RS = 2M",
+    Simplify[(12 RS^2/r^6 /. r -> RS) == 12/RS^4] &&
+    Simplify[(12/RS^4 /. RS -> 2 M) == 3/(4 M^4)]];
+  check["1c ann: g_rr diverges at RS while K stays finite",
+    Limit[(1/f) /. RS -> 1, r -> 1, Direction -> "FromAbove"] === Infinity &&
+    (12 RS^2/r^6 /. {RS -> 1, r -> 1}) == 12];
+];
+
+(* Ex 1.3 numbers *)
+Module[{G = 6.674*^-11, c = 2.998*^8, Msun = 1.989*^30, pc = 3.0857*^16, AU = 1.496*^11,
+        RSsun, RSgal, RSbh},
+  RSsun = 2 G Msun/c^2; RSgal = 1*^12 RSsun; RSbh = 1*^9 RSsun;
+  (* Fix pass 2026-10-14 (critic N6): was Abs[RSsun - 2953] < 1, which also passed 2953.85 *)
+  check["1c fix N6: RS(Msun) = 2953.8 m rounds to 2954 m (old 2953 fails)", Round[RSsun] == 2954];
+  check["1c fix N6: RS = 2.954 km (M/Msun) to 1 m", Round[RSsun/1000, 0.001] == 2.954];
+  check["1c ann: RS proportional to M: RS(1e12 Msun) = 2.95e15 m",
+    Abs[RSgal/2.95*^15 - 1] < 0.005];
+  check["1c ann: 2.95e15 m = 0.096 pc", Abs[RSgal/pc - 0.096] < 0.0005];
+  check["1c ann: RS/R for 50 kpc = 1.9e-6", Abs[(RSgal/pc)/5*^4 - 1.9*^-6] < 0.05*^-6];
+  check["1c ann (bridge): RS(1e9 Msun) = 2.95e12 m = 20 AU = 1e-4 pc",
+    Abs[RSbh/2.95*^12 - 1] < 0.005 && Abs[RSbh/AU - 20] < 0.5 && Abs[RSbh/pc/1*^-4 - 1] < 0.05];
+  check["1c ann (bridge): 1 kpc / RS(1e9 Msun) ~ 1e7",
+    Abs[Log10[1000 pc/RSbh] - 7] < 0.05];
+];
+
+(* Ex 1.4: Taylor expansion and the neutron-star breakdown *)
+Module[{xx, s},
+  s = Series[1/Sqrt[1 - xx] - 1, {xx, 0, 2}];
+  check["1c ann: (1-x)^(-1/2) - 1 = x/2 + 3x^2/8 + O(x^3)",
+    Simplify[Normal[s] == xx/2 + 3 xx^2/8]];
+  (* Fix pass 2026-10-14 (critic N11): x computed from the module constants, not typed in *)
+  Module[{xs = (2 6.674*^-11 1.989*^30/(2.998*^8)^2)/6.957*^8},
+    check["1c fix N11: Sun x = RS/R = 4.246e-6, i.e. 4.25e-6 at 3 s.f. (old 4.24 fails)",
+      Round[xs 10^6, 0.001] == 4.246 && Round[xs 10^6, 0.01] == 4.25];
+    check["1c fix N11: z_sun = x/2 = 2.12e-6 (unrounded x); exact z also 2.12e-6",
+      Round[xs/2 10^6, 0.01] == 2.12 && Round[(1/Sqrt[1 - xs] - 1) 10^6, 0.01] == 2.12];
+  ];
+  check["1c ann: NS x = 0.414: x/2 = 0.207 vs exact 0.306",
+    Abs[0.414/2 - 0.207] < 1*^-9 && Abs[(1/Sqrt[1 - 0.414] - 1) - 0.306] < 0.001];
+  check["1c ann: second-order x/2 + 3x^2/8 = 0.271 at x = 0.414",
+    Abs[0.414/2 + 3 0.414^2/8 - 0.271] < 0.001];
+  check["1c ann: relative 2nd-order correction (3x^2/8)/(x/2) = 3x/4 ~ 1e-6 for x ~ 1e-6",
+    Simplify[(3 xx^2/8)/(xx/2) == 3 xx/4] && (3 1*^-6/4) < 1*^-6];
+  check["1c ann: 0.306 / 2.12e-6 = 1.44e5", Abs[0.306/2.12*^-6/1.44*^5 - 1] < 0.005];
+];
+
+(* Ex 1.5: Flamm integral by substitution u = r - RS *)
+Module[{u, RS, r},
+  check["1c ann: Integrate sqrt(RS/u) du = 2 sqrt(RS u)",
+    Simplify[D[2 Sqrt[RS u], u] == Sqrt[RS/u], RS > 0 && u > 0]];
+  check["1c ann: z(r) = 2 sqrt(RS (r-RS)) satisfies (dz/dr)^2 = RS/(r-RS)",
+    Simplify[D[2 Sqrt[RS (r - RS)], r]^2 == RS/(r - RS), r > RS > 0]];
+  check["1c ann: dz/dr -> infinity at the throat (vertical tangent)",
+    Limit[D[2 Sqrt[(r - 1)], r], r -> 1, Direction -> "FromAbove"] === Infinity];
+];
+
+summary[];

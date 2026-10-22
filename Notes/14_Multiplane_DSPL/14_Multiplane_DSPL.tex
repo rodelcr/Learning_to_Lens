@@ -1,0 +1,1103 @@
+% =============================================================================
+% Module 14: The Multi-Plane Lens Equation and Double-Source-Plane Lenses
+% =============================================================================
+% Part V — Compound Lenses, Degeneracies, and Cosmography
+% Sources: Schneider, Ehlers & Falco (1992) Sec. 9.1.1, eqs. (9.1)-(9.3)
+%            (checked against the PDF, pp. 280-283);
+%          Congdon & Keeton (2018) Sec. 4.8, eqs. (4.94)-(4.99) (checked, pp. 112-113);
+%          Kormann, Schneider & Bartelmann (1994) for the SIE.
+%          Ported from two analytic study notes (multi-plane lens equation and
+%          DSPL distance ratio; what a DSPL fit samples) and rewritten as a
+%          self-contained chapter. Label prefixes: mp (multi-plane, B),
+%          mpi (DSPL inference).
+% Mathematica: ../Mathematica/14_Multiplane_DSPL/multiplane_dspl.wl
+% Solutions:   ../Solutions/14_Multiplane_DSPL/problems_14.wl
+% =============================================================================
+
+\chapter{The Multi-Plane Lens Equation and Double-Source-Plane Lenses}
+\label{ch:multiplane_dspl}
+
+\noindent
+Everything so far has used a single deflecting plane: one thin mass
+sheet between the observer and one source.  Real lines of sight are not
+so tidy.  A quasar may be lensed by two galaxies at different redshifts;
+a lens galaxy may sit in front of \emph{two} background sources at
+different redshifts; and the nearer of those sources is itself a galaxy
+with mass, so it lenses the farther one.  This chapter, the first of
+Part~V, builds the machinery for all of these situations and then
+specialises it to a configuration that is a cosmological tool in its
+own right: the \textbf{double-source-plane lens} (DSPL), one deflector
+seen against two sources.
+
+The plan is:
+\begin{itemize}[nosep]
+    \item assemble the \textbf{recursive multi-plane lens equation} for
+          $N$ deflecting planes from straight-line propagation between
+          deflections, and identify the lens--lens coupling it contains;
+    \item specialise to one deflector and two source planes, derive the
+          \textbf{distance ratio} $\Brat$, show that it lies in $(0,1)$
+          and that it does not depend on $\Hubble$;
+    \item connect $\Brat$ to what is actually measured, the ratio of the
+          two Einstein radii $\etamea$: $\Brat=\etamea$ for an isothermal
+          (SIS or SIE) deflector, $\Brat=\etamea^{\gp-1}$ for a power law;
+    \item compute $\Brat(z_l,z_{s1},z_{s2};\Omegam,w)$ and its
+          sensitivity to $w$ and $\Omegam$;
+    \item state precisely what a DSPL fit samples, where the inner
+          density slope enters, and the one shortcut that would make the
+          inference circular.
+\end{itemize}
+
+\medskip
+\noindent
+\textbf{Companion Mathematica files:}
+\begin{itemize}[nosep]
+    \item \mathlink{14_Multiplane_DSPL/multiplane_dspl.wl}{multiplane\_dspl.wl}
+          --- recursive multi-plane equation versus explicit ray tracing
+          (generic deflections and two point-mass planes), the two-plane
+          Jacobian, the distance ratio $\Brat$ in flat $w$CDM computed
+          from the comoving-distance integral, the power-law and SIE
+          Einstein-radius identities, $\partial\ln\Brat/\partial w$ and
+          $\partial\ln\Brat/\partial\Omegam$ by two independent methods,
+          the lens--lens coupling estimate, and
+          Figure~\ref{fig:mp_B_vs_zs2}
+    \item \solnlink{14_Multiplane_DSPL/problems_14.wl}{problems\_14.wl}
+          --- verified solutions to all exercises of this chapter
+\end{itemize}
+
+
+% =====================================================================
+\section{Why a Double Source Plane Is a Cosmological Ruler}
+\label{sec:mp_why}
+
+A single strong lens says a great deal about the \emph{mass} of the
+deflector but little that is clean about \emph{cosmology}.  The Einstein
+radius of a singular isothermal sphere,
+$\thetaE = 4\pi(\sigma_v/c)^2\,\Dds/\Ds$
+(eq.~\eqref{eq:sis_einstein_radius}), multiplies a property of the galaxy
+($\sigma_v$) by a ratio of distances, and the two cannot be separated
+without an independent handle on the mass.
+
+A DSPL uses the \emph{same deflector twice}.  Two sources at redshifts
+$z_{s1}<z_{s2}$ lie behind one galaxy at $z_l$.  The galaxy's mass
+distribution is identical for both; only the geometry differs.  The
+ratio of the two Einstein radii therefore cancels the deflector mass,
+leaving a dimensionless ratio of distances that depends on the shape of
+the expansion history, $(\Omegam,w)$, but, as we will show, not on the
+Hubble constant.  The use of DSPLs to constrain the
+dark-energy equation of state was developed by \citet{collett_2012};
+cosmological constraints from an observed galaxy-scale DSPL were derived
+by \citet{collett_auger_2014}.
+
+\begin{annotation}[What is new compared with Parts II and III]
+Nothing in this chapter needs new physics.  Every ingredient is
+already on the shelf: the thin-lens deflection
+(Chapter~\ref{ch:lens_equation}), angular-diameter distances
+(Chapter~\ref{ch:cosmological_distances}), and the isothermal and
+power-law profiles (Chapters~\ref{ch:axisymmetric_models},
+\ref{ch:elliptical_models} and~\ref{ch:galaxy_lensing}).  What is new is
+\emph{bookkeeping}: which distance multiplies which deflection when
+there is more than one plane.  The most common error in this subject is
+a wrong distance in that bookkeeping, so the chapter is deliberately
+pedantic about it.
+\end{annotation}
+
+
+% =====================================================================
+\section{Recap: The Single-Plane Lens Equation and Its Distances}
+\label{sec:mp_recap}
+
+\begin{aside}[Why light bends twice as much]
+A ray passing a point mass $M$ at impact parameter $b$ is deflected by
+$\alphahat = 4GM/(c^2 b)$, twice the value a Newtonian argument gives,
+because the photon responds equally to the temporal ($g_{tt}$) and
+spatial ($g_{ij}$) parts of the weak-field metric
+$\dd s^2 = -(1+2\Phi/c^2)c^2\dd t^2 + (1-2\Phi/c^2)\dd\ell^2$.  A slow
+massive particle feels only $g_{tt}$ and is deflected half as much
+(Chapters~\ref{ch:linearized_gravity} and~\ref{ch:light_deflection}).
+\end{aside}
+
+For a thin mass sheet with surface density $\Sigma$, the physical
+deflection at lens-plane position $\vecxi$ is the superposition
+\begin{equation}
+    \hat{\vecalpha}(\vecxi) = \frac{4G}{c^2}\int \Sigma(\vecxi')\,
+    \frac{\vecxi-\vecxi'}{|\vecxi-\vecxi'|^2}\,\dd^2\xi' ,
+    \label{eq:mp_alphahat}
+\end{equation}
+and with $\vecxi=\Dd\vectheta$ the lens equation of
+Chapter~\ref{ch:lens_equation} (eqs.~\eqref{eq:reduced_deflection}
+and~\eqref{eq:lens_equation}) reads
+\begin{equation}
+    \vecbeta = \vectheta - \vecalpha(\vectheta),\qquad
+    \vecalpha(\vectheta) \equiv \frac{\Dds}{\Ds}\,\hat{\vecalpha}(\Dd\vectheta).
+    \label{eq:mp_singleplane}
+\end{equation}
+The factor $\Dds/\Ds$ is the \textbf{lensing efficiency}: a given mass
+produces a larger reduced deflection for a more distant source.
+
+All distances are angular-diameter distances.  In a spatially flat
+universe with comoving distance $\chi(z)$,
+\begin{equation}
+    D_A(z_1,z_2) = \frac{\chi(z_2)-\chi(z_1)}{1+z_2},\qquad
+    \chi(z)=\frac{c}{\Hubble}\int_0^{z}\frac{\dd z'}{E(z')},\qquad
+    E(z)=\sqrt{\Omegam(1+z)^3+(1-\Omegam)\,\zeta(z)},
+    \label{eq:mp_DA}
+\end{equation}
+where $\zeta(z)=\exp\!\big[3\!\int_0^z \frac{1+w(z')}{1+z'}\,\dd z'\big]$
+carries the dark-energy history.  For constant $w$,
+$\zeta=(1+z)^{3(1+w)}$, and $\zeta\equiv1$ for a cosmological constant
+($w=-1$).  The denominator $1+z_2$ belongs to the \emph{far} endpoint.
+\annot{\texttt{multiplane\_dspl.wl} check 5a}
+
+\begin{bridge}[Chapter~\ref{ch:cosmological_distances}: why $\Dds\neq\Ds-\Dd$]
+Equation~\eqref{eq:mp_DA} with $z_1=z_d$, $z_2=z_s$ is
+eq.~\eqref{eq:Dds_flat} of \S\ref{sec:Dds}.  Comoving distances add along
+a line of sight in a flat universe; angular-diameter distances do not,
+because each is divided by $(1+z)$ at its own far endpoint:
+\[
+  (\Ds-\Dd)-\Dds = \chi_d\Big[\frac{1}{1+z_s}-\frac{1}{1+z_d}\Big]\neq 0 .
+\]
+At $(z_d,z_s)=(0.5,2)$ in flat $\Lambda$CDM with $\Omegam=0.3$ and
+$\Hubble=70$\,km\,s$^{-1}$\,Mpc$^{-1}$: $\Dds=1097.08$\,Mpc but
+$\Ds-\Dd=467.54$\,Mpc.  In this chapter three or more redshifts are in
+play, and \emph{every} plane-to-plane distance must be built from
+comoving differences.  Exercise~\ref{ex:mp_naive_distance} shows what
+the naive subtraction does to $\Brat$.
+\end{bridge}
+
+
+% =====================================================================
+\section{The Multi-Plane Lens Equation}
+\label{sec:mp_multiplane}
+
+\subsection{Statement}
+
+Order the deflecting planes by redshift, $z_1<z_2<\dots<z_N$, and put
+the source at $z_s>z_N$.  Let $\vectheta_j$ be the angular position, as
+seen by the observer, at which the ray crosses plane $j$; $\vectheta_1$
+is the observed image position.  Write $D_j\equiv D_A(0,z_j)$ and
+$D_{ij}\equiv D_A(z_i,z_j)$, and let $\hat{\vecalpha}_i$ be the physical
+deflection produced by the mass in plane $i$, evaluated at the physical
+impact position $\vecxi_i=D_i\vectheta_i$.  Then
+\citep[\S9.1.1, eqs.~9.2--9.3]{schneider_ehlers_falco_1992}
+\begin{equation}
+    \boxed{\;
+    \vectheta_{j} = \vectheta_{1} - \sum_{i=1}^{j-1}
+    \frac{D_{ij}}{D_{j}}\,\hat{\vecalpha}_i\big(D_i\vectheta_i\big),
+    \qquad j=2,\dots,N+1,\;}
+    \label{eq:mp_multiplane}
+\end{equation}
+with $\vectheta_{N+1}\equiv\vecbeta$ the source position.  The equation
+is \emph{recursive}: $\vectheta_2$ needs only $\vectheta_1$;
+$\vectheta_3$ needs $\vectheta_1$ and $\vectheta_2$; and so on.
+\citet[\S9]{schneider_ehlers_falco_1992} attribute the multiple
+lens-plane formalism in part to \citet{blandford_narayan_1986}.
+
+\begin{keybox}[The multi-plane lens equation]
+A ray observed at $\vectheta_1$ reaches plane $j$ at
+$\vectheta_j=\vectheta_1-\sum_{i<j}(D_{ij}/D_j)\,\hat{\vecalpha}_i(D_i\vectheta_i)$.
+Each earlier plane contributes its physical deflection, weighted by its
+efficiency $D_{ij}/D_j$ towards plane $j$ and evaluated where the
+\emph{already deflected} ray crosses it.  For $N=1$ this is
+eq.~\eqref{eq:mp_singleplane}.
+\end{keybox}
+
+\subsection{Derivation from straight-line propagation}
+
+In a spatially flat FRW universe the spatial metric in comoving
+coordinates is Euclidean, so between deflections a light ray is a
+straight line in comoving coordinates.  Let $\vec{x}(\chi)$ be the ray's
+comoving transverse position at comoving distance $\chi$ from the
+observer.  It leaves the observer in direction $\vectheta_1$; at plane
+$i$ (comoving distance $\chi_i$) its direction changes by
+$\hat{\vecalpha}_i$.  Because the FRW metric is conformally flat, angles
+are the same in comoving and proper coordinates, so the local deflection
+angle can be used directly.
+
+\begin{derivation}[Comoving ray tracing $\Rightarrow$ eq.~\eqref{eq:mp_multiplane}]
+Between the observer and plane 1 the ray is $\vec{x}=\chi\,\vectheta_1$,
+so $\vec{x}_1=\chi_1\vectheta_1$.  After plane 1 its direction is
+$\vectheta_1-\hat{\vecalpha}_1$, so at plane 2
+\[
+  \vec{x}_2=\chi_1\vectheta_1+(\vectheta_1-\hat{\vecalpha}_1)(\chi_2-\chi_1)
+           =\chi_2\vectheta_1-(\chi_2-\chi_1)\,\hat{\vecalpha}_1 .
+\]
+Each further deflection adds one more term of the same form:
+\[
+  \vec{x}_j=\chi_j\vectheta_1-\sum_{i=1}^{j-1}(\chi_j-\chi_i)\,\hat{\vecalpha}_i .
+\]
+The angular position seen by the observer is $\vectheta_j=\vec{x}_j/\chi_j$:
+\[
+  \vectheta_j=\vectheta_1-\sum_{i=1}^{j-1}\frac{\chi_j-\chi_i}{\chi_j}\,\hat{\vecalpha}_i .
+\]
+Finally, by eq.~\eqref{eq:mp_DA},
+$D_{ij}/D_j=[(\chi_j-\chi_i)/(1+z_j)]/[\chi_j/(1+z_j)]=(\chi_j-\chi_i)/\chi_j$:
+the two factors of $(1+z_j)$ cancel.  The deflection at plane $i$
+depends on the \emph{proper} impact parameter
+$\vecxi_i=\vec{x}_i/(1+z_i)=D_i\vectheta_i$.  This is
+eq.~\eqref{eq:mp_multiplane}.  \texttt{multiplane\_dspl.wl} checks 1a--1b
+verify the identity symbolically for three deflecting planes plus a
+source, with arbitrary deflections.
+\end{derivation}
+
+The geometric derivation in SEF \S9.1.1 works directly with
+angular-diameter distances and does not assume flatness, so
+eq.~\eqref{eq:mp_multiplane} also holds in curved FRW models, with
+$D_{ij}$ computed from the curved-space formula
+(eq.~\eqref{eq:Dds_general}).
+
+\subsection{The Congdon--Keeton form and the factors $\beta_{ij}$}
+
+It is often convenient to use deflections reduced to the final source,
+$\vecalpha_i\equiv(D_{is}/D_s)\,\hat{\vecalpha}_i$.  Substituting into
+eq.~\eqref{eq:mp_multiplane} gives
+\citep[\S4.8, eqs.~4.99a--c]{congdon_principles_2018}
+\begin{equation}
+    \vecbeta=\vectheta_1-\sum_{i=1}^{N}\vecalpha_i(\vectheta_i),\qquad
+    \vectheta_j=\vectheta_1-\sum_{i=1}^{j-1}\beta_{ij}\,\vecalpha_i(\vectheta_i),\qquad
+    \beta_{ij}\equiv\frac{D_{ij}\,D_s}{D_j\,D_{is}} .
+    \label{eq:mp_CK}
+\end{equation}
+The factor $\beta_{ij}$ converts a deflection reduced to the source
+plane into one reduced to plane $j$.  It reappears in
+\S\ref{sec:mp_dspl} as the DSPL distance ratio.  \annot{check 1c}
+
+\subsection{Lens--lens coupling}
+
+Equation~\eqref{eq:mp_multiplane} is nonlinear in a way the single-plane
+equation is not: the deflection at plane $i$ is evaluated at
+$\vectheta_i$, which already depends on all earlier deflections.  This
+\textbf{lens--lens coupling} leaves a clean signature in the Jacobian.
+For two planes, let $\Psi_i\equiv\partial\vecalpha_i/\partial\vectheta_i$;
+each is symmetric because each $\vecalpha_i$ is the gradient of a
+potential.  The chain rule applied to eq.~\eqref{eq:mp_CK} gives
+\begin{equation}
+    \Amat\equiv\pderiv{\vecbeta}{\vectheta_1}
+    = I-\Psi_1-\Psi_2\big(I-\beta_{12}\Psi_1\big).
+    \label{eq:mp_jacobian}
+\end{equation}
+Its antisymmetric part is
+$\tfrac12\beta_{12}\big[\Psi_2\Psi_1-(\Psi_2\Psi_1)^{T}\big]$, which
+vanishes only if the two matrices commute.  So $\Amat$ is in general
+\emph{not} symmetric: the multi-plane mapping is not a gradient map, and
+images can be rotated as well as sheared, as SEF point out at the start
+of their Chapter~9.  Setting either mass to zero restores a symmetric
+Jacobian.  \annot{checks 1g--1j: for two point masses the finite-difference
+Jacobian matches eq.~\eqref{eq:mp_jacobian} and its off-diagonal
+elements are clearly unequal}
+
+\begin{bridge}[Chapter~\ref{ch:magnification}: the single-plane Jacobian]
+In \S\ref{sec:jacobian} the Jacobian $\Amat=\partial\vecbeta/\partial\vectheta$
+was symmetric because $\vecalpha=\nabla\psiL$, so
+$\Amat_{ij}=\delta_{ij}-\partial_i\partial_j\psiL$, and it could be
+written in terms of $\kappab$ and $\gammaL$ alone.  The extra term
+$\beta_{12}\Psi_2\Psi_1$ in eq.~\eqref{eq:mp_jacobian} is what breaks
+that symmetry.  It is second order in the two lensing strengths, which
+is why a weak second plane is often well described by an
+\emph{effective} single-plane convergence and shear --- and why that
+description fails when both planes are strong.
+\end{bridge}
+
+\begin{annotation}[Is the thin-lens approximation still safe?]
+Equation~\eqref{eq:mp_multiplane} assumes each deflection is complete
+before the next begins: the planes must be far apart compared with the
+extent of each mass distribution.  SEF (\S9 introduction) adopt this
+assumption for all astrophysically relevant cases but add that ``one
+should keep in mind that this hypothesis remains formally untested'',
+citing in a footnote an unpublished (private-communication) numerical
+two-point-mass test in which the approximation held very well for all
+rays that are not strongly demagnified.  For galaxy-scale DSPLs the planes are separated by
+Gpc while the galaxies are tens of kpc across.
+\end{annotation}
+
+\subsection{Two limits every implementation should pass}
+
+\begin{enumerate}[nosep]
+    \item \textbf{Remove the first plane's mass.}  With
+          $\hat{\vecalpha}_1=0$, eq.~\eqref{eq:mp_multiplane} for the
+          source becomes
+          $\vecbeta=\vectheta-(D_{2s}/D_s)\,\hat{\vecalpha}_2(D_2\vectheta)$,
+          the single-plane equation~\eqref{eq:mp_singleplane} for a lens
+          at $z_2$.  \annot{checks 1e--1f}
+    \item \textbf{Merge the planes.}  As $z_1\to z_2$, $D_{12}\to0$, so
+          $\beta_{12}\to0$ and $\vectheta_2=\vectheta_1$: by
+          eq.~\eqref{eq:mp_CK} the two masses act as one thin lens with
+          the summed deflection.  \citet[\S4.8]{congdon_principles_2018}
+          make the same remark.
+\end{enumerate}
+\texttt{multiplane\_dspl.wl} \annot{check 1d} also traces rays through two
+point masses at $z=0.3$ and $0.6$ (source at $z=1.5$) both ways ---
+explicit sequential tracing in comoving coordinates, and the recursive
+angular equation --- and finds agreement to better than
+$10^{-12}$\,arcsec.
+
+
+% =====================================================================
+\section{One Deflector, Two Source Planes}
+\label{sec:mp_dspl}
+
+Now take a single deflector at $z_l$ with physical deflection
+$\hat{\vecalpha}$, and two sources at $z_{s1}<z_{s2}$.  For the moment
+treat source 1 as massless; its mass is restored in
+\S\ref{sec:mp_coupling}.  There is one deflecting plane, so the sum in
+eq.~\eqref{eq:mp_multiplane} has one term and there is no coupling.  An
+image at $\vectheta$ maps to each source plane as
+\begin{align}
+  \vecbeta_{1} &= \vectheta - \frac{D_{l,s1}}{D_{s1}}\,\hat{\vecalpha}(D_l\vectheta)
+               \equiv \vectheta - \vecalpha_{1}(\vectheta), \label{eq:mp_plane1}\\
+  \vecbeta_{2} &= \vectheta - \frac{D_{l,s2}}{D_{s2}}\,\hat{\vecalpha}(D_l\vectheta)
+               \equiv \vectheta - \vecalpha_{2}(\vectheta). \label{eq:mp_plane2}
+\end{align}
+The \emph{same} physical deflection appears in both; the reduced
+deflections differ only by their efficiencies.  Hence
+\begin{equation}
+  \frac{\vecalpha_{2}(\vectheta)}{\vecalpha_{1}(\vectheta)}
+  = \frac{D_{l,s2}/D_{s2}}{D_{l,s1}/D_{s1}}
+  = \frac{1}{\Brat},
+  \qquad
+  \Brat \equiv \frac{D_{l,s1}\,D_{s2}}{D_{s1}\,D_{l,s2}} ,
+  \label{eq:mp_Bdef}
+\end{equation}
+so $\vecalpha_2(\vectheta)=\vecalpha_1(\vectheta)/\Brat$ \emph{at every
+$\vectheta$, for any mass distribution in the lens plane}.  \annot{check 2a}
+Comparing with eq.~\eqref{eq:mp_CK}, $\Brat$ is exactly the
+Congdon--Keeton factor $\beta_{ij}$ with the lens as plane $i$, the near
+source as plane $j$, and the far source as ``the'' source \annot{check 2a$'$}.
+
+\begin{keybox}[The DSPL distance ratio]
+$\displaystyle \Brat = \frac{D_{l,s1}\,D_{s2}}{D_{s1}\,D_{l,s2}}$
+is dimensionless, lies strictly between 0 and 1, and
+$\vecalpha_2 = \vecalpha_1/\Brat$ pointwise.  The deflector's mass
+distribution cancels in the ratio $\vecalpha_2/\vecalpha_1=1/\Brat$,
+which is pure geometry.  Turning a measured ratio of Einstein radii
+into $\Brat$ still requires the deflector's slope
+(\S\ref{sec:mp_eta}).
+\end{keybox}
+
+\paragraph{Why $0<\Brat<1$.}  Insert eq.~\eqref{eq:mp_DA}.  Every
+distance carries a factor $c/\Hubble$ and a factor $1/(1+z)$ of its far
+endpoint; all of them cancel (\S\ref{sec:mp_cosmo}), leaving
+\begin{equation}
+  \Brat = \frac{(\chi_{s1}-\chi_l)\,\chi_{s2}}{\chi_{s1}\,(\chi_{s2}-\chi_l)}
+        = \frac{1-\chi_l/\chi_{s1}}{1-\chi_l/\chi_{s2}} ,
+  \qquad \chi_x\equiv\chi(z_x).
+  \label{eq:mp_Bchi}
+\end{equation}
+With $0<\chi_l<\chi_{s1}<\chi_{s2}$ the numerator is smaller than the
+denominator, and both are positive.  The second form makes the physics
+plain: in a flat universe the efficiency is
+$D_{l,s}/D_s=1-\chi_l/\chi_s$, which grows with source distance, so the
+far source is lensed more strongly and $\Brat<1$.  \annot{check 2d}
+
+\begin{derivation}[Monotonicity and limits of $\Brat$]
+Differentiating eq.~\eqref{eq:mp_Bchi},
+\[
+  \pderiv{\Brat}{\chi_{s2}} = -\frac{\Brat\,\chi_l}{\chi_{s2}(\chi_{s2}-\chi_l)}<0,
+  \qquad
+  \pderiv{\Brat}{\chi_{s1}} = +\frac{\Brat\,\chi_l}{\chi_{s1}(\chi_{s1}-\chi_l)}>0 .
+\]
+Moving the far source back lowers $\Brat$; moving the near source back
+raises it.  The limits are $\Brat\to0$ as $z_{s1}\to z_l$ (source 1 sits
+on the lens, efficiency zero) and $\Brat\to1$ as $z_{s2}\to z_{s1}$ (the
+two sources coincide).  Because $\chi(z\to\infty)$ is finite
+($3.305\,c/\Hubble$ for flat $\Lambda$CDM with $\Omegam=0.3$), $\Brat$
+does not fall to zero as $z_{s2}\to\infty$ but to a finite floor
+(Exercise~\ref{ex:mp_limits}).  \annot{checks 2e--2f; Solutions 5a--5d}
+\end{derivation}
+
+\paragraph{An illustrative geometry.}  Throughout this chapter we use
+$(z_l,z_{s1},z_{s2})=(0.5,\,1.0,\,2.0)$ in flat $\Lambda$CDM with
+$\Omegam=0.3$; the choice is generic, made only to make numbers
+concrete.  Equation~\eqref{eq:mp_Bdef} gives
+\begin{equation}
+  \Brat(0.5,\,1.0,\,2.0) = 0.6742 .
+  \label{eq:mp_Bnum}
+\end{equation}
+\annot{checks 2h--2i}  Had the lens-to-source distances been built by naive
+subtraction, $D_{l,s}=D_s-D_l$, one would have found $0.878$ --- a
+$30\%$ error from a single bookkeeping slip \annot{check 2l}.
+
+
+% =====================================================================
+\section{When the Near Source Has Mass: Coupling in a DSPL}
+\label{sec:mp_coupling}
+
+Equation~\eqref{eq:mp_plane2} assumed one deflector.  In a real DSPL the
+near source is a galaxy, and its mass deflects the light of the far
+source: a genuine second deflecting plane at $z_{s1}$.  Apply
+eq.~\eqref{eq:mp_multiplane} with planes $\{l,\,s1\}$ and the far source
+as the final plane.  The ray crosses plane $s1$ at
+$\vectheta_{s1}=\vecbeta_1$, so
+\begin{equation}
+  \vecbeta_2 = \vectheta - \frac{1}{\Brat}\,\vecalpha_1(\vectheta)
+             - \frac{D_{s1,s2}}{D_{s2}}\,\hat{\vecalpha}_{s1}\big(D_{s1}\vecbeta_1\big),
+  \qquad \vecbeta_1 = \vectheta - \vecalpha_1(\vectheta),
+  \label{eq:mp_coupling}
+\end{equation}
+where $\vecalpha_1$ is the main lens's deflection reduced to plane
+$s1$ and $\hat{\vecalpha}_{s1}$ is the physical deflection of the near
+source's own mass.  The last term is the coupling; it is evaluated at
+the point $\vecbeta_1$ where the \emph{lensed} ray crosses the
+near-source plane.  Setting the near source's mass to zero recovers
+eq.~\eqref{eq:mp_plane2}.  \annot{checks 6a--6b}
+
+\paragraph{How large is it?}  Model both galaxies as singular isothermal
+spheres with velocity dispersions $\sigma_L$ (main lens) and $\sigma_1$
+(near source).  Each produces a constant physical deflection
+$4\pi\sigma^2/c^2$, so the ratio of the coupling deflection to the main
+lens's deflection, both reduced to the far-source plane, is
+\begin{equation}
+  \frac{\theta_{\mathrm{E}}(s1\to s2)}{\theta_{\mathrm{E}}(l\to s2)}
+  = \Big(\frac{\sigma_1}{\sigma_L}\Big)^{2}\,\frac{D_{s1,s2}}{D_{l,s2}}
+  = \Big(\frac{\sigma_1}{\sigma_L}\Big)^{2}\,
+    \frac{\chi_{s2}-\chi_{s1}}{\chi_{s2}-\chi_l} .
+  \label{eq:mp_couplingsize}
+\end{equation}
+At the illustrative geometry $D_{s1,s2}/D_{s2}=0.3622$ and
+$D_{l,s2}/D_{s2}=0.6354$, so the geometric factor is $0.570$.  A near
+source with $\sigma_1/\sigma_L=0.4$ deflects the far source's light by
+$9.1\%$ of the main lens's deflection; a $\sigma_1=100$\,km\,s$^{-1}$
+galaxy at $z_{s1}=1$ has an Einstein radius of $0.10''$ for a source at
+$z_{s2}=2$.  \annot{checks 6c--6f}  For galaxy-scale sources this is a
+first-order term, not a small perturbation.
+
+\begin{annotation}[Coupling breaks the clean ratio --- so it must be modelled]
+With the coupling present, $\vecbeta_2$ is no longer
+$\vectheta-\vecalpha_1/\Brat$: the far-source images are shaped by two
+deflectors at two redshifts.  The near source's light is observed (it
+forms its own arcs), so its centroid and shape are well constrained, and
+its mass can be included as a second deflector.  The parameter vector of
+\S\ref{sec:mpi_sampling} then gains
+$\{\theta_{\mathrm{E},s1},\,q_{s1},\,\varphi_{s1},\,\vectheta_{c,s1}\}$.
+The distance ratio $\Brat$ enters exactly as before, through the main
+lens's term; the coupling adds new unknowns and one further ratio of
+distances, $D_{s1,s2}/D_{s2}$, which is also Hubble-free.
+\end{annotation}
+
+
+% =====================================================================
+\section{From Deflections to Einstein Radii: $\Brat=\etamea^{\gp-1}$}
+\label{sec:mp_eta}
+
+We do not measure $\hat{\vecalpha}$; we measure image positions, which
+for a nearly round deflector are governed by the Einstein radius on each
+source plane.  Define the measured ratio
+\begin{equation}
+    \etamea\equiv\frac{\thetaE^{(1)}}{\thetaE^{(2)}} .
+    \label{eq:mp_eta}
+\end{equation}
+Because the far source is lensed more strongly,
+$\thetaE^{(2)}>\thetaE^{(1)}$ and $\etamea<1$.
+
+Take a circular power-law deflector with three-dimensional density
+$\rho\propto r^{-\gp}$.  Its convergence on source plane $i$ is
+$\kappab_i(\theta)=\frac{3-\gp}{2}\big(\thetaE^{(i)}/\theta\big)^{\gp-1}$
+(eq.~\eqref{eq:kappa_power_law}), and the circular-lens relation
+$\alpha=\theta\,\bar\kappab(<\theta)$ gives
+\begin{equation}
+  \alpha_i(\theta)=\big(\thetaE^{(i)}\big)^{\gp-1}\,\theta^{\,2-\gp}.
+  \label{eq:mp_plaw}
+\end{equation}
+\annot{checks 3a--3b}  Imposing $\alpha_2=\alpha_1/\Brat$ at all $\theta$
+forces $\big(\thetaE^{(2)}\big)^{\gp-1}=\big(\thetaE^{(1)}\big)^{\gp-1}/\Brat$:
+\begin{equation}
+  \thetaE^{(2)} = \thetaE^{(1)}\,\Brat^{-1/(\gp-1)}
+  \qquad\Longleftrightarrow\qquad
+  \boxed{\;\Brat = \etamea^{\,\gp-1}\;}
+  \label{eq:mp_etaB}
+\end{equation}
+\annot{checks 3c--3f}
+
+\begin{bridge}[Chapters~\ref{ch:axisymmetric_models} and~\ref{ch:galaxy_lensing}: where eq.~\eqref{eq:mp_plaw} comes from]
+For any circular lens $\alpha(\theta)=\theta\,\bar\kappab(<\theta)$
+(eq.~\eqref{eq:alpha_mean_kappa}).  With the power-law convergence of
+\S\ref{sec:power_law_profile},
+\[
+  \bar\kappab(<\theta)=\frac{2}{\theta^2}\int_0^\theta
+  \frac{3-\gp}{2}\Big(\frac{\thetaE}{\theta'}\Big)^{\gp-1}\theta'\,\dd\theta'
+  =\Big(\frac{\thetaE}{\theta}\Big)^{\gp-1},
+\]
+so $\alpha=\thetaE^{\gp-1}\theta^{2-\gp}$ and $\alpha(\thetaE)=\thetaE$.
+The isothermal case $\gp=2$ gives the constant SIS deflection
+$\alpha=\thetaE$ of eq.~\eqref{eq:sis_alpha_reduced}.  The same
+physical surface density on the two source planes differs only through
+$\Sigmacr\propto D_s/(D_l D_{l,s})$ (eq.~\eqref{eq:sigma_cr}), which is
+how the single factor $1/\Brat$ arises: $\kappab_2=\kappab_1/\Brat$.
+\end{bridge}
+
+Two consequences organise the rest of the chapter:
+\begin{enumerate}[nosep]
+  \item For an isothermal deflector ($\gp=2$) the exponent is one and
+        $\Brat=\etamea$ exactly: the ratio of Einstein radii \emph{is}
+        the distance ratio \annot{check 3e}.
+  \item For any other slope, recovering $\Brat$ from the measured
+        $\etamea$ requires $\gp$.  At fixed $\etamea$,
+        $\partial\ln\Brat/\partial\gp=\ln\etamea$, which is negative and
+        independent of $\gp$ \annot{check 3g}.  An error in the inferred slope
+        enters $\Brat$ through the exponent even if $\etamea$ is perfect.
+\end{enumerate}
+
+\begin{annotation}[A worked number]
+At the illustrative geometry $\Brat=0.6742$.  A deflector with
+$\gp=1.9$ would show $\etamea=\Brat^{1/0.9}=0.6453$, so
+$\ln\etamea=-0.438$.  A slope error $\delta\gp=0.023$ alone then
+produces a $1\%$ error in $\Brat$ (Exercise~\ref{ex:mp_slope_lever}).
+The smaller $\etamea$ is --- the more widely separated the two source
+planes --- the larger the lever arm $|\ln\etamea|$.
+\end{annotation}
+
+
+% =====================================================================
+\section{The Cosmological Content of $\Brat$}
+\label{sec:mp_cosmo}
+
+\subsection{$\Brat$ is independent of $\Hubble$}
+
+Insert eq.~\eqref{eq:mp_DA} into eq.~\eqref{eq:mp_Bdef}, writing
+$\chi=(c/\Hubble)\,\tilde\chi$ with $\tilde\chi(z)\equiv\int_0^z\dd z'/E$:
+\begin{equation}
+  \Brat
+  = \frac{\dfrac{c}{\Hubble}\dfrac{\tilde\chi_{s1}-\tilde\chi_l}{1+z_{s1}}\cdot
+          \dfrac{c}{\Hubble}\dfrac{\tilde\chi_{s2}}{1+z_{s2}}}
+         {\dfrac{c}{\Hubble}\dfrac{\tilde\chi_{s1}}{1+z_{s1}}\cdot
+          \dfrac{c}{\Hubble}\dfrac{\tilde\chi_{s2}-\tilde\chi_l}{1+z_{s2}}}
+  = \frac{(\tilde\chi_{s1}-\tilde\chi_l)\,\tilde\chi_{s2}}
+         {\tilde\chi_{s1}\,(\tilde\chi_{s2}-\tilde\chi_l)} .
+  \label{eq:mp_Bcancel}
+\end{equation}
+Numerator and denominator each contain two factors of $c/\Hubble$, one
+of $(1+z_{s1})^{-1}$ and one of $(1+z_{s2})^{-1}$; all cancel.  The lens
+redshift never appears in a $(1+z)$ prefactor, because no distance in
+$\Brat$ ends at the lens.  \annot{checks 2b--2c.  Numerically, $\Brat$ at the
+illustrative geometry is identical for $\Hubble=50$, 70 and
+100\,km\,s$^{-1}$\,Mpc$^{-1}$ to $10^{-12}$, check 2g}
+
+\begin{keybox}[$\Brat$ is Hubble-free]
+$\Brat$ depends on cosmology only through the \emph{shape} of the
+comoving-distance function, i.e.\ through
+$E(z)=\sqrt{\Omegam(1+z)^3+(1-\Omegam)\,\zeta(z)}$.  It is independent
+of $\Hubble$.  DSPLs therefore probe $\Omegam$ and $w$ and say nothing
+about $\Hubble$ --- the complement of time-delay cosmography, which
+measures an absolute distance scale.
+\end{keybox}
+
+\begin{bridge}[Chapter~\ref{ch:galaxy_lensing}: the other distance combination]
+The time-delay distance of \S\ref{sec:time_delay_cosmography},
+$D_{\Delta t}=(1+z_d)\Dd\Ds/\Dds$, is a product of distances with
+dimensions of length; it scales as $c/\Hubble$ \annot{check 2a$''$}, which is
+why time delays measure $\Hubble$.  The DSPL ratio $\Brat$ is a ratio of
+two \emph{efficiencies} and is dimensionless.  One observable fixes the
+absolute scale, the other the shape of the expansion history.  How the
+mass-sheet degeneracy of \S\ref{sec:msd} plays out with two source planes
+is the subject of Chapter~\ref{ch:msd_kinematics}; the question of
+whether cosmological parameters can be recovered from multi-plane lens
+systems at all, given such degeneracies, is posed in the title of
+\citet{schneider_2014_multiplane}.
+\end{bridge}
+
+\subsection{Sensitivity to $w$ and $\Omegam$}
+
+Define the logarithmic responses
+\begin{equation}
+  S_w \equiv \pderiv{\ln\Brat}{w},\qquad
+  S_{\Omegam}\equiv\pderiv{\ln\Brat}{\Omegam},
+  \label{eq:mp_S}
+\end{equation}
+evaluated at a reference cosmology, each with the other parameter held
+fixed.  A fractional error in the recovered distance ratio maps, to
+first order and with the other parameter held fixed, to
+\begin{equation}
+  \delta w = \frac{\delta\Brat/\Brat}{S_w},\qquad
+  \delta\Omegam = \frac{\delta\Brat/\Brat}{S_{\Omegam}} .
+  \label{eq:mp_propagate}
+\end{equation}
+
+\begin{derivation}[Computing $S_w$ without finite differences]
+From eq.~\eqref{eq:mp_Bcancel},
+$\ln\Brat=\ln(\tilde\chi_{s1}-\tilde\chi_l)+\ln\tilde\chi_{s2}
+-\ln\tilde\chi_{s1}-\ln(\tilde\chi_{s2}-\tilde\chi_l)$,
+so for any cosmological parameter $p$
+\[
+  \pderiv{\ln\Brat}{p}=\frac{\tilde\chi'_{s1}-\tilde\chi'_l}{\tilde\chi_{s1}-\tilde\chi_l}
+   +\frac{\tilde\chi'_{s2}}{\tilde\chi_{s2}}-\frac{\tilde\chi'_{s1}}{\tilde\chi_{s1}}
+   -\frac{\tilde\chi'_{s2}-\tilde\chi'_l}{\tilde\chi_{s2}-\tilde\chi_l},
+  \qquad
+  \tilde\chi'_x\equiv\pderiv{\tilde\chi(z_x)}{p}
+   =-\frac12\int_0^{z_x}\frac{\partial E^2/\partial p}{E^3}\,\dd z' .
+\]
+For constant $w$,
+$\partial E^2/\partial w=3(1-\Omegam)(1+z)^{3(1+w)}\ln(1+z)>0$: raising
+$w$ makes dark energy denser in the past, raises $E$, and shortens every
+$\tilde\chi$.  Similarly
+$\partial E^2/\partial\Omegam=(1+z)^3-(1+z)^{3(1+w)}>0$ for $z>0$ and
+$w<0$ \annot{check 5j}.  \texttt{multiplane\_dspl.wl} evaluates these integrals
+and agrees with a central finite difference of $\ln\Brat$ to better than
+$10^{-7}$ \annot{checks 5b--5c}.
+\end{derivation}
+
+At the illustrative geometry in flat $\Lambda$CDM ($\Omegam=0.3$, $w=-1$):
+\begin{equation}
+  S_w = -0.0330,\qquad S_{\Omegam} = -0.0357 .
+  \label{eq:mp_Snum}
+\end{equation}
+\annot{checks 5d--5e}  Both are negative: raising $w$ or $\Omegam$ shortens
+the comoving distances unevenly, in a way that lowers $\Brat$.  Both are
+\emph{small}.  If $\Omegam$ is held fixed, a $1\%$ error in $\Brat$
+masquerades as $|\delta w|=0.30$ at this geometry \annot{check 5g}.  The
+linear estimate hides an asymmetry: solving for $w$ exactly at
+$\Omegam=0.3$, a $1\%$ deficit in $\Brat$ shifts $w$ by $+0.29$ and a $1\%$ excess by
+$-0.36$ \annot{check 5l}.  If $\Omegam$ is free to move as well, the same
+$1\%$ buys a larger shift: along $\dd\Omegam=-\tfrac12\dd w$ it takes
+$|\delta w|=0.66$ \annot{check 5m}, and along the degeneracy curve of
+\S\ref{sec:mpi_sampling} it is unbounded.  A single DSPL therefore gives
+only a weak $w$ constraint, and populations of DSPLs are needed
+\citep{collett_2012}.  For the same reason, percent-level systematics in
+$\Brat$ matter (Chapters~\ref{ch:central_mass_bias}
+and~\ref{ch:cosmological_sensitivity}).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../Figures/14_Multiplane_DSPL/B_vs_zs2.pdf}
+    \caption{The DSPL distance ratio $\Brat$ as a function of the far
+    source redshift $z_{s2}$ for $z_l=0.5$, $z_{s1}=1.0$, in a flat
+    cosmology with $\Omegam=0.3$, for $w=-1$ (solid) and $w=-0.7$
+    (dashed).  Lower panel: the fractional difference.  $\Brat$ falls
+    monotonically with $z_{s2}$ towards a finite floor; the $w$ signal
+    grows with the separation of the two source planes, reaching
+    $-1.75\%$ at $z_{s2}=4$ ($\Brat=0.5815\to0.5714$).  Generated by
+    \texttt{multiplane\_dspl.wl} \annot{checks 5h--5k}.}
+    \label{fig:mp_B_vs_zs2}
+\end{figure}
+
+\begin{annotation}[Reading Figure~\ref{fig:mp_B_vs_zs2}]
+Three lessons.  (i) As $z_{s2}\to z_{s1}$ the two curves meet at
+$\Brat=1$ whatever the cosmology: two coincident sources carry no
+information.  (ii) Even for a widely separated source pair the $w$
+signal is under $2\%$.  (iii) The response does not change sign anywhere
+on this range of $z_{s2}$, and its magnitude grows with the separation
+of the two source planes.
+\end{annotation}
+
+% #####################################################################
+% DSPL inference (label prefix mpi)
+% #####################################################################
+
+% =====================================================================
+\section[The Isothermal Ellipsoid]{The Isothermal Ellipsoid: Ratio of Einstein Radii = Distance Ratio}
+\label{sec:mpi_sie}
+
+Galaxy lenses are elliptical, not round, so it is worth seeing that the
+statement $\Brat=\etamea$ survives ellipticity exactly for an isothermal
+profile.
+
+\paragraph{SIS baseline.}  For a singular isothermal sphere the physical
+deflection is the constant $\alphahat=4\pi\sigma_v^2/c^2$, so on source
+plane $i$
+\begin{equation}
+  \thetaE^{(i)} = 4\pi\,\frac{\sigma_v^2}{c^2}\,\frac{D_{l,si}}{D_{si}} .
+  \label{eq:mpi_sisthetaE}
+\end{equation}
+The Einstein radius is \emph{linear} in the efficiency --- the special
+property of the isothermal slope.
+
+\paragraph{Adding ellipticity.}  In the normalisation of
+Chapter~\ref{ch:elliptical_models} (eq.~\eqref{eq:sie_kappa}, following
+\citet{kormann_isothermal_1994}, whose eq.~(21b) is this form with the
+axes rotated by $90^\circ$ \annot{check 4g}), the SIE convergence on source plane
+$i$ is
+\begin{equation}
+  \kappab_i(\vectheta)=\frac{\thetaE^{(i)}\sqrt{q}}{2\sqrt{q^2\theta_1^2+\theta_2^2}},
+  \qquad
+  \thetaE^{(i)}=4\pi\frac{\sigma_v^2}{c^2}\frac{D_{l,si}}{D_{si}},
+  \label{eq:mpi_siekappa}
+\end{equation}
+and its deflection (eq.~\eqref{eq:sie_alpha}) is $\thetaE^{(i)}$ times a
+function of $(\theta_1,\theta_2,q)$ that is homogeneous of degree zero
+in $\vectheta$.  Two facts follow.  First, the plane-2 deflection field is
+the plane-1 field divided by $\Brat$, as it must be \annot{check 4b}.  Second,
+every length scale of the lens --- the parameter $\thetaE$, the radius of
+the tangential critical curve along any direction, the radius of the
+circle with the same area as that curve --- is $\thetaE$ times a
+coefficient that depends only on $q$ and the direction.
+
+\paragraph{The cancellation.}  Put the same physical SIE behind two
+source planes.  $\sigma_v$, $q$ and the position angle are properties of
+the galaxy and identical for both, so
+\begin{equation}
+  \etamea=\frac{\thetaE^{(1)}}{\thetaE^{(2)}}
+  =\frac{\big[4\pi\sigma_v^2/c^2\big]\,f(q)\,(D_{l,s1}/D_{s1})}
+        {\big[4\pi\sigma_v^2/c^2\big]\,f(q)\,(D_{l,s2}/D_{s2})}
+  =\Brat ,
+  \label{eq:mpi_sieratio}
+\end{equation}
+where $f(q)$ is whatever $q$-dependent factor a particular Einstein-radius
+convention introduces ($f=1$ for the parameter of
+eq.~\eqref{eq:mpi_siekappa}).  \annot{checks 4a--4f: the numerically located
+tangential critical curves on the two planes have radius ratio $\Brat$ to
+$10^{-10}$ along every direction tested, for $q=0.4$, $0.7$ and $0.95$,
+and so do their area-equivalent radii}
+
+\begin{keybox}[The ratio of Einstein radii]
+For an SIS or SIE the velocity dispersion, axis ratio and position angle
+all cancel in $\etamea=\thetaE^{(1)}/\thetaE^{(2)}$, leaving
+$\etamea=\Brat$ exactly, in any Einstein-radius convention.  For a power
+law $\Brat=\etamea^{\gp-1}$, and the slope must be known.
+\end{keybox}
+
+\begin{bridge}[Chapter~\ref{ch:elliptical_models}: the SIE in this book]
+Equation~\eqref{eq:mpi_siekappa} is eq.~\eqref{eq:sie_kappa} of
+\S\ref{sec:sie}, with the SIS-equivalent Einstein radius
+$\thetaE=4\pi\sigma_v^2\Dds/(c^2\Ds)$.  The tangential critical curve of
+\S\ref{sec:critical_curves} crosses the axes at $\thetaE/\sqrt{q}$ and
+$\thetaE\sqrt{q}$; both scale with $\thetaE$ and hence, from one source
+plane to the other, by the same factor $1/\Brat$.  The DSPL statement
+reduces to ``the SIE has one length scale, and the efficiency multiplies
+it''.
+\end{bridge}
+
+\begin{annotation}[Conventions cancel; single Einstein radii do not]
+Codes define the SIE ``Einstein radius'' with the $\sqrt{q}$ in
+different places (intermediate axis, major axis, area-equivalent).  Each
+convention rescales $\thetaE^{(1)}$ and $\thetaE^{(2)}$ by the same
+function of $q$, which cancels in $\etamea$.  A single Einstein radius is
+convention-dependent; the ratio is not.  The practical rule: fit both
+planes with one code and one convention, and read off the ratio.
+\end{annotation}
+
+
+% =====================================================================
+\section{What a DSPL Fit Samples}
+\label{sec:mpi_sampling}
+
+A DSPL cosmography fit is a Bayesian fit of one lens model to both image
+systems at once.  The deflector-plus-sources parameter vector is
+\begin{equation}
+  \mathbf{p}_{\rm mod} = \big\{\,\underbrace{\thetaE^{(1)},\,\gp,\,q,\,\varphi,\,
+  \gamma_{\rm ext},\,\phi_{\rm ext},\,\vectheta_c}_{\text{deflector}},\;
+  \underbrace{\vecbeta_{1}}_{\text{source 1}},\;
+  \underbrace{\vecbeta_{2}}_{\text{source 2}},\;
+  \dots\,\big\},
+  \label{eq:mpi_pmod}
+\end{equation}
+with $\vectheta_c$ the lens centre, $(\gamma_{\rm ext},\phi_{\rm ext})$
+an external shear, and the dots standing for source-light parameters in
+extended-image fits (and, when the near source is massive, its own mass
+parameters, \S\ref{sec:mp_coupling}).  The two source planes are tied
+together by one extra number through the plane-2 lens equation
+\begin{equation}
+  \vecbeta_2 = \vectheta - \frac{1}{\Brat}\,\vecalpha_1(\vectheta;\mathbf{p}_{\rm mod}),
+  \label{eq:mpi_plane2fit}
+\end{equation}
+the same deflection field that lenses source 1, divided by $\Brat$.
+That single rescaling is the only place cosmology enters a position or
+pixel fit of a one-deflector DSPL.
+
+\paragraph{Two equivalent parametrisations.}
+\begin{itemize}[nosep]
+  \item[(a)] \textbf{Free $\Brat$.}  Append $\Brat$ to
+        $\mathbf{p}_{\rm mod}$ and sample both.  The plane-2 data pull on
+        $\Brat$ through eq.~\eqref{eq:mpi_plane2fit}.  Convert the $\Brat$
+        posterior to $(\Omegam,w)$ afterwards with
+        eq.~\eqref{eq:mp_Bdef}.  Cosmology never enters the likelihood.
+  \item[(b)] \textbf{Free cosmology.}  Sample
+        $(\mathbf{p}_{\rm mod},\Omegam,w)$ and compute
+        $\Brat(z_l,z_{s1},z_{s2};\Omegam,w)$ at every step.  The
+        likelihood is the same function; only the coordinates on
+        parameter space, and hence the meaning of a ``flat'' prior,
+        differ.
+\end{itemize}
+
+\paragraph{The likelihood.}  With Gaussian astrometric errors,
+\begin{equation}
+  \mathcal{L}(\text{data}\mid\mathbf{p}_{\rm mod},\Brat)\propto
+  \exp\!\Big[-\tfrac12\,\chi^2\Big],\qquad
+  \chi^2 = \sum_{\text{planes }i}\;\sum_{\text{images }k}
+  \frac{\big|\vectheta^{\rm obs}_{ik}-\vectheta^{\rm mod}_{ik}(\mathbf{p}_{\rm mod},\Brat)\big|^2}{\sigma^2_{ik}},
+  \label{eq:mpi_like}
+\end{equation}
+summed over both image systems.  In position-only fits the source
+positions $\vecbeta_i$ are nuisance parameters, often optimised or
+marginalised per plane; in extended-image fits the sum runs over pixels
+and the source light is reconstructed.  Either way $\Brat$ --- or the
+cosmology behind it --- is a sampled dimension of the posterior,
+constrained by requiring that one deflector map both image systems back
+to consistent sources.
+
+\paragraph{Why one lens gives a curve, not a point.}  In
+parametrisation (b), $\chi^2$ depends on $(\Omegam,w)$ only through the
+composite $\Brat(\Omegam,w)$.  Two cosmologies with the same $\Brat$ give
+identical model images and identical likelihood.  A single DSPL
+therefore constrains a level curve of $\Brat$ in the $(\Omegam,w)$
+plane, with local slope
+\begin{equation}
+  \deriv{w}{\Omegam}\bigg|_{\Brat}=-\frac{S_{\Omegam}}{S_w},
+  \label{eq:mpi_degslope}
+\end{equation}
+which is $-1.08$ at the illustrative geometry \annot{check 5f; Solutions
+9a--9d}.  Breaking the degeneracy needs several lenses with different
+redshift triplets, each contributing a differently oriented band
+\citep{collett_2012}.  \annot{check 5n: the slope is $-0.87$ at
+$(0.3,0.6,3.3)$}
+
+\begin{annotation}[Shear in a two-plane fit]
+An external shear generated by mass at $z_l$ is a deflection field at
+the lens plane like any other, so it too scales by $1/\Brat$ between the
+planes.  If the model writes the shear as a reduced quantity per plane,
+the plane-2 shear is $\gamma_{\rm ext}^{(2)}=\gamma_{\rm ext}^{(1)}/\Brat$
+(Exercise~\ref{ex:mpi_shape_shear}).  A shear produced by structure at
+\emph{another} redshift --- in front of the lens, or between the two
+source planes --- does not share that scaling and is a genuine
+plane-to-plane systematic.
+\end{annotation}
+
+
+% =====================================================================
+\section[The $\Brat$--$\gp$ Degeneracy]{The $\Brat$--$\gp$ Degeneracy: Why the Inner Slope Is Load-Bearing}
+\label{sec:mpi_degeneracy}
+
+The data constrain the image configuration, hence essentially $\etamea$
+and the slope $\gp$ jointly; the cosmological number is the derived
+combination $\Brat=\etamea^{\gp-1}$.  Its logarithmic differential is
+\begin{equation}
+  \frac{\delta\Brat}{\Brat}
+  = (\gp-1)\,\frac{\delta\etamea}{\etamea}
+  \;+\; \ln\etamea\;\delta\gp .
+  \label{eq:mpi_twochannel}
+\end{equation}
+(Solutions 8a--8d.)  Two consequences:
+\begin{enumerate}
+  \item \textbf{The posterior in $(\Brat,\gp)$ is correlated.}  If the
+        images fix $\etamea$ well but $\gp$ poorly, the marginal $\Brat$
+        posterior is broad.  The width of the cosmology constraint is set
+        by how well the slope is pinned.
+        Exercise~\ref{ex:mpi_error_budget} gives a worked budget in which
+        the slope channel dominates.
+  \item \textbf{The two channels have opposite signs.}  Since
+        $\etamea<1$, $\ln\etamea<0$, while $\gp-1>0$.  An upward error in
+        $\etamea$ raises $\Brat$; an upward error in $\gp$ lowers it.
+        Correlated errors can therefore partly cancel, and an error in the
+        slope can masquerade as a change in cosmology even when $\etamea$
+        is measured well.
+\end{enumerate}
+The slope is pinned by data that probe the mass profile away from the
+tangential arcs or across them, and three such anchors stand on an equal
+footing.  Stellar kinematics measure the mass at a different radius
+(Chapter~\ref{ch:galaxy_lensing}).  The radial thickness of extended
+arcs measures the local gradient of the deflection: for a power law the
+radial eigenvalue of the Jacobian at $\thetaE$ is $\gp-1$, so the radial
+magnification there is $1/(\gp-1)$ \annot{check 3h}.  A radial or
+central image, when one is detected, probes the inner profile directly
+(Chapter~\ref{ch:odd_images}), although Chapter~\ref{ch:odd_images}
+stresses that a central image constrains a \emph{combination} of inner
+slope and central mass, not the slope alone.  That central region is
+where an unmodelled compact mass would act, which is why
+Chapters~\ref{ch:power_law_point_mass} and~\ref{ch:central_mass_bias}
+study power-law lenses with a central point mass.
+
+\begin{bridge}[Chapter~\ref{ch:galaxy_lensing}: slopes and degeneracies again]
+In \S\ref{sec:power_law_profile} the slope $\gp$ was the quantity that
+lensing alone constrains poorly and that stellar kinematics helps to
+pin down, and in \S\ref{sec:time_delay_cosmography} the inferred
+$\Hubble$ depended on the assumed profile.  The DSPL case is the same
+story with $\Brat$ in place of $\Hubble$: the distance-type observable is
+clean only once the radial structure of the deflector is fixed.
+\end{bridge}
+
+
+% =====================================================================
+\section{The Circularity Trap}
+\label{sec:mpi_circular}
+
+One shortcut invalidates the inference.  One might take a reference cosmology,
+compute $\Brat_{\rm ref}$, and \emph{impose}
+$\thetaE^{(2)}=\thetaE^{(1)}\,\Brat_{\rm ref}^{-1/(\gp-1)}$ (equivalently
+$\etamea=\Brat_{\rm ref}^{1/(\gp-1)}$) as a constraint in the fit.  That
+builds the answer into the model: the posterior would merely echo
+$\Brat_{\rm ref}$.
+
+\begin{keybox}[Never tie the two planes with a cosmological $\Brat$]
+The correct inference leaves the two planes' normalisations free:
+either $\thetaE^{(1)}$ and $\thetaE^{(2)}$ are both sampled, or
+$\thetaE^{(1)}$ and $\Brat$ are.  $\Brat$ is then whatever value lets one
+deflector fit both image systems, and only then is it a
+\emph{measurement} that can agree or disagree with a cosmology.  The
+relation $\etamea=\Brat^{1/(\gp-1)}$ is for \emph{interpreting} a fitted
+$(\etamea,\gp)$, never for constraining the fit.
+\end{keybox}
+
+\begin{annotation}[How the trap sneaks in]
+The trap is rarely set deliberately.  It appears when a simulation
+pipeline that \emph{generated} mock data with
+$\thetaE^{(2)}=\thetaE^{(1)}\Brat_{\rm true}^{-1/(\gp-1)}$ is reused,
+unchanged, as the fitting model; or when a multi-plane ray tracer is
+handed a fixed cosmology and the fit never varies it.  In
+parametrisation (b) the cosmology must be a \emph{sampled} parameter; in
+(a) $\Brat$ must be.  A quick test: refit mock data generated with a
+different $\Brat$ and check that the posterior moves with it.
+\end{annotation}
+
+
+% =====================================================================
+\section{Summary}
+\label{sec:mp_summary}
+
+\begin{itemize}
+  \item With $N$ deflecting planes, a ray observed at $\vectheta_1$
+        reaches plane $j$ at
+        $\vectheta_j=\vectheta_1-\sum_{i<j}(D_{ij}/D_j)\hat{\vecalpha}_i(D_i\vectheta_i)$
+        (eq.~\eqref{eq:mp_multiplane}), which follows from straight
+        comoving rays between deflections.  Each deflection is evaluated
+        at the already deflected ray (lens--lens coupling), and the
+        Jacobian is no longer symmetric.
+  \item For one deflector and two source planes, $\vecalpha_2=\vecalpha_1/\Brat$
+        with $\Brat=D_{l,s1}D_{s2}/(D_{s1}D_{l,s2})\in(0,1)$.  In a flat
+        universe
+        $\Brat=(\chi_{s1}-\chi_l)\chi_{s2}/[\chi_{s1}(\chi_{s2}-\chi_l)]$,
+        independent of $\Hubble$.  Plane-to-plane distances must be
+        built from comoving differences, never as $D_s-D_l$.
+  \item A massive near source adds a coupling term
+        $-(D_{s1,s2}/D_{s2})\hat{\vecalpha}_{s1}(D_{s1}\vecbeta_1)$
+        (eq.~\eqref{eq:mp_coupling}); for galaxy-scale sources it is a
+        first-order effect and must be modelled.
+  \item The measured ratio of Einstein radii is the distance ratio for an
+        isothermal deflector ($\Brat=\etamea$; SIS or SIE, any
+        ellipticity, any Einstein-radius convention) and
+        $\Brat=\etamea^{\gp-1}$ for a power law.
+  \item $\Brat$ is only weakly sensitive to cosmology: $S_w=-0.0330$ and
+        $S_{\Omegam}=-0.0357$ at $(z_l,z_{s1},z_{s2})=(0.5,1,2)$, so,
+        with $\Omegam$ held fixed, a $1\%$ error in $\Brat$ corresponds
+        to $|\delta w|\approx0.3$.  One lens constrains a curve in
+        $(\Omegam,w)$.  Lenses at different redshift triplets give
+        differently oriented curves \citep{collett_2012}, so a sample
+        shrinks the allowed region.
+  \item A DSPL fit samples the lens model plus $\Brat$ (or the cosmology
+        behind it).  The inner slope controls the width of the $\Brat$
+        posterior through
+        $\delta\Brat/\Brat=(\gp-1)\delta\etamea/\etamea+\ln\etamea\,\delta\gp$.
+        Never fix $\thetaE^{(2)}/\thetaE^{(1)}$ from a reference
+        cosmology.
+\end{itemize}
+
+The chain from data to cosmology is
+\begin{equation*}
+  \underbrace{\text{image positions}}_{\text{data}}
+  \;\longrightarrow\;
+  \underbrace{(\etamea,\gp)}_{\text{lens fit}}
+  \;\xrightarrow{\;\Brat=\etamea^{\gp-1}\;}\;
+  \underbrace{\Brat}_{\text{distance ratio}}
+  \;\xrightarrow{\;\text{eq.~\eqref{eq:mp_Bcancel}}\;}\;
+  \underbrace{(\Omegam,\,w)}_{\text{cosmology}} .
+\end{equation*}
+The middle arrow needs the slope; the last arrow is Hubble-free but
+weak.  Chapter~\ref{ch:power_law_point_mass} develops the power-law lens
+with a central point mass, and Chapter~\ref{ch:central_mass_bias} shows
+how such a mass, left out of the model, biases both arrows.
+
+
+% =====================================================================
+\section{Problems}
+\label{sec:mp_problems}
+
+\begin{exercise}
+\label{ex:mp_hubble_free}
+\textbf{$\Brat$ is Hubble-free.}  Write each of the four distances in
+eq.~\eqref{eq:mp_Bdef} using eq.~\eqref{eq:mp_DA} and show explicitly that
+all factors of $c/\Hubble$ and $(1+z)^{-1}$ cancel, so that $\Brat$
+depends only on $\{\chi_l,\chi_{s1},\chi_{s2}\}$.  Why does $z_l$ never
+appear in a $(1+z)$ prefactor?
+\end{exercise}
+
+\begin{exercise}
+\label{ex:mp_isothermal}
+\textbf{The isothermal ruler.}  For an isothermal deflector ($\gp=2$)
+verify $\Brat=\etamea$ from eq.~\eqref{eq:mp_etaB}, and again directly
+from the constant SIS deflection.  Interpret geometrically why the ratio
+of Einstein radii equals the ratio of the two efficiencies.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:mp_slope_lever}
+\textbf{The slope lever arm.}  (a) From eq.~\eqref{eq:mp_etaB}, compute
+$\partial\ln\Brat/\partial\gp$ at fixed $\etamea$ and show that it does
+not depend on $\gp$.  (b) At the illustrative geometry ($\Brat=0.6742$) a
+deflector has $\gp=1.9$.  What is $\etamea$, and what slope error
+$\delta\gp$ produces a $1\%$ error in $\Brat$?  (c) Suppose an unmodelled
+feature of the lens biases the fitted slope by $\delta\gp=+0.03$ while
+$\etamea$ is measured perfectly.  What $\delta\Brat/\Brat$ results, and,
+using $S_w$ from eq.~\eqref{eq:mp_Snum}, what $\delta w$ would be
+inferred?
+\end{exercise}
+
+\begin{exercise}
+\label{ex:mp_naive_distance}
+\textbf{The cost of $D_{ds}=D_s-D_d$.}  (a) Show that
+$(D_s-D_d)-D_{ds}=\chi_d[1/(1+z_s)-1/(1+z_d)]$ in a flat universe and
+that it is nonzero for every $z_s>z_d>0$.  (b) Evaluate $D_d$, $D_s$,
+$D_{ds}$ and $D_s-D_d$ at $z_d=0.5$, $z_s=2$ in flat $\Lambda$CDM with
+$\Omegam=0.3$, $\Hubble=70$\,km\,s$^{-1}$\,Mpc$^{-1}$.  (c) Compute the
+``distance ratio'' that results if both lens-to-source distances in
+eq.~\eqref{eq:mp_Bdef} are built by naive subtraction, at the
+illustrative geometry, and compare with eq.~\eqref{eq:mp_Bnum}.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:mp_limits}
+\textbf{Limits of $\Brat$.}  (a) Show that $\Brat\to0$ as $z_{s1}\to z_l$
+and $\Brat\to1$ as $z_{s2}\to z_{s1}$, and interpret both limits.
+(b) Show that $\partial\Brat/\partial\chi_{s2}<0$.  (c) For flat
+$\Lambda$CDM with $\Omegam=0.3$, $\chi(z\to\infty)$ is finite.  Compute it
+in units of $c/\Hubble$ and find the floor
+$\Brat(0.5,\,1.0,\,z_{s2}\to\infty)$.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:mp_coupling}
+\textbf{How big is lens--lens coupling?}  (a) Treat both the main lens
+and the near source as singular isothermal spheres and derive
+eq.~\eqref{eq:mp_couplingsize}.  (b) Show that the coupling vanishes as
+$z_{s1}\to z_{s2}$ and tends to $(\sigma_1/\sigma_L)^2$ as
+$z_{s1}\to z_l$.  (c) Evaluate the geometric factor at the illustrative
+geometry and the coupling fraction for $\sigma_1/\sigma_L=0.4$ and $0.6$.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:mpi_shape_shear}
+\textbf{What cancels in $\etamea$.}  (a) Carry a general shape factor
+$f(q,\varphi)$ through eq.~\eqref{eq:mpi_sieratio} and confirm it cancels
+for any $f$ common to both planes.  (b) Add an external shear produced by
+mass at $z_l$.  Show that the whole lens-plane deflection field (SIE plus
+shear) scales by $1/\Brat$ between the planes, so a model in which the
+reduced shear differs between planes by that factor recovers
+$\etamea=\Brat$ exactly.  (Here $\etamea$ is the ratio of the fitted
+$\thetaE$ parameters; with shear present, radii read off the critical
+curves do not scale by exactly $1/\Brat$.)  (c) Explain why a shear produced by a perturber
+between the two source planes does not cancel.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:mpi_two_channel}
+\textbf{Two channels.}  Derive eq.~\eqref{eq:mpi_twochannel} by taking
+the logarithmic differential of $\Brat=\etamea^{\gp-1}$, and confirm
+that for $\etamea<1$ and $\gp>1$ the two channels have opposite signs.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:mpi_degeneracy}
+\textbf{The single-lens degeneracy.}  In parametrisation (b) of
+\S\ref{sec:mpi_sampling}, show that the likelihood is exactly constant
+along level curves $\Brat(\Omegam,w)=\text{const}$ and that the local
+slope of such a curve is $-S_{\Omegam}/S_w$.  Evaluate it at the
+illustrative geometry, and check numerically that a step along that
+direction changes $\Brat$ far less than the same step across it.
+\end{exercise}
+
+\begin{exercise}
+\label{ex:mpi_error_budget}
+\textbf{Where to spend observing time.}  A fit returns
+$\etamea=0.72\pm0.01$ and $\gp=1.60\pm0.05$ with correlation coefficient
+$\rho=+0.8$.  Propagate to $\sigma_\Brat/\Brat$ with
+eq.~\eqref{eq:mpi_twochannel}, including the covariance.  Compare the
+slope-driven and ratio-driven contributions.  Which dominates, and what
+does this say about the relative value of better astrometry and a
+better constraint on the slope?  For a lens whose redshifts give $|S_w|=0.0330$,
+what is $\sigma_w$?
+\end{exercise}

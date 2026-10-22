@@ -51,12 +51,30 @@ This is larger than the typical stellar mass of a massive elliptical
 ($\sim 10^{11}\;\Msun$), indicating significant dark matter within
 the Einstein radius. \checkmark
 
+\begin{derivation}[The arithmetic in physical units]
+Work in kpc: $\RE = \Dd\thetaE = 918.8~\mathrm{Mpc}\times 7.27\times10^{-6} =
+6.68$~kpc.  Then $M_{\mathrm{E}} = \pi\RE^2\Sigmacr = \pi(6.68)^2\times
+2.83\times10^{9} = 3.98\times10^{11}\,\Msun$.  The axis ratio $q = 0.8$ never
+enters: for the SIE, the mean convergence inside the critical ellipse is
+exactly 1 and its area is $\pi\thetaE^2$ (chapter,
+eq.~\eqref{eq:mass_from_thetaE} and the annotation that follows it).
+\end{derivation}
+
 \textbf{(d)} From $\thetaE = 4\pi\sigma_v^2\Dds/(\speedoflight^2\Ds)$:
 \begin{equation*}
     \sigma_v = \speedoflight\,\sqrt{\frac{\thetaE\,\Ds}{4\pi\,\Dds}}
     \approx 285~\mathrm{km/s} \,.
 \end{equation*}
 This is typical of a massive early-type galaxy. \checkmark
+
+\begin{derivation}[Inverting for $\sigma_v$]
+$\thetaE = 4\pi(\sigma_v/\speedoflight)^2\,\Dds/\Ds \Rightarrow
+(\sigma_v/\speedoflight)^2 = \thetaE\Ds/(4\pi\Dds)$, with $\thetaE$ in radians.
+Here $\Ds/\Dds = 1652.0/1054.7 = 1.566$, so
+$\sigma_v = \speedoflight\sqrt{7.27\times10^{-6}\times1.566/(4\pi)} = 285$~km/s.
+Unit trap: using $\thetaE$ in arcsec inflates $\sigma_v$ by
+$\sqrt{206265} \approx 454$.
+\end{derivation}
 
 % ----- Exercise 9.2 -----
 \subsection*{Exercise~\ref{ex:msd_derivation}: Mass-Sheet Degeneracy}
@@ -79,6 +97,16 @@ The transformed lens equation:
 \end{align*}
 So the same image positions $\vectheta$ satisfy the transformed lens
 equation for source position $\lambda\vecbeta$. \checkmark
+
+\begin{annotation}[The step ``$\Rightarrow$'' in the first display]
+$\vecalpha_\lambda$ follows from $\kappab_\lambda$ only up to a curl-free,
+divergence-free field.  The MST is the choice $\psiL_\lambda = \lambda\psiL +
+\tfrac12(1-\lambda)|\vectheta|^2$, whose gradient is
+$\lambda\vecalpha + (1-\lambda)\vectheta$.  The sheet term works because a
+uniform convergence $\kappab_s$ deflects by $\kappab_s\vectheta$:
+$\nabla\cdot(\kappab_s\vectheta) = 2\kappab_s$ in two dimensions.
+\end{annotation}
+
 
 \textbf{(b)} The Jacobian is
 $\Amat = \mathbb{I} - \partial\vecalpha/\partial\vectheta$.
@@ -121,10 +149,39 @@ images $A$ and $B$ is:
 The derivation proceeds by substituting $\vecbeta_\lambda =
 \lambda\vecbeta$ and $\psiL_\lambda = \lambda\psiL +
 \frac{1}{2}(1-\lambda)|\vectheta|^2$ and simplifying.  The
-uniform $|\vectheta|^2$ term cancels between the two images
-because they are at the same image positions, leaving a factor
-of $\lambda$ multiplying the original Fermat potential
-difference. \checkmark
+$|\vectheta|^2$ terms cancel within each image's Fermat potential,
+leaving $\phi_\lambda = \lambda\phi + \tfrac12\lambda(\lambda-1)|\vecbeta|^2$;
+the last term depends only on the common source position and
+cancels between the two images, leaving a factor of $\lambda$
+multiplying the original Fermat-potential difference. \checkmark
+
+\begin{derivation}[The simplification, every line]
+Expand $\phi_\lambda(\vectheta,\lambda\vecbeta)$:
+\begin{align*}
+  \phi_\lambda
+  &= \tfrac12|\vectheta|^2 - \lambda\,\vectheta\cdot\vecbeta + \tfrac12\lambda^2|\vecbeta|^2
+     - \lambda\psiL - \tfrac12|\vectheta|^2 + \tfrac12\lambda|\vectheta|^2\\
+  &= \lambda\big[\tfrac12|\vectheta|^2 - \vectheta\cdot\vecbeta - \psiL\big] + \tfrac12\lambda^2|\vecbeta|^2\\
+  &= \lambda\big[\tfrac12|\vectheta-\vecbeta|^2 - \psiL\big] - \tfrac12\lambda|\vecbeta|^2 + \tfrac12\lambda^2|\vecbeta|^2
+   = \lambda\,\phi(\vectheta,\vecbeta) + \tfrac12\lambda(\lambda-1)|\vecbeta|^2 .
+\end{align*}
+The $|\vectheta|^2$ pieces cancel \emph{within} each image (line~1 to
+line~2).  What cancels \emph{between} images is the last term,
+$\tfrac12\lambda(\lambda-1)|\vecbeta|^2$, which depends only on the common
+source.  Hence $\Delta\phi_\lambda = \lambda\Delta\phi$ and, at fixed
+distances, $\Delta t_\lambda = \lambda\Delta t$.
+\end{derivation}
+
+\begin{annotation}[Checklist: what an MST leaves alone]
+Invariant: image positions, flux ratios, critical curves, the Einstein radius,
+and the reduced shear $\gammaL/(1-\kappab)$.  Changed: $\kappab$, $\gammaL$,
+$|\mu|$ ($\lambda^{-2}$), $\Delta t$ ($\lambda$), source size and position
+($\lambda$), caustics ($\lambda$).  Any observable in the first list cannot
+break the degeneracy; one in the second list can, if its absolute value is
+known independently (a standard candle for $|\mu|$, a cosmology for
+$\Delta t$, or a dynamical mass).
+\end{annotation}
+
 
 % ----- Exercise 9.3 -----
 \subsection*{Exercise~\ref{ex:H0_time_delay}: $\Hubble$ from a Time-Delay Lens}
@@ -132,21 +189,30 @@ difference. \checkmark
 \textbf{(a)} The time-delay equation is:
 \begin{equation*}
     \Delta t = \frac{(1+z_d)}{\speedoflight}
-    \,\frac{\Dd\,\Ds}{\Dds}\,\Delta\tau \,.
+    \,\frac{\Dd\,\Ds}{\Dds}\,\Delta\tau
+    = \frac{D_{\Delta t}\,\Delta\tau}{\speedoflight}\,,
+    \qquad D_{\Delta t} = (1+z_d)\frac{\Dd\Ds}{\Dds}\,.
 \end{equation*}
 Solving for $\Hubble$: since $\Dd\Ds/\Dds \propto 1/\Hubble$,
 we can write
-$\Dd\Ds/\Dds = d(z_d, z_s, \Omegam)/\Hubble$ where $d$ is a
-dimensionless function of redshifts and cosmological parameters.
+$\Dd\Ds/\Dds = d(z_d, z_s, \Omegam)/\Hubble$, where $d$ (units of
+velocity, e.g.\ km\,s$^{-1}$) depends only on the redshifts and the
+density parameters.
 Then:
 \begin{equation*}
     \Hubble = \frac{(1+z_d)\,\Delta\tau}{\speedoflight\,\Delta t}
     \times d(z_d, z_s, \Omegam) \,.
 \end{equation*}
 
+\begin{annotation}[Convention check]
+$d = \Hubble\Dd\Ds/\Dds = \speedoflight\,f_df_s/f_{ds}$ (chapter's
+$D_{\Delta t}$ box) has units of velocity, and $(1+z_d)$ appears exactly once.
+\end{annotation}
+
+
 \textbf{(b)} For $z_d = 0.6$, $z_s = 1.5$, $\Omegam = 0.3$
-(flat $\Lambda$CDM), the dimensionless distance ratio
-$d = \Hubble\Dd\Ds/\Dds$ is computed from the cosmological
+(flat $\Lambda$CDM), the distance factor
+$d = \Hubble\Dd\Ds/\Dds$ (a velocity) is computed from the cosmological
 integrals.  Converting $\Delta\tau = 0.64~\mathrm{arcsec}^2
 = 0.64 \times (4.848 \times 10^{-6})^2~\mathrm{rad}^2
 = 1.50 \times 10^{-11}~\mathrm{rad}^2$ and
@@ -156,13 +222,28 @@ Numerical evaluation gives $\Hubble \approx 70$~km/s/Mpc
 (the exact value depends on the precise cosmological distances;
 see \texttt{problems\_09.wl} for the detailed calculation). \checkmark
 
+\begin{derivation}[The ``self-consistent'' step without iteration]
+Because $D_{\Delta t} \propto 1/\Hubble$ exactly, no iteration is needed.
+Evaluate at a reference $H_{\mathrm{ref}} = 70$:
+$(1+z_d)\Dd\Ds/\Dds = 1.6\times1379.0\times1745.6/863.0 = 4463$~Mpc.  The
+predicted delay is
+$\Delta t_{\mathrm{pred}} = D_{\Delta t}\Delta\tau/\speedoflight =
+(4463\times3.086\times10^{24}~\mathrm{cm})(1.504\times10^{-11})/
+(2.998\times10^{10}~\mathrm{cm\,s^{-1}}) = 79.98$~days.  Then
+\[
+  \Hubble = H_{\mathrm{ref}}\,\frac{\Delta t_{\mathrm{pred}}(H_{\mathrm{ref}})}{\Delta t_{\mathrm{obs}}}
+  = 70\times\frac{79.98}{80} = 69.98~\mathrm{km\,s^{-1}\,Mpc^{-1}} .
+\]
+\end{derivation}
+
+
 \textbf{(c)} If the true lens has an unmodeled positive mass sheet
 with $\kappab_s = 0.05$, then the true MST parameter is
 $\lambda = 1 - \kappab_s = 0.95$.  Recall (Section~9.2,
 eq.~\ref{eq:mst_H0}) that under the MST the model-predicted time
 delay scales as $\Delta t_\lambda = \lambda\,\Delta t$ at fixed
 $\Hubble$, so at \emph{fixed observed} $\Delta t$ the inferred
-$\Hubble$ scales the opposite way:
+$\Hubble$ scales the same way, by $\lambda$:
 \begin{equation*}
     \Hubble^{\mathrm{true}} = \lambda\,\Hubble^{\mathrm{naive}}
     \quad\Longleftrightarrow\quad
@@ -176,6 +257,17 @@ $\Hubble^{\mathrm{true}} \approx 69$~km/s/Mpc --- closer to the Planck
 CMB value.  This is the direction in which TDCOSMO has pulled the
 time-delay $\Hubble$ relative to the original H0LiCOW result, and it
 sits squarely in the modern $\Hubble$-tension discussion. \checkmark
+
+\begin{derivation}[The sign, in one chain]
+$\Delta t_{\mathrm{obs}} = D_{\Delta t}(\Hubble)\,\Delta\tau/\speedoflight$ with
+$D_{\Delta t} \propto \Hubble^{-1}$, so $\Hubble \propto \Delta\tau$ at fixed
+$\Delta t_{\mathrm{obs}}$.  The true model is the MST of the fitted one, with
+$\Delta\tau_{\mathrm{true}} = \lambda\Delta\tau_{\mathrm{naive}}$, hence
+$\Hubble^{\mathrm{true}} = \lambda\Hubble^{\mathrm{naive}}$.  With this
+exercise's own number, $0.95\times69.98 = 66.48$; with the round $73$ of the
+text, $0.95\times73 = 69.35 \approx 69$.
+\end{derivation}
+
 
 % ----- Exercise 9.4 -----
 \subsection*{Exercise~\ref{ex:power_law_profile}: Power-Law Profile}
@@ -196,6 +288,26 @@ More precisely, $\kappab(\theta) = \frac{3-\gamma'}{2}
 (\thetaE/\theta)^{\gamma'-1}$, where $\thetaE$ is defined as the
 radius where the mean convergence equals unity. \checkmark
 
+\begin{derivation}[From $\rho$ to the normalized $\kappab$, all steps]
+\begin{enumerate}[nosep]
+  \item $\Sigma(R) = \rho_0r_0^{\gamma'}\int_{-\infty}^{\infty}(R^2+z^2)^{-\gamma'/2}dz$.
+        Put $z = Ru$:
+        $= \rho_0r_0^{\gamma'}R^{1-\gamma'}\cdot2\int_0^\infty(1+u^2)^{-\gamma'/2}du$.
+  \item Put $t = u^2/(1+u^2)$: $2\int_0^\infty(1+u^2)^{-\gamma'/2}du =
+        \int_0^1t^{-1/2}(1-t)^{(\gamma'-3)/2}dt = B\big(\tfrac12,\tfrac{\gamma'-1}{2}\big)
+        = \sqrt\pi\,\Gamma\big(\tfrac{\gamma'-1}{2}\big)/\Gamma\big(\tfrac{\gamma'}{2}\big)$
+        (convergent for $\gamma' > 1$).  This is the prefactor above.
+  \item $\kappab = \Sigma/\Sigmacr \propto \theta^{1-\gamma'}$; write
+        $\kappab = A(\thetaE/\theta)^{\gamma'-1}$.
+  \item $\bar\kappab(\theta) = \frac{2}{\theta^2}\int_0^\theta\kappab\theta'd\theta'
+        = \frac{2A}{3-\gamma'}(\thetaE/\theta)^{\gamma'-1}$ for $\gamma' < 3$.
+  \item $\bar\kappab(\thetaE) = 1 \Rightarrow A = (3-\gamma')/2$.
+\end{enumerate}
+The window $1 < \gamma' < 3$ is where both the line-of-sight integral and the
+enclosed 2D mass are finite.
+\end{derivation}
+
+
 \textbf{(b)} For $\gamma' = 2$:
 $\kappab \propto \theta^{1-2} = \theta^{-1} = 1/\theta$, which
 is the SIS convergence $\kappab = \thetaE/(2\theta)$. \checkmark
@@ -212,12 +324,43 @@ Since $R_{\mathrm{ap}} \neq R_{\mathrm{E}}$ in general, the ratio
 $\sigma_v^2/M_{\mathrm{E}}$ depends on $\gamma'$, breaking the
 degeneracy between mass normalization and profile slope. \checkmark
 
-\textbf{(d)} For a given $\thetaE$ and $\sigma_v$, the self-consistent
-$\gamma'$ can be found from the relation linking both.  For
-$\thetaE = 1.2''$ and $\sigma_v = 230$~km/s, numerical evaluation
-(see \texttt{problems\_09.wl}) gives $\gamma' \approx 2.0$--$2.1$,
-fully consistent with the bulge-halo conspiracy value
-$\gamma' \approx 2.0 \pm 0.2$. \checkmark
+\begin{derivation}[Where $\sigma_v^2 \propto M/R$ comes from]
+For an isotropic tracer $\nu \propto r^{-\delta}$ in $M(r) \propto
+r^{3-\gamma'}$, integrating the spherical Jeans equation
+$d(\nu\sigma_r^2)/dr = -\nu\Gnewton M/r^2$ inward from infinity gives
+\[
+  \sigma_r^2 = \frac{\Gnewton M(r)}{r}\,\frac{1}{\gamma'+\delta-2}
+  \qquad(\gamma'+\delta > 2),
+\]
+and $1/[2(\gamma'-1)]$ if the light traces the mass ($\delta = \gamma'$).  The
+$\gamma'$-dependent factor is part of $g(\gamma')$; projection and aperture
+averaging add more.  With $M_{\mathrm{E}}$ fixed at $\RE$ and
+$M_{\mathrm{3D}}(r) \propto r^{3-\gamma'}$, the prediction at $R_{\mathrm{ap}}$
+carries $(R_{\mathrm{ap}}/\RE)^{2-\gamma'}$.  This is the extra $\gamma'$
+dependence that lensing alone does not have.
+\end{derivation}
+
+
+\textbf{(d)} For $z_d = 0.3$, $z_s = 1.0$ (flat $\Lambda$CDM,
+$\Omegam = 0.3$, as given in the exercise), the isothermal prediction
+for $\thetaE = 1.2''$ is
+$\sigma_{\mathrm{SIS}} = \speedoflight\sqrt{\thetaE\Ds/(4\pi\Dds)}
+\approx 255$~km/s, so $\sigma_{\mathrm{obs}}/\sigma_{\mathrm{SIS}}
+\approx 0.90$ (\texttt{problems\_09.wl}).  Inverting this ratio for
+$\gamma'$ requires an aperture, a light profile and an anisotropy,
+none of which is specified, so no value of $\gamma'$ is computed
+here.  A ratio this close to unity is consistent with a
+near-isothermal $\gamma' \approx 2$ (the bulge--halo conspiracy).
+\checkmark
+
+\begin{annotation}[What the script actually computes]
+\texttt{problems\_09.wl} stops at $\sigma_{\mathrm{SIS}} = 255$~km/s and
+$(\sigma_{\mathrm{obs}}/\sigma_{\mathrm{SIS}})^2 = 0.81$; it does not invert
+$g(\gamma')$.  For a real inversion, Part~V
+(Chapter~\ref{ch:msd_kinematics}) sets up the full projected,
+aperture-weighted Jeans prediction.
+\end{annotation}
+
 
 % ----- Exercise 9.5 -----
 \subsection*{Exercise~\ref{ex:compare_lenses}: Comparing Real Lens Systems}
@@ -253,6 +396,14 @@ B1608+656  & $\sim 3.9$ \\
 \end{center}
 
 \textbf{(c)} Physical Einstein radii ($R_{\mathrm{E}} = \Dd\,\thetaE$):
+
+\begin{annotation}[Unit check for part (c)]
+$1'' = 4.848\times10^{-6}$~rad, so $\RE[\mathrm{kpc}] = 4.848\times10^{-3}\,
+\Dd[\mathrm{Mpc}]\,\thetaE[''].$  For Q0957$+$561,
+$1037.6\times4.848\times10^{-3} = 5.03$~kpc; for Q2237$+$0305,
+$163.2\times0.9\times4.848\times10^{-3} = 0.712$~kpc.
+\end{annotation}
+
 
 \begin{center}
 \begin{tabular}{lc}

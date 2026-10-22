@@ -1,0 +1,258 @@
+% =============================================================================
+% Module 15: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included from main.tex via \ifsolutions
+% Every answer is attested by Solutions/15_PowerLaw_PointMass/problems_15.wl
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:pl_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{15_PowerLaw_PointMass/problems\_15.wl}{problems\_15.wl},
+which verifies each answer symbolically and numerically.
+
+% ----- Exercise: kappa by inversion -----
+\subsection*{Exercise~\ref{ex:pl_kappa_inversion}: Power-Law Convergence by Inversion}
+
+Form the combination $\theta\,\alpha_{\rm PL}=\thetaE^{\gp-1}\theta^{3-\gp}$ and differentiate:
+\begin{equation*}
+    \deriv{}{\theta}\big[\theta\,\alpha_{\rm PL}\big]=(3-\gp)\,\thetaE^{\gp-1}\theta^{2-\gp} .
+\end{equation*}
+Dividing by $2\theta$,
+\begin{equation*}
+    \kappab(\theta)=\frac{1}{2\theta}\deriv{}{\theta}\big[\theta\,\alpha_{\rm PL}\big]
+      =\frac{3-\gp}{2}\,\thetaE^{\gp-1}\theta^{1-\gp}
+      =\frac{3-\gp}{2}\left(\frac{\thetaE}{\theta}\right)^{\gp-1} .
+\end{equation*}
+In the other direction,
+\begin{equation*}
+    \frac{2}{\theta}\int_0^\theta\kappab(\theta')\,\theta'\,\dd\theta'
+    =\frac{2}{\theta}\cdot\frac{3-\gp}{2}\thetaE^{\gp-1}\int_0^\theta\theta'^{\,2-\gp}\dd\theta'
+    =\frac{2}{\theta}\cdot\frac{3-\gp}{2}\thetaE^{\gp-1}\frac{\theta^{3-\gp}}{3-\gp}
+    =\thetaE^{\gp-1}\theta^{2-\gp} ,
+\end{equation*}
+where the integral converges at the origin only for $\gp<3$ (finite
+projected mass).  Finally $\bar\kappa(\theta)=\alpha/\theta=(\thetaE/\theta)^{\gp-1}$,
+so $\bar\kappa(\thetaE)=1$ for every slope: the Einstein radius is
+where the mean interior convergence is unity.
+\emph{[Attested: \solnlink{15_PowerLaw_PointMass/problems\_15.wl}{problems\_15.wl}, checks 1a--1d.]}
+
+% ----- Exercise: point-mass magnification -----
+\subsection*{Exercise~\ref{ex:pl_point_mass_mag}: Point-Mass Magnification}
+
+With $\alpha_\bullet=\thetaBH^2/\theta$ we have
+$\lambda_t=1-\thetaBH^2/\theta^2$ and $\lambda_r=1+\thetaBH^2/\theta^2$, so
+\begin{equation*}
+    \mu=\frac{1}{\lambda_t\lambda_r}
+      =\frac{1}{(1-\thetaBH^2/\theta^2)(1+\thetaBH^2/\theta^2)}
+      =\frac{1}{1-\thetaBH^4/\theta^4}
+      =\frac{\theta^4}{\theta^4-\thetaBH^4} .
+\end{equation*}
+Equivalently, $\mu=(\theta/\ysrc)(\dd\theta/\dd\ysrc)$ for the map
+$\ysrc=\theta-\thetaBH^2/\theta$.  Since $\lambda_r>0$ always, the
+parity is set by $\lambda_t$: positive outside $\thetaBH$, negative
+inside.
+
+The lens equation is $\theta^2-\ysrc\,\theta-\thetaBH^2=0$, with roots
+$\theta_\pm=\tfrac12(\ysrc\pm\sqrt{\ysrc^2+4\thetaBH^2})$,
+$\theta_+\theta_-=-\thetaBH^2$ and $\theta_++\theta_-=\ysrc$.  So
+$|\theta_+|>\thetaBH>|\theta_-|$, and $\mu_+>0$, $\mu_-<0$.
+Substituting into $\mu(\theta)$ and writing $u=\ysrc/\thetaBH$ gives
+the standard result (eq.~\ref{eq:pm_magnification} of
+Chapter~\ref{ch:axisymmetric_models}),
+\begin{equation*}
+    |\mu_\pm|=\frac{u^2+2}{2u\sqrt{u^2+4}}\pm\frac12 ,
+    \qquad
+    |\mu_+|+|\mu_-|=\frac{u^2+2}{u\sqrt{u^2+4}} .
+\end{equation*}
+This exceeds $1$ for every finite $u$, because
+$(u^2+2)^2-u^2(u^2+4)=4>0$; it approaches $1$ only as $u\to\infty$.
+The signed magnifications satisfy $\mu_++\mu_-=|\mu_+|-|\mu_-|=1$.
+For example, $u=5/3$ gives a total magnification of $1.1011$.
+\emph{[Attested: \solnlink{15_PowerLaw_PointMass/problems\_15.wl}{problems\_15.wl}, checks 2a--2g.]}
+
+% ----- Exercise: radial radius -----
+\subsection*{Exercise~\ref{ex:pl_radial_radius}: Radial Critical Radius}
+
+The radial eigenvalue is
+$\lambda_r=1-\dd\alpha_{\rm PL}/\dd\theta=1-(2-\gp)(\thetaE/\theta)^{\gp-1}$.
+Setting it to zero,
+\begin{equation*}
+    \left(\frac{\thetaE}{\theta}\right)^{\gp-1}=\frac{1}{2-\gp}
+    \;\Longrightarrow\;
+    \frac{\theta_r}{\thetaE}=(2-\gp)^{1/(\gp-1)} .
+\end{equation*}
+This is real and positive only for $\gp<2$; for $\gp>2$ the base
+$2-\gp$ is negative and a non-integer power of it is not real (indeed
+$\lambda_r\ge1$ there).  As $\gp\to2^-$ the base tends to $0^+$ with
+exponent $\to1$, so $\theta_r\to0$.  At $\gp=1.6$:
+$\theta_r/\thetaE=0.4^{1/0.6}=0.4^{5/3}=0.2172$.  The sign of
+$\lambda_r$ indeed changes across this radius (negative at
+$0.99\,\theta_r$, positive at $1.01\,\theta_r$); likewise at $\gp=1.5$
+it changes between $\theta=0.2$ and $0.3$, bracketing $\theta_r=0.25$.
+\emph{[Attested: \solnlink{15_PowerLaw_PointMass/problems\_15.wl}{problems\_15.wl}, checks 3a--3e.]}
+
+% ----- Exercise: SIS + PM shifts -----
+\subsection*{Exercise~\ref{ex:pl_sis_pm_shift}: SIS plus Point Mass, First-Order Shifts}
+
+Write $\theta_+^{(0)}=\ysrc+\thetaE$ and $\thetaBH^2=\mBH\thetaE^2$.  Expanding the square root,
+\begin{equation*}
+    \sqrt{(\theta_+^{(0)})^2+4\thetaBH^2}
+    =\theta_+^{(0)}\left[1+\frac{2\thetaBH^2}{(\theta_+^{(0)})^2}+\order{\mBH^2}\right] ,
+\end{equation*}
+so eq.~\eqref{eq:pl_sis_pm_plus} becomes
+\begin{equation*}
+    \theta_+=\theta_+^{(0)}+\frac{\thetaBH^2}{\theta_+^{(0)}}+\order{\mBH^2} .
+\end{equation*}
+On the far side, $\theta_-=\tfrac12[(\ysrc-\thetaE)-\sqrt{(\ysrc-\thetaE)^2+4\thetaBH^2}]$;
+since $\ysrc-\thetaE<0$, $\sqrt{(\ysrc-\thetaE)^2}=\thetaE-\ysrc$ and the
+same expansion gives
+\begin{equation*}
+    \theta_-=\theta_-^{(0)}+\frac{\thetaBH^2}{\theta_-^{(0)}}+\order{\mBH^2} ,
+    \qquad \theta_-^{(0)}=\ysrc-\thetaE<0 .
+\end{equation*}
+So $\delta\theta_\pm=\thetaBH^2/\theta_\pm^{(0)}$: positive for the
+outer image and negative for the counter-image, i.e.\ both move away
+from the centre.  For $\thetaE=1$, $\thetaBH=0.08$ ($\mBH=0.0064$),
+$\ysrc=0.3$: the exact images are $\theta_+=1.304905$ and
+$\theta_-=-0.709026$, against the linearized $1.3+0.0064/1.3=1.304923$
+and $-0.7-0.0064/0.7=-0.709143$.  The differences are second order in
+$\mBH$.
+\emph{[Attested: \solnlink{15_PowerLaw_PointMass/problems\_15.wl}{problems\_15.wl}, checks 4a--4f.]}
+
+% ----- Exercise: tangential shift -----
+\subsection*{Exercise~\ref{ex:pl_tangential_shift}: Tangential Critical Curve with a Point Mass}
+
+With $u=\theta/\thetaE$, $\lambda_t(u)=1-u^{1-\gp}-\mBH u^{-2}$.  Put
+$u=1+\delta$ and expand to first order in $\delta$ and $\mBH$:
+$u^{1-\gp}\simeq1-(\gp-1)\delta$ and $\mBH u^{-2}\simeq\mBH$, so
+\begin{equation*}
+    \lambda_t\simeq(\gp-1)\,\delta-\mBH=0
+    \;\Longrightarrow\;
+    \delta=\frac{\mBH}{\gp-1} ,
+    \qquad
+    \theta_t\simeq\thetaE\left(1+\frac{\mBH}{\gp-1}\right) .
+\end{equation*}
+The shift grows as the profile becomes shallower ($\gp\to1$), because
+then $\bar\kappa$ varies slowly near $\thetaE$ and a small extra mass
+moves the radius where $\bar\kappa+\mBH u^{-2}=1$ a long way.  For the
+SIS the condition $1-1/u-\mBH/u^2=0$ is a quadratic with root
+$u_t=\tfrac12(1+\sqrt{1+4\mBH})=1+\mBH-\mBH^2+\cdots$, in agreement
+with the linear result at $\gp=2$.  Numerically, for $\gp=1.5$ and
+$\mBH=0.01$, $u_t=1.0195$, against the linear estimate $1.02$.
+\emph{[Attested: \solnlink{15_PowerLaw_PointMass/problems\_15.wl}{problems\_15.wl}, checks 5a--5d.]}
+
+% ----- Exercise: annihilation at 3/2 -----
+\subsection*{Exercise~\ref{ex:pl_annihilation_15}: Annihilation at $\gp=3/2$ by Hand}
+
+At $\gp=3/2$, $\lambda_r=1-\tfrac12u^{-1/2}+\mBH u^{-2}$.  Multiply by
+$u^2$ and put $u=s^2$:
+\begin{equation*}
+    u^2\lambda_r=s^4-\tfrac12 s^3+\mBH\equiv P(s) .
+\end{equation*}
+Radial critical curves are positive roots of $P$.  The two roots merge
+where $P$ and $P'$ vanish together.  $P'(s)=4s^3-\tfrac32 s^2=0$ gives
+$s=3/8$, i.e.\ $u_c=9/64$; then $P(3/8)=0$ gives
+\begin{equation*}
+    \mBH_{\rm crit}=-\left[\left(\tfrac38\right)^4-\tfrac12\left(\tfrac38\right)^3\right]
+    =\frac{27}{4096}\approx0.0066 .
+\end{equation*}
+Both agree with the general formulae for $u_c$ and
+eq.~\eqref{eq:pl_mcrit} at $\gp=3/2$.  The merged radial caustic is at
+\begin{equation*}
+    \ysrc(u_c)=u_c-\sqrt{u_c}-\frac{\mBH_{\rm crit}}{u_c}
+    =\frac{9}{64}-\frac{3}{8}-\frac{3}{64}=-\frac{9}{32} ,
+\end{equation*}
+i.e.\ $|\ysrc|=9\thetaE/32$.  For comparison, $P$ has two positive
+roots at $\mBH=0.003$ and none at $\mBH=0.01$.
+\emph{[Attested: \solnlink{15_PowerLaw_PointMass/problems\_15.wl}{problems\_15.wl}, checks 6a--6f.]}
+
+% ----- Exercise: bPL outside -----
+\subsection*{Exercise~\ref{ex:bpl_outside}: Broken Power Law outside the Break}
+
+\textbf{(a)} The mass inside the break is
+\begin{equation*}
+    2\pi\int_0^{\theta_B}\kappa_B\left(\frac{\theta_B}{\theta'}\right)^{t_1}\theta'\,\dd\theta'
+    =2\pi\kappa_B\theta_B^{t_1}\,\frac{\theta_B^{2-t_1}}{2-t_1}
+    =\frac{2\pi\kappa_B\theta_B^2}{2-t_1} ,
+\end{equation*}
+and the annulus contributes
+$2\pi\kappa_B\theta_B^2[(\theta/\theta_B)^{2-t_2}-1]/(2-t_2)$.  Dividing
+the total by $\pi\theta$ gives eq.~\eqref{eq:bpl_alpha_out}.
+
+\textbf{(b)} At $\theta=\theta_B$ the annulus term vanishes and
+$\alpha=2\kappa_B\theta_B/(2-t_1)$, which is also the value
+of~\eqref{eq:bpl_alpha_in} there.
+
+\textbf{(c)} Split the bracket:
+\begin{equation*}
+    \alpha=\frac{2\kappa_B\theta_B^{t_2}}{2-t_2}\,\theta^{1-t_2}
+      +\frac{2\kappa_B\theta_B^2}{\theta}\left[\frac{1}{2-t_1}-\frac{1}{2-t_2}\right] ,
+\end{equation*}
+and use $1/(2-t_1)-1/(2-t_2)=(t_1-t_2)/[(2-t_1)(2-t_2)]$.  The first
+term is the outer power law continued to the centre; the second is a
+point mass with
+$\theta_{\rm eff}^2=2\kappa_B\theta_B^2(t_1-t_2)/[(2-t_1)(2-t_2)]$.
+\emph{[Attested: \solnlink{15_PowerLaw_PointMass/problems\_15.wl}{problems\_15.wl}, checks B1a--B1e.]}
+
+% ----- Exercise: bPL PM limit -----
+\subsection*{Exercise~\ref{ex:bpl_point_mass_limit}: The Point-Mass Limit}
+
+Fixing $2\pi\kappa_B\theta_B^2/(2-t_1)=\pi\thetaBH^2$ means
+$\kappa_B=(2-t_1)\thetaBH^2/(2\theta_B^2)$.  Substituting
+into~\eqref{eq:bpl_alpha_in},
+\begin{equation*}
+    \alpha=\frac{2\theta_B^2}{(2-t_1)\theta}\cdot\frac{(2-t_1)\thetaBH^2}{2\theta_B^2}
+      \left(\frac{\theta}{\theta_B}\right)^{2-t_1}
+    =\frac{\thetaBH^2}{\theta}\left(\frac{\theta}{\theta_B}\right)^{2-t_1}
+    \;\xrightarrow{\;t_1\to2\;}\;\frac{\thetaBH^2}{\theta} .
+\end{equation*}
+The convergence $\kappa_B(\theta_B/\theta)^{t_1}$ becomes more and
+more concentrated, but its normalization $\kappa_B\propto(2-t_1)$ goes
+to zero: the mass migrates onto the centre while its total stays
+fixed.  In the same limit
+$\theta_{\rm eff}^2=\thetaBH^2(t_1-t_2)/(2-t_2)\to\thetaBH^2$: the
+effective point mass becomes the whole inner mass, as
+eq.~\eqref{eq:bpl_eff_ratio} says.  At fixed $\theta_B$ the same
+$\kappa_B\to0$ multiplies the outer branch~\eqref{eq:bpl_alpha_out},
+which also tends to $\thetaBH^2/\theta$: the outer galaxy vanishes and
+the whole lens becomes a bare point mass.  Keeping a galaxy requires
+the joint limit of \S\ref{sec:bpl_pm_limit}, with
+$\theta_B\to0$ as well (eq.~\ref{eq:bpl_joint_limit}).
+\emph{[Attested: \solnlink{15_PowerLaw_PointMass/problems\_15.wl}{problems\_15.wl}, checks B2a--B2e.]}
+
+% ----- Exercise: bPL SIS limits -----
+\subsection*{Exercise~\ref{ex:bpl_sis_limit}: Isothermal Limits}
+
+\textbf{(a)} With $t_1=t_2=1$, eq.~\eqref{eq:bpl_alpha_in} gives
+$\alpha=2\kappa_B\theta_B^2\theta^{-1}(\theta/\theta_B)=2\kappa_B\theta_B$,
+and in eq.~\eqref{eq:bpl_alpha_out} the bracket is
+$1+(\theta/\theta_B-1)=\theta/\theta_B$, giving the same constant.  A
+constant deflection is the SIS, with $\thetaE=2\kappa_B\theta_B$.
+
+\textbf{(b)} With $t_2=1$, eq.~\eqref{eq:bpl_identity} reads
+\begin{equation*}
+    \alpha=2\kappa_B\theta_B+\frac{\theta_{\rm eff}^2}{\theta} ,
+    \qquad
+    \theta_{\rm eff}^2=\frac{2\kappa_B\theta_B^2(t_1-1)}{2-t_1} ,
+    \qquad\theta>\theta_B :
+\end{equation*}
+an SIS of Einstein radius $\theta_{E,\rm S}=2\kappa_B\theta_B$ plus a
+point mass.  Eq.~\eqref{eq:pl_sis_pm_plus} with
+$\thetaE\to\theta_{E,\rm S}$ and $\thetaBH^2\to\theta_{\rm eff}^2$
+gives the outer image, valid provided it lies outside $\theta_B$.  For
+$\theta_B=0.1$, $\kappa_B=5$, $t_1=3/2$: $\theta_{E,\rm S}=1$,
+$\theta_{\rm eff}^2=0.1$, and for $\ysrc=0.3$
+\begin{equation*}
+    \theta_+=\tfrac12\Big[1.3+\sqrt{1.69+0.4}\Big]=1.3728>\theta_B ,
+\end{equation*}
+which agrees with a direct numerical solution of the broken-power-law
+lens equation.
+
+\textbf{(c)} For $t_1<1$ the inner profile is shallower than
+isothermal, $\theta_{\rm eff}^2<0$, and the effective point mass is
+\emph{negative}: a core removes mass relative to the continued SIS.
+Outside the break the lens then looks like a SIS minus a point mass.
+\emph{[Attested: \solnlink{15_PowerLaw_PointMass/problems\_15.wl}{problems\_15.wl}, checks B3a--B3d.]}

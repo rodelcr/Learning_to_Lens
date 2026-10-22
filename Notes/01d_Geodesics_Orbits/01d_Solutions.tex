@@ -18,22 +18,22 @@ which verifies each answer symbolically.
 We start from the normalization condition~\eqref{eq:normalization} with
 $f(r) = 1 - R_S/r$:
 \begin{equation*}
-    -f\!\left(\frac{dt}{d\lambda}\right)^{\!2}
+    -f c^2\!\left(\frac{dt}{d\lambda}\right)^{\!2}
     + \frac{1}{f}\left(\frac{dr}{d\lambda}\right)^{\!2}
-    + r^2\!\left(\frac{d\phi}{d\lambda}\right)^{\!2} = -\epsilon \,.
+    + r^2\!\left(\frac{d\phi}{d\lambda}\right)^{\!2} = -\epsilon c^2 \,.
 \end{equation*}
-Substituting the conserved quantities $E = f\, dt/d\lambda$ and
+Substituting the conserved quantities $E = f c^2\, dt/d\lambda$ and
 $L = r^2\, d\phi/d\lambda$:
 \begin{equation*}
-    -\frac{E^2}{f} + \frac{1}{f}\left(\frac{dr}{d\lambda}\right)^{\!2}
-    + \frac{L^2}{r^2} = -\epsilon \,.
+    -\frac{E^2}{f c^2} + \frac{1}{f}\left(\frac{dr}{d\lambda}\right)^{\!2}
+    + \frac{L^2}{r^2} = -\epsilon c^2 \,.
 \end{equation*}
 Multiplying through by $f$ and rearranging:
 \begin{align*}
     \left(\frac{dr}{d\lambda}\right)^{\!2}
-    &= E^2 - f(r)\!\left(\epsilon + \frac{L^2}{r^2}\right) \\
-    &= E^2 - \left(1 - \frac{R_S}{r}\right)\!\left(\epsilon + \frac{L^2}{r^2}\right) \\
-    &= E^2 - \epsilon + \frac{\epsilon R_S}{r} - \frac{L^2}{r^2} + \frac{R_S L^2}{r^3} \,.
+    &= \frac{E^2}{c^2} - f(r)\!\left(\epsilon c^2 + \frac{L^2}{r^2}\right) \\
+    &= \frac{E^2}{c^2} - \left(1 - \frac{R_S}{r}\right)\!\left(\epsilon c^2 + \frac{L^2}{r^2}\right) \\
+    &= \frac{E^2}{c^2} - \epsilon c^2 + \frac{\epsilon c^2 R_S}{r} - \frac{L^2}{r^2} + \frac{R_S L^2}{r^3} \,.
 \end{align*}
 Dividing by 2 and identifying terms:
 \begin{equation*}
@@ -41,7 +41,7 @@ Dividing by 2 and identifying terms:
     + \underbrace{\left(-\frac{\epsilon GM}{r}
     + \frac{L^2}{2r^2}
     - \frac{GML^2}{c^2 r^3}\right)}_{V_{\mathrm{eff}}(r)}
-    = \frac{1}{2}(E^2 - \epsilon) \equiv \mathcal{E} \,,
+    = \frac{1}{2}\left(\frac{E^2}{c^2} - \epsilon c^2\right) \equiv \mathcal{E} \,,
 \end{equation*}
 where we used $R_S = 2GM/c^2$.  This gives the effective
 potential~\eqref{eq:effective_potential}:
@@ -49,6 +49,23 @@ potential~\eqref{eq:effective_potential}:
     \boxed{V_{\mathrm{eff}}(r) = -\frac{\epsilon\, GM}{r}
     + \frac{L^2}{2r^2} - \frac{GML^2}{c^2 r^3}}
 \]
+
+\begin{derivation}[The ``identifying terms'' step, with $c$ kept]
+Halving the last expanded line term by term with $R_S = 2GM/c^2$
+(see also the derivation box after eq.~\eqref{eq:effective_potential}):
+\begin{align*}
+\tfrac12\,\epsilon c^2R_S/r &= \epsilon GM/r
+  && \text{(moves left as } -\epsilon GM/r\text{)} \\
+\tfrac12\,L^2/r^2 &= L^2/(2r^2)
+  && \text{(moves left as } +L^2/(2r^2)\text{)} \\
+\tfrac12\,R_SL^2/r^3 &= GML^2/(c^2r^3)
+  && \text{(moves left as } -GML^2/(c^2r^3)\text{)} .
+\end{align*}
+The remaining two terms, $\tfrac12(E^2/c^2 - \epsilon c^2)$, are the
+constant $\mathcal{E}$.  With $c = 1$ (Carroll's units) every $c$ above
+drops out and $\mathcal{E} = \tfrac12(E^2 - \epsilon)$.
+\end{derivation}
+
 
 \textbf{Newtonian limit:} The last term $-GML^2/(c^2 r^3)$ is the GR
 correction.  In the Newtonian limit ($c \to \infty$, or equivalently
@@ -61,6 +78,16 @@ barrier $L^2/(2r^2)$ diverges as $r \to 0$, preventing any particle from
 reaching the origin.  The GR correction term is attractive at small $r$
 and allows the barrier to be overcome --- this is why particles can plunge
 into black holes.
+
+\begin{annotation}[What ``$c \to \infty$'' means]
+The GR term is smaller than the centrifugal term by the factor
+$\bigl(GML^2/c^2r^3\bigr)/\bigl(L^2/2r^2\bigr) = R_S/r$.  Sending
+$c \to \infty$ at fixed $r$ is a shorthand for the physical condition
+$r \gg R_S$.  For the same reason $\mathcal{E} = \tfrac12(E^2/c^2 - c^2)$ tends
+to the Newtonian specific energy: with $E = c^2 + e$,
+$\mathcal{E} = e + e^2/(2c^2)$.
+\end{annotation}
+
 
 % ----- Exercise 1.2 -----
 \subsection*{Exercise~\ref{ex:isco_derivation}: ISCO Derivation}
@@ -102,6 +129,22 @@ $dV/dr = 0$ and $d^2V/dr^2 = 0$ simultaneously:
 Combined with $dV/dr = 0$, this yields $r = 6$, $L = 2\sqrt{3}$,
 confirming the result.
 
+\begin{derivation}[Solving the two conditions simultaneously]
+Multiply $dV/dr = 0$ by $r^4$ and $d^2V/dr^2 = 0$ by $r^5$:
+\begin{align*}
+r^2 - L^2r + 3L^2 &= 0 && \text{(i)} \\
+-2r^2 + 3L^2r - 12L^2 &= 0 && \text{(ii)} \\
+L^2r - 6L^2 = L^2(r - 6) &= 0 && \bigl(2\times\text{(i)} + \text{(ii)}\bigr) \\
+r &= 6 && (L \neq 0) \\
+36 - 6L^2 + 3L^2 = 36 - 3L^2 &= 0 \;\Rightarrow\; L^2 = 12
+  && (\text{back into (i)}) .
+\end{align*}
+Geometrically, $V' = V'' = 0$ is an inflection point: the minimum at $r_+$
+and the maximum at $r_-$ have merged, which is the same condition as the
+vanishing discriminant of Step~2.
+\end{derivation}
+
+
 % ----- Exercise 1.3 -----
 \subsection*{Exercise~\ref{ex:photon_sphere_derivation}: Photon Sphere}
 
@@ -133,6 +176,17 @@ at $r = 3$, confirming that the photon orbit is \textbf{unstable}.
 Any perturbation causes the photon to spiral inward (capture) or
 escape to infinity.
 
+\begin{annotation}[Alternative route: the barrier height gives the capture impact parameter]
+The maximum of the barrier is
+$V^{\mathrm{photon}}_{\mathrm{eff}}(3) = L^2/18 - L^2/27 = L^2/54$.  A photon
+from infinity has $\mathcal{E} = \tfrac12E^2$ (with $\epsilon = 0$ there is
+no rest-mass term), so it is turned back iff $\tfrac12E^2 < L^2/54$, i.e.\
+iff $b^2 = L^2/E^2 > 27$: $b_{\mathrm{crit}} = 3\sqrt3\,GM/c^2 \approx
+2.598\,R_S$.  Note that $r = 3$ is independent of $L$; the photon orbit
+has no analogue of the $L$-dependent pair $r_\pm$ of Exercise~\ref{ex:isco_derivation}.
+\end{annotation}
+
+
 % ----- Exercise 1.4 -----
 \subsection*{Exercise~\ref{ex:mercury_precession}: Mercury's Perihelion Precession}
 
@@ -149,14 +203,34 @@ Using eq.~\eqref{eq:perihelion_precession} with Mercury's orbital parameters:
     \Delta\phi &= \frac{6\pi G M}{c^2\, a\,(1 - e^2)} \\
     &= \frac{6\pi \times 6.674\!\times\!10^{-11} \times 1.989\!\times\!10^{30}}
     {(2.998\!\times\!10^{8})^2 \times 5.79\!\times\!10^{10} \times (1 - 0.2056^2)} \\
-    &= 5.01 \times 10^{-7} \;\text{rad/orbit} \,.
+    &= 5.02 \times 10^{-7} \;\text{rad/orbit} \,.
 \end{align*}
+
+\begin{derivation}[The arithmetic in Step 1, organised by length scales]
+\begin{align*}
+\frac{GM_\odot}{c^2} &= \frac{6.674\times10^{-11}\times1.989\times10^{30}}
+  {(2.998\times10^8)^2}~\text{m} = 1477~\text{m}
+  && \text{(the Sun's gravitational radius)} \\
+6\pi\,\frac{GM_\odot}{c^2} &= 2.784\times10^4~\text{m} \\
+a(1 - e^2) &= 5.79\times10^{10}\times0.9577~\text{m} = 5.545\times10^{10}~\text{m}
+  && \text{(semi-latus rectum)} \\
+\Delta\phi &= \frac{2.784\times10^4}{5.545\times10^{10}}
+  = 5.02\times10^{-7}~\text{rad/orbit}
+  && \text{(dimensionless: m/m)} .
+\end{align*}
+Mathematica (\texttt{problems\_01d.wl}, annotated-edition checks) gives
+$5.020\times10^{-7}$~rad $= 0.10355''$ per orbit.  Keep four significant
+figures in Step~2 ($0.1036''$): then $0.1036\times415.2 = 43.0''$.  (Earlier
+versions of Steps~1--2 printed $5.01\times10^{-7}$ and $0.1034''$, a slip;
+$0.1034\times415.2 = 42.9''$.)  Step~3 uses the Julian year, 365.25~days.
+\end{derivation}
+
 
 \textbf{Step 2: Convert to arcseconds.}
 \begin{equation*}
-    \Delta\phi = 5.01 \times 10^{-7} \;\text{rad}
+    \Delta\phi = 5.02 \times 10^{-7} \;\text{rad}
     \times \frac{180 \times 3600}{\pi} \;\frac{\text{arcsec}}{\text{rad}}
-    = 0.1034\;\text{arcsec/orbit} \,.
+    = 0.1036\;\text{arcsec/orbit} \,.
 \end{equation*}
 
 \textbf{Step 3: Orbits per century.}
@@ -167,7 +241,7 @@ Using eq.~\eqref{eq:perihelion_precession} with Mercury's orbital parameters:
 \textbf{Step 4: Precession per century.}
 \begin{equation*}
     \Delta\phi_{\mathrm{century}}
-    = 0.1034 \times 415.2
+    = 0.1036 \times 415.2
     = \boxed{43.0 \;\text{arcsec/century}} \,.
 \end{equation*}
 This matches the observed anomalous precession of Mercury, confirming one
@@ -202,6 +276,40 @@ $r \to 0$, allowing plunge orbits.
 \textbf{(b)} For $\mathcal{E}$ slightly above $V_{\mathrm{eff}}(r_+)$, the
 particle oscillates between a minimum radius (perihelion) and a maximum
 radius (aphelion), but the orbit does not close due to the GR correction
-term.  The perihelion advances by a small angle each orbit, producing a
-\textbf{bound precessing ellipse} --- the same effect responsible for
-Mercury's perihelion precession (Exercise~\ref{ex:mercury_precession}).
+term.  The perihelion advances by a large angle each orbit
+($\approx 2.6$~rad $\approx 149^\circ$ for near-circular orbits at
+$r \approx 12\,GM/c^2$), producing a strongly precessing rosette, a
+\textbf{bound precessing ellipse} in the classification of the exercise.
+Only for $r \gg 6GM/c^2$ does the advance become small, tending to
+$6\pi GM/(c^2 r)$ per orbit: the regime of Mercury's perihelion precession
+(Exercise~\ref{ex:mercury_precession}).
+
+\begin{annotation}[Why $V_{\mathrm{eff}}(4) = 0$ is special]
+Since $\mathcal{E} = \tfrac12(E^2/c^2 - c^2) = \tfrac12(E^2 - 1)$ in these units, the unstable orbit at
+$r_- = 4$ has $E^2 = 1 + 2V_{\mathrm{eff}}(4) = 1$: it is \emph{marginally
+bound}.  A particle released from rest at infinity with $L = 4\,GM/c$ just
+reaches the top of the barrier at $r = 4GM/c^2$.
+\end{annotation}
+
+\begin{derivation}[How big is the precession for $L = 4$? (part b, quantitatively)]
+For a nearly circular orbit at $r_c$, linearise $\ddot r = -V_{\mathrm{eff}}'(r)$
+about $r_c$: $\delta\ddot r = -V_{\mathrm{eff}}''(r_c)\,\delta r$, a radial
+oscillation with $\kappa^2 = V_{\mathrm{eff}}''(r_c)$ (per unit proper time).
+The angular frequency is $\Omega = d\phi/d\tau = L/r_c^2$.  On a circular
+orbit $r_c^2 - L^2r_c + 3L^2 = 0$, i.e.\ $L^2 = r_c^2/(r_c - 3)$, and with
+$V_{\mathrm{eff}}'' = -2/r^3 + 3L^2/r^4 - 12L^2/r^5$:
+\[
+\frac{\kappa^2}{\Omega^2} = 1 - \frac{6}{r_c}
+\qquad (G = c = M = 1).
+\]
+Per radial period, $\phi$ advances by $2\pi\,\Omega/\kappa = 2\pi/\sqrt{1 - 6/r_c}$.
+At $r_c = 12$ (which indeed has $L^2 = 144/9 = 16$) the excess over $2\pi$ is
+\[
+2\pi\bigl(\sqrt2 - 1\bigr) \approx 2.60~\text{rad} \approx 149^\circ
+\quad\text{per orbit},
+\]
+as quoted in part~(b).  For
+$r_c \gg 6$, $2\pi\bigl(1/\sqrt{1 - 6/r_c} - 1\bigr) \to 6\pi/r_c =
+6\pi GM/(c^2r_c)$, the $e \to 0$ limit of eq.~\eqref{eq:perihelion_precession}.
+\end{derivation}
+

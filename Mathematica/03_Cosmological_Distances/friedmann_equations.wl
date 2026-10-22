@@ -17,12 +17,24 @@
             PDF figures exported to Figures/03_Cosmological_Distances/
 
    Requires: Functions from Module 1b (christoffel_symbols.wl), which
-             are redefined here for self-containedness.
+             are redefined here for self-containedness; the shared
+             check[]/summary[] harness (../harness.wl).
+
+   Fix-pass 2026-10-14 (FACT_CRITIC_03 V1/V2): with x^0 = t (g_00 = -c^2,
+   T_00 = rho c^4) the Ricci component is R_00 = -3 a''/a, not -3 a''/(c^2 a)
+   (the x^0 = c t component).  Every former "Difference = ..." / "Verified"
+   print is now a check[] assertion; the script ends with summary[] and
+   exits non-zero if any check fails.  Run via:
+     bash Mathematica/run_wl.sh Mathematica/03_Cosmological_Distances/friedmann_equations.wl
    ========================================================================= *)
+
+Get[FileNameJoin[{DirectoryName[$InputFileName], "..", "harness.wl"}]];
 
 Print["=== Module 3: Cosmological Distances ===\n"];
 
-baseDir = "/Users/rosador/Documents/Learning_to_Lens/Figures/03_Cosmological_Distances";
+(* Relative to this script, so a worktree run writes into its own Figures/ *)
+baseDir = FileNameJoin[{DirectoryName[$InputFileName], "..", "..", "Figures",
+                        "03_Cosmological_Distances"}];
 If[!DirectoryQ[baseDir], CreateDirectory[baseDir]];
 
 
@@ -152,16 +164,20 @@ Print["Verification of key Christoffel symbols:"];
 gamma011 = gammaFRW[[1, 2, 2]];
 Print["  Gamma^t_{r r} = ", gamma011];
 Print["  Expected: a(t)*adot(t) / (c^2*(1-k*r^2))\n"];
+check["F1a Gamma^t_{rr} = a a'/(c^2 (1 - k r^2))",
+  Simplify[gamma011 - a[t] a'[t]/(c^2 (1 - k r^2))] === 0];
 
 (* Gamma^1_{01} = adot/a *)
 gamma101 = gammaFRW[[2, 1, 2]];
 Print["  Gamma^r_{t r} = ", gamma101];
 Print["  Expected: adot(t)/a(t)\n"];
+check["F1b Gamma^r_{tr} = a'/a", Simplify[gamma101 - a'[t]/a[t]] === 0];
 
 (* Gamma^1_{22} = -r*(1-kr^2) *)
 gamma122 = gammaFRW[[2, 3, 3]];
 Print["  Gamma^r_{theta theta} = ", gamma122];
 Print["  Expected: -r*(1-k*r^2)\n"];
+check["F1c Gamma^r_{theta theta} = -r (1 - k r^2)", Simplify[gamma122 + r (1 - k r^2)] === 0];
 
 
 (* =========================================================================
@@ -187,14 +203,23 @@ Print["  R_{33} = ", ricciFRW[[4, 4]]];
 Print[""];
 
 (* Verify R_{00} *)
-R00expected = -3 a''[t] / (c^2 a[t]);
+R00expected = -3 a''[t] / a[t];      (* x^0 = t; fix-pass 2026-10-14, was -3 a''/(c^2 a) *)
 R00check = Simplify[ricciFRW[[1, 1]] - R00expected];
-Print["Verification: R_{00} expected = -3*a double dot/(c^2*a)"];
+Print["Verification: R_{00} expected = -3*a double dot/a  (x^0 = t)"];
 Print["  Difference = ", R00check];
+check["F2a R_00 = -3 a''/a with x^0 = t (eq:R00)", R00check === 0];
+check["F2b R_00 != -3 a''/(c^2 a) (old eq:R00 is the x^0 = c t component, R_tt/c^2)",
+  Simplify[ricciFRW[[1, 1]] + 3 a''[t]/(c^2 a[t])] =!= 0 &&
+  Simplify[ricciFRW[[1, 1]]/c^2 + 3 a''[t]/(c^2 a[t])] === 0];
 
 (* Check that R_{11}, R_{22}, R_{33} share the same combination *)
 spatialCombo = Simplify[ricciFRW[[2, 2]] * (1 - k r^2) / a[t]^2 * c^2];
 Print["  Spatial combination = ", spatialCombo];
+check["F2c R_11 = (a a'' + 2 a'^2 + 2 k c^2)/(c^2 (1 - k r^2)) (eq:R11)",
+  Simplify[spatialCombo - (a[t] a''[t] + 2 a'[t]^2 + 2 k c^2)/a[t]^2] === 0];
+check["F2d R_22 and R_33 share the combination (eq:R22, eq:R33)",
+  Simplify[ricciFRW[[3, 3]] - r^2 (a[t] a''[t] + 2 a'[t]^2 + 2 k c^2)/c^2] === 0 &&
+  Simplify[ricciFRW[[4, 4]] - r^2 Sin[\[Theta]]^2 (a[t] a''[t] + 2 a'[t]^2 + 2 k c^2)/c^2] === 0];
 Print[""];
 
 (* Ricci scalar *)
@@ -207,6 +232,7 @@ Rexpected = 6/c^2 * (a''[t]/a[t] + a'[t]^2/a[t]^2 + k c^2/a[t]^2);
 Rcheck = Simplify[ricciScalarFRW - Rexpected];
 Print["  Verification against expected formula:"];
 Print["  Difference = ", Rcheck, "\n"];
+check["F2e Ricci scalar R = (6/c^2)(a''/a + a'^2/a^2 + k c^2/a^2) (eq:ricci_scalar_frw)", Rcheck === 0];
 
 
 (* =========================================================================
@@ -241,6 +267,11 @@ lhs00 = Simplify[G00 + \[CapitalLambda] metricFRWsym[[1, 1]]];
 Print["  LHS = ", lhs00];
 Print["  RHS = 8*pi*G*rho"];
 Print[""];
+check["F3a LHS_00 = 3(a'^2/a^2 + k c^2/a^2) - Lambda c^2 (eq:lhs_00)",
+  Simplify[lhs00 - (3 (a'[t]^2/a[t]^2 + k c^2/a[t]^2) - \[CapitalLambda] c^2)] === 0];
+check["F3b old printed eq:lhs_00, (3/c^2)(a'^2/a^2 + k c^2/a^2) - Lambda c^2, is NOT the LHS",
+  Simplify[lhs00 - ((3/c^2) (a'[t]^2/a[t]^2 + k c^2/a[t]^2) - \[CapitalLambda] c^2)] =!= 0];
+check["F3c the a'' terms cancel in the (0,0) equation", FreeQ[lhs00, a''[t]]];
 
 (* First Friedmann equation *)
 Print["Rearranging time-time component:"];
@@ -250,12 +281,21 @@ Print["  This is the FIRST FRIEDMANN EQUATION.\n"];
 (* Verify symbolically *)
 friedmann1LHS = a'[t]^2/a[t]^2;
 friedmann1RHS = 8 Pi G \[Rho] / 3 - k c^2 / a[t]^2 + \[CapitalLambda] c^2 / 3;
-Print["  Verified: the time-time Einstein equation reduces to"];
+friedmann1Solved = hh /. First@Solve[(Expand[lhs00] /. a'[t]^2 -> hh a[t]^2) == 8 Pi G \[Rho], hh];  (* hh = H^2 *)
+check["F3d (0,0) equation solved for H^2 = eq:friedmann_1",
+  Simplify[friedmann1Solved - friedmann1RHS] === 0];
+Print["  The time-time Einstein equation reduces to"];
 Print["  H^2 = 8*pi*G*rho/3 - k*c^2/a^2 + Lambda*c^2/3\n"];
 
 (* Spatial components give the second Friedmann equation *)
 Print["Spatial components of Einstein eqs give:"];
 Print["  acceleration/a = -4*pi*G/3 * (rho + 3p/c^2) + Lambda*c^2/3"];
+Module[{eq11, add},
+  (* (1,1): G_11 + Lambda g_11 = (8 pi G/c^4) p g_11; eliminate a'^2 with Friedmann I *)
+  eq11 = Simplify[(einsteinFRW[[2, 2]] + \[CapitalLambda] metricFRWsym[[2, 2]])/metricFRWsym[[2, 2]]];
+  add = a''[t] /. First@Solve[(eq11 /. a'[t]^2 -> a[t]^2 friedmann1RHS) == 8 Pi G pp/c^4, a''[t]];
+  check["F3e (1,1) equation + Friedmann I => eq:friedmann_2",
+    Simplify[add/a[t] - (-(4 Pi G/3) (\[Rho] + 3 pp/c^2) + \[CapitalLambda] c^2/3)] === 0]];
 Print["  This is the SECOND FRIEDMANN EQUATION.\n"];
 
 (* Fluid conservation *)
@@ -672,3 +712,4 @@ Print["Open (Om=0.3, OL=0, Ok=0.7): t_0 = ",
 
 
 Print["=== End of Module 3: Cosmological Distances ==="];
+summary[];

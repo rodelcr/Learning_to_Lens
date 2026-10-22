@@ -16,15 +16,15 @@ visualize by application of Fermat's principle of geometrical optics [\ldots]}
 \end{quote}
 
 \noindent
-In Module~\ref{ch:lens_equation} we derived the lens equation
+In Chapter~\ref{ch:lens_equation} we derived the lens equation
 $\vecbeta = \vectheta - \vecalpha(\vectheta)$ as a geometric
-consequence of light deflection.  In Module~\ref{ch:light_deflection}
+consequence of light deflection.  In Chapter~\ref{ch:light_deflection}
 we computed the Shapiro time delay experienced by photons passing
 through a gravitational potential, and in
-Module~\ref{ch:linearized_gravity} we introduced the effective
+Chapter~\ref{ch:linearized_gravity} we introduced the effective
 refractive index of a weak gravitational field.
 
-In this module we show that the lens equation itself emerges from a
+In this chapter we show that the lens equation itself emerges from a
 variational principle: images form at stationary points of the
 \textbf{arrival-time surface}.  This elegant reformulation ---
 Fermat's principle for gravitational lensing --- not only provides a
@@ -55,7 +55,7 @@ independent probe of the Hubble constant.
 \label{sec:fermat_intro}
 
 The lens equation $\vecbeta = \vectheta - \vecalpha(\vectheta)$ was
-derived in Module~\ref{ch:lens_equation} by tracing light rays through
+derived in Chapter~\ref{ch:lens_equation} by tracing light rays through
 the lensing geometry.  While this approach is direct and intuitive, it
 does not explain \textit{why} light ``chooses'' particular paths through
 the lens plane, nor does it immediately reveal the relative arrival times
@@ -100,13 +100,13 @@ two contributions:
           travels a longer geometric path than the straight-line ray.  In
           the small-angle, thin-lens approximation, the extra path length
           corresponds to an angular excess of $\half|\vectheta - \vecbeta|^2$
-          (see Module~\ref{ch:lens_equation}, Section~\ref{sec:lensing_geometry}).
+          (see Chapter~\ref{ch:lens_equation}, Section~\ref{sec:lensing_geometry}).
     \item \textbf{Shapiro (gravitational) delay}: The photon passes
           through the gravitational potential of the lens, experiencing the
-          time delay derived in Module~\ref{ch:light_deflection}.  In the
+          time delay derived in Chapter~\ref{ch:light_deflection}.  In the
           thin-lens formalism, this delay is encoded in the
           \textbf{lensing potential} $\psiL(\vectheta)$
-          (Module~\ref{ch:magnification}).
+          (Chapter~\ref{ch:magnification}).
 \end{itemize}
 
 Combining these contributions, the total arrival time is
@@ -121,7 +121,7 @@ Combining these contributions, the total arrival time is
     \label{eq:time_delay_function}
 \end{equation}
 where $z_d$ is the redshift of the lens, the angular diameter distances
-$\Dd$, $\Ds$, $\Dds$ are defined in Module~\ref{ch:cosmological_distances},
+$\Dd$, $\Ds$, $\Dds$ are defined in Chapter~\ref{ch:cosmological_distances},
 and the constant is an irrelevant additive term that depends on the
 unperturbed travel time.
 
@@ -133,11 +133,68 @@ the lens is stretched to
 $\Delta t_{\mathrm{obs}} = (1 + z_d)\,\Delta t_{\mathrm{lens}}$ in the
 observer's frame, just as photon wavelengths are redshifted by the same
 factor (eq.~\ref{eq:redshift_scale_factor} from
-Module~\ref{ch:cosmological_distances}; cf.\ Schneider, Ehlers \&
+Chapter~\ref{ch:cosmological_distances}; cf.\ Schneider, Ehlers \&
 Falco 1992, Sec.~4.6, eqs.~4.65--4.67).
 The combination $\Dd\,\Ds / \Dds$ is the \textbf{effective lensing
 distance}, which encodes the geometry of the observer--lens--source
 system.
+
+\begin{derivation}[The two terms of eq.~\eqref{eq:time_delay_function}]
+\textbf{Geometric term (Euclidean sketch).}  Put the observer at the origin,
+the lens plane at distance $\Dd$ and the source plane at $\Ds$, and in this
+sketch only take $\Ds = \Dd + \Dds$ (flat, static space).  A ray that crosses the
+lens plane at $\xi = \Dd\theta$ and ends at the source position
+$\eta = \Ds\beta$ is longer than the straight ray to $\eta$ by
+\[
+  \Delta L \simeq \frac{\xi^2}{2\Dd} + \frac{(\eta-\xi)^2}{2\Dds}
+  - \frac{\eta^2}{2\Ds}
+\]
+(each leg of length $\sqrt{D^2+h^2}$ is expanded as $D + h^2/2D$; the
+leading $D$'s cancel because $\Dd+\Dds = \Ds$ here).  Substituting
+$\xi=\Dd\theta$, $\eta=\Ds\beta$ and eliminating $\Ds-\Dds=\Dd$, the
+coefficients of $\theta^2$, $\beta^2$ and $\theta\beta$ each reduce to
+$\Dd\Ds/(2\Dds)$, so
+\[
+  \Delta L = \frac{\Dd\,\Ds}{2\,\Dds}\,|\vectheta-\vecbeta|^2 .
+\]
+Dividing by $\speedoflight$ gives the geometric delay in the lens frame;
+multiplying by $(1+z_d)$ converts it to the observer frame.  In an
+expanding universe the same form holds with angular-diameter distances
+(the general argument is the one cited in the main text, SEF Sec.~4.6);
+the Euclidean sketch is only meant to show where the combination
+$\Dd\Ds/\Dds$ comes from.
+
+\textbf{Gravitational term.}  The Shapiro delay along the ray is
+$t_{\rm grav} = -(2/\speedoflight^3)\int\Phi\,dz$ (Chapter~\ref{ch:light_deflection}),
+and the lensing potential is
+$\psiL = \frac{\Dds}{\Dd\Ds}\frac{2}{\speedoflight^2}\int\Phi\,dz$
+\citep[eq.~48]{narayan_lectures_1997}.  Eliminating $\int\Phi\,dz$:
+\[
+  t_{\rm grav} = -\frac{1}{\speedoflight}\,\frac{\Dd\Ds}{\Dds}\,\psiL ,
+\]
+the same prefactor as the geometric term, so the two terms can share one
+bracket.
+(Both steps checked symbolically: \texttt{problems\_06.wl}, A1--A2.)
+\end{derivation}
+
+\begin{annotation}[Units, signs, and what ``const'' hides]
+\emph{Units.}  $\tau$ is in rad$^2$ and $\Dd\Ds/(\speedoflight\Dds)$ is a time,
+so $t$ is a time.  If $\tau$ is quoted in arcsec$^2$, convert first
+($1''^{\,2} = 2.35\times10^{-11}$\,rad$^2$); forgetting this is the most common
+numerical slip in Exercise~\ref{ex:H0_from_time_delay}.
+For $z_d=0.3$, $z_s=1$ (flat $\Lambda$CDM, $\Hubble=70$, $\Omegam=0.3$) the
+\emph{time-delay distance} $(1+z_d)\Dd\Ds/\Dds \approx 1870$\,Mpc, and each
+arcsec$^2$ of $\Delta\tau$ is worth $\approx 52$ days (check A15).
+
+\emph{Sign of $\psiL$.}  $\psiL$ is only defined up to an additive constant
+(its line-of-sight integral diverges for most models), so the statement
+``$\psiL>0$'' carries no physics; only differences of $\tau$ matter.  What is
+physical is the \emph{shape}: $d\psiL/d\theta = \alpha > 0$ for every
+attractive axisymmetric lens (check A13), so $-\psiL$ is \emph{largest at the
+lens centre}.  Rays through the deeper part of the potential are delayed
+\emph{more} by the Shapiro term, never less --- the Shapiro effect is always
+a delay.
+\end{annotation}
 
 \begin{definition}[Fermat potential]
 The dimensionless quantity
@@ -166,16 +223,21 @@ The Fermat potential has a simple physical interpretation:
           lens plane ($\vectheta$) is far from the straight-line direction
           ($\vecbeta$).
     \item The second term $-\psiL(\vectheta)$ is the
-          \textbf{gravitational (Shapiro) delay}: for smooth extended
-          profiles (such as the SIS), the lensing potential $\psiL > 0$
-          everywhere in the vicinity of the lens, so this term
-          \textit{reduces} the arrival time --- photons passing through a
-          deeper potential arrive earlier due to the Shapiro effect
-          (recall Module~\ref{ch:light_deflection}).  For a point mass,
-          however, $\psiL = \thetaE^2\ln|\vectheta| < 0$ inside the
-          Einstein radius ($|\vectheta| < \thetaE$), so $-\psiL > 0$
-          there and the Shapiro term \textit{increases} the arrival time
-          in that region.
+          \textbf{gravitational (Shapiro) delay}.  Because $\psiL$ is
+          defined only up to an additive constant, its sign carries no
+          physical meaning; its shape does.  For any attractive
+          axisymmetric lens $d\psiL/d\theta = \alpha > 0$, so $-\psiL$ is
+          largest at the lens centre: photons passing through a deeper
+          part of the potential are delayed \textit{more}, as for the
+          Shapiro delay of Chapter~\ref{ch:light_deflection}.\footnote{An
+          earlier version of this remark said that $\psiL>0$ makes the
+          Shapiro term \emph{reduce} the arrival time.  That has the sign
+          backwards: the Shapiro delay $(2/\speedoflight^3)\int|\Phi|\,dl$
+          is positive and grows with $|\Phi|$
+          \citep[eq.~3]{narayan_lectures_1997}.}  For a point mass,
+          $\psiL = \thetaE^2\ln|\vectheta|$ and $-\psiL\to+\infty$ at the
+          origin, so the arrival-time surface has an infinite peak there
+          instead of a smooth maximum.
 \end{itemize}
 The competition between geometric and gravitational delay determines the
 structure of the arrival-time surface and hence the number and types of
@@ -213,7 +275,7 @@ Setting this to zero:
     \label{eq:lens_eq_from_fermat}
 \end{equation}
 Since the reduced deflection angle is $\vecalpha(\vectheta) = \nabla\psiL(\vectheta)$
-(from Module~\ref{ch:magnification}), this is precisely
+(from Chapter~\ref{ch:magnification}), this is precisely
 the \textbf{lens equation}:
 \begin{equation}
     \boxed{
@@ -229,9 +291,30 @@ from ray-tracing geometry, follows directly from the
 a variational derivation of the fundamental equation of gravitational
 lensing.  The connection between the gradient of the lensing potential and
 the deflection angle, $\vecalpha = \nabla\psiL$, was established in
-Module~\ref{ch:magnification} from the Poisson equation
+Chapter~\ref{ch:magnification} from the Poisson equation
 $\nabla^2\psiL = 2\kappab$.
 \end{remark}
+
+\begin{derivation}[$\nabla\tau = 0$ in components]
+Write $\half|\vectheta-\vecbeta|^2 = \half\sum_b(\theta_b-\beta_b)^2$.  The
+chain rule gives
+$\partial_{\theta_a}\half\sum_b(\theta_b-\beta_b)^2 = \sum_b(\theta_b-\beta_b)\,\delta_{ab}
+= \theta_a-\beta_a$, because $\vecbeta$ is held fixed (the source does not
+move when we vary the trial path).  Hence
+$\partial_a\tau = \theta_a-\beta_a-\partial_a\psiL$, and setting both
+components to zero is the vector lens equation with
+$\alpha_a = \partial_a\psiL$.  Nothing about the lens was assumed: this holds
+for any $\psiL$ (checked for a generic $\psiL(\theta_1,\theta_2)$,
+\texttt{problems\_06.wl} A3a).
+\end{derivation}
+
+\begin{annotation}[Stationary, not minimal]
+Fermat's principle selects \emph{stationary} paths.  Minima, saddles and
+maxima of $\tau$ are all real images; a common misreading is ``light takes
+the quickest path'', which would predict a single image.  The trial paths
+$\vectheta$ are kinked at the lens plane and are not themselves light rays;
+only the stationary ones are.
+\end{annotation}
 
 
 % =====================================================================
@@ -249,7 +332,24 @@ stationary point by the \textbf{Hessian matrix} of $\tau$:
 \end{equation}
 where $\Amat_{ab}$ is the \textbf{Jacobian matrix} of the lens mapping
 (the inverse magnification matrix, from
-Module~\ref{ch:magnification}).
+Chapter~\ref{ch:magnification}).
+
+\begin{derivation}[Hessian of $\tau$ = Jacobian $\Amat$]
+Differentiate $\partial_a\tau = \theta_a-\beta_a-\partial_a\psiL$ once more:
+$\partial_b(\theta_a-\beta_a) = \delta_{ab}$ and
+$\partial_b\partial_a\psiL \equiv \psiL_{,ab}$.  So
+$T_{ab} = \delta_{ab}-\psiL_{,ab}$.  With
+$\psiL_{,11} = \kappab+\gamma_1$, $\psiL_{,22} = \kappab-\gamma_1$,
+$\psiL_{,12} = \gamma_2$ (Chapter~\ref{ch:magnification}),
+\[
+  T = \begin{pmatrix} 1-\kappab-\gamma_1 & -\gamma_2\\ -\gamma_2 & 1-\kappab+\gamma_1\end{pmatrix}
+  = \Amat ,
+\]
+whose eigenvalues are $1-\kappab\mp|\gammaL|$.  The \emph{curvature} of the
+arrival-time surface is therefore the inverse magnification matrix: a
+nearly flat direction of $\tau$ is a strongly magnified direction of the
+image.  (\texttt{problems\_06.wl} A3b.)
+\end{derivation}
 
 The eigenvalues of $T_{ab}$ at a stationary point determine the
 \textit{type} of the image.  There are exactly three possibilities,
@@ -275,6 +375,36 @@ classified by \textbf{Morse theory}:
     corresponds to the \textit{maximum} of the arrival-time surface and
     therefore \textbf{arrives last}.
 \end{enumerate}
+
+\begin{derivation}[From eigenvalue signs to $\det\Amat$ and $\mathrm{tr}\,\Amat$]
+For a real symmetric $2\times2$ matrix with eigenvalues $\lambda_1,\lambda_2$:
+$\lambda_1\lambda_2 = \det\Amat$ and $\lambda_1+\lambda_2 = \mathrm{tr}\,\Amat$
+(A4a,b).  Therefore
+\begin{itemize}[nosep]
+  \item $\det\Amat<0$ $\Leftrightarrow$ opposite signs $\Leftrightarrow$ saddle (Type~II);
+  \item $\det\Amat>0$ and $\mathrm{tr}\,\Amat>0$ $\Leftrightarrow$ both positive
+        $\Leftrightarrow$ minimum (Type~I) (A4c);
+  \item $\det\Amat>0$ and $\mathrm{tr}\,\Amat<0$ $\Leftrightarrow$ both negative
+        $\Leftrightarrow$ maximum (Type~III).
+\end{itemize}
+Now use $\mathrm{tr}\,\Amat = 2-\nabla^2\psiL = 2(1-\kappab)$ (A3c).  A maximum
+needs $\mathrm{tr}\,\Amat<0$, i.e.\ $\kappab>1$ \emph{at the image}: Type~III
+images can only sit where the lens is locally supercritical, which in
+practice means the dense centre.  So the third image of a cored lens sits
+at the centre.
+\end{derivation}
+
+\begin{annotation}[Which image arrives first, and parity]
+Because the prefactor $(1+z_d)\Dd\Ds/(\speedoflight\Dds)$ is positive, ordering
+in $\tau$ is ordering in time: variability appears first in the image at the
+lowest stationary point.  For a circular lens this is the image farthest from
+the lens centre \citep[Sect.~3.3.2]{narayan_lectures_1997}.  A frequent
+error is to assume the \emph{brighter} image leads; brightness is set by
+$1/\det\Amat$, arrival by $\tau$, and the two are not tied together in general.
+Parity is $\mathrm{sign}(\det\Amat)$: saddles are mirror images, so a
+resolved saddle image of an extended source is flipped relative to the
+minimum.
+\end{annotation}
 
 \begin{table}[ht]
 \centering
@@ -306,7 +436,7 @@ nothing) --- always one saddle and one extremum, preserving the
 constraint $N_{\min} + N_{\max} - N_{\mathrm{saddle}} = 1$ (a
 consequence of Morse theory on the plane).  This topological constraint
 is why images always appear and disappear in pairs with opposite parity,
-as explored in detail in Module~\ref{ch:elliptical_models}.
+as explored in detail in Chapter~\ref{ch:elliptical_models}.
 \end{remark}
 
 \begin{theorem}[Burke's Odd-Number Theorem]
@@ -330,15 +460,53 @@ The smoothness hypothesis is essential.  Burke's theorem does
 delta function and $\psiL = \thetaE^2\ln|\vectheta|$ diverges at the
 origin, so the origin is a singularity of $\tau$ rather than a true
 stationary point.  A point mass therefore produces exactly two images
-($\theta_\pm$ from Module~\ref{ch:lens_equation}), not three.  For an
+($\theta_\pm$ from Chapter~\ref{ch:lens_equation}), not three.  For an
 extended lens with a smooth core (such as a non-singular isothermal
-sphere, Module~7), the central singularity is replaced by a genuine
+sphere, Chapter~\ref{ch:axisymmetric_models}), the central singularity is replaced by a genuine
 maximum of $\tau$ and a corresponding third image appears, typically
 highly demagnified.  The singular isothermal sphere itself is
 intermediate: $\Sigma\!\propto\!1/\theta$ is finite at every $\theta>0$
 but diverges at the origin, again removing the central image while
 keeping the two outer images.
 \end{remark}
+
+\begin{derivation}[Why the count is odd: a Poincar\'e--Hopf sketch]
+Burke's original argument is a heuristic based on the Poincar\'e--Hopf index
+theorem \citep{burke_1981}; the rigorous statement is the Odd Number Image
+Theorem of \citet[Theorem~11.5]{petters_singularity_2001}.  The idea:
+\begin{enumerate}[nosep]
+  \item Far from the lens, $\psiL$ grows more slowly than $|\vectheta|^2$
+        (finite mass), so $\nabla\tau\simeq\vectheta$ points radially outward on
+        a large circle.  Its winding number there is $+1$.
+  \item Around each isolated stationary point the winding number (index) of
+        $\nabla\tau$ is $+1$ for a minimum or maximum and $-1$ for a saddle.
+  \item If $\nabla\tau$ is smooth inside the circle, the outer winding equals the
+        sum of the indices: $n_{\min}+n_{\max}-n_{\rm sad} = 1$.  Since
+        $N = n_{\min}+n_{\max}+n_{\rm sad} = 1 + 2n_{\rm sad}$, $N$ is odd.
+\end{enumerate}
+For a point mass, $\nabla\tau$ is singular at the origin and the singularity
+itself carries index $+1$ (near $\vectheta=0$, $\nabla\tau\simeq-\thetaE^2\vectheta/|\vectheta|^2$,
+a radial field).  Numerically, for $y=0.5$: winding $+1$ on a large circle, $+1$
+around the minimum, $-1$ around the saddle, $+1$ around the origin (check A14).
+The singularity ``uses up'' the index of the missing maximum, leaving
+$n_{\min}-n_{\rm sad}+n_{\max} = 0$.  The general statement for $g$
+point-like (infinite) singularities is
+$n_{\min}+n_{\max} = n_{\rm sad}-g+1$ \citep[Theorem~11.4]{petters_singularity_2001}.
+For the SIS the origin is not a stationary point but a cone-shaped peak of
+$\tau$; \citet[Sect.~3.1]{narayan_lectures_1997} describe it as a third image
+of zero flux at $\theta=0$.
+\end{derivation}
+
+\begin{bridge}[Burke's theorem and a central point mass]
+Chapter~\ref{ch:odd_images} asks how many images a galaxy with a central
+supermassive black hole makes.  The hypothesis that fails is the
+\emph{smooth, bounded} $\Sigma$: a point mass punctures the lens plane with an
+infinite singularity of $\psiL$, so the count obeys the $g=1$ version above,
+$N = 2(n_{\min}+n_{\max})$, which is even.  The central image of a cored lens
+is the Type~III \emph{maximum} of $\tau$ (it needs $\kappab>1$, see the
+derivation box on image types); adding the point mass changes what happens
+near that maximum, which is where Chapter~\ref{ch:odd_images} starts.
+\end{bridge}
 
 
 % =====================================================================
@@ -354,7 +522,7 @@ gravitational lensing.
 \subsection{Point Mass Lens}
 
 For a point mass lens with Einstein radius $\thetaE$, the lensing
-potential is (from Module~\ref{ch:magnification}):
+potential is (from Chapter~\ref{ch:magnification}):
 \begin{equation}
     \psiL(\vectheta) = \thetaE^2\, \ln|\vectheta| \,.
     \label{eq:psi_point_mass_fermat}
@@ -385,9 +553,24 @@ in the region $|\vectheta| > 0$:
 The point $\vectheta = \mathbf{0}$ is a \emph{singularity} of $\psiL$,
 not a true stationary point of $\tau$, so the point-mass lens has only
 the two images $\theta_\pm$ above.  A softened mass profile
-(Module~\ref{ch:axisymmetric_models}) replaces this singularity with a
+(Chapter~\ref{ch:axisymmetric_models}) replaces this singularity with a
 smooth maximum and produces a corresponding (highly demagnified) third
 image.
+
+\begin{derivation}[Checking ``minimum'' and ``saddle'' for the point mass]
+In units of $\thetaE$, on the axis $\vectheta=(x,0)$ the Hessian of
+eq.~\eqref{eq:tau_point_mass} is diagonal,
+\[
+  T = \mathrm{diag}\!\left(1+\frac{1}{x^2},\;1-\frac{1}{x^2}\right),
+  \qquad \det\Amat = 1-\frac{1}{x^4}
+\]
+(radial eigenvalue first; \texttt{problems\_06.wl} A5).  The radial
+eigenvalue is always positive.  The tangential one is positive for $|x|>1$
+and negative for $|x|<1$.  Since $x_+>1$ and $|x_-|<1$ for every $y>0$, $x_+$
+is a minimum and $x_-$ a saddle: the Einstein ring $|x|=1$ separates the
+two image types.  Near the origin $\tau\simeq-\ln|\vectheta|\to+\infty$, so
+there is no finite maximum to be an image.
+\end{derivation}
 
 \begin{figure}[ht]
     \centering
@@ -468,6 +651,15 @@ the distance combination in item (1) --- and hence the cosmological
 parameters.
 \end{remark}
 
+\begin{annotation}[Only differences are observable]
+The additive constant in eq.~\eqref{eq:time_delay_function} (and any constant
+added to $\psiL$) cancels in $\Delta t_{ij}$, so absolute arrival times are
+never measured.  The sign convention to remember: $\Delta t_{ij}>0$ means
+image $i$ arrives \emph{after} image $j$.  Papers differ on whether
+$\Delta t_{AB}$ means $t_A-t_B$ or $t_B-t_A$, so always check which one is meant
+before comparing numbers.
+\end{annotation}
+
 
 % =====================================================================
 \section{Time Delay and the Hubble Constant}
@@ -482,9 +674,31 @@ inversely with the Hubble constant:
     \label{eq:distance_H0_scaling}
 \end{equation}
 This follows from the definition of angular diameter distances in
-Module~\ref{ch:cosmological_distances}: all comoving distances scale as
+Chapter~\ref{ch:cosmological_distances}: all comoving distances scale as
 $\speedoflight / \Hubble$ times a dimensionless integral over the
 expansion history.
+
+\begin{derivation}[$\Dd\Ds/\Dds\propto 1/\Hubble$, step by step]
+In a flat universe, $D(z_1,z_2) = (\speedoflight/\Hubble)\,[\chi(z_2)-\chi(z_1)]/(1+z_2)$
+with $\chi(z) = \int_0^z dz'/E(z')$ dimensionless.  Then
+\[
+  \frac{\Dd\Ds}{\Dds}
+  = \frac{\speedoflight}{\Hubble}\,
+    \frac{\dfrac{\chi_d}{1+z_d}\,\dfrac{\chi_s}{1+z_s}}{\dfrac{\chi_s-\chi_d}{1+z_s}}
+  = \frac{\speedoflight}{\Hubble}\,\frac{\chi_d\,\chi_s}{(1+z_d)(\chi_s-\chi_d)} ,
+\]
+the $(1+z_s)$ factors cancelling (\texttt{problems\_06.wl} A10g).  The
+fraction depends on $z_d$, $z_s$ and the density parameters, but not on
+$\Hubble$.  Hence $\Delta t\propto\Hubble^{-1}$ at fixed $\Delta\tau$.
+\end{derivation}
+
+\begin{annotation}[$\Dds\neq\Ds-\Dd$]
+Comoving distances add along a line of sight in a flat universe
+($\chi_{ds} = \chi_s-\chi_d$), but angular-diameter distances do not.  For
+$z_d=0.3$, $z_s=1$: $\Dds/(\Ds-\Dd)\approx1.44$ (check A10c).  Writing
+$\Dds = \Ds-\Dd$ is the classic error that turns a correct $\Hubble$ pipeline into
+a wrong one.
+\end{annotation}
 
 Therefore, the time delay between images scales as:
 \begin{equation}
@@ -514,8 +728,32 @@ To extract $\Hubble$ from a time delay measurement, one needs:
           fixed) to convert the distance ratio into $\Hubble$.
 \end{enumerate}
 The main systematic uncertainty is the lens model degeneracy (the
-``mass-sheet degeneracy''), which we will encounter in later modules.
+``mass-sheet degeneracy''), which we will encounter in later chapters.
 \end{remark}
+
+\begin{derivation}[Why the mass-sheet degeneracy hits $\Hubble$ directly]
+Transform $\kappab\to\lambda\kappab+(1-\lambda)$, i.e.\
+$\psiL_\lambda = \lambda\psiL+\tfrac{1-\lambda}{2}|\vectheta|^2$, and rescale the
+unobservable source position $\vecbeta_\lambda = \lambda\vecbeta$.  Then
+\begin{align*}
+  \tau_\lambda &= \half|\vectheta-\lambda\vecbeta|^2-\lambda\psiL-\tfrac{1-\lambda}{2}|\vectheta|^2\\
+  &= \lambda\left[\half|\vectheta|^2-\vectheta\cdot\vecbeta-\psiL\right]+\tfrac{\lambda^2}{2}|\vecbeta|^2
+   = \lambda\,\tau(\vectheta,\vecbeta)+f(\vecbeta),
+\end{align*}
+where $f$ does not depend on $\vectheta$ (\texttt{problems\_06.wl} A9a).  So
+$\nabla\tau_\lambda = \lambda\nabla\tau$: same image positions (A9b), and
+$\Delta\tau_\lambda = \lambda\,\Delta\tau$ between any two images.
+\end{derivation}
+
+\begin{bridge}[$\Delta t\propto\lambda$: the mass-sheet transformation]
+Chapter~\ref{ch:msd_kinematics} uses this scaling.  The images
+cannot tell $\lambda$ apart, but the predicted delay is $\Delta t\propto\lambda/\Hubble$.
+So for a fixed measured $\Delta t$ the inferred $\Hubble$ scales as $\lambda$.
+Some information that is \emph{not} image positions has to fix $\lambda$:
+stellar kinematics (Chapter~\ref{ch:msd_kinematics}) or a second source
+plane (Chapter~\ref{ch:multiplane_dspl}).  The degeneracy itself goes back to
+\citet{falco_gorenstein_shapiro_1985}.
+\end{bridge}
 
 \subsection{Observational Milestones}
 
@@ -586,6 +824,31 @@ the result is:
 \end{equation}
 where $y = \beta / \thetaE$ is the dimensionless source position.
 
+\begin{derivation}[The ``algebraic simplification'' behind eq.~\eqref{eq:delta_tau_point_mass}]
+Use three properties of the roots $x_\pm = (y\pm\sqrt{y^2+4})/2$ of
+$x^2-yx-1=0$ (Vieta): $x_++x_-=y$, $x_+x_-=-1$, $x_+-x_-=\sqrt{y^2+4}$
+(A6a--c).  The first gives $x_+-y=-x_-$ and $x_--y=-x_+$ (A6d), so the
+geometric terms swap:
+\[
+  \Delta\tau = \half(x_--y)^2-\half(x_+-y)^2-\ln|x_-|+\ln x_+
+  = \half(x_+^2-x_-^2)+\ln\frac{x_+}{|x_-|}.
+\]
+Factor $x_+^2-x_-^2 = (x_++x_-)(x_+-x_-) = y\sqrt{y^2+4}$.  For the logarithm,
+$|x_-| = (\sqrt{y^2+4}-y)/2$, so
+$x_+/|x_-| = (\sqrt{y^2+4}+y)/(\sqrt{y^2+4}-y)$ (A6e,f).  A compact equivalent
+is $\ln[\ldots] = 2\,\mathrm{arcsinh}(y/2)$ (A6g).
+\end{derivation}
+
+\begin{annotation}[Sanity checks on $\Delta\tau(y)$]
+(i) $\Delta\tau(0)=0$: a source on axis gives a symmetric ring, so there is no delay.
+(ii) $d\Delta\tau/dy = \sqrt{y^2+4}>0$ (A6h), so the delay grows monotonically
+with offset.  (iii) For small $y$, $\Delta\tau = 2y+y^3/12+\order{y^5}$ (A6j).
+The leading term $2y$ is the same as the SIS result $\Delta\tau = 2\beta\thetaE$
+of Section~\ref{sec:sis_time_delay} in units of $\thetaE^2$ (A8d).  Near the
+ring, the delay is set mostly by the source offset times the ring size and
+only weakly by the profile.
+\end{annotation}
+
 The physical time delay is:
 \begin{equation}
     \Delta t = \frac{(1 + z_d)}{\speedoflight}\,
@@ -595,11 +858,28 @@ The physical time delay is:
 Using $\thetaE^2 = 4\Gnewton M / (\speedoflight^2) \cdot \Dds / (\Dd\,\Ds)$:
 \begin{equation}
     \Delta t = \frac{4\Gnewton M}{\speedoflight^3}\, (1 + z_d)\, \Delta\tau
-    = \frac{\RS}{\speedoflight}\, (1 + z_d)\, \Delta\tau \,,
+    = \frac{2\RS}{\speedoflight}\, (1 + z_d)\, \Delta\tau \,,
     \label{eq:delta_t_schwarzschild}
 \end{equation}
 where $\RS = 2\Gnewton M / \speedoflight^2$ is the Schwarzschild
-radius.
+radius.\footnote{The factor 2 in the second equality follows from
+$4\Gnewton M/\speedoflight^3 = 2\RS/\speedoflight$.  Earlier versions of these
+notes wrote $\RS/\speedoflight$ here and in
+Example~\ref{ex:point_mass_numerical}, which halved the delay.}
+
+\begin{annotation}[Unit check: $4\Gnewton M/\speedoflight^3 = 2\RS/\speedoflight$]
+Substituting $\thetaE^2 = (4\Gnewton M/\speedoflight^2)\,\Dds/(\Dd\Ds)$, all distances
+cancel and the prefactor is $4\Gnewton M/\speedoflight^3$ (A7a).  With
+$\RS = 2\Gnewton M/\speedoflight^2$, this is $2\RS/\speedoflight$, not $\RS/\speedoflight$ (A7b).
+For $M=10^{12}\,\Msun$, $4\Gnewton M/\speedoflight^3\approx1.97\times10^7$\,s
+$\approx228$\,d (A7c).  The prefactor $(1+z_d)\,4\Gnewton M/\speedoflight^3\,\Delta\tau$
+with $z_d=0.3$, $y=0.5$ gives $\Delta t\approx2.59\times10^7$\,s $\approx300$\,d
+(A7d), the value in Example~\ref{ex:point_mass_numerical}.  Writing the prefactor
+as $\RS/\speedoflight$ would halve it (A7e).  To four decimals the ratio in the
+logarithm is $1.6404$, so the log is $0.4949$ and $\Delta\tau(0.5)=1.0103$ (A17b).
+In this form the distances cancel, so a point-mass delay measures $M$
+independently of cosmology.
+\end{annotation}
 
 \begin{example}
 \label{ex:point_mass_numerical}
@@ -617,18 +897,18 @@ For $y = 0.5$: $\sqrt{y^2 + 4} = \sqrt{4.25} \approx 2.0616$.
 \begin{align*}
     \Delta\tau &= \frac{0.5 \times 2.0616}{2}
     + \ln\!\left(\frac{2.0616 + 0.5}{2.0616 - 0.5}\right) \\
-    &= 0.5154 + \ln(1.6401)
-    = 0.5154 + 0.4947 = 1.0101 \,.
+    &= 0.5154 + \ln(1.6404)
+    = 0.5154 + 0.4949 = 1.0103 \,.
 \end{align*}
 The time delay is:
 \begin{equation*}
-    \Delta t = \frac{2.95 \times 10^{15}}{2.998 \times 10^8}
-    \times 1.3 \times 1.0101
-    \approx 1.29 \times 10^{7}~\text{s}
-    \approx 149~\text{days} \,.
+    \Delta t = \frac{2 \times 2.95 \times 10^{15}}{2.998 \times 10^8}
+    \times 1.3 \times 1.0103
+    \approx 2.59 \times 10^{7}~\text{s}
+    \approx 300~\text{days} \,.
 \end{equation*}
 This is a realistic order of magnitude --- observed time delays in
-galaxy-scale lens systems range from days to months.  Computed and
+galaxy-scale lens systems range from days to a year or so.  Computed and
 verified in
 \mathlink{06_Fermat_Time_Delays/time_delay_function.wl}{time\_delay\_function.wl}.
 \end{example}
@@ -650,7 +930,7 @@ verified in
 \section{Example: SIS Time Delay}
 \label{sec:sis_time_delay}
 
-As a preview for Module~7 (axially symmetric lens models), we state the
+As a preview for Chapter~\ref{ch:axisymmetric_models} (axially symmetric lens models), we state the
 time delay for the \textbf{singular isothermal sphere} (SIS).  The SIS
 is characterized by its velocity dispersion $\sigma_v$, and its Einstein
 radius is $\thetaE = 4\pi\,(\sigma_v/\speedoflight)^2\,\Dds/\Ds$.
@@ -685,6 +965,28 @@ For the SIS, the time delay is proportional to the source position ---
 the further the source from the optical axis, the larger the time delay.
 This simple relation makes the SIS a useful ``first approximation'' for
 time-delay estimates.
+
+\begin{derivation}[$\tau$ at the two SIS images]
+With $\psiL = \thetaE|\theta|$ on the axis and $0<\beta<\thetaE$:
+\begin{align*}
+  \tau(\theta_+) &= \half\thetaE^2-\thetaE(\beta+\thetaE) = -\half\thetaE^2-\beta\thetaE,\\
+  \tau(\theta_-) &= \half\thetaE^2-\thetaE(\thetaE-\beta) = -\half\thetaE^2+\beta\thetaE,
+\end{align*}
+using $|\theta_+-\beta| = |\theta_--\beta| = \thetaE$ and $|\theta_-| = \thetaE-\beta$.
+The geometric terms are equal and cancel, so the whole delay comes from the
+potential: $\Delta\tau = 2\beta\thetaE = \half(\theta_+^2-\theta_-^2)$
+(A8a--c).  Both images lie at the same distance $\thetaE$ from the source
+position.
+\end{derivation}
+
+\begin{annotation}[SIS: $\sigma_v$, $\thetaE$, and the factor $\Dds/\Ds$]
+$\thetaE = 4\pi(\sigma_v/\speedoflight)^2\,\Dds/\Ds$ contains the ratio
+$\Dds/\Ds$ only, with no separate $\Dd$, unlike the point-mass
+$\thetaE\propto\sqrt{\Dds/(\Dd\Ds)}$.  A handy normalisation is
+$\alphahat = 1.4''\,(\sigma_v/220\,\mathrm{km\,s^{-1}})^2$
+\citep[eq.~44]{narayan_lectures_1997} (A12).  Then $\thetaE$ is that number
+times $\Dds/\Ds<1$.  Chapter~\ref{ch:axisymmetric_models} derives all of this.
+\end{annotation}
 
 
 % =====================================================================
@@ -731,7 +1033,7 @@ time-delay estimates.
     \item For a point mass lens, the dimensionless time delay is
           $\Delta\tau = y\sqrt{y^2+4}/2 + \ln[(\sqrt{y^2+4}+y)/(\sqrt{y^2+4}-y)]$,
           where $y = \beta/\thetaE$.  The physical time delay for a
-          galaxy-mass lens is of order days to months.
+          galaxy-mass lens is of order days to a year or so.
 
     \item For the SIS, $\Delta t_{\mathrm{SIS}} \propto \beta\,\thetaE$,
           a simple linear dependence on the source position.
@@ -813,7 +1115,7 @@ lens is at $z_d = 0.3$ and the source is at $z_s = 1.0$.
     \item For a flat $\Lambda$CDM cosmology with $\Omegam = 0.3$,
           show that $\Dd\Ds/\Dds \propto 1/\Hubble$ and compute the
           proportionality constant (hint: use the dimensionless distance
-          ratios from Module~3).
+          ratios from Chapter~\ref{ch:cosmological_distances}).
     \item Determine $\Hubble$ in km\,s$^{-1}$\,Mpc$^{-1}$.  Compare
           with the H0LiCOW result and the Planck value.
 \end{enumerate}

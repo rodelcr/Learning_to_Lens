@@ -27,6 +27,16 @@ $\tau(\vectheta, \vecbeta) = \half|\vectheta - \vecbeta|^2
 The first term follows from
 $\nabla_{\vectheta}|\vectheta - \vecbeta|^2 = 2(\vectheta - \vecbeta)$.
 
+\begin{derivation}[The gradient of $|\vectheta-\vecbeta|^2$]
+$|\vectheta-\vecbeta|^2 = (\theta_1-\beta_1)^2+(\theta_2-\beta_2)^2$.  Then
+$\partial_{\theta_1}$ of this is $2(\theta_1-\beta_1)$ and $\partial_{\theta_2}$ is
+$2(\theta_2-\beta_2)$; $\vecbeta$ is a fixed parameter.  Collecting gives
+$2(\vectheta-\vecbeta)$, and the $\half$ in $\tau$ cancels the 2.  For the
+point mass ($\thetaE=1$), $\partial_{\theta_1}\tau = \theta_1-\beta_1-\theta_1/|\vectheta|^2$,
+which is the component form of $\vecbeta = \vectheta-\vectheta/|\vectheta|^2$
+(\texttt{problems\_06.wl}, Exercise 6.1 block and A3a).
+\end{derivation}
+
 \textbf{(b)} Setting $\nabla_{\vectheta}\,\tau = 0$:
 \begin{equation*}
     (\vectheta - \vecbeta) - \nabla\psiL(\vectheta) = 0
@@ -46,6 +56,17 @@ light paths.  These are the image positions.  The geometric delay
 (longer path) and gravitational delay (Shapiro effect) compete, and
 images form where their combined effect is stationary.
 
+\begin{annotation}[A second way to see (c)]
+Think of $\tau$ as the phase of a wave, $\propto\nu\,t(\vectheta)$.  In the
+Fresnel--Kirchhoff picture every point of the lens plane contributes, and
+contributions cancel by rapid phase oscillation except near stationary
+points, where the phase changes only at second order.  The stationary-phase
+points are the geometric-optics images, and the second-order (Hessian)
+term sets their amplitudes.  That Hessian is $\Amat$ (main text,
+eq.~\eqref{eq:hessian_tau}), which is why $|\mu| = 1/|\det\Amat|$ is
+consistent with this picture.
+\end{annotation}
+
 % ----- Exercise 6.2 -----
 \subsection*{Exercise~\ref{ex:point_mass_arrival}: Arrival Times for a Point Mass Lens}
 
@@ -61,20 +82,34 @@ positions are:
 $x_+ = 1.2808$, $x_- = -0.7808$.
 \begin{align*}
     \tau(x_+) &= \half(1.2808 - 0.5)^2 - \ln(1.2808) \\
-    &= \half(0.7808)^2 - 0.2474
-    = 0.3048 - 0.2474 = 0.0574 \,, \\
+    &= \half(0.7808)^2 - 0.2475
+    = 0.3048 - 0.2475 = 0.0573 \,, \\
     \tau(x_-) &= \half(-0.7808 - 0.5)^2 - \ln(0.7808) \\
-    &= \half(1.2808)^2 - (-0.2474)
-    = 0.8202 + 0.2474 = 1.0676 \,.
+    &= \half(1.2808)^2 - (-0.2475)
+    = 0.8202 + 0.2475 = 1.0677 \,.
 \end{align*}
 
 \textbf{(c)} The dimensionless time delay is:
 \begin{equation*}
-    \Delta\tau = \tau(x_-) - \tau(x_+) = 1.0676 - 0.0574 = 1.0101 \,.
+    \Delta\tau = \tau(x_-) - \tau(x_+) = 1.0677 - 0.0573 \approx 1.0103 \,.
 \end{equation*}
+(The unrounded values give $1.01032$; the last digit of the rounded
+difference is not significant.)
 This matches the analytic formula:
 $\Delta\tau = y\sqrt{y^2+4}/2 + \ln[(\sqrt{y^2+4}+y)/(\sqrt{y^2+4}-y)]
-= 0.5154 + 0.4947 = 1.0101$.  \checkmark
+= 0.5154 + 0.4949 = 1.0103$.  \checkmark
+
+\begin{derivation}[Shortcut for (b)--(c)]
+Because $x_+ + x_- = y$, we have $x_+-y = -x_-$ and $x_--y = -x_+$.  The
+geometric term at one image is the squared position of the other image:
+$\half(x_+-y)^2 = \half x_-^2 = 0.3048$ and $\half(x_--y)^2 = \half x_+^2 = 0.8202$.
+Also $x_+x_- = -1$, so $\ln|x_-| = -\ln x_+$: the two logarithms are
+equal and opposite.  Hence
+$\Delta\tau = \half(x_+^2-x_-^2)+2\ln x_+$, which is the analytic formula
+term by term (\texttt{problems\_06.wl} A6a--e).  To four decimals,
+$\ln x_+ = \ln 1.28078 = 0.2475$, so $2\ln x_+ = 0.4949$,
+$\tau(x_+) = 0.0573$, and $\Delta\tau = 0.5154+0.4949 = 1.0103$ (A17a,b).
+\end{derivation}
 
 \textbf{(d)} For $M = 10^{12}\,\Msun$, $z_d = 0.3$:
 \begin{align*}
@@ -82,21 +117,38 @@ $\Delta\tau = y\sqrt{y^2+4}/2 + \ln[(\sqrt{y^2+4}+y)/(\sqrt{y^2+4}-y)]
     = \frac{2 \times 6.674 \times 10^{-11} \times
     1.989 \times 10^{42}}{(2.998 \times 10^8)^2}
     \approx 2.953 \times 10^{15}~\text{m} \,, \\
-    \Delta t &= \frac{\RS}{\speedoflight}\,(1 + z_d)\,\Delta\tau
-    = \frac{2.953 \times 10^{15}}{2.998 \times 10^8}
-    \times 1.3 \times 1.0101 \\
-    &\approx 1.293 \times 10^{7}~\text{s}
-    \approx 149.7~\text{days} \,.
+    \Delta t &= \frac{2\RS}{\speedoflight}\,(1 + z_d)\,\Delta\tau
+    = \frac{2 \times 2.953 \times 10^{15}}{2.998 \times 10^8}
+    \times 1.3 \times 1.0103 \\
+    &\approx 2.587 \times 10^{7}~\text{s}
+    \approx 299.5~\text{days} \,.
 \end{align*}
+The prefactor is $4\Gnewton M/\speedoflight^3 = 2\RS/\speedoflight$, not
+$\RS/\speedoflight$; an earlier version of this solution dropped the factor 2
+and quoted $149.7$~days.
+
+\begin{annotation}[Factor of 2 in (d)]
+The prefactor is $(1+z_d)\,\Dd\Ds\thetaE^2/(\speedoflight\Dds) = (1+z_d)\,4\Gnewton M/\speedoflight^3$,
+and $4\Gnewton M/\speedoflight^3 = 2\RS/\speedoflight$ (\texttt{problems\_06.wl} A7a,b).
+With the correct factor,
+$\Delta t = 1.97\times10^7\,\mathrm{s}\times1.3\times1.0103\approx2.59\times10^7$\,s
+$\approx300$\,d (A7d).  Using $\RS/\speedoflight$ instead would give a value
+low by a factor 2 (A7e).  A quick way to catch this kind of slip: $\RS/\speedoflight$ for $10^{12}\,\Msun$ is $\approx114$\,d, so any
+point-mass delay with $\Delta\tau\sim1$ and $z_d\sim0.3$ must be a few hundred
+days.
+\end{annotation}
 
 % ----- Exercise 6.3 -----
 \subsection*{Exercise~\ref{ex:typeI_first}: Type~I Image Arrives First}
 
 \textbf{(a)} For a point mass lens, $\tau(x) = \half(x - y)^2 - \ln|x|$.
 The image at $x_+$ is the primary image (minimum of $\tau$), and
-$x_-$ is the secondary image (saddle point).  Since $x_+$ is a minimum
-and $x_-$ is a saddle point, by definition
-$\tau(x_+) \leq \tau(x_-)$ for any source position.
+$x_-$ is the secondary image (saddle point).  Since $\tau\to+\infty$
+both as $|\vectheta|\to\infty$ and as $\vectheta\to0$, $\tau$ has a global
+minimum, which must be a stationary point of minimum type.  The only such
+point is $x_+$, so $\tau(x_+)<\tau(x_-)$ for any $y>0$.  (Being a local
+minimum alone would not be enough: in general a minimum need not lie below
+a saddle elsewhere on the surface.)
 
 More explicitly: $\Delta\tau = y\sqrt{y^2+4}/2 +
 \ln[(\sqrt{y^2+4}+y)/(\sqrt{y^2+4}-y)]$.  Both terms are positive for
@@ -105,6 +157,12 @@ logarithm exceeds 1 since $\sqrt{y^2+4} + y > \sqrt{y^2+4} - y > 0$.
 Therefore $\Delta\tau > 0$, i.e., $\tau(x_-) > \tau(x_+)$.
 \hfill $\square$
 
+\begin{annotation}[Is ``by definition'' enough?]
+The explicit formula gives a second, independent proof.  An even shorter
+route: $\Delta\tau(0) = 0$ and $d\Delta\tau/dy = \sqrt{y^2+4}>0$
+(\texttt{problems\_06.wl} A6h,i), so $\Delta\tau>0$ for every $y>0$.
+\end{annotation}
+
 \textbf{(b)} Numerical verification:
 
 \begin{center}
@@ -112,21 +170,33 @@ Therefore $\Delta\tau > 0$, i.e., $\tau(x_-) > \tau(x_+)$.
 \toprule
 $y = \beta/\thetaE$ & $\tau(x_+)$ & $\tau(x_-)$ & $\Delta\tau$ \\
 \midrule
-0.1  & $-0.0024$ & $0.0076$  & $0.0100$ \\
-0.5  & $0.0574$  & $1.0676$  & $1.0101$ \\
-1.0  & $0.1903$  & $2.6180$  & $2.4277$ \\
-2.0  & $0.3508$  & $5.3573$  & $5.0065$ \\
+0.1  & $0.4025$  & $0.6025$  & $0.2001$ \\
+0.5  & $0.0573$  & $1.0677$  & $1.0103$ \\
+1.0  & $-0.2902$ & $1.7902$  & $2.0805$ \\
+2.0  & $-0.7956$ & $3.7956$  & $4.5912$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-In all cases $\tau(x_+) < \tau(x_-)$.  \checkmark
+In all cases $\tau(x_+) < \tau(x_-)$.  \checkmark\ (An earlier version of
+this table had wrong entries in the $y=0.1$, $1$ and $2$ rows; the values
+above follow from $\tau(x)=\half(x-y)^2-\ln|x|$ at $x_\pm$.)
 
 \textbf{(c)} Since $t(\vectheta) \propto \tau(\vectheta)$ (with a
 positive proportionality constant), a smaller $\tau$ means a smaller
 arrival time.  Therefore the Type~I image (minimum of $\tau$) arrives
 before the Type~II image (saddle point of $\tau$).  The time delay
 between them is $\Delta t \propto \Delta\tau > 0$.
+
+\begin{annotation}[Checking the table in (b)]
+The rows follow from $\tau(x) = \half(x-y)^2-\ln|x|$ at
+$x_\pm = (y\pm\sqrt{y^2+4})/2$ (\texttt{problems\_06.wl} A17d).
+A quick consistency test catches wrong rows:
+$\Delta\tau/y$ should start at 2 and grow slowly, and here it is $2.001$,
+$2.021$, $2.080$, $2.296$.  As $y\to0$, $\Delta\tau\to2y$, which matches the
+SIS result in units of $\thetaE^2$ (A6j, A8d).  Note that $\tau(x_+)<0$ at
+$y\geq1$; the sign of $\tau$ has no meaning, only differences do.
+\end{annotation}
 
 % ----- Exercise 6.4 -----
 \subsection*{Exercise~\ref{ex:H0_from_time_delay}: Measuring $\Hubble$ from Time Delays}
@@ -150,32 +220,61 @@ With $z_d = 0.3$:
 Converting to Mpc: $4.24 \times 10^{25} / 3.086 \times 10^{22}
 \approx 1374$~Mpc.
 
+\begin{annotation}[Units in (a)]
+$\tau$ must be in rad$^2$: $2.0''^{\,2} = 2.0/206265^2 = 4.70\times10^{-11}$\,rad$^2$
+(\texttt{problems\_06.wl} A10a).  If you leave $\tau$ in arcsec$^2$ the
+``distance'' comes out $4\times10^{10}$ times too small.  The result is the
+time-delay distance divided by $(1+z_d)$; for orientation, a fiducial
+$\Hubble=70$ cosmology gives $(1+z_d)\Dd\Ds/\Dds\approx1870$\,Mpc at these
+redshifts (A15), close to $1.3\times1374 = 1786$\,Mpc.  The $\approx5\%$
+difference is what moves $\Hubble$ from 70 to $\approx73$.
+\end{annotation}
+
 \textbf{(b)} For a flat $\Lambda$CDM cosmology with $\Omegam = 0.3$, the
 distances scale as $D \propto \speedoflight / \Hubble$.  Writing the
 dimensionless comoving distance $\chi(z) = \int_0^z dz'/E(z')$ with
 $E(z) = \sqrt{\Omegam(1+z)^3 + \OmegaL}$, numerical integration gives
-$\chi_d \approx 0.279$, $\chi_s \approx 0.778$, $\chi_{ds} \approx 0.499$.
+$\chi_d \approx 0.279$, $\chi_s \approx 0.771$, $\chi_{ds} \approx 0.493$.
 Combining with $\Dd = (\speedoflight/\Hubble)\chi_d/(1+z_d)$,
 $\Ds = (\speedoflight/\Hubble)\chi_s/(1+z_s)$, and
 $\Dds = (\speedoflight/\Hubble)\chi_{ds}/(1+z_s)$:
 \begin{equation*}
     \frac{\Dd\,\Ds}{\Dds} = \frac{\speedoflight}{\Hubble}\,
     \frac{\chi_d\,\chi_s}{(1+z_d)\,\chi_{ds}}
-    = \frac{\speedoflight}{\Hubble} \times \frac{0.279 \times 0.778}
-        {1.3 \times 0.499}
-    \approx \frac{\speedoflight}{\Hubble} \times 0.334 \,.
+    = \frac{\speedoflight}{\Hubble} \times \frac{0.279 \times 0.771}
+        {1.3 \times 0.493}
+    \approx \frac{\speedoflight}{\Hubble} \times 0.336 \,.
 \end{equation*}
+
+\begin{derivation}[Where the $(1+z)$ factors go]
+\[
+  \frac{\Dd\Ds}{\Dds} = \frac{\speedoflight}{\Hubble}\;
+  \frac{\chi_d}{1+z_d}\cdot\frac{\chi_s}{1+z_s}\cdot\frac{1+z_s}{\chi_{ds}}
+  = \frac{\speedoflight}{\Hubble}\,\frac{\chi_d\chi_s}{(1+z_d)\chi_{ds}}
+\]
+(\texttt{problems\_06.wl} A10g).  The formula $\Dds = (\speedoflight/\Hubble)\chi_{ds}/(1+z_s)$
+with $\chi_{ds} = \chi_s-\chi_d$ holds only for $\Omega_k=0$ (A10b).
+\end{derivation}
+
+\begin{annotation}[More digits]
+Direct integration gives $\chi_d = 0.279$, $\chi_s = 0.771$,
+$\chi_{ds} = 0.493$, so the dimensionless factor is $0.336$
+(\texttt{problems\_06.wl} A10d), and the final answer is
+$\Hubble = 73.3$\,km\,s$^{-1}$\,Mpc$^{-1}$ (A10e).  As a cross-check of
+$\Dds\neq\Ds-\Dd$: in units of $\speedoflight/\Hubble$, $\Dd = 0.215$,
+$\Ds = 0.386$, $\Dds = 0.246$, whereas $\Ds-\Dd = 0.171$.
+\end{annotation}
 
 \textbf{(c)} Combining:
 \begin{equation*}
-    \Hubble = \frac{\speedoflight \times 0.334}
+    \Hubble = \frac{\speedoflight \times 0.336}
     {\Dd\,\Ds/\Dds}
-    = \frac{2.998 \times 10^8 \times 0.334}{4.24 \times 10^{25}}
-    \approx 2.36 \times 10^{-18}~\text{s}^{-1} \,.
+    = \frac{2.998 \times 10^8 \times 0.336}{4.24 \times 10^{25}}
+    \approx 2.38 \times 10^{-18}~\text{s}^{-1} \,.
 \end{equation*}
 Converting to km\,s$^{-1}$\,Mpc$^{-1}$:
 \begin{equation*}
-    \Hubble \approx 2.36 \times 10^{-18} \times 3.086 \times 10^{19}
+    \Hubble \approx 2.38 \times 10^{-18} \times 3.086 \times 10^{19}
     \approx 73~\text{km\,s}^{-1}\,\text{Mpc}^{-1} \,.
 \end{equation*}
 
@@ -222,6 +321,24 @@ inside).
 \textbf{(d)} These match the analytical predictions from the lens
 equation $\theta_\pm = (\beta \pm \sqrt{\beta^2 + 4\thetaE^2})/2$
 exactly.  \checkmark
+
+\begin{annotation}[Hessian at the two stationary points]
+On the axis the Hessian is $\mathrm{diag}(1+1/x^2,\,1-1/x^2)$ (main-text
+derivation box).  At $x_+ = 1.1612$: eigenvalues $(1.742,\,0.258)$, both
+positive, so a minimum.  At $x_- = -0.8612$: $(2.348,\,-0.348)$, opposite
+signs, so a saddle (\texttt{problems\_06.wl} A16).  The small positive
+eigenvalue $0.258$ at the minimum is the tangential one: the minimum image
+is magnified mostly tangentially, as arcs are.
+\end{annotation}
+
+\begin{bridge}[What to carry into Part V]
+Three results from this chapter are used repeatedly in Part~V.  First, the
+image type follows from the signs of $(\lambda_t,\lambda_r)$; Type~III needs
+$\kappab>1$ (Chapter~\ref{ch:odd_images}).  Second, $\Delta t\propto\lambda$
+under a mass-sheet transformation (Chapter~\ref{ch:msd_kinematics}).  Third,
+the image count changes when a point-like singularity is added
+(Chapter~\ref{ch:odd_images}).
+\end{bridge}
 
 \noindent
 The plots are generated in

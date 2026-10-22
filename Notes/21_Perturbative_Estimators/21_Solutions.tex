@@ -1,0 +1,253 @@
+% =============================================================================
+% Module 21: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included from main.tex via \ifsolutions
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:pe_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl},
+which verifies each answer symbolically and, where a number is quoted,
+numerically. Throughout, $\thetaE=1$, $r_j=\mBH a_j-\epsilon b_j-\delta\ysrc$
+with $a_j=1/\theta_j$ and $b_j=(\gp-1)\alpha_{\rm PL}(\theta_j)$, and
+$\epsilon=\mBH c$ with $c=\operatorname{Cov}_w(a,b)/\operatorname{Var}_w(b)$.
+
+% ----- Exercise: two images -----
+\subsection*{Exercise~\ref{ex:pe_two_images}: Two Images}
+
+With two images the system
+\[
+  \mBH a_1-\epsilon b_1-\delta\ysrc=0,\qquad
+  \mBH a_2-\epsilon b_2-\delta\ysrc=0
+\]
+has two equations for the two unknowns $(\epsilon,\delta\ysrc)$.
+Subtracting eliminates $\delta\ysrc$:
+\[
+  \mBH(a_1-a_2)=\epsilon\,(b_1-b_2)
+  \quad\Longrightarrow\quad
+  \epsilon=\mBH\,\frac{a_1-a_2}{b_1-b_2},
+\]
+so $c=(a_1-a_2)/(b_1-b_2)$, and back-substitution gives
+$\delta\ysrc=\mBH a_1-\epsilon b_1$. The general regression formula
+reduces to the same difference quotient for $n=2$.
+
+\textbf{Why the residual vanishes.} A square system that is
+non-singular ($b_1\neq b_2$, i.e.\ the two images are not at the same
+signed position) has an exact solution, so the least-squares minimum is
+zero. With three images there are three equations for the same two
+unknowns; the point-mass shape $a_j\propto1/\theta_j$ is generically
+\emph{not} a linear combination of $b_j$ and a constant, and no choice
+of $(\epsilon,\delta\ysrc)$ annihilates all three residuals. For the
+canonical triple at $\rho=0.1$, $\gp=1.5$ the minimum residual is
+strictly positive; it vanishes only in the degenerate limit $\rho=1$.
+
+\textbf{What it tells you.} The leftover residual is the
+\emph{only} part of the central mass's signal that the model cannot
+absorb: it is the evidence that a central mass is present. A plane with
+two images can be biased by a central mass but can never detect one; a
+plane with a radial image can, if the slope is held fixed. With the
+slope free, a single three-image plane gives three equations for three
+unknowns and is fitted exactly (\S\ref{sec:pe_free_slope}; for the
+running example the $3\times3$ system has determinant $0.561$), so
+detection then needs a fourth datum or a second source plane that shares
+the slope.
+\emph{[Attested: \solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl}, checks 1a--1f.]}
+
+% ----- Exercise: intercept -----
+\subsection*{Exercise~\ref{ex:pe_intercept}: Why the Intercept Matters}
+
+The response coefficient is built from \emph{centred} weighted moments,
+\[
+  c=\frac{\sum_jw_j(a_j-\bar a)(b_j-\bar b)}{\sum_jw_j(b_j-\bar b)^2}.
+\]
+Under $a_j\to a_j+\kappa$ the weighted mean shifts by the same constant,
+$\bar a\to\bar a+\kappa$, so every $a_j-\bar a$ is unchanged and so is
+$c$. The intercept absorbs the shift: from
+$\delta\ysrc=\mBH(\bar a-c\bar b)$, $\delta\ysrc\to\delta\ysrc+\mBH\kappa$,
+while $\epsilon$ is unchanged.
+
+\textbf{Physical content.} A constant added to every deflection on a
+plane is exactly a uniform shift of that plane's source, and the source
+position is not observable. The invariance says that the estimator uses
+only observable information.
+
+\textbf{Fixing the intercept.} Setting $\delta\ysrc=0$ and regressing
+through the origin gives $c_{\rm fixed}=\sum_ja_jb_j/\sum_jb_j^2$. For
+the canonical triple at $\rho=0.1$, $\gp=1.5$ this differs from
+Eq.~\eqref{eq:pe_cclosed}. Fixing the source would let a pure source
+shift masquerade as information about the Einstein radius.
+\emph{[Attested: \solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl}, checks 2a--2c.]}
+
+% ----- Exercise: radial leverage -----
+\subsection*{Exercise~\ref{ex:pe_radial_leverage}: The Radial Image's Leverage}
+
+\textbf{(a)} The radial image enters $a$ as $1/\rho\to\infty$ (the
+point-mass deflection diverges at small radius) but enters $b$ as
+$(\gp-1)\rho^{2-\gp}\to0$ (the power law's response to $\thetaE$ is
+weakest there). The uncentred cross moment is
+$\sum_ja_jb_j=(\gp-1)[2+\rho^{1-\gp}]$: the pair contributes $2$, the
+radial image $\rho^{1-\gp}\to\infty$. After centring,
+$\operatorname{Cov}(a,b)\to\tfrac23(\gp-1)\rho^{1-\gp}$, still carried by
+the radial image, while $\operatorname{Var}(b)\to2(\gp-1)^2$ is set by
+the pair. Hence
+\[
+  c\simeq\frac{\tfrac23(\gp-1)\rho^{1-\gp}}{2(\gp-1)^2}
+  =\frac{\rho^{1-\gp}}{3(\gp-1)}\xrightarrow[\rho\to0]{}\infty .
+\]
+
+\textbf{(b)} Nothing in (a) required $\rho\ll1$ until the last step.
+The pair cancels in both means, so exactly $\bar a=1/(3\rho)$ and
+$\bar b=(\gp-1)\rho^{2-\gp}/3$, and
+\[
+  \operatorname{Cov}(a,b)=2(\gp-1)\Bigl[1+\tfrac13\rho^{1-\gp}\Bigr],
+  \qquad
+  \operatorname{Var}(b)=2(\gp-1)^2\Bigl[1+\tfrac13\rho^{4-2\gp}\Bigr],
+\]
+whose ratio is Eq.~\eqref{eq:pe_cclosed},
+$c=(3+\rho^{1-\gp})/[(\gp-1)(3+\rho^{4-2\gp})]$.
+
+\textbf{(c)} Dividing by the asymptote,
+$c/c_{\rm asym}=(1+3u)/(1+v/3)$ with $u=\rho^{\gp-1}$ and
+$v=\rho^{4-2\gp}$. The term $3u$ comes from the ``$1$'' in the
+covariance bracket, i.e.\ from the tangential pair; the term $v/3$ comes
+from the variance bracket, i.e.\ from the radial image's $b_C^2$. For
+small $\rho$ the term with the smaller exponent dominates, and
+$\gp-1<4-2\gp\iff\gp<5/3$: below $\gp=5/3$ the pair's $+3u$ leads and
+$c>c_{\rm asym}$; above it the radial image's $v/3$ leads and $c$ dips
+below the asymptote at small $\rho$.
+
+\textbf{(d)} At $\rho=1$: $c=(3+1)/[(\gp-1)(3+1)]=1/(\gp-1)$, the
+two-image floor. The radial image has merged with a tangential one.
+
+\textbf{(e)} At $\rho=0.03$, $\gp=1.4$:
+\[
+  c_{\rm asym}=3.388,\qquad
+  c_{\rm one\ term}=5.871,\qquad
+  c_{\rm exact}=5.859,
+\]
+and a direct numerical regression on $\theta=(1,-1,0.03)$ also gives
+$5.859$. The asymptote is $42\%$ low (the true value is $1.73$ times
+it), an error that would propagate unchanged into any bias built on
+$c$; the one-term form is high by only $0.2\%$. Carry the exact
+Eq.~\eqref{eq:pe_cclosed}; quote the one-term form only when a formula
+with visible structure is wanted. For a real lens with an asymmetric
+pair, neither replaces the general regression on the actual images
+(\S\ref{sec:pe_beyond_canonical}).
+\emph{[Attested: \solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl}, checks 3a--3k.]}
+
+% ----- Exercise: sign change -----
+\subsection*{Exercise~\ref{ex:pe_sign_change}: Sign Change}
+
+From $\Delta\Brat/\Brat=(\gp-1)\mBH_1[c_1-\Brat^{k}c_2]$ the bias
+vanishes, and changes sign, where the bracket does:
+\[
+  \frac{c_2}{c_1}=\Brat^{-k},\qquad k=\frac{3-\gp}{\gp-1}.
+\]
+For $1<\gp<3$, $k>0$, and for $0<\Brat<1$ (write $\Brat=e^{-L}$, $L>0$)
+the threshold $\Brat^{-k}=e^{kL}>1$. The sign flips when plane~2's
+response exceeds plane~1's by more than the geometric suppression
+factor. Since $\partial(\Delta\Brat/\Brat)/\partial c_2=-(\gp-1)\mBH_1\Brat^k<0$,
+a larger $c_2$ drives the bias negative; in a source-plane fit a larger
+$c_2$ means a deeper plane-2 radial image, while in an image-plane fit
+a very deep radial image is down-weighted and $c_2$ returns towards the
+floor (\S\ref{sec:pe_beyond_canonical}). The sign of the cosmological
+bias is controlled by where the radial images sit and by how the fit
+weights them.
+
+\textbf{Why the shortcut cannot.} Setting both $c_i$ to the floor gives
+$\mBH_1(1-\Brat^{k})=\mBH_1(1-e^{-kL})>0$ for every $0<\Brat<1$. It
+contains no image positions and has a fixed sign, so it cannot track a
+sign that is set by image geometry.
+\emph{[Attested: \solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl}, checks 4a--4e.]}
+
+% ----- Exercise: coherence limit -----
+\subsection*{Exercise~\ref{ex:pe_coherence_limit}: Coherence Limit}
+
+From $r_i=(\gp-1)[c_1-\Brat_i^{k}c_i]$ with $k>0$, $\Brat_i^{k}\to0$ as
+$\Brat_i\to0$, so
+\[
+  \lim_{\Brat_i\to0}r_i=(\gp-1)\,c_1,
+\]
+independent of $c_i$ and of which plane was chosen.
+
+\textbf{Interpretation.} In this limit the central-mass fraction seen by
+plane $i$, $\mBH_i=\mBH_1\Brat_i^{k}$, tends to zero: plane $i$ is
+effectively unperturbed and contributes nothing of its own. What
+survives is plane~1's error. The distant plane acts as a clean
+reference, and the ratio measures plane~1's contamination in full.
+Adding such planes does not dilute the systematic; every ratio inherits
+the same $c_1$.
+
+\textbf{Reach.} Since $\Brat_i=d_1/d_i$ and every distance factor
+$d_i=D_{{\rm d}s_i}/D_{s_i}<1$, we have $\Brat_i>d_1$. Even a source at
+infinite redshift leaves $\Brat_i$ above $d_1$, so the limit is
+approached but not reached; it is approached fastest for shallow slopes,
+where $k$ is large. For equal $c_i=c>0$, $|r_i|$ increases
+monotonically as $\Brat_i$ decreases.
+\emph{[Attested: \solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl}, checks 5a--5d.]}
+
+% ----- Exercise: design -----
+\subsection*{Exercise~\ref{ex:pe_design}: Design}
+
+\textbf{Neither move improves accuracy; both improve precision.}
+\begin{itemize}
+    \item \textbf{Halving the per-ratio error.} For $C=\sigma^2I$ the bias
+          $(J^{\mathsf T}C^{-1}J)^{-1}J^{\mathsf T}C^{-1}\boldsymbol\delta$
+          does not depend on $\sigma$, while the marginal errors scale
+          as $\sigma$. Halving $\sigma$ leaves the bias unchanged and
+          halves the error, so $\mathcal{S}$ \emph{doubles}.
+    \item \textbf{Adding a plane.} In the equal-sensitivity toy with a
+          coherent shift, $\mathcal{S}_N=\sqrt N\,\mathcal{S}_1$; going
+          from three to four ratios raises $\mathcal{S}$ by
+          $\sqrt{4/3}\approx1.15$.
+\end{itemize}
+Both make the result \emph{more precisely wrong}. The quantity to
+optimise is $\mathcal{S}$, not the statistical error, and the only lever
+that lowers $\mathcal{S}$ is the modelling one: give the deflector's
+inner profile enough freedom to represent a central mass, or resolve the
+radial image well enough to constrain it.
+
+\textbf{The caveat that keeps this honest.} A new plane adds an
+independent row to the Jacobian and can break parameter degeneracies,
+which is a genuine gain that the toy model ignores. The correct
+statement is that extra planes buy constraining power but no
+\emph{protection}: unless the modelling systematic is addressed first,
+the added power is spent sharpening a biased answer.
+\emph{[Attested: \solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl}, checks 6a--6d; the degeneracy-breaking caveat is conceptual.]}
+
+% ----- Exercise: mass sheet -----
+\subsection*{Exercise~\ref{ex:pe_mass_sheet}: A Different Omitted Component}
+
+\textbf{(a)} A uniform sheet of convergence $\kappa$ deflects by
+$\kappa\theta$, so the true source is
+$\ysrc=\theta_j-\alpha_{\rm PL}(\theta_j)-\kappa\theta_j$. Repeating the
+subtraction of \S\ref{sec:pe_residuals} gives
+$r_j=\kappa a_j-\epsilon b_j-\delta\ysrc$ with $a_j=\theta_j$.
+
+\textbf{(b)} For the canonical triple $a=(1,-1,\rho)$, so
+$\bar a=\rho/3$, $\sum_ja_jb_j=(\gp-1)[2+\rho^{3-\gp}]$ and
+$\operatorname{Cov}(a,b)=2(\gp-1)[1+\tfrac13\rho^{3-\gp}]$; the variance
+is unchanged. Hence
+\[
+  c_{\rm sheet}=\frac{3+\rho^{3-\gp}}{(\gp-1)\bigl(3+\rho^{4-2\gp}\bigr)}.
+\]
+
+\textbf{(c)} Both $\rho^{3-\gp}$ and $\rho^{4-2\gp}$ vanish as $\rho\to0$,
+so $c_{\rm sheet}\to1/(\gp-1)$; the tangential pair alone also gives
+$1/(\gp-1)$ (there $a=b/(\gp-1)$ again). Solving the total lens equation
+at first order gives $\thetaE^{\rm tot}=\thetaE[1+\kappa/(\gp-1)]$, the
+same floor: the pair measures the total enclosed mass whatever its
+form. At $\rho=0.05$, $\gp=1.6$: $c_{\rm sheet}=1.626$, slightly
+\emph{below} the floor $1.667$, while the point-mass $c=4.87$.
+
+\textbf{Why.} Leverage comes from where the omitted shape and the
+model's direction differ most. A point mass's deflection $1/\theta$ is
+largest at the centre, exactly where the power law's $b$ vanishes. A
+sheet's deflection $\kappa\theta$ \emph{vanishes} at the centre too, so
+at the radial image both shapes are small and the radial image carries
+almost no information about a sheet. Leverage is a property of the pair
+(omitted component, datum), not of the datum alone.
+\emph{[Attested: \solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl}, checks 7a--7f.]}

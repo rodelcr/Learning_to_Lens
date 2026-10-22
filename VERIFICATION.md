@@ -19,6 +19,51 @@ mathematical truth.
 
 ## Three Levels of Verification
 
+### Level 0: Build integrity (`Notes/build.sh` assertions, added 2026-10-14)
+
+`build.sh` builds the three editions (student / instructor / Annotated Study Edition) and
+**exits non-zero** unless all of the following hold:
+
+| Assertion | What it catches |
+|-----------|-----------------|
+| No `! ` LaTeX error, no undefined reference/citation in `main.log` (per edition) | broken `\ref`/`\cite`, missing files |
+| No literal `??` in the text of any PDF | unresolved cross-references |
+| Pages: student ≥ `MIN_STUDENT` (240), instructor > student, annotated ≥ instructor | an edition silently truncated |
+| Annotation sentinels (`ANNOTATION`/`DERIVATION`/`BRIDGE` box titles) absent from student and instructor PDFs; present in the annotated PDF when `ANNOT_REQUIRED=1` | annotation leakage; annotation layer not compiled |
+| `Output/build_fingerprints.txt`: page count + text-md5 of pages 2–end per edition | annotation-only commits must leave the student and instructor lines unchanged (page 1 excluded because of `\today`) |
+
+Phase-0 reference (stubs only, before any Part V content): `Output/build_fingerprints_phase0.txt`.
+Leakage test performed 2026-10-14: with a chapter containing every annotation construct
+(boxes, `\ifannotated`-split display, `\intertext`, `\annot`) the student and instructor
+fingerprints were byte-identical to a build with every construct stripped from the source, and
+equation numbers were identical across the three editions.
+
+#### Annotated Study Edition invariants (author rules; see `Notes/editions.tex`)
+- R1 `\begin{annotation|derivation|bridge}` and `\end{...}` alone on their own lines, `\end` un-indented.
+- R2 Never inside align / gather / multline / equation / tabular / itemize.
+- R3 No `\label` inside an annotated block unless only `\ref`'d from annotated blocks; no annotation-only `\cite` keys.
+- R4 Inside displays: `\ifannotated\intertext{...}\fi` immediately after `\\`, or duplicate the whole display in `\ifannotated ... \else ... \fi` with identical labels and `\notag` on extra rows. A `\\` inside a skipped `\ifannotated` branch within `align` breaks the build ("Incomplete \iffalse").
+- R5 Every numeric claim inside an annotation gets a `check[]` in the module's `problems_NN.wl`.
+
+Lint commands:
+```bash
+grep -nE '^\s+\\end\{(annotation|derivation|bridge)\}' Notes/*/*.tex        # R1: must be empty
+cat Notes/*/*.tex | grep -o '\\label{[^}]*}' | sort | uniq -d                # labels globally unique
+cd Notes && ANNOT_REQUIRED=1 bash build.sh && diff <(head -2 ../Output/build_fingerprints.txt) <(head -2 ../Output/build_fingerprints_phase0.txt)
+```
+
+#### Mathematica kernel cap
+Run every script through `bash Mathematica/run_wl.sh <script.wl>` — a 3-slot semaphore
+(`/tmp/ltl_wls_slot{1,2,3}`); a fourth concurrent kernel hangs on this machine. Scripts
+`Get[]` `Mathematica/harness.wl` (`check[]`, `report[]` alias, `summary[]` → exit code) so that
+`SUMMARY: p PASS, f FAIL` lines can be quoted verbatim and sweeps can rely on `$?`.
+The `Wolfram` MCP server registered with Claude Code (2026-10-14) runs its own persistent local
+kernel, which counts toward the cap: with it connected, run at most two `run_wl.sh` jobs. The harness
+switches to `Print` output and a non-exiting `summary[]` when it detects that kernel
+(`MCP_SERVER_NAME`); MCP evaluations are scratch work and never replace a `wolframscript` run of the
+committed script.
+
+
 ### Level 1: Symbolic Derivation (per-module `.wl` scripts)
 
 Each module has a dedicated Wolfram Language script that symbolically derives
@@ -45,6 +90,16 @@ and verifies the key results for that module:
 | 11 | `lensing_statistics.wl` | Point-mass cross-section σ(μ)=πθ_E²y²(μ) with σ∝μ⁻² (⇒ p(μ)∝μ⁻³), SIS μ=2/y & r=(1+y)/(1−y), β=1 magnification-bias null; SIS combined threshold cross-section by direct source-plane integration (35-pt grid incl. μ<2 — shows Schneider 2006 eq. 101's H(μ−2) factor must be absent), proper→comoving optical-depth identity, Ω_Λ volume factor 2.93× (flat 0.3/0.7 vs EdS, z_s=2) (13/13; extended 2026-09-22) |
 | 12 | `weak_lensing.wl` | Kaiser–Squires inversion recovers κ, tangential shear γ_t=θ_E/(2θ) [SIS], reduced-shear invariance under the mass-sheet transform (10/10). Solutions `problems_12.wl` 21/21 (extended 2026-09-22: NFW γ_t finite central value κ_s/2, large-x asymptote, monotone on a 201-pt grid — no peak; Ex. 12.5(c) ξ₊=ξ₋=A/(2πθ) for P_κ=A/ℓ, consistent with Schneider 2006 Pt 3 eq. 113; P∝ℓ⁻² shown divergent) |
 | 13 | `microlensing.wl` | Point-lens A(u)=(u²+2)/(u√(u²+4)) from summed image magnifications, limits A→1/u, 1; Paczynski light-curve symmetry; astrometric centroid shift peaks at u=√2 (16/16). Extended 2026-09-23: equal-mass binary caustic transitions derived exactly (half-separation a = 1 and 8^{-1/2}, i.e. d = 2 and 2^{-1/2}) — microlensing.wl 20/20; problems_13.wl 22/22 with quasar-plane distances computed in concordance cosmology (D_ds = 1097 Mpc, r_E = 5.2e16 cm, t_E = 28 yr, t_cross = 6.3 months) |
+| 14 Multiplane DSPL | `multiplane_dspl.wl` (56/56), `problems_14.wl` (49/49) | Multi-plane recursion vs comoving ray trace (<1e−12″); B independent of H0; B = η^(γ′−1); SIE ratio = B for q = 0.4/0.7/0.95; S_w, S_Ωm two ways; lens–lens coupling |
+| 15 Power-law + point mass | `power_law_point_mass.wl` (72/72), `broken_power_law.wl` (36/36), `problems_15.wl` (54/54) | dα/dθ = 2κ − κ̄; Meneghetti 5.38–5.44, Keeton 23/26/29; θ_r; m_crit(3/2) = 27/4096, max 0.0066 at γ′≈1.48; SIS+PM closed form vs root solve (1e−9); bEPL deflection, SIS/PM limits, continuity |
+| 16 Odd/central images | `odd_images.wl` (84/84), `problems_16.wl` (51/51) | ∇τ = 0 → lens equation; NIS cubic, Morse counts {1,3}; μ_c = 4θ_c²/(θ_E−2θ_c)²; point mass: exactly 2 images; NIS+PM census 2/4/2; θ_•,crit closed form; Burke n₊−n₋+g = 1 |
+| 17 Central-mass bias | `central_mass_bias.wl` (66/66), `problems_17.wl` (37/37) | θ_E,tot definition + expansion; α₂ = α₁/B; m₂ = m₁B^((3−γ′)/(γ′−1)); annihilation boundary closed form vs FindRoot (1e−30); perturbative bias vs FindMinimum fit; sign in B and w |
+| 18 MSD + kinematics | `msd_multiplane.wl` (69/69), `problems_18.wl` (40/40) | MST invariance (positions, flux ratios), Δt ∝ λ, det A ∝ λ²; free-ratio DSPL MST (B′, λ₁, η invariant); two-plane MST ν₃ = 1; local MST; Jeans F(γ′,ν,β_a); decoupling radius |
+| 19 Multipoles | `multipoles_power_law.wl` (67/67), `problems_19.wl` (53/53) | ψ_m closed form, ∇²ψ_m = 2κ_m; zero enclosed mass (m ≥ 1); k_m = a_m(3−γ′), a_m = (γ′−1)ε_m; critical-curve shift; inner/outer residual discriminator |
+| 20 Cosmological sensitivity | `cosmological_sensitivity.wl` (53/53), `problems_20.wl` (26/26) | CPL ζ(z) integral vs closed form; B H0-free; Jacobian ∂lnB/∂(Ω_m,w₀,w_a) two ways (1e−10); rank 1; external-probe bias and its [2c*,0] interval; N-plane coherence identity |
+| 21 First-order estimators | `response_coefficient.wl` (85/85), `problems_21.wl` (39/39) | δp = m(XᵀWX)⁻¹XᵀWg; δθ = m a/λ_r; closed-form c vs FindMinimum (1e−4); γ′ = 5/3 crossing; free slope δγ′; B scalings, sign change ρ* = 0.212; coherence N = 5; S_N = √N S₁ |
+
+All 16 Part V scripts (added 2026-10-14) `Get` `Mathematica/harness.wl` and end with `summary[]`; counts above are the verbatim `SUMMARY:` tallies re-run by the orchestrator. Every `Solutions/NN/problems_NN.wl` of modules 01a–13 also gained an "Annotated-edition checks (2026-10)" section (all PASS; counts in each module's `FACT_CRITIC_*_annotated_2026-10-14.md`).
 
 To run all per-module verifications:
 ```bash
@@ -89,7 +144,7 @@ To run the master verification:
 wolframscript -file Mathematica/verify_against_textbooks.wl
 ```
 
-**Current result: 12/12 tests pass.**
+**Current result: 28/28 tests pass** (12 original + 16 added 2026-10-14 for Part V, sections 9–13 of the script).
 
 | Test | Textbook Reference | Expected | Verified |
 |------|-------------------|----------|----------|
@@ -105,6 +160,11 @@ wolframscript -file Mathematica/verify_against_textbooks.wl
 | ∫₀¹(1-u³)/(1-u²)^{3/2} du = 2 | C&K eq. 3.95 | 2 (exact) | ✓ |
 | D_A turnover at z ~ 1.6 | Carroll Sec. 8.4 | z = 1.6 | ✓ |
 | D_ds ≠ D_s - D_d | C&K Sec. 3.5 | Confirmed | ✓ |
+| Multi-plane recursion (two point-mass planes, symbolic + numeric) | C&K 4.94–4.99; SEF 9.1 | recursion == explicit ray trace; M₁→0 → single plane; D₁₂→0 → β₁₂=0 | ✓ (5) |
+| DSPL ratio B = D_ls1 D_s2/(D_s1 D_ls2) | C&K 4.95 (one deflector) | H₀-independent; B<1; θ_E2 = θ_E1 B^(−1/(γ′−1)) | ✓ (3) |
+| Power-law lens κ, α | Meneghetti 5.39, 5.40 | κ = (3−n)/2 x^(1−n); α = x^(2−n); κ(θ_E) = (3−n)/2 | ✓ (3) |
+| Radial critical radius | Meneghetti 5.41–5.42 | x_r = (2−n)^(1/(n−1)), real only for 1<n<2 | ✓ (2) |
+| Mass-sheet transformation | C&K 4.87–4.88 | lens equation preserved; κ̃ = (1−κ₀)κ + κ₀; Jacobian × (1−κ₀) | ✓ (3) |
 
 ---
 
@@ -162,7 +222,7 @@ done
 
 ---
 
-*Last verified: 2026-09-24. Full cleanup: distances computed in-script for Modules 3 and 10; new checks in problems_03 (θ_E monotone, R_E peak), problems_05 (signed μ₋ < 0 via Reduce), problems_08 (SIS+shear caustic closed form, analytic area) and cluster_lensing (κ=1 radius); all affected scripts re-run; master 12/12. Part IV passes 2026-09-22/23: Module 11 → 13/13, Module 12 solutions → 21/21, Module 13 → 20/20 + 22/22.*
+*Last verified: 2026-10-14 (Part V + annotated edition; critic phase complete, fix pass in progress). Previous: 2026-09-24. Full cleanup: distances computed in-script for Modules 3 and 10; new checks in problems_03 (θ_E monotone, R_E peak), problems_05 (signed μ₋ < 0 via Reduce), problems_08 (SIS+shear caustic closed form, analytic area) and cluster_lensing (κ=1 radius); all affected scripts re-run; master 12/12. Part IV passes 2026-09-22/23: Module 11 → 13/13, Module 12 solutions → 21/21, Module 13 → 20/20 + 22/22.*
 *Verification script: `Mathematica/verify_against_textbooks.wl`*
 *Master cross-checks: 12/12 passing. Per-module extension scripts added
 2026-07-14 (Schneider, Kochanek & Wambsganss 2006 gap-fill): Module 8

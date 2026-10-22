@@ -1,0 +1,271 @@
+% =============================================================================
+% Module 19: Solutions to Exercises
+% =============================================================================
+% This file is conditionally included from main.tex via \ifsolutions
+% Verified by ../Solutions/19_Multipoles/problems_19.wl
+% =============================================================================
+
+\section{Solutions to Exercises}
+\label{sec:mu_solutions}
+
+\noindent
+Full worked solutions are also available in the Mathematica script
+\solnlink{19_Multipoles/problems\_19.wl}{problems\_19.wl},
+which verifies each answer symbolically and numerically.  Throughout,
+$\kappab_m = \tfrac12 k_m(\thetaE/\theta)^{\gp-1}\cos m\Delta\varphi$,
+$\kappab_0 = \tfrac12(3-\gp)(\thetaE/\theta)^{\gp-1}$,
+$\alpha_0 = \thetaE^{\gp-1}\theta^{2-\gp}$ and $a_m = k_m/(3-\gp)$.
+
+% ----- Exercise 19.1 -----
+\subsection*{Exercise~\ref{ex:mu_potential}: Potential, Deflection and Response}
+
+\textbf{The potential.}  With $\nabla^2 = \partial_\theta^2 +
+\theta^{-1}\partial_\theta + \theta^{-2}\partial_\varphi^2$ and the trial
+function $\theta^p\cos m\Delta\varphi$,
+\[
+    \nabla^2(\theta^p\cos m\Delta\varphi)
+    = [p(p-1)+p-m^2]\,\theta^{p-2}\cos m\Delta\varphi
+    = (p^2-m^2)\,\theta^{p-2}\cos m\Delta\varphi .
+\]
+Matching $2\kappab_m\propto\theta^{1-\gp}$ forces $p=3-\gp$, and the
+amplitude condition $A(p^2-m^2) = k_m\thetaE^{\gp-1}$ gives
+Eq.~\eqref{eq:mu_psim}.
+
+\textbf{The deflection.}  $\partial_\theta$ brings down $(3-\gp)$ and
+lowers the power to $\theta^{2-\gp}$, giving Eq.~\eqref{eq:mu_alphar};
+$\theta^{-1}\partial_\varphi$ turns $\cos$ into $-m\sin$ and also
+yields $\theta^{2-\gp}$, giving Eq.~\eqref{eq:mu_alphaphi} (the two
+minus signs cancel).
+
+\textbf{Radius-independence.}  Both components carry the common factor
+$\thetaE^{\gp-1}\theta^{2-\gp} = \alpha_0$, which cancels in
+$|\vecalpha_m|/\alpha_0$, leaving Eq.~\eqref{eq:mu_alpharatio}.  For
+$m>3-\gp$ the square root $\sqrt{p^2\cos^2+m^2\sin^2}$ is largest at
+$\sin m\Delta\varphi=\pm1$, where it equals $m$; so the peak is
+$m k_m/[m^2-(3-\gp)^2]$.
+
+\textbf{Numbers} ($a_m=0.01$, $k_m = a_m(3-\gp)$):
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & $\gp=1.40$ ($k_m=0.0160$) & $\gp=1.50$ ($k_m=0.0150$) \\
+\midrule
+$m=3$ & $0.0074534$ & $0.0066667$ \\
+$m=4$ & $0.0047619$ & $0.0043636$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+At fixed $a_m$ the $m=3$ mode perturbs the deflection more, by factors
+$1.565$ ($\gp=1.4$) and $1.528$ ($\gp=1.5$).  At $\thetaE=1''$ the
+$\gp=1.5$ entries are $6.7$ and $4.4$~mas.
+
+\textbf{Large $m$.}  $m k_m/[m^2-(3-\gp)^2]\to k_m/m$: the deflection
+per unit convergence amplitude falls as $1/m$.  The Poisson equation
+divides the potential of a wavenumber-$m$ mode by $\sim m^2$; the
+gradient restores one power of $m$.
+\emph{[Attested: \solnlink{19_Multipoles/problems\_19.wl}{problems\_19.wl},
+checks 1a--1m.]}
+
+% ----- Exercise 19.2 -----
+\subsection*{Exercise~\ref{ex:mu_isophote}: Isophotal Translation}
+
+A convergence constant along $\theta_{\rm iso}(\varphi)$ with power-law
+radial run is a function of $\tilde\theta = \theta/[1+\varepsilon_m\cos
+m\Delta\varphi]$:
+\begin{align*}
+    \kappab &= C\tilde\theta^{-(\gp-1)}
+    = C\theta^{1-\gp}\big[1+\varepsilon_m\cos m\Delta\varphi\big]^{\gp-1}\\
+    &= \kappab_0\Big[1+(\gp-1)\varepsilon_m\cos m\Delta\varphi
+      + \tfrac12(\gp-1)(\gp-2)\varepsilon_m^2\cos^2 m\Delta\varphi
+      + \order{\varepsilon_m^3}\Big].
+\end{align*}
+The only approximation is dropping the $\varepsilon_m^2$ term (binomial
+series of $(1+x)^{\gp-1}$ with $|x|\ll1$).  Comparing the
+$\cos m\Delta\varphi$ coefficient with Eq.~\eqref{eq:mu_am} gives
+$a_m = (\gp-1)\varepsilon_m$.
+\begin{center}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+$\varepsilon_m$ & $\gp=1.40$ & $\gp=1.50$ & $\gp=2.00$ \\
+\midrule
+$a_m=0.01$ & $0.025$ & $0.020$ & $0.010$ \\
+$a_m=0.03$ & $0.075$ & $0.060$ & $0.030$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Shallow slopes demand the larger geometric distortion: at $\gp=1.4$ the
+contours must be $2.5\times$ more distorted than at isothermal for the
+same $a_m$ ($2\times$ at $\gp=1.5$).  Note that $k_m/a_m = 3-\gp$ and
+$\varepsilon_m/a_m = 1/(\gp-1)$ are different conversions; they agree
+only at $\gp=2$.
+\emph{[Attested: \solnlink{19_Multipoles/problems\_19.wl}{problems\_19.wl},
+checks 2a--2g.]}
+
+% ----- Exercise 19.3 -----
+\subsection*{Exercise~\ref{ex:mu_zero_mass}: Zero Enclosed Mass and Partial Arcs}
+
+\textbf{(a)} For integer $m\ge1$,
+$\int_0^{2\pi}\cos[m(\varphi-\varphi_m)]\,\dd\varphi
+= \tfrac1m[\sin m(\varphi-\varphi_m)]_0^{2\pi} = 0$.  The enclosed-mass
+integral factorises into this $\varphi$-integral times the finite
+radial integral $\tfrac12 k_m\thetaE^{\gp-1}\int_0^\theta
+\theta'^{\,2-\gp}\dd\theta'$, so $\delta M_m(<\theta)=0$ for every
+$\theta$.  For orthogonality write
+$\cos[m(\varphi-\varphi_m)]\cos[n(\varphi-\varphi_n)]
+= \tfrac12\cos[(m-n)\varphi - m\varphi_m + n\varphi_n]
++ \tfrac12\cos[(m+n)\varphi - m\varphi_m - n\varphi_n]$.  Over a full
+period the second term always integrates to zero ($m+n\ge2$); the first
+vanishes unless $m=n$, when it is constant and gives
+$\pi\cos[m(\varphi_m-\varphi_n)]$.  For example, an $m=3$ mode at
+$20^\circ$ and an $m=4$ mode at $30^\circ$ have zero overlap.
+
+\textbf{(b)} The point-mass deflection $\thetaBH^2/\theta$ does not
+depend on $\varphi$, so its integral against $\cos m\varphi$ vanishes for
+every $m\ge1$: it is a pure monopole.
+
+\textbf{(c)} Least squares for a constant template $c$ fitted to
+$A\cos m\varphi$ on $|\varphi|<\Delta$ minimises
+$\int(A\cos m\varphi - c)^2\dd\varphi$, giving
+$c = \int A\cos m\varphi\,\dd\varphi/\int\dd\varphi
+= A\sin m\Delta/(m\Delta)$.  For $m=4$: $\Delta=\pi/8$ gives $2/\pi
+\simeq 0.637$; $\Delta=\pi/6$ gives $0.413$; $\Delta=\pi/4$ and
+$\Delta=\pi$ give $0$.  A model with no angular freedom confronted with
+a $\cos m\varphi$ residual seen on a short arc thus finds a nonzero
+best-fitting monopole correction --- and a central point mass is a
+monopole correction.  The ``detection'' is a projection of the omitted
+multipole onto the only template available; it disappears when the
+multipole is included, because then the angular residual has its own
+template and Theorem~\ref{thm:mu_zero_mass} leaves nothing for the
+point mass to explain.
+\emph{[Attested: \solnlink{19_Multipoles/problems\_19.wl}{problems\_19.wl},
+checks 3a--3h.]}
+
+% ----- Exercise 19.4 -----
+\subsection*{Exercise~\ref{ex:mu_critical}: Critical-Curve Shift}
+
+\textbf{(a)} $\lambda_t = 1-\alpha_0/\theta = 1-(\thetaE/\theta)^{\gp-1}$
+vanishes at $\thetaE$; $\lambda_r = 1-\alpha_0' = 1-(2-\gp)
+(\thetaE/\theta)^{\gp-1}$ equals $\gp-1$ there; and
+$\partial_\theta\lambda_t = (\gp-1)\thetaE^{\gp-1}\theta^{-\gp}$, which
+is $(\gp-1)/\thetaE$ at the ring.
+
+\textbf{(b)} Follow the derivation box of \S\ref{sec:mu_critical}: to
+first order $\det\Amat \simeq (\gp-1)\big[(\gp-1)\delta - B\big]$ with
+$B = [\partial_\theta\psiL_m/\theta + \partial_\varphi^2\psiL_m/\theta^2]_{\thetaE}$.
+From Eq.~\eqref{eq:mu_psim},
+$\partial_\theta\psiL_m/\theta = -k_m(3-\gp)\cos m\Delta\varphi/D$ and
+$\partial_\varphi^2\psiL_m/\theta^2 = +k_m m^2\cos m\Delta\varphi/D$ at
+$\thetaE$, with $D=m^2-(3-\gp)^2$; so $B = k_m[m^2-(3-\gp)]\cos
+m\Delta\varphi/D$ and $\delta = B/(\gp-1)$, which is
+Eq.~\eqref{eq:mu_crit_shift}.
+
+\textbf{(c)} The coefficient of $a_m\cos m\Delta\varphi$ is
+$10/3\simeq3.33$ ($m=3$) and $3.16$ ($m=4$) at $\gp=1.5$, and exactly
+$1$ for both at $\gp=2$.
+
+\textbf{(d)} The area is $\tfrac12\oint\theta_c^2\,\dd\varphi =
+\pi\thetaE^2 + \thetaE^2\oint\delta\,\dd\varphi + \order{a_m^2}$, and
+$\oint\cos m\Delta\varphi\,\dd\varphi = 0$.
+
+\textbf{(e)} With $\psiL_\bullet = \thetaBH^2\ln\theta$ on a fixed base,
+$\partial_\theta\psiL_\bullet/\theta = f_\bullet\thetaE^2/\theta^2$ and
+$\partial_\varphi\psiL_\bullet=0$, so $B = f_\bullet$ and
+$\delta\theta_c/\thetaE = f_\bullet/(\gp-1)$: a uniform expansion
+($0.02\,\thetaE$ for $f_\bullet=0.01$, $\gp=1.5$).
+\emph{[Attested: \solnlink{19_Multipoles/problems\_19.wl}{problems\_19.wl},
+checks 4a--4f.]}
+
+% ----- Exercise 19.5 -----
+\subsection*{Exercise~\ref{ex:mu_residual}: The Inner/Outer Discriminator}
+
+\textbf{(a)} With the base scaled by $(1-f_\bullet)$ and a point mass
+$f_\bullet\thetaE^2/\theta$ added, the deflection at $\thetaE$ is
+$(1-f_\bullet)\thetaE + f_\bullet\thetaE = \thetaE$.  The change is
+$-f_\bullet\alpha_0 + f_\bullet\thetaE^2/\theta$, which is
+Eq.~\eqref{eq:mu_res_pm}; dividing by $\alpha_0$ gives
+$f_\bullet[(\thetaE/\theta)^{3-\gp}-1]$.
+
+\textbf{(b)} Put $\theta = \thetaE e^x$:
+$\delta\alpha_\bullet/\alpha_0 = f_\bullet(e^{-(3-\gp)x}-1) \simeq
+-f_\bullet(3-\gp)x$.  At fixed $\thetaE$,
+$\partial\alpha_0/\partial\gp = -\alpha_0\ln(\theta/\thetaE) =
+-\alpha_0 x$, so a slope change $\delta\gp$ contributes $-\delta\gp\,x$.
+Choosing $\delta\gp = -f_\bullet(3-\gp)$ adds $+f_\bullet(3-\gp)x$ and
+cancels the linear term.  With $u=e^{-x}$ the total is
+$f_\bullet[u^p-1-p\ln u]$, $p=3-\gp$, whose first derivative in $x$
+vanishes at the ring and whose second derivative there is
+$f_\bullet p^2$.
+
+\textbf{(c)} At $\gp=1.5$ the radial critical curve of the base is
+$\theta_r = \thetaE(0.5)^2 = 0.25\,\thetaE$.  (With the point mass added
+the composite lens has none: $f_\bullet = 0.01 > 27/4096 \approx 0.0066$,
+Eq.~\eqref{eq:pl_mcrit}.  The linear residuals below need only the
+deflection at $\theta_r$, so they are unaffected.)  Using
+$|\delta\alpha|/\thetaE = (\theta/\thetaE)^{1/2}\times$(fractional
+residual): point mass (ring + slope) $0.02460$ at $\theta_r$ and
+$3.747\times10^{-4}$ at $1.2\,\thetaE$; $m=4$ multipole
+$0.002182$ and $0.004780$.  Ratios: point mass/multipole $11.28$
+inside and $0.0784$ outside; inner/outer $65.65$ for the point mass and
+$0.4564 = (0.25/1.2)^{1/2}$ for the multipole.
+
+\textbf{(d)} The point-mass residual is independent of $\varphi$ ($m=0$)
+and concentrated inside the ring; the multipole residual is
+$\propto\cos m\Delta\varphi$, averages to zero on every circle and is
+largest in the arcs.  Split the residual map radially (inside $\sim$
+halfway between $\theta_r$ and $\thetaE$ versus the arc region) and
+Fourier-analyse each annulus in $\varphi$: a central mass shows up as an
+inner $m=0$ excess, angular structure as an outer $m\ge1$ pattern.
+\emph{[Attested: \solnlink{19_Multipoles/problems\_19.wl}{problems\_19.wl},
+checks 5a--5i.]}
+
+% ----- Exercise 19.6 -----
+\subsection*{Exercise~\ref{ex:mu_convention}: Bookkeeping}
+
+\textbf{(a)} $k_4 = a_4(3-\gp) = 0.015$ and $m\varphi_4 = 120^\circ$, so
+$(\epsilon_1,\epsilon_2) = 0.015(\cos120^\circ,\sin120^\circ)
+= (-0.0075,\ 0.01299)$.  Inverting: $\sqrt{\epsilon_1^2+\epsilon_2^2}
+= 0.015$ and $\tfrac14\operatorname{atan2}(\epsilon_2,\epsilon_1) =
+30^\circ$.  This answer holds in the convention of
+Eq.~\eqref{eq:mu_components}.  A code that orders the components the
+other way, $(\epsilon_1,\epsilon_2) = k_m(\sin m\varphi_m,\cos
+m\varphi_m)$, needs $(\epsilon_1,\epsilon_2) = 0.015(\sin120^\circ,
+\cos120^\circ) = (0.01299,\ -0.0075)$ for the same $\varphi_4$; given
+$(-0.0075,\ 0.01299)$ it would put the mode at $90^\circ/4 - 30^\circ =
+-7.5^\circ$.
+
+\textbf{(b)} $|\boldsymbol\epsilon| = 0.01$ is $k_4$, so the injected
+amplitude is $a_4 = 0.01/(3-\gp) = 0.00667$ at $\gp=1.5$ and $0.00625$
+at $\gp=1.4$: $33.3\%$ and $37.5\%$ below the intended $0.01$.
+
+\textbf{(c)} $\cos[m(\varphi-\varphi_m-2\pi/m)] =
+\cos[m(\varphi-\varphi_m)-2\pi] = \cos[m(\varphi-\varphi_m)]$, and
+$\cos[m(\varphi-\varphi_m)-\pi] = -\cos[m(\varphi-\varphi_m)]$.  Hence
+orientation posteriors should be reported modulo $2\pi/m$, and a
+sampler that allows negative $k_m$ has a two-fold degeneracy unless
+$\varphi_m$ is restricted to an interval of width $\pi/m$.
+\emph{[Attested: \solnlink{19_Multipoles/problems\_19.wl}{problems\_19.wl},
+checks 6a--6g.]}
+
+% ----- Exercise 19.7 -----
+\subsection*{Exercise~\ref{ex:mu_dipole}: The Dipole Resonance}
+
+\textbf{(a)} $m = 3-\gp$ with $1<\gp<3$ requires $0<m<2$, so the only
+integer solution is $m=1$, $\gp=2$.  There
+$\theta\cos(\varphi-\varphi_1) = x\cos\varphi_1 + y\sin\varphi_1$ is
+linear in Cartesian coordinates: its Laplacian vanishes and its gradient
+is the constant unit vector $(\cos\varphi_1,\sin\varphi_1)$, i.e.\ a
+uniform deflection, which is a pure source translation.
+
+\textbf{(b)} $1-(3-\gp)^2 = -1.56$ ($\gp=1.4$), $-1.25$ ($\gp=1.5$),
+$-0.21$ ($\gp=1.9$).
+
+\textbf{(c)} For $m=1<p=3-\gp$ the square root in
+Eq.~\eqref{eq:mu_alpharatio} is maximal at $\cos\Delta\varphi=\pm1$,
+where it equals $p$; the peak is $p\,k_1/|1-p^2| = a_1p^2/|1-p^2|$,
+i.e.\ $0.018$ at $\gp=1.5$ and $0.0576$ at $\gp=1.9$ for $a_1=0.01$ ---
+larger than any $m\ge2$ response at the same amplitude, and diverging
+as $\gp\to2$.  Most of it is the nearly uniform part of the deflection,
+which shifts all images together and is absorbed by the source
+position; only the small non-uniform remainder is observable.
+\emph{[Attested: \solnlink{19_Multipoles/problems\_19.wl}{problems\_19.wl},
+checks 7a--7f.]}

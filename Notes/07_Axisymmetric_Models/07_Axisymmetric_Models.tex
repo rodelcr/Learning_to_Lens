@@ -17,7 +17,7 @@ one-dimensional problem.}
 \end{quote}
 
 \noindent
-In Modules~\ref{ch:lens_equation} and~\ref{ch:magnification} we
+In Chapters~\ref{ch:lens_equation} and~\ref{ch:magnification} we
 developed the general framework of gravitational lensing: the lens
 equation $\vecbeta = \vectheta - \vecalpha(\vectheta)$, the convergence
 $\kappab$, the shear $\gammaL$, and the magnification
@@ -28,18 +28,18 @@ point mass lens and briefly previewed the singular isothermal sphere
 Now we move from formalism to \textit{modeling}.  Real gravitational
 lenses --- galaxies and galaxy clusters --- have extended mass
 distributions, and to interpret observations we need specific,
-physically motivated models.  This module covers the most important
+physically motivated models.  This chapter covers the most important
 \textbf{circularly symmetric} (axisymmetric) lens models:
 \begin{itemize}[nosep]
-    \item The \textbf{point mass} (recap from Module~4),
+    \item The \textbf{point mass} (recap from Chapter~\ref{ch:lens_equation}),
     \item The \textbf{singular isothermal sphere} (SIS),
     \item The \textbf{nonsingular isothermal sphere} (NIS),
     \item The \textbf{Navarro--Frenk--White} (NFW) profile.
 \end{itemize}
 
 These models form the building blocks for more complex, non-circular
-lens models (Module~8) and for practical lens modeling applications
-(Modules~9--10).
+lens models (Chapter~\ref{ch:elliptical_models}) and for practical lens modeling applications
+(Chapters~\ref{ch:galaxy_lensing}--\ref{ch:cluster_lensing}).
 
 \medskip
 \noindent
@@ -60,7 +60,7 @@ lens models (Module~8) and for practical lens modeling applications
 \section{Introduction: From Formalism to Models}
 \label{sec:axi_intro}
 
-The general formalism of Module~\ref{ch:magnification} provides the
+The general formalism of Chapter~\ref{ch:magnification} provides the
 machinery for computing lensing observables --- but to apply it, one
 must specify a mass distribution.  In practice, the choice of mass
 model is guided by the physics of the lens:
@@ -77,11 +77,11 @@ model is guided by the physics of the lens:
           ($\S$\ref{sec:nfw}).
 \end{itemize}
 
-In this module we restrict ourselves to \textbf{circularly symmetric}
+In this chapter we restrict ourselves to \textbf{circularly symmetric}
 models, where all lensing quantities depend only on the angular radius
 $\theta = |\vectheta|$.  This simplification allows analytic progress
 and builds intuition before tackling the elliptical models of
-Module~8.
+Chapter~\ref{ch:elliptical_models}.
 
 
 % =====================================================================
@@ -129,6 +129,29 @@ and the reduced deflection angle is
     \label{eq:alpha_enclosed_mass}
 \end{equation}
 
+\begin{derivation}[From $\alphahat = 4\Gnewton M/\speedoflight^2\xi$ to eq.~\eqref{eq:alpha_enclosed_mass}]
+\begin{enumerate}[nosep]
+  \item For an axisymmetric $\Sigma$, the projected mass outside radius $\xi$
+        contributes zero net deflection (the 2D analogue of Newton's shell
+        theorem; Chapter~\ref{ch:lens_equation}).  So
+        $\alphahat(\xi) = 4\Gnewton M(\xi)/(\speedoflight^2\xi)$.
+  \item Reduced angle: $\alpha = (\Dds/\Ds)\,\alphahat$ and $\xi = \Dd\theta$, so
+        $\alpha = 4\Gnewton M\Dds/(\speedoflight^2\Ds\Dd\theta)$.
+  \item Insert $\Sigmacr = \speedoflight^2\Ds/(4\pi\Gnewton\Dd\Dds)$: then
+        $\pi\Sigmacr\Dd^2\theta = \speedoflight^2\Ds\Dd\theta/(4\Gnewton\Dds)$, whose
+        inverse times $M$ is the expression in step 2
+        (\texttt{problems\_07.wl} B1).
+\end{enumerate}
+\end{derivation}
+
+\begin{annotation}[Reduced vs physical deflection]
+$\alphahat$ is the physical bending angle at the lens and depends only on the
+mass.  $\alpha = (\Dds/\Ds)\,\alphahat$ is the angle the observer infers,
+and it depends on where the source is.  Everything in this chapter ($\thetaE$,
+$\kappab$, $\gammaL$, critical curves) uses $\alpha$.  Do not
+set $\thetaE = \alphahat$ and forget the factor $\Dds/\Ds<1$.
+\end{annotation}
+
 \subsection{Mean Convergence}
 
 It is useful to define the \textbf{mean convergence} within radius
@@ -147,6 +170,24 @@ the deflection angle~\eqref{eq:alpha_enclosed_mass} can be written as:
     \label{eq:alpha_mean_kappa}
 \end{equation}
 
+\begin{derivation}[$M = \pi\Dd^2\Sigmacr\theta^2\bar\kappa$]
+From eq.~\eqref{eq:enclosed_mass},
+$M = 2\pi\Dd^2\int_0^\theta\Sigma\,\theta'd\theta' = 2\pi\Dd^2\Sigmacr\int_0^\theta\kappab\,\theta'd\theta'$.
+By eq.~\eqref{eq:mean_kappa}, $\int_0^\theta\kappab\theta'd\theta' = \half\theta^2\bar\kappa$.
+So $M = \pi\Dd^2\Sigmacr\theta^2\bar\kappa$.  Dividing by
+$\pi\Sigmacr\Dd^2\theta$ gives $\alpha = \bar\kappa\theta$.
+\end{derivation}
+
+\begin{annotation}[$\bar\kappa(\thetaE) = 1$ defines $\thetaE$]
+Setting $\beta = 0$ in $\beta = \theta-\bar\kappa\theta$ gives a ring where
+$\bar\kappa = 1$.  The mean convergence inside the Einstein radius is exactly
+one for \emph{every} axisymmetric lens, so the projected mass inside $\thetaE$
+is $M(\thetaE) = \pi\Sigmacr\Dd^2\thetaE^2$ whatever the profile.  So lensing
+pins down the mass inside $\thetaE$ with little model dependence.  Do not
+look for $\kappab(\theta) = 1$ instead; that defines a different radius,
+and for an SIS $\kappab(\thetaE) = 1/2$.
+\end{annotation}
+
 \subsection{Shear for Circular Symmetry}
 
 For a circularly symmetric lens, the shear magnitude takes a remarkably
@@ -162,9 +203,30 @@ $\theta$ and the local convergence at $\theta$.  Physically, this
 makes sense: the shear arises from the \textit{differential} focusing
 between interior and exterior mass.
 
+\begin{derivation}[$|\gammaL| = \bar\kappa-\kappab$ from the potential]
+For $\psiL(\theta)$ depending only on $\theta$, write $\psiL' = \alpha$ and
+$\psiL'' = d\alpha/d\theta$.  In polar form the shear is
+$\gamma_1+i\gamma_2 = \half(\psiL''-\psiL'/\theta)\,e^{2i\varphi}$ with
+$\gamma_1 = \half(\psiL_{,11}-\psiL_{,22})$, $\gamma_2 = \psiL_{,12}$ (B14), so
+$|\gammaL| = \half|d\alpha/d\theta-\alpha/\theta|$.  Two inputs:
+\[
+  \frac{\alpha}{\theta} = \bar\kappa, \qquad
+  \frac{d\alpha}{d\theta} = \frac{d(\theta\bar\kappa)}{d\theta} = 2\kappab-\bar\kappa ,
+\]
+the second because $d(\theta^2\bar\kappa)/d\theta = 2\theta\kappab$ from
+eq.~\eqref{eq:mean_kappa} (\texttt{problems\_07.wl} B2a).  Then
+$|\gammaL| = \half|2\kappab-2\bar\kappa| = \bar\kappa-\kappab$ for any profile whose
+$\kappab$ decreases outward (so $\bar\kappa\geq\kappab$).  For an
+\emph{arbitrary} (non-circular) lens the circle-averaged version is
+$\bar\kappa = \langle\kappab\rangle+\langle\gamma_t\rangle$, obtained by repeating the
+steps above with azimuthal averages on the circle of radius $\theta$.  For how
+well weak-lensing data recover cluster masses in practice, see
+\citet{bartelmann_1995}.
+\end{derivation}
+
 \subsection{Magnification for Circular Symmetry}
 
-From Module~\ref{ch:lens_equation} (eq.~\ref{eq:magnification_circular}),
+From Chapter~\ref{ch:lens_equation} (eq.~\ref{eq:magnification_circular}),
 the magnification of a circularly symmetric lens is:
 \begin{equation}
     \mu = \frac{\theta}{\beta}\,
@@ -186,13 +248,52 @@ The \textbf{tangential critical curve} occurs where $\lambda_t = 0$
 (i.e., $\bar{\kappa} = 1$), and the \textbf{radial critical curve}
 occurs where $\lambda_r = 0$ (i.e., $2\kappab = 1 + \bar{\kappa}$).
 
+\begin{derivation}[The two eigenvalues]
+In 1D, $\beta(\theta) = \theta-\alpha(\theta)$, so
+\[
+  \frac{\beta}{\theta} = 1-\frac{\alpha}{\theta} = 1-\bar\kappa = \lambda_t,
+  \qquad
+  \frac{d\beta}{d\theta} = 1-\frac{d\alpha}{d\theta} = 1-2\kappab+\bar\kappa = \lambda_r ,
+\]
+using $d\alpha/d\theta = 2\kappab-\bar\kappa$ (B2a).  The magnification is
+$\mu = (\theta/\beta)(d\theta/d\beta) = 1/(\lambda_t\lambda_r)$.  As a
+consistency check, with $|\gammaL| = \bar\kappa-\kappab$,
+$\lambda_t\lambda_r = (1-\kappab)^2-|\gammaL|^2$, which is the general
+$\det\Amat$ (B2b).  Equivalently $\lambda_{t,r} = 1-\kappab\mp|\gammaL|$.
+\end{derivation}
+
+\begin{annotation}[$\lambda_t$ vs $\lambda_r$: which is which]
+$\lambda_t$ measures stretching \emph{along the circle} (tangential) and
+$\lambda_r$ stretching \emph{along the radius}.  Near $\lambda_t = 0$ images
+are tangential arcs, and the corresponding caustic is the point $\beta = 0$.
+Near $\lambda_r = 0$ images are radially stretched, and the caustic is a
+circle of radius $\beta_r = |\theta_r-\alpha(\theta_r)|$.  Swapping the two
+labels is a common error.  Useful fact: for a smooth $\kappab$,
+$\bar\kappa(0) = \kappab(0)$ (B2c), so $\lambda_t(0) = \lambda_r(0) = 1-\kappab(0)$.
+Both critical curves are born together at the centre when the central
+convergence crosses 1.
+\end{annotation}
+
+\begin{bridge}[The toolbox for power laws plus a point mass]
+Chapter~\ref{ch:power_law_point_mass} runs this formalism with a power-law
+host plus a central point mass of Einstein radius $b$.  The point mass adds
+$b^2/\theta^2$ to $\bar\kappa$ and nothing to $\kappab$ (away from the
+origin).  So it \emph{lowers} $\lambda_t$ and \emph{raises} $\lambda_r$ by
+the same amount $b^2/\theta^2$ (\texttt{problems\_07.wl} B12).  As $\theta\to0$,
+$\lambda_r\to+\infty$ and $\lambda_t\to-\infty$.  The tangential critical curve
+moves outward.  The host's $\lambda_r<0$ region is eroded from the inside: it
+becomes an annulus bounded by two radial-type critical curves, or it vanishes
+altogether.  That chapter's critical-curve results all follow from these
+two eigenvalues.
+\end{bridge}
+
 
 % =====================================================================
 \section{Point Mass Lens (Recap)}
 \label{sec:point_mass_recap}
 
 We briefly collect the point mass results from
-Modules~\ref{ch:lens_equation} and~\ref{ch:magnification} for
+Chapters~\ref{ch:lens_equation} and~\ref{ch:magnification} for
 comparison with the extended models.
 
 For a point mass $M$ at the origin:
@@ -226,6 +327,14 @@ away from the origin).  It has only a tangential critical curve at
 $\theta = \thetaE$ (the Einstein ring), whose corresponding caustic
 is the degenerate point $\beta = 0$.
 \end{remark}
+
+\begin{annotation}[Why a point mass has no radial critical curve]
+$\lambda_r = 1-d(\thetaE^2/\theta)/d\theta = 1+\thetaE^2/\theta^2>1$
+(\texttt{problems\_07.wl} B3).  The deflection \emph{decreases} outward, so
+$\beta(\theta)$ is monotonic on each side of the lens.  A point mass alone can
+never make a radial critical curve.  Placed at the centre of a cored galaxy,
+it can only push the host's $\lambda_r$ up (see the bridge box above).
+\end{annotation}
 
 
 % =====================================================================
@@ -262,6 +371,12 @@ rotation curves out to large radii.  For elliptical galaxies, the
 velocity dispersion $\sigma_v$ plays the analogous role.
 \end{remark}
 
+\begin{derivation}[$v_c = \sqrt2\,\sigma_v$]
+$M(r) = \int_0^r4\pi r'^2\rho\,dr' = \int_0^r 4\pi r'^2\,\sigma_v^2/(2\pi\Gnewton r'^2)\,dr'
+= 2\sigma_v^2r/\Gnewton$.  Then $v_c^2 = \Gnewton M(r)/r = 2\sigma_v^2$
+(\texttt{problems\_07.wl} B4e; \citealt[eq.~42]{narayan_lectures_1997}).
+\end{derivation}
+
 \subsection{Surface Mass Density}
 
 Projecting along the line of sight (taking $\xi$ as the impact
@@ -274,6 +389,16 @@ parameter in the lens plane):
 \end{equation}
 The surface mass density diverges as $\xi \to 0$ and falls off as
 $\xi^{-1}$.
+
+\begin{derivation}[The projection integral]
+$\int_{-\infty}^{\infty}dz/(\xi^2+z^2) = \pi/\xi$ (substitute $z = \xi\tan\phi$,
+$dz = \xi\sec^2\phi\,d\phi$; the integrand becomes $d\phi/\xi$ over
+$\phi\in(-\pi/2,\pi/2)$).  Hence
+$\Sigma = \frac{\sigma_v^2}{2\pi\Gnewton}\cdot\frac{\pi}{\xi} = \frac{\sigma_v^2}{2\Gnewton\xi}$
+(\texttt{problems\_07.wl} B4a; full steps in the solution to
+Exercise~\ref{ex:sis_deflection_derivation}).  Dimension check:
+$\sigma_v^2/\Gnewton$ is mass/length, divided by a length gives mass/area.
+\end{derivation}
 
 \subsection{Einstein Radius of the SIS}
 
@@ -291,7 +416,7 @@ one-line integral,
 and $\Sigma(\xi)$ itself follows from
 $\int_{-\infty}^{\infty}\!(\sigma_v^2/(2\pi\Gnewton))/(\xi^2+z^2)\,dz
 = \sigma_v^2/(2\Gnewton\xi)$.  Substituting into the axisymmetric
-deflection formula (eq.~\ref{eq:deflection_integral} from Module~4):
+deflection formula (eq.~\ref{eq:deflection_integral} from Chapter~\ref{ch:lens_equation}):
 \begin{equation}
     \boxed{
     \alphahat = \frac{4\pi\sigma_v^2}{\speedoflight^2}
@@ -332,6 +457,40 @@ where the \textbf{Einstein radius} of the SIS is:
     \label{eq:sis_einstein_radius}
 \end{equation}
 
+\begin{annotation}[The $\sigma_v\leftrightarrow\thetaE$ relation]
+\begin{itemize}[nosep]
+  \item \emph{Only $\Dds/\Ds$ appears.}  There is no separate $\Dd$, unlike the
+        point mass, where $\thetaE^2\propto\Dds/(\Dd\Ds)$.  The SIS
+        $\thetaE$ is the constant bending angle scaled by the
+        lens-to-source / observer-to-source lever arm.
+  \item \emph{Handy numbers.}  $\alphahat = 1.40''\,(\sigma_v/220\,\mathrm{km\,s^{-1}})^2$
+        \citep[eq.~44]{narayan_lectures_1997}, equivalently
+        $1.80''\,(\sigma_v/250\,\mathrm{km\,s^{-1}})^2$ (B5b,c).  Since $\Dds/\Ds<1$,
+        this is an upper bound on $\thetaE$ for the given $\sigma_v$.
+  \item \emph{Error propagation.}  $\thetaE\propto\sigma_v^2$, so a $10\%$ error in
+        $\sigma_v$ becomes a $21\%$ error in $\thetaE$ (B5d).
+  \item \emph{Classic error:} using $\Ds-\Dd$ for $\Dds$.  For $z_d=0.3$, $z_s=1$:
+        $\Ds-\Dd\approx730$\,Mpc, while $\Dds\approx1055$\,Mpc (B6b).
+  \item \emph{Caveat.}  The $\sigma_v$ here is the SIS model parameter.  A
+        measured stellar velocity dispersion inside an aperture is not the
+        same quantity in general; relating the two is part of
+        Chapter~\ref{ch:msd_kinematics}.
+\end{itemize}
+\end{annotation}
+
+\begin{bridge}[Two source planes behind one SIS]
+For a double source-plane system (Chapter~\ref{ch:multiplane_dspl}) with the
+same SIS deflector, $\thetaE\propto\Dds/\Ds$, so
+\[
+  \frac{\theta_{\mathrm{E},2}}{\theta_{\mathrm{E},1}}
+  = \frac{D_{\mathrm{ds}_2}/D_{\mathrm{s}_2}}{D_{\mathrm{ds}_1}/D_{\mathrm{s}_1}}
+\]
+directly, with no square root.  For a point mass it is the square root of the
+same ratio (\texttt{problems\_07.wl} B9).  This is the simplest version of
+the DSPL distance ratio; the full treatment also includes lensing of the far
+source by the near one.
+\end{bridge}
+
 \begin{example}
 \textbf{SIS Einstein radius for a typical galaxy lens.}
 For $\sigma_v = 250$~km\,s$^{-1}$, $z_d = 0.3$, $z_s = 1$
@@ -348,9 +507,16 @@ and verified in
 \mathlink{07_Axisymmetric_Models/axisymmetric_models.wl}{axisymmetric\_models.wl}.
 \end{example}
 
+\begin{annotation}[Where the distances come from]
+$\Dd\approx919$, $\Ds\approx1652$, $\Dds\approx1055$\,Mpc are what flat
+$\Lambda$CDM with $\Hubble = 70$\,km\,s$^{-1}$\,Mpc$^{-1}$ and $\Omegam = 0.3$ gives for
+$z_d = 0.3$, $z_s = 1$ (\texttt{problems\_07.wl} B6a).  With those,
+$4\pi(250/3\times10^5)^2\times0.638 = 1.15''$ (B5a).
+\end{annotation}
+
 \subsection{Convergence and Shear of the SIS}
 
-The convergence is (previewed in Module~\ref{ch:magnification},
+The convergence is (previewed in Chapter~\ref{ch:magnification},
 eq.~\ref{eq:kappa_sis}):
 \begin{equation}
     \kappab(\theta) = \frac{\Sigma(\Dd\,\theta)}{\Sigmacr}
@@ -384,6 +550,22 @@ models.  For the point mass, $\kappab = 0$ (away from the origin)
 while $|\gammaL| = \thetaE^2/\theta^2 \neq 0$.  For the NIS and NFW
 models below, $|\gammaL| \neq \kappab$ in general.
 \end{remark}
+
+\begin{bridge}[$\kappab(\thetaE) = 1/2$ is the $\gamma' = 2$ case]
+The SIS is the $\gamma' = 2$ member of the power-law family
+$\rho\propto r^{-\gamma'}$, whose convergence normalised by $\bar\kappa(\thetaE) = 1$ is
+\[
+  \kappab(\theta) = \frac{3-\gamma'}{2}\left(\frac{\thetaE}{\theta}\right)^{\gamma'-1},
+  \qquad
+  \bar\kappa(\theta) = \left(\frac{\thetaE}{\theta}\right)^{\gamma'-1},
+\]
+so $\kappab(\thetaE) = (3-\gamma')/2$, which is $1/2$ at $\gamma' = 2$
+(\texttt{problems\_07.wl} B7a,b).  Exercise~\ref{ex:sis_kappa_equals_gamma}(d)
+is this family with $n = \gamma'-1$, and $|\gammaL| = \kappab$ singles out
+$\gamma' = 2$ (B7c).  Chapter~\ref{ch:power_law_point_mass} uses $\kappab(\thetaE)$
+as the handle on the slope: steeper profiles have less convergence at the
+Einstein radius.
+\end{bridge}
 
 \subsection{SIS Lens Equation and Images}
 
@@ -443,6 +625,16 @@ linear).  The total magnification for a doubly-imaged source
     \label{eq:sis_total_mag}
 \end{equation}
 
+\begin{derivation}[$\mu_\pm$ from the eigenvalues, and the sign of $\mu_-$]
+For the SIS, $d\alpha/d\theta = 0$, so $\lambda_r = 1$ everywhere and
+$\mu = 1/\lambda_t = 1/(1-\thetaE/|\theta|)$ (B8a).  At $\theta_+ = \beta+\thetaE$:
+$\mu_+ = (\beta+\thetaE)/\beta = 1+\thetaE/\beta$.  At $|\theta_-| = \thetaE-\beta$:
+$\mu_- = 1/(1-\thetaE/(\thetaE-\beta)) = 1-\thetaE/\beta<0$ (B8b,c).  The
+negative sign is the parity flip of the saddle (Type~II) image.  In the
+formula $\mu = (\theta/\beta)(d\theta/d\beta)$ the sign appears because
+$\theta_-$ is a \emph{signed} coordinate.
+\end{derivation}
+
 \subsection{Critical Curves and Caustics of the SIS}
 
 The SIS has a particularly simple critical curve structure:
@@ -470,6 +662,14 @@ central singularity.  As we will see in Section~\ref{sec:nis},
 introducing a finite core radius (NIS) creates a radial critical
 curve and fundamentally changes the image configuration.
 \end{remark}
+
+\begin{annotation}[The ``missing'' third SIS image]
+Narayan \& Bartelmann put it this way: technically a third image with zero
+flux sits at $\theta = 0$, and it acquires a finite flux once the centre is
+given a core \citep[Sect.~3.1]{narayan_lectures_1997}.  In Fermat language,
+$\tau$ has a cone-shaped peak at the origin instead of a smooth maximum
+(Chapter~\ref{ch:fermat_time_delays}).
+\end{annotation}
 
 
 % =====================================================================
@@ -507,6 +707,15 @@ $\int_{-\infty}^{\infty} dz/(\xi^2 + r_c^2 + z^2) = \pi/\sqrt{\xi^2 + r_c^2}$,
 integrating along the line of sight at $\xi = \Dd\theta$ gives
 eq.~\eqref{eq:nis_sigma}.
 
+\begin{derivation}[NIS projection]
+This is the SIS integral with $\xi^2\to\xi^2+r_c^2$:
+$\Sigma = \frac{\sigma_v^2}{2\pi\Gnewton}\cdot\frac{\pi}{\sqrt{\xi^2+r_c^2}}$ (B10a).  With
+$\xi = \Dd\theta$ and $r_c = \Dd\theta_c$,
+$\sqrt{\xi^2+r_c^2} = \Dd\sqrt{\theta^2+\theta_c^2}$, which is
+eq.~\eqref{eq:nis_sigma}.  Dividing by $\Sigmacr$ gives
+eq.~\eqref{eq:nis_kappa} with the \emph{SIS} $\thetaE$ as the amplitude (B10b).
+\end{derivation}
+
 \subsection{Convergence of the NIS}
 
 \begin{equation}
@@ -522,6 +731,25 @@ The central convergence is:
 \end{equation}
 For strong lensing to occur, we need $\kappab(0) > 1$, requiring
 $\theta_c < \thetaE / 2$.
+
+\begin{annotation}[Where ``$\theta_c<\thetaE/2$'' comes from]
+In 1D, $\beta(\theta) = \theta-\alpha(\theta)$ has more than one solution for
+some $\beta$ only if it is \emph{non-monotonic}, i.e.\ only if
+$d\beta/d\theta = \lambda_r<0$ somewhere.  For the NIS,
+$d\alpha/d\theta = \thetaE\theta_c/[s(s+\theta_c)]$ with $s = \sqrt{\theta^2+\theta_c^2}$
+(B10d).  This is largest at $\theta = 0$, where it equals
+$\thetaE/(2\theta_c) = \kappab(0)$ (B10e,f).  So multiple images exist
+$\Leftrightarrow\kappab(0)>1\Leftrightarrow\theta_c<\thetaE/2$, with
+\emph{strict} inequality: at $\theta_c = \thetaE/2$ the radial critical curve
+has zero radius and there is still only one image.
+
+\emph{Classic error:} Narayan \& Bartelmann's Table~2 ``softened isothermal
+sphere'' softens the \emph{potential}, $\psiL\propto\sqrt{\theta_c^2+\theta^2}$, not
+the density.  Its convergence is
+$\thetaE(\theta^2+2\theta_c^2)/[2(\theta^2+\theta_c^2)^{3/2}]$ with
+$\kappab(0) = \thetaE/\theta_c$, so its criterion is $\theta_c<\thetaE$
+(B10q,r).  Do not mix formulas between the two models.
+\end{annotation}
 
 \subsection{Deflection Angle of the NIS}
 
@@ -551,6 +779,15 @@ In the limit $\theta_c \to 0$:
 recovering the constant SIS deflection angle.  The integral and the
 SIS limit are checked symbolically in
 \mathlink{07_Axisymmetric_Models/axisymmetric\_models.wl}{axisymmetric\_models.wl}.
+
+\begin{annotation}[The NIS lensing potential]
+Integrating $\alpha$ once more gives
+$\psiL(\theta) = \thetaE\,[\,s-\theta_c\ln(\theta_c+s)\,]$ with $s = \sqrt{\theta^2+\theta_c^2}$,
+up to a constant (B10o).  It is smooth at $\theta = 0$, so $-\psiL$ has a
+genuine smooth maximum there.  That maximum becomes the Type~III central
+image of Chapter~\ref{ch:fermat_time_delays}.  You need this $\psiL$ to compute the
+time delay of the central image.
+\end{annotation}
 
 \subsection{Effect of the Core Radius on Image Multiplicity}
 
@@ -582,9 +819,54 @@ The core radius has a dramatic effect on the critical curve structure:
 
 The radial critical curve of the NIS creates a \textbf{radial
 caustic} in the source plane: a circle of radius $\beta_r > 0$.
-Sources inside this radial caustic (and inside the tangential
-caustic) produce three images; sources between the radial and
-tangential caustics produce one image.
+Because the tangential caustic of an axisymmetric lens is the single
+point $\beta = 0$, the image count depends only on $|\beta|$: sources
+with $0 < |\beta| < \beta_r$ produce three images, sources with
+$|\beta| > \beta_r$ produce one, and a source at $\beta = 0$ produces an
+Einstein ring plus a central image.\footnote{An earlier version said that
+sources \emph{between} the radial and tangential caustics produce one image.
+For the NIS the tangential caustic is the point $\beta=0$, inside the radial
+caustic, so that region is the three-image region; one image forms outside
+$\beta_r$ (e.g.\ for $\theta_c = 0.1\,\thetaE$, $\beta_r = 0.427\,\thetaE$).}
+
+\begin{derivation}[NIS critical curves and caustic, explicitly]
+Write $s = \sqrt{\theta^2+\theta_c^2}$, so $\theta^2 = (s-\theta_c)(s+\theta_c)$ and
+$\alpha = \thetaE(s-\theta_c)/\theta$.
+
+\emph{Tangential} ($\lambda_t = 1-\alpha/\theta = 0$):
+$\thetaE(s-\theta_c) = (s-\theta_c)(s+\theta_c)$, so $s+\theta_c = \thetaE$ and
+\[
+  \theta_t^2 = (\thetaE-\theta_c)^2-\theta_c^2 = \thetaE(\thetaE-2\theta_c)
+\]
+(B10g).  Note $\theta_t<\thetaE$ whenever $\theta_c>0$: the parameter
+``$\thetaE$'' of the NIS is the Einstein radius of the \emph{SIS it came from},
+not of the NIS itself (B10k).
+
+\emph{Radial} ($\lambda_r = 1-d\alpha/d\theta = 0$): with
+$d\alpha/d\theta = \thetaE\theta_c/[s(s+\theta_c)]$ (B10d) the condition is the
+quadratic $s^2+\theta_c s-\thetaE\theta_c = 0$, whose positive root is
+\[
+  s_r = \tfrac12\Bigl(-\theta_c+\sqrt{\theta_c^2+4\thetaE\theta_c}\Bigr),
+  \qquad
+  \theta_r^2 = s_r^2-\theta_c^2 = \theta_c(\thetaE-\theta_c-s_r)
+\]
+(B10h,j).  $\theta_r^2>0\Leftrightarrow s_r>\theta_c\Leftrightarrow
+\sqrt{\theta_c^2+4\thetaE\theta_c}>3\theta_c\Leftrightarrow\theta_c<\thetaE/2$ (B10i),
+the same criterion as before.
+
+\emph{Numbers} for $\theta_c = 0.1\,\thetaE$: $\theta_t = 0.894\,\thetaE$,
+$\theta_r = 0.251\,\thetaE$, and the radial caustic has radius
+$\beta_r = |\theta_r-\alpha(\theta_r)| = 0.427\,\thetaE$ (B10l).
+
+\emph{Image count.}  Because the tangential caustic is the single point
+$\beta = 0$, the count depends only on $\beta$ vs $\beta_r$: for
+$\beta = 0.2\,\thetaE$ there are three images, at
+$\theta\approx-0.660$, $-0.054$, $+1.114$ (units of $\thetaE$); for
+$\beta = 0.6\,\thetaE$ there is one (B10m).  Their types from the signs of
+$(\lambda_t,\lambda_r)$ are saddle, maximum, minimum, so
+$n_{\min}-n_{\rm sad}+n_{\max} = 1$ (B10n).  The arrival order is minimum,
+then saddle, then the central maximum (B10p).
+\end{derivation}
 
 \begin{remark}
 The transition from SIS to NIS illustrates a general principle:
@@ -594,6 +876,19 @@ Observed lens systems rarely show a detectable central (third)
 image, which constrains the core radius to be very small or zero ---
 supporting cuspy density profiles.
 \end{remark}
+
+\begin{bridge}[The NIS central image and the radial critical curve]
+Two Part~V chapters start here.  In Chapter~\ref{ch:odd_images}, the NIS
+third image is the textbook \emph{central} image: a Type~III maximum of
+$\tau$ that sits inside $\theta_r$ where $\kappab>1$, is strongly
+demagnified, and arrives last.  A central point mass acts on exactly this
+region and can remove the central image or add a second faint image next
+to it.  In
+Chapter~\ref{ch:power_law_point_mass}, the NIS radial critical curve is the
+prototype of the radial critical curves of shallower-than-isothermal power
+laws.  The radial caustic radius $\beta_r$ sets the cross-section for radial
+arcs and central images.
+\end{bridge}
 
 \begin{figure}[ht]
     \centering
@@ -623,7 +918,7 @@ The \textbf{Navarro--Frenk--White} (NFW) profile is the ``universal''
 dark matter halo density profile found in cosmological $N$-body
 simulations (Navarro, Frenk \& White 1996, 1997).  It is the standard
 model for the mass distribution of galaxy clusters and is essential
-for cluster lensing (Module~10).
+for cluster lensing (Chapter~\ref{ch:cluster_lensing}).
 
 \subsection{Three-Dimensional Density Profile}
 
@@ -734,6 +1029,24 @@ so
     \label{eq:nfw_I_as_K}
 \end{equation}
 
+\begin{derivation}[The ``short calculation'' of Step 3]
+Quotient rule:
+\[
+  \frac{d}{dw}\frac{\sqrt{w^2-x^2}}{1+w}
+  = \frac{w}{(1+w)\sqrt{w^2-x^2}}-\frac{\sqrt{w^2-x^2}}{(1+w)^2}
+  = \frac{w(1+w)-(w^2-x^2)}{(1+w)^2\sqrt{w^2-x^2}}
+  = \frac{w+x^2}{(1+w)^2\sqrt{w^2-x^2}}
+\]
+(B11a).  Now split $w+x^2 = (1+w)+(x^2-1)$ (B11b):
+\[
+  \frac{w+x^2}{(1+w)^2\sqrt{w^2-x^2}} = \frac{1}{(1+w)\sqrt{w^2-x^2}}
+  + \frac{x^2-1}{(1+w)^2\sqrt{w^2-x^2}} .
+\]
+Integrate from $x$ to $\infty$.  The left side is a total derivative, which
+evaluates to $1-0$, and the right side is $K(x)+(x^2-1)I(x)$.  This is
+eq.~\eqref{eq:nfw_IbK}.
+\end{derivation}
+
 \paragraph{Step 4: evaluate $K(x)$.}
 The substitution $w = x\cosh\tau$ (with $\sqrt{w^2-x^2} = x\sinh\tau$,
 $dw = x\sinh\tau\,d\tau$) turns $K$ into
@@ -762,6 +1075,28 @@ $\operatorname{arccosh}(1/x) \leftrightarrow \arccos(1/x)$ (analytic
 continuation through $x=1$), and the $x=1$ value follows from a
 Taylor expansion of either branch.
 
+\begin{derivation}[Step 4 with the half-angle substitution written out]
+Put $t = \tanh(\tau/2)$.  Then $\cosh\tau = (1+t^2)/(1-t^2)$ and
+$d\tau = 2\,dt/(1-t^2)$ (B11d), and $\tau\in(0,\infty)\mapsto t\in(0,1)$.  So
+\[
+  1+x\cosh\tau = \frac{(1+x)-(1-x)t^2}{1-t^2}
+  \quad\Rightarrow\quad
+  K(x) = \int_0^1\frac{2\,dt}{(1+x)-(1-x)t^2}
+\]
+(B11c).  With $a = 1+x$, $b = 1-x$:
+\begin{itemize}[nosep]
+  \item $0<x<1$ ($b>0$):
+        $K = \frac{2}{\sqrt{ab}}\operatorname{arctanh}\sqrt{b/a}
+        = \frac{2\operatorname{arctanh}\sqrt{(1-x)/(1+x)}}{\sqrt{1-x^2}}$, and
+        $2\operatorname{arctanh}\sqrt{(1-x)/(1+x)} = \operatorname{arccosh}(1/x)$ (B11e).
+  \item $x>1$ ($b<0$): the denominator is $a+|b|t^2$, giving
+        $\frac{2}{\sqrt{a|b|}}\arctan\sqrt{|b|/a}$, and
+        $2\arctan\sqrt{(x-1)/(x+1)} = \arctan\sqrt{x^2-1} = \arccos(1/x)$ (B11f).
+\end{itemize}
+Both branches agree with direct numerical quadrature of
+eq.~\eqref{eq:nfw_Ktau} (B11g), and $f(x)\to1/3$ from both sides at $x = 1$ (B11h).
+\end{derivation}
+
 \paragraph{Collected result.}
 Substituting eq.~\eqref{eq:nfw_K_branches} into
 eq.~\eqref{eq:nfw_I_as_K}, and then eq.~\eqref{eq:nfw_I_definition},
@@ -784,8 +1119,8 @@ Writing out the three branches explicitly,
     \end{cases}
     \label{eq:nfw_f}
 \end{equation}
-This recovers the standard result of Bartelmann (1996) and
-Wright \& Brainerd (2000).
+This recovers the standard result of \citet{bartelmann_1996} and
+\citet{wright_brainerd_2000}.
 
 \begin{remark}
 The apparent singularity at $x = 1$ in eq.~\eqref{eq:nfw_f} cancels
@@ -821,6 +1156,15 @@ NFW cusp ($\rho \propto r^{-1}$) is shallower than the isothermal cusp
 ($\rho \propto r^{-2}$), which has important consequences for central
 image formation.
 \end{remark}
+
+\begin{annotation}[Asymptotes of $f(x)$ as sanity checks]
+Small $x$: $f(x) = \ln(2/x)-1+\ldots$, a logarithm, \emph{not}
+$(1/x)\ln(2/x)$ (B11i).  Large $x$: $x^2f(x)\to1$, i.e.\ $\Sigma\propto\theta^{-2}$
+(B11k), consistent with $\rho\propto r^{-3}$ projected.  At $x=1$: $f = 1/3$.  A
+plotted $f$ that misses any of these three has a branch error.
+$\kappa_s = 2\rho_sr_s/\Sigmacr$ is dimensionless: density times length is a
+surface density.
+\end{annotation}
 
 \subsection{Deflection Angle and Shear of the NFW}
 
@@ -875,6 +1219,15 @@ with
     \label{eq:nfw_g}
 \end{equation}
 
+\begin{derivation}[Checking eq.~\eqref{eq:nfw_antiderivative}]
+For $0<x<1$, differentiate $\ln(x/2)+\operatorname{arccosh}(1/x)/\sqrt{1-x^2}$ and
+compare with $x f(x) = x[1-K(x)]/(x^2-1)$.  The two agree; the check is done
+at a point in each branch (\texttt{problems\_07.wl} B11j) and symbolically in
+\mathlink{07_Axisymmetric_Models/nfw\_projection.wl}{nfw\_projection.wl}.  The
+constant of integration is fixed by $h(0) = 0$: as $x\to0$,
+$K(x)\simeq\ln(2/x)$ cancels $\ln(x/2)$.
+\end{derivation}
+
 \paragraph{Deflection angle and shear.}
 Substituting eq.~\eqref{eq:nfw_h_evaluated} into
 eqs.~\eqref{eq:nfw_alpha_setup}--\eqref{eq:nfw_hdef} and using
@@ -921,7 +1274,7 @@ strength of an NFW halo:
 \end{itemize}
 
 The NFW model will be applied extensively to cluster lensing in
-Module~10.
+Chapter~\ref{ch:cluster_lensing}.
 
 \begin{figure}[ht]
     \centering
@@ -945,7 +1298,7 @@ Module~10.
 \label{sec:model_comparison}
 
 Table~\ref{tab:model_comparison} summarizes the key properties of the
-four axisymmetric lens models covered in this module.
+four axisymmetric lens models covered in this chapter.
 
 \begin{table}[ht]
 \centering
@@ -1053,6 +1406,14 @@ The key qualitative differences between the models are:
           SIS and point mass cannot.
 \end{itemize}
 
+\begin{annotation}[Einstein radius vs ``$\kappab = 1$'' radius]
+For every model in this table the Einstein radius is where $\bar\kappa = 1$,
+not where $\kappab = 1$.  For the SIS these are $\thetaE$ and $\thetaE/2$.
+For the NIS, $\theta_t = \sqrt{\thetaE(\thetaE-2\theta_c)}$, which is not the
+amplitude parameter $\thetaE$.  For NFW, solve $\bar\kappa(x) = 1$ with
+eq.~\eqref{eq:nfw_alpha}.
+\end{annotation}
+
 
 % =====================================================================
 \section{Problems}
@@ -1142,7 +1503,7 @@ Verify with
           $\kappab = \thetaE/(2\theta)$ in the limit $\theta_c \to 0$.
     \item Find the critical value of $\theta_c$ (in terms of $\thetaE$)
           above which the NIS cannot produce multiple images.
-          \textit{Hint:} multiple images require $\kappab(0) \geq 1$.
+          \textit{Hint:} multiple images require $\kappab(0) > 1$.
     \item For the NIS with $\theta_c = 0.1\,\thetaE$, compute
           $\kappab(0)$, $\kappab(\thetaE)$, and
           $\kappab(2\,\thetaE)$.

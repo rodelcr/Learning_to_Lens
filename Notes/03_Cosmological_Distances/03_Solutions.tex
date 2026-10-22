@@ -35,7 +35,7 @@ eqs.~\eqref{eq:R00}--\eqref{eq:R33}.  The computation proceeds via:
 \end{enumerate}
 The key results are:
 \[
-    R_{00} = -\frac{3\ddot{a}}{\speedoflight^2 a} \,, \qquad
+    R_{00} = -\frac{3\ddot{a}}{a} \quad (x^0 = t) \,, \qquad
     R_{ij} = \frac{g_{ij}}{\speedoflight^2 a^2}
     \left(a\ddot{a} + 2\dot{a}^2 + 2k\speedoflight^2\right) .
 \]
@@ -47,11 +47,42 @@ The Ricci scalar follows:
 \]
 All verified symbolically in \texttt{friedmann\_equations.wl}.
 
+
+\begin{derivation}[$R_{11}$ by hand, term by term]
+$R_{11} = \underbrace{\partial_\lambda\christoffel{\lambda}{1}{1}}_{(1)}
+\underbrace{-\,\partial_1\christoffel{\lambda}{1}{\lambda}}_{(2)}
++\underbrace{\christoffel{\lambda}{\lambda}{\sigma}\christoffel{\sigma}{1}{1}}_{(3)}
+\underbrace{-\,\christoffel{\lambda}{1}{\sigma}\christoffel{\sigma}{1}{\lambda}}_{(4)}$,
+with $\kappa \equiv kr/(1-kr^2) = \christoffel{1}{1}{1}$ and $x^0 = t$.
+\begin{align*}
+(1)&= \partial_t\christoffel{0}{1}{1} + \partial_r\christoffel{1}{1}{1}
+   = \frac{\dot a^2 + a\ddot a}{\speedoflight^2(1-kr^2)} + \partial_r\kappa,\\
+(2)&= -\partial_r\bigl(\christoffel{1}{1}{1} + \christoffel{2}{1}{2} + \christoffel{3}{1}{3}\bigr)
+   = -\partial_r\Bigl(\kappa + \frac{2}{r}\Bigr),\\
+(3)&= \underbrace{\frac{3\dot a}{a}}_{\christoffel{\lambda}{\lambda}{0}}\christoffel{0}{1}{1}
+   + \underbrace{\Bigl(\kappa + \frac{2}{r}\Bigr)}_{\christoffel{\lambda}{\lambda}{1}}\kappa
+   = \frac{3\dot a^2}{\speedoflight^2(1-kr^2)} + \kappa^2 + \frac{2k}{1-kr^2},\\
+(4)&= -\Bigl[2\,\christoffel{0}{1}{1}\christoffel{1}{1}{0} + \kappa^2
+   + (\christoffel{2}{1}{2})^2 + (\christoffel{3}{1}{3})^2\Bigr]
+   = -\Bigl[\frac{2\dot a^2}{\speedoflight^2(1-kr^2)} + \kappa^2 + \frac{2}{r^2}\Bigr].
+\end{align*}
+The spatial parts of (1)$+$(2) collapse to $+2/r^2$, which cancels the $-2/r^2$
+of (4); the $\kappa^2$ terms cancel between (3) and (4).  What survives is
+\[
+  R_{11} = \frac{a\ddot a + (1 + 3 - 2)\dot a^2}{\speedoflight^2(1-kr^2)}
+         + \frac{2k}{1-kr^2}
+         = \frac{a\ddot a + 2\dot a^2 + 2k\speedoflight^2}{\speedoflight^2(1-kr^2)} ,
+\]
+eq.~\eqref{eq:R11} (checks B21a--e in \texttt{problems\_03.wl}).  $R_{00}$ is
+done in the derivation box after eq.~\eqref{eq:ricci_scalar_frw}; with
+$x^0 = t$ it equals $-3\ddot a/a$, while $-3\ddot a/(\speedoflight^2 a)$ is the
+$x^0 = \speedoflight t$ component (checks B2a--b).
+\end{derivation}
 \textbf{(c)} The $(0,0)$ component of Einstein's equations
 $G_{\mu\nu} + \Lambda g_{\mu\nu} = (8\pi\Gnewton/\speedoflight^4) T_{\mu\nu}$:
 \begin{align*}
     R_{00} - \half \ricciS\, g_{00} + \Lambda g_{00}
-    &= \frac{3}{\speedoflight^2}\left(\frac{\dot{a}^2}{a^2}
+    &= 3\left(\frac{\dot{a}^2}{a^2}
     + \frac{k\speedoflight^2}{a^2}\right) - \Lambda\speedoflight^2 \\
     &= \frac{8\pi\Gnewton}{\speedoflight^4}\cdot\rho\speedoflight^4
     = 8\pi\Gnewton\rho \,.
@@ -70,6 +101,23 @@ Similarly, the spatial components give the second Friedmann equation:
     + \frac{\Lambda\speedoflight^2}{3}}
 \]
 
+
+\begin{derivation}[Part (c), the steps behind ``similarly'']
+\textit{(0,0).}  With $x^0 = t$, $R_{tt} = -3\ddot a/a$ and
+$-\tfrac12 R g_{tt} = +3(\ddot a/a + \dot a^2/a^2 + k\speedoflight^2/a^2)$; the
+$\ddot a$ terms cancel, giving the first line of the display above (check B2f).
+
+\textit{(1,1).}  Divide the $(1,1)$ equation by $g_{11}$:
+$(a\ddot a + 2\dot a^2 + 2k\speedoflight^2)/(\speedoflight^2a^2)
+- (3/\speedoflight^2)(\ddot a/a + \dot a^2/a^2 + k\speedoflight^2/a^2) + \Lambda
+= 8\pi\Gnewton p/\speedoflight^4$.  Collecting,
+$-(1/\speedoflight^2)(2\ddot a/a + \dot a^2/a^2 + k\speedoflight^2/a^2) + \Lambda
+= 8\pi\Gnewton p/\speedoflight^4$ (check B3a).
+
+\textit{Eliminate $\dot a^2$.}  Replace $\dot a^2/a^2 + k\speedoflight^2/a^2$ by
+$8\pi\Gnewton\rho/3 + \Lambda\speedoflight^2/3$ (first Friedmann equation), multiply
+by $-\speedoflight^2/2$ and solve for $\ddot a/a$ (check B3b).
+\end{derivation}
 \textbf{(d)} Differentiate the first Friedmann equation with respect to $t$:
 \[
     2\frac{\dot{a}}{a}\left(\frac{\ddot{a}}{a} - \frac{\dot{a}^2}{a^2}\right)
@@ -84,6 +132,26 @@ algebraic simplification:
     + \frac{p}{\speedoflight^2}\right) = 0}
 \]
 
+
+\begin{derivation}[The ``algebraic simplification'' of part (d)]
+\textit{Left side.}  Using both Friedmann equations,
+\[
+  \frac{\ddot a}{a} - \frac{\dot a^2}{a^2}
+  = \Bigl[-\frac{4\pi\Gnewton}{3}\Bigl(\rho + \frac{3p}{\speedoflight^2}\Bigr)
+     + \frac{\Lambda\speedoflight^2}{3}\Bigr]
+  - \Bigl[\frac{8\pi\Gnewton\rho}{3} - \frac{k\speedoflight^2}{a^2}
+     + \frac{\Lambda\speedoflight^2}{3}\Bigr]
+  = -4\pi\Gnewton\Bigl(\rho + \frac{p}{\speedoflight^2}\Bigr) + \frac{k\speedoflight^2}{a^2}
+\]
+(check B22): $\Lambda$ cancels, and $-\tfrac{4\pi}{3} - \tfrac{8\pi}{3} = -4\pi$
+for the $\rho$ terms, $-4\pi\Gnewton\,p/\speedoflight^2$ for the pressure term.
+
+\textit{Equate.}  $2(\dot a/a)[-4\pi\Gnewton(\rho + p/\speedoflight^2)
++ k\speedoflight^2/a^2] = (8\pi\Gnewton/3)\dot\rho + 2k\speedoflight^2\dot a/a^3$.
+The curvature terms are identical on both sides and cancel.  Dividing the rest by
+$8\pi\Gnewton/3$:
+$\dot\rho = -3(\dot a/a)(\rho + p/\speedoflight^2)$ (check B4).
+\end{derivation}
 % ----- Exercise 3.2 -----
 \subsection*{Exercise~\ref{ex:age_of_universe}: Age of the Universe}
 
@@ -98,6 +166,16 @@ $H(z) = \Hubble(1+z)^{3/2}$, so
 For $\Hubble = 70$~km\,s$^{-1}$\,Mpc$^{-1}$:
 $t_0 = 2/(3 \times 70) \times 977.8 = 9.3$~Gyr.
 
+
+\begin{derivation}[Where the age integral and the 977.8 come from]
+$t_0 = \int_0^{t_0}dt = \int_0^1 da/\dot a = \int_0^1 da/(aH)$.  With
+$a = 1/(1+z)$, $da = -dz/(1+z)^2$ and $1/a = 1+z$, so
+$da/(aH) = -dz/[(1+z)H]$; the limits $a: 0\to1$ become $z: \infty\to0$ and the
+sign flips them back (check B18c).  For EdS, $\int_0^\infty(1+z)^{-5/2}dz = 2/3$
+(check B18d).  The number $977.8$ is $1/\Hubble$ in Gyr for
+$\Hubble = 1$~km\,s$^{-1}$\,Mpc$^{-1}$, so $1/\Hubble = 977.8/70 = 13.97$~Gyr and
+$t_0 = \tfrac23\times13.97 = 9.3$~Gyr (check B8b).
+\end{derivation}
 \textbf{(b)} For the concordance cosmology ($\Omegam = 0.3$,
 $\OmegaL = 0.7$), the integral must be evaluated numerically.
 Using Mathematica:
@@ -107,13 +185,31 @@ Using Mathematica:
     \approx \boxed{13.5~\text{Gyr}}
 \]
 
+
+\begin{derivation}[A closed form for flat $\Lambda$CDM]
+With $x = a^{3/2}$, $H = \Hubble\sqrt{\Omegam a^{-3} + \OmegaL}$ gives
+$\Hubble t_0 = \int_0^1 a^{1/2}da/\sqrt{\Omegam + \OmegaL a^3}
+= \tfrac{2}{3}\int_0^1 dx/\sqrt{\Omegam + \OmegaL x^2}
+= \frac{2}{3\sqrt{\OmegaL}}\operatorname{arcsinh}\sqrt{\OmegaL/\Omegam}$.
+For $(\Omegam,\OmegaL) = (0.3, 0.7)$ this is $0.964$, i.e.\ $13.47$~Gyr,
+identical to the numerical integral (check B18a).
+\end{derivation}
 \textbf{(c)} Open universe ($\Omegam = 0.3$, $\OmegaL = 0$,
 $\Omega_k = 0.7$): $H(z) = \Hubble\sqrt{0.3(1+z)^3 + 0.7(1+z)^2}$.
-Numerical integration gives $t_0 \approx 11.0$~Gyr.  The concordance
-cosmology gives a universe that is $\sim 23\%$ older, because the
+Numerical integration gives $t_0 \approx 11.3$~Gyr.  The concordance
+cosmology gives a universe that is $\sim 19\%$ older, because the
 cosmological constant accelerates the expansion at late times, effectively
 stretching the time since the Big Bang.
 
+
+\begin{annotation}[Numbers for the open model]
+The script (Exercise~3.2(c) block of \texttt{problems\_03.wl}, which includes the
+$\Omega_k(1+z)^2$ term) returns $\Hubble t_0 = 0.809$, i.e.\
+$t_0 = 11.30$~Gyr, so the concordance age exceeds it by a factor $1.19$
+(checks B18b, B23b).  Without $\Lambda$ the expansion has always decelerated,
+so the age is a smaller fraction of the Hubble time ($0.81\,t_H$ versus
+$0.96\,t_H$).
+\end{annotation}
 % ----- Exercise 3.3 -----
 \subsection*{Exercise~\ref{ex:DA_turnover}: Angular Diameter Distance Turnover}
 
@@ -123,9 +219,9 @@ stretching the time since the Big Bang.
 \toprule
 Cosmology & $z_{\max}$ & $D_A^{\max}$ (Mpc) \\
 \midrule
-Concordance ($\Omegam = 0.3$, $\OmegaL = 0.7$) & $1.61$ & $1770$ \\
-Einstein--de~Sitter ($\Omegam = 1.0$, $\OmegaL = 0$) & $1.25$ & $1180$ \\
-Open ($\Omegam = 0.3$, $\OmegaL = 0$) & $1.44$ & $1300$ \\
+Concordance ($\Omegam = 0.3$, $\OmegaL = 0.7$) & $1.605$ & $1748$ \\
+Einstein--de~Sitter ($\Omegam = 1.0$, $\OmegaL = 0$) & $1.25$ & $1269$ \\
+Open ($\Omegam = 0.3$, $\OmegaL = 0$; $D_M$ with $\sinh$) & $1.90$ & $1583$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -142,6 +238,26 @@ at an intermediate redshift.
 \textbf{(c)} Setting $dD_A/dz = 0$ numerically for the concordance
 cosmology gives $z_{\max} \approx 1.61$.
 
+
+\begin{derivation}[Turnovers: one exact, one numerical, and a curvature trap]
+\textit{Condition.}  $dD_A/dz = 0 \Leftrightarrow \speedoflight(1+z)/H(z) = D_M(z)$
+for flat models (derivation box in the turnover section).
+
+\textit{EdS exactly.}  $D_A = 2d_H(1-s)s^2$ with $s = (1+z)^{-1/2}$ peaks at
+$s = 2/3$: $z_{\max} = 5/4$ and $D_A^{\max} = (8/27)d_H = 1269$~Mpc for
+$\Hubble = 70$ (checks B12c--e).
+
+\textit{Concordance.}  Root of the condition: $z_{\max} = 1.605$,
+$D_A^{\max} = 1748$~Mpc (check B12a), matching the caption of
+Fig.~\ref{fig:DA_vs_z}.
+
+\textit{Open model: use $\sinh$.}  For $\Omega_k = 0.7$ one must use
+$D_M = (d_H/\sqrt{\Omega_k})\sinh(\sqrt{\Omega_k}\,\chi/d_H)$, not $\chi$.  With the
+$\sinh$ the maximum is at $z_{\max} = 1.90$, $D_A^{\max} = 1583$~Mpc
+(check B12f); using $\chi/(1+z)$ instead gives $z = 1.47$, $1445$~Mpc, which is
+the flat-geometry formula applied to an open expansion history.  (The script's
+\texttt{DAFunc} now uses $D_M$ with the $\sinh$, check B25.)
+\end{derivation}
 % ----- Exercise 3.4 -----
 \subsection*{Exercise~\ref{ex:real_lens}: Distances for Q0957+561}
 
@@ -161,6 +277,13 @@ Using the concordance cosmology with $\Hubble = 70$~km\,s$^{-1}$\,Mpc$^{-1}$:
 $\Dds = 1155$~Mpc, about $1.6$ times larger.  This
 confirms that angular diameter distances do not add linearly.
 
+
+\begin{annotation}[The size of the gap, predicted]
+For a flat universe $\Dds - (\Ds - \Dd) = \Dd(z_s - z_d)/(1+z_s)$ exactly
+(annotation after the subtraction-trap remark).  Here
+$1038 \times 1.05/2.41 = 452$~Mpc, which is $1155 - 702$ to rounding
+(check B23a).
+\end{annotation}
 \textbf{(c)} The critical surface mass density is:
 \[
     \Sigmacr = \frac{\speedoflight^2}{4\pi\Gnewton}
@@ -171,6 +294,17 @@ confirms that angular diameter distances do not add linearly.
 Converting to appropriate units:
 $\Sigmacr \approx 2.4 \times 10^9~\Msun\,\text{kpc}^{-2}$.
 
+
+\begin{derivation}[The unit conversion, explicitly]
+$\speedoflight^2/(4\pi\Gnewton) = 1.07\times10^{26}$~kg\,m$^{-1}$.  Multiply by
+$1~\text{Mpc} = 3.086\times10^{22}$~m and divide by $\Msun = 1.989\times10^{30}$~kg
+and by $10^6$ ($\text{Mpc}^2 \to \text{kpc}^2$): the prefactor is
+$1.663\times10^{12}\,\Msun\,\text{kpc}^{-2}$ per $\text{Mpc}^{-1}$ (check B17a).
+The distance factor is $\Ds/(\Dd\Dds) = 1740/(1038\times1155)
+= 1.45\times10^{-3}$~Mpc$^{-1}$, so
+$\Sigmacr = 1.663\times10^{12}\times1.45\times10^{-3} = 2.4\times10^9\,\Msun\,\text{kpc}^{-2}$
+(check B17b).
+\end{derivation}
 \textbf{(d)} The Einstein radius for $M = 10^{12}\,\Msun$:
 \[
     \thetaE = \sqrt{\frac{4\Gnewton M}{\speedoflight^2}
@@ -182,6 +316,15 @@ $\Sigmacr \approx 2.4 \times 10^9~\Msun\,\text{kpc}^{-2}$.
 \]
 Evaluating: $\thetaE \approx 1.1 \times 10^{-5}$~rad $\approx \boxed{2.3''}$.
 
+
+\begin{derivation}[Evaluating without a calculator slip]
+The factor $1/(3.086\times10^{22})$ converts the remaining $\text{Mpc}^{-1}$ to
+$\text{m}^{-1}$, inside the square root.  Equivalently use the scaling
+$\thetaE = 2.85''\,(M/10^{12}\Msun)^{1/2}(\mathcal D/\text{Gpc}^{-1})^{1/2}$
+(check B19e) with $\mathcal D = \Dds/(\Dd\Ds) = 1155/(1038\times1740)$~Mpc$^{-1}$
+$= 0.64$~Gpc$^{-1}$: $2.85\times0.80 = 2.3''$ ($1.1\times10^{-5}$~rad;
+check B19b).
+\end{derivation}
 % ----- Exercise 3.5 -----
 \subsection*{Exercise~\ref{ex:einstein_radius_numerical}: Einstein Radius for a Typical Galaxy Lens}
 
@@ -212,6 +355,13 @@ This confirms that galaxy-scale lenses with $M \sim 10^{12}\,\Msun$
 produce Einstein rings of order $\sim 1''$--$3''$, depending on the
 distance configuration.
 
+
+\begin{derivation}[Part (b) in one line]
+$\mathcal D = \Dds/(\Dd\Ds) = 1055/(919\times1652)$~Mpc$^{-1}$ $= 0.695$~Gpc$^{-1}$,
+so $\thetaE = 2.85''\sqrt{0.695} = 2.38''$ (check B19f).  The Schwarzschild
+radius quoted, $2.95\times10^{15}$~m $= 0.096$~pc, enters as
+$4\Gnewton M/\speedoflight^2 = 2\RS$ (check B19d).
+\end{derivation}
 \textbf{(c)} Since $\thetaE \propto \sqrt{M}$:
 \[
     \thetaE = 2.4'' \times \sqrt{\frac{M}{10^{12}\,\Msun}}
@@ -228,8 +378,26 @@ $\thetaE \propto \Dd^{-1/2} \to \infty$, because the lens is very close) and
 vanishes as $z_d \to z_s$ ($\Dds \to 0$); for example
 $\thetaE \approx 6.2''$ at $z_d = 0.05$ and $1.7''$ at $z_d = 0.5$.  The
 \emph{physical} Einstein radius $\RE = \Dd\thetaE$ is what peaks, at
-$z_d \approx 0.35$ ($\RE \approx 10.7$~kpc), roughly midway to the source.
+$z_d \approx 0.35$ ($\RE \approx 10.7$~kpc), a little short of the comoving
+midpoint ($\chi_d \approx 0.42\,\chi_s$).
 In practice, $\thetaE$ is very large for nearby lenses but the
 lensing cross-section becomes negligible.  The physically relevant
 quantity is the \textit{probability} of lensing, which peaks at
 intermediate $z_d$.
+
+\begin{annotation}[Why $\thetaE$ falls but $\RE$ peaks]
+$\thetaE^2 \propto \mathcal D = \Dds/(\Dd\Ds)$, which is strictly decreasing in
+$z_d$ at fixed $z_s$ (check B16d).  $\RE^2 = \Dd^2\thetaE^2 \propto
+\Dd\Dds/\Ds$, the efficiency function, which in a flat universe is
+$\chi_d(\chi_s-\chi_d)/[(1+z_d)\chi_s]$: a parabola in $\chi_d$ tilted toward the
+observer by $1/(1+z_d)$, so its peak ($z_d = 0.35$ for $z_s = 1$) lies a little
+short of the comoving midpoint (checks B16a--c).
+\end{annotation}
+
+\begin{bridge}[From one source plane to two]
+Every number in this exercise is a function of $(z_d, z_s)$ through four
+comoving distances.  With a second source at $z_{s_2}$ behind the first, the same
+lens has two Einstein radii, and their ratio for an isothermal lens is the
+distance ratio $\Brat$ of Chapter~\ref{ch:multiplane_dspl}; that ratio does not
+depend on $M$ or $\Hubble$, only on the cosmological shape parameters.
+\end{bridge}

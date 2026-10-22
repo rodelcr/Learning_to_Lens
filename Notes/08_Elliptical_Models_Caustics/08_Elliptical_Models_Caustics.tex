@@ -18,7 +18,7 @@ qualitatively new image configurations [\ldots]}
 \end{quote}
 
 \noindent
-In Modules~\ref{ch:magnification} and~\ref{ch:axisymmetric_models} we
+In Chapters~\ref{ch:magnification} and~\ref{ch:axisymmetric_models} we
 developed the Jacobian formalism for magnification and applied it to
 axisymmetric lens models: the point mass and the singular isothermal
 sphere (SIS).  These models have a continuous rotational symmetry that
@@ -42,7 +42,7 @@ symmetry introduces qualitatively new phenomena:
           the caustic structure.
 \end{itemize}
 
-This module introduces the two workhorse non-axisymmetric models
+This chapter introduces the two workhorse non-axisymmetric models
 (SIS + external shear and the singular isothermal ellipsoid) and then
 develops the theory of critical curves, caustics, and image topology
 in full detail.  The image topology section is the conceptual heart
@@ -67,7 +67,7 @@ of strong lensing theory.
 \section{Introduction: Why Non-Axisymmetric Models Matter}
 \label{sec:elliptical_intro}
 
-The singular isothermal sphere (Module~\ref{ch:axisymmetric_models}) is
+The singular isothermal sphere (Chapter~\ref{ch:axisymmetric_models}) is
 an excellent starting point for galaxy-scale lensing.  Its velocity
 dispersion $\sigma_v$ maps directly onto observable galaxy kinematics,
 and its Einstein radius $\thetaE = 4\pi\sigma_v^2 \Dds/(\speedoflight^2
@@ -124,6 +124,30 @@ chosen the shear to be aligned with the $\theta_1$-axis (the general
 case involves a rotation by the shear angle $\phi_\gamma$).  The
 first term is the SIS potential; the second is the external shear
 contribution.
+
+\begin{annotation}[Shear angle, sign convention, units]
+For a shear of strength $\gamma_{\mathrm{ext}}$ at angle $\phi_\gamma$ the
+quadratic potential is
+$\psiL_\gamma = \tfrac12\gamma_{\mathrm{ext}}|\vectheta|^2\cos 2(\phi-\phi_\gamma)
+= \tfrac12\big[\gamma_1(\theta_1^2-\theta_2^2) + 2\gamma_2\theta_1\theta_2\big]$,
+with $(\gamma_1,\gamma_2) = \gamma_{\mathrm{ext}}(\cos 2\phi_\gamma,\sin 2\phi_\gamma)$;
+eq.~\eqref{eq:psi_sis_shear} is the case $\phi_\gamma = 0$.  Three traps.
+(i)~The components depend on $2\phi_\gamma$: $\phi_\gamma$ and
+$\phi_\gamma+\pi$ are the same shear (a spin-2 quantity, like an ellipse).
+(ii)~With this sign, for $\gamma_2 = 0$ the Jacobian is
+$\mathrm{diag}(1-\gamma_1,\,1+\gamma_1)$, so images are stretched
+\emph{along} $\phi_\gamma$.
+(iii)~The perturbing mass does \emph{not} sit at $\phi_\gamma$: a distant point
+mass $m$ on the $+\theta_1$ axis at distance $D$ produces, at the origin,
+$\gamma_1 = -m/D^2 < 0$, $\gamma_2 = 0$, $\kappab = 0$, i.e.\
+$\phi_\gamma = 90^\circ$.  Images are stretched \emph{tangentially} about the
+perturber, exactly as arcs are stretched tangentially about a cluster.  Codes
+and papers differ on whether they quote $\phi_\gamma$ or the direction to the
+perturber; check which before comparing.
+Units: $\psiL$ is in arcsec$^2$ (e.g.\ $\thetaE|\vectheta|$), $\vecalpha$ in
+arcsec, $\kappab$ and $\gammaL$ are dimensionless.
+\end{annotation}
+
 
 \subsection{Deflection Angle}
 
@@ -195,6 +219,46 @@ along $\theta_1$ (approximately elliptical for small
 $\gamma_{\mathrm{ext}}$; the deviation from a true ellipse reaches
 ${\sim}1.5\%$ at $\gamma_{\mathrm{ext}} = 0.1$).
 
+\begin{derivation}[The SIS$+$shear Jacobian and its determinant, line by line]
+\textit{SIS Hessian.}  With $\theta = |\vectheta|$ and
+$\partial_i\theta = \theta_i/\theta$,
+\[
+  \partial_i(\thetaE\theta) = \thetaE\frac{\theta_i}{\theta},
+  \qquad
+  \partial_j\partial_i(\thetaE\theta)
+  = \thetaE\Big(\frac{\delta_{ij}}{\theta} - \frac{\theta_i\theta_j}{\theta^3}\Big)
+  = \frac{\thetaE}{\theta^3}\big(\delta_{ij}\theta^2 - \theta_i\theta_j\big).
+\]
+\textit{Shear Hessian.}  $\partial_1^2\psiL_\gamma = g$,
+$\partial_2^2\psiL_\gamma = -g$, $\partial_1\partial_2\psiL_\gamma = 0$.
+
+\textit{Polar substitution.}  $\theta_2^2/\theta^3 = \sin^2\phi/\theta$,
+$\theta_1^2/\theta^3 = \cos^2\phi/\theta$, $\theta_1\theta_2/\theta^3 =
+\sin\phi\cos\phi/\theta$.  With $u = \thetaE/\theta$ and
+$\Amat_{ij} = \delta_{ij} - \partial_i\partial_j\psiL$ this gives the three
+entries quoted above (note $\Amat_{12} = -\partial_1\partial_2\psiL =
++u\sin\phi\cos\phi$).
+
+\textit{Determinant} ($s = \sin\phi$, $c = \cos\phi$):
+\begin{align*}
+  \det\Amat
+  &= (1-g-us^2)(1+g-uc^2) - u^2s^2c^2 \\
+  &= (1-g^2) - u\big[(1+g)s^2 + (1-g)c^2\big] + u^2s^2c^2 - u^2s^2c^2 \\
+  &= (1-g^2) - u\,(1 - g\cos 2\phi),
+\end{align*}
+using $s^2 + c^2 = 1$ and $c^2 - s^2 = \cos 2\phi$ in the bracket.  The $u^2$
+terms cancel identically because the SIS Hessian has a zero eigenvalue in the
+radial direction (rank one); the same fact gives $\det\Amat = 1 - 2\kappab$ for
+every isothermal lens (box in \S\ref{sec:sie_deflection} below).
+
+\textit{Solve.}  $\det\Amat = 0 \Rightarrow u = (1-g^2)/(1-g\cos2\phi)$, and
+$\theta = \thetaE/u$ is eq.~\eqref{eq:crit_sis_shear}.  Sanity values:
+$\theta_{\mathrm{crit}}(0) = \thetaE/(1+g)$ and
+$\theta_{\mathrm{crit}}(\pi/2) = \thetaE/(1-g)$, i.e.\ $0.909''$ and
+$1.111''$ for $\thetaE = 1''$, $g = 0.1$.
+\end{derivation}
+
+
 \begin{remark}
 The critical curve is elongated \textit{perpendicular} to the shear
 direction.  This is physically intuitive: the shear stretches images
@@ -228,6 +292,45 @@ proportional to $\gamma_{\mathrm{ext}}$: for
 $\gamma_{\mathrm{ext}} = 0$, the caustic degenerates to a point
 (the SIS point caustic), and for larger shear values, the diamond
 grows.
+
+\begin{derivation}[Closed form of the SIS$+$shear caustic, its cusps and area]
+Insert $\theta_{\mathrm{crit}}$ into eq.~\eqref{eq:caustic_sis_shear_1} and use
+$(1-g)/(1-g^2) = 1/(1+g)$:
+\begin{align*}
+  \beta_1 &= \cos\phi\,\big[(1-g)\theta_{\mathrm{crit}} - \thetaE\big]
+  = \thetaE\cos\phi\Big[\frac{1-g\cos2\phi}{1+g} - 1\Big]\\
+  &= -\frac{g\thetaE\cos\phi\,(1+\cos2\phi)}{1+g}
+  = -\frac{2g\thetaE}{1+g}\cos^3\phi ,
+\end{align*}
+with $1+\cos2\phi = 2\cos^2\phi$.  In the same way, with
+$(1+g)/(1-g^2) = 1/(1-g)$ and $1-\cos2\phi = 2\sin^2\phi$,
+$\beta_2 = +\dfrac{2g\thetaE}{1-g}\sin^3\phi$.
+
+\textit{Cusps.}  $d\beta_1/d\phi = \frac{6g\thetaE}{1+g}\cos^2\phi\sin\phi$ and
+$d\beta_2/d\phi = \frac{6g\thetaE}{1-g}\sin^2\phi\cos\phi$ vanish together iff
+$\sin\phi\cos\phi = 0$: the curve stops and reverses at
+$\phi = 0, \pi/2, \pi, 3\pi/2$ (cusps); everywhere else its tangent is
+non-zero (folds).
+
+\textit{Size.}  Semi-axes $a = 2g\thetaE/(1+g)$ along $\beta_1$ and
+$b = 2g\thetaE/(1-g)$ along $\beta_2$ ($0.182''$ and $0.222''$ for
+$g = 0.1$, $\thetaE = 1''$).  For the curve $(a\cos^3\phi, b\sin^3\phi)$ the
+enclosed area is $\big|\oint\beta_1\,d\beta_2\big| = 3ab\int_0^{2\pi}\cos^4\phi
+\sin^2\phi\,d\phi = 3\pi ab/8$, i.e.\
+$3\pi g^2\thetaE^2/[2(1-g^2)] = 0.0476$~arcsec$^2$ for $g = 0.1$
+(Exercise~\ref{ex:sis_shear_crit}).
+\end{derivation}
+
+\begin{annotation}[Which way does each cusp point?]
+The critical point on the $+\theta_1$ axis, at $\thetaE/(1+g)$, maps to
+$\beta_1 = -2g\thetaE/(1+g) < 0$: the \emph{opposite} side.  The critical
+point on the $+\theta_2$ axis, at $\thetaE/(1-g)$, maps to
+$\beta_2 = +2g\thetaE/(1-g) > 0$: the \emph{same} side.  The caustic is
+therefore not the critical curve shrunk in place.  Both curves have their long
+axis along $\theta_2$ ($b > a$), perpendicular to $\phi_\gamma$.  As
+$g \to 0$, $a, b \to 2g\thetaE \to 0$: the SIS point caustic is recovered.
+\end{annotation}
+
 
 \begin{figure}[ht]
     \centering
@@ -299,6 +402,26 @@ density $\Sigma = \sigma_v^2/(2\Gnewton\xi)$.
 
 The factor $\sqrt{q}$ ensures that the total mass enclosed within a
 given elliptical radius is consistent with the isothermal profile.
+
+\begin{annotation}[Conventions: $q$, $\epsilon$, $e$, and the $\sqrt{q}$ normalization]
+Three ellipticity variables appear in this chapter and in modeling codes: the
+axis ratio $q = b/a$; the flattening $\epsilon = 1-q$ (used in
+\S\ref{sec:which_multipoles}); and $e = (1-q)/(1+q)$ (the ``equivalent shear''
+of Exercise~\ref{ex:sie_caustic}).  For $q = 0.7$: $\epsilon = 0.3$ but
+$e = 0.176$.  Putting one where the other is meant is nearly a factor-of-two error (1.7 at $q = 0.7$).
+
+The $\sqrt{q}$ can be absorbed into a more symmetric form,
+$\kappab = \thetaE\big/\big(2\sqrt{q\theta_1^2 + \theta_2^2/q}\big)$, which is
+the same function as eq.~\eqref{eq:sie_kappa}.  With this normalization the
+tangential critical curve encloses area $\pi\thetaE^2$ and mean convergence
+exactly 1 for every $q$ (box in the critical-curve subsection below).  That is
+what ``SIS-equivalent'' Einstein radius means here.
+
+Units check: $[\sigma_v^2/(\Gnewton\xi)] =
+(\mathrm{cm^2\,s^{-2}})/(\mathrm{cm^3\,g^{-1}\,s^{-2}}\cdot\mathrm{cm}) =
+\mathrm{g\,cm^{-2}}$, a surface density, as it should be.
+\end{annotation}
+
 
 Converting to angular coordinates via $\vecxi = \Dd\vectheta$ and
 dividing by the critical surface density gives the dimensionless
@@ -396,6 +519,54 @@ cancellation is carried out symbolically in
     \label{eq:sie_gradient_check}
 \end{equation}
 
+\begin{derivation}[The cancellation in Step 3, written out]
+Let $k \equiv \sqrt{1-q^2}$, $F = \sqrt{q^2\theta_1^2+\theta_2^2}$,
+$\theta^2 = \theta_1^2+\theta_2^2$, and call the two arguments
+$x = k\theta_1/F$, $y = k\theta_2/F$.  The prefactor is
+$C = \thetaE\sqrt{q}/k$.
+
+\textit{(1) Inner derivatives} (quotient rule, $\partial_1F = q^2\theta_1/F$,
+$\partial_2F = \theta_2/F$):
+\begin{align*}
+  \partial_1x &= \frac{k(F^2-q^2\theta_1^2)}{F^3} = \frac{k\theta_2^2}{F^3}, &
+  \partial_2x &= -\frac{k\theta_1\theta_2}{F^3},\\
+  \partial_1y &= -\frac{kq^2\theta_1\theta_2}{F^3}, &
+  \partial_2y &= \frac{k(F^2-\theta_2^2)}{F^3} = \frac{kq^2\theta_1^2}{F^3}.
+\end{align*}
+\textit{(2) Outer derivatives.}  Because
+$F^2 + k^2\theta_1^2 = q^2\theta_1^2 + \theta_2^2 + (1-q^2)\theta_1^2 = \theta^2$
+and $F^2 - k^2\theta_2^2 = q^2\theta^2$,
+\[
+  \frac{d\arctan x}{dx} = \frac{1}{1+x^2} = \frac{F^2}{\theta^2},
+  \qquad
+  \frac{d\operatorname{arctanh} y}{dy} = \frac{1}{1-y^2} = \frac{F^2}{q^2\theta^2}.
+\]
+\textit{(3) Chain rule.}
+\[
+  \partial_1\alpha_1 = C\frac{F^2}{\theta^2}\frac{k\theta_2^2}{F^3}
+  = \frac{\thetaE\sqrt{q}\,\theta_2^2}{\theta^2F},\qquad
+  \partial_2\alpha_2 = C\frac{F^2}{q^2\theta^2}\frac{kq^2\theta_1^2}{F^3}
+  = \frac{\thetaE\sqrt{q}\,\theta_1^2}{\theta^2F},
+\]
+\[
+  \partial_2\alpha_1 = \partial_1\alpha_2
+  = -\frac{\thetaE\sqrt{q}\,\theta_1\theta_2}{\theta^2F}.
+\]
+\textit{(4) Consequences.}  $\partial_2\alpha_1 = \partial_1\alpha_2$: the field
+is curl-free, so a potential exists.  And
+\[
+  \theta_j\partial_1\alpha_j
+  = \frac{\thetaE\sqrt{q}}{\theta^2F}\big(\theta_1\theta_2^2 - \theta_2\theta_1\theta_2\big) = 0,
+  \qquad
+  \theta_j\partial_2\alpha_j
+  = \frac{\thetaE\sqrt{q}}{\theta^2F}\big(-\theta_1^2\theta_2 + \theta_2\theta_1^2\big) = 0,
+\]
+which is the condition of Step~3.  (With a symmetric Hessian,
+$\theta_j\partial_i\alpha_j = \theta_j\partial_j\alpha_i$, which vanishes by
+Euler's theorem because each $\alpha_i$ is homogeneous of degree~0.)
+\end{derivation}
+
+
 \paragraph{Step 4: verify $\nabla^2\psiL = 2\kappab$.}
 Computing
 $\nabla^2\psiL = \partial_1\alpha_1 + \partial_2\alpha_2$ from
@@ -406,22 +577,48 @@ $\nabla^2\psiL = \partial_1\alpha_1 + \partial_2\alpha_2$ from
        \frac{\partial}{\partial\theta_1}\!
             \arctan\!\!\left(\frac{\theta_1\sqrt{1-q^2}}{F}\right)
      = \frac{\thetaE\sqrt{q}}{\sqrt{1-q^2}}
-       \cdot \frac{\sqrt{1-q^2}}{F}\cdot \frac{\theta_2^2}{q^2\theta_1^2+\theta_2^2} \\
-    &= \frac{\thetaE\sqrt{q}\,\theta_2^2}{F^{3}},
+       \cdot \frac{F^2}{\theta^2}\cdot\frac{\sqrt{1-q^2}\,\theta_2^2}{F^{3}} \\
+    &= \frac{\thetaE\sqrt{q}\,\theta_2^2}{\theta^2 F},
     \\[2pt]
     \partial_2\alpha_2
-    &= \frac{\thetaE\sqrt{q}\,q^2\theta_1^2}{F^{3}},
+    &= \frac{\thetaE\sqrt{q}\,\theta_1^2}{\theta^2 F},
 \end{align*}
 after applying the chain rule to $\partial_i F = q^{2(1-\delta_{i2})}\theta_i/F$
-and simplifying.  Adding:
+and simplifying, with $\theta^2 = \theta_1^2+\theta_2^2$.  Adding:
 \begin{equation}
     \nabla^2\psiL \;=\;
-        \frac{\thetaE\sqrt{q}\,(q^2\theta_1^2 + \theta_2^2)}{F^{3}}
+        \frac{\thetaE\sqrt{q}\,(\theta_1^2 + \theta_2^2)}{\theta^2 F}
     \;=\; \frac{\thetaE\sqrt{q}}{F}
     \;=\; 2\,\kappab(\vectheta),
     \label{eq:sie_poisson_check}
 \end{equation}
 matching \eqref{eq:sie_kappa}.  This completes the verification.
+
+\begin{derivation}[Every isothermal lens has $\det\Amat = 1 - 2\kappab$]
+From the Step-3 box (and Step~4), the SIE Hessian is
+\[
+  \partial_i\partial_j\psiL = \frac{\thetaE\sqrt{q}}{\theta^2F}
+  \begin{pmatrix}\theta_2^2 & -\theta_1\theta_2\\ -\theta_1\theta_2 & \theta_1^2\end{pmatrix}
+  = 2\kappab\;\hat{t}\,\hat{t}^{\mathsf T},
+  \qquad \hat{t} = \frac{(-\theta_2,\theta_1)}{\theta},
+\]
+since $\thetaE\sqrt{q}/F = 2\kappab$.  Hence
+$\Amat = \mathbb{I} - 2\kappab\,\hat{t}\hat{t}^{\mathsf T}$.  The radial
+direction has eigenvalue $1$ and the tangential direction $1-2\kappab$, so
+\[
+  \det\Amat = 1 - 2\kappab, \qquad |\gammaL| = \kappab, \qquad
+  \mu = \frac{1}{1-2\kappab}.
+\]
+This holds for \emph{any} isothermal potential $\psiL = \theta\,G(\phi)$.  In
+polar components $\partial_\theta^2\psiL = 0$, the mixed term
+$\partial_\theta(\theta^{-1}\partial_\phi\psiL) = 0$, and the tangential entry
+is $(G+G'')/\theta = 2\kappab$; compare eq.~\eqref{eq:ring_crit}.
+Consequences: (i)~the radial eigenvalue is identically 1, so there is no
+radial critical curve; (ii)~the tangential critical curve is the contour
+$2\kappab = 1$; (iii)~an image's magnification follows from the local
+$\kappab$ alone, a fast hand check (\S\ref{sec:image_configurations}).
+\end{derivation}
+
 
 \paragraph{Step 5: the SIS limit $q \to 1$.}
 As $q\to 1^-$, $\sqrt{1-q^2}\to 0$ and the arguments of the inverse
@@ -437,12 +634,14 @@ which is the SIS deflection.  The limit is taken symbolically in
 
 The critical curves of the SIE are found by solving
 $\det\Amat(\vectheta) = 0$.  Unlike the SIS (where the critical
-curve is a circle), the SIE critical curves are smooth oval curves
-whose shape depends on $q$.
+curve is a circle), the SIE tangential critical curve is an
+ellipse, $q^2\theta_1^2 + \theta_2^2 = q\thetaE^2$, with the same
+axis ratio $q$ as the mass (it is the contour $2\kappab = 1$ of
+eq.~\eqref{eq:sie_kappa}).  Its shape depends on $q$.
 
 For axis ratios $q \lesssim 0.9$, the SIE has:
 \begin{itemize}
-    \item A \textbf{tangential critical curve}: a smooth oval close
+    \item A \textbf{tangential critical curve}: an ellipse close
           to the Einstein radius, elongated \emph{along} the mass
           distribution's major axis.  Concretely, with $q < 1$ and
           mass elongated along $\theta_1$, the critical curve
@@ -459,6 +658,83 @@ The SIE, being singular at the origin, does not have a radial
 critical curve (just as the SIS does not).  A non-singular
 isothermal ellipsoid would also have a radial critical curve mapping
 to a radial caustic.
+
+\begin{derivation}[The SIE critical curve is an exact ellipse of area $\pi\thetaE^2$; its cusps]
+\textit{Critical curve.}  $2\kappab = 1 \Leftrightarrow F = \thetaE\sqrt{q}
+\Leftrightarrow q^2\theta_1^2 + \theta_2^2 = q\thetaE^2$.  This is an ellipse
+with semi-axes $\thetaE/\sqrt{q}$ (along $\theta_1$) and $\thetaE\sqrt{q}$
+(along $\theta_2$), the same axis ratio $q$ and orientation as the mass.  Its
+area is $\pi(\thetaE/\sqrt{q})(\thetaE\sqrt{q}) = \pi\thetaE^2$.
+
+\textit{Mass inside it.}  Use $\theta_1 = r\cos t/q$, $\theta_2 = r\sin t$, so
+$F = r$ and $d^2\theta = (r/q)\,dr\,dt$:
+\[
+  \int\kappab\,d^2\theta = \int_0^{2\pi}\!\!\int_0^{\thetaE\sqrt{q}}
+  \frac{\thetaE\sqrt{q}}{2r}\,\frac{r}{q}\,dr\,dt = \pi\thetaE^2 .
+\]
+The mean convergence inside the critical curve is exactly 1 for every $q$.
+This is the elliptical analogue of $\bar\kappab(\thetaE) = 1$, and it is why
+$M_{\mathrm{E}} = \pi\thetaE^2\Dd^2\Sigmacr$ (Chapter~\ref{ch:galaxy_lensing},
+eq.~\eqref{eq:mass_einstein}) holds for the SIE without any $q$ correction.
+
+\textit{Cusps.}  At a critical point let $\vec{e}$ be the zero-eigenvalue
+eigenvector of $\Amat$.  The caustic tangent is
+$d\vecbeta/ds = \Amat\,d\vectheta/ds$, which vanishes (a cusp) exactly where the
+critical-curve tangent $d\vectheta/ds$ is parallel to $\vec{e}$.  For the SIE,
+$\vec{e} = \hat{t} \propto (-\theta_2,\theta_1)$ and the curve tangent is
+perpendicular to $\nabla F$.  Since
+$(-\theta_2,\theta_1)\cdot\nabla F = \theta_1\theta_2(1-q^2)/F$, the cusps sit
+where $\theta_1\theta_2 = 0$: the four points on the axes.  All other points
+are folds.
+
+\textit{Cusp positions.}  Map $\vectheta = (\thetaE/\sqrt{q},0)$ and
+$(0,\thetaE\sqrt{q})$ through eq.~\eqref{eq:sie_alpha}.  The arguments become
+$k/q$ and $k$, giving
+\[
+  \beta_1^{\mathrm{cusp}} = \frac{\thetaE}{\sqrt{q}} - \frac{\thetaE\sqrt{q}}{k}\arctan\frac{k}{q},
+  \qquad
+  \beta_2^{\mathrm{cusp}} = \thetaE\sqrt{q} - \frac{\thetaE\sqrt{q}}{k}\operatorname{arctanh}k .
+\]
+For $q = 0.7$ these are $0.263\,\thetaE$ and $-0.213\,\thetaE$; for $q = 0.8$
+they are $0.159\,\thetaE$ and $-0.139\,\thetaE$.  The negative sign means the
+$\theta_2$-axis cusp lands on the opposite side.
+\end{derivation}
+
+\begin{annotation}[The cut: what replaces the radial caustic of a singular lens]
+For a singular isothermal lens $\vecalpha$ does not vanish at the centre.  As
+$\vectheta \to 0$ along direction $\phi$, $\vecalpha$ tends to a finite,
+direction-dependent limit, so an infinitesimal circle about the centre maps to
+a closed curve in the source plane.  This curve is often called the
+\emph{cut} or pseudo-caustic.  For $q = 0.7$ it crosses the axes at
+$|\beta_1| = 0.932\,\thetaE$ and $|\beta_2| = 1.049\,\thetaE$.  It splits the
+source plane by image count: one image outside the cut, two between the cut
+and the diamond, four inside the diamond.  The SIS limit is the familiar
+statement that $\beta > \thetaE$ gives one image.
+
+As $q$ decreases the diamond grows faster than the cut.  For $q < 0.394$ the
+$\beta_1$ cusps poke outside it (\emph{naked cusps}).  A source in the
+protruding tip then has three images: for $q = 0.3$, a source halfway between
+the cut and the cusp tip on the $\beta_1$ axis gives 3 images in
+\texttt{problems\_08.wl}.
+\end{annotation}
+
+\begin{bridge}[Chapter~\ref{ch:multiplane_dspl}: the SIE Einstein-radius ratio]
+In a double-source-plane lens, ignoring the mass of the near source, number
+the planes as in Part~V: plane~1 is the near source, plane~2 the far one.  The
+same deflector then has $\kappab_1 = \Brat\,\kappab_2$, where
+$\Brat = D_{l,s1}D_{s2}/(D_{s1}D_{l,s2}) < 1$ is the ratio of $\Dds/\Ds$ for
+the two sources, a ratio of four angular-diameter distances.
+The SIE enters only through $\thetaE \propto \Dds/\Ds$, so plane~1 sees the
+same SIE with $\thetaE^{(1)} = \Brat\,\thetaE^{(2)}$.  Its critical ellipse is
+the plane-2 ellipse scaled by $\Brat$ along \emph{both} axes, so the measured
+Einstein-radius ratio $\etamea = \thetaE^{(1)}/\thetaE^{(2)}$ equals $\Brat$
+independently of $q$.  Any convention that
+multiplies $\thetaE$ by a $q$-dependent factor, the $\sqrt{q}$ here or another,
+cancels in the ratio.  Chapter~\ref{ch:multiplane_dspl} uses exactly this to
+read $\Brat$, and hence cosmology, off a DSPL with an elliptical main
+deflector.
+\end{bridge}
+
 
 The cross-section for quad lensing (the area enclosed by the
 tangential caustic) increases with ellipticity.  For $q = 0.7$, the
@@ -505,10 +781,10 @@ $\varphi$ (with $\vectheta = \theta(\cos\varphi,\sin\varphi)$):
     \label{eq:multipole_series}
 \end{equation}
 where $\psiL_0$ is the monopole (the axisymmetric part of
-Module~\ref{ch:axisymmetric_models}) and each $m \ge 1$ term has its own
+Chapter~\ref{ch:axisymmetric_models}) and each $m \ge 1$ term has its own
 orientation $\varphi_m$.  The convergence of a single multipole follows
 from the two-dimensional Poisson equation $\nabla^2\psiL = 2\kappab$
-(Module~\ref{ch:magnification}), with the Laplacian in polar coordinates
+(Chapter~\ref{ch:magnification}), with the Laplacian in polar coordinates
 $\nabla^2 = \partial_\theta^2 + \theta^{-1}\partial_\theta
 + \theta^{-2}\partial_\varphi^2$.
 
@@ -533,6 +809,33 @@ Two limits anchor this result:
           --- the leading \textbf{quadrupole}, the elliptical
           distortion of an isothermal galaxy.
 \end{itemize}
+
+\begin{derivation}[The ``direct computation'' of eq.~\eqref{eq:kappa_multipole}]
+For $\psiL_m = a\,\theta\cos m(\varphi-\varphi_m)$ the three terms of the
+polar Laplacian are
+$\partial_\theta^2\psiL_m = 0$,
+$\theta^{-1}\partial_\theta\psiL_m = a\cos m(\varphi-\varphi_m)/\theta$, and
+$\theta^{-2}\partial_\varphi^2\psiL_m = -a\,m^2\cos m(\varphi-\varphi_m)/\theta$.
+Their sum is $a(1-m^2)\cos m(\varphi-\varphi_m)/\theta = 2\kappab_m$.
+\end{derivation}
+
+\begin{annotation}[The isothermal dipole is massless; signs of the quadrupole]
+For $m = 1$ the factor $(1-m^2)$ vanishes: $\kappab_1 = 0$.  Indeed
+$\psiL_1 = a_1\theta\cos(\varphi-\varphi_1) = a_1\,\hat{n}\cdot\vectheta$ with
+$\hat n = (\cos\varphi_1,\sin\varphi_1)$.  Its deflection is the constant
+vector $a_1\hat{n}$, a rigid shift of the source plane.  That is why the
+dipole is ``nearly degenerate with the source position'': in pure isothermal
+form it is \emph{exactly} degenerate, and a physical lopsidedness needs a
+radial profile other than $\propto\theta$.
+
+Sign trap for $m \ge 2$: $\kappab_m$ has the opposite sign to $\psiL_m$.  A
+potential quadrupole $\propto +\cos 2\varphi$ means a mass \emph{deficit} along
+$\varphi = 0$ and an excess along $\varphi = \pi/2$.  Consistently, the SIE of
+\S\ref{sec:sie}, with mass elongated along $\theta_1$, has a \emph{negative}
+$\cos 2\varphi$ coefficient in its potential.  For $q = 0.7$ the coefficient of
+$\psiL(\cos\varphi,\sin\varphi)$ is $-0.059\,\thetaE$.
+\end{annotation}
+
 
 \subsection{Internal vs.\ External Multipoles}
 \label{sec:int_ext_multipoles}
@@ -580,10 +883,23 @@ typical lens with $\thetaE \sim 1''$:
           degenerate with the source position and rarely matters.
 \end{itemize}
 The practical lesson --- and a recurring theme of the applications in
-Module~\ref{ch:galaxy_lensing} --- is that a monopole plus an external
+Chapter~\ref{ch:galaxy_lensing} --- is that a monopole plus an external
 shear (a single quadrupole) captures most of the constrainable angular
 structure, with the $m=4$ term becoming relevant only for markedly
 flattened lenses.
+
+\begin{bridge}[Chapter~\ref{ch:multipoles}: angular structure versus a central mass]
+Chapter~\ref{ch:multipoles} asks whether angular structure in the main
+deflector ($m = 1$ lopsidedness, $m = 3$, the $m = 4$ boxy/discy term) can be
+confused with, or hide, a compact central mass in a compound lens.  Both kinds
+of perturbation alter the deflection field near the Einstein ring where the
+images form.  It builds on this section: the convergence of an isothermal
+multipole, eq.~\eqref{eq:kappa_multipole}; the fact that an isothermal $m = 1$
+term is a pure source shift (previous box); and the internal/external split,
+which decides whether a multipole fitted at the ring must also be present at
+the radius of an inner source.
+\end{bridge}
+
 
 
 % =====================================================================
@@ -591,7 +907,7 @@ flattened lenses.
 \label{sec:critical_curves}
 
 We now develop the general theory of critical curves, building on
-the preview in Module~\ref{ch:magnification}
+the preview in Chapter~\ref{ch:magnification}
 (Section~\ref{sec:critical_curves_preview}).
 
 \begin{definition}
@@ -611,7 +927,7 @@ Equivalently, $\mu(\vectheta) \to \infty$ on critical curves.
 \subsection{Two Families of Critical Curves}
 
 Using the eigenvalues $\lambda_\pm = 1 - \kappab \pm |\gammaL|$ of
-the Jacobian (Module~\ref{ch:magnification}, eq.~\ref{eq:eigenvalues}),
+the Jacobian (Chapter~\ref{ch:magnification}, eq.~\ref{eq:eigenvalues}),
 the condition $\det\Amat = \lambda_+\,\lambda_- = 0$ is satisfied
 when either eigenvalue vanishes:
 
@@ -636,6 +952,26 @@ when either eigenvalue vanishes:
     lens center) form near radial critical curves, though they are
     rarer and fainter than tangential arcs.
 \end{enumerate}
+
+\begin{annotation}[Which eigenvalue is ``tangential''?]
+Always $\lambda_- = 1-\kappab-|\gammaL| \le \lambda_+$.  For an axisymmetric
+lens $|\gammaL| = \bar\kappab - \kappab$, where $\bar\kappab = \alpha/\theta$
+is the mean convergence inside $\theta$.  Then
+\[
+  \lambda_- = \lambda_t = 1 - \frac{\alpha}{\theta} = 1 - \bar\kappab,
+  \qquad
+  \lambda_+ = \lambda_r = 1 - \frac{d\alpha}{d\theta} = 1 - 2\kappab + \bar\kappab .
+\]
+$\lambda_t = 0$ is the Einstein-ring condition $\bar\kappab = 1$, and
+$\lambda_r = 0$ requires $d\alpha/d\theta = 1$.  The latter is impossible for
+the SIS ($\alpha$ constant) and for any isothermal lens, whose radial
+eigenvalue is identically 1 (box in \S\ref{sec:sie_deflection}).  Classic
+error: taking ``radial critical curve'' to mean $\kappab = 1$; the condition
+involves both $\kappab$ and $\bar\kappab$.  For non-axisymmetric lenses the
+eigenvectors are only approximately radial and tangential; the names describe
+the direction in which images are stretched.
+\end{annotation}
+
 
 \subsection{Critical Curves for Axisymmetric vs.\ Elliptical Lenses}
 
@@ -762,7 +1098,7 @@ lens mapping.
 \subsection{Critical Curves as Parity Boundaries}
 \label{sec:parity_boundaries}
 
-Recall from Module~\ref{ch:magnification} that the magnification is
+Recall from Chapter~\ref{ch:magnification} that the magnification is
 $\mu = 1/\det\Amat$ and that the sign of $\mu$ determines the image
 parity:
 \begin{itemize}
@@ -802,11 +1138,11 @@ For a typical galaxy lens with an elliptical mass distribution:
     \item The region \textbf{inside} the radial critical curve has
           $\det\Amat > 0$ again: images here are Type~I or Type~III
           (positive parity, but corresponding to time-delay maxima
-          for Type~III, as discussed in Module~\ref{ch:fermat_time_delays}).
+          for Type~III, as discussed in Chapter~\ref{ch:fermat_time_delays}).
 \end{itemize}
 
 \begin{remark}
-The connection to Morse theory (Module~\ref{ch:fermat_time_delays})
+The connection to Morse theory (Chapter~\ref{ch:fermat_time_delays})
 is direct.  The three image types correspond to the three types of
 stationary points of the Fermat potential: \textbf{Type~I} = minimum,
 \textbf{Type~II} = saddle, \textbf{Type~III} = maximum.  The
@@ -850,7 +1186,7 @@ Crucially, the two images that appear or disappear:
 The fact that images always appear or disappear in \textbf{pairs}
 with opposite parities is a topological necessity.  It preserves
 \textbf{Burke's odd-number theorem}
-(Module~\ref{ch:fermat_time_delays}): the total number of images is
+(Chapter~\ref{ch:fermat_time_delays}): the total number of images is
 always odd (for a non-singular, transparent lens with a source
 inside the outermost caustic).  Since images are created and
 destroyed in pairs, the parity of the count (odd or even) never
@@ -872,15 +1208,22 @@ focus on the tangential caustic.
 Consider a source that starts far from the lens and moves inward,
 crossing the caustics:
 
-\paragraph{Stage 1: Source far outside all caustics.}
-The source position $\vecbeta$ is far from the lens center, well
-outside any caustic.  For a singular model like the SIE there are
-\textbf{two images} (one Type~I outside the critical curve, near
-the true source position, and one Type~II inside the critical curve
-on the opposite side of the lens).  In a non-singular model an
-additional third image would appear at the maximum of $\tau$ near
-the lens center, but for the SIE that central image is suppressed
-because $\Sigma$ is singular at the origin.  The two observable
+\paragraph{Stage 1: Source outside the tangential caustic.}
+For the singular SIE the outermost boundary in the source plane is
+not a radial caustic but the \emph{cut} (pseudo-caustic): the closed
+curve onto which an infinitesimal circle about the singular centre
+is mapped.  If the source is beyond the cut (for $q = 0.7$,
+$|\beta_1| > 0.932\,\thetaE$ on the $\beta_1$ axis and
+$|\beta_2| > 1.049\,\thetaE$ on the $\beta_2$ axis) the SIE forms a
+\textbf{single} Type~I image, the elliptical version of the SIS rule
+that $\beta > \thetaE$ gives one image.  Once the source is inside
+the cut but still outside the diamond, there are \textbf{two images}
+(one Type~I outside the critical curve, near the true source
+position, and one Type~II inside the critical curve on the opposite
+side of the lens).  In a non-singular model a third, Type~III image
+appears near the lens center once the source is inside the radial
+caustic, but for the SIE that central image is suppressed because
+$\Sigma$ is singular at the origin.  The two observable
 images are:
 \begin{itemize}
     \item \textbf{Type~I} (positive parity, minimum of the arrival
@@ -890,6 +1233,12 @@ images are:
           time), inside the critical curve on the far side of the
           lens, also weakly magnified.
 \end{itemize}
+
+\begin{annotation}[How far is ``far''?]
+In a cored model the radial caustic replaces the cut: one image outside it,
+three inside (the table at the end of this subsection).
+\end{annotation}
+
 
 \paragraph{Stage 2: Source crosses the tangential caustic (outside
 $\to$ inside).}
@@ -959,11 +1308,12 @@ creation event.
 For a non-singular lens model (e.g., a softened isothermal
 ellipsoid), there is also a \textbf{radial caustic} enclosing the
 tangential one.  As the source crosses the radial caustic inward,
-two additional images appear near the radial critical curve (near
-the lens center), bringing the total from 3 to 5.  This gives the
-complete sequence:
+two additional images appear (a Type~II near the radial critical
+curve and the Type~III central image), bringing the total from 1
+to 3; crossing the tangential caustic then adds two more, giving 5.
+This gives the complete sequence:
 \begin{center}
-\begin{tabular}{ccccc}
+\begin{tabular}{ccc}
 \toprule
 \textbf{Region} & \textbf{Image count} & \textbf{Types} \\
 \midrule
@@ -975,6 +1325,18 @@ Inside tangential caustic & 5 & I, I, II, II, III \\
 \end{center}
 Here Type~III is a maximum of the arrival time (the highly
 demagnified central image).
+
+\begin{bridge}[Chapter~\ref{ch:odd_images}: the third image]
+The bookkeeping of this subsection is all one needs to count images in a
+compound lens.  A caustic crossing changes the number by two; parity flips
+across every critical curve; $N_+ - N_- = 1$ for a smooth, transparent lens.
+The singular SIE parks the Type~III image on the singularity with zero flux.
+A finite core brings it back, demagnified, inside the radial critical curve.
+Chapter~\ref{ch:odd_images} asks what a central point mass (a supermassive
+black hole) does to that central image and to the radial caustic.  The odd
+image probes the innermost mass profile.
+\end{bridge}
+
 
 
 \subsection{The Fold and Cusp Catastrophes}
@@ -1023,6 +1385,31 @@ following properties hold:
           ``arc'' morphology.
 \end{enumerate}
 
+\begin{derivation}[Why $|\mu| \propto d_\perp^{-1/2}$ at a fold]
+Centre local coordinates on a critical point, with axes along the
+eigenvectors of $\Amat$ there.  The eigenvalues are $c \ne 0$ (along
+$\theta_\parallel$) and $0$ (along $\theta_\perp$).  Expand the lens map.
+Along $\theta_\parallel$ the linear term survives: $\beta_\parallel \simeq
+c\,\theta_\parallel$.  Along $\theta_\perp$ the linear term vanishes because
+$\det\Amat = 0$, so the leading term is quadratic: $\beta_\perp \simeq
+a\,\theta_\perp^2$ (to leading order, after a smooth change of local
+coordinates; this is the fold normal form).
+Then:
+\begin{align*}
+  \theta_\perp &= \pm\sqrt{\beta_\perp/a}
+  && \text{(real only on the side } \beta_\perp/a > 0\text{)},\\
+  \Amat &= \mathrm{diag}(c,\ 2a\theta_\perp),\quad
+  \det\Amat = 2ac\,\theta_\perp
+  && \text{(opposite signs: opposite parities)},\\
+  \mu_\pm &= \pm\frac{1}{2c\sqrt{a\beta_\perp}}
+  && \Rightarrow\ |\mu| \propto \beta_\perp^{-1/2} = d_\perp^{-1/2},
+  \quad \mu_+ + \mu_- = 0 .
+\end{align*}
+Exercise~\ref{ex:fold_magnification} is the one-dimensional version of the
+same calculation.
+\end{derivation}
+
+
 \subsubsection{Cusp Caustics}
 
 Near a \textbf{cusp} (a pointed corner of the caustic), the behavior
@@ -1063,6 +1450,35 @@ is richer:
           ensuring opposite parities.
 \end{enumerate}
 
+\begin{derivation}[The cusp relation from the cusp normal form]
+Near a cusp the lens map can be written, in local coordinates with constants
+$a, b, c$, as
+\[
+  \beta_1 = c\,\theta_1 + \tfrac{b}{2}\theta_2^2, \qquad
+  \beta_2 = b\,\theta_1\theta_2 + a\,\theta_2^3 .
+\]
+Its Jacobian $\begin{pmatrix} c & b\theta_2\\ b\theta_2 & b\theta_1 + 3a\theta_2^2\end{pmatrix}$
+is symmetric, so this is a legitimate (gradient) lens map.
+\begin{enumerate}[nosep]
+  \item Eliminate $\theta_1 = (\beta_1 - b\theta_2^2/2)/c$.  Then $\theta_2$
+        solves the cubic
+        $g(t) = \big(a - \tfrac{b^2}{2c}\big)t^3 + \tfrac{b\beta_1}{c}t - \beta_2 = 0$.
+  \item Substituting the same $\theta_1$ into the determinant gives
+        $\det\Amat = c\,g'(t)$, so each image has $\mu_i = 1/[c\,g'(t_i)]$.
+  \item For any cubic with distinct roots, $\sum_i 1/g'(t_i) = 0$.  Write
+        $1/g(t) = \sum_i [g'(t_i)(t-t_i)]^{-1}$ (partial fractions); the left
+        side falls as $t^{-3}$ at large $t$, while the right side falls as
+        $t^{-1}\sum_i 1/g'(t_i)$, so the sum must vanish.
+\end{enumerate}
+Hence $\mu_A + \mu_B + \mu_C = 0$ exactly within the normal form, with
+corrections of higher order in the distance from the cusp.  On the cusp axis
+(take $a = b = c = 1$, $\beta_2 = 0$, $\beta_1 < 0$) the three magnifications
+are $1/\beta_1$, $-1/(2\beta_1)$ and $-1/(2\beta_1)$.  They sum to zero, while
+$\sum|\mu| = 2/|\beta_1| \propto d_\perp^{-1}$, compared with $d_\perp^{-1/2}$
+at a fold.
+\end{derivation}
+
+
 \begin{remark}
 The fold and cusp are the only \textbf{stable} (generic)
 singularities of smooth two-dimensional maps.  Higher-order
@@ -1071,6 +1487,19 @@ or fine-tuning and are not generically present in gravitational lens
 models.  This is a deep result of Whitney's theorem in singularity
 theory (Petters et al.\ 2001, Ch.~7, Sec.~7.5).
 \end{remark}
+
+\begin{annotation}[Fold or cusp?  A test you can apply]
+At a critical point let $\vec{e}$ be the eigenvector of $\Amat$ with zero
+eigenvalue.  The caustic tangent is $d\vecbeta/ds = \Amat\,d\vectheta/ds$.  If
+$\vec{e}$ is transverse to the critical curve, $d\vecbeta/ds \neq 0$: a fold.
+If $\vec{e}$ is tangent to the critical curve, $d\vecbeta/ds = 0$: the caustic
+stops and reverses, a cusp.  Both models of this chapter put their cusps on
+the symmetry axes.  For the SIS$+$shear, $d\vecbeta/d\phi = 0$ only at
+$\sin\phi\cos\phi = 0$; for the SIE, the tangential eigenvector is parallel to
+the critical ellipse only on the axes (derivation boxes in \S\ref{sec:sis_shear}
+and \S\ref{sec:sie}).
+\end{annotation}
+
 
 \begin{figure}[ht]
     \centering
@@ -1229,6 +1658,19 @@ caustic.  Two images form:
 \end{itemize}
 The brighter image (A) is on the same side as the source; the
 fainter image (B) is on the opposite side.
+
+\begin{annotation}[Checking the double by hand]
+On the $\theta_1$ axis, $F = q|\theta_1|$ and
+$\alpha_1 = \mathrm{sgn}(\theta_1)\,(\thetaE\sqrt{q}/k)\arctan(k/q) =
+\pm 0.932\,\thetaE$ for $q = 0.7$.  The deflection is constant along the axis,
+as for the SIS.  So $\theta_A = 0.5 + 0.932 = 1.432''$ and
+$\theta_B = 0.5 - 0.932 = -0.432''$.  With $\mu = 1/(1-2\kappab)$ and
+$2\kappab = 1/(\sqrt{q}\,|\theta_1|)$ on this axis, $\mu_A = +6.05$ and
+$\mu_B = -0.566$, matching the values above.  Classic error: using the SIS
+formula $\mu = \theta/(\theta-\thetaE)$ with $\thetaE$.  On this axis the SIE
+behaves like an SIS with Einstein radius $\thetaE/\sqrt{q} = 1.195\,\thetaE$.
+\end{annotation}
+
 
 \subsection{Quad / Einstein Cross Configuration}
 

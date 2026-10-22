@@ -17,6 +17,9 @@
      6.3 --- Show Type I image arrives before Type II image
      6.4 --- Measure H0 from time delays
      6.5 --- Plot the arrival-time surface
+   Annotated-edition checks (2026-10): A1-A17 at the end of this file,
+     one per identity/number in the Annotated Study Edition boxes of
+     Notes/06_Fermat_Time_Delays/*.tex; ends with summary[].
    ========================================================================= *)
 
 Print["=== Module 6: SOLUTIONS ===\n"];
@@ -143,14 +146,14 @@ Print["    VERIFIED\n"];
 Mlens = 1*^12 * Msolar;
 zd = 0.3;
 RS = 2 Gnewton Mlens / cc^2;
-deltaT = RS / cc * (1 + zd) * dtau;
+deltaT = 2 RS / cc * (1 + zd) * dtau;   (* 4GM/c^3 = 2 R_S/c; fixed 2026-10-14 (was R_S/c) *)
 deltaTdays = deltaT / dayToSec;
 
 Print["(d) Physical time delay:"];
 Print["    M = 10^12 Msun, z_d = 0.3"];
 Print["    R_S = 2*G*M/c^2 = ", ScientificForm[RS, 4], " m"];
-Print["    Delta_t = R_S/c * (1+z_d) * Delta_tau"];
-Print["            = ", ScientificForm[RS/cc, 4], " * ", 1 + zd, " * ",
+Print["    Delta_t = 2 R_S/c * (1+z_d) * Delta_tau   (2 R_S/c = 4GM/c^3)"];
+Print["            = ", ScientificForm[2 RS/cc, 4], " * ", 1 + zd, " * ",
     NumberForm[dtau, {5, 4}]];
 Print["            = ", ScientificForm[deltaT, 4], " s"];
 Print["            = ", NumberForm[deltaTdays, {5, 1}], " days\n"];
@@ -353,7 +356,10 @@ Print[""];
 (* Generate the plots *)
 Print["Generating plots...\n"];
 
-baseDir = "/Users/rosador/Documents/Learning_to_Lens/Figures/06_Fermat_Time_Delays";
+(* Repo-relative (was an absolute path into the main checkout, which made a
+   run from a git worktree write into the main repo's Figures/). *)
+baseDir = FileNameJoin[{DirectoryName[$InputFileName], "..", "..",
+    "Figures", "06_Fermat_Time_Delays"}];
 If[!DirectoryQ[baseDir], CreateDirectory[baseDir]];
 
 (* 3D surface *)
@@ -443,3 +449,264 @@ Print["      theta_+ = (0.3 + sqrt(4.09))/2 = ", NumberForm[xpPlot, {5, 4}], "  
 Print["      theta_- = (0.3 - sqrt(4.09))/2 = ", NumberForm[xmPlot, {5, 4}], "  MATCH\n"];
 
 Print["=== End of Module 6 Solutions ==="];
+
+
+(* ===== Annotated-edition checks (2026-10) ===== *)
+(* Every identity written in a derivation box and every number quoted in an
+   annotation box of Notes/06_Fermat_Time_Delays/*.tex (Annotated Study
+   Edition) is checked here.  Harness: check[] / summary[].                 *)
+
+Get[FileNameJoin[{DirectoryName[$InputFileName], "..", "..",
+                  "Mathematica", "harness.wl"}]];
+Print["\n=== Annotated-edition checks: Module 6 ==="];
+ClearAll[th1, th2, b1, b2, psiG, x, y, lam, Dd, Ds, Dds, th, be, tE, tc];
+
+(* -- A1. Geometric delay: Euclidean thin-screen path excess ------------- *)
+(* L_excess = xi^2/(2Dd) + (eta-xi)^2/(2Dds) - eta^2/(2Ds), xi = Dd th,
+   eta = Ds be, Ds = Dd + Dds  ==>  (Dd Ds/(2 Dds)) (th - be)^2           *)
+geoExcess = (Dd th)^2/(2 Dd) + (Ds be - Dd th)^2/(2 Dds) - (Ds be)^2/(2 Ds);
+check["A1 geometric path excess = Dd Ds/(2 Dds) (theta-beta)^2 (Euclidean, Ds=Dd+Dds)",
+  Simplify[(geoExcess - Dd Ds/(2 Dds) (th - be)^2) /. Ds -> Dd + Dds] === 0];
+
+(* -- A2. Shapiro term: t_grav = -(2/c^3) Int Phi dl and
+         psi = (Dds/(Dd Ds)) (2/c^2) Int Phi dz  ==>
+         t_grav = -(Dd Ds/(c Dds)) psi                                    *)
+ClearAll[intPhi, cL];
+psiFromPhi = Dds/(Dd Ds) 2/cL^2 intPhi;
+check["A2 -(Dd Ds/(c Dds)) psi = -(2/c^3) Int Phi dz",
+  Simplify[-(Dd Ds/(cL Dds)) psiFromPhi + 2/cL^3 intPhi] === 0];
+
+(* -- A3. grad tau and Hessian of tau for a generic psi ------------------ *)
+tauG = ((th1 - b1)^2 + (th2 - b2)^2)/2 - psiG[th1, th2];
+gradT = {D[tauG, th1], D[tauG, th2]};
+check["A3a grad tau = (theta - beta) - grad psi",
+  Simplify[gradT - ({th1 - b1, th2 - b2} -
+     {D[psiG[th1, th2], th1], D[psiG[th1, th2], th2]})] === {0, 0}];
+hessT = D[tauG, {{th1, th2}, 2}];
+check["A3b Hess tau = delta_ab - psi_ab = A",
+  Simplify[hessT - (IdentityMatrix[2] -
+     D[psiG[th1, th2], {{th1, th2}, 2}])] === {{0, 0}, {0, 0}}];
+
+(* -- A4. Eigenvalue product/sum = det/trace for a symmetric 2x2 --------- *)
+ClearAll[a11, a12, a22];
+ev = Eigenvalues[{{a11, a12}, {a12, a22}}];
+check["A4a lambda1 lambda2 = det A (symmetric 2x2)",
+  Simplify[ev[[1]] ev[[2]] - (a11 a22 - a12^2)] === 0];
+check["A4b lambda1 + lambda2 = tr A (symmetric 2x2)",
+  Simplify[ev[[1]] + ev[[2]] - (a11 + a22)] === 0];
+(* both > 0  <=>  det > 0 and tr > 0 (Reduce over the reals) *)
+check["A4c both eigenvalues > 0 <=> det>0 && tr>0",
+  Resolve[ForAll[{a11, a12, a22},
+    Implies[a11 a22 - a12^2 > 0 && a11 + a22 > 0,
+            Min[ev] > 0]], Reals] === True];
+
+(* -- A5. Point-mass Hessian on the axis (thetaE = 1) -------------------- *)
+tauPM2 = ((th1 - b1)^2 + th2^2)/2 - Log[Sqrt[th1^2 + th2^2]];
+hPM = D[tauPM2, {{th1, th2}, 2}] /. th2 -> 0;
+check["A5a point mass: Hess tau at (x,0) = diag(1 + 1/x^2, 1 - 1/x^2)",
+  Simplify[hPM - DiagonalMatrix[{1 + 1/th1^2, 1 - 1/th1^2}],
+    th1 != 0] === {{0, 0}, {0, 0}}];
+check["A5b det A = 1 - 1/x^4 for the point mass",
+  Simplify[Det[DiagonalMatrix[{1 + 1/x^2, 1 - 1/x^2}]] - (1 - 1/x^4)] === 0];
+check["A5c y=0.5: x_+ > 1 (lambda_t>0: minimum), |x_-| < 1 (lambda_t<0: saddle)",
+  xPlus[0.5] > 1 && Abs[xMinus[0.5]] < 1];
+
+(* -- A6. Point-mass Delta tau: the skipped algebra ---------------------- *)
+xp6 = (y + Sqrt[y^2 + 4])/2; xm6 = (y - Sqrt[y^2 + 4])/2;
+check["A6a x_+ + x_- = y", Simplify[xp6 + xm6 - y] === 0];
+check["A6b x_+ x_- = -1", Simplify[xp6 xm6 + 1] === 0];
+check["A6c x_+ - x_- = sqrt(y^2+4)", Simplify[xp6 - xm6 - Sqrt[y^2 + 4]] === 0];
+check["A6d x_+ - y = -x_-  and  x_- - y = -x_+",
+  Simplify[{xp6 - y + xm6, xm6 - y + xp6}] === {0, 0}];
+dtauSteps = (xp6^2 - xm6^2)/2 + Log[xp6/(-xm6)];
+check["A6e tau(x_-) - tau(x_+) = (x_+^2 - x_-^2)/2 + ln(x_+/|x_-|) = boxed formula",
+  FullSimplify[dtauSteps - deltaTauAnalytic[y], y > 0] === 0];
+check["A6f x_+/|x_-| = (sqrt(y^2+4)+y)/(sqrt(y^2+4)-y)",
+  FullSimplify[xp6/(-xm6) - (Sqrt[y^2 + 4] + y)/(Sqrt[y^2 + 4] - y), y > 0] === 0];
+check["A6g ln[(sqrt(y^2+4)+y)/(sqrt(y^2+4)-y)] = 2 arcsinh(y/2)",
+  FullSimplify[Log[(Sqrt[y^2 + 4] + y)/(Sqrt[y^2 + 4] - y)] - 2 ArcSinh[y/2],
+    y > 0] === 0];
+check["A6h d(Delta tau)/dy = sqrt(y^2+4)  (so Delta tau increases from 0)",
+  FullSimplify[D[deltaTauAnalytic[y], y] - Sqrt[y^2 + 4], y > 0] === 0];
+check["A6i Delta tau(0) = 0", deltaTauAnalytic[0] === 0];
+check["A6j small y: Delta tau = 2y + y^3/12 + O(y^5)",
+  Simplify[Normal[Series[deltaTauAnalytic[y], {y, 0, 4}]] - (2 y + y^3/12)] === 0];
+
+(* -- A7. Physical prefactor: thetaE^2 Dd Ds/Dds = 4GM/c^2 -------------- *)
+ClearAll[GG, MM, cS];
+thetaE2PM = 4 GG MM/cS^2 Dds/(Dd Ds);
+check["A7a (Dd Ds/Dds) thetaE^2 / c = 4GM/c^3",
+  Simplify[(Dd Ds/Dds) thetaE2PM/cS - 4 GG MM/cS^3] === 0];
+check["A7b 4GM/c^3 = 2 R_S/c  (R_S = 2GM/c^2)",
+  Simplify[4 GG MM/cS^3 - 2 (2 GG MM/cS^2)/cS] === 0];
+fourGMc3 = 4 Gnewton (1*^12 Msolar)/cc^3;
+check["A7c 4GM/c^3 = 1.97e7 s = 228 d for M = 1e12 Msun",
+  Abs[fourGMc3/1*^7 - 1.97] < 0.005 && Abs[fourGMc3/dayToSec - 228] < 0.5];
+dtCorrect = fourGMc3 (1 + 0.3) deltaTauAnalytic[0.5];
+Print["  [info] (1+z_d) (4GM/c^3) Delta tau(0.5) = ", dtCorrect, " s = ",
+  dtCorrect/dayToSec, " d"];
+check["A7d (1+z_d)(4GM/c^3) Delta tau(y=0.5) = 2.59e7 s = 300 d (z_d = 0.3)",
+  Abs[dtCorrect/1*^7 - 2.59] < 0.005 && Abs[dtCorrect/dayToSec - 300] < 0.5];
+check["A7e an R_S/c prefactor (pre-2026-10-14 text) is exactly half of A7d",
+  Abs[(2 Gnewton 1*^12 Msolar/cc^2/cc) 1.3 deltaTauAnalytic[0.5]/dtCorrect - 1/2] < 10^-12];
+
+(* -- A8. SIS Fermat potential at the two images (thetaE = tE) ----------- *)
+tauSIS[t_] := (t - be)^2/2 - tE Abs[t];
+tpS = be + tE; tmS = be - tE;
+check["A8a SIS tau(theta_+) = -tE^2/2 - be tE",
+  Simplify[tauSIS[tpS] - (-tE^2/2 - be tE), 0 < be < tE] === 0];
+check["A8b SIS tau(theta_-) = -tE^2/2 + be tE",
+  Simplify[tauSIS[tmS] - (-tE^2/2 + be tE), 0 < be < tE] === 0];
+check["A8c SIS Delta tau = 2 be tE = (theta_+^2 - theta_-^2)/2",
+  Simplify[{tauSIS[tmS] - tauSIS[tpS] - 2 be tE,
+            (tpS^2 - tmS^2)/2 - 2 be tE}, 0 < be < tE] === {0, 0}];
+check["A8d SIS and point mass agree to leading order: Delta tau/tE^2 = 2y + O(y^3)",
+  Coefficient[Normal[Series[deltaTauAnalytic[y], {y, 0, 2}]], y] == 2];
+
+(* -- A9. Mass-sheet transformation: Delta tau -> lambda Delta tau ------- *)
+(* psi_l = lam psi + (1-lam) |th|^2/2, beta_l = lam beta                 *)
+tauOrig = ((th1 - b1)^2 + (th2 - b2)^2)/2 - psiG[th1, th2];
+tauMST = ((th1 - lam b1)^2 + (th2 - lam b2)^2)/2 -
+   (lam psiG[th1, th2] + (1 - lam) (th1^2 + th2^2)/2);
+check["A9a tau_lambda(theta; lambda beta) = lambda tau(theta; beta) + f(beta)",
+  FreeQ[Simplify[tauMST - lam tauOrig], th1 | th2]];
+check["A9b grad tau_lambda = lambda grad tau (same image positions)",
+  Simplify[{D[tauMST, th1], D[tauMST, th2]} - lam {D[tauOrig, th1], D[tauOrig, th2]}] === {0, 0}];
+
+(* -- A10. Exercise 6.4 conversions ------------------------------------- *)
+check["A10a 2.0 arcsec^2 = 4.70e-11 rad^2",
+  Abs[2.0/radToArcsec^2/1*^-11 - 4.70] < 0.005];
+check["A10b flat universe: chi_ds = chi_s - chi_d (so Dds = (chi_s - chi_d) c/H0/(1+z_s))",
+  Abs[chiDS - (chiS - chiD)] < 10^-8];
+DdM = chiD/(1 + zdLens); DsM = chiS/(1 + zsSource); DdsM = chiDS/(1 + zsSource);
+Print["  [info] (c/H0 units) Dd = ", DdM, " Ds = ", DsM, " Dds = ", DdsM,
+  "  Ds - Dd = ", DsM - DdM];
+check["A10c Dds != Ds - Dd for z_d=0.3, z_s=1: Dds/(Ds - Dd) = 1.44",
+  Abs[DdsM/(DsM - DdM) - 1.44] < 0.005];
+check["A10d chi_d = 0.279, chi_s = 0.771, chi_ds = 0.493, f = 0.336 (pre-fix text quoted 0.778/0.499/0.334)",
+  Abs[chiD - 0.279] < 0.0005 && Abs[chiS - 0.771] < 0.0005 &&
+  Abs[chiDS - 0.493] < 0.0005 && Abs[distFactor - 0.336] < 0.0005];
+check["A10e H0 from Ex 6.4 = 73 km/s/Mpc", Abs[H0kms - 73] < 0.5];
+check["A10f Delta t scales as 1/H0: f independent of H0 (dimensionless integrals only)",
+  FreeQ[chiD chiS/((1 + zdLens) chiDS), H0]];
+
+(* -- A11. Morse counting for the point mass vs Petters Thm 11.4 -------- *)
+(* point mass, g = 1 infinite singularity: Mmin + Mmax = Msad - g + 1     *)
+check["A11 point mass: n_min - n_sad + n_max = 1 - g with g = 1 (1 - 1 + 0 = 0)",
+  1 - 1 + 0 == 1 - 1];
+
+(* -- A12. N&B quoted 1.4'' for SIS (sigma=220) is consistent -------- *)
+(* (used in the Module 6 SIS preview annotation)                         *)
+check["A12 4 Pi (220 km/s / c)^2 = 1.40 arcsec",
+  Abs[4 Pi (220000/299792458.)^2 radToArcsec - 1.40] < 0.005];
+
+(* -- A3c. tr A = 2 (1 - kappa): a maximum (tr < 0) needs kappa > 1 ----- *)
+check["A3c tr(Hess tau) = 2 - Laplacian psi = 2 (1 - kappa)",
+  Simplify[Tr[hessT] - (2 - (D[psiG[th1, th2], {th1, 2}] + D[psiG[th1, th2], {th2, 2}]))] === 0];
+
+(* -- A13. -psi is largest at the lens centre (psi' = alpha > 0) -------- *)
+check["A13 d psi/d theta > 0 for SIS (tE), point mass (tE^2/th), NIS (theta>0)",
+  And @@ (Simplify[# > 0, th > 0 && tE > 0 && tc > 0] & /@
+    {D[tE th, th], D[tE^2 Log[th], th],
+     Simplify[D[tE (Sqrt[th^2 + tc^2] - tc Log[tc + Sqrt[th^2 + tc^2]]), th],
+       th > 0 && tc > 0]})];
+
+(* -- A14. Poincare-Hopf: winding numbers of grad tau (point mass, y=0.5) *)
+gPM[{p1_, p2_}] := {p1 - 0.5 - p1/(p1^2 + p2^2), p2 - p2/(p1^2 + p2^2)};
+winding[c_, r_] := Module[{ang},
+   ang = Table[With[{g = gPM[c + r {Cos[f], Sin[f]}]}, ArcTan[g[[1]], g[[2]]]],
+     {f, 0., 2 Pi, 2 Pi/4000}];
+   Round[Total[Mod[Differences[ang] + Pi, 2 Pi] - Pi]/(2 Pi)]];
+wBig = winding[{0, 0}, 6.]; wMin = winding[{xPlus[0.5], 0}, 0.1];
+wSad = winding[{xMinus[0.5], 0}, 0.1]; wSing = winding[{0, 0}, 0.05];
+Print["  [info] winding: large circle ", wBig, ", minimum ", wMin, ", saddle ", wSad,
+  ", origin ", wSing];
+check["A14 index: large circle +1 = min(+1) + saddle(-1) + singular origin(+1)",
+  wBig == 1 && wMin == 1 && wSad == -1 && wSing == 1 && wBig == wMin + wSad + wSing];
+
+(* -- A15. time-delay distance rule of thumb ------------------------------ *)
+DdT = 918.77; DsT = 1651.91; DdsT = 1054.72;  (* Mpc, flat LCDM H0=70 Om=0.3 *)
+perArcsec2 = 1.3 DdT DsT/DdsT MpcToM/cc/radToArcsec^2/dayToSec;
+Print["  [info] (1+z_d) Dd Ds/Dds = ", 1.3 DdT DsT/DdsT, " Mpc; per arcsec^2: ",
+  perArcsec2, " d"];
+check["A15 z_d=0.3, z_s=1, H0=70: D_dt = 1870 Mpc; 1 arcsec^2 of Delta tau = 52 d",
+  Abs[1.3 DdT DsT/DdsT - 1870] < 5 && Abs[perArcsec2 - 52] < 0.5];
+
+(* -- A16. Exercise 6.5 Hessian eigenvalues (y = 0.3) -------------------- *)
+eP = {1 + 1/xPlus[0.3]^2, 1 - 1/xPlus[0.3]^2};
+eM = {1 + 1/xMinus[0.3]^2, 1 - 1/xMinus[0.3]^2};
+Print["  [info] Ex 6.5 eigenvalues: x_+ ", eP, "  x_- ", eM];
+check["A16 Ex 6.5: x_+ eigenvalues (1.742, 0.258); x_- eigenvalues (2.348, -0.348)",
+  Max[Abs[eP - {1.742, 0.258}]] < 0.0005 && Max[Abs[eM - {2.348, -0.348}]] < 0.0005];
+
+(* -- A10g. (1+z_s) cancels in Dd Ds/Dds ---------------------------------- *)
+ClearAll[cd, cs, cds, zd1, zs1];
+check["A10g (cd/(1+zd)) (cs/(1+zs)) / (cds/(1+zs)) = cd cs/((1+zd) cds)",
+  Simplify[(cd/(1 + zd1)) (cs/(1 + zs1))/(cds/(1 + zs1)) - cd cs/((1 + zd1) cds)] === 0];
+
+(* -- A17. numbers quoted in the 06_Solutions annotations ---------------- *)
+xp5 = xPlus[0.5]; xm5 = xMinus[0.5];
+check["A17a Ex 6.2: x_-^2/2 = 0.3048, x_+^2/2 = 0.8202, ln x_+ = 0.2475, ln|x_-| = -ln x_+, tau(x_+) = 0.0573",
+  Abs[xm5^2/2 - 0.3048] < 0.00005 && Abs[xp5^2/2 - 0.8202] < 0.00005 &&
+  Abs[Log[xp5] - 0.2475] < 0.00005 && Abs[Log[Abs[xm5]] + Log[xp5]] < 10^-12 &&
+  Abs[tauPM[xp5, 0.5] - 0.0573] < 0.00005];
+check["A17b (x_+^2 - x_-^2)/2 = 0.5154, 2 ln x_+ = 0.4949, Delta tau(0.5) = 1.0103, log ratio 1.6404",
+  Abs[(xp5^2 - xm5^2)/2 - 0.5154] < 0.00005 && Abs[2 Log[xp5] - 0.4949] < 0.00005 &&
+  Abs[deltaTauAnalytic[0.5] - 1.0103] < 0.00005 &&
+  Abs[(Sqrt[4.25] + 0.5)/(Sqrt[4.25] - 0.5) - 1.6404] < 0.00005];
+check["A17c R_S/c for 1e12 Msun = 114 d",
+  Abs[2 Gnewton 1*^12 Msolar/cc^3/dayToSec - 114] < 0.5];
+tabY = {0.1, 0.5, 1., 2.};
+tab = Table[{tauPM[xPlus[yy], yy], tauPM[xMinus[yy], yy],
+    tauPM[xMinus[yy], yy] - tauPM[xPlus[yy], yy]}, {yy, tabY}];
+check["A17d corrected Ex 6.3 table (tau+, tau-, Delta tau) to 1e-4",
+  Max[Abs[tab - {{0.4025, 0.6025, 0.2001}, {0.0573, 1.0677, 1.0103},
+      {-0.2902, 1.7902, 2.0805}, {-0.7956, 3.7956, 4.5912}}]] < 0.00006];
+check["A17d' Delta tau/y = 2.001, 2.021, 2.080, 2.296",
+  Max[Abs[tab[[All, 3]]/tabY - {2.001, 2.021, 2.080, 2.296}]] < 0.0006];
+check["A17d'' pre-2026-10-14 table rows y = 0.1, 1, 2 (0.0100, 2.4277, 5.0065) disagree with the formula",
+  Abs[tab[[1, 3]] - 0.0100] > 0.1 && Abs[tab[[3, 3]] - 2.4277] > 0.1 && Abs[tab[[4, 3]] - 5.0065] > 0.1];
+check["A17e 1.3 x 1374 = 1786 Mpc; 1870/1786 x 70 = 73.3",
+  Abs[1.3 1374 - 1786] < 0.5 && Abs[1870/1786. 70 - 73.3] < 0.05];
+check["A17f 206265^2 = 4.25e10 (arcsec^2 -> rad^2 factor)", Abs[radToArcsec^2/1*^10 - 4.25] < 0.005];
+check["A17g Dd, Ds, Dds, Ds - Dd = 0.215, 0.386, 0.246, 0.171 (c/H0 units)",
+  Max[Abs[{DdM, DsM, DdsM, DsM - DdM} - {0.215, 0.386, 0.246, 0.171}]] < 0.0006];
+
+(* -- F. Fix pass 2026-10-14 (FACT_CRITIC_06 V1-V5): each check FAILS on the
+   pre-fix printed value and PASSES on the corrected one. ------------------ *)
+check["F1 Ex 6.2(d) body: deltaT == (4GM/c^3)(1+z_d) Delta tau (was R_S/c)",
+  Abs[deltaT/(4 Gnewton Mlens/cc^3 (1 + zd) dtau) - 1] < 10^-12];
+check["F1b Ex 6.2(d): Delta t = 2.588e7 s = 299.6 d (old 1.293e7 s / 149.7 d fails)",
+  Abs[deltaT/1*^7 - 2.588] < 0.0005 && Abs[deltaTdays - 299.6] < 0.05 &&
+  Abs[deltaTdays - 149.7] > 1];
+dtEx = 2 2.95*^15/2.998*^8 1.3 1.0103;
+check["F1c Example ex:point_mass_numerical: 2 x 2.95e15/2.998e8 x 1.3 x 1.0103 = 2.59e7 s = 300 d (old 1.29e7 s / 149 d fails)",
+  Abs[dtEx/1*^7 - 2.59] < 0.01 && Abs[dtEx/dayToSec - 300] < 1.5 && Abs[dtEx/dayToSec - 149] > 100];
+dtSol = 2 2.953*^15/2.998*^8 1.3 1.0103;
+check["F1d Sol 6.2(d) with the printed inputs: 2 x 2.953e15/2.998e8 x 1.3 x 1.0103 = 2.587e7 s = 299.5 d (old 149.7 d fails)",
+  Abs[dtSol/1*^7 - 2.587] < 0.0005 && Abs[dtSol/dayToSec - 299.5] < 0.05 && Abs[dtSol/dayToSec - 149.7] > 100];
+check["F2 Ex 6.2(b)-(c) roundings: ln 1.2808 -> 0.2475 (not 0.2474); 0.3048-0.2475=0.0573, 0.8202+0.2475=1.0677; Delta tau 1.0103 (not 1.0101)",
+  Round[Log[xp5], 0.0001] == 0.2475 && Round[Log[xp5], 0.0001] != 0.2474 &&
+  Round[tauPM[xm5, 0.5], 0.0001] == 1.0677 && Round[deltaTauAnalytic[0.5], 0.0001] == 1.0103 &&
+  Round[deltaTauAnalytic[0.5], 0.0001] != 1.0101 && Round[(Sqrt[4.25] + 0.5)/(Sqrt[4.25] - 0.5), 0.0001] == 1.6404];
+ClearAll[x1F, x2F, yF];
+tauPlane = ((x1F - yF)^2 + x2F^2)/2 - Log[x1F^2 + x2F^2]/2;
+statPts = Solve[{D[tauPlane, x1F] == 0, D[tauPlane, x2F] == 0, x1F^2 + x2F^2 > 0} /. yF -> 1/2,
+   {x1F, x2F}, Reals];
+check["F3 Sol 6.3(a): tau -> +Infinity at theta -> 0 and |theta| -> Infinity; only stationary points are x_+ (min), x_- (saddle)",
+  Limit[tauPlane /. {x2F -> 0, yF -> 1/2}, x1F -> 0] === Infinity &&
+  Limit[tauPlane /. {x2F -> 0, yF -> 1/2}, x1F -> Infinity] === Infinity &&
+  Sort[x1F /. statPts] == Sort[{xPlus[1/2], xMinus[1/2]}] // Simplify];
+check["F4 V3 remark: point mass -psi = -tE^2 ln th -> +Infinity at the origin (Shapiro term largest at centre)",
+  Limit[-Log[th], th -> 0, Direction -> "FromAbove"] === Infinity];
+fEx64 = 0.279 0.771/(1.3 0.493);
+H0si = 2.998*^8 0.336/4.24*^25;
+check["F5 Sol 6.4(b-c): 0.279x0.771/(1.3x0.493) = 0.336 (old 0.334 fails); 2.998e8x0.336/4.24e25 = 2.38e-18 (old 2.36e-18 fails); x3.086e19 = 73.3",
+  Abs[fEx64 - 0.336] < 0.0005 && Abs[fEx64 - 0.334] > 0.001 &&
+  Abs[H0si/1*^-18 - 2.38] < 0.005 && Abs[H0si/1*^-18 - 2.36] > 0.01 &&
+  Abs[H0si 3.086*^19 - 73.3] < 0.1];
+
+summary[];
+
+
+
