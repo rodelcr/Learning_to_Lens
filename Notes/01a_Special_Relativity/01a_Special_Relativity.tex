@@ -17,22 +17,22 @@ on spacetime, gravity is inherent in spacetime itself.}
 \end{quote}
 
 \noindent
-Before we can understand how gravity bends light, we need the language of
+Before we can describe how gravity bends light we need the language of
 special relativity and tensors.  This chapter reviews the foundations:
 Minkowski spacetime, Lorentz transformations, four-vectors, and the index
 notation that will carry us through the rest of these notes.  The emphasis is
-on building fluency with the notation and the key physical ideas --- time
-dilation, length contraction, the invariant interval --- so that the
-transition to curved spacetime in later chapters feels natural.
+on fluency with the notation and with the physical ideas (time dilation,
+length contraction, the invariant interval) that the transition to curved
+spacetime in later chapters will build on.
 
 \medskip
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
-    \item \mathlink{01a_Special_Relativity/lorentz_transforms.wl}{lorentz\_transforms.wl}
-          --- symbolic construction and verification of Lorentz boost matrices
-    \item \mathlink{01a_Special_Relativity/four_vectors.nb}{four\_vectors.nb}
-          --- interactive visualizations of worldlines, light cones, and time dilation
+    \item \mathlink{01a_Special_Relativity/lorentz_transforms.wl}{lorentz\_transforms.wl}:
+          symbolic construction and verification of Lorentz boost matrices
+    \item \mathlink{01a_Special_Relativity/four_vectors.nb}{four\_vectors.nb}:
+          interactive visualizations of worldlines, light cones, and time dilation
 \end{itemize}
 
 % =====================================================================
@@ -52,14 +52,14 @@ and the gravitational potential $\Phi$ satisfies Poisson's equation,
     \label{eq:poisson}
 \end{equation}
 In GR, both of these are replaced by statements about the curvature of
-spacetime.  The key equation we will eventually arrive at is Einstein's
+spacetime.  The equation we will eventually arrive at is Einstein's
 field equation (Carroll eq.~1.5, in units with $c = 1$):
 \begin{equation}
     \ricci - \half \ricciS\, \metric = 8\pi G\, T_{\mu\nu} \,.
     \label{eq:einstein_field}
 \end{equation}
-But we are getting ahead of ourselves.  For now, we focus on \textit{flat}
-spacetime --- the arena of special relativity --- and learn the tensor
+That is for later.  For now we restrict attention to \emph{flat}
+spacetime, the arena of special relativity, and develop the tensor
 language needed to write down equations like~\eqref{eq:einstein_field}.
 
 
@@ -68,12 +68,12 @@ language needed to write down equations like~\eqref{eq:einstein_field}.
 \label{sec:spacetime_interval}
 
 Special relativity (SR) unifies space and time into a single
-four-dimensional continuum called \textbf{Minkowski space}.  An individual
-point in spacetime is an \textbf{event}, and the path of a particle through
-spacetime is its \textbf{worldline}.
+four-dimensional continuum called \emph{Minkowski space}.  An individual
+point in spacetime is an \emph{event}, and the path of a particle through
+spacetime is its \emph{worldline}.
 
 Unlike Newtonian mechanics, SR has no absolute notion of simultaneity.
-Instead, the fundamental invariant is the \textbf{spacetime interval}
+Instead, the fundamental invariant is the \emph{spacetime interval}
 between two events (Carroll eq.~1.10):
 \begin{equation}
     \boxed{
@@ -81,14 +81,14 @@ between two events (Carroll eq.~1.10):
     }
     \label{eq:spacetime_interval}
 \end{equation}
-where we work in \textbf{natural units} with $c = 1$ throughout this chapter
+where we work in \emph{natural units} with $c = 1$ throughout this chapter
 (we will restore factors of $c$ when needed for astrophysical applications).
 
 \begin{remark}
-We adopt the \textbf{mostly-plus} sign convention
+We adopt the \emph{mostly-plus} sign convention
 $(-,+,+,+)$, following Carroll.  Some references (especially in particle
-physics) use the opposite convention $(+,-,-,-)$.  Be careful when
-comparing equations across textbooks.
+physics) use the opposite convention $(+,-,-,-)$, and the sign of every
+term in an equation must be checked when comparing across textbooks.
 \end{remark}
 
 \begin{figure}[ht]
@@ -103,17 +103,14 @@ comparing equations across textbooks.
     \label{fig:light_cones}
 \end{figure}
 
-The interval classifies the separation between events:
-\begin{itemize}[nosep]
-    \item $(\Delta s)^2 < 0$: \textbf{timelike} separation (events can be
-          causally connected)
-    \item $(\Delta s)^2 = 0$: \textbf{null} or \textbf{lightlike} separation
-          (connected by a light ray)
-    \item $(\Delta s)^2 > 0$: \textbf{spacelike} separation (no causal
-          connection possible)
-\end{itemize}
+The sign of the interval classifies the separation between two events.
+If $(\Delta s)^2 < 0$ the separation is \emph{timelike} and the events can
+be causally connected; if $(\Delta s)^2 = 0$ it is \emph{null} (or
+\emph{lightlike}), the events being connected by a light ray; and if
+$(\Delta s)^2 > 0$ it is \emph{spacelike}, and no causal connection
+between the events is possible.
 
-The \textbf{proper time} $\Delta\tau$ along a timelike path is defined as
+The \emph{proper time} $\Delta\tau$ along a timelike path is defined as
 (Carroll eq.~1.17)
 \begin{equation}
     (\Delta\tau)^2 = -(\Delta s)^2 = (\Delta t)^2 - (\Delta x)^2
@@ -121,14 +118,14 @@ The \textbf{proper time} $\Delta\tau$ along a timelike path is defined as
     \label{eq:proper_time}
 \end{equation}
 This is the time measured by a clock traveling along the worldline.
-For an infinitesimal displacement, we write the \textbf{line element}
+For an infinitesimal displacement, we write the \emph{line element}
 (Carroll eq.~1.20):
 \begin{equation}
     ds^2 = \eta_{\mu\nu}\, dx^\mu\, dx^\nu \,,
     \label{eq:line_element}
 \end{equation}
-where we have introduced the \textbf{Minkowski metric} and the
-\textbf{Einstein summation convention} (repeated indices are summed over).
+where we have introduced the Minkowski metric and the
+\emph{Einstein summation convention} (repeated indices are summed over).
 
 
 % =====================================================================
@@ -144,7 +141,7 @@ Spacetime coordinates are labeled by Greek letters
 \end{equation}
 Latin indices $i, j, k, \ldots$ run over the spatial components $1, 2, 3$ only.
 
-The \textbf{Minkowski metric} is the $4 \times 4$ matrix
+The \emph{Minkowski metric} is the $4 \times 4$ matrix
 (Carroll eq.~1.15):
 \begin{equation}
     \eta_{\mu\nu} =
@@ -157,14 +154,14 @@ The \textbf{Minkowski metric} is the $4 \times 4$ matrix
     \label{eq:minkowski_metric}
 \end{equation}
 Its inverse, $\eta^{\mu\nu}$, has the same components.  The metric is used to
-\textbf{raise and lower indices}:
+\emph{raise and lower indices}:
 \begin{equation}
     V_\mu = \eta_{\mu\nu}\, V^\nu, \qquad
     \omega^\mu = \eta^{\mu\nu}\, \omega_\nu \,.
     \label{eq:raise_lower}
 \end{equation}
-Note that in Minkowski space this simply flips the sign of the time component:
-$V_0 = -V^0$, while $V_i = V^i$.
+In Minkowski space this flips the sign of the time component and leaves
+the spatial components unchanged: $V_0 = -V^0$, while $V_i = V^i$.
 
 
 % =====================================================================
@@ -172,7 +169,7 @@ $V_0 = -V^0$, while $V_i = V^i$.
 \label{sec:lorentz_transforms}
 
 The coordinate transformations that leave the interval~\eqref{eq:line_element}
-invariant are called \textbf{Lorentz transformations}.  They act on the
+invariant are called \emph{Lorentz transformations}.  They act on the
 coordinates as (Carroll eq.~1.25)
 \begin{equation}
     x^{\mu'} = \Lambda^{\mu'}{}_{\nu}\, x^\nu \,,
@@ -206,16 +203,16 @@ A spatial rotation in the $x$--$y$ plane by angle $\theta$ is
 
 \subsection{Boosts}
 
-Rotations mix two spatial directions using $\sin$ and $\cos$ (circular
-functions that preserve the positive-definite sum $x^2 + y^2$).
-A \textbf{Lorentz boost} mixes a space and a time direction, and must
-preserve the \textit{indefinite} form $-t^2 + x^2$ (the Minkowski
-interval).  The functions that do this are the hyperbolic functions
-$\sinh$ and $\cosh$, which satisfy the identity
-$\cosh^2\phi - \sinh^2\phi = 1$ --- exactly mirroring the Minkowski
+Rotations mix two spatial directions using $\sin$ and $\cos$, the circular
+functions that preserve the positive-definite sum $x^2 + y^2$.
+A \emph{Lorentz boost} mixes a space and a time direction, and must
+preserve the \emph{indefinite} form $-t^2 + x^2$ of the Minkowski
+interval.  The functions that do this are the hyperbolic functions
+$\sinh$ and $\cosh$, whose identity
+$\cosh^2\phi - \sinh^2\phi = 1$ has the same relative sign as the Minkowski
 signature (Carroll Sec.~1.3, pp.~12--14).
 
-The boost along the $x$-axis with \textbf{rapidity} parameter $\phi$ is
+The boost along the $x$-axis with \emph{rapidity} parameter $\phi$ is
 therefore (Carroll eq.~1.32):
 \begin{equation}
     \Lambda^{\mu'}{}_\nu =
@@ -233,12 +230,12 @@ $\theta_1$ and $\theta_2$ give a rotation by $\theta_1 + \theta_2$,
 two successive boosts with rapidities $\phi_1$ and $\phi_2$ compose
 to a single boost with rapidity $\phi_1 + \phi_2$ (Exercise~\ref{ex:boost_composition}).
 
-To connect to the more familiar velocity $v$ of the boosted frame
-(Carroll eqs.~1.33--1.35),
-note that a particle at rest in $S'$ has $x' = 0$, so from the boost
-matrix: $0 = -\sinh\phi \cdot t + \cosh\phi \cdot x$, giving
+To connect the rapidity to the more familiar velocity $v$ of the boosted frame
+(Carroll eqs.~1.33--1.35), consider a particle at rest in $S'$, for which
+$x' = 0$.  The boost matrix then gives
+$0 = -\sinh\phi \cdot t + \cosh\phi \cdot x$, so that
 $x/t = \tanh\phi$.  Since $x/t$ is the velocity $v$ of the $S'$
-frame as seen from $S$, we identify:
+frame as seen from $S$, we identify
 \begin{equation}
     v = \tanh\phi \,.
     \label{eq:rapidity_velocity}
@@ -287,27 +284,26 @@ Then confirm this symbolically using
 
 \subsection{Physical Consequences}
 
-The boost equations~\eqref{eq:boost_velocity} immediately lead to the
+The boost equations~\eqref{eq:boost_velocity} lead directly to the
 classic relativistic effects (Carroll Sec.~1.3; Congdon \& Keeton
-Sec.~3.1.2).  In each case the derivation is a single substitution:
-\begin{itemize}
-    \item \textbf{Time dilation:} A clock at rest in $S'$ has
-          $\Delta x' = 0$.  The inverse boost gives
-          $\Delta t = \gamma(\Delta t' + v \cdot 0) = \gamma\,\Delta t'$,
-          so the moving clock appears to run \textit{slow} by a factor
-          $\gamma > 1$.
-    \item \textbf{Length contraction:} A rod at rest in $S'$ has proper
-          length $L_0 = \Delta x'$.  We measure it in $S$ by noting
-          the positions of both ends \textit{simultaneously}
-          ($\Delta t = 0$).  From $\Delta x' = \gamma(\Delta x - v\cdot 0)$
-          we get $L_0 = \gamma\,\Delta x$, hence
-          $L = \Delta x = L_0/\gamma$ --- the rod is shorter in the
-          frame where it moves.
-    \item \textbf{Relativity of simultaneity:} Events simultaneous in $S'$
-          ($\Delta t' = 0$) satisfy $0 = \gamma(\Delta t - v\,\Delta x)$,
-          giving $\Delta t = v\,\Delta x$: events separated in space
-          are \textit{not} simultaneous in $S$.
-\end{itemize}
+Sec.~3.1.2); in each case the derivation is a single substitution.
+Consider first a clock at rest in $S'$, for which
+$\Delta x' = 0$.  The inverse boost gives
+$\Delta t = \gamma(\Delta t' + v \cdot 0) = \gamma\,\Delta t'$,
+so the moving clock runs \emph{slow} by a factor
+$\gamma > 1$; this is \emph{time dilation}.
+Next consider a rod at rest in $S'$, with proper
+length $L_0 = \Delta x'$.  We measure it in $S$ by recording
+the positions of both ends \emph{simultaneously}
+($\Delta t = 0$).  From $\Delta x' = \gamma(\Delta x - v\cdot 0)$
+we obtain $L_0 = \gamma\,\Delta x$, hence
+$L = \Delta x = L_0/\gamma$: the rod is shorter in the
+frame in which it moves, which is \emph{length contraction}.
+Finally, events simultaneous in $S'$
+($\Delta t' = 0$) satisfy $0 = \gamma(\Delta t - v\,\Delta x)$,
+so that $\Delta t = v\,\Delta x$; events separated in space
+are therefore \emph{not} simultaneous in $S$, and simultaneity is
+relative to the frame.
 
 \begin{exercise}
 \label{ex:twin_paradox}
@@ -326,49 +322,48 @@ ages by $\Delta\tau_{ABC} = \Delta t$.
 \section{Four-Vectors}
 \label{sec:four_vectors}
 
-A \textbf{four-vector} $V^\mu$ is a set of four components that transforms
+A \emph{four-vector} $V^\mu$ is a set of four components that transforms
 under Lorentz transformations as (Carroll eq.~1.39):
 \begin{equation}
     V^{\mu'} = \Lambda^{\mu'}{}_\nu\, V^\nu \,.
     \label{eq:vector_transform}
 \end{equation}
-
-Key examples:
+The examples we shall use most are the following.
 
 \paragraph{Four-position:} $x^\mu = (t, x, y, z)$.
 
 \paragraph{Four-velocity:} For a massive particle with worldline
 $x^\mu(\tau)$, the four-velocity is defined as the derivative of the
-position with respect to \textit{proper time} $\tau$ (the time measured
+position with respect to proper time $\tau$ (the time measured
 by a clock traveling with the particle):
 \begin{equation}
     U^\mu = \frac{dx^\mu}{d\tau} \,.
     \label{eq:four_velocity}
 \end{equation}
-To express this in terms of coordinate time $t$, use
+To express this in terms of coordinate time $t$ we use
 $d\tau = dt/\gamma$ (from time dilation, eq.~\eqref{eq:proper_time};
-see also Carroll eq.~1.17), giving
-$U^\mu = \gamma\, dx^\mu/dt = \gamma(1, v^x, v^y, v^z)$
+see also Carroll eq.~1.17), which gives
+$U^\mu = \gamma\, dx^\mu/dt = \gamma(1, v^x, v^y, v^z)$,
 where $v^i = dx^i/dt$ is the ordinary three-velocity.
 
 The norm of the four-velocity is always
 $\eta_{\mu\nu} U^\mu U^\nu = -1$ (in units with $c = 1$;
 Carroll eq.~1.100).
-This follows directly from the definition:
+This follows from the definition, since
 $U^\mu U_\mu = (dx^\mu/d\tau)(dx_\mu/d\tau)
 = ds^2/d\tau^2 = -d\tau^2/d\tau^2 = -1$,
-since $ds^2 = -d\tau^2$ along a timelike worldline.
+where we have used $ds^2 = -d\tau^2$ along a timelike worldline.
 
 \paragraph{Four-momentum:} The four-momentum is defined as
 $p^\mu = m\, U^\mu$, where $m$ is the rest mass
 (Carroll eq.~1.101).
-Expanding: $p^\mu = m\gamma(1, v^x, v^y, v^z) = (E, p^x, p^y, p^z)$,
+Written out, $p^\mu = m\gamma(1, v^x, v^y, v^z) = (E, p^x, p^y, p^z)$,
 where $E = \gamma m$ is the relativistic energy (which reduces to $m$
 at rest, i.e., $E = mc^2$ in conventional units) and
 $\mathbf{p} = \gamma m\,\mathbf{v}$ is the relativistic three-momentum
 (which reduces to $m\mathbf{v}$ for $v \ll c$;
 Congdon \& Keeton eqs.~3.18--3.23).
-The invariant norm gives the \textbf{energy--momentum relation}:
+The invariant norm gives the \emph{energy--momentum relation}:
 \begin{equation}
     \boxed{
     \eta_{\mu\nu}\, p^\mu p^\nu = -E^2 + |\mathbf{p}|^2 = -m^2
@@ -377,24 +372,24 @@ The invariant norm gives the \textbf{energy--momentum relation}:
 \end{equation}
 or, restoring $c$: $E^2 = (pc)^2 + (mc^2)^2$.
 
-For a \textbf{photon} ($m = 0$), $E = |\mathbf{p}|$ and the four-momentum
-is null: $p^\mu p_\mu = 0$.  This will be crucial when we trace light rays
-through curved spacetime in later chapters.
+For a photon ($m = 0$), $E = |\mathbf{p}|$ and the four-momentum
+is null: $p^\mu p_\mu = 0$.  This is the property we shall use when we
+trace light rays through curved spacetime in later chapters.
 
 
 % =====================================================================
 \section{Dual Vectors (One-Forms)}
 \label{sec:dual_vectors}
 
-Associated with every vector space is a \textbf{dual vector space} (or
-cotangent space $T_p^*$).  A dual vector (or \textbf{one-form})
-$\omega_\mu$ transforms under the \textit{inverse} Lorentz transformation
+Associated with every vector space is a \emph{dual vector space} (or
+cotangent space $T_p^*$).  A dual vector (or \emph{one-form})
+$\omega_\mu$ transforms under the \emph{inverse} Lorentz transformation
 (Carroll eq.~1.50):
 \begin{equation}
     \omega_{\mu'} = \Lambda^\nu{}_{\ \mu'}\, \omega_\nu \,.
     \label{eq:dual_transform}
 \end{equation}
-The prototypical one-form is the \textbf{gradient} of a scalar field
+The prototypical one-form is the \emph{gradient} of a scalar field
 $\phi$ (Carroll eq.~1.54):
 \begin{equation}
     (\mathrm{d}\phi)_\mu = \partial_\mu \phi
@@ -409,7 +404,7 @@ $\omega_\mu V^\mu \in \mathbf{R}$.
 \section{Tensors}
 \label{sec:tensors}
 
-A \textbf{tensor} of type $(k, l)$ is a multilinear map that takes $k$
+A \emph{tensor} of type $(k, l)$ is a multilinear map that takes $k$
 one-forms and $l$ vectors and produces a real number (Carroll eq.~1.56).
 In components, the transformation law is (Carroll eq.~1.63):
 \begin{equation}
@@ -422,47 +417,45 @@ In components, the transformation law is (Carroll eq.~1.63):
 
 \subsection{Important Operations}
 
-\begin{itemize}
-    \item \textbf{Contraction:} Summing over one upper and one lower index
-          reduces the rank by $(1,1)$ (Carroll eq.~1.70):
-          $S^{\mu\rho}{}_\sigma = T^{\mu\nu\rho}{}_{\sigma\nu}$.
-    \item \textbf{Raising/lowering:} Use the metric to move indices
-          (Carroll eq.~1.72):
-          $T^{\alpha\beta\mu}{}_\delta = \eta^{\mu\gamma}\,
-          T^{\alpha\beta}{}_{\gamma\delta}$.
-    \item \textbf{Symmetrization/antisymmetrization:} Round brackets denote
-          symmetrization; square brackets denote antisymmetrization
-          (Carroll eqs.~1.79--1.80).
-\end{itemize}
+Three operations on tensors recur throughout these notes.
+\emph{Contraction}, the sum over one upper and one lower index,
+reduces the rank by $(1,1)$ (Carroll eq.~1.70), as in
+$S^{\mu\rho}{}_\sigma = T^{\mu\nu\rho}{}_{\sigma\nu}$.
+\emph{Raising and lowering} uses the metric to move an index up or down
+(Carroll eq.~1.72), as in
+$T^{\alpha\beta\mu}{}_\delta = \eta^{\mu\gamma}\,
+T^{\alpha\beta}{}_{\gamma\delta}$.
+\emph{Symmetrization} and \emph{antisymmetrization} over a set of indices
+are denoted by round and square brackets respectively
+(Carroll eqs.~1.79--1.80).
 
 \subsection{Key Tensors in Minkowski Space}
 
-\begin{itemize}
-    \item \textbf{Metric:} $\eta_{\mu\nu}$ --- a symmetric $(0,2)$ tensor.
-    \item \textbf{Kronecker delta:} $\delta^\mu_{\ \nu}$ --- the identity map.
-    \item \textbf{Levi-Civita symbol:} $\tilde{\epsilon}_{\mu\nu\rho\sigma}$
-          (Carroll eq.~1.68) --- totally antisymmetric, with
-          $\tilde{\epsilon}_{0123} = +1$.
-    \item \textbf{Electromagnetic field strength:}
-          $F_{\mu\nu} = -F_{\nu\mu}$ (Carroll eq.~1.69) --- a $(0,2)$
-          antisymmetric tensor encoding $\mathbf{E}$ and $\mathbf{B}$.
-\end{itemize}
+Four tensors in Minkowski space will be used repeatedly.
+The metric $\eta_{\mu\nu}$ is a symmetric $(0,2)$ tensor.
+The Kronecker delta $\delta^\mu_{\ \nu}$ is the identity map.
+The Levi-Civita symbol $\tilde{\epsilon}_{\mu\nu\rho\sigma}$
+(Carroll eq.~1.68) is totally antisymmetric, with
+$\tilde{\epsilon}_{0123} = +1$.
+The electromagnetic field strength
+$F_{\mu\nu} = -F_{\nu\mu}$ (Carroll eq.~1.69) is a $(0,2)$
+antisymmetric tensor whose components are $\mathbf{E}$ and $\mathbf{B}$.
 
 
 % =====================================================================
 \section{The Metric as the Central Object}
 \label{sec:metric_central}
 
-The key insight that connects SR to GR is that the metric is the fundamental
+What connects SR to GR is that the metric is the fundamental
 object describing the geometry of spacetime.  In SR, the metric is the
 constant $\eta_{\mu\nu}$.  In GR, the metric becomes a field
-$g_{\mu\nu}(x)$ that varies from point to point, encoding the curvature of
-spacetime due to matter and energy.
+$g_{\mu\nu}(x)$ that varies from point to point and encodes the curvature of
+spacetime produced by matter and energy.
 
-Everything we need for gravitational lensing --- the bending of light, the
-distortion of images, the time delays between multiple images --- follows
-from understanding how the metric determines the paths of light rays.
-That story begins in the next chapter, where we introduce curved spacetime
+Everything we need for gravitational lensing (the bending of light, the
+distortion of images, the time delays between multiple images) follows
+from how the metric determines the paths of light rays.
+That account begins in the next chapter, where we introduce curved spacetime
 and the geodesic equation.
 
 
@@ -470,9 +463,9 @@ and the geodesic equation.
 \section{Energy and Momentum in SR}
 \label{sec:energy_momentum_sr}
 
-The \textbf{stress-energy tensor} $T^{\mu\nu}$ encodes the energy and
+The \emph{stress-energy tensor} $T^{\mu\nu}$ encodes the energy and
 momentum content of matter and fields.  For a perfect fluid with
-energy density $\rho$, pressure $p$, and four-velocity $U^\mu$:
+energy density $\rho$, pressure $p$, and four-velocity $U^\mu$ it is
 \begin{equation}
     T^{\mu\nu} = (\rho + p)\, U^\mu U^\nu + p\, \eta^{\mu\nu} \,.
     \label{eq:perfect_fluid}
@@ -491,19 +484,17 @@ right-hand side of Einstein's field equation~\eqref{eq:einstein_field}.
 \section{Summary}
 \label{sec:sr_summary}
 
-\begin{itemize}
-    \item Spacetime is a four-dimensional continuum; the invariant quantity
-          is the interval $ds^2 = \eta_{\mu\nu}\, dx^\mu dx^\nu$.
-    \item Lorentz transformations ($x^{\mu'} = \Lambda^{\mu'}{}_\nu x^\nu$)
-          leave the interval invariant.  Boosts mix space and time.
-    \item Four-vectors and tensors are classified by how they transform
-          under Lorentz transformations.
-    \item The metric $\eta_{\mu\nu}$ is the central object --- it defines
-          distances, raises/lowers indices, and generalizes to $g_{\mu\nu}$
-          in GR.
-    \item Photons travel on null paths ($ds^2 = 0$), which will be the
-          starting point for understanding gravitational lensing.
-\end{itemize}
+Spacetime is a four-dimensional continuum whose invariant quantity
+is the interval $ds^2 = \eta_{\mu\nu}\, dx^\mu dx^\nu$.
+Lorentz transformations ($x^{\mu'} = \Lambda^{\mu'}{}_\nu x^\nu$)
+leave the interval invariant; boosts mix space and time.
+Four-vectors and tensors are classified by how they transform
+under Lorentz transformations.
+The metric $\eta_{\mu\nu}$ is the central object: it defines
+distances, raises and lowers indices, and generalizes to $g_{\mu\nu}$
+in GR.
+Photons travel on null paths ($ds^2 = 0$), which is the
+starting point for the treatment of gravitational lensing.
 
 
 % =====================================================================

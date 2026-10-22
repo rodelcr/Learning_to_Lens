@@ -22,34 +22,34 @@ of light (which involves fast-moving particles).}
 \noindent
 In Chapters~\ref{ch:special_relativity}--\ref{ch:geodesics_orbits} we developed the full machinery of general relativity
 and applied it to the exact Schwarzschild solution.  That framework is
-necessary for understanding black holes and strong-field orbits, but
-\textit{most gravitational lensing} --- by galaxies, galaxy clusters,
-and large-scale structure --- operates in a regime where gravity is
+necessary for black holes and strong-field orbits, but
+most gravitational lensing (by galaxies, galaxy clusters,
+and large-scale structure) operates in a regime where gravity is
 weak: the Newtonian potential satisfies $|\Phi|/c^2 \ll 1$ and peculiar
 velocities are small compared to $c$.  In this regime the metric can be
 treated as a small perturbation of flat Minkowski spacetime, and the
-resulting \textbf{linearized gravity} formalism is both simpler and
+resulting \emph{linearized gravity} formalism is both simpler and
 more directly connected to the lens equation that we will develop in
 Chapter~\ref{ch:lens_equation}.
 
 This chapter derives the weak-field metric from first principles, recovers
 Newtonian gravity as a limiting case, computes the deflection of light
-(reproducing the famous factor-of-two over the Newtonian prediction),
-and introduces the effective refractive index interpretation that
-provides the physical intuition behind Fermat's principle for lensing.
+(reproducing the factor of two over the Newtonian prediction),
+and introduces the effective refractive index interpretation on which
+Fermat's principle for lensing rests.
 The linearity of the perturbation equations also guarantees that
-deflection angles from multiple masses \textit{superpose} --- the
+deflection angles from multiple masses superpose, which is the
 foundation for treating extended mass distributions in later chapters.
 
 \medskip
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
-    \item \mathlink{01e_Linearized_Gravity/weak_field_metric.wl}{weak\_field\_metric.wl}
-          --- symbolic verification of the Newtonian limit, weak-field
+    \item \mathlink{01e_Linearized_Gravity/weak_field_metric.wl}{weak\_field\_metric.wl}:
+          symbolic verification of the Newtonian limit, weak-field
           deflection angle, factor-of-2, and figure generation
-    \item \mathlink{01e_Linearized_Gravity/deflection_comparison.nb}{deflection\_comparison.nb}
-          --- interactive comparison of exact Schwarzschild deflection
+    \item \mathlink{01e_Linearized_Gravity/deflection_comparison.nb}{deflection\_comparison.nb}:
+          interactive comparison of exact Schwarzschild deflection
           vs.\ weak-field approximation; effective refractive index
           visualization
 \end{itemize}
@@ -75,33 +75,31 @@ galaxy clusters ($M \sim 10^{15}\,\Msun$, $r \sim 1$~Mpc), one finds
 $|\Phi|/c^2 \sim 5 \times 10^{-5}$; values of $\sim 10^{-4}$ are reached
 only in the inner few hundred kpc of a massive cluster.
 
-In all of these astrophysical settings, gravity is \textit{extremely}
+In all of these astrophysical settings gravity is very
 weak.  This justifies expanding the metric perturbatively around flat
-spacetime and keeping only first-order terms --- the \textbf{linearized
-gravity} approximation.
+spacetime and keeping only first-order terms, which is the linearized
+gravity approximation.
 
 \begin{annotation}[Units, and what $|\Phi|/c^2$ predicts]
-\begin{itemize}
-    \item \textbf{Dimensionless:} $[GM/(rc^2)] =
-          (\mathrm{m^3\,kg^{-1}\,s^{-2}})(\mathrm{kg})/
-          (\mathrm{m}\cdot\mathrm{m^2\,s^{-2}}) = 1$.  With
-          $c = 2.998\times10^8$~m\,s$^{-1}$ the three point-mass estimates are
-          $2.12\times10^{-6}$ (Sun at the limb), $4.8\times10^{-6}$
-          ($10^{12}\,\Msun$ at 10~kpc) and $4.8\times10^{-5}$
-          ($10^{15}\,\Msun$ at 1~Mpc).
-    \item \textbf{It sets the deflection directly.} For a point mass,
-          $\alphahat = 4GM/(c^2b) = 4\,|\Phi(b)|/c^2$: four times the
-          potential at closest approach.  Sun: $4\times2.12\times10^{-6} =
-          8.49\times10^{-6}$~rad $= 1.75''$; the galaxy estimate gives
-          $\approx 4''$.  Arcsecond image splittings are therefore the
-          \emph{natural} scale of galaxy lensing.
-\end{itemize}
+The ratio is dimensionless, $[GM/(rc^2)] =
+(\mathrm{m^3\,kg^{-1}\,s^{-2}})(\mathrm{kg})/
+(\mathrm{m}\cdot\mathrm{m^2\,s^{-2}}) = 1$.  With
+$c = 2.998\times10^8$~m\,s$^{-1}$ the three point-mass estimates are
+$2.12\times10^{-6}$ (Sun at the limb), $4.8\times10^{-6}$
+($10^{12}\,\Msun$ at 10~kpc) and $4.8\times10^{-5}$
+($10^{15}\,\Msun$ at 1~Mpc).
+It also sets the deflection directly: for a point mass,
+$\alphahat = 4GM/(c^2b) = 4\,|\Phi(b)|/c^2$, four times the
+potential at closest approach.  For the Sun, $4\times2.12\times10^{-6} =
+8.49\times10^{-6}$~rad $= 1.75''$; the galaxy estimate gives
+$\approx 4''$.  Arcsecond image splittings are therefore the
+\emph{natural} scale of galaxy lensing.
 \end{annotation}
 
 
 \begin{remark}
-The only astrophysical setting where linearized gravity is
-\textit{insufficient} for lensing is near black holes and neutron stars,
+The only astrophysical setting in which linearized gravity is
+insufficient for lensing is near black holes and neutron stars,
 where $|\Phi|/c^2$ approaches unity.  Strong lensing by black holes
 (e.g., the photon ring observed by the Event Horizon Telescope) requires
 the full Schwarzschild or Kerr solution developed in Chapters~\ref{ch:schwarzschild} and~\ref{ch:geodesics_orbits}.
@@ -122,9 +120,9 @@ metric (Carroll eq.~7.1; Congdon \& Keeton Sec.~3.3.2):
     \label{eq:metric_perturbation}
 \end{equation}
 where $\eta_{\mu\nu} = \mathrm{diag}(-1, +1, +1, +1)$ is the flat
-Minkowski metric and $h_{\mu\nu}$ is the \textbf{metric perturbation}.
+Minkowski metric and $h_{\mu\nu}$ is the \emph{metric perturbation}.
 The condition $|h_{\mu\nu}| \ll 1$ means that spacetime is ``almost
-flat'' --- deviations from Minkowski geometry are small.
+flat'': deviations from Minkowski geometry are small.
 
 The inverse metric to first order in $h$ is (Carroll eq.~7.2):
 \begin{equation}
@@ -134,7 +132,7 @@ The inverse metric to first order in $h$ is (Carroll eq.~7.2):
 where indices on $h_{\mu\nu}$ are raised and lowered with $\eta$.
 
 \begin{derivation}[Why the inverse has a minus sign]
-Try $g^{\mu\nu} = \eta^{\mu\nu} - h^{\mu\nu}$ with
+We try $g^{\mu\nu} = \eta^{\mu\nu} - h^{\mu\nu}$ with
 $h^{\mu\nu} \equiv \eta^{\mu\alpha}\eta^{\nu\beta}h_{\alpha\beta}$:
 \begin{align*}
 g_{\mu\lambda}\,g^{\lambda\nu}
@@ -146,8 +144,8 @@ g_{\mu\lambda}\,g^{\lambda\nu}
   && \text{(lower/raise with } \eta\text{)} \\
 &= \delta_\mu^{\ \nu} + \order{h^2} .
 \end{align*}
-Sign trap: $h^{00} = \eta^{00}\eta^{00}h_{00} = +h_{00}$, so
-$g^{00} = -1 - h_{00}$.  Check directly for a diagonal metric:
+A sign trap: $h^{00} = \eta^{00}\eta^{00}h_{00} = +h_{00}$, so
+$g^{00} = -1 - h_{00}$.  A direct check for a diagonal metric gives
 $g^{00} = 1/g_{00} = -1/(1 - h_{00}) = -1 - h_{00} + \order{h_{00}^2}$.
 \end{derivation}
 
@@ -162,7 +160,7 @@ The Christoffel symbols to first order are (Carroll eq.~7.4):
 \end{equation}
 
 \begin{derivation}[Linearising the Christoffel symbols]
-Start from the exact
+We start from the exact
 $\christoffel{\alpha}{\mu}{\nu} = \tfrac12 g^{\alpha\beta}
 (\partial_\mu g_{\nu\beta} + \partial_\nu g_{\mu\beta} - \partial_\beta g_{\mu\nu})$.
 Because $\eta_{\mu\nu}$ is constant, every derivative of $g$ is a
@@ -173,7 +171,7 @@ derivative of $h$, i.e.\ already first order.  Then
   (\partial_\mu h_{\nu\beta} + \partial_\nu h_{\mu\beta} - \partial_\beta h_{\mu\nu}) ,
 \]
 and the $h^{\alpha\beta}\,\partial h$ piece is $\order{h^2}$.  Dropping it
-leaves eq.~\eqref{eq:christoffel_linearized}.  Consequence: in flat
+leaves eq.~\eqref{eq:christoffel_linearized}.  Consequently, in flat
 coordinates all Christoffel symbols vanish at zeroth order, so the
 connection is ``made of'' gradients of the potential.
 \end{derivation}
@@ -181,9 +179,9 @@ connection is ``made of'' gradients of the potential.
 
 \begin{remark}
 In linearized gravity we systematically discard all terms of order
-$h^2$ and higher.  This means the Christoffel symbols are first order
+$h^2$ and higher.  The Christoffel symbols are then first order
 in $h$, the Riemann tensor is first order, and the Einstein equations
-become \textit{linear} in $h_{\mu\nu}$.  Linearity is the crucial
+become \emph{linear} in $h_{\mu\nu}$.  Linearity is the
 simplification that allows superposition of gravitational effects.
 \end{remark}
 
@@ -198,19 +196,19 @@ perturbation $h_{00}$ with the Newtonian potential $\Phi$.
 
 \subsection{Assumptions}
 
-The \textbf{Newtonian limit} requires three conditions
+The \emph{Newtonian limit} requires three conditions
 (Carroll Sec.~4.1):
 \begin{enumerate}
-    \item \textbf{Weak field:} $|h_{\mu\nu}| \ll 1$
-    \item \textbf{Slow motion:} $v \ll c$, so
-          $dx^i/d\tau \ll dx^0/d\tau = c\,dt/d\tau$
-    \item \textbf{Static field:} $\partial_0 h_{\mu\nu} = 0$
-          (the gravitational field is not changing with time)
+    \item a weak field, $|h_{\mu\nu}| \ll 1$;
+    \item slow motion, $v \ll c$, so that
+          $dx^i/d\tau \ll dx^0/d\tau = c\,dt/d\tau$;
+    \item a static field, $\partial_0 h_{\mu\nu} = 0$
+          (the gravitational field is not changing with time).
 \end{enumerate}
 
 \subsection{Derivation}
 
-The geodesic equation for a massive particle is (Carroll eq.~3.44):
+The geodesic equation for a massive particle is (Carroll eq.~3.44)
 \begin{equation}
     \frac{d^2 x^\mu}{d\tau^2}
     + \christoffel{\mu}{\alpha}{\beta}\,
@@ -252,8 +250,8 @@ eq.~\eqref{eq:christoffel_linearized} gives:
 \christoffel{i}{j}{k} &= \frac{1}{c^2}\bigl(\delta_{jk}\,\partial_i\Phi
   - \delta_{ij}\,\partial_k\Phi - \delta_{ik}\,\partial_j\Phi\bigr) .
 \end{align*}
-Sizes in the geodesic equation for a slow particle ($dx^0/d\tau \approx c$,
-$dx^j/d\tau \approx v^j$): the $\christoffel{i}{0}{0}$ term is
+The sizes of the terms in the geodesic equation for a slow particle ($dx^0/d\tau \approx c$,
+$dx^j/d\tau \approx v^j$) are as follows: the $\christoffel{i}{0}{0}$ term is
 $\sim|\nabla\Phi|$; the $\christoffel{i}{0}{j}$ term is zero; the
 $\christoffel{i}{j}{k}$ term is $\sim|\nabla\Phi|\,v^2/c^2$.  Dropping the
 latter is the slow-motion approximation.  For light ($v = c$) it is
@@ -262,7 +260,7 @@ Section~\ref{sec:null_geodesics_weak}.
 \end{derivation}
 
 
-The spatial part of the geodesic equation then becomes:
+The spatial part of the geodesic equation then becomes
 \begin{equation}
     \frac{d^2 x^i}{d\tau^2}
     = \half \partial_i h_{00}\left(\frac{dx^0}{d\tau}\right)^{\!2}
@@ -270,7 +268,7 @@ The spatial part of the geodesic equation then becomes:
     \label{eq:geodesic_spatial}
 \end{equation}
 Using $d\tau \approx dt$ (valid for slow motion, since $\gamma \approx 1$),
-we get:
+we obtain
 \begin{equation}
     \frac{d^2 x^i}{dt^2} = \half c^2\, \partial_i h_{00} \,.
     \label{eq:newton_from_geodesic}
@@ -289,7 +287,7 @@ last term is higher order, and the factor $(dt/d\tau)^2$ cancels
 
 \subsection{Identification with Newtonian Gravity}
 
-Newton's second law in a gravitational field is:
+Newton's second law in a gravitational field is
 \begin{equation}
     \frac{d^2 x^i}{dt^2} = -\partial_i \Phi \,.
     \label{eq:newton_law}
@@ -303,7 +301,7 @@ Comparing with eq.~\eqref{eq:newton_from_geodesic}, we identify
     \label{eq:h00_identification}
 \end{equation}
 The time-time component of the metric perturbation is determined by the
-Newtonian potential.  For a point mass $M$, $\Phi = -GM/r$, so:
+Newtonian potential.  For a point mass $M$, $\Phi = -GM/r$, so
 \begin{equation}
     h_{00} = \frac{2GM}{c^2 r} = \frac{R_S}{r} \,,
     \label{eq:h00_point_mass}
@@ -311,21 +309,19 @@ Newtonian potential.  For a point mass $M$, $\Phi = -GM/r$, so:
 where $R_S = 2GM/c^2$ is the Schwarzschild radius.
 
 \begin{annotation}[Sign conventions to keep straight]
-\begin{itemize}
-    \item Signature $(-,+,+,+)$ and $x^0 = ct$, so $h_{\mu\nu}$ and
-          $\Phi/c^2$ are dimensionless.  $\eta_{00} = -1$, hence
-          $h_{00} = g_{00} + 1$.
-    \item $\Phi < 0$ near a mass, so $h_{00} = -2\Phi/c^2 = R_S/r > 0$ and
-          $g_{00} = -(1 - R_S/r)$: exactly Schwarzschild's $g_{tt}/c^2$.
-    \item With the opposite signature $(+,-,-,-)$ one has
-          $g_{00} = 1 + 2\Phi/c^2$ and $h_{00} = +2\Phi/c^2$.  Copying
-          formulas between books without converting is the classic
-          sign error.
-    \item The identification fixes $h_{00}$ only up to a constant,
-          $\partial_i(h_{00} + 2\Phi/c^2) = 0$; the constant is zero because
-          both $h_{00}$ and $\Phi$ vanish at infinity (asymptotic
-          flatness).
-\end{itemize}
+The signature is $(-,+,+,+)$ and $x^0 = ct$, so $h_{\mu\nu}$ and
+$\Phi/c^2$ are dimensionless; $\eta_{00} = -1$, hence
+$h_{00} = g_{00} + 1$.
+Since $\Phi < 0$ near a mass, $h_{00} = -2\Phi/c^2 = R_S/r > 0$ and
+$g_{00} = -(1 - R_S/r)$, which is Schwarzschild's $g_{tt}/c^2$.
+With the opposite signature $(+,-,-,-)$ one has
+$g_{00} = 1 + 2\Phi/c^2$ and $h_{00} = +2\Phi/c^2$, and copying
+formulas between books without converting is the usual
+sign error.
+The identification fixes $h_{00}$ only up to a constant,
+$\partial_i(h_{00} + 2\Phi/c^2) = 0$; the constant is zero because
+both $h_{00}$ and $\Phi$ vanish at infinity (asymptotic
+flatness).
 \end{annotation}
 
 
@@ -352,9 +348,9 @@ Verify each step using
 \section{The Weak-Field Metric}
 \label{sec:weak_field_metric}
 
-The Newtonian limit only determined $h_{00}$.  To get the full
-weak-field metric --- including the spatial components needed for
-light bending --- we must go beyond the slow-motion assumption and
+The Newtonian limit only determined $h_{00}$.  To obtain the full
+weak-field metric, including the spatial components needed for
+light bending, we must go beyond the slow-motion assumption and
 use the linearized Einstein equations.
 
 For a static, spherically symmetric source, the solution to the
@@ -369,7 +365,7 @@ linearized Einstein equations in isotropic coordinates gives
     \label{eq:weak_field_metric}
 \end{equation}
 where $\Phi(\mathbf{x})$ is the Newtonian gravitational potential
-(with $\Phi < 0$ for attractive gravity).  Equivalently:
+(with $\Phi < 0$ for attractive gravity).  Equivalently,
 \begin{equation}
     h_{00} = -\frac{2\Phi}{c^2} \,, \qquad
     h_{ij} = -\frac{2\Phi}{c^2}\,\delta_{ij} \,.
@@ -377,7 +373,7 @@ where $\Phi(\mathbf{x})$ is the Newtonian gravitational potential
 \end{equation}
 
 \begin{derivation}[Where $h_{ij}$ comes from: the linearised field equation]
-Define the trace-reversed perturbation
+We define the trace-reversed perturbation
 $\bar h_{\mu\nu} \equiv h_{\mu\nu} - \tfrac12\eta_{\mu\nu}h$ with
 $h = \eta^{\mu\nu}h_{\mu\nu}$ (so $\bar h = -h$).  In Lorenz gauge,
 $\partial^\mu\bar h_{\mu\nu} = 0$, the linearised Einstein equation reads
@@ -397,7 +393,7 @@ h_{00} &= -\frac{4\Phi}{c^2} + \frac12\cdot\frac{4\Phi}{c^2} = -\frac{2\Phi}{c^2
 \qquad
 h_{ij} = -\frac12\,\delta_{ij}\,\frac{4\Phi}{c^2} = -\frac{2\Phi}{c^2}\,\delta_{ij} .
 \end{align*}
-Gauge-free check (done in \texttt{problems\_01e.wl}): insert the metric
+A gauge-free check (done in \texttt{problems\_01e.wl}) is to insert the metric
 eq.~\eqref{eq:weak_field_metric} into the exact Einstein tensor and keep
 first order.  One finds $G_{00} = 2\nabla^2\Phi/c^2$, $G_{0i} = 0$ and
 $G_{ij} = 0$.  With $G_{00} = 8\pi G T_{00}/c^4 = 8\pi G\rho/c^2$ this is
@@ -410,13 +406,13 @@ the absence of stresses in the source.
 
 
 \begin{remark}
-The key point is that \textbf{both} the time and space components of
+Both the time and space components of
 the metric are perturbed, and by equal amounts.  The Newtonian limit
 (which assumes slow motion) only probes $h_{00}$, because the spatial
-components of the four-velocity are negligible.  But photons travel at
+components of the four-velocity are negligible.  Photons, however, travel at
 $c$, so all components of the metric contribute equally to the
 propagation of light.  This is why light bending in GR is
-\textit{twice} the Newtonian prediction.
+\emph{twice} the Newtonian prediction.
 \end{remark}
 
 \begin{exercise}
@@ -446,7 +442,7 @@ Verify with
 \begin{annotation}[A trap in part (b)]
 $(1 + R_S/r)\,dr^2 + r^2d\Omega^2$ and $(1 + R_S/r)(dr^2 + r^2d\Omega^2)$
 differ by $R_S\,r\,d\Omega^2$, which is \emph{first} order in $R_S/r$
-relative to $r^2d\Omega^2$.  Simply relabelling $r$ as the Cartesian radius
+relative to $r^2d\Omega^2$.  Relabelling $r$ as the Cartesian radius
 therefore does not work.  The radial coordinate must change:
 $r = \rho(1 + R_S/4\rho)^2$ (eq.~\eqref{eq:isotropic_r}), so
 $r \simeq \rho + R_S/2$.  The worked version is in the derivation box of
@@ -472,21 +468,21 @@ geodesic: $ds^2 = 0$.
 
 For a photon moving primarily in the $x$-direction, passing the mass
 at impact parameter $b$ (the closest approach distance in the absence
-of deflection), we can use the \textbf{Born approximation}: compute
+of deflection), we can use the \emph{Born approximation}: we compute
 the deflection along the unperturbed (straight-line) path.  This is
 valid when the deflection angle is small, which is guaranteed by the
 weak-field condition.
 
 \subsection{The Null Condition}
 
-Setting $ds^2 = 0$ in eq.~\eqref{eq:weak_field_metric}:
+Setting $ds^2 = 0$ in eq.~\eqref{eq:weak_field_metric} gives
 \begin{equation}
     \left(1 + \frac{2\Phi}{c^2}\right) c^2 dt^2
     = \left(1 - \frac{2\Phi}{c^2}\right)
     \bigl(dx^2 + dy^2 + dz^2\bigr) \,.
     \label{eq:null_condition}
 \end{equation}
-The coordinate speed of light is therefore:
+The coordinate speed of light is therefore
 \begin{equation}
     \frac{|\mathbf{dx}|}{dt}
     = c\,\sqrt{\frac{1 + 2\Phi/c^2}{1 - 2\Phi/c^2}}
@@ -494,7 +490,7 @@ The coordinate speed of light is therefore:
     \label{eq:coordinate_speed}
 \end{equation}
 to first order in $\Phi/c^2$.  Since $\Phi < 0$, the coordinate speed
-is \textit{less} than $c$ near a mass --- gravity slows light.
+is less than $c$ near a mass: gravity slows light.
 
 \begin{derivation}[Expanding the coordinate speed]
 With $p \equiv \Phi/c^2$, $|p| \ll 1$:
@@ -534,10 +530,10 @@ the photon's path and $dl$ is the path length along the unperturbed
 trajectory.  This gives the ``Newtonian'' contribution to the
 deflection.
 
-The spatial perturbation $h_{ij}$ contributes an \textit{equal} amount,
+The spatial perturbation $h_{ij}$ contributes an \emph{equal} amount,
 doubling the result.  In the PPN (parametrized post-Newtonian)
 formalism, the full deflection angle is written as
-(Will 1993):
+(Will 1993)
 \begin{equation}
     \boxed{
     \alphahat = \frac{1 + \gamma_{\mathrm{PPN}}}{c^2}
@@ -548,15 +544,15 @@ formalism, the full deflection angle is written as
 where $\gamma_{\mathrm{PPN}} = 1$ in GR\@.  The Parametrized
 Post-Newtonian (PPN) formalism describes deviations from Newtonian
 gravity using a set of dimensionless parameters; $\gamma_{\mathrm{PPN}}$
-measures how much \textit{spatial} curvature is produced per unit rest
+measures how much spatial curvature is produced per unit rest
 mass.  In GR, $\gamma_{\mathrm{PPN}} = 1$ (equal time and space
 perturbations to the metric, as derived in
 Section~\ref{sec:weak_field_metric}); in Brans--Dicke theory,
 $\gamma_{\mathrm{PPN}} = (1+\omega)/(2+\omega)$ where $\omega$ is the
-coupling constant.  Solar system tests --- most precisely the Cassini
-spacecraft's measurement of the Shapiro delay \citep{bertotti_2003} --- give
-$\gamma_{\mathrm{PPN}} - 1 = (2.1 \pm 2.3) \times 10^{-5}$, strongly
-supporting GR \citep{will_2014}.\footnote{Earlier versions of this chapter quoted
+coupling constant.  Solar system tests, most precisely the Cassini
+spacecraft's measurement of the Shapiro delay \citep{bertotti_2003}, give
+$\gamma_{\mathrm{PPN}} - 1 = (2.1 \pm 2.3) \times 10^{-5}$, in
+agreement with GR \citep{will_2014}.\footnote{Earlier versions of this chapter quoted
 $|\gamma_{\mathrm{PPN}} - 1| < 2.3\times10^{-5}$, the number listed as the
 $\gamma - 1$ limit in Table~4 of \citet{will_2014}.  The measurement itself is a
 central value of $2.1\times10^{-5}$ with a $1\sigma$ uncertainty of
@@ -566,7 +562,7 @@ The Newtonian prediction corresponds to $\gamma_{\mathrm{PPN}} = 0$
 (no spatial curvature contribution), giving half the GR value.
 
 \begin{derivation}[The two equal halves, straight from the geodesic equation]
-Take $x^0 = ct$, a photon moving along $+x$, and the Born approximation:
+We take $x^0 = ct$, a photon moving along $+x$, and the Born approximation:
 along the unperturbed ray $k^\mu = dx^\mu/d\lambda = (1, 1, 0, 0)$, with
 $\lambda = x$ at zeroth order.  The transverse ($y$) component of the
 geodesic equation is
@@ -602,7 +598,7 @@ For a point mass with $|\Phi| = GM/r$, the photon travels along the
 $x$-axis at perpendicular distance $b$ (so
 $r = \sqrt{x^2 + b^2}$ and
 $\nabla_\perp |\Phi| = (GM\, b)/(x^2 + b^2)^{3/2}$).
-The line-of-sight integral evaluates to:
+The line-of-sight integral evaluates to
 \begin{equation}
     \int_{-\infty}^{+\infty} \nabla_\perp |\Phi|\, dl
     = GM \int_{-\infty}^{+\infty}
@@ -613,22 +609,22 @@ The line-of-sight integral evaluates to:
 \end{equation}
 using the standard integral
 $\int_{-\infty}^{+\infty} b\, dx/(x^2 + b^2)^{3/2} = 2/b$.
-With $\gamma_{\mathrm{PPN}} = 1$ (GR), the deflection angle is:
+With $\gamma_{\mathrm{PPN}} = 1$ (GR), the deflection angle is
 \begin{equation}
     \boxed{
     \alphahat = \frac{4GM}{c^2 b}
     }
     \label{eq:deflection_point_mass}
 \end{equation}
-This is the \textbf{Einstein deflection angle} for a point mass ---
-the single most important equation in gravitational lensing.  We derived
-this here via the Born approximation in the weak-field metric; in
+This is the \emph{Einstein deflection angle} for a point mass,
+the central equation of gravitational lensing.  We derived
+it here via the Born approximation in the weak-field metric; in
 Chapter~\ref{ch:light_deflection} we will re-derive it from the exact null
-geodesic orbit equation in the full Schwarzschild metric, confirming
-that both approaches agree.
+geodesic orbit equation in the full Schwarzschild metric, and the two
+approaches agree.
 
 \begin{derivation}[The ``standard integral'', and where the bending happens]
-Substitute $x = b\tan\vartheta$, $dx = b\sec^2\vartheta\,d\vartheta$,
+We substitute $x = b\tan\vartheta$, $dx = b\sec^2\vartheta\,d\vartheta$,
 $x^2 + b^2 = b^2\sec^2\vartheta$:
 \[
 \int_{-\infty}^{+\infty}\frac{b\,dx}{(x^2 + b^2)^{3/2}}
@@ -690,19 +686,17 @@ $b/R_S = R_\odot/R_S \approx 2.36\times10^5$.
 \subsection{The Factor of Two}
 
 The factor of 4 in eq.~\eqref{eq:deflection_point_mass} (rather than 2)
-is one of the most celebrated results in GR.  Its origin is as follows:
-\begin{itemize}
-    \item The temporal perturbation $h_{00} = -2\Phi/c^2$ contributes a
-          deflection of $2GM/(c^2 b)$.  This is the ``Newtonian'' part,
-          which can also be derived by treating the photon as a
-          Newtonian particle moving at speed $c$.
-    \item The spatial perturbation $h_{ij} = -2\Phi/c^2\, \delta_{ij}$
-          contributes an \textit{equal} additional deflection of
-          $2GM/(c^2 b)$.  This arises because photons, unlike massive
-          particles, are equally sensitive to the spatial curvature.
-\end{itemize}
-The total is $4GM/(c^2 b) = 2 \times (2GM/(c^2 b))$, i.e., \textbf{twice
-the Newtonian prediction}.  This factor of 2 was confirmed by
+is one of the best-known results of GR, and its origin is as follows.
+The temporal perturbation $h_{00} = -2\Phi/c^2$ contributes a
+deflection of $2GM/(c^2 b)$.  This is the ``Newtonian'' part,
+which can also be derived by treating the photon as a
+Newtonian particle moving at speed $c$.
+The spatial perturbation $h_{ij} = -2\Phi/c^2\, \delta_{ij}$
+contributes an \emph{equal} additional deflection of
+$2GM/(c^2 b)$, because photons, unlike massive
+particles, are equally sensitive to the spatial curvature.
+The total is $4GM/(c^2 b) = 2 \times (2GM/(c^2 b))$, i.e., twice
+the Newtonian prediction.  This factor of 2 was confirmed by
 Eddington's 1919 solar eclipse expedition and is one of the classical
 tests of general relativity.
 
@@ -749,14 +743,14 @@ Check with
 \section{The Effective Refractive Index}
 \label{sec:refractive_index}
 
-The weak-field metric leads to a beautiful analogy between gravitational
+The weak-field metric leads to an analogy between gravitational
 lensing and optics.  From eq.~\eqref{eq:coordinate_speed}, the
-coordinate speed of light near a mass is:
+coordinate speed of light near a mass is
 \begin{equation}
     v_{\mathrm{coord}} = c\left(1 + \frac{2\Phi}{c^2}\right) \,.
     \label{eq:coord_speed_light}
 \end{equation}
-We can define an \textbf{effective refractive index} by analogy with
+We can define an \emph{effective refractive index} by analogy with
 optics, where $v = c/n$:
 \begin{equation}
     \boxed{
@@ -767,12 +761,12 @@ optics, where $v = c/n$:
     \label{eq:refractive_index}
 \end{equation}
 Since $\Phi < 0$ near a mass, $n > 1$: gravity acts as a medium with
-refractive index greater than unity, \textit{slowing} light (in
+refractive index greater than unity, slowing light (in
 coordinate time) and bending it toward the mass.
 
 \begin{derivation}[Ray optics in the medium $n$ reproduces the full $4GM/(c^2b)$]
-$n = c/v_{\mathrm{coord}} = \sqrt{(1 - 2\Phi/c^2)/(1 + 2\Phi/c^2)}
-= 1 - 2\Phi/c^2 + \order{\Phi^2/c^4}$.  Note
+Here $n = c/v_{\mathrm{coord}} = \sqrt{(1 - 2\Phi/c^2)/(1 + 2\Phi/c^2)}
+= 1 - 2\Phi/c^2 + \order{\Phi^2/c^4}$, so that
 $n - 1 = \tfrac12(h_{00} + h_{xx})$: the refractive index already contains
 both halves.  For a point mass, $n - 1 = 2GM/(c^2r) = R_S/r$.  The ray
 equation of geometrical optics,
@@ -798,13 +792,13 @@ with the bend toward larger $n$, i.e.\ toward the mass.  No separate
     \label{fig:refractive_index}
 \end{figure}
 
-This refractive index interpretation has two important consequences:
+This refractive index interpretation has two consequences.
 
 \paragraph{Fermat's Principle.}
 In optics, light follows the path that extremizes the optical path
 length $\int n\, dl$.  The same principle applies in gravitational
 lensing: photons follow paths that extremize the
-\textbf{time delay functional} (Carroll eq.~7.85;
+\emph{time delay functional} (Carroll eq.~7.85;
 Congdon \& Keeton eq.~4.25):
 \begin{equation}
     t[\mathbf{x}(l)] = \frac{1}{c} \int n\, dl
@@ -816,7 +810,7 @@ This will be the foundation for the time delay formalism in Chapter~\ref{ch:ferm
 \paragraph{Shapiro Time Delay.}
 Light passing near a mass arrives later than it would in flat spacetime,
 by an amount proportional to $\int 2|\Phi|/c^2\, dl$ along the path.
-This \textbf{Shapiro delay} has been measured to high precision using
+This \emph{Shapiro delay} has been measured to high precision using
 radar signals bouncing off Mercury and Venus.
 
 \begin{derivation}[Shapiro delay along a straight path]
@@ -872,16 +866,16 @@ For each, compute $n - 1 = 2GM/(c^2 r)$ and comment on the magnitude.
 \section{Superposition in Linearized Gravity}
 \label{sec:superposition}
 
-Because the metric perturbation $h_{\mu\nu}$ satisfies \textit{linear}
+Because the metric perturbation $h_{\mu\nu}$ satisfies \emph{linear}
 equations in the weak-field limit, we can superpose solutions.  If we
 have two masses $M_1$ and $M_2$ at positions $\mathbf{x}_1$ and
-$\mathbf{x}_2$, the total Newtonian potential is:
+$\mathbf{x}_2$, the total Newtonian potential is
 \begin{equation}
     \Phi(\mathbf{x}) = -\frac{GM_1}{|\mathbf{x} - \mathbf{x}_1|}
     - \frac{GM_2}{|\mathbf{x} - \mathbf{x}_2|} \,,
     \label{eq:superposition_potential}
 \end{equation}
-and the total deflection angle is simply the \textit{vector sum} of
+and the total deflection angle is the vector sum of
 the individual deflections:
 \begin{equation}
     \boxed{
@@ -904,12 +898,12 @@ $\Sigma(\vecxi)$, this becomes (Congdon \& Keeton eq.~4.9):
 This integral is the starting point for all lens models in Chapters~\ref{ch:axisymmetric_models}--\ref{ch:cluster_lensing}.
 
 \begin{derivation}[From the sum to the integral, and a second route via the projected potential]
-\textbf{Sum $\to$ integral.} Chop the lens plane into cells of area
-$d^2\xi'$ carrying mass $\Sigma(\vecxi')\,d^2\xi'$ and apply
+The step sum $\to$ integral is made by chopping the lens plane into cells of area
+$d^2\xi'$ carrying mass $\Sigma(\vecxi')\,d^2\xi'$ and applying
 eq.~\eqref{eq:superposition_deflection} with $M_i \to \Sigma(\vecxi')\,d^2\xi'$,
 $\vecxi_i \to \vecxi'$, $\sum_i \to \int d^2\xi'$.
 
-\textbf{Projected potential.} Since
+The second route goes through the projected potential.  Since
 $\hat{\boldsymbol\alpha} = (2/c^2)\int\nabla_\perp\Phi\,dz =
 \nabla_\perp\hat\psi$ with $\hat\psi \equiv (2/c^2)\int\Phi\,dz$, and
 $\int\partial_z^2\Phi\,dz = 0$ for an isolated lens,
@@ -947,10 +941,10 @@ code.
 
 
 \begin{remark}
-Superposition of deflection angles does \textit{not} hold in the
+Superposition of deflection angles does \emph{not} hold in the
 exact (nonlinear) theory.  It is a consequence of linearization and is
-valid only when all masses satisfy $|\Phi|/c^2 \ll 1$.  Fortunately,
-this condition is satisfied for essentially all astrophysical lensing
+valid only when all masses satisfy $|\Phi|/c^2 \ll 1$.  This
+condition is satisfied for nearly all astrophysical lensing
 systems.
 \end{remark}
 
@@ -1005,9 +999,9 @@ Check with
 \label{sec:preview_lens_equation}
 
 The deflection angle~\eqref{eq:deflection_point_mass} is a
-\textit{physical} angle, measured in the frame of the lens.  To connect
-this to observed image positions on the sky, we need the
-\textbf{lens equation}, which relates the true source position
+\emph{physical} angle, measured in the frame of the lens.  To connect
+it to observed image positions on the sky, we need the
+\emph{lens equation}, which relates the true source position
 $\vecbeta$ to the observed image position $\vectheta$ through the
 deflection angle (Congdon \& Keeton eq.~4.26):
 \begin{equation}
@@ -1015,7 +1009,7 @@ deflection angle (Congdon \& Keeton eq.~4.26):
     \label{eq:lens_equation_preview}
 \end{equation}
 where $\vecalpha = (\Dds / \Ds)\, \boldsymbol{\hat{\alpha}}$ is the
-\textbf{reduced deflection angle} and $\Dd$, $\Ds$, $\Dds$ are the
+\emph{reduced deflection angle} and $\Dd$, $\Ds$, $\Dds$ are the
 angular diameter distances from observer to lens, observer to source,
 and lens to source.\footnote{Earlier versions of this preview wrote
 $\vecbeta = \vectheta - (\Dds/\Ds)\,\vecalpha$ with
@@ -1028,9 +1022,9 @@ and~\eqref{eq:lens_equation} of Chapter~\ref{ch:lens_equation}.}
 
 The full derivation of this equation, along with the thin-lens
 approximation and the definition of angular diameter distances, will be
-developed in Chapters~\ref{ch:cosmological_distances} and~\ref{ch:lens_equation}.  The key point for now is that the
-weak-field deflection angle computed in this chapter provides the
-essential input to the lens equation.
+developed in Chapters~\ref{ch:cosmological_distances} and~\ref{ch:lens_equation}.  For now, the
+weak-field deflection angle computed in this chapter is the
+input to the lens equation.
 
 \begin{annotation}[Reading eq.~\eqref{eq:lens_equation_preview}: physical versus reduced deflection]
 The preview is already the form used from Chapter~\ref{ch:lens_equation}
@@ -1040,7 +1034,7 @@ $\vecalpha \equiv (\Dds/\Ds)\,\hat{\boldsymbol\alpha}$
 factor is $\Dds/\Ds$ because the deflection acts over the lens--source leg:
 $\Ds\vecbeta = \Ds\vectheta - \Dds\hat{\boldsymbol\alpha}$.  The physical $\hat{\boldsymbol\alpha}$ (this
 chapter) depends only on the lens; the reduced $\vecalpha$ also depends on
-the source distance through $\Dds/\Ds$.  Note $\Dds \neq \Ds - \Dd$ for
+the source distance through $\Dds/\Ds$.  Also, $\Dds \neq \Ds - \Dd$ for
 angular-diameter distances in an expanding universe
 (Chapter~\ref{ch:cosmological_distances}).
 \end{annotation}
@@ -1074,37 +1068,28 @@ and applies the distance ratios plane by plane.
 \section{Summary}
 \label{sec:linearized_summary}
 
-\begin{itemize}
-    \item In the weak-field limit, the metric is
-          $g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}$ with
-          $|h_{\mu\nu}| \ll 1$.
-
-    \item The Newtonian limit of the geodesic equation identifies
-          $h_{00} = -2\Phi/c^2$, where $\Phi$ is the Newtonian
-          gravitational potential.
-
-    \item The full weak-field metric has \textit{equal} perturbations in
-          time and space:
-          $ds^2 = -(1 + 2\Phi/c^2)\,c^2 dt^2 + (1 - 2\Phi/c^2)\,
-          d\mathbf{x}^2$.
-
-    \item Null geodesics in this metric yield the Einstein deflection
-          angle $\alphahat = 4GM/(c^2 b)$ --- \textbf{twice} the
-          Newtonian value.  The factor of 2 arises from the spatial
-          curvature contribution.
-
-    \item The weak-field metric defines an effective refractive index
-          $n = 1 + 2|\Phi|/c^2 > 1$, connecting gravitational lensing
-          to Fermat's principle and the Shapiro time delay.
-
-    \item Linearized gravity allows \textbf{superposition}: deflection
-          angles from multiple masses add vectorially.  This is the
-          foundation for treating galaxies, clusters, and continuous
-          mass distributions as gravitational lenses.
-
-    \item The deflection angle is the key input to the lens equation
-          (Chapter~\ref{ch:lens_equation}), which maps source positions to image positions.
-\end{itemize}
+In the weak-field limit, the metric is
+$g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}$ with
+$|h_{\mu\nu}| \ll 1$.
+The Newtonian limit of the geodesic equation identifies
+$h_{00} = -2\Phi/c^2$, where $\Phi$ is the Newtonian
+gravitational potential, and the full weak-field metric has equal perturbations in
+time and space,
+$ds^2 = -(1 + 2\Phi/c^2)\,c^2 dt^2 + (1 - 2\Phi/c^2)\,
+d\mathbf{x}^2$.
+Null geodesics in this metric yield the Einstein deflection
+angle $\alphahat = 4GM/(c^2 b)$, twice the
+Newtonian value; the factor of 2 arises from the spatial
+curvature contribution.
+The weak-field metric defines an effective refractive index
+$n = 1 + 2|\Phi|/c^2 > 1$, which connects gravitational lensing
+to Fermat's principle and the Shapiro time delay.
+Linearized gravity allows superposition: deflection
+angles from multiple masses add vectorially, which is the
+foundation for treating galaxies, clusters, and continuous
+mass distributions as gravitational lenses.
+The deflection angle is the input to the lens equation
+(Chapter~\ref{ch:lens_equation}), which maps source positions to image positions.
 
 
 % =====================================================================

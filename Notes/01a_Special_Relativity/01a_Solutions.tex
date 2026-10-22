@@ -18,13 +18,13 @@ which verifies each answer symbolically.
 We compute $(\Delta s)^2 = -(\Delta t)^2 + (\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2$:
 \begin{enumerate}[label=(\alph*)]
     \item $(\Delta s)^2 = -(2)^2 + (1)^2 + (1)^2 + (0)^2 = -4 + 1 + 1 = -2 < 0$
-          $\Rightarrow$ \textbf{Timelike}.  A massive particle can travel between these events.
+          $\Rightarrow$ timelike.  A massive particle can travel between these events.
 
     \item $(\Delta s)^2 = -(1)^2 + (1)^2 + (0)^2 + (0)^2 = 0$
-          $\Rightarrow$ \textbf{Null}.  A light ray connects these events.
+          $\Rightarrow$ null.  A light ray connects these events.
 
     \item $(\Delta s)^2 = -(3)^2 + (1)^2 + (2)^2 + (2)^2 = -9 + 1 + 4 + 4 = 0$
-          $\Rightarrow$ \textbf{Null}.  Again lightlike: $|\Delta\mathbf{x}|^2 = 9 = (\Delta t)^2$.
+          $\Rightarrow$ null again, since $|\Delta\mathbf{x}|^2 = 9 = (\Delta t)^2$.
 \end{enumerate}
 
 % ----- Exercise 1.2 -----
@@ -32,7 +32,7 @@ We compute $(\Delta s)^2 = -(\Delta t)^2 + (\Delta x)^2 + (\Delta y)^2 + (\Delta
 
 The boost matrix for rapidity $\phi$ is
 $\Lambda(\phi) = \begin{psmallmatrix} \cosh\phi & -\sinh\phi \\ -\sinh\phi & \cosh\phi \end{psmallmatrix}$
-(showing only the $t$--$x$ block).  Computing the product:
+(showing only the $t$--$x$ block).  The product of two such matrices is
 \begin{align*}
     \Lambda(\phi_1)\,\Lambda(\phi_2)
     &= \begin{pmatrix}
@@ -80,8 +80,8 @@ For the velocity addition formula, we use $v = \tanh\phi$:
     = \frac{\tanh\phi_1 + \tanh\phi_2}{1 + \tanh\phi_1\tanh\phi_2}
     = \frac{v_1 + v_2}{1 + v_1 v_2} \,.
 \end{equation*}
-Note: for $v_1 = v_2 = 1$ (speed of light), $v = 2/2 = 1$, confirming
-that the speed of light is invariant.
+For $v_1 = v_2 = 1$ (the speed of light) this gives $v = 2/2 = 1$, as
+required by the invariance of the speed of light.
 
 % ----- Exercise 1.3 -----
 \subsection*{Exercise~\ref{ex:four_velocity_norm}: Four-Velocity Norm}
@@ -116,17 +116,13 @@ Applying the boost $\Lambda$ along $x$:
     E' = p^{0'} = \gamma(p^0 - v\,p^1) = \gamma E(1 - v\cos\theta) \,.
 \end{equation*}
 
-\textbf{(b)} Special cases:
-\begin{itemize}
-    \item $\theta = 0$ (photon along $+x$, same direction as boost):
-    $E' = \gamma E(1-v) = E\sqrt{\frac{1-v}{1+v}}$.
-    This is a \textbf{redshift} ($E' < E$).  The observer recedes from the source.
-
-    \item $\theta = \pi/2$ (transverse):
-    $E' = \gamma E = E/\sqrt{1-v^2}$.
-    This is the \textbf{transverse Doppler effect} --- a purely relativistic
-    blueshift with no classical analogue, arising from time dilation.
-\end{itemize}
+\textbf{(b)} For $\theta = 0$, a photon along $+x$ in the same direction as the boost,
+$E' = \gamma E(1-v) = E\sqrt{\frac{1-v}{1+v}}$.
+This is a redshift ($E' < E$): the observer recedes from the source.
+For $\theta = \pi/2$, a transverse photon,
+$E' = \gamma E = E/\sqrt{1-v^2}$.
+This is the \emph{transverse Doppler effect}, a purely relativistic
+blueshift with no classical analogue, which arises from time dilation.
 
 \begin{derivation}[From the boost matrix to the special cases]
 The time row of the boost is $\Lambda^{0'}{}_{\nu} = (\gamma, -\gamma v, 0, 0)$, so
@@ -145,10 +141,10 @@ observer moves toward the source). The boosted four-momentum is still null, as i
 \textbf{(a)} By inspection, $F_{\mu\nu} = -F_{\nu\mu}$ (the matrix is
 antisymmetric: the diagonal is zero, and off-diagonal elements differ by a sign).
 
-\textbf{(b)} Raising both indices with the metric:
-$F^{\mu\nu} = \eta^{\mu\alpha}\eta^{\nu\beta}F_{\alpha\beta}$.
-In matrix form: $F^{\mu\nu} = \eta \cdot F_{\mu\nu} \cdot \eta$.
-The result is:
+\textbf{(b)} Raising both indices with the metric gives
+$F^{\mu\nu} = \eta^{\mu\alpha}\eta^{\nu\beta}F_{\alpha\beta}$,
+which in matrix form reads $F^{\mu\nu} = \eta \cdot F_{\mu\nu} \cdot \eta$.
+The result is
 \[
     F^{\mu\nu} =
     \begin{pmatrix}
@@ -161,7 +157,7 @@ The result is:
 The electric field components flip sign (from raising the time index),
 while the magnetic components are unchanged.
 
-\textbf{(c)} The Lorentz scalar:
+\textbf{(c)} The Lorentz scalar is
 \begin{align*}
     F_{\mu\nu}F^{\mu\nu}
     &= 2\bigl(-E_1^2 - E_2^2 - E_3^2 + B_1^2 + B_2^2 + B_3^2\bigr) \\
