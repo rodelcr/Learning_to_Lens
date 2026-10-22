@@ -30,7 +30,7 @@ lens-to-source distances start at $\chi_l$:
   D_{l,s2} &= \frac{c}{\Hubble}\,\frac{\tilde\chi_{s2}-\tilde\chi_l}{1+z_{s2}},
 \end{align*}
 with $\tilde\chi=\int_0^z\dd z'/E$.  The $(1+z)$ in each denominator is
-set by the \emph{far} endpoint, so $D_{s1}$ and $D_{l,s1}$ both carry
+set by the far endpoint, so $D_{s1}$ and $D_{l,s1}$ both carry
 $(1+z_{s1})^{-1}$, and $D_{s2}$ and $D_{l,s2}$ both carry
 $(1+z_{s2})^{-1}$.  In
 $\Brat=D_{l,s1}D_{s2}/(D_{s1}D_{l,s2})$ the numerator and the
@@ -40,9 +40,9 @@ $(1+z_{s1})^{-1}$ and one of $(1+z_{s2})^{-1}$.  They cancel, leaving
   \Brat = \frac{(\chi_{s1}-\chi_l)\,\chi_{s2}}{\chi_{s1}\,(\chi_{s2}-\chi_l)} .
 \end{equation*}
 The lens redshift never appears in a prefactor because no distance in
-$\Brat$ \emph{ends} at the lens; $z_l$ enters only through $\chi_l$.
-Because $\Hubble$ multiplies every $\chi$ by the same constant, only the
-\emph{shape} of $E(z)$ survives.  Numerically, at the illustrative
+$\Brat$ ends at the lens; $z_l$ enters only through $\chi_l$.
+Since $\Hubble$ multiplies every $\chi$ by the same constant, only the
+shape of $E(z)$ survives.  Numerically, at the illustrative
 geometry, $\Brat=0.6742$ for $\Hubble=50$, 70 and 100 alike.
 
 \emph{[Attested: \solnlink{14_Multiplane_DSPL/problems\_14.wl}{problems\_14.wl},
@@ -57,7 +57,7 @@ $\alpha_i(\theta)=\thetaE^{(i)}$, a constant.  The pointwise relation
 $\alpha_2=\alpha_1/\Brat$ then reads $\thetaE^{(2)}=\thetaE^{(1)}/\Brat$,
 i.e.\ $\etamea=\Brat$.
 
-\textbf{Geometry.}  An SIS bends every ray by the same physical angle
+The geometric reason is that an SIS bends every ray by the same physical angle
 $\alphahat=4\pi\sigma_v^2/c^2$.  The reduced deflection on plane $i$ is
 that angle times the efficiency, $\alpha_i=(D_{l,si}/D_{si})\alphahat$,
 and for a constant-deflection lens the Einstein radius equals the
@@ -117,7 +117,7 @@ more than half of the true $D_{ds}$.
 
 \textbf{(c)} At $(0.5,1.0,2.0)$ the naive ``ratio'' is $0.8782$ against
 the true $\Brat=0.6742$, an error of $+30.3\%$.  Read through
-eq.~\eqref{eq:mp_propagate} this would be a shift of order $8$ in $w$ ---
+eq.~\eqref{eq:mp_propagate} this would be a shift of order $8$ in $w$,
 far outside the linear regime, and far larger than any physical signal
 in $\Brat$.
 
@@ -180,10 +180,10 @@ checks 6a--6d.]}
 $\thetaE^{(i)}=[4\pi\sigma_v^2/c^2]\,f(q,\varphi)\,D_{l,si}/D_{si}$.  The
 mass factor and $f$ are properties of the deflector, identical for $i=1,2$,
 so
-$\etamea=(D_{l,s1}/D_{s1})/(D_{l,s2}/D_{s2})=\Brat$ for \emph{any} $f$.
-The argument never used the specific form of $f$, only that the ellipse
-does not know where the source sits.  It also shows the ratio is
-convention-free.
+$\etamea=(D_{l,s1}/D_{s1})/(D_{l,s2}/D_{s2})=\Brat$ for any $f$.
+The argument never used the specific form of $f$, only that the shape of
+the deflector is independent of the source redshift.  It also shows that
+the ratio is convention-free.
 
 \textbf{(b)} Let the lens-plane mass consist of the SIE plus a perturber
 at $z_l$ that produces, near the lens, a constant shear.  Reduced to

@@ -23,48 +23,43 @@ technology of his day, but wrong for ours.  The images formed when one star
 lenses another are split by only $\sim\!10^{-3}$~arcsec, far too small to
 resolve, so the
 individual images that dominated Chapters~\ref{ch:lens_equation}
-through~\ref{ch:elliptical_models} can never be seen.  What \emph{is}
-observable is the \textbf{total magnification}, and because the lens, source,
+through~\ref{ch:elliptical_models} can never be seen.  What is
+observable is the total magnification, and since the lens, source,
 and observer are all in relative motion, that magnification varies with time.
-Monitoring millions of stars turns this tiny, transient brightening into one of
-the most productive tools in modern astrophysics.  This is the regime of
-\textbf{gravitational microlensing}, and it is the subject of this chapter,
+Monitoring millions of stars turns this small, transient brightening into one
+of the most productive tools in modern astrophysics.  This is the regime of
+\emph{gravitational microlensing}, and it is the subject of this chapter,
 which follows Part~4 of \citet{schneider_kochanek_wambsganss_2006}.
 
-Microlensing recycles the physics we have already built --- it is the point-mass
+Microlensing reuses the physics already developed: it is the point-mass
 lens of Chapter~\ref{ch:lens_equation} and the magnification formalism of
-Chapter~\ref{ch:magnification}, read out in a new observational regime:
-\begin{itemize}[nosep]
-    \item the images are \textbf{unresolved}, so the observable is the
-          time-variable \textbf{total magnification} $A(u)$, not image
-          positions;
-    \item the natural clock is the \textbf{Einstein-radius crossing time}
-          $t_{\mathrm{E}}$, and the light curve has a universal, symmetric
-          \textbf{Paczy\'nski} shape;
-    \item ensembles of unseen lenses are characterized statistically through
-          the \textbf{optical depth} $\tau$;
-    \item small departures from the point-lens light curve reveal
-          \textbf{binary companions and planets} (the caustics of
-          Chapter~\ref{ch:elliptical_models} in miniature);
-    \item the sub-milliarcsecond wobble of the light centroid
-          (\textbf{astrometric microlensing}) and the micro-caustic networks
-          that flicker across \textbf{multiply imaged quasars} (Chapters~%
-          \ref{ch:elliptical_models}--\ref{ch:galaxy_lensing}) extend the
-          method to lens masses and quasar sizes.
-\end{itemize}
+Chapter~\ref{ch:magnification}, read out in a new observational regime.
+Since the images are unresolved, the observable is the time-variable total
+magnification $A(u)$ rather than the image positions.  The natural clock is
+the Einstein-radius crossing time $t_{\mathrm{E}}$, and the light curve has
+a universal, symmetric shape, the Paczy\'nski curve.  Ensembles of unseen
+lenses are characterized statistically through the optical depth $\tau$,
+and small departures from the point-lens light curve reveal binary
+companions and planets, through the caustics of
+Chapter~\ref{ch:elliptical_models} realized at stellar scales.  The
+sub-milliarcsecond motion of the light centroid (astrometric microlensing)
+and the micro-caustic networks that cross the images of multiply imaged
+quasars (Chapters~%
+\ref{ch:elliptical_models}--\ref{ch:galaxy_lensing}) extend the
+method to lens masses and quasar sizes.
 
 \medskip
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
-    \item \mathlink{13_Microlensing/microlensing.wl}{microlensing.wl}
-          --- symbolic derivation of the point-lens magnification
+    \item \mathlink{13_Microlensing/microlensing.wl}{microlensing.wl}:
+          symbolic derivation of the point-lens magnification
           $A(u) = (u^2+2)/(u\sqrt{u^2+4})$ from the two images, its
           $u\to0$ and $u\to\infty$ limits, and the symmetry of the
           Paczy\'nski light curve about the peak; figures exported to
           \texttt{Figures/13\_Microlensing/}
-    \item \mathlink{13_Microlensing/microlensing_explorer.nb}{microlensing\_explorer.nb}
-          --- interactive notebook with \texttt{Manipulate} widgets for the
+    \item \mathlink{13_Microlensing/microlensing_explorer.nb}{microlensing\_explorer.nb}:
+          interactive notebook with \texttt{Manipulate} widgets for the
           light curve (vary $u_0$, $t_0$, $t_{\mathrm{E}}$) and for the
           binary-lens caustic topology (vary mass ratio $q$ and separation
           $d$)
@@ -89,20 +84,20 @@ image splittings of galaxy lensing).  The two images produced by a point lens st
 separated by $\Delta\theta \approx 2\thetaE \sim$~mas, far below the
 resolution of any conventional telescope.
 
-As a result, \textbf{individual image positions,
-magnifications, and shapes are not measurable}.  All the information carried by
+As a result, individual image positions,
+magnifications, and shapes are not measurable.  All the information carried by
 the image geometry in earlier chapters is lost.  What survives is the
-\emph{sum} of the image fluxes --- the total magnification --- which, thanks to
+sum of the image fluxes, the total magnification, which, through the
 relative motion, sweeps out a light curve
 \citep[Sect.~1]{schneider_kochanek_wambsganss_2006}.  The remainder of this
 chapter is largely the study of that light curve and its perturbations.
 
 \begin{remark}
-Microlensing is defined by the \emph{observable}, not by the lens mass.  The
+Microlensing is defined by the observable, not by the lens mass.  The
 same point-mass physics describes a planet ($10^{-6}\,\Msun$) perturbing a
 stellar event and a $30\,\Msun$ black hole in the Galactic halo.  What makes
-all of these ``micro'' is that the image splitting is unresolved, so the total
-magnification is the only handle.
+all of these ``micro'' is that the image splitting is unresolved, so that the
+total magnification is the only observable.
 \end{remark}
 
 
@@ -147,8 +142,8 @@ and an earlier version of this equation dropped it.)
 
 \subsection{Total Magnification}
 
-Because only the combined flux is observable, the relevant quantity is the
-\textbf{total magnification} $A(u) = |\mu_+| + |\mu_-| = \mu_+ - \mu_-$:
+Since only the combined flux is observable, the relevant quantity is the
+\emph{total magnification} $A(u) = |\mu_+| + |\mu_-| = \mu_+ - \mu_-$:
 \begin{equation}
     \boxed{\;A(u) = \frac{u^2 + 2}{u\,\sqrt{u^2 + 4}}\;}
     \label{eq:micro_A}
@@ -157,7 +152,7 @@ This is the central formula of single-lens microlensing
 \citep[eq.~4]{schneider_kochanek_wambsganss_2006}; the derivation by summing
 the two image magnifications is verified symbolically in
 \mathlink{13_Microlensing/microlensing.wl}{microlensing.wl}.  Its two limits
-are physically important:
+are
 \begin{align}
     A(u) &\;\longrightarrow\; \frac{1}{u} \qquad (u \to 0) \,,
     \label{eq:micro_A_small} \\
@@ -166,7 +161,8 @@ are physically important:
 \end{align}
 Close alignment ($u \to 0$) gives arbitrarily high magnification (formally
 infinite for a point source at $u = 0$, where the images merge into an
-Einstein ring), while a distant source ($u \gg 1$) is essentially unlensed.
+Einstein ring), while a distant source ($u \gg 1$) is lensed only
+negligibly.
 At the fiducial separation $u = 1$ the magnification is
 $A(1) = 3/\sqrt{5} \approx 1.34$, corresponding to a brightening of
 $\Delta m = 2.5\log_{10}A \approx 0.32$~mag; the positive-parity image then
@@ -191,7 +187,7 @@ the conventional threshold defining a microlensing ``event''.
 \section{The Light Curve and the Einstein Timescale}
 \label{sec:lightcurve}
 
-A microlensing event is a \emph{temporal} phenomenon.  Over the days-to-months
+A microlensing event is a temporal phenomenon.  Over the days-to-months
 duration of an event the relative motion of lens and source is well
 approximated as rectilinear, so the separation traces a straight line past the
 lens.  Writing $t_0$ for the time of closest approach and $u_0$ for the
@@ -201,7 +197,7 @@ minimum (impact-parameter) separation, the source--lens separation is
     \boxed{\;u(t) = \sqrt{u_0^2 + \left(\frac{t - t_0}{t_{\mathrm{E}}}\right)^2}\;}
     \label{eq:micro_ut}
 \end{equation}
-where the \textbf{Einstein (crossing) timescale}
+where the \emph{Einstein (crossing) timescale}
 \begin{equation}
     t_{\mathrm{E}} \equiv \frac{\Dd\,\thetaE}{v_\perp}
     = \frac{\RE}{v_\perp}
@@ -214,8 +210,8 @@ curve $F(t) = A(u(t))\,F_s$, where $F_s$ is the unlensed source flux.
 
 \subsection{The Paczy\'nski Curve}
 
-The resulting light curve --- the \textbf{Paczy\'nski curve}
-\citep{paczynski_1986} --- is smooth, achromatic, and \emph{symmetric} about
+The resulting light curve, the \emph{Paczy\'nski curve}
+\citep{paczynski_1986}, is smooth, achromatic, and symmetric about
 $t_0$.  Symmetry follows immediately because $u(t)$ depends on time only
 through $(t-t_0)^2$: $u(t_0+s) = u(t_0-s)$, hence
 $A(u(t_0+s)) = A(u(t_0-s))$.  Since $A$ is a monotonically decreasing function
@@ -230,23 +226,23 @@ occurs at closest approach:
 Both the symmetry and the identification $A_{\max} = A(u_0)$ are verified in
 \mathlink{13_Microlensing/microlensing.wl}{microlensing.wl}.
 
-The point-source, point-lens light curve is described by just four parameters:
+The point-source, point-lens light curve is described by four parameters:
 the baseline flux $F_0$, the peak time $t_0$, the impact parameter $u_0$, and
-the timescale $t_{\mathrm{E}}$.  Of these \emph{only $t_{\mathrm{E}}$ carries
-physical information about the lens}, and it does so in the degenerate
+the timescale $t_{\mathrm{E}}$.  Of these only $t_{\mathrm{E}}$ carries
+physical information about the lens, and it does so in the degenerate
 combination $t_{\mathrm{E}} = \Dd\thetaE/v_\perp \propto \sqrt{M}$ that mixes
 the lens mass $M$, distance $\Dd$, and transverse velocity $v_\perp$
-\citep[Sect.~1.2]{schneider_kochanek_wambsganss_2006}.  Breaking this
-degeneracy --- to weigh the lens --- requires extra information: finite-source
-effects, parallax, or the astrometric shift of \S\ref{sec:astrometric}.
+\citep[Sect.~1.2]{schneider_kochanek_wambsganss_2006}.  To break this
+degeneracy, and so to determine the lens mass, requires additional
+information: finite-source effects, parallax, or the astrometric shift of
+\S\ref{sec:astrometric}.
 
-\begin{example}
-\textbf{A typical Galactic event.}
+\begin{example}[A typical Galactic event]
 For a lens of $M = 0.3\,\Msun$ halfway to a bulge source
 ($\Dd = 4$~kpc, $\Ds = 8$~kpc) moving at $v_\perp = 200$~km\,s$^{-1}$,
 eqs.~\eqref{eq:micro_thetaE} and~\eqref{eq:micro_tE} give
 $\thetaE \approx 0.55$~mas, $\RE \approx 2.2$~AU, and
-$t_{\mathrm{E}} \approx 19$~days --- of order weeks, as observed.  The
+$t_{\mathrm{E}} \approx 19$~days, of order weeks, as observed.  The
 numbers are computed in
 \solnlink{13_Microlensing/problems\_13.wl}{problems\_13.wl}.
 \end{example}
@@ -269,12 +265,13 @@ numbers are computed in
 \section{Optical Depth to Microlensing}
 \label{sec:micro_optical_depth}
 
-A single event is rare, so microlensing is inherently a statistical enterprise:
-one monitors millions of stars to catch a handful of events.  The relevant
-statistic is the \textbf{optical depth} $\tau$, the probability that a random
-source lies within one Einstein radius of some lens at a given instant ---
-equivalently, the fraction of the sky covered by the Einstein disks of all the
-lenses \citep[Sect.~1.4]{schneider_kochanek_wambsganss_2006}.
+A single event is rare, so microlensing is inherently a statistical
+undertaking: one monitors millions of stars to catch a handful of events.
+The relevant statistic is the \emph{optical depth} $\tau$, the probability
+that a random source lies within one Einstein radius of some lens at a given
+instant; equivalently, it is the fraction of the sky covered by the Einstein
+disks of all the lenses
+\citep[Sect.~1.4]{schneider_kochanek_wambsganss_2006}.
 
 For lenses distributed with mass density $\rho(\Dd)$ along the line of sight,
 \citet{paczynski_1986} showed
@@ -284,7 +281,7 @@ For lenses distributed with mass density $\rho(\Dd)$ along the line of sight,
     \frac{\Dd\,\Dds}{\Ds}\,\rho(\Dd)\,d\Dd\;}
     \label{eq:micro_tau}
 \end{equation}
-The optical depth is \emph{independent of the individual lens masses}: it
+The optical depth is independent of the individual lens masses: it
 depends only on the total mass density, because the Einstein area
 $\pi\thetaE^2 \propto M$ while the number density $\propto 1/M$, and the two
 cancel.  The equivalence of ``fraction of sky in Einstein disks'' and
@@ -293,18 +290,18 @@ $\Sigma/\Sigmacr$ for a thin lens screen is verified in
 
 \subsection{The Dark-Matter Test Toward the Magellanic Clouds}
 
-Paczy\'nski's motivation was this: if the dark halo of the Milky Way were
-made of compact objects (MACHOs --- MAssive Compact Halo Objects), they would
-microlens background stars in the Large and Small Magellanic Clouds
-(LMC/SMC).  For a standard isothermal halo he predicted
+Paczy\'nski's motivation was the dark-matter problem: if the dark halo of
+the Milky Way were made of compact objects (MACHOs, massive compact halo
+objects), they would microlens background stars in the Large and Small
+Magellanic Clouds (LMC/SMC).  For a standard isothermal halo he predicted
 \begin{equation}
     \tau_{\mathrm{halo}} \sim 5 \times 10^{-7} \,,
     \label{eq:micro_tau_halo}
 \end{equation}
-so roughly one star in two million is measurably lensed at any time --- a small
-but tractable number given large CCD surveys.  The MACHO, EROS, and OGLE
-collaborations carried out the experiment through the 1990s and 2000s.  Their
-verdict: the observed rate toward the LMC,
+so that roughly one star in two million is measurably lensed at any time, a
+small but tractable fraction for large CCD surveys.  The MACHO, EROS, and
+OGLE collaborations carried out the experiment through the 1990s and 2000s.
+They found that the observed rate toward the LMC,
 $\tau_{\mathrm{LMC}} \approx 1.2^{+0.4}_{-0.3} \times 10^{-7}$ (MACHO, with a
 further $\sim\!20\%$ systematic uncertainty), is far too low for compact
 objects to constitute the entire halo.  EROS limits objects of
@@ -312,7 +309,7 @@ $2\times10^{-7}$ to $1\,\Msun$ to less than $25\%$ of the halo, MACHO finds
 that objects of $0.3$--$30\,\Msun$ cannot make up the whole halo, and the
 surviving events are consistent with ordinary stars in the disk or within the
 Clouds themselves \citep[Sect.~3.5]{schneider_kochanek_wambsganss_2006}.
-This important \emph{null} result rules out compact objects of
+This null result rules out compact objects of
 $\sim\!10^{-7}$--$30\,\Msun$ as the dominant component of the halo dark
 matter.
 
@@ -324,7 +321,7 @@ $\tau_{\mathrm{bulge}} \approx (0.9\text{--}4) \times 10^{-6}$ (EROS to
 MACHO/OGLE), tracing the
 stellar bar along the line of sight
 \citep[Sect.~3.6]{schneider_kochanek_wambsganss_2006}.  The bulge is now the
-principal hunting ground for the planetary events of the next section.
+principal field for the planetary events of the next section.
 
 
 % =====================================================================
@@ -332,8 +329,8 @@ principal hunting ground for the planetary events of the next section.
 \label{sec:binary_planet}
 
 A single point lens has only a degenerate point caustic at $u=0$.  As soon as
-a \emph{second} mass is added, the lens becomes non-axisymmetric and develops
-\textbf{extended caustics} in the source plane --- exactly the fold-and-cusp
+a second mass is added, the lens becomes non-axisymmetric and develops
+extended caustics in the source plane, the fold-and-cusp
 curves of Chapter~\ref{ch:elliptical_models}, now realized at stellar scales.
 For a binary lens the deflection is the sum of two point-mass terms
 \citep[eq.~14]{schneider_kochanek_wambsganss_2006},
@@ -364,11 +361,11 @@ curves in \texttt{microlensing.wl}.}
 
 \subsection{Caustic Crossings}
 
-The observational signature is a sharp spike.  When the source \emph{crosses} a
-caustic, a pair of highly magnified images is created or destroyed, and because
+When the source crosses a
+caustic, a pair of highly magnified images is created or destroyed, and since
 these images dominate the (unresolved) total flux, the light curve shows a
 sharp spike.  A point source would formally be infinitely magnified at the
-caustic; the finite spike height instead \emph{measures the source size},
+caustic; the finite spike height instead measures the source size,
 since the magnification is smeared over the time
 $t_{\mathrm{cross}} = R_{\mathrm{source}}/v_\perp$ it takes the source to move
 by its own radius.  Caustic-crossing binaries thus break the point-source
@@ -382,19 +379,20 @@ star produces the same kind of short, low-amplitude deviation on top of an
 otherwise ordinary stellar light curve, and estimated that of order $10\%$ of
 events should show a detectable binary signature.  A planet of mass ratio
 $q = M_{\mathrm{planet}}/M_\star$ generates a small caustic whose perturbation
-is strongest when the projected separation lies in the \textbf{lensing zone}
+is strongest when the projected separation lies in the \emph{lensing zone}
 $0.6 \lesssim d/\thetaE \lesssim 1.6$, where the planetary caustic falls near
 the Einstein ring of the host star
 \citep[Sect.~4.1]{schneider_kochanek_wambsganss_2006}.  By
 coincidence this angular range corresponds to physical separations of order
-$1$~AU for typical Galactic lenses --- overlapping the habitable zone.  The
+$1$~AU for typical Galactic lenses, which overlaps the habitable zone.  The
 planetary deviation is brief (hours to a day) and of small amplitude (a few
 percent), so dense, continuous monitoring of ongoing stellar events is
-required.  Microlensing is especially sensitive to \emph{cool, low-mass
-planets at $\sim\!1$--few~AU} around distant ($\sim$~kpc) stars, a region of parameter
-space complementary to radial-velocity and transit surveys.  Its cost is that
-each event is a unique, non-repeatable alignment, and only the mass \emph{ratio}
-$q$ (not the planet mass directly) is measured from the light curve alone.
+required.  Microlensing is especially sensitive to cool, low-mass
+planets at $\sim\!1$--few~AU around distant ($\sim$~kpc) stars, a region of
+parameter space complementary to radial-velocity and transit surveys.  The
+limitation is that each event is a unique, non-repeatable alignment, and
+only the mass ratio $q$ (not the planet mass directly) is measured from the
+light curve alone.
 
 
 % =====================================================================
@@ -402,9 +400,9 @@ $q$ (not the planet mass directly) is measured from the light curve alone.
 \label{sec:astrometric}
 
 Although the two images cannot be resolved, their flux-weighted mean
-position --- the \textbf{light centroid} --- is displaced from the true source
+position, the \emph{light centroid}, is displaced from the true source
 position, and that displacement can in principle be measured to
-sub-milliarcsecond precision.  This is \textbf{astrometric microlensing}
+sub-milliarcsecond precision.  This is \emph{astrometric microlensing}
 \citep[Sect.~6]{schneider_kochanek_wambsganss_2006}.  Combining the image
 positions~\eqref{eq:micro_images} with their
 magnifications~\eqref{eq:micro_mu_pm}, the centroid shift relative to the
@@ -413,7 +411,7 @@ source is
     \delta(u) = \frac{u}{u^2 + 2}\,\thetaE \,.
     \label{eq:micro_centroid}
 \end{equation}
-Unlike the photometric magnification, the centroid shift \emph{vanishes} both
+Unlike the photometric magnification, the centroid shift vanishes both
 at perfect alignment ($u\to0$) and at large separation ($u\to\infty$); it is
 maximized in between.  Setting $d\delta/du = 0$ gives
 \begin{equation}
@@ -427,7 +425,7 @@ maximized in between.  Setting $d\delta/du = 0$ gives
 verified in \mathlink{13_Microlensing/microlensing.wl}{microlensing.wl}.
 
 The astrometric signal is valuable because the centroid traces an ellipse
-whose \emph{angular} size is set directly by $\thetaE \propto \sqrt{M}$.
+whose angular size is set directly by $\thetaE \propto \sqrt{M}$.
 Measuring it therefore yields $\thetaE$, and combined with a parallax
 measurement it breaks the mass--distance--velocity degeneracy entirely,
 delivering the lens mass:
@@ -439,8 +437,8 @@ delivering the lens mass:
 with $\thetaE$ and the lens--source relative parallax $\pi_{\mathrm{ds}}$ in
 milliarcseconds
 \citep[eq.~25]{schneider_kochanek_wambsganss_2006}.  The centroid shift is
-tens to hundreds of micro-arcseconds --- beyond ground-based astrometry of the
-2000s, but squarely within reach of space astrometry (the numerical
+tens to hundreds of micro-arcseconds, beyond ground-based astrometry of the
+2000s but within reach of space astrometry (the numerical
 coefficient is checked in
 \solnlink{13_Microlensing/problems\_13.wl}{problems\_13.wl}).
 
@@ -451,13 +449,13 @@ coefficient is checked in
 
 Microlensing is not confined to the Milky Way.  When a distant quasar is
 multiply imaged by a foreground galaxy (Chapters~\ref{ch:elliptical_models}
-and~\ref{ch:galaxy_lensing}), the individual \emph{stars} of that galaxy
-microlens each macro-image.  This is \textbf{quasar microlensing}
-\citep[Sect.~7]{schneider_kochanek_wambsganss_2006}.  The key contrast with
+and~\ref{ch:galaxy_lensing}), the individual stars of that galaxy
+microlens each macro-image.  This is \emph{quasar microlensing}
+\citep[Sect.~7]{schneider_kochanek_wambsganss_2006}.  The difference from
 Galactic microlensing is that at the position of a macro-image the stellar
 convergence is of order unity, $\kappab \sim 1$, so at any instant a
-\emph{whole ensemble} of stars lenses the source coherently, producing an
-intricate \textbf{network of micro-caustics} in the source plane rather than a
+whole ensemble of stars lenses the source coherently, producing a
+network of micro-caustics in the source plane rather than a
 single isolated event.
 
 The relevant scales, for typical lens and source redshifts
@@ -487,22 +485,22 @@ $t_{\mathrm{cross}} \approx 4$~months.  Those two values are consistent with
 each other but are about $1.5\times$ shorter than $r/v$ for
 $v = 600$~km\,s$^{-1}$, which implies a differently defined effective velocity.
 Here we quote $r/v$ directly; see \texttt{problems\_13.wl}.}
-The full Einstein-crossing time is discouragingly long, but the observable
-fluctuations are governed instead by the much shorter \emph{caustic}-crossing
+The full Einstein-crossing time is long, but the observable
+fluctuations are governed instead by the much shorter caustic-crossing
 time $t_{\mathrm{cross}} = R_{\mathrm{source}}/v_\perp \approx 6\,R_{15}\,
 (v_\perp/600~\text{km s}^{-1})^{-1}$~months, where the quasar continuum radius
 $R_{15}$ is in units of $10^{15}$~cm.  The scale estimates and the
 $\propto\sqrt{M}$ mass scaling are checked in
 \solnlink{13_Microlensing/problems\_13.wl}{problems\_13.wl}.
 
-The value of quasar microlensing is that $t_{\mathrm{cross}}$ ---
-and hence the sharpness of the microlensing fluctuations --- is set by the
-\emph{source size}: a compact continuum-emitting region crosses caustics
-cleanly and flickers strongly, whereas a large emission region washes the
+The value of quasar microlensing lies in the fact that $t_{\mathrm{cross}}$,
+and hence the sharpness of the microlensing fluctuations, is set by the
+source size: a compact continuum-emitting region crosses caustics
+sharply and fluctuates strongly, whereas a large emission region smooths the
 peaks out.  Monitoring the uncorrelated (non-time-delayed) variability between
-the macro-images therefore constrains the \textbf{quasar accretion-disk size},
+the macro-images therefore constrains the quasar accretion-disk size,
 independently of the time-delay cosmography of Chapter~\ref{ch:galaxy_lensing}.
-The classic laboratory is the ``Einstein Cross'' Q2237$+$0305, whose four
+The best-studied case is the ``Einstein Cross'' Q2237$+$0305, whose four
 images vary independently by up to $\sim\!1.3$~mag; the fits imply a continuum
 region of order $10^{14}$~cm
 \citep[Sect.~7.3]{schneider_kochanek_wambsganss_2006}.  Quasar microlensing
@@ -515,46 +513,37 @@ smooth dark matter, complementing the halo constraints of
 \section{Summary}
 \label{sec:micro_summary}
 
-\begin{itemize}
-    \item In the \textbf{microlensing regime} the two point-lens images are
-          split by only $\sim$~mas and are unresolved, so the sole observable
-          is the time-variable \textbf{total magnification}
-          $A(u) = (u^2+2)/(u\sqrt{u^2+4})$, with
-          $u = \beta/\thetaE$.
+In the microlensing regime the two point-lens images are
+split by only $\sim$~mas and are unresolved, so the sole observable
+is the time-variable total magnification
+$A(u) = (u^2+2)/(u\sqrt{u^2+4})$, with
+$u = \beta/\thetaE$.  It tends to $A(u) \to 1/u$ at high magnification
+($u\to0$) and to $A(u)\to1$ at large separation ($u\to\infty$); the event
+threshold is $u = 1$, where $A = 3/\sqrt{5} \approx 1.34$.  Relative motion
+turns $A$ into the symmetric Paczy\'nski light curve $A(u(t))$ with
+$u(t) = \sqrt{u_0^2 + (t-t_0)^2/t_{\mathrm{E}}^2}$, peaking at
+$A_{\max} = A(u_0)$.  Only the Einstein timescale
+$t_{\mathrm{E}} = \Dd\thetaE/v_\perp \propto \sqrt{M}$ carries
+physical information, in a mass--distance--velocity degenerate
+combination.
 
-    \item $A(u) \to 1/u$ at high magnification ($u\to0$) and $A(u)\to1$ at
-          large separation ($u\to\infty$); the event threshold is $u = 1$,
-          where $A = 3/\sqrt{5} \approx 1.34$.
+The optical depth
+$\tau = \int (4\pi\Gnewton/\speedoflight^2)(\Dd\Dds/\Ds)\rho\,d\Dd$
+is mass-independent.  Toward the LMC the measured
+$\tau \approx 1.2\times10^{-7}$ rules out compact objects of
+$\sim\!10^{-7}$--$30\,\Msun$ as the dominant halo dark matter
+(EROS: $< 25\%$ of the halo for $2\times10^{-7}$--$1\,\Msun$);
+toward the bulge $\tau \sim 10^{-6}$.
 
-    \item Relative motion turns $A$ into the symmetric \textbf{Paczy\'nski
-          light curve} $A(u(t))$ with
-          $u(t) = \sqrt{u_0^2 + (t-t_0)^2/t_{\mathrm{E}}^2}$, peaking at
-          $A_{\max} = A(u_0)$.  Only the \textbf{Einstein timescale}
-          $t_{\mathrm{E}} = \Dd\thetaE/v_\perp \propto \sqrt{M}$ carries
-          physical information, in a mass--distance--velocity degenerate
-          combination.
-
-    \item The \textbf{optical depth}
-          $\tau = \int (4\pi\Gnewton/\speedoflight^2)(\Dd\Dds/\Ds)\rho\,d\Dd$
-          is mass-independent.  Toward the LMC the measured
-          $\tau \approx 1.2\times10^{-7}$ rules out compact objects of
-          $\sim\!10^{-7}$--$30\,\Msun$ as the dominant halo dark matter
-          (EROS: $< 25\%$ of the halo for $2\times10^{-7}$--$1\,\Msun$);
-          toward the bulge $\tau \sim 10^{-6}$.
-
-    \item \textbf{Binary and planetary} lenses add extended caustics; caustic
-          crossings give sharp, source-size-dependent spikes, and a planet in
-          the lensing zone $0.6 \lesssim d/\thetaE \lesssim 1.6$ produces a
-          brief low-amplitude deviation revealing the mass ratio $q$.
-
-    \item \textbf{Astrometric} microlensing measures the light-centroid shift,
-          peaking at $\delta_{\max} = 8^{-1/2}\thetaE$ for $u = \sqrt2$; with a
-          parallax it yields the lens mass.
-
-    \item \textbf{Quasar} microlensing ($\kappab\sim1$, micro-caustic
-          networks) constrains quasar accretion-disk sizes and the compact-object
-          content of lens galaxies.
-\end{itemize}
+Binary and planetary lenses add extended caustics.  Caustic
+crossings give sharp, source-size-dependent spikes, and a planet in
+the lensing zone $0.6 \lesssim d/\thetaE \lesssim 1.6$ produces a
+brief low-amplitude deviation revealing the mass ratio $q$.
+Astrometric microlensing measures the light-centroid shift,
+peaking at $\delta_{\max} = 8^{-1/2}\thetaE$ for $u = \sqrt2$; with a
+parallax it yields the lens mass.  Quasar microlensing ($\kappab\sim1$,
+micro-caustic networks) constrains quasar accretion-disk sizes and the
+compact-object content of lens galaxies.
 
 
 % =====================================================================
