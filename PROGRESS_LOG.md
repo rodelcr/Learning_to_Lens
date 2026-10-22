@@ -696,3 +696,12 @@ derivations, each accompanied by symbolic Mathematica verification.
 - `.claude/skills/gr-lensing-intuition` merged with the global copy into a union (Part IV + Part V terms, N-plane MSD, Burke-with-point-mass and Schneider 2014≠2019 pitfalls); both copies identical.
 - `~/Documents/AGEL/Learning_to_Autolens/Mathematica/14_multi_plane.wl` given a SUPERSEDED header pointing at Chapter 18 (commit d750f54 there).
 - Spiral branch `model-ladder-and-sample` pushed (c631552..4077d41).
+
+### 2026-10-22 — de-LLM prose pass (all 25 chapters + solutions)
+- Register defined from the reference PDFs in `Notes/STYLE.md`; gates: `Notes/prose_guard.py` (math, numbers, labels, refs, cites, links, headings, boxes byte-identical) and `Notes/style_lint.sh` (tell counts; baseline `style_lint_baseline_2026-10-22.txt`, after `style_lint_after_2026-10-22.txt`).
+- Five agents in worktrees (prose/A–E), merged --no-ff: A 2fd25b3 (01a–01e), B b22f980+f5d413b (02–06), C 7742b9f (07–11), D 9c63e3c (12–16), E b62ba3e+b4721b0 (17–21). Guard PASS on all 50 files against 0785fd2.
+- Guard bug found by agents B/E mid-run (starred envs, `\\[npt]`, list option brackets) fixed in 741f6eb; affected spans redone in B2/E2.
+- Lint TOTAL (dash/bold/lead/item/words/bang): 408/1428/96/346/176/2 → 31/556/0/155/35/0. Residual dashes are epigraph attributions, captions and headings; residual bold is \textbf{(a)} part labels, exercise titles, table/caption labels; residual lists are companion-file lists, exercise parts and genuinely enumerable sets.
+- 14 box titles with tells rewritten centrally (sanity check, "--- do not confuse them", "you", "Common error:").
+- Editions 364/449/572 → 351/436/557 pp; build assertions pass; published to rodelcr.github.io.
+- Facts flagged by the agents and NOT changed (need a check): Ch 11 §NFW "three steps" vs four \paragraph steps (07:~957); Ch 13 "six" H0LiCOW/TDCOSMO lenses vs seven in Birrer+20 (09:~1112); Ch 17 binary-caustic thresholds d=2^{-1/2}, 2 vs SKW half-separations (13:~350); Ch 14 Rubin/Roman dates (10:~728); Ch 3 MICROSCOPE/Eöt-Wash uncited (01c:69–72); plain-text cites "Will 1993", "Hogg 1999", "Wong 2020", "Birrer 2020", "Walsh 1979" (01e, 03, 06); Ch 14 summary "10^3–10^4" vs body "1000–40,000" (Earendel).

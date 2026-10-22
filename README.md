@@ -2,7 +2,7 @@
 
 **An Introduction to General Relativity and Strong Gravitational Lensing — with Mathematica**
 
-A 25-chapter tutorial suite in five parts (364 student pages / 449 instructor pages / 572 annotated-study-edition pages; module ids 01a–13 and 14–21) designed for advanced undergraduate and early graduate students learning gravitational lensing theory and modeling. Each module pairs **LaTeX lecture notes** with **Wolfram Mathematica** notebooks and scripts for symbolic derivations, numerical computations, and interactive visualizations.
+A 25-chapter tutorial suite in five parts (351 student pages / 436 instructor pages / 557 annotated-study-edition pages; module ids 01a–13 and 14–21) designed for advanced undergraduate and early graduate students learning gravitational lensing theory and modeling. Each module pairs **LaTeX lecture notes** with **Wolfram Mathematica** notebooks and scripts for symbolic derivations, numerical computations, and interactive visualizations.
 
 ---
 
