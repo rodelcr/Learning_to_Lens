@@ -294,7 +294,7 @@ $q = 0.8$: The tangential caustic of this SIE has cusps at
 $|\beta_1| \approx 0.159''$ and $|\beta_2| \approx 0.139''$.  The
 source has $\beta_2 = 0.2'' > 0.139''$, the largest $|\beta_2|$
 anywhere on the caustic, so it lies outside the tangential caustic
-but well inside the cut: a \textbf{double} (2 bright images).
+but well inside the cut: a double (2 bright images).
 
 \begin{annotation}[A sharper inside/outside test]
 Comparing $|\vecbeta|$ with a single ``cusp radius'' is only a rough guide,
@@ -304,15 +304,14 @@ because the diamond is not round; the caustic's extent along each axis
 
 
 \textbf{(b)} Solving the lens equation numerically (see
-\texttt{problems\_08.wl}), two bright images are found:
-\begin{itemize}
-    \item Image A: $\vectheta_A \approx (0.36, 1.20)''$, $\mu_A \approx +3.67$
-    \item Image B: $\vectheta_B \approx (-0.56, -0.55)''$, $\mu_B \approx -3.82$
-\end{itemize}
+\texttt{problems\_08.wl}), two bright images are found: image A at
+$\vectheta_A \approx (0.36, 1.20)''$ with $\mu_A \approx +3.67$, and
+image B at $\vectheta_B \approx (-0.56, -0.55)''$ with
+$\mu_B \approx -3.82$.
 
 \begin{annotation}[What the script actually returns]
 \texttt{problems\_08.wl} also prints the lens-equation residuals
-($\sim10^{-16}$).  Sanity check: the positive-parity image lies on the same
+($\sim10^{-16}$).  As a check, the positive-parity image lies on the same
 side as the source $(0.1, 0.2)''$, roughly along its direction, and outside
 the critical ellipse; the negative-parity image lies on the opposite side,
 inside it.
@@ -320,12 +319,9 @@ inside it.
 
 
 \textbf{(c)} The magnifications are computed from
-$\mu = 1/\det\Amat$ at each image position:
-\begin{itemize}
-    \item $\mu_A > 0$ (Type~I, positive parity)
-    \item $\mu_B < 0$ (Type~II, negative parity)
-\end{itemize}
-This gives the values quoted in~(b), $\mu_A \approx +3.67$ and
+$\mu = 1/\det\Amat$ at each image position: $\mu_A > 0$ (Type~I,
+positive parity) and $\mu_B < 0$ (Type~II, negative parity).  This
+gives the values quoted in~(b), $\mu_A \approx +3.67$ and
 $\mu_B \approx -3.82$ (\texttt{problems\_08.wl}).
 
 \begin{derivation}[Magnifications by hand from $\mu = 1/(1-2\kappab)$]
@@ -384,7 +380,7 @@ of positive-parity minus negative-parity images is $3 - 2 = 1$.
 
 \begin{annotation}[Checking the parity count without the central image]
 With only the bright images the singular SIE gives $N_+ - N_- = 2 - 2 = 0$
-(quad) and $1 - 1 = 0$ (double).  The ``missing'' $+1$ is precisely the
+(quad) and $1 - 1 = 0$ (double).  The ``missing'' $+1$ is the
 Type~III image that the singularity removes.  This is a quick diagnostic: a
 smooth model returning $N_+ - N_- \neq 1$ has lost an image in the solver or
 has a singularity.
