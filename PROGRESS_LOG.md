@@ -689,3 +689,10 @@ derivations, each accompanied by symbolic Mathematica verification.
 - **Student edition: 208 pages**
 - **Instructor edition: 254 pages**
 - All 12 master-verification tests still pass.
+
+### 2026-10-22 — post-publish doc sweep
+- README.md / CLAUDE.md: "14-module (199/245 pp)" → 25 chapters in five parts, 364/449/572 pp; CLAUDE.md curriculum table extended to modules 11–21 with the module-id ↔ chapter-number map.
+- VERIFICATION.md footer: fix pass marked closed (2026-10-21).
+- `.claude/skills/gr-lensing-intuition` merged with the global copy into a union (Part IV + Part V terms, N-plane MSD, Burke-with-point-mass and Schneider 2014≠2019 pitfalls); both copies identical.
+- `~/Documents/AGEL/Learning_to_Autolens/Mathematica/14_multi_plane.wl` given a SUPERSEDED header pointing at Chapter 18 (commit d750f54 there).
+- Spiral branch `model-ladder-and-sample` pushed (c631552..4077d41).

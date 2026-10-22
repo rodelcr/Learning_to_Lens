@@ -14,8 +14,9 @@ description: >
   'microlensing', 'Paczynski light curve', 'Einstein timescale',
   'lensing statistics', 'cross-section', 'optical depth', 'magnification bias',
   'flux-ratio anomaly', 'substructure', 'multipole expansion',
-  'Einstein-ring reconstruction', 'external convergence', or references to
-  lenstronomy, PyAutoLens, or the AGEL project.
+  'Einstein-ring reconstruction', 'external convergence', 'double source plane',
+  'DSPL', 'compound lens', 'multi-plane', 'radial image', 'central image', or
+  references to lenstronomy, PyAutoLens, herculens, or the AGEL project.
 ---
 
 # GR & Gravitational Lensing Intuition
@@ -43,9 +44,14 @@ chain from metric theory through lens modeling to cosmographic applications.
 - Substructure / flux-ratio anomalies, multipole angular structure, and
   Einstein-ring / extended-source reconstruction
 
-Note: the *Learning to Lens* tutorial is now **17 modules in four parts** —
-Part IV (Modules 11–13: Lensing Statistics, Weak Lensing & Cosmic Shear,
-Microlensing) was added 2026-07-14 from Schneider, Kochanek & Wambsganss (2006).
+Note: the *Learning to Lens* tutorial is now **25 chapters in five parts**
+(module dirs 01a–13 + 14–21; three editions: student / instructor / annotated
+study). Part IV (Modules 11–13: Lensing Statistics, Weak Lensing & Cosmic Shear,
+Microlensing) was added 2026-07-14 from Schneider, Kochanek & Wambsganss (2006);
+Part V (Modules 14–21 = PDF Chapters 18–25: multi-plane/DSPL, power law + point
+mass, odd/central images, central-mass bias, multi-plane MSD, multipoles,
+cosmological sensitivity, perturbative estimators) was ported 2026-10-14 from the
+AGEL `202607_Theoretical_spiral_compound` study notes and merged to `main` 2026-10-21.
 Citations are backed by `Notes/references.bib` (natbib) — **never fabricate a
 citation**; verify metadata via Zotero/CrossRef/ISBN.
 
@@ -71,7 +77,9 @@ inside caustic → more images; outside → fewer.
 The mass-sheet degeneracy (MSD) preserves all image positions but changes
 magnifications (×1/λ²), time delays (×λ), and inferred H₀ (×1/λ). Breaking it
 requires stellar kinematics, multiple source planes, or standardizable
-magnifications.
+magnifications. The MSD generalizes across N planes (Schneider 2014, A&A 568 L2;
+Schneider 2019, A&A 624 A54; Teodori 2026) — a second source plane does NOT
+remove it; it only changes which combination of sheets is degenerate.
 
 ### Compound-Lens Cosmography
 DSPLs measure the H₀-free ratio 𝓑 = (D_ls1·D_s2)/(D_s1·D_ls2) = η^(γ′−1).
@@ -102,6 +110,12 @@ The generic derivations behind this section are now textbook chapters: Learning 
    - D_A is not monotonic (turns over at z ~ 1.6)
    - Einstein radius constrains enclosed mass, not the density profile
    - MSD is the dominant systematic in time-delay cosmography
+   - **Burke's count needs a smooth Σ.** With a point mass (SMBH) the arrival
+     surface has τ→+∞ at the hole, the image count becomes *even*, and the
+     central image is swallowed (4→2 at the annihilation boundary; Ch. 20–21).
+   - **Schneider 2014 ≠ Schneider 2019.** A&A 568 L2 (2014) is the "can one
+     determine cosmological parameters from multi-plane lenses?" letter; the
+     generalized multi-plane MST paper is A&A 624 A54 (2019; arXiv 1409.0015).
    - **Convention mismatch:** Kochanek's Part 2 (Schneider+2006) normalizes the
      multipole convergence differently from this tutorial's ∇²ψ = 2κ. Re-derive
      in-convention with Mathematica rather than copying his eq. verbatim — the

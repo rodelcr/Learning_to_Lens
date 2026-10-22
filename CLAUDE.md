@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Learning to Lens** is a 14-module educational tutorial suite teaching general relativity and strong gravitational lensing to advanced undergraduate / early graduate students. Each module pairs **LaTeX lecture notes** (`Notes/`) with **Wolfram Mathematica** scripts and notebooks (`Mathematica/`, `Solutions/`).
+**Learning to Lens** is a 25-chapter (module ids 01a–13 + 14–21) educational tutorial suite in five parts teaching general relativity and strong gravitational lensing to advanced undergraduate / early graduate students. Each module pairs **LaTeX lecture notes** (`Notes/`) with **Wolfram Mathematica** scripts and notebooks (`Mathematica/`, `Solutions/`).
 
 **Project lead:** Rodrigo Córdova Rosado (rodrigo.cordova_rosado@cfa.harvard.edu, Harvard CfA)
 
@@ -60,6 +60,19 @@ Learning_to_Lens/
 | 8 | Elliptical Models & Critical Curves | SIE, external shear, caustics, image topology |
 | 9 | Galaxy Lensing Applications | Mass-sheet degeneracy, lensing + kinematics, time-delay cosmography |
 | 10 | Cluster Lensing | NFW clusters, giant arcs, cosmic telescope, weak lensing intro |
+| 11 | Lensing Statistics | Cross-sections, optical depth, magnification bias |
+| 12 | Weak Lensing & Cosmic Shear | Shear estimators, Kaiser–Squires, aperture mass, galaxy–galaxy lensing |
+| 13 | Microlensing | Point-lens light curves, Einstein timescale, optical depth |
+| 14 | Multi-Plane Lens Equation & DSPL | Recursive lens equation, β ratio, double-source-plane cosmography |
+| 15 | Power-Law Lenses with a Central Point Mass | Elliptical/spherical power law, radial critical radius, broken power law |
+| 16 | Odd Images, Central Images & Suppression | Burke's theorem, central-image demagnification, point-mass hole |
+| 17 | Central Mass Bias in Compound Lenses | Annihilation boundary, m_crit(γ′), bias of DSPL ratios |
+| 18 | MSD in Multi-Plane Lenses & Kinematic Breaking | Multi-plane MST, ξ invariant, velocity-dispersion anchor |
+| 19 | Azimuthal Multipoles & Central-Mass Confusion | a_m/k_m multipoles on a power law, degeneracy with a central mass |
+| 20 | Cosmological Sensitivity of Compound-Lens Ratios | β(z, Ω, w) derivatives, CPL |
+| 21 | First-Order Estimators & Multi-Plane Coherence | Perturbative estimators, coherence conditions |
+
+Module ids are directory names; PDF chapter numbers run 1–25 (01a–01e = Chapters 1–5, 2–13 = Chapters 6–17, 14–21 = Chapters 18–25). Cross-references in the prose use chapter numbers.
 
 ## Common Commands
 
