@@ -15,9 +15,9 @@
 \noindent
 Every lens model we have built so far has had either circular
 (Chapter~\ref{ch:axisymmetric_models}) or elliptical
-(Chapter~\ref{ch:elliptical_models}) isodensity contours.  That is a
+(Chapter~\ref{ch:elliptical_models}) isodensity contours, which is a
 modelling convenience.  Lens galaxies carry angular structure beyond
-the ellipse at the per-cent level in their \emph{mass}:
+the ellipse at the per-cent level in their mass:
 \citet{oriordan_vegetti_2024} model mass multipoles of 1 and 3 per
 cent, consistent with the departures seen in galaxy isophotes, and
 \citet{stacey_2024} measure $m=3$ and $m=4$ multipoles of about 1\% of
@@ -33,11 +33,11 @@ connects the amplitude conventions in use, and then prove the result
 the rest of the chapter uses: \emph{a multipole of
 order $m\ge1$ encloses zero mass at every radius}.  It is therefore
 exactly orthogonal to a central point mass in the space of convergence
-fields --- and yet the two can be confused in a fit, because a
+fields, and yet the two can be confused in a fit, because a
 likelihood is not an integral over a full circle.  We close with the
 residual diagnostic that tells them apart: an omitted central mass
-misfits the \emph{inner} image region, an omitted multipole misfits the
-\emph{outer} arcs.
+misfits the inner image region, an omitted multipole misfits the
+outer arcs.
 
 The chapter builds on the multipole series of
 Chapter~\ref{ch:elliptical_models} (\S\ref{sec:multipoles}), on the
@@ -50,14 +50,14 @@ inferences in Chapter~\ref{ch:central_mass_bias}.
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
-    \item \mathlink{19_Multipoles/multipoles_power_law.wl}{multipoles\_power\_law.wl}
-          --- symbolic verification of every new equation of this
+    \item \mathlink{19_Multipoles/multipoles_power_law.wl}{multipoles\_power\_law.wl},
+          the symbolic verification of every new equation of this
           chapter (potential, deflection, amplitude bookkeeping,
           zero-enclosed-mass theorem for general $m$, critical-curve
           shift, residual demonstration); exports the two figures to
           \texttt{Figures/19\_Multipoles/}
-    \item \solnlink{19_Multipoles/problems\_19.wl}{problems\_19.wl}
-          --- worked solutions to the Problems
+    \item \solnlink{19_Multipoles/problems\_19.wl}{problems\_19.wl},
+          the worked solutions to the Problems
 \end{itemize}
 
 
@@ -67,27 +67,22 @@ inferences in Chapter~\ref{ch:central_mass_bias}.
 
 We use polar image-plane coordinates $(\theta,\varphi)$ centred on the
 deflector, exactly as in \S\ref{sec:multipoles}.  Two notational
-collisions need to be flagged once and for all.
-\begin{itemize}
-    \item \textbf{The integer $m$ is the azimuthal multipole order.}
-          Elsewhere in Part~V the symbol $\mBH$ denotes the central
-          point-mass fraction.  To avoid a clash, in this chapter we
-          write the central point-mass fraction as
-          \begin{equation}
-              f_\bullet \;\equiv\; \frac{\thetaBH^2}{\thetaE^2},
-              \label{eq:mu_fbullet}
-          \end{equation}
-          where $\thetaBH$ is the Einstein radius the point mass would
-          have on its own (so its deflection is $\thetaBH^2/\theta$,
-          Chapter~\ref{ch:axisymmetric_models}).
-    \item \textbf{The symbol $a_m$.}  In \S\ref{sec:multipole_series}
-          $a_m$ was the amplitude of an isothermal \emph{potential}
-          multipole, $\psiL_m = a_m\theta\cos[m(\varphi-\varphi_m)]$.
-          Here $a_m$
-          is the \emph{fractional convergence} amplitude defined in
-          Eq.~\eqref{eq:mu_am} below.  The two are related in
-          \S\ref{sec:mu_isothermal_limit}.
-\end{itemize}
+collisions must be settled at the outset.  First, the integer $m$ is
+the azimuthal multipole order, whereas elsewhere in Part~V the symbol
+$\mBH$ denotes the central point-mass fraction.  To avoid a clash, in
+this chapter we write the central point-mass fraction as
+\begin{equation}
+    f_\bullet \;\equiv\; \frac{\thetaBH^2}{\thetaE^2},
+    \label{eq:mu_fbullet}
+\end{equation}
+where $\thetaBH$ is the Einstein radius the point mass would have on
+its own (so its deflection is $\thetaBH^2/\theta$,
+Chapter~\ref{ch:axisymmetric_models}).  Second, the symbol $a_m$ needs
+care: in \S\ref{sec:multipole_series} $a_m$ was the amplitude of an isothermal
+potential multipole, $\psiL_m = a_m\theta\cos[m(\varphi-\varphi_m)]$.
+Here $a_m$ is the \emph{fractional convergence} amplitude defined in
+Eq.~\eqref{eq:mu_am} below.  The two are related in
+\S\ref{sec:mu_isothermal_limit}.
 The total three-dimensional density slope is $\gp$ ($\rho\propto
 r^{-\gp}$, with $\gp=2$ isothermal), as in
 \S\ref{sec:power_law_profile}.
@@ -99,11 +94,11 @@ $\vecalpha = \nabla\psiL$, Eq.~\eqref{eq:alpha_grad_psi}, and Jacobian
 $\Amat = \mathbb{I} - \nabla\nabla\psiL$.  In polar coordinates the
 Laplacian is $\nabla^2 = \partial_\theta^2 + \theta^{-1}\partial_\theta
 + \theta^{-2}\partial_\varphi^2$.  Chapter~\ref{ch:elliptical_models}
-used it to compute the convergence of an \emph{isothermal} potential
+used it to compute the convergence of an isothermal potential
 multipole, Eq.~\eqref{eq:kappa_multipole}.  Here we run the logic in
-the opposite direction and for a general slope: we \emph{specify} the
+the opposite direction and for a general slope: we specify the
 convergence multipole (the quantity photometry and dynamics talk about)
-and \emph{solve} for its potential.
+and solve for its potential.
 \end{bridge}
 
 
@@ -149,7 +144,7 @@ dimensionless form).
 \label{sec:mu_single}
 
 The simplest non-circular extension multiplies the monopole by a small
-angular modulation.  A single order $m$ with the \emph{same} radial
+angular modulation.  A single order $m$ with the same radial
 run as the base is
 \begin{equation}
     \kappab_m(\theta,\varphi)
@@ -167,12 +162,12 @@ fractional convergence perturbation},
     \;}
     \label{eq:mu_am}
 \end{equation}
-which is \emph{independent of radius}, because $\kappab_m$ and
+which is independent of radius, because $\kappab_m$ and
 $\kappab_0$ both scale as $\theta^{-(\gp-1)}$.  The total convergence
 is therefore
 $\kappab = \kappab_0(\theta)\,\{1 + a_m\cos[m(\varphi-\varphi_m)]\}$:
 $a_m = 0.01$ means a 1\% azimuthal modulation of the surface density at
-every radius.  This is an intrinsic departure \emph{from} the base
+every radius.  This is an intrinsic departure from the base
 shape, not the $m=4$ content that an ellipse itself carries; the latter
 is what \S\ref{sec:which_multipoles} estimated to matter only for
 markedly flattened lenses ($q\lesssim0.75$).
@@ -200,7 +195,7 @@ wrong when they are conflated.
 Because the polar Laplacian does not mix different azimuthal orders,
 we can solve $\nabla^2\psiL_m = 2\kappab_m$ one order at a time with
 the separable ansatz $\psiL_m = A\,\theta^{p}\cos m\Delta\varphi$,
-$\Delta\varphi\equiv\varphi-\varphi_m$.  The key identity is
+$\Delta\varphi\equiv\varphi-\varphi_m$.  The identity needed is
 \begin{equation}
     \nabla^2\!\left(\theta^{p}\cos m\Delta\varphi\right)
     \;=\; (p^2 - m^2)\,\theta^{p-2}\cos m\Delta\varphi .
@@ -218,14 +213,11 @@ Eq.~\eqref{eq:mu_lap_identity}.
 
 Now demand $\nabla^2\psiL_m = 2\kappab_m = k_m\,\thetaE^{\gp-1}\,
 \theta^{1-\gp}\cos m\Delta\varphi$.
-\begin{enumerate}[nosep]
-    \item \emph{Powers of $\theta$:} $\theta^{p-2} = \theta^{1-\gp}$
-          forces $p = 3-\gp$.
-    \item \emph{Angular dependence:} both sides carry
-          $\cos m\Delta\varphi$, so no other harmonic is generated.
-    \item \emph{Amplitude:} $A\,(p^2-m^2) = k_m\thetaE^{\gp-1}$, i.e.\
-          $A = -k_m\thetaE^{\gp-1}/[m^2-(3-\gp)^2]$.
-\end{enumerate}
+The powers of $\theta$ must match, $\theta^{p-2} = \theta^{1-\gp}$,
+which forces $p = 3-\gp$; both sides carry $\cos m\Delta\varphi$, so no
+other harmonic is generated; and the amplitudes must match,
+$A\,(p^2-m^2) = k_m\thetaE^{\gp-1}$, i.e.\
+$A = -k_m\thetaE^{\gp-1}/[m^2-(3-\gp)^2]$.
 Any solution of the homogeneous equation $\nabla^2\psiL=0$ could be
 added; with the same angular dependence these are $\theta^{\pm m}\cos
 m\Delta\varphi$, the internal and external multipoles of
@@ -258,16 +250,16 @@ $\vecalpha_m = (\partial_\theta\psiL_m,\ \theta^{-1}\partial_\varphi\psiL_m)$:
 \end{align}
 Only the radial component carries the factor $(3-\gp)$, only the
 tangential one the factor $m$; at high $m$ the perturbation is
-predominantly tangential.  As a sanity check, setting $m=0$ and
+predominantly tangential.  As a check, setting $m=0$ and
 $k_0 = 3-\gp$ in Eq.~\eqref{eq:mu_psim} returns the monopole
 potential $\psiL_0$ of Eq.~\eqref{eq:mu_monopole}.
 
 \begin{annotation}[Sign of the potential]
 For $m^2>(3-\gp)^2$ (every $m\ge2$, and $m=1$ only when $\gp>2$) the
 prefactor in Eq.~\eqref{eq:mu_psim} is negative: the potential is
-\emph{lowest} where the convergence is \emph{highest}.  That looks
+lowest where the convergence is highest.  That looks
 backwards if one thinks of $\psiL$ as a projected gravitational
-potential, but it is just the statement that $\nabla^2\psiL_m =
+potential, but it is only the statement that $\nabla^2\psiL_m =
 2\kappab_m$ for a rapidly oscillating function: the angular part of
 the Laplacian returns $-m^2$ times the function, and for large $m$ it
 dominates the radial terms.  The case $m^2<(3-\gp)^2$ is the subject
@@ -308,23 +300,23 @@ factor $\thetaE^{\gp-1}\theta^{2-\gp}$ cancels:
     \quad (m > 3-\gp).
     \label{eq:mu_alpharatio}
 \end{equation}
-The \emph{fractional} deflection perturbation is the same at every
-radius; the \emph{absolute} perturbation grows outward as
+The fractional deflection perturbation is the same at every
+radius; the absolute perturbation grows outward as
 $\theta^{2-\gp}$ for the shallow slopes $\gp<2$.  This will matter in
 \S\ref{sec:mu_residuals}.  For $a_m = 0.01$ on a $\gp=1.5$ base,
 Eq.~\eqref{eq:mu_alpharatio} gives a peak of $0.67\%$ ($m=3$) and
-$0.44\%$ ($m=4$) of the monopole deflection --- about $6.7$ and $4.4$
+$0.44\%$ ($m=4$) of the monopole deflection, about $6.7$ and $4.4$
 milliarcseconds for $\thetaE=1''$.
 
 \begin{annotation}[Why higher orders bend light less]
 At fixed $k_m$ and large $m$ the peak ratio tends to $k_m/m$: the
-deflection response to a \emph{fixed} convergence amplitude falls as
+deflection response to a fixed convergence amplitude falls as
 $1/m$.  The Poisson equation suppresses the potential of an angular
 wavenumber-$m$ mode by $1/(m^2-p^2)$ relative to its convergence, and
-taking the gradient restores only one power of $m$.  Physically, rapid
+taking the gradient restores only one power of $m$; rapid
 azimuthal oscillations of $\kappab$ largely cancel in the integral that
 generates the potential.  Hence at the same $a_m$, an $m=3$ term
-perturbs the deflection more than $m=4$ --- by a factor $1.565$ at
+perturbs the deflection more than $m=4$, by a factor $1.565$ at
 $\gp=1.4$ and $1.528$ at $\gp=1.5$ (Exercise~\ref{ex:mu_potential}).
 \end{annotation}
 
@@ -358,15 +350,15 @@ $2\pi/m$ (and a shift by $\pi/m$ is equivalent to flipping the sign of
 $k_m$).
 
 \begin{keybox}[Amplitude conventions are not interchangeable]
-\textbf{Always derive the fractional density amplitude from the
-code's own definition} before comparing to a published value or
-injecting a ``1\% multipole''; Eqs.~\eqref{eq:mu_kappam},
+The fractional density amplitude must always be derived from the
+code's own definition before it is compared to a published value or a
+``1\% multipole'' is injected; Eqs.~\eqref{eq:mu_kappam},
 \eqref{eq:mu_am} and~\eqref{eq:mu_components} are one convention among
-several.  Check the angle too: if a code orders the components the
-other way, $(\epsilon_1,\epsilon_2)=k_m(\sin m\varphi_m,\cos
+several.  The angle needs the same care: if a code orders the
+components the other way, $(\epsilon_1,\epsilon_2)=k_m(\sin m\varphi_m,\cos
 m\varphi_m)$, the same two numbers put the mode at $90^\circ/m -
-\varphi_m$ instead of $\varphi_m$.  Evaluate the code's own convergence
-and locate its peak.  For the circular
+\varphi_m$ instead of $\varphi_m$.  The safe procedure is to evaluate
+the code's own convergence and locate its peak.  For the circular
 power-law form used here, $k_m = a_m(3-\gp)$; taking a component
 magnitude of $0.01$ to mean $a_m=0.01$ actually injects
 $a_m = 0.01/(3-\gp)$, which is $33\%$ low at $\gp=1.5$ and $37.5\%$ low
@@ -376,13 +368,13 @@ at $\gp=1.4$.
 \subsection{From fractional amplitude to isophotal deviation}
 \label{sec:mu_isophote}
 
-What does $a_m$ mean geometrically?  Suppose the isodensity contours
-are perturbed circles,
+The geometric meaning of $a_m$ follows from supposing that the
+isodensity contours are perturbed circles,
 \begin{equation}
     \theta_{\rm iso}(\varphi) \;=\; \theta_0\big[1 + \varepsilon_m\cos m\Delta\varphi\big],
     \label{eq:mu_iso_contour}
 \end{equation}
-with $\varepsilon_m$ the fractional \emph{contour} deviation (for
+with $\varepsilon_m$ the fractional contour deviation (for
 isophotes, the quantity a photometric fit of Fourier modes to the
 contour radius returns).  A convergence
 that is constant along these contours and has the power-law radial run
@@ -405,19 +397,19 @@ m\Delta\varphi$).  Comparing with Eq.~\eqref{eq:mu_am}:
     \label{eq:mu_am_eps}
 \end{equation}
 At isothermal $\gp=2$ the two coincide.  At shallow slopes a given
-convergence multipole demands a \emph{larger} contour distortion:
+convergence multipole demands a larger contour distortion:
 $a_m = 0.01$ needs $\varepsilon_m = 2.5\%$ at $\gp=1.4$ and $2.0\%$ at
 $\gp=1.5$.  Equation~\eqref{eq:mu_am_eps} is the ellipticity-equivalent
-translator: it tells you how ``boxy'' a lens must look for a given
+translator: it says how ``boxy'' a lens must look for a given
 lensing amplitude.  It is first order, for circular base contours and
 a radially constant amplitude; real multipole amplitudes vary with
-radius and sit on elliptical contours, so use it as an
+radius and sit on elliptical contours, so it serves as an
 order-of-magnitude translator, not a calibration.
 
 \begin{annotation}[Two different factors --- do not confuse them]
-$k_m/a_m = 3-\gp$ is a \emph{normalisation} factor (it comes from the
+$k_m/a_m = 3-\gp$ is a normalisation factor (it comes from the
 monopole's prefactor); $\varepsilon_m/a_m = 1/(\gp-1)$ is a
-\emph{geometric} factor (it comes from the logarithmic slope of
+geometric factor (it comes from the logarithmic slope of
 $\kappab$).  They agree only at $\gp=2$, where both are unity.  At
 $\gp=1.4$: $k_m = 1.6\,a_m$ but $\varepsilon_m = 2.5\,a_m$.
 \end{annotation}
@@ -469,9 +461,9 @@ also mutually orthogonal, for any orientations:
 \end{equation}
 
 \begin{keybox}[Orthogonal sectors of the convergence]
-A multipole of order $m\ge1$ carries \textbf{zero enclosed mass at
-every radius} (Theorem~\ref{thm:mu_zero_mass}); a central point mass is
-a \textbf{pure monopole}.  The two are exactly orthogonal in the space
+A multipole of order $m\ge1$ carries zero enclosed mass at
+every radius (Theorem~\ref{thm:mu_zero_mass}); a central point mass is
+a pure monopole.  The two are exactly orthogonal in the space
 of convergence fields, and so are different multipole orders.  A
 multipole leaves the mass inside the Einstein ring unchanged, and a
 central point mass leaves the contour shapes unchanged.
@@ -479,9 +471,9 @@ central point mass leaves the contour shapes unchanged.
 
 \begin{bridge}[Back to Chapter~\ref{ch:axisymmetric_models}: the deflection knows only the enclosed mass]
 For an axisymmetric lens, Eq.~\eqref{eq:alpha_enclosed_mass} says that
-the deflection at $\theta$ is set entirely by $M(<\theta)$ --- the
-two-dimensional shell theorem.  Theorem~\ref{thm:mu_zero_mass} is the
-non-axisymmetric generalisation: the \emph{azimuthally averaged} radial
+the deflection at $\theta$ is set entirely by $M(<\theta)$, which is
+the two-dimensional shell theorem.  Theorem~\ref{thm:mu_zero_mass} is the
+non-axisymmetric generalisation: the azimuthally averaged radial
 deflection is still set by $M(<\theta)$ alone, and a multipole leaves
 that average untouched.  Everything a multipole does to the images
 lives in the angular variation of $\vecalpha$ about its mean.
@@ -492,12 +484,12 @@ lives in the angular variation of $\vecalpha$ about its mean.
 \section{Degenerate in the Likelihood, not in \texorpdfstring{$\kappab$}{kappa}}
 \label{sec:mu_likelihood}
 
-Orthogonality holds under an integral over the \emph{full} circle.  A
+Orthogonality holds under an integral over the full circle.  A
 likelihood is a sum over the pixels that actually contain lensed
 light, and those occupy a few localised arcs.  Over a partial arc, two
 orthogonal functions generally have a nonzero overlap.
 
-The simplest model of the effect: suppose the data contain a residual
+In the simplest model of the effect, suppose the data contain a residual
 $A\cos m\varphi$ (from an omitted multipole) over an arc
 $|\varphi|<\Delta$, and the model has only a $\varphi$-independent
 template available (as any monopole perturbation is).  The
@@ -511,26 +503,26 @@ least-squares amplitude the fit assigns to the template is
 which vanishes for the full circle ($\Delta=\pi$) but is of order unity
 for short arcs: $2/\pi\simeq0.64$ for an $m=4$ residual seen over a
 $45^\circ$ arc ($\Delta=\pi/8$), and $0.41$ over $60^\circ$.  A model
-with \emph{no} angular freedom will therefore buy whatever $\chi^2$
+with no angular freedom will therefore buy whatever $\chi^2$
 reduction its available parameters can deliver, and a central point
-mass is one such parameter.  That is a \textbf{specification error},
+mass is one such parameter.  That is a \emph{specification error},
 not a physical degeneracy.  Conversely, because the two perturbations
 are orthogonal in $\kappab$, once the multipole orders actually
-present are \emph{in} the model
+present are in the model
 the angular signal has a legitimate home: one expects free multipoles
 neither to absorb a genuine central mass nor to leave room for a
-spurious one.  Before quoting an evidence ratio for a central mass as a
-detection, check that the winning model fits the data to the noise
-level.
+spurious one.  An evidence ratio for a central mass should therefore
+not be quoted as a detection unless the winning model fits the data to
+the noise level.
 
 \begin{annotation}[How to read an evidence ratio in this situation]
 When the angular structure is omitted, a model with an extra central
 mass will typically win a Bayesian evidence comparison against one
-without --- but both models are wrong, and the evidence ratio only says
-which is \emph{less} wrong.  Before quoting such a ratio as a
-detection, check that the winning model actually fits the data to the
-noise level.  If adding the multipoles produces a good fit and the
-central mass then \emph{costs} evidence by about the size of an Occam
+without, but both models are wrong, and the evidence ratio only says
+which is less wrong.  Such a ratio can be quoted as a detection only
+if the winning model actually fits the data to the noise level.  If
+adding the multipoles produces a good fit and the central mass then
+costs evidence by about the size of an Occam
 penalty (the log of the ratio of its prior width to its posterior
 width), the original ``detection'' was the angular structure in
 disguise.
@@ -542,10 +534,8 @@ disguise.
 \label{sec:mu_critical}
 
 The tangential critical curve is the most directly observed feature of
-a lens --- the Einstein ring traces it.  How does a small multipole
-deform it?
-
-For the circular base the tangential eigenvalue of the Jacobian
+a lens, since the Einstein ring traces it, and we now ask how a small
+multipole deforms it.  For the circular base the tangential eigenvalue of the Jacobian
 (Eq.~\eqref{eq:eigenvalues}) is $\lambda_t = 1-\alpha_0/\theta$, which
 vanishes at $\thetaE$; the radial eigenvalue there is
 $\lambda_r = 1-\alpha_0' = \gp-1 > 0$.  Write the critical curve as
@@ -565,20 +555,17 @@ and $\det\Amat = (1-\psiL_{\theta\theta})(1-\psiL_{\varphi\varphi})
 - \psiL_{\theta\varphi}^2$ (the determinant is rotation invariant; the
 companion script checks the polar formula against the Cartesian
 Hessian).  For the monopole alone, $1-\psiL_{\varphi\varphi} =
-\lambda_t$ and $\psiL_{\theta\varphi}=0$.  Now add $\psiL_m$:
-\begin{enumerate}[nosep]
-    \item $\psiL_{\theta\varphi}^2$ is second order in $a_m$: drop it.
-    \item The factor $1-\psiL_{\theta\theta}$ is $\gp-1+\order{a_m}$, and
-          it multiplies $1-\psiL_{\varphi\varphi}$, which is itself first
-          order on the perturbed curve; to first order only $\gp-1$
-          survives.
-    \item Expand about $\thetaE$:
-          $1-\psiL_{\varphi\varphi} \simeq (\gp-1)\,\delta
-          - \big[\partial_\theta\psiL_m/\theta + \partial_\varphi^2\psiL_m/\theta^2\big]_{\thetaE}$,
-          using $\partial_\theta(1-\alpha_0/\theta)|_{\thetaE} = (\gp-1)/\thetaE$.
-    \item With Eq.~\eqref{eq:mu_psim} the bracket is
-          $k_m\,[m^2-(3-\gp)]\cos m\Delta\varphi/[m^2-(3-\gp)^2]$.
-\end{enumerate}
+\lambda_t$ and $\psiL_{\theta\varphi}=0$.  Now add $\psiL_m$.  The term
+$\psiL_{\theta\varphi}^2$ is second order in $a_m$ and is dropped.  The
+factor $1-\psiL_{\theta\theta}$ is $\gp-1+\order{a_m}$, and it
+multiplies $1-\psiL_{\varphi\varphi}$, which is itself first order on
+the perturbed curve, so to first order only $\gp-1$ survives.
+Expanding about $\thetaE$,
+$1-\psiL_{\varphi\varphi} \simeq (\gp-1)\,\delta
+- \big[\partial_\theta\psiL_m/\theta + \partial_\varphi^2\psiL_m/\theta^2\big]_{\thetaE}$,
+using $\partial_\theta(1-\alpha_0/\theta)|_{\thetaE} = (\gp-1)/\thetaE$.
+With Eq.~\eqref{eq:mu_psim} the bracket is
+$k_m\,[m^2-(3-\gp)]\cos m\Delta\varphi/[m^2-(3-\gp)^2]$.
 Setting $1-\psiL_{\varphi\varphi}=0$ gives Eq.~\eqref{eq:mu_crit_shift}.
 \end{derivation}
 
@@ -590,28 +577,21 @@ The result is
     a_m\,\frac{(3-\gp)\,(m^2-3+\gp)}{(\gp-1)\,[m^2-(3-\gp)^2]}\,\cos m\Delta\varphi .
     \label{eq:mu_crit_shift}
 \end{equation}
-Three readings:
-\begin{itemize}
-    \item \textbf{Isothermal check.}  At $\gp=2$ the coefficient is
-          exactly $1$ for every $m$: $\delta\theta_c = a_m\thetaE\cos
-          m\Delta\varphi = \varepsilon_m\thetaE\cos m\Delta\varphi$.  For
-          an isothermal lens the tangential critical curve is the
-          $\kappab=\tfrac12$ isodensity contour, so it inherits the
-          contour shape exactly (compare Eq.~\eqref{eq:mu_am_eps} at
-          $\gp=2$).
-    \item \textbf{Shallow slopes amplify the response.}  The factor
-          $1/(\gp-1)$ is the inverse of the radial eigenvalue: a shallow
-          profile has a slowly varying $\lambda_t$ near the ring, so a
-          given perturbation moves its zero further.  For $m=4$ at
-          $\gp=1.5$ the coefficient is $3.16$; a 1\% multipole moves the
-          critical curve by $\pm3.2\%$ of $\thetaE$.
-    \item \textbf{Zero mean.}  The shift averages to zero over
-          $\varphi$, so the area inside the critical curve is unchanged
-          at first order, by the same integral
-          $\oint\cos m\Delta\varphi\,\dd\varphi=0$ that proves
-          Theorem~\ref{thm:mu_zero_mass}.
-\end{itemize}
-A central point mass added to a \emph{fixed} base does the opposite:
+Three readings follow.  At $\gp=2$ the coefficient is exactly $1$ for
+every $m$: $\delta\theta_c = a_m\thetaE\cos m\Delta\varphi =
+\varepsilon_m\thetaE\cos m\Delta\varphi$.  For an isothermal lens the
+tangential critical curve is the $\kappab=\tfrac12$ isodensity contour,
+so it inherits the contour shape exactly (compare
+Eq.~\eqref{eq:mu_am_eps} at $\gp=2$).  Shallow slopes amplify the
+response, since the factor $1/(\gp-1)$ is the inverse of the radial
+eigenvalue: a shallow profile has a slowly varying $\lambda_t$ near the
+ring, so a given perturbation moves its zero further.  For $m=4$ at
+$\gp=1.5$ the coefficient is $3.16$; a 1\% multipole moves the critical
+curve by $\pm3.2\%$ of $\thetaE$.  Finally, the shift averages to zero
+over $\varphi$, so the area inside the critical curve is unchanged at
+first order, by the same integral $\oint\cos m\Delta\varphi\,\dd\varphi=0$
+that proves Theorem~\ref{thm:mu_zero_mass}.
+A central point mass added to a fixed base does the opposite:
 it expands the critical curve uniformly, $\delta\theta_c/\thetaE =
 f_\bullet/(\gp-1)$, with no angular dependence.  If instead the base
 normalisation is reduced so that the Einstein ring stays where the data
@@ -650,7 +630,7 @@ of an isothermal lens is a contour of constant convergence.
 \section{The Residual Diagnostic: Inner versus Outer}
 \label{sec:mu_residuals}
 
-We can now say \emph{where} in the image plane each perturbation shows
+We can now say where in the image plane each perturbation shows
 up.  The data fix the Einstein ring very precisely, so any viable model
 must reproduce it; a fair comparison holds $\thetaE$ fixed.
 
@@ -684,11 +664,11 @@ compensate for the added central concentration).  What remains is
     \qquad u\equiv\frac{\thetaE}{\theta},\quad p\equiv 3-\gp,
     \label{eq:mu_res_refit}
 \end{equation}
-which is \emph{second} order in $\ln(\theta/\thetaE)$ near the ring
+which is second order in $\ln(\theta/\thetaE)$ near the ring
 (it starts as $\tfrac12 f_\bullet p^2\ln^2 u$) and grows as
 $f_\bullet u^p$ inside.  The point-mass signature that survives a
 reasonable fit is concentrated in the inner region.  A convenient
-reference radius is the radial critical curve of the \emph{base},
+reference radius is the radial critical curve of the base,
 \begin{equation}
     \theta_r = \thetaE\,(2-\gp)^{1/(\gp-1)}
     \qquad(1<\gp<2),
@@ -711,9 +691,9 @@ the absorption is limited to the partial-arc overlap of
 Eq.~\eqref{eq:mu_arc_overlap}, and it disappears once the multipole is
 modelled.  Its fractional deflection is
 radius-independent (Eq.~\eqref{eq:mu_alpharatio}), so its absolute
-deflection is $\propto\theta^{2-\gp}$ and is \emph{largest} where the
+deflection is $\propto\theta^{2-\gp}$ and is largest where the
 tangential arcs are, near and outside $\thetaE$.  Its ratio between two
-radii is simply $(\theta_{\rm in}/\theta_{\rm out})^{2-\gp}$.
+radii is $(\theta_{\rm in}/\theta_{\rm out})^{2-\gp}$.
 
 \subsection{A worked comparison}
 
@@ -737,7 +717,7 @@ point mass / multipole & $11.3$ & $0.078$ & \\
 \bottomrule
 \end{tabular}
 \end{center}
-The two perturbations have \emph{opposite} radial orderings.  The
+The two perturbations have opposite radial orderings.  The
 multipole dominates for $0.58\lesssim\theta/\thetaE\lesssim2.1$, which
 is where tangential arcs live; the point mass dominates inside, where
 the radial images live.  Figure~\ref{fig:mu_residual} shows the full
@@ -763,21 +743,17 @@ pixels sit there.)
 \end{figure}
 
 \begin{keybox}[The residual-map discriminator]
-The two hypotheses misfit in \textbf{opposite places} and with
-\textbf{opposite angular structure}:
-\begin{itemize}[leftmargin=1.2em]
-    \item An \textbf{omitted central mass} leaves an \emph{inner},
-          azimuthally \emph{uniform} ($m=0$) residual, in the inner
-          image region (at the radial critical curve if the lens still
-          has one, otherwise at the central images).
-    \item \textbf{Omitted azimuthal structure} leaves an \emph{outer}
-          residual with a $\cos m\varphi$ pattern and zero azimuthal
-          mean, in the tangential arcs.
-\end{itemize}
-A global $\chi^2$ cannot tell the two apart.  Split the residual map
-at a radius between $\theta_r$ and $\thetaE$ and look at its angular
-pattern.  A ``central mass'' whose inclusion mainly improves the
-\emph{outer} residual is not a central-mass signal.
+The two hypotheses misfit in opposite places and with opposite
+angular structure.  An omitted central mass leaves an inner,
+azimuthally uniform ($m=0$) residual, in the inner image region (at the
+radial critical curve if the lens still has one, otherwise at the
+central images), whereas omitted azimuthal structure leaves an outer
+residual with a $\cos m\varphi$ pattern and zero azimuthal mean, in the
+tangential arcs.
+A global $\chi^2$ cannot tell the two apart; the residual map, split
+at a radius between $\theta_r$ and $\thetaE$ and examined for its
+angular pattern, can.  A ``central mass'' whose inclusion mainly
+improves the outer residual is not a central-mass signal.
 \end{keybox}
 
 \begin{annotation}[What this toy leaves out]
@@ -787,9 +763,9 @@ the source position and structure also adjust, the residual is
 measured in image-plane surface brightness (so it is weighted by the
 local magnification and by the source's brightness gradients), and the
 lens light, shear and ellipticity have their own freedom.  The
-inner/outer split survives because it rests on two exact facts --- the
+inner/outer split survives because it rests on two exact facts, the
 multipole's zero azimuthal mean and the point mass's
-$(\thetaE/\theta)^{3-\gp}$ growth --- but the specific numbers in the
+$(\thetaE/\theta)^{3-\gp}$ growth, but the specific numbers in the
 table are illustrations, not predictions for any particular lens.
 \end{annotation}
 
@@ -813,9 +789,9 @@ Eqs.~\eqref{eq:mu_psim}--\eqref{eq:mu_alphaphi} vanishes when
 $m = 3-\gp$.  For integer $m$ and $1<\gp<3$ the only case is $m=1$,
 $\gp=2$ (isothermal).  There the trial function
 $\theta^{3-\gp}\cos\Delta\varphi = \theta\cos\Delta\varphi$ is a
-\emph{linear} function of position, hence harmonic ($\nabla^2=0$, zero
-convergence), and its gradient is a \emph{uniform} deflection.  A
-uniform deflection merely translates the source plane and is
+linear function of position, hence harmonic ($\nabla^2=0$, zero
+convergence), and its gradient is a uniform deflection.  A
+uniform deflection translates the source plane and is
 unobservable \citep[][\S4.1.3]{congdon_principles_2018}.  The divergent
 amplitude is the usual signature of driving a homogeneous solution:
 no finite potential of this power-law form produces an $m=1$
@@ -838,35 +814,31 @@ correlations with the source position.
 \section{Summary}
 \label{sec:mu_summary}
 
-\begin{itemize}
-    \item A single multipole on a power-law base,
-          $\kappab_m = \tfrac12 k_m(\thetaE/\theta)^{\gp-1}
-          \cos[m(\varphi-\varphi_m)]$, has the closed-form potential
-          $\psiL_m = -k_m\thetaE^{\gp-1}\theta^{3-\gp}\cos m\Delta\varphi/
-          [m^2-(3-\gp)^2]$ (Eq.~\eqref{eq:mu_psim}); its deflection
-          is Eqs.~\eqref{eq:mu_alphar}--\eqref{eq:mu_alphaphi}, and its
-          fractional deflection is independent of radius.
-    \item The fractional density amplitude is $a_m = k_m/(3-\gp)$; the
-          isophotal deviation is $\varepsilon_m = a_m/(\gp-1)$.  Always
-          derive $a_m$ from a code's own amplitude definition.
-    \item A multipole with $m\ge1$ encloses \textbf{zero mass at every
-          radius}; a central point mass is a pure monopole.  They are
-          orthogonal in $\kappab$ but not in a likelihood evaluated on
-          partial arcs (overlap $\sin m\Delta/(m\Delta)$), so an omitted
-          multipole can masquerade as a central mass --- a
-          specification error that disappears when the multipole is
-          modelled.
-    \item To first order the tangential critical curve moves by
-          Eq.~\eqref{eq:mu_crit_shift}: $\delta\theta_c = a_m\thetaE\cos
-          m\Delta\varphi$ at $\gp=2$, amplified by $\sim1/(\gp-1)$ at
-          shallow slopes, with zero azimuthal mean.
-    \item \textbf{Diagnostic:} an omitted central mass misfits the
-          \emph{inner} region with an azimuthally uniform residual; an
-          omitted multipole misfits the \emph{outer} arcs with a
-          $\cos m\varphi$ residual.
-    \item The $m=1$, $\gp=2$ case is a resonance with the source
-          translation; the dipole is poorly constrained near isothermal.
-\end{itemize}
+A single multipole on a power-law base,
+$\kappab_m = \tfrac12 k_m(\thetaE/\theta)^{\gp-1}
+\cos[m(\varphi-\varphi_m)]$, has the closed-form potential
+$\psiL_m = -k_m\thetaE^{\gp-1}\theta^{3-\gp}\cos m\Delta\varphi/
+[m^2-(3-\gp)^2]$ (Eq.~\eqref{eq:mu_psim}); its deflection is
+Eqs.~\eqref{eq:mu_alphar}--\eqref{eq:mu_alphaphi}, and its fractional
+deflection is independent of radius.  The fractional density amplitude
+is $a_m = k_m/(3-\gp)$ and the isophotal deviation is
+$\varepsilon_m = a_m/(\gp-1)$; $a_m$ must always be derived from a
+code's own amplitude definition.
+
+A multipole with $m\ge1$ encloses zero mass at every radius, whereas a
+central point mass is a pure monopole.  They are orthogonal in
+$\kappab$ but not in a likelihood evaluated on partial arcs (overlap
+$\sin m\Delta/(m\Delta)$), so an omitted multipole can masquerade as a
+central mass, a specification error that disappears when the multipole
+is modelled.  To first order the tangential critical curve moves by
+Eq.~\eqref{eq:mu_crit_shift}: $\delta\theta_c = a_m\thetaE\cos
+m\Delta\varphi$ at $\gp=2$, amplified by $\sim1/(\gp-1)$ at shallow
+slopes, with zero azimuthal mean.  The residual diagnostic is that an
+omitted central mass misfits the inner region with an azimuthally
+uniform residual, while an omitted multipole misfits the outer arcs
+with a $\cos m\varphi$ residual.  The $m=1$, $\gp=2$ case is a
+resonance with the source translation, and the dipole is poorly
+constrained near isothermal.
 
 
 % =====================================================================

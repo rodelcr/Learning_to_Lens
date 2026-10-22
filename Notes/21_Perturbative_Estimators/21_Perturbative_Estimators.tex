@@ -22,34 +22,34 @@ a single-plane model has no line-of-sight structure. When such a model
 is fitted to real image positions it does not fail loudly. It returns
 parameters that are \emph{biased}: the fit absorbs the omitted component
 by moving whatever parameters it has. The usual way to find out by how
-much is numerical --- simulate data with the extra component, refit,
-compare. That answers ``how much'' for one configuration at a time, but
-it does not say \emph{why}, and it cannot tell you in advance which
+much is numerical: one simulates data with the extra component, refits,
+and compares. That answers ``how much'' for one configuration at a time,
+but it does not say why, and it cannot tell in advance which
 images, which parameters or which configurations are the dangerous ones.
 
-This chapter develops the analytic counterpart: a \textbf{first-order
+This chapter develops the analytic counterpart: a \emph{first-order
 estimator} that predicts, in closed form, the bias of a least-squares
-fit when the omitted component is small. The idea is general --- any
-omitted nuisance component, any parametric model --- and the recipe fits
+fit when the omitted component is small. The idea is general (any
+omitted nuisance component, any parametric model) and the recipe fits
 in one box (\S\ref{sec:pe_idea}). We work it out in full for one
 physically important case: a pure power law fitted to a lens that also
 contains a small central point mass, such as a supermassive black hole
 (Chapter~\ref{ch:power_law_point_mass} develops that lens;
 Chapter~\ref{ch:central_mass_bias} catalogues the bias channels it
 opens). The example shows every feature of the method: a nuisance
-parameter that must not be fixed, a single image --- the radial image
---- that in a source-plane fit carries almost all the leverage (and in
+parameter that must not be fixed, a single image, the radial image,
+that in a source-plane fit carries almost all the leverage (and in
 an image-plane fit much less), an exact closed form for a
 canonical configuration, a sign change, and, once several source planes
-look through the same deflector, a \emph{coherent} error that does not
+look through the same deflector, a coherent error that does not
 average down.
 
 \medskip
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
-    \item \mathlink{21_Perturbative_Estimators/response_coefficient.wl}{response\_coefficient.wl}
-          --- first-order image positions; weighted normal equations;
+    \item \mathlink{21_Perturbative_Estimators/response_coefficient.wl}{response\_coefficient.wl},
+          with first-order image positions; weighted normal equations;
           the closed form of the response coefficient and its limits;
           brute-force \texttt{FindMinimum} fits against the linear
           estimator (with and without the radial image, source- and
@@ -57,8 +57,8 @@ average down.
           double-source-plane bias and sign change; $N$-plane coherence;
           exports the two figures of this chapter to
           \texttt{Figures/21\_Perturbative\_Estimators/}
-    \item \solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl}
-          --- verified solutions to all exercises
+    \item \solnlink{21_Perturbative_Estimators/problems\_21.wl}{problems\_21.wl},
+          the verified solutions to all exercises
 \end{itemize}
 
 % =====================================================================
@@ -77,7 +77,7 @@ minimises $\chi^2(\vb{p})=\sum_j w_j\,[d_j^{\rm true}-d_j(\vb{p})]^2$
 with weights $w_j$. Expanding the model about the truth,
 $d_j(\vb{p}_0+\delta\vb{p})\simeq d_j(\vb{p}_0)+\sum_k X_{jk}\,\delta p_k$
 with $X_{jk}=\partial d_j/\partial p_k$, the residuals become
-$m\,g_j-\sum_k X_{jk}\delta p_k$: a \emph{linear} least-squares problem
+$m\,g_j-\sum_k X_{jk}\delta p_k$: a linear least-squares problem
 in $\delta\vb{p}$. Its solution is
 \begin{equation}
     \boxed{\;
@@ -88,29 +88,25 @@ in $\delta\vb{p}$. Its solution is
 \end{equation}
 Equation~\eqref{eq:pe_general} is the estimator. The bias is linear
 in the amplitude $m$, and its coefficient is the regression of the
-omitted shape $\vb{g}$ onto the columns of $X$ --- the directions in
-which the model is free to move. Three consequences are immediate.
-\begin{itemize}
-    \item If $\vb{g}$ lies in the span of the columns of $X$, the model
-          absorbs the omitted component exactly: the fit is perfect, the
-          component is \emph{invisible}, and yet the parameters are
-          biased.
-    \item If $\vb{g}$ is orthogonal (in the metric $W$) to every column,
-          the parameters are unbiased and the component shows up only in
-          the residuals.
-    \item Everything in between is decided by the \emph{data geometry}:
-          which data exist, where they sit, and how they are weighted.
-          That is why the same omitted mass produces very different
-          biases in lenses with different image configurations.
-\end{itemize}
+omitted shape $\vb{g}$ onto the columns of $X$, the directions in
+which the model is free to move. Three consequences are immediate. If
+$\vb{g}$ lies in the span of the columns of $X$, the model absorbs the
+omitted component exactly: the fit is perfect, the component is
+invisible, and yet the parameters are biased. If $\vb{g}$ is orthogonal
+(in the metric $W$) to every column, the parameters are unbiased and the
+component shows up only in the residuals. Everything in between is
+decided by the \emph{data geometry}, that is, by which data exist,
+where they sit, and how they are weighted; this is why the same omitted
+mass produces very different biases in lenses with different image
+configurations.
 
 \begin{keybox}[The first-order recipe]
 \begin{enumerate}[nosep]
-    \item Write the truth as \emph{model + small component}, with an
+    \item Write the truth as model plus small component, with an
           explicit amplitude $m$ and shape $g_j$.
-    \item Linearise the residuals \emph{at the observed data} in all
+    \item Linearise the residuals at the observed data in all
           small quantities: $m$ and the parameter shifts $\delta p_k$.
-    \item Include \emph{every} unobservable nuisance parameter (source
+    \item Include every unobservable nuisance parameter (source
           position, overall offsets) as a free column of $X$. Fixing a
           nuisance that the data do not determine changes the answer.
     \item Solve the normal equations, Eq.~\eqref{eq:pe_general}. The
@@ -124,7 +120,7 @@ When only one parameter of interest remains (plus nuisances), the
 matrix expression collapses to a single number, $\delta p=m\,c$. We
 call $c$ the \emph{response coefficient}: the fractional change of the
 fitted parameter per unit fraction of omitted mass. It plays the role
-of a susceptibility in linear-response theory --- a property of the
+of a susceptibility in linear-response theory, a property of the
 probe (the image positions, the model, the weights), not of the
 perturbation's amplitude.
 \end{annotation}
@@ -176,7 +172,7 @@ a mean convergence $\bar\kappa(\thetaE)=1$ in
 Eq.~\eqref{eq:alpha_mean_kappa}, is what makes $\mBH$ a mass ratio.
 \end{bridge}
 
-The observer, unaware of the point mass, fits a \emph{pure} power law
+The observer, unaware of the point mass, fits a pure power law
 with the slope held fixed (we free it in \S\ref{sec:pe_free_slope}).
 The free parameters are the Einstein radius and the source position,
 which is never observed.
@@ -252,7 +248,7 @@ $\delta\vectheta=\Amat^{-1}\delta\vecalpha$, with $\Amat$ the Jacobian of
 Eq.~\eqref{eq:jacobian_def}. Only the radial eigenvalue $\lambda_r$ of
 Eq.~\eqref{eq:eigenvalues_circular} enters here, because both the
 perturbation and the displacement are radial. Images near a critical
-curve ($\lambda\to0$) are hypersensitive to any perturbation --- for the
+curve ($\lambda\to0$) are hypersensitive to any perturbation, for the
 same reason that they are highly magnified.
 \end{bridge}
 
@@ -268,9 +264,9 @@ the point-mass deflection $a_j\propto1/\theta_j$ is largest there.
 
 \subsection{The first-order residual}
 
-A position-only fit asks: is there one source position
+A position-only fit asks whether there is one source position
 $\ysrc_{\rm fit}$ and one Einstein radius $\thetaE e^{\epsilon}$ such
-that the model maps every observed image back to that source? Its
+that the model maps every observed image back to that source. Its
 residual at image $j$ is
 $r_j=\theta_j-\alpha_{\rm PL}(\theta_j;\thetaE e^{\epsilon})-\ysrc_{\rm fit}$.
 The true lens maps the same image to the true source,
@@ -301,7 +297,7 @@ r_j=\bigl[\theta_j-\alpha_{\rm PL}(\theta_j)-(\gp-1)\epsilon\,\alpha_{\rm PL}(\t
 -\bigl[\theta_j-\alpha_{\rm PL}(\theta_j)-\mBH a_j\bigr]-\delta\ysrc
 =\mBH a_j-\epsilon b_j-\delta\ysrc .
 \]
-The residual is evaluated at the \emph{observed} image positions.
+The residual is evaluated at the observed image positions.
 Whether one uses those or the unperturbed ones of
 Eq.~\eqref{eq:pe_image_shift} changes $a_j$ and $b_j$ only at
 $\order{\mBH}$, and hence the bias only at $\order{\mBH^2}$.
@@ -352,7 +348,7 @@ whose solution is
 with weighted means $\bar a=\sum_j w_ja_j/\sum_j w_j$ and
 $\bar b=\sum_j w_jb_j/\sum_j w_j$. The response coefficient is the slope
 of a weighted linear regression of the omitted shape $a$ on the model's
-direction $b$ \emph{with an intercept}, and the intercept is the source
+direction $b$ with an intercept, and the intercept is the source
 shift.
 
 \begin{derivation}[Solving the normal equations]
@@ -370,26 +366,22 @@ Eq.~\eqref{eq:pe_general}; both forms are checked symbolically for
 general weights in \texttt{response\_coefficient.wl}.
 \end{derivation}
 
-Three properties follow directly from Eq.~\eqref{eq:pe_c}.
-
-\textbf{Two images give an exact fit.} With two images there are two
-equations and two unknowns, both residuals can be made zero, and
+Three properties follow directly from Eq.~\eqref{eq:pe_c}. First, two
+images give an exact fit: with two images there are two equations and
+two unknowns, both residuals can be made zero, and
 $c=(a_1-a_2)/(b_1-b_2)$ for any weights. A source plane with only two
-images cannot \emph{detect} the central mass; it can only be biased by
-it.
-
-\textbf{The source shift absorbs any constant.} Replacing
+images cannot detect the central mass; it can only be biased by it.
+Second, the source shift absorbs any constant: replacing
 $a_j\to a_j+\kappa$ shifts $\bar a$ by $\kappa$ and leaves every centred
-difference, and hence $c$, unchanged; only $\delta\ysrc$ moves.
-
-\textbf{$c$ is scale free.} Under $\theta\to\lambda\theta$,
+difference, and hence $c$, unchanged; only $\delta\ysrc$ moves. Third,
+$c$ is scale free: under $\theta\to\lambda\theta$,
 $\thetaE\to\lambda\thetaE$ both $a_j$ and $b_j$ scale by $\lambda$, so
 $c$ depends only on the dimensionless positions $\theta_j/\thetaE$. We
 set $\thetaE=1$ from now on.
 
 \begin{keybox}[The free intercept is not a technicality]
 The source position is not observed, so $\delta\ysrc$ must be fitted.
-Dropping it --- regressing $a$ on $b$ through the origin --- is
+Dropping it, i.e.\ regressing $a$ on $b$ through the origin, is
 equivalent to claiming the source position is known, and gives a
 different, wrong, $c$. The invariance of $c$ under $a_j\to a_j+\kappa$
 is exactly the statement that a uniform shift of the source is
@@ -406,19 +398,19 @@ nuisance parameter is a free column.
 Start with only the two bright images, idealised as a symmetric pair at
 $\theta=\pm1$. Then $a=(1,-1)$ and $b=(\gp-1)(1,-1)$, so $a=b/(\gp-1)$
 exactly: on these two images the point-mass shape is
-\emph{indistinguishable} from a rescaling of the Einstein radius, and
+indistinguishable from a rescaling of the Einstein radius, and
 \begin{equation}
     c_{\rm pair}=\frac{1}{\gp-1}.
     \label{eq:pe_floor}
 \end{equation}
 This number has a clean meaning. Solving the lens equation of the
-\emph{total} lens for its Einstein radius to first order in $\mBH$
+total lens for its Einstein radius to first order in $\mBH$
 gives
 \begin{equation}
     \thetaE^{\rm tot}=\thetaE\Bigl(1+\frac{\mBH}{\gp-1}\Bigr)+\order{\mBH^2},
     \label{eq:pe_total_mass}
 \end{equation}
-so a fit to a symmetric tangential pair simply returns the Einstein
+so a fit to a symmetric tangential pair returns the Einstein
 radius of the total enclosed mass, as it should.
 
 \begin{bridge}[The Einstein radius measures enclosed mass]
@@ -426,8 +418,8 @@ This is the first-order version of the statement of
 Chapter~\ref{ch:galaxy_lensing}, Eq.~\eqref{eq:mass_einstein}, that the
 Einstein radius measures the mass it encloses in projection, whatever its
 radial distribution. To the tangential images a point mass inside
-$\thetaE$ is just more enclosed mass; they cannot tell it from a
-slightly heavier power law.
+$\thetaE$ is more enclosed mass and nothing else; they cannot tell it
+from a slightly heavier power law.
 \end{bridge}
 
 \subsection{Why the radial image dominates}
@@ -442,8 +434,8 @@ behave oppositely:
 \]
 Near the centre the point-mass deflection diverges while the power
 law's response to a change of Einstein radius vanishes. This is where
-the two shapes are \emph{most} different, so this is the datum that
-breaks the degeneracy of the pair --- and, by the same token, the datum
+the two shapes are most different, so this is the datum that
+breaks the degeneracy of the pair and, by the same token, the datum
 that drags the fitted Einstein radius furthest when the point mass is
 ignored, provided it carries the same weight as the other images (a
 source-plane fit). How strongly it pulls in an image-plane fit is a
@@ -452,8 +444,8 @@ different matter (\S\ref{sec:pe_beyond_canonical}).
 \subsection{The exact closed form for the canonical triple}
 \label{sec:pe_closed_form}
 
-For the \textbf{canonical triple} --- a symmetric pair at $\pm1$ and a
-radial image at $\rho$ --- the regression can be done exactly. With unit
+For the \emph{canonical triple}, a symmetric pair at $\pm1$ and a
+radial image at $\rho$, the regression can be done exactly. With unit
 weights, i.e.\ for the source-plane $\chi^2$ of Eq.~\eqref{eq:pe_chi2},
 \begin{equation}
     a=\Bigl(1,\,-1,\,\frac1\rho\Bigr),
@@ -516,31 +508,26 @@ image's side.
 
 \paragraph{Limits.} Figure~\ref{fig:pe_response} shows
 Eq.~\eqref{eq:pe_cclosed}; its limits carry the physics of the
-source-plane fit.
-\begin{itemize}
-    \item $\rho\to1$: $c\to4/[4(\gp-1)]=1/(\gp-1)$, the floor of
-          Eq.~\eqref{eq:pe_floor}. The ``radial'' image has merged with
-          a tangential one and the configuration has lost its extra
-          datum. For the canonical triple, masked and unmasked cases
-          are one function evaluated at the two ends of $\rho$.
-    \item $\rho\to0$: $\rho^{1-\gp}\to\infty$ dominates the numerator
-          while $\rho^{4-2\gp}\to0$ in the denominator, so
-          \begin{equation}
-              c\;\simeq\;c_{\rm asym}\equiv\frac{\rho^{1-\gp}}{3(\gp-1)}
-              \;\longrightarrow\;\infty .
-              \label{eq:pe_asym}
-          \end{equation}
-          In a source-plane fit, the deeper the radial image, the larger
-          the leverage of an unmodelled central mass. The divergence is
-          a warning, not a prediction: the linear estimate fails well
-          before $\mBH c$ becomes large (\S\ref{sec:pe_validity}). It is
-          also specific to unit weights: under image-plane weights $c$
-          tends to the floor instead (\S\ref{sec:pe_beyond_canonical}).
-    \item In between, $c$ decreases strictly with $\rho$ for every
-          $1<\gp<2$: the numerator of $\dd c/\dd\rho$ is a sum of three
-          terms with negative coefficients
-          \annot{\texttt{response\_coefficient.wl}, check~10}.
-\end{itemize}
+source-plane fit. As $\rho\to1$, $c\to4/[4(\gp-1)]=1/(\gp-1)$, the
+floor of Eq.~\eqref{eq:pe_floor}: the ``radial'' image has merged with
+a tangential one and the configuration has lost its extra datum, so for
+the canonical triple the masked and unmasked cases are one function
+evaluated at the two ends of $\rho$. As $\rho\to0$, $\rho^{1-\gp}\to\infty$
+dominates the numerator while $\rho^{4-2\gp}\to0$ in the denominator, so
+\begin{equation}
+    c\;\simeq\;c_{\rm asym}\equiv\frac{\rho^{1-\gp}}{3(\gp-1)}
+    \;\longrightarrow\;\infty .
+    \label{eq:pe_asym}
+\end{equation}
+In a source-plane fit, therefore, the deeper the radial image, the
+larger the leverage of an unmodelled central mass. The divergence is a
+warning, not a prediction: the linear estimate fails well before
+$\mBH c$ becomes large (\S\ref{sec:pe_validity}). It is also specific to
+unit weights: under image-plane weights $c$ tends to the floor instead
+(\S\ref{sec:pe_beyond_canonical}). In between, $c$ decreases strictly
+with $\rho$ for every $1<\gp<2$, since the numerator of $\dd c/\dd\rho$
+is a sum of three terms with negative coefficients
+\annot{\texttt{response\_coefficient.wl}, check~10}.
 
 \subsection{How good is the asymptote?}
 
@@ -552,7 +539,7 @@ exact correction factor (Fig.~\ref{fig:pe_corrfactor}),
     \label{eq:pe_corrfactor}
 \end{equation}
 Here $u$ is the tangential pair's contribution to the covariance and $v$
-is the radial image's contribution to the variance --- precisely the
+is the radial image's contribution to the variance, precisely the
 two terms the $\rho\to0$ limit discards. Both exponents are positive for
 $1<\gp<2$, so both corrections vanish as $\rho\to0$, but at different
 rates. Expanding to first order in each,
@@ -566,9 +553,9 @@ form to use.
 \begin{keybox}[$\gp=5/3$ is a structural boundary]
 Which correction in Eq.~\eqref{eq:pe_corrfactor} leads is decided by the
 slope alone: $\gp-1<4-2\gp$ if and only if $\gp<5/3$. Below $\gp=5/3$ the
-$+3u$ term rules and $c$ approaches the asymptote from \emph{above};
+$+3u$ term rules and $c$ approaches the asymptote from above;
 above $5/3$ the $v/3$ term rules at small $\rho$ and $c$ dips
-\emph{below} it. The two cross where $\rho^{5-3\gp}=9$, i.e.\ at
+below it. The two cross where $\rho^{5-3\gp}=9$, i.e.\ at
 \[
     \rho_\times=9^{1/(5-3\gp)},
 \]
@@ -605,7 +592,7 @@ coefficient is set by the slowest-decaying term it drops.
 \subsection{Beyond the canonical triple}
 \label{sec:pe_beyond_canonical}
 
-Real tangential pairs are \emph{not} symmetric. In the running example
+Real tangential pairs are not symmetric. In the running example
 ($\gp=1.6$, $\ysrc=0.2$) the source-plane regression of
 Eq.~\eqref{eq:pe_c}, with $w_j=1$ on the three images listed in
 \S\ref{sec:pe_setup}, gives
@@ -628,12 +615,12 @@ relative $4\times10^{-4}$ at $\mBH=10^{-6}$, large because the radial image is s
 sensitive; see \S\ref{sec:pe_validity}.)
 
 \paragraph{The weights matter.} An image-plane fit of the same three
-images --- Eq.~\eqref{eq:pe_chi2} with $w_j\propto1/\lambda_r^2$ ---
+images, Eq.~\eqref{eq:pe_chi2} with $w_j\propto1/\lambda_r^2$,
 gives $c=2.08$, again confirmed by a brute-force image-plane fit. The
-radial image is \emph{demagnified}, $|\lambda_r(\theta_C)|=2.78>1$, so a
+radial image is demagnified, $|\lambda_r(\theta_C)|=2.78>1$, so a
 given source-plane residual corresponds to a small image-plane
 displacement and the image-plane $\chi^2$ down-weights it. The radial
-image's leverage is therefore a property of the \emph{estimator} as well
+image's leverage is therefore a property of the estimator as well
 as of the lens: which $\chi^2$ is minimised, and with which astrometric
 errors, is part of the data geometry in Eq.~\eqref{eq:pe_general}.
 
@@ -656,8 +643,8 @@ example of \S\ref{sec:pe_sign_change} are therefore source-plane
 A response coefficient is meaningless without the weights it was
 computed with. Source-plane and image-plane fits of identical data can
 differ by a large factor, as the running example shows. When comparing
-an analytic estimate with a numerical experiment, check first that both
-minimise the same $\chi^2$.
+an analytic estimate with a numerical experiment, one must first check
+that both minimise the same $\chi^2$.
 \end{annotation}
 
 % =====================================================================
@@ -671,7 +658,7 @@ So far the slope was fixed. Freeing it adds a third column to $X$,
     \label{eq:pe_hcolumn}
 \end{equation}
 which vanishes at $|\theta|=\thetaE$: the power-law deflection at the
-Einstein radius equals $\thetaE$ for \emph{every} slope, so the slope
+Einstein radius equals $\thetaE$ for every slope, so the slope
 pivots there. On the canonical triple there are now three equations for
 three unknowns $(\epsilon,\delta\gp,\delta\ysrc)$, and the exact solution
 is
@@ -697,7 +684,7 @@ $L>0$, $\delta\gp/\mBH=(e^{L(3-\gp)}-1)/L>0$.
 Equation~\eqref{eq:pe_free_slope} makes the role of the radial image
 explicit. For the canonical triple with the slope free, the Einstein
 radius falls back to the
-total-mass value of Eq.~\eqref{eq:pe_total_mass}, and \emph{all} of the
+total-mass value of Eq.~\eqref{eq:pe_total_mass}, and all of the
 radial image's information goes into the slope: the fitted profile
 steepens to mimic the central mass, the fit is perfect, and the central
 mass is undetectable from these three positions. Without the radial
@@ -727,7 +714,7 @@ plane~1 the nearer source, and
     \Brat=\frac{d_1}{d_2}<1
     \label{eq:pe_B}
 \end{equation}
-their ratio --- the cosmological observable of a double-source-plane
+their ratio, the cosmological observable of a double-source-plane
 lens \citep{collett_2012}. We treat each plane as lensed by the main
 deflector only: any extra deflection of the far source by the nearer
 source's own mass is assumed to be modelled correctly
@@ -752,7 +739,7 @@ $\etamea^{\gp-1}=d_1/d_2=\Brat$. A point mass has $\thetaBH^2\propto d_i$.
 Hence
 $\mBH_i=\thetaBH^{(i)2}/\thetaE^{(i)2}\propto d_i^{\,1-2/(\gp-1)}=d_i^{-k}$,
 and $\mBH_2/\mBH_1=(d_1/d_2)^{k}=\Brat^{k}$. Since $k>0$ for $1<\gp<3$,
-the farther plane sees a \emph{smaller} central-mass fraction: its
+the farther plane sees a smaller central-mass fraction: its
 Einstein radius grows faster with distance than the point mass's.
 \end{derivation}
 
@@ -763,9 +750,9 @@ only through them, which is what makes it a cosmological probe. Nothing
 in this chapter needs their explicit form.
 \end{bridge}
 
-At fixed $\gp$ the two planes share no fitted parameter --- each has its
-own Einstein radius and its own source position --- so \textbf{the
-planes decouple}: each is a separate regression with its own response
+At fixed $\gp$ the two planes share no fitted parameter (each has its
+own Einstein radius and its own source position), so the planes
+decouple: each is a separate regression with its own response
 coefficient $c_i$, and $\epsilon_i=\mBH_i c_i$.
 
 \subsection{The bias}
@@ -779,10 +766,10 @@ Eq.~\eqref{eq:pe_mscaling},
     +\order{\mBH^2}.\;}
     \label{eq:pe_bias}
 \end{equation}
-The bias is a \emph{difference}: it would vanish if both planes
+The bias is a difference: it would vanish if both planes
 responded alike, and it survives because $\Brat^{k}<1$ suppresses
 plane~2's response. Each $c_i$ depends on where that plane's images
-sit, so the bias depends on the source positions --- above all through
+sit, so the bias depends on the source positions, above all through
 the depth of each plane's radial image.
 
 \paragraph{The total-mass shortcut.} If both planes are put at the
@@ -791,10 +778,10 @@ floor, $c_1=c_2=1/(\gp-1)$, Eq.~\eqref{eq:pe_bias} reduces to
     \frac{\Delta\Brat}{\Brat}\bigg|_{\rm floor}=\mBH_1\bigl(1-\Brat^{k}\bigr),
     \label{eq:pe_shortcut}
 \end{equation}
-which is just the difference between the total-mass Einstein radii of
+which is the difference between the total-mass Einstein radii of
 Eq.~\eqref{eq:pe_total_mass} on the two planes. It is a correct answer
-to a different question --- how two \emph{definitions} of the Einstein
-radius differ --- and contains no image positions, no source
+to a different question, how two definitions of the Einstein
+radius differ, and contains no image positions, no source
 marginalisation and no fit. In particular it is positive for every
 $0<\Brat<1$.
 
@@ -835,26 +822,22 @@ response of each ratio to the central mass is
     \label{eq:pe_ri}
 \end{equation}
 Three structural facts follow (checked symbolically for $N=5$ planes).
-\begin{enumerate}
-    \item \textbf{Every $r_i$ contains the same $c_1$}, with the same
-          coefficient $\gp-1$. All ratios share the reference plane and
-          look through one deflector, so their errors share a cause: the
-          $r_i$ form a deterministic family, not independent draws.
-    \item \textbf{A common non-zero limit.} As $\Brat_i^{k}\to0$,
-          $r_i\to(\gp-1)c_1$ whatever $c_i$ is. In that limit plane $i$
-          sees a negligible central-mass fraction
-          ($\mBH_i=\mBH_1\Brat_i^{k}\to0$) and acts as a clean reference
-          against which plane~1's contamination is measured in full. The
-          response tends to a constant, never to zero.
-    \item \textbf{No cancellation.} For equal $c_i=c>0$,
-          $r_i=(\gp-1)c\,(1-\Brat_i^{k})$ lies strictly between $0$ and
-          $(\gp-1)c$ and grows monotonically as $\Brat_i$ decreases: all
-          ratios are biased in the same direction.
-\end{enumerate}
+First, every $r_i$ contains the same $c_1$, with the same coefficient
+$\gp-1$. All ratios share the reference plane and look through one
+deflector, so their errors share a cause: the $r_i$ form a
+deterministic family, not independent draws. Second, there is a common
+non-zero limit: as $\Brat_i^{k}\to0$, $r_i\to(\gp-1)c_1$ whatever $c_i$
+is. In that limit plane $i$ sees a negligible central-mass fraction
+($\mBH_i=\mBH_1\Brat_i^{k}\to0$) and acts as a clean reference against
+which plane~1's contamination is measured in full; the response tends
+to a constant, never to zero. Third, there is no cancellation: for equal
+$c_i=c>0$, $r_i=(\gp-1)c\,(1-\Brat_i^{k})$ lies strictly between $0$ and
+$(\gp-1)c$ and grows monotonically as $\Brat_i$ decreases, so all
+ratios are biased in the same direction.
 
 \begin{annotation}[How far can the limit be pushed?]
 Every $d_i$ is less than one, so $\Brat_i=d_1/d_i>d_1$: even a source at
-infinite redshift does \emph{not} send $\Brat_i\to0$. The limit is
+infinite redshift does not send $\Brat_i\to0$. The limit is
 approached, not reached, and is approached fastest for shallow slopes,
 where $k$ is large. Its content is structural: the responses are bounded
 by, and pulled towards, the shared plane-1 term.
@@ -864,8 +847,8 @@ by, and pulled towards, the shared plane-1 term.
 \section{The Consequence: Significance, Not Amplitude}
 \label{sec:pe_significance}
 
-``Does the bias stack across planes?'' is best asked not of the raw size
-of the bias but of its size \emph{in units of the statistical error},
+Whether the bias stacks across planes is best asked not of the raw size
+of the bias but of its size in units of the statistical error,
 \begin{equation}
     \mathcal{S}=\frac{|\text{systematic shift of a parameter}|}{\text{statistical error of that parameter}} ,
     \label{eq:pe_S}
@@ -874,7 +857,7 @@ because that is what decides whether a published result is wrong. Two
 generic facts about linear least squares settle how $\mathcal{S}$
 scales.
 
-\textbf{The bias does not know the noise level.} For data with
+First, the bias does not know the noise level. For data with
 covariance $C=\sigma^2I$ and Jacobian $J$, the bias of a linear fit to a
 data shift $\boldsymbol\delta$ is
 $(J^{\mathsf T}C^{-1}J)^{-1}J^{\mathsf T}C^{-1}\boldsymbol\delta$, in
@@ -882,9 +865,9 @@ which $\sigma^2$ cancels, while the parameter covariance
 $(J^{\mathsf T}C^{-1}J)^{-1}$ scales as $\sigma^2$. Better data shrink
 the error bar but not the bias, so $\mathcal{S}\propto1/\sigma$.
 
-\textbf{Coherent biases do not average down.} In the simplest toy ---
-$N$ ratios with equal sensitivity to one parameter, each shifted by the
-same $\mBH r$ --- the averaged parameter carries the full bias $\mBH r$
+Second, coherent biases do not average down. In the simplest toy
+($N$ ratios with equal sensitivity to one parameter, each shifted by the
+same $\mBH r$) the averaged parameter carries the full bias $\mBH r$
 while its error falls as $\sigma/\sqrt N$, so
 $\mathcal{S}_N=\sqrt N\,\mathcal{S}_1$. Had the shifts random signs, the
 root-mean-square bias would fall as $1/\sqrt N$ along with the error and
@@ -892,7 +875,7 @@ $\mathcal{S}$ would not grow. Equation~\eqref{eq:pe_ri} says the
 central-mass bias is of the first, coherent, kind.
 
 \begin{keybox}[The design consequence]
-A compound lens with more source planes is more \emph{exposed} to a
+A compound lens with more source planes is more exposed to a
 coherent modelling systematic, not less. Extra planes buy statistical
 precision, which the systematic does not share. Intuition of the form
 ``$N$ planes, so errors average down like $\sqrt N$'' presumes
@@ -900,9 +883,9 @@ independent draws, and here there is one physical cause; when the
 planes' response coefficients are comparable it also pushes every ratio
 the same way (unequal $c_i$ can give opposite signs,
 \S\ref{sec:pe_sign_change}). The only
-lever that lowers $\mathcal{S}$ is the modelling one: give the
+lever that lowers $\mathcal{S}$ is the modelling one: giving the
 deflector's inner profile the freedom to represent the central mass, or
-measure the radial image well enough to constrain it. How per-ratio
+measuring the radial image well enough to constrain it. How per-ratio
 biases map into cosmological parameters through a full Fisher matrix is
 the subject of Chapter~\ref{ch:cosmological_sensitivity}.
 \end{keybox}
@@ -914,7 +897,7 @@ the subject of Chapter~\ref{ch:cosmological_sensitivity}.
 Equation~\eqref{eq:pe_general} is a first-order expansion. It fails, and
 the numerics must be used, in the following situations.
 \begin{enumerate}
-    \item \textbf{The fitted shift is not small.} The step
+    \item The fitted shift is not small. The step
           $e^{(\gp-1)\epsilon}\simeq1+(\gp-1)\epsilon$ requires
           $|\epsilon|=\mBH|c|\ll1$. That is necessary but not
           sufficient. The image positions of
@@ -930,11 +913,11 @@ the numerics must be used, in the following situations.
           disappeared altogether (item~3). In a source-plane fit $c$ also
           grows as $\rho^{1-\gp}$, so a deep radial image breaks the
           expansion at a smaller $\mBH$ on both counts.
-    \item \textbf{An image is near a critical curve.} The image shift
+    \item An image is near a critical curve. The image shift
           $\mBH a_j/\lambda_r(\theta_j)$ of Eq.~\eqref{eq:pe_image_shift}
           diverges as $\lambda_r\to0$, i.e.\ as the source approaches
           the radial caustic.
-    \item \textbf{The image count changes.} A finite central mass can
+    \item The image count changes. A finite central mass can
           make the radial image merge with the extra central image and
           disappear. That is a change of topology, not a small
           perturbation, and no linear theory captures it
@@ -965,51 +948,44 @@ should be free, or contains a bug.
 \section{Summary}
 \label{sec:pe_summary}
 
-\begin{itemize}
-    \item To first order, the bias of a least-squares fit caused by a
-          small omitted component of amplitude $m$ and shape $\vb{g}$ is
-          $\delta\vb{p}=m\,(X^{\mathsf T}WX)^{-1}X^{\mathsf T}W\vb{g}$:
-          the regression of the omitted shape on the model's free
-          directions, Eq.~\eqref{eq:pe_general}.
-    \item Every unobservable nuisance parameter (here the source
-          position) must be a free column; it enters as an intercept,
-          and fixing it changes the answer.
-    \item For a fixed-slope power law fitted to a lens with a central
-          point mass, $\epsilon=\mBH c$ with
-          $c=\operatorname{Cov}_w(a,b)/\operatorname{Var}_w(b)$,
-          $a=\thetaE^2/\theta$, $b=(\gp-1)\alpha_{\rm PL}$
-          (Eq.~\eqref{eq:pe_c}); the weights distinguish source-plane
-          from image-plane fits.
-    \item A symmetric tangential pair alone gives $c=1/(\gp-1)$: it
-          measures the total enclosed mass. The radial image, where the
-          point-mass and power-law shapes differ most, supplies the
-          leverage in a source-plane fit. For the canonical triple with
-          unit (source-plane) weights
-          $c=(3+\rho^{1-\gp})/[(\gp-1)(3+\rho^{4-2\gp})]$ exactly, with
-          asymptote $\rho^{1-\gp}/[3(\gp-1)]$, a crossing at
-          $\rho_\times=9^{1/(5-3\gp)}$ for $\gp>5/3$, and the floor at
-          $\rho=1$. Under image-plane weights the deep radial image is
-          down-weighted and $c$ returns to the floor as $\rho\to0$.
-    \item With the slope free, the radial image's leverage goes into the
-          slope: the fit steepens and absorbs the central mass exactly,
-          and for the canonical triple the Einstein radius returns to its
-          total-mass value.
-    \item For two source planes,
-          $\Delta\Brat/\Brat=(\gp-1)\mBH_1[c_1-\Brat^{k}c_2]$ with
-          $k=(3-\gp)/(\gp-1)$, which changes sign at
-          $c_2/c_1=\Brat^{-k}$; the total-mass shortcut
-          $\mBH_1(1-\Brat^{k})$ cannot. Where the sign changes depends
-          on the weights: in a source-plane fit a deep enough plane-2
-          radial image always makes the bias negative, in an image-plane
-          fit it does not.
-    \item For $N$ planes all responses share the plane-1 term and tend
-          to $(\gp-1)c_1$: the error is coherent, so adding planes makes
-          the systematic more \emph{significant}.
-    \item The estimate fails when $\mBH c$ is not small, when a deep
-          radial image's fractional shift $\mBH a_j/(\lambda_r\theta_j)$
-          is not small (about $640\,\mBH$ in the running example), near
-          critical curves, and when images are created or destroyed.
-\end{itemize}
+To first order, the bias of a least-squares fit caused by a small
+omitted component of amplitude $m$ and shape $\vb{g}$ is
+$\delta\vb{p}=m\,(X^{\mathsf T}WX)^{-1}X^{\mathsf T}W\vb{g}$, the
+regression of the omitted shape on the model's free directions,
+Eq.~\eqref{eq:pe_general}. Every unobservable nuisance parameter (here
+the source position) must be a free column; it enters as an intercept,
+and fixing it changes the answer. For a fixed-slope power law fitted to
+a lens with a central point mass, $\epsilon=\mBH c$ with
+$c=\operatorname{Cov}_w(a,b)/\operatorname{Var}_w(b)$,
+$a=\thetaE^2/\theta$, $b=(\gp-1)\alpha_{\rm PL}$ (Eq.~\eqref{eq:pe_c}),
+and the weights distinguish source-plane from image-plane fits.
+
+A symmetric tangential pair alone gives $c=1/(\gp-1)$: it measures the
+total enclosed mass. The radial image, where the point-mass and
+power-law shapes differ most, supplies the leverage in a source-plane
+fit. For the canonical triple with unit (source-plane) weights
+$c=(3+\rho^{1-\gp})/[(\gp-1)(3+\rho^{4-2\gp})]$ exactly, with asymptote
+$\rho^{1-\gp}/[3(\gp-1)]$, a crossing at $\rho_\times=9^{1/(5-3\gp)}$
+for $\gp>5/3$, and the floor at $\rho=1$. Under image-plane weights the
+deep radial image is down-weighted and $c$ returns to the floor as
+$\rho\to0$. With the slope free, the radial image's leverage goes into
+the slope: the fit steepens and absorbs the central mass exactly, and
+for the canonical triple the Einstein radius returns to its total-mass
+value.
+
+For two source planes,
+$\Delta\Brat/\Brat=(\gp-1)\mBH_1[c_1-\Brat^{k}c_2]$ with
+$k=(3-\gp)/(\gp-1)$, which changes sign at $c_2/c_1=\Brat^{-k}$; the
+total-mass shortcut $\mBH_1(1-\Brat^{k})$ cannot. Where the sign changes
+depends on the weights: in a source-plane fit a deep enough plane-2
+radial image always makes the bias negative, in an image-plane fit it
+does not. For $N$ planes all responses share the plane-1 term and tend
+to $(\gp-1)c_1$: the error is coherent, so adding planes makes the
+systematic more significant. The estimate fails when $\mBH c$ is not
+small, when a deep radial image's fractional shift
+$\mBH a_j/(\lambda_r\theta_j)$ is not small (about $640\,\mBH$ in the
+running example), near critical curves, and when images are created or
+destroyed.
 
 % =====================================================================
 \section{Problems}
