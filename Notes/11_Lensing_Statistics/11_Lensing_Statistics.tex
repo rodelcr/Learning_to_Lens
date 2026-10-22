@@ -23,20 +23,16 @@ Universe.}
 \noindent
 So far we have studied lenses one at a time.  But a survey observes
 \emph{populations}: many sources seen through many deflectors.  The
-questions then become statistical --- what fraction of distant quasars is
-multiply imaged?  how many giant arcs should a cluster survey find?  how
-does lensing distort the number counts of a flux-limited sample?  These
+questions then become statistical: what fraction of distant quasars is
+multiply imaged, how many giant arcs a cluster survey should find, and
+how lensing distorts the number counts of a flux-limited sample.  These
 questions are answered with three ingredients built in this chapter:
-\begin{itemize}[nosep]
-    \item the \textbf{cross-section} of a single lens for a given imaging
-          property (\S\ref{sec:cross_sections});
-    \item the \textbf{optical depth}, obtained by summing cross-sections
-          over the lens population along the line of sight
-          (\S\ref{sec:optical_depth});
-    \item the \textbf{magnification bias}, which reshapes the observed
-          counts of a lensed source population
-          (\S\ref{sec:magnification_bias}).
-\end{itemize}
+the cross-section of a single lens for a given imaging property
+(\S\ref{sec:cross_sections}); the optical depth, obtained by summing
+cross-sections over the lens population along the line of sight
+(\S\ref{sec:optical_depth}); and the magnification bias, which
+reshapes the observed counts of a lensed source population
+(\S\ref{sec:magnification_bias}).
 Together these make lens statistics a probe both of the lens population
 (masses, profiles, abundance) and of cosmology (through the volume
 element).  We build on the point-mass and SIS imaging of
@@ -48,12 +44,13 @@ caustic structure of Chapter~\ref{ch:elliptical_models}.
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
     \item \mathlink{11_Lensing_Statistics/lensing_statistics.wl}{lensing\_statistics.wl}
-          --- symbolic derivation and verification of the point-mass and
-          SIS cross-sections (including the combined SIS threshold
-          cross-section, Eq.~\eqref{eq:sis_cross_full}), the comoving
-          optical-depth integrand and its $\OmegaL$ dependence, and the
-          magnification-bias factor for power-law counts; figures
-          exported to \texttt{Figures/11\_Lensing\_Statistics/}.
+          contains the symbolic derivation and verification of the
+          point-mass and SIS cross-sections (including the combined
+          SIS threshold cross-section, Eq.~\eqref{eq:sis_cross_full}),
+          the comoving optical-depth integrand and its $\OmegaL$
+          dependence, and the magnification-bias factor for power-law
+          counts; the figures are exported to
+          \texttt{Figures/11\_Lensing\_Statistics/}.
 \end{itemize}
 
 
@@ -62,10 +59,10 @@ caustic structure of Chapter~\ref{ch:elliptical_models}.
 \label{sec:cross_sections}
 
 Fix a source and a lens at given distances.  For some imaging property
-$Q$ --- ``total magnification exceeds $\mu$'', ``image separation exceeds
-$\Delta\theta$'', ``flux ratio below $r$'' --- there is a region of the
+$Q$ (``total magnification exceeds $\mu$'', ``image separation exceeds
+$\Delta\theta$'', ``flux ratio below $r$'') there is a region of the
 \emph{source plane} in which the source must lie for the images to have
-property $Q$.  The solid angle of that region is the \textbf{cross-section}
+property $Q$.  The solid angle of that region is the \emph{cross-section}
 $\sigma_Q$
 \citep[][Part~1, \S5.1]{schneider_kochanek_wambsganss_2006}.  Everything
 in lens statistics is built from cross-sections.
@@ -123,7 +120,7 @@ are
     \mu = \frac{2}{y}, \qquad r = \frac{1+y}{1-y}.
     \label{eq:sis_mu_r}
 \end{equation}
-The basic multiple-imaging cross-section is therefore simply the area of
+The basic multiple-imaging cross-section is therefore the area of
 the disk $\beta < \thetaE$,
 \begin{equation}
     \sigma = \pi\,\thetaE^2,
@@ -157,8 +154,8 @@ dominated by the most massive galaxies.
 \section{Optical Depth}
 \label{sec:optical_depth}
 
-The probability that a random source is lensed with property $Q$ --- the
-\textbf{optical depth} $\tau$ --- is the fraction of the sky covered by
+The probability that a random source is lensed with property $Q$, the
+\emph{optical depth} $\tau$, is the fraction of the sky covered by
 the cross-sections of all intervening lenses.  Summing the (non-overlapping)
 cross-sections of lenses with proper number density $n$ along the line of
 sight,
@@ -172,7 +169,7 @@ where $\chi$ collects the lens parameters (mass, velocity dispersion,
 ellipticity)
 \citep[][Part~1, \S5.2]{schneider_kochanek_wambsganss_2006}.  Written with
 the comoving number density $n = (1+z)^3 n_{\mathrm{com}}$ and comoving
-angular diameter distance $f_K$, this becomes the particularly clean
+angular diameter distance $f_K$, this takes the compact form
 \begin{equation}
     \tau(Q) = \int_0^{w_s}\! dw\; f_K^2(w)
         \int d\chi\; n_{\mathrm{com}}(w,\chi)\,\sigma(Q; w, w_s, \chi).
@@ -207,8 +204,8 @@ counts, the observed counts are
     \label{eq:mag_bias}
 \end{equation}
 with $\int p\,d\mu = 1$ and $\int \mu\,p\,d\mu = \langle\mu\rangle$
-\citep[][Part~1, \S5.3]{schneider_kochanek_wambsganss_2006}.  Two cases
-follow.  For \textbf{power-law counts}
+\citep[][Part~1, \S5.3]{schneider_kochanek_wambsganss_2006}.  For
+power-law counts
 $N_0(>S) = A\,S^{-\beta}$,
 \begin{equation}
     N(>S) = N_0(>S)\,
@@ -216,21 +213,21 @@ $N_0(>S) = A\,S^{-\beta}$,
     \label{eq:mag_bias_powerlaw}
 \end{equation}
 so the counts keep the same slope and are boosted by a factor that
-depends only on $\beta$ and $p(\mu)$.  Remarkably, for $\beta = 1$ the
-counts are \emph{unchanged}: the solid-angle dilution exactly cancels the
+depends only on $\beta$ and $p(\mu)$.  For $\beta = 1$ the
+counts are unchanged: the solid-angle dilution exactly cancels the
 brightening.  Counts steeper than $\beta = 1$ are boosted; flatter ones
 are depleted.
 
 Because $p(\mu) \propto \mu^{-3}$ at high magnification
-\citep{blandford_narayan_1986} --- a consequence of the universal fold
+\citep{blandford_narayan_1986}, a consequence of the universal fold
 magnification law, Eq.~\eqref{eq:fold_magnification}, met for the point
-mass in \S\ref{sec:cross_point} --- the bias integral grows sharply as
+mass in \S\ref{sec:cross_point}, the bias integral grows sharply as
 $\beta \to 2$: a source population with steep counts, or with an
 exponential Schechter cutoff, is strongly biased toward including lensed
-objects.  This is why several of the apparently most luminous objects in
-the sky --- the IRAS galaxy F10214$+$4724 ($\mu \sim 50$), the
-Lyman-break galaxy cB58 ($\mu \sim 30$), the quasar APM~08279$+$5255 ---
-turn out to be strongly magnified.  It is also why lensed high-redshift
+objects.  For this reason several of the apparently most luminous
+objects in the sky, the IRAS galaxy F10214$+$4724 ($\mu \sim 50$), the
+Lyman-break galaxy cB58 ($\mu \sim 30$), and the quasar
+APM~08279$+$5255, turn out to be strongly magnified.  It is also why lensed high-redshift
 galaxies are found preferentially behind massive clusters, the
 ``cosmic telescope'' effect of Chapter~\ref{ch:cluster_lensing}.
 
@@ -239,23 +236,18 @@ galaxies are found preferentially behind massive clusters, the
 \section{Summary}
 \label{sec:statistics_summary}
 
-\begin{itemize}[nosep]
-    \item A \textbf{cross-section} $\sigma_Q$ is the source-plane solid
-          angle producing a chosen imaging property $Q$.  For a point
-          mass, $\sigma(\mu_p) = \pi\thetaE^2\,y^2(\mu_p)$ with
-          $y^2 = 2(\mu_p/\sqrt{\mu_p^2-1}-1)$; for an SIS the
-          multiple-imaging cross-section is $\pi\thetaE^2$.
-    \item The \textbf{optical depth} sums cross-sections over the lens
-          population along the line of sight,
-          Eq.~\eqref{eq:optical_depth_comoving}.  For SIS galaxies
-          $\tau \propto n_{\mathrm{com}}(\sigma_v/c)^4$ times a
-          cosmological volume factor sensitive to $\OmegaL$.
-    \item \textbf{Magnification bias} reshapes flux-limited counts,
-          Eq.~\eqref{eq:mag_bias}; power-law counts are boosted by a
-          $\beta$-dependent factor, unchanged at $\beta = 1$, and
-          strongly biased as $\beta \to 2$ because
-          $p(\mu) \propto \mu^{-3}$.
-\end{itemize}
+A cross-section $\sigma_Q$ is the source-plane solid angle producing
+a chosen imaging property $Q$.  For a point mass,
+$\sigma(\mu_p) = \pi\thetaE^2\,y^2(\mu_p)$ with
+$y^2 = 2(\mu_p/\sqrt{\mu_p^2-1}-1)$; for an SIS the multiple-imaging
+cross-section is $\pi\thetaE^2$.  The optical depth sums
+cross-sections over the lens population along the line of sight,
+Eq.~\eqref{eq:optical_depth_comoving}; for SIS galaxies
+$\tau \propto n_{\mathrm{com}}(\sigma_v/c)^4$ times a cosmological
+volume factor sensitive to $\OmegaL$.  Magnification bias reshapes
+flux-limited counts, Eq.~\eqref{eq:mag_bias}; power-law counts are
+boosted by a $\beta$-dependent factor, unchanged at $\beta = 1$, and
+strongly biased as $\beta \to 2$ because $p(\mu) \propto \mu^{-3}$.
 
 
 % =====================================================================

@@ -26,40 +26,36 @@ makes the mathematics tractable but the phenomenology limited.  The SIS,
 for instance, can produce at most two images of a point source, and its
 critical curve is a perfect circle.
 
-Real galaxies, however, are \textit{elliptical}.  Their mass
+Real galaxies, however, are elliptical.  Their mass
 distributions have axis ratios $q \sim 0.5$--$0.9$, and they live in
 environments that contribute external tidal shear.  Breaking circular
-symmetry introduces qualitatively new phenomena:
-\begin{itemize}[nosep]
-    \item Critical curves deform from circles into ellipses and ovals.
-    \item Caustics develop a \textbf{diamond (astroid)} shape with
-          cusps and folds.
-    \item Sources can be \textbf{quadruply imaged} (not just doubly),
-          producing Einstein crosses and arcs.
-    \item The \textbf{topology} of image configurations --- how many
-          images exist, their parities, and their magnifications ---
-          is entirely governed by the source's position relative to
-          the caustic structure.
-\end{itemize}
+symmetry introduces qualitatively new phenomena.  Critical curves
+deform from circles into ellipses and ovals; caustics develop a
+diamond (astroid) shape with cusps and folds; sources can be
+quadruply as well as doubly imaged, producing Einstein crosses and
+arcs; and the topology of the image configuration (how many images
+exist, their parities, and their magnifications) is governed
+entirely by the position of the source relative to the caustics.
 
-This chapter introduces the two workhorse non-axisymmetric models
-(SIS + external shear and the singular isothermal ellipsoid) and then
-develops the theory of critical curves, caustics, and image topology
-in full detail.  The image topology section is the conceptual heart
-of strong lensing theory.
+This chapter introduces the two standard non-axisymmetric models,
+the SIS with external shear and the singular isothermal ellipsoid, and
+then develops the theory of critical curves, caustics, and image
+topology on which the rest of strong lensing theory rests.
 
 \medskip
 \noindent
 \textbf{Companion Mathematica files:}
 \begin{itemize}[nosep]
     \item \mathlink{08_Elliptical_Models_Caustics/critical\_curves\_caustics.wl}{critical\_curves\_caustics.wl}
-          --- symbolic and numerical computation of critical curves
-          and caustics for SIS+shear and SIE models; image position
-          solver; figure generation for all module figures
+          contains the symbolic and numerical computation of critical
+          curves and caustics for the SIS+shear and SIE models, an
+          image position solver, and the generation of all the
+          figures of this chapter.
     \item \mathlink{08_Elliptical_Models_Caustics/image\_configurations.nb}{image\_configurations.nb}
-          --- interactive notebook: place a source on the source
-          plane and watch images appear, colored by parity; animate
-          caustic crossings; sliders for ellipticity and shear
+          is an interactive notebook in which a source is placed on
+          the source plane and the images appear, colored by parity;
+          caustic crossings can be animated and the ellipticity and
+          shear varied with sliders.
 \end{itemize}
 
 
@@ -68,33 +64,30 @@ of strong lensing theory.
 \label{sec:elliptical_intro}
 
 The singular isothermal sphere (Chapter~\ref{ch:axisymmetric_models}) is
-an excellent starting point for galaxy-scale lensing.  Its velocity
+a useful starting point for galaxy-scale lensing.  Its velocity
 dispersion $\sigma_v$ maps directly onto observable galaxy kinematics,
 and its Einstein radius $\thetaE = 4\pi\sigma_v^2 \Dds/(\speedoflight^2
-\Ds)$ sets the angular scale of lensing.  But the SIS has a fundamental
-limitation: perfect circular symmetry.
+\Ds)$ sets the angular scale of lensing.  The SIS has one basic
+limitation, its perfect circular symmetry.
 
-Observations of strong lens systems reveal:
-\begin{enumerate}
-    \item \textbf{Quadruple images} are common.  About 20--30\% of
-          known galaxy-scale lens systems are quads (four bright images
-          plus a faint central image), which an SIS cannot produce.
-    \item \textbf{Giant luminous arcs} in galaxy clusters are
-          tangentially stretched images that trace out the critical
-          curves of the cluster potential.  These arcs are not perfect
-          circles, implying the mass distribution is not axisymmetric.
-    \item \textbf{Astrometric anomalies} in lens models require
-          ellipticity and/or external shear to achieve acceptable fits.
-\end{enumerate}
+Observations of strong lens systems show three things that an SIS
+cannot account for.  Quadruple images are common: about 20--30\% of
+known galaxy-scale lens systems are quads (four bright images plus a
+faint central image), which an SIS cannot produce.  Giant luminous
+arcs in galaxy clusters are tangentially stretched images that trace
+out the critical curves of the cluster potential, and these arcs are
+not perfect circles, so the mass distribution is not axisymmetric.
+Finally, astrometric anomalies in lens models require ellipticity
+and/or external shear to achieve acceptable fits.
 
 The simplest way to break axial symmetry is to add a constant
-\textbf{external shear} to the SIS potential.  The resulting
-SIS + shear model already captures the essential features: diamond
-caustics, quad images, and fold/cusp configurations.  The more
-physically motivated \textbf{singular isothermal ellipsoid} (SIE)
-achieves the same through an intrinsically elliptical mass
-distribution and is the model used in modern lens-modeling codes
-such as \texttt{lenstronomy} and \texttt{PyAutoLens}.
+\emph{external shear} to the SIS potential.  The resulting
+SIS + shear model already produces diamond caustics, quad images, and
+fold/cusp configurations.  The more physically motivated
+\emph{singular isothermal ellipsoid} (SIE) achieves the same through
+an intrinsically elliptical mass distribution and is the model used
+in modern lens-modeling codes such as \texttt{lenstronomy} and
+\texttt{PyAutoLens}.
 
 
 % =====================================================================
@@ -103,7 +96,7 @@ such as \texttt{lenstronomy} and \texttt{PyAutoLens}.
 
 The simplest non-axisymmetric lens model augments the SIS potential
 with a constant external tidal shear $\gamma_{\mathrm{ext}}$.
-Physically, this shear arises from the tidal gravitational field of
+This shear arises from the tidal gravitational field of
 neighboring galaxies or the cluster environment in which the lens
 galaxy resides.
 
@@ -131,7 +124,8 @@ quadratic potential is
 $\psiL_\gamma = \tfrac12\gamma_{\mathrm{ext}}|\vectheta|^2\cos 2(\phi-\phi_\gamma)
 = \tfrac12\big[\gamma_1(\theta_1^2-\theta_2^2) + 2\gamma_2\theta_1\theta_2\big]$,
 with $(\gamma_1,\gamma_2) = \gamma_{\mathrm{ext}}(\cos 2\phi_\gamma,\sin 2\phi_\gamma)$;
-eq.~\eqref{eq:psi_sis_shear} is the case $\phi_\gamma = 0$.  Three traps.
+eq.~\eqref{eq:psi_sis_shear} is the case $\phi_\gamma = 0$.  Three
+conventions need care.
 (i)~The components depend on $2\phi_\gamma$: $\phi_\gamma$ and
 $\phi_\gamma+\pi$ are the same shear (a spin-2 quantity, like an ellipse).
 (ii)~With this sign, for $\gamma_2 = 0$ the Jacobian is
@@ -213,7 +207,7 @@ The derivation is verified symbolically in
 \mathlink{08_Elliptical_Models_Caustics/critical\_curves\_caustics.wl}{critical\_curves\_caustics.wl}.
 For $\gamma_{\mathrm{ext}} = 0$ this reduces to $\theta = \thetaE$
 (the SIS critical circle).  For $\gamma_{\mathrm{ext}} > 0$, the
-critical curve is an \textbf{oval}: elongated along the
+critical curve is an oval: elongated along the
 $\theta_2$-axis (perpendicular to the shear direction) and compressed
 along $\theta_1$ (approximately elliptical for small
 $\gamma_{\mathrm{ext}}$; the deviation from a true ellipse reaches
@@ -252,7 +246,7 @@ radial direction (rank one); the same fact gives $\det\Amat = 1 - 2\kappab$ for
 every isothermal lens (box in \S\ref{sec:sie_deflection} below).
 
 \textit{Solve.}  $\det\Amat = 0 \Rightarrow u = (1-g^2)/(1-g\cos2\phi)$, and
-$\theta = \thetaE/u$ is eq.~\eqref{eq:crit_sis_shear}.  Sanity values:
+$\theta = \thetaE/u$ is eq.~\eqref{eq:crit_sis_shear}.  As a check,
 $\theta_{\mathrm{crit}}(0) = \thetaE/(1+g)$ and
 $\theta_{\mathrm{crit}}(\pi/2) = \thetaE/(1-g)$, i.e.\ $0.909''$ and
 $1.111''$ for $\thetaE = 1''$, $g = 0.1$.
@@ -260,9 +254,9 @@ $1.111''$ for $\thetaE = 1''$, $g = 0.1$.
 
 
 \begin{remark}
-The critical curve is elongated \textit{perpendicular} to the shear
-direction.  This is physically intuitive: the shear stretches images
-along $\theta_1$, which means the magnification diverges at smaller
+The critical curve is elongated perpendicular to the shear
+direction.  The reason is that the shear stretches images
+along $\theta_1$, so that the magnification diverges at smaller
 $\theta$ in that direction, pushing the critical curve inward along
 $\theta_1$ and outward along $\theta_2$.
 \end{remark}
@@ -272,8 +266,8 @@ $\theta_1$ and outward along $\theta_2$.
 The caustics are obtained by mapping the critical curves through the
 lens equation $\vecbeta = \vectheta_{\mathrm{crit}} -
 \vecalpha(\vectheta_{\mathrm{crit}})$.  For the SIS + shear model,
-the tangential caustic takes the shape of a \textbf{diamond} or
-\textbf{astroid} --- a four-cusped curve.
+the tangential caustic takes the shape of a \emph{diamond} or
+\emph{astroid}, a four-cusped curve.
 
 In parametric form, the caustic is:
 \begin{align}
@@ -346,21 +340,16 @@ $g \to 0$, $a, b \to 2g\thetaE \to 0$: the SIS point caustic is recovered.
 
 \subsection{Image Configurations}
 
-The image configurations for the SIS + shear model depend on the
-source position relative to the diamond caustic:
-\begin{itemize}
-    \item \textbf{Source outside the diamond:} Two images (a double).
-          One image is outside the critical curve (Type~I, positive
-          parity); the other is inside (Type~II, negative parity,
-          demagnified).
-    \item \textbf{Source inside the diamond:} Four images (a quad).
-          Two images outside the critical curve (positive parity);
-          two inside (negative parity).
-    \item \textbf{Source on a fold:} Three images, with two of them
-          merging on the critical curve (highly magnified).
-    \item \textbf{Source on a cusp:} Three images, with the merging
-          triplet producing a characteristic cusp configuration.
-\end{itemize}
+The image configuration for the SIS + shear model depends on the
+source position relative to the diamond caustic.  A source outside
+the diamond has two images (a double): one outside the critical curve
+(Type~I, positive parity) and one inside (Type~II, negative parity,
+demagnified).  A source inside the diamond has four images (a quad),
+two outside the critical curve with positive parity and two inside
+with negative parity.  A source on a fold has three images, two of
+which merge on the critical curve and are highly magnified, and a
+source on a cusp has three images, with the merging triplet producing
+the characteristic cusp configuration.
 
 \begin{remark}
 The SIS is singular, so there is no separate radial critical curve
@@ -375,7 +364,7 @@ enclosing the tangential one.
 \section{The Singular Isothermal Ellipsoid (SIE)}
 \label{sec:sie}
 
-The \textbf{singular isothermal ellipsoid} (SIE) is the workhorse
+The singular isothermal ellipsoid (SIE) is the standard
 model for galaxy-scale strong lensing.  Rather than adding shear
 externally, the SIE builds ellipticity directly into the mass
 distribution.
@@ -454,8 +443,8 @@ Kormann, Schneider \& Bartelmann (1994, hereafter KSB94), is
          {\sqrt{q^2\theta_1^2 + \theta_2^2}}\right).}
     \label{eq:sie_alpha}
 \end{equation}
-The asymmetry --- $\arctan$ along the major axis, $\operatorname{arctanh}$
-along the minor --- is intrinsic to the elliptical geometry.  Rather
+The asymmetry ($\arctan$ along the major axis, $\operatorname{arctanh}$
+along the minor) is intrinsic to the elliptical geometry.  Rather
 than reproducing the long convolution integral that leads to these
 forms (a contour-integral computation spanning several pages of
 KSB94), we give a shorter derivation that shows eq.~\eqref{eq:sie_alpha}
@@ -490,7 +479,7 @@ $F(\vectheta) \equiv \sqrt{q^2\theta_1^2 + \theta_2^2}$.
 Dimensional and homogeneity requirements force the argument of the
 inverse trig/hyperbolic function to be dimensionless and of degree
 $0$.  Natural choices are
-$\theta_1\sqrt{1-q^2}/F$ and $\theta_2\sqrt{1-q^2}/F$ --- the
+$\theta_1\sqrt{1-q^2}/F$ and $\theta_2\sqrt{1-q^2}/F$; the
 coefficients $\sqrt{1-q^2}$ are fixed uniquely (up to sign) by the
 requirement that $\alpha_i \to \thetaE\theta_i/|\vectheta|$ in the
 SIS limit $q\to 1$.  This motivates the KSB94 ansatz
@@ -639,20 +628,16 @@ ellipse, $q^2\theta_1^2 + \theta_2^2 = q\thetaE^2$, with the same
 axis ratio $q$ as the mass (it is the contour $2\kappab = 1$ of
 eq.~\eqref{eq:sie_kappa}).  Its shape depends on $q$.
 
-For axis ratios $q \lesssim 0.9$, the SIE has:
-\begin{itemize}
-    \item A \textbf{tangential critical curve}: an ellipse close
-          to the Einstein radius, elongated \emph{along} the mass
-          distribution's major axis.  Concretely, with $q < 1$ and
-          mass elongated along $\theta_1$, the critical curve
-          crosses the $\theta_1$-axis at $\pm\thetaE/\sqrt{q}$ and
-          the $\theta_2$-axis at $\pm\thetaE\sqrt{q}$, so it stretches
-          farther along $\theta_1$ than along $\theta_2$.
-    \item A \textbf{tangential caustic}: a diamond (astroid) shape,
-          similar to the SIS + shear case, with four cusps; for
-          $q < 1$ the diamond is also wider along the mass major
-          axis $\beta_1$.
-\end{itemize}
+For axis ratios $q \lesssim 0.9$ the SIE has a tangential critical
+curve that is an ellipse close to the Einstein radius, elongated
+\emph{along} the major axis of the mass distribution: with $q < 1$
+and mass elongated along $\theta_1$, the critical curve crosses the
+$\theta_1$-axis at $\pm\thetaE/\sqrt{q}$ and the $\theta_2$-axis at
+$\pm\thetaE\sqrt{q}$, so it stretches farther along $\theta_1$ than
+along $\theta_2$.  Its tangential caustic is a diamond (astroid)
+similar to that of the SIS + shear case, with four cusps; for
+$q < 1$ the diamond is also wider along the mass major axis
+$\beta_1$.
 
 The SIE, being singular at the origin, does not have a radial
 critical curve (just as the SIS does not).  A non-singular
@@ -739,8 +724,8 @@ deflector.
 The cross-section for quad lensing (the area enclosed by the
 tangential caustic) increases with ellipticity.  For $q = 0.7$, the
 caustic area is roughly $0.066\,\thetaE^2$, while for $q = 0.5$ it
-can be several times larger.  This is why more elliptical galaxies
-are more likely to produce quad lens systems.
+can be several times larger.  More elliptical galaxies are
+therefore more likely to produce quad lens systems.
 
 \begin{figure}[ht]
     \centering
@@ -761,10 +746,10 @@ are more likely to produce quad lens systems.
 
 The SIE and the SIS${}+{}$shear model are two \emph{specific} ways of
 breaking circular symmetry.  A more systematic view treats any lens
-potential as a circularly symmetric \textbf{monopole} plus a series of
-\textbf{angular multipoles}.  This is the natural language for asking
+potential as a circularly symmetric \emph{monopole} plus a series of
+\emph{angular multipoles}.  This is the natural language for asking
 \emph{which} deviations from circular symmetry a set of images can
-actually constrain --- a question that, as \citet{schneider_kochanek_wambsganss_2006}
+constrain, a question that, as \citet{schneider_kochanek_wambsganss_2006}
 emphasize (Part~2, \S4.4--4.5, Kochanek), gravitational lensing answers
 better than any other probe of galaxy potentials.
 
@@ -788,7 +773,7 @@ from the two-dimensional Poisson equation $\nabla^2\psiL = 2\kappab$
 $\nabla^2 = \partial_\theta^2 + \theta^{-1}\partial_\theta
 + \theta^{-2}\partial_\varphi^2$.
 
-For the \textbf{isothermal-scaling} multipole
+For the \emph{isothermal-scaling} multipole
 $\psiL_m = a_m\,\theta\,\cos[m(\varphi-\varphi_m)]$ (radial dependence
 $\propto\theta$, matching the flat rotation curve of the SIS), a direct
 computation gives
@@ -801,14 +786,11 @@ computation gives
 \end{equation}
 (verified symbolically in the companion script; cf.\ the equivalent
 relation in \citet{schneider_kochanek_wambsganss_2006}, Part~2, eq.~77).
-Two limits anchor this result:
-\begin{itemize}[nosep]
-    \item $m=0$: $\kappab_0 = a_0/(2\theta)$ --- the SIS profile
-          $\kappab = \thetaE/(2\theta)$ with $a_0 = \thetaE$.
-    \item $m=2$: $\kappab_2 = -(3a_2/2\theta)\cos[2(\varphi-\varphi_2)]$
-          --- the leading \textbf{quadrupole}, the elliptical
-          distortion of an isothermal galaxy.
-\end{itemize}
+Two cases anchor this result.  For $m=0$,
+$\kappab_0 = a_0/(2\theta)$ is the SIS profile
+$\kappab = \thetaE/(2\theta)$ with $a_0 = \thetaE$.  For $m=2$,
+$\kappab_2 = -(3a_2/2\theta)\cos[2(\varphi-\varphi_2)]$ is the leading
+\emph{quadrupole}, the elliptical distortion of an isothermal galaxy.
 
 \begin{derivation}[The ``direct computation'' of eq.~\eqref{eq:kappa_multipole}]
 For $\psiL_m = a\,\theta\cos m(\varphi-\varphi_m)$ the three terms of the
@@ -828,7 +810,7 @@ dipole is ``nearly degenerate with the source position'': in pure isothermal
 form it is \emph{exactly} degenerate, and a physical lopsidedness needs a
 radial profile other than $\propto\theta$.
 
-Sign trap for $m \ge 2$: $\kappab_m$ has the opposite sign to $\psiL_m$.  A
+The sign needs care for $m \ge 2$: $\kappab_m$ has the opposite sign to $\psiL_m$.  A
 potential quadrupole $\propto +\cos 2\varphi$ means a mass \emph{deficit} along
 $\varphi = 0$ and an excess along $\varphi = \pi/2$.  Consistently, the SIE of
 \S\ref{sec:sie}, with mass elongated along $\theta_1$, has a \emph{negative}
@@ -841,19 +823,16 @@ $\psiL(\cos\varphi,\sin\varphi)$ is $-0.059\,\thetaE$.
 \label{sec:int_ext_multipoles}
 
 Each angular harmonic $m$ admits two radial ``flavours'' that are
-solutions of Laplace's equation away from the mass: an \textbf{internal}
+solutions of Laplace's equation away from the mass: an \emph{internal}
 part sourced by mass \emph{interior} to $\theta$ (decaying outward) and
-an \textbf{external} part sourced by mass \emph{exterior} to $\theta$
-(growing outward).  The quadrupole makes this concrete:
-\begin{itemize}[nosep]
-    \item The \textbf{external shear} of \S\ref{sec:sis_shear} is the
-          massless external quadrupole, $\psiL = \tfrac12\gammaL\,\theta^2
-          \cos[2(\varphi-\varphi_\gamma)]$, with $\kappab = 0$ but
-          nonzero $\gammaL$: a pure tidal field from the environment.
-    \item The isothermal quadrupole $\psiL_2 \propto \theta$ of
-          Eq.~\eqref{eq:kappa_multipole} is the internal quadrupole
-          carried by the lens's own elliptical mass.
-\end{itemize}
+an \emph{external} part sourced by mass \emph{exterior} to $\theta$
+(growing outward).  The quadrupole makes this concrete.  The external
+shear of \S\ref{sec:sis_shear} is the massless external quadrupole,
+$\psiL = \tfrac12\gammaL\,\theta^2
+\cos[2(\varphi-\varphi_\gamma)]$, with $\kappab = 0$ but nonzero
+$\gammaL$: a pure tidal field from the environment.  The isothermal
+quadrupole $\psiL_2 \propto \theta$ of Eq.~\eqref{eq:kappa_multipole}
+is the internal quadrupole carried by the lens's own elliptical mass.
 For a singular isothermal ellipsoid the internal and external quadrupole
 amplitudes are locked in the ratio
 $\psiL_{2,\mathrm{int}}/\psiL_{2,\mathrm{ext}} = (m-1)/(m+1) = 1/3$, so
@@ -862,31 +841,26 @@ $f_{\mathrm{int}} = 1/4$: \emph{three-quarters of an SIE's quadrupole is
 generated by mass outside any given radius}
 \citep[][Part~2, eq.~74]{schneider_kochanek_wambsganss_2006}.  For lenses
 embedded in flat-rotation-curve dark haloes, most of the quadrupole
-therefore comes from the halo beyond the Einstein ring --- which is
-precisely why an \emph{external} shear term is an adequate stand-in for
+therefore comes from the halo beyond the Einstein ring, which is
+why an \emph{external} shear term is an adequate stand-in for
 the environment in most models.
 
 \subsection{Which Multipoles Matter}
 \label{sec:which_multipoles}
 
 The amplitude of successive poles falls steeply with ellipticity,
-$\psiL_m \propto \epsilon^{m/2}$ (with $q = 1-\epsilon$), so for a
-typical lens with $\thetaE \sim 1''$:
-\begin{itemize}[nosep]
-    \item the \textbf{quadrupole} ($m=2$) produces angular deflections
-          $\sim 0.46''\,\epsilon$ --- important for essentially any
-          ellipticity, given milliarcsecond astrometry;
-    \item the \textbf{$m=4$ pole} (boxy/discy isophotes) contributes
-          $\sim 0.09''\,\epsilon^2$ --- important only for
-          $q \lesssim 0.75$;
-    \item the \textbf{dipole} ($m=1$, lopsidedness) is nearly
-          degenerate with the source position and rarely matters.
-\end{itemize}
-The practical lesson --- and a recurring theme of the applications in
-Chapter~\ref{ch:galaxy_lensing} --- is that a monopole plus an external
-shear (a single quadrupole) captures most of the constrainable angular
-structure, with the $m=4$ term becoming relevant only for markedly
-flattened lenses.
+$\psiL_m \propto \epsilon^{m/2}$ (with $q = 1-\epsilon$).  For a
+typical lens with $\thetaE \sim 1''$ the quadrupole ($m=2$) produces
+angular deflections $\sim 0.46''\,\epsilon$, which matter for any
+ellipticity given milliarcsecond astrometry; the $m=4$ pole
+(boxy/discy isophotes) contributes $\sim 0.09''\,\epsilon^2$ and
+matters only for $q \lesssim 0.75$; and the dipole ($m=1$,
+lopsidedness) is nearly degenerate with the source position and
+rarely matters.  The practical conclusion, a recurring theme of the
+applications in Chapter~\ref{ch:galaxy_lensing}, is that a monopole
+plus an external shear (a single quadrupole) accounts for most of the
+constrainable angular structure, with the $m=4$ term becoming
+relevant only for markedly flattened lenses.
 
 \begin{bridge}[Chapter~\ref{ch:multipoles}: angular structure versus a central mass]
 Chapter~\ref{ch:multipoles} asks whether angular structure in the main
@@ -911,7 +885,7 @@ the preview in Chapter~\ref{ch:magnification}
 (Section~\ref{sec:critical_curves_preview}).
 
 \begin{definition}
-The \textbf{critical curves} are the loci in the image plane where
+The \emph{critical curves} are the loci in the image plane where
 the Jacobian determinant vanishes:
 \begin{equation}
     \boxed{
@@ -929,29 +903,25 @@ Equivalently, $\mu(\vectheta) \to \infty$ on critical curves.
 Using the eigenvalues $\lambda_\pm = 1 - \kappab \pm |\gammaL|$ of
 the Jacobian (Chapter~\ref{ch:magnification}, eq.~\ref{eq:eigenvalues}),
 the condition $\det\Amat = \lambda_+\,\lambda_- = 0$ is satisfied
-when either eigenvalue vanishes:
-
-\begin{enumerate}
-    \item \textbf{Tangential critical curve} ($\lambda_- = 0$):
-    \begin{equation}
-        1 - \kappab(\vectheta) = |\gammaL(\vectheta)|
-        \label{eq:tangential_crit}
-    \end{equation}
-    Images near this curve are stretched \textit{tangentially}
-    (along the curve), because the eigenvalue corresponding to the
-    tangential direction vanishes.  Giant arcs in clusters trace the
-    tangential critical curve.
-
-    \item \textbf{Radial critical curve} ($\lambda_+ = 0$):
-    \begin{equation}
-        1 - \kappab(\vectheta) = -|\gammaL(\vectheta)|
-        \label{eq:radial_crit}
-    \end{equation}
-    Images near this curve are stretched \textit{radially}
-    (perpendicular to the curve).  Radial arcs (pointing toward the
-    lens center) form near radial critical curves, though they are
-    rarer and fainter than tangential arcs.
-\end{enumerate}
+when either eigenvalue vanishes, and there are accordingly two
+families.  The \emph{tangential critical curve} is where
+$\lambda_- = 0$,
+\begin{equation}
+    1 - \kappab(\vectheta) = |\gammaL(\vectheta)|
+    \label{eq:tangential_crit}
+\end{equation}
+Images near this curve are stretched tangentially (along the curve),
+because the eigenvalue corresponding to the tangential direction
+vanishes; giant arcs in clusters trace the tangential critical
+curve.  The \emph{radial critical curve} is where $\lambda_+ = 0$,
+\begin{equation}
+    1 - \kappab(\vectheta) = -|\gammaL(\vectheta)|
+    \label{eq:radial_crit}
+\end{equation}
+Images near this curve are stretched radially (perpendicular to the
+curve).  Radial arcs, pointing toward the lens center, form near
+radial critical curves, though they are rarer and fainter than
+tangential arcs.
 
 \begin{annotation}[Which eigenvalue is ``tangential''?]
 Always $\lambda_- = 1-\kappab-|\gammaL| \le \lambda_+$.  For an axisymmetric
@@ -965,8 +935,8 @@ is the mean convergence inside $\theta$.  Then
 $\lambda_t = 0$ is the Einstein-ring condition $\bar\kappab = 1$, and
 $\lambda_r = 0$ requires $d\alpha/d\theta = 1$.  The latter is impossible for
 the SIS ($\alpha$ constant) and for any isothermal lens, whose radial
-eigenvalue is identically 1 (box in \S\ref{sec:sie_deflection}).  Classic
-error: taking ``radial critical curve'' to mean $\kappab = 1$; the condition
+eigenvalue is identically 1 (box in \S\ref{sec:sie_deflection}).  A common
+error is to take ``radial critical curve'' to mean $\kappab = 1$; the condition
 involves both $\kappab$ and $\bar\kappab$.  For non-axisymmetric lenses the
 eigenvectors are only approximately radial and tangential; the names describe
 the direction in which images are stretched.
@@ -975,41 +945,32 @@ the direction in which images are stretched.
 
 \subsection{Critical Curves for Axisymmetric vs.\ Elliptical Lenses}
 
-\begin{itemize}
-    \item \textbf{Axisymmetric lenses:} The critical curves are
-          circles centered on the lens.  For the SIS, there is only
-          a tangential critical curve at $\theta = \thetaE$.  For
-          the point mass, the critical curve is the Einstein ring.
-    \item \textbf{Elliptical lenses:} The critical curves become
-          ellipses or ovals.  For the SIE (mass elongated along
-          $\theta_1$, $q < 1$) the tangential critical curve is
-          elongated \emph{along} the mass major axis, crossing
-          $\theta_1$ at $\pm\thetaE/\sqrt{q}$ and $\theta_2$ at
-          $\pm\thetaE\sqrt{q}$.  The shapes are computed numerically
-          by solving $\det\Amat = 0$ on a grid or parametrically.
-\end{itemize}
+For axisymmetric lenses the critical curves are circles centered on
+the lens: for the SIS there is only a tangential critical curve at
+$\theta = \thetaE$, and for the point mass the critical curve is the
+Einstein ring.  For elliptical lenses the critical curves become
+ellipses or ovals.  For the SIE (mass elongated along $\theta_1$,
+$q < 1$) the tangential critical curve is elongated \emph{along} the
+mass major axis, crossing $\theta_1$ at $\pm\thetaE/\sqrt{q}$ and
+$\theta_2$ at $\pm\thetaE\sqrt{q}$.  In general the shapes are
+computed numerically by solving $\det\Amat = 0$ on a grid or
+parametrically.
 
 \subsection{Physical Meaning}
 
 Critical curves are the sites of maximum magnification.  Images that
-form near a critical curve are:
-\begin{enumerate}
-    \item \textbf{Highly magnified:} $|\mu| \gg 1$, because
-          $\det\Amat \approx 0$.
-    \item \textbf{Highly stretched:} Along one direction (tangential
-          or radial), the magnification diverges while it remains
-          finite in the orthogonal direction.  This produces the
-          elongated arc morphology.
-    \item \textbf{On parity boundaries:} As we cross a critical
-          curve, $\det\Amat$ changes sign, so the image parity
-          flips.  One side has positive parity (Type~I); the other
-          has negative parity (Type~II).
-\end{enumerate}
-
-The practical significance is enormous: critical curves are where we
-look for the most highly magnified background sources.  Cluster
-lensing surveys map out critical curves to find magnified galaxies at
-very high redshift.
+form near a critical curve are highly magnified, $|\mu| \gg 1$,
+because $\det\Amat \approx 0$.  They are also highly stretched: along
+one direction (tangential or radial) the magnification diverges while
+it remains finite in the orthogonal direction, which produces the
+elongated arc morphology.  Finally, critical curves are parity
+boundaries: as we cross one, $\det\Amat$ changes sign, so the image
+parity flips, with positive parity (Type~I) on one side and negative
+parity (Type~II) on the other.  The practical significance is
+considerable, since critical curves are where the most highly
+magnified background sources are to be found; cluster lensing surveys
+map out critical curves to find magnified galaxies at very high
+redshift.
 
 
 % =====================================================================
@@ -1017,9 +978,9 @@ very high redshift.
 \label{sec:caustics}
 
 \begin{definition}
-The \textbf{caustics} are the images of the critical curves under the
+The \emph{caustics} are the images of the critical curves under the
 lens mapping.  That is, the caustics are the curves in the
-\textit{source plane} obtained by applying the lens equation to each
+source plane obtained by applying the lens equation to each
 point on a critical curve:
 \begin{equation}
     \boxed{
@@ -1033,66 +994,46 @@ point on a critical curve:
 
 \subsection{Types of Caustics}
 
-Corresponding to the two families of critical curves, there are two
-types of caustics:
-
-\begin{enumerate}
-    \item \textbf{Tangential caustic:} The mapping of the tangential
-          critical curve.  For elliptical lenses, this is typically a
-          diamond (astroid) shape with four cusps.  Sources inside
-          the tangential caustic are quadruply imaged.
-
-    \item \textbf{Radial caustic:} The mapping of the radial
-          critical curve.  This is typically a smooth, roughly
-          elliptical curve that encloses the tangential caustic.
-          Sources inside the radial caustic but outside the
-          tangential caustic are doubly imaged; sources outside both
-          caustics have a single image.
-\end{enumerate}
+Corresponding to the two families of critical curves there are two
+types of caustics.  The \emph{tangential caustic} is the mapping of
+the tangential critical curve; for elliptical lenses it is typically
+a diamond (astroid) with four cusps, and sources inside it are
+quadruply imaged.  The \emph{radial caustic} is the mapping of the
+radial critical curve; it is typically a smooth, roughly elliptical
+curve that encloses the tangential caustic.  Sources inside the
+radial caustic but outside the tangential caustic are doubly imaged,
+and sources outside both caustics have a single image.
 
 \subsection{Caustics for Specific Models}
 
-\begin{itemize}
-    \item \textbf{Point mass:} The tangential critical curve (Einstein
-          ring $\theta = \thetaE$) maps to a single point
-          ($\beta = 0$) --- a \textbf{degenerate point caustic}.  A
-          source at $\beta = 0$ produces the Einstein ring; any
-          source at $\beta > 0$ produces exactly two images.
-
-    \item \textbf{SIS:} Same as the point mass --- the critical curve
-          $\theta = \thetaE$ maps to $\beta = 0$.  The SIS has no
-          radial caustic.  Sources with $\beta < \thetaE$ produce two
-          images; sources with $\beta > \thetaE$ produce one image.
-
-    \item \textbf{SIS + shear:} The tangential caustic opens up into
-          a diamond (astroid) with four cusps.  The diamond size is
-          proportional to $\gamma_{\mathrm{ext}}$.
-
-    \item \textbf{SIE:} Same diamond structure as SIS + shear, with
-          the diamond size controlled by the ellipticity $(1 - q)$.
-
-    \item \textbf{Non-singular models} (NIS, NFW): Both tangential
-          and radial caustics are present.  The radial caustic
-          encloses the tangential one, creating regions with 1, 3,
-          and 5 images.
-\end{itemize}
+For the point mass, the tangential critical curve (the Einstein ring
+$\theta = \thetaE$) maps to a single point ($\beta = 0$), a
+degenerate point caustic; a source at $\beta = 0$ produces the
+Einstein ring, and any source at $\beta > 0$ produces exactly two
+images.  The SIS behaves in the same way: the critical curve
+$\theta = \thetaE$ maps to $\beta = 0$, and there is no radial
+caustic, so sources with $\beta < \thetaE$ produce two images and
+sources with $\beta > \thetaE$ produce one image.  For the SIS +
+shear the tangential caustic opens up into a diamond (astroid) with
+four cusps whose size is proportional to $\gamma_{\mathrm{ext}}$,
+and the SIE has the same diamond structure, with the size controlled
+by the ellipticity $(1 - q)$.  Non-singular models (NIS, NFW) have
+both tangential and radial caustics; the radial caustic encloses the
+tangential one, creating regions with 1, 3, and 5 images.
 
 
 % =====================================================================
 \section{Image Topology}
 \label{sec:image_topology}
 
-This section is the conceptual heart of strong gravitational lensing.
-It explains \textit{why} images appear and disappear as a source
+This section explains why images appear and disappear as a source
 moves, why they always come in pairs, and how the full image
 configuration (positions, parities, magnifications) is determined
-entirely by the source's location relative to the caustic structure.
-
-The key insight is that \textbf{caustics are the boundaries between
-regions of different image multiplicity}, and \textbf{critical curves
-are the boundaries between regions of different image parity}.
-Together, they provide a complete topological description of the
-lens mapping.
+by the location of the source relative to the caustic structure.
+Caustics are the boundaries between regions of different image
+multiplicity, and critical curves are the boundaries between regions
+of different image parity; together they provide a complete
+topological description of the lens mapping.
 
 
 \subsection{Critical Curves as Parity Boundaries}
@@ -1100,66 +1041,53 @@ lens mapping.
 
 Recall from Chapter~\ref{ch:magnification} that the magnification is
 $\mu = 1/\det\Amat$ and that the sign of $\mu$ determines the image
-parity:
-\begin{itemize}
-    \item $\det\Amat > 0 \;\Rightarrow\; \mu > 0$: \textbf{positive
-          parity} (Type~I image).  The image has the same orientation
-          as the source.
-    \item $\det\Amat < 0 \;\Rightarrow\; \mu < 0$: \textbf{negative
-          parity} (Type~II image).  The image is mirror-reflected
-          relative to the source.
-\end{itemize}
-
-Since $\det\Amat$ is a continuous function of position that passes
-through zero on critical curves, the sign of $\det\Amat$ must
-\textit{change} across a critical curve.  Therefore:
+parity: $\det\Amat > 0 \;\Rightarrow\; \mu > 0$ gives positive
+parity (a Type~I image, with the same orientation as the source),
+and $\det\Amat < 0 \;\Rightarrow\; \mu < 0$ gives negative parity (a
+Type~II image, mirror-reflected relative to the source).  Since
+$\det\Amat$ is a continuous function of position that passes through
+zero on critical curves, the sign of $\det\Amat$ must change across
+a critical curve.  Therefore:
 
 \begin{proposition}
 \textbf{Critical curves are parity boundaries.}  Images on opposite
 sides of a critical curve have opposite parities.  If a critical
 curve separates region $R_+$ ($\det\Amat > 0$) from region $R_-$
-($\det\Amat < 0$), then:
-\begin{itemize}
-    \item Images in $R_+$ have positive parity (Type~I, minima of the
-          arrival time surface).
-    \item Images in $R_-$ have negative parity (Type~II, saddle points
-          of the arrival time surface).
-\end{itemize}
+($\det\Amat < 0$), then images in $R_+$ have positive parity
+(Type~I, minima of the arrival time surface) and images in $R_-$
+have negative parity (Type~II, saddle points of the arrival time
+surface).
 \end{proposition}
 
-For a typical galaxy lens with an elliptical mass distribution:
-\begin{itemize}
-    \item The region \textbf{outside} the tangential critical curve
-          has $\det\Amat > 0$: images here are Type~I (positive
-          parity, time-delay minima).
-    \item The region \textbf{between} the tangential and radial
-          critical curves has $\det\Amat < 0$: images here are
-          Type~II (negative parity, saddle points).
-    \item The region \textbf{inside} the radial critical curve has
-          $\det\Amat > 0$ again: images here are Type~I or Type~III
-          (positive parity, but corresponding to time-delay maxima
-          for Type~III, as discussed in Chapter~\ref{ch:fermat_time_delays}).
-\end{itemize}
+For a typical galaxy lens with an elliptical mass distribution, the
+region outside the tangential critical curve has $\det\Amat > 0$, so
+images there are Type~I (positive parity, time-delay minima); the
+region between the tangential and radial critical curves has
+$\det\Amat < 0$, so images there are Type~II (negative parity,
+saddle points); and the region inside the radial critical curve has
+$\det\Amat > 0$ again, so images there are Type~I or Type~III
+(positive parity, but corresponding to time-delay maxima for
+Type~III, as discussed in Chapter~\ref{ch:fermat_time_delays}).
 
 \begin{remark}
 The connection to Morse theory (Chapter~\ref{ch:fermat_time_delays})
 is direct.  The three image types correspond to the three types of
-stationary points of the Fermat potential: \textbf{Type~I} = minimum,
-\textbf{Type~II} = saddle, \textbf{Type~III} = maximum.  The
-magnification parity determines the Morse index.
+stationary points of the Fermat potential: Type~I is a minimum,
+Type~II a saddle, and Type~III a maximum.  The magnification parity
+determines the Morse index.
 \end{remark}
 
 
 \subsection{Caustic Crossings and Image Creation/Destruction}
 \label{sec:caustic_crossings}
 
-The most important property of caustics is:
+The most important property of caustics is the following.
 
 \begin{proposition}
 \textbf{Image creation/destruction at caustics.}  When a source
 crosses a caustic, the number of images changes by exactly two.  A
-pair of images either \textbf{appears} (as the source enters a
-higher-multiplicity region) or \textbf{disappears} (as it exits).
+pair of images either appears (as the source enters a
+higher-multiplicity region) or disappears (as it exits).
 \end{proposition}
 
 This happens because, as a source approaches a caustic from the side
@@ -1170,22 +1098,16 @@ caustic, the two images merge \textit{on} the critical curve (where
 $\det\Amat = 0$ and the magnification diverges).  As the source
 crosses the caustic, the two images separate and become distinct.
 
-Crucially, the two images that appear or disappear:
-\begin{enumerate}
-    \item Are located on \textbf{opposite sides} of the critical
-          curve.
-    \item Have \textbf{opposite parities} (one Type~I, one Type~II).
-    \item Are both \textbf{highly magnified} near the caustic
-          (their magnifications diverge as they approach the critical
-          curve).
-    \item Have \textbf{nearly equal magnifications} (in absolute
-          value) near the caustic.
-\end{enumerate}
+The two images that appear or disappear are located on opposite
+sides of the critical curve, have opposite parities (one Type~I, one
+Type~II), are both highly magnified near the caustic (their
+magnifications diverge as they approach the critical curve), and
+have nearly equal magnifications in absolute value.
 
 \begin{remark}
-The fact that images always appear or disappear in \textbf{pairs}
+The fact that images always appear or disappear in pairs
 with opposite parities is a topological necessity.  It preserves
-\textbf{Burke's odd-number theorem}
+Burke's odd-number theorem
 (Chapter~\ref{ch:fermat_time_delays}): the total number of images is
 always odd (for a non-singular, transparent lens with a source
 inside the outermost caustic).  Since images are created and
@@ -1215,24 +1137,20 @@ curve onto which an infinitesimal circle about the singular centre
 is mapped.  If the source is beyond the cut (for $q = 0.7$,
 $|\beta_1| > 0.932\,\thetaE$ on the $\beta_1$ axis and
 $|\beta_2| > 1.049\,\thetaE$ on the $\beta_2$ axis) the SIE forms a
-\textbf{single} Type~I image, the elliptical version of the SIS rule
+single Type~I image, the elliptical version of the SIS rule
 that $\beta > \thetaE$ gives one image.  Once the source is inside
-the cut but still outside the diamond, there are \textbf{two images}
+the cut but still outside the diamond, there are two images
 (one Type~I outside the critical curve, near the true source
 position, and one Type~II inside the critical curve on the opposite
 side of the lens).  In a non-singular model a third, Type~III image
 appears near the lens center once the source is inside the radial
 caustic, but for the SIE that central image is suppressed because
-$\Sigma$ is singular at the origin.  The two observable
-images are:
-\begin{itemize}
-    \item \textbf{Type~I} (positive parity, minimum of the arrival
-          time), outside the tangential critical curve near the
-          true source position, weakly magnified ($|\mu| \approx 1$).
-    \item \textbf{Type~II} (negative parity, saddle of the arrival
-          time), inside the critical curve on the far side of the
-          lens, also weakly magnified.
-\end{itemize}
+$\Sigma$ is singular at the origin.  The two observable images are a
+Type~I image (positive parity, a minimum of the arrival time) outside
+the tangential critical curve near the true source position, weakly
+magnified ($|\mu| \approx 1$), and a Type~II image (negative parity,
+a saddle of the arrival time) inside the critical curve on the far
+side of the lens, also weakly magnified.
 
 \begin{annotation}[How far is ``far''?]
 In a cored model the radial caustic replaces the cut: one image outside it,
@@ -1244,20 +1162,14 @@ three inside (the table at the end of this subsection).
 $\to$ inside).}
 As the source reaches the tangential (diamond) caustic, two new
 images appear simultaneously, straddling the tangential critical
-curve.  The total count goes from \textbf{2 to 4 images}:
-\begin{enumerate}
-    \item The \textbf{original Type~I image} (positive parity,
-          outside the tangential critical curve) persists, moving
-          slightly.
-    \item A \textbf{new Type~II image} (negative parity) appears
-          just inside the tangential critical curve.  This is a
-          \textit{saddle point} of the arrival time surface.  It is
-          highly magnified and tangentially stretched.
-    \item A \textbf{new Type~I image} (positive parity) appears
-          just outside the tangential critical curve, close to the
-          Type~II image.  This is a \textit{minimum} of the
-          arrival time surface.  It is also highly magnified.
-\end{enumerate}
+curve.  The total count goes from 2 to 4 images.  The original
+Type~I image (positive parity, outside the tangential critical curve)
+persists, moving slightly.  A new Type~II image (negative parity)
+appears just inside the tangential critical curve; it is a saddle
+point of the arrival time surface, highly magnified and tangentially
+stretched.  A new Type~I image (positive parity) appears just outside
+the tangential critical curve, close to the Type~II image; it is a
+minimum of the arrival time surface and is also highly magnified.
 
 The two new images are born as a highly magnified, closely spaced
 pair straddling the critical curve.  They have opposite parities
@@ -1269,15 +1181,9 @@ magnifications decrease.
 configuration).}
 With the source well inside the diamond caustic, four bright images
 surround the lens (plus a faint, highly demagnified central image in
-non-singular models).  The typical configuration is an
-\textbf{Einstein cross}:
-\begin{itemize}
-    \item Two Type~I images (positive parity, outside the tangential
-          critical curve).
-    \item Two Type~II images (negative parity, inside the tangential
-          critical curve).
-\end{itemize}
-
+non-singular models).  The typical configuration is an Einstein
+cross: two Type~I images (positive parity) outside the tangential
+critical curve and two Type~II images (negative parity) inside it.
 The four images form a roughly cross-shaped pattern around the lens.
 The magnification depends on the source's proximity to the caustic
 folds and cusps.
@@ -1286,7 +1192,7 @@ folds and cusps.
 (inside $\to$ outside).}
 As the source exits the diamond caustic, two images converge on the
 critical curve, merge, and disappear.  The count drops from
-\textbf{4 back to 2}.  The
+4 back to 2.  The
 two images that disappear are a Type~I/Type~II pair, just as in the
 creation event.
 
@@ -1306,7 +1212,7 @@ creation event.
 \end{figure}
 
 For a non-singular lens model (e.g., a softened isothermal
-ellipsoid), there is also a \textbf{radial caustic} enclosing the
+ellipsoid), there is also a radial caustic enclosing the
 tangential one.  As the source crosses the radial caustic inward,
 two additional images appear (a Type~II near the radial critical
 curve and the Type~III central image), bringing the total from 1
@@ -1343,47 +1249,34 @@ image probes the innermost mass profile.
 \label{sec:fold_cusp}
 
 The caustic curves of a generic smooth lens consist of two types of
-points: \textbf{folds} (smooth segments) and \textbf{cusps} (pointed
+points: \emph{folds} (smooth segments) and \emph{cusps} (pointed
 corners).  These are the only two generic singularities of smooth
-two-dimensional mappings, a result from \textbf{catastrophe theory}
+two-dimensional mappings, a result from catastrophe theory
 (or singularity theory; see Petters, Levine \& Wambsganss 2001 for
 a thorough treatment).
 
 \subsubsection{Fold Caustics}
 
-Near a \textbf{fold} (a smooth segment of the caustic), the
-following properties hold:
-
-\begin{enumerate}
-    \item \textbf{Two images merge.}  As a source crosses a fold
-          caustic, two images appear or disappear.  The images
-          straddle the critical curve, one on each side.
-
-    \item \textbf{Magnification scaling.}  Near a fold, the
-          magnification of each of the two merging images scales as:
-    \begin{equation}
-        \boxed{
-        |\mu| \propto \frac{1}{\sqrt{d_{\perp}}}
-        }
-        \label{eq:fold_magnification}
-    \end{equation}
-    where $d_\perp$ is the perpendicular distance of the source
-    from the caustic.  The magnification diverges as
-    $d_\perp \to 0$ (source on the caustic), but only as an
-    inverse square root --- a relatively mild divergence.
-
-    \item \textbf{Equal and opposite magnifications.}  The two
-          merging images have magnifications that approach
-          $+|\mu_0|$ and $-|\mu_0|$ (equal absolute values,
-          opposite signs), so their \textit{total signed
-          magnification} approaches zero.  The unsigned total
-          $2|\mu_0| \propto 1/\sqrt{d_\perp}$ diverges.
-
-    \item \textbf{Tangential stretching.}  The merging images are
-          highly elongated tangentially (along the critical curve)
-          and compressed radially.  This is the origin of the
-          ``arc'' morphology.
-\end{enumerate}
+Near a fold (a smooth segment of the caustic) two images merge: as a
+source crosses a fold caustic, two images appear or disappear,
+straddling the critical curve with one on each side.  The
+magnification of each of the two merging images scales as
+\begin{equation}
+    \boxed{
+    |\mu| \propto \frac{1}{\sqrt{d_{\perp}}}
+    }
+    \label{eq:fold_magnification}
+\end{equation}
+where $d_\perp$ is the perpendicular distance of the source from the
+caustic.  The magnification diverges as $d_\perp \to 0$ (source on
+the caustic), but only as an inverse square root, a relatively mild
+divergence.  The two merging images have magnifications that
+approach $+|\mu_0|$ and $-|\mu_0|$ (equal absolute values, opposite
+signs), so their total signed magnification approaches zero, while
+the unsigned total $2|\mu_0| \propto 1/\sqrt{d_\perp}$ diverges.
+The merging images are highly elongated tangentially (along the
+critical curve) and compressed radially, which is the origin of the
+``arc'' morphology.
 
 \begin{derivation}[Why $|\mu| \propto d_\perp^{-1/2}$ at a fold]
 Centre local coordinates on a critical point, with axes along the
@@ -1412,43 +1305,31 @@ same calculation.
 
 \subsubsection{Cusp Caustics}
 
-Near a \textbf{cusp} (a pointed corner of the caustic), the behavior
-is richer:
-
-\begin{enumerate}
-    \item \textbf{Three images merge.}  As a source approaches a
-          cusp from inside the caustic, three images converge toward
-          a single point on the critical curve.  These form the
-          characteristic \textbf{cusp triplet}.
-
-    \item \textbf{Stronger magnification divergence.}  Near a cusp,
-          the sum of the (unsigned) image magnifications diverges
-          more strongly than for a fold:
-    \begin{equation}
-        |\mu_A| + |\mu_B| + |\mu_C| \propto d_{\perp}^{-1}
-        \label{eq:cusp_magnification}
-    \end{equation}
-    (compared to $d_\perp^{-1/2}$ for a fold).
-
-    \item \textbf{Cusp relation.}  The \emph{signed} magnifications
-          of the three cusp images satisfy a (different) relation,
-    \begin{equation}
-        \mu_A + \mu_B + \mu_C \;\to\; 0 \quad
-        \text{(in the limit $d_\perp \to 0$)} \,,
-        \label{eq:cusp_relation}
-    \end{equation}
-    where $A$, $B$, $C$ are the three images of the cusp triplet
-    (with signed magnifications).  That is, the sum of the signed
-    magnifications of the three brightest images in a cusp
-    configuration should vanish.  Violations of this relation
-    indicate substructure (e.g., dark matter subhalos) perturbing
-    the images.
-
-    \item \textbf{Configuration.}  The three cusp images are
-          closely spaced along the critical curve.  One is on the
-          opposite side of the critical curve from the other two,
-          ensuring opposite parities.
-\end{enumerate}
+Near a cusp (a pointed corner of the caustic) the behavior is
+richer.  Three images merge: as a source approaches a cusp from
+inside the caustic, three images converge toward a single point on
+the critical curve, forming the characteristic \emph{cusp triplet}.
+The magnification divergence is stronger than at a fold, since the
+sum of the (unsigned) image magnifications diverges as
+\begin{equation}
+    |\mu_A| + |\mu_B| + |\mu_C| \propto d_{\perp}^{-1}
+    \label{eq:cusp_magnification}
+\end{equation}
+(compared to $d_\perp^{-1/2}$ for a fold).  The \emph{signed}
+magnifications of the three cusp images satisfy a different relation,
+\begin{equation}
+    \mu_A + \mu_B + \mu_C \;\to\; 0 \quad
+    \text{(in the limit $d_\perp \to 0$)} \,,
+    \label{eq:cusp_relation}
+\end{equation}
+where $A$, $B$, $C$ are the three images of the cusp triplet (with
+signed magnifications).  That is, the sum of the signed
+magnifications of the three brightest images in a cusp configuration
+should vanish; violations of this relation indicate substructure
+(e.g., dark matter subhalos) perturbing the images.  The three cusp
+images are closely spaced along the critical curve, and one is on the
+opposite side of the critical curve from the other two, ensuring
+opposite parities.
 
 \begin{derivation}[The cusp relation from the cusp normal form]
 Near a cusp the lens map can be written, in local coordinates with constants
@@ -1480,11 +1361,11 @@ at a fold.
 
 
 \begin{remark}
-The fold and cusp are the only \textbf{stable} (generic)
+The fold and cusp are the only stable (generic)
 singularities of smooth two-dimensional maps.  Higher-order
 singularities (swallowtails, lips, etc.)\ require special symmetries
 or fine-tuning and are not generically present in gravitational lens
-models.  This is a deep result of Whitney's theorem in singularity
+models.  This follows from Whitney's theorem in singularity
 theory (Petters et al.\ 2001, Ch.~7, Sec.~7.5).
 \end{remark}
 
@@ -1525,71 +1406,54 @@ the following taxonomy applies:
 
 \subsubsection{Doubles}
 
-\textbf{Source outside the tangential caustic.}  Two images form (or
-effectively one bright image plus one highly demagnified image near
-the lens center for singular models):
-\begin{itemize}
-    \item One Type~I image (positive parity, outside the critical
-          curve): the dominant, brighter image.
-    \item One Type~II image (negative parity, inside the critical
-          curve): typically fainter, on the opposite side of the
-          lens from the source.
-\end{itemize}
-Doubles account for $\sim$70--80\% of known galaxy-scale lens
-systems.
+When the source is outside the tangential caustic, two images form
+(or effectively one bright image plus one highly demagnified image
+near the lens center for singular models): one Type~I image
+(positive parity, outside the critical curve), the dominant, brighter
+image, and one Type~II image (negative parity, inside the critical
+curve), typically fainter and on the opposite side of the lens from
+the source.  Doubles account for $\sim$70--80\% of known
+galaxy-scale lens systems.
 
 \subsubsection{Quads / Einstein Crosses}
 
-\textbf{Source inside the tangential caustic.}  Four bright images
-form (plus a faint central image):
-\begin{itemize}
-    \item Two Type~I images (positive parity), roughly on the side
-          of the lens closer to the source.
-    \item Two Type~II images (negative parity), on the opposite
-          side.
-\end{itemize}
-The four images form a roughly cross-shaped (\textbf{Einstein cross})
-or diamond-shaped pattern around the lens.  Quads account for
-$\sim$20--30\% of galaxy-scale systems and are extremely valuable
-for cosmography because they provide three independent time delays.
+When the source is inside the tangential caustic, four bright images
+form (plus a faint central image): two Type~I images (positive
+parity), roughly on the side of the lens closer to the source, and
+two Type~II images (negative parity) on the opposite side.  The four
+images form a roughly cross-shaped (Einstein cross) or diamond-shaped
+pattern around the lens.  Quads account for $\sim$20--30\% of
+galaxy-scale systems and are especially valuable for cosmography
+because they provide three independent time delays.
 
 \subsubsection{Cusp Configurations}
 
-\textbf{Source near a cusp of the tangential caustic.}  Three of the
-four images in a quad merge into a closely spaced triplet near one
-point on the critical curve.  This produces the \textbf{naked cusp}
-or \textbf{cusp triplet} configuration:
-\begin{itemize}
-    \item Three closely spaced images near the cusp of the critical
-          curve, with the cusp relation
-          $\mu_A + \mu_B + \mu_C \approx 0$.
-    \item One isolated image on the opposite side of the lens.
-\end{itemize}
+When the source is near a cusp of the tangential caustic, three of
+the four images in a quad merge into a closely spaced triplet near
+one point on the critical curve.  This produces the \emph{naked cusp}
+or \emph{cusp triplet} configuration: three closely spaced images
+near the cusp of the critical curve, with the cusp relation
+$\mu_A + \mu_B + \mu_C \approx 0$, and one isolated image on the
+opposite side of the lens.
 
 \subsubsection{Why Most Observed Quads Have a Diamond Caustic}
 
 The tangential caustic of an elliptical galaxy lens is generically a
-diamond (astroid) shape.  This is because:
-\begin{enumerate}
-    \item The dominant perturbation from circular symmetry is
-          quadrupolar (ellipticity or shear), which produces
-          exactly four cusps.
-    \item Higher-order multipoles (hexapole, octupole) are typically
-          subdominant and do not change the topology of the caustic.
-    \item The diamond caustic produces Einstein crosses (quads with
-          roughly equal magnifications) when the source is near the
-          center, and fold/cusp configurations when the source is
-          near a fold or cusp of the diamond.
-\end{enumerate}
+diamond (astroid).  The dominant perturbation from circular symmetry
+is quadrupolar (ellipticity or shear), which produces exactly four
+cusps, and higher-order multipoles (hexapole, octupole) are typically
+subdominant and do not change the topology of the caustic.  The
+diamond caustic produces Einstein crosses (quads with roughly equal
+magnifications) when the source is near the center, and fold or cusp
+configurations when the source is near a fold or cusp of the
+diamond.
 
 
 \subsection{Why Giant Arcs Form}
 \label{sec:giant_arcs_preview}
 
-One of the most spectacular phenomena in strong lensing is the
-formation of \textbf{giant luminous arcs} in galaxy clusters.  The
-theory of critical curves and caustics provides a complete
-explanation.
+The formation of giant luminous arcs in galaxy clusters follows
+from the theory of critical curves and caustics.
 
 \paragraph{Step 1: Sources near the tangential caustic.}
 Giant arcs form when a background galaxy lies very close to (but
@@ -1600,8 +1464,8 @@ curve.
 \paragraph{Step 2: Tangential stretching near the critical curve.}
 The tangential critical curve is where $\lambda_- = 0$ (the
 eigenvalue corresponding to the tangential direction vanishes).
-Near this curve, images are stretched enormously in the
-\textit{tangential} direction (along the critical curve) while
+Near this curve, images are stretched strongly in the
+tangential direction (along the critical curve) while
 remaining relatively unstretched in the radial direction.
 
 Quantitatively, if the source is at perpendicular distance
@@ -1613,7 +1477,7 @@ scales as:
 \end{equation}
 while the radial magnification remains of order unity.  The result
 is an image that is stretched by a factor of $\mu_{\mathrm{tan}}$
-along the critical curve but not radially --- an \textbf{arc}.
+along the critical curve but not radially: an arc.
 
 \paragraph{Step 3: Arc length and curvature.}
 Since the arc follows the tangential critical curve, its curvature
@@ -1621,7 +1485,7 @@ matches that of the critical curve.  For a galaxy cluster, the
 tangential critical curve has a radius of $\sim$10--30 arcsec, so
 giant arcs appear as curved features with large opening angles.
 The length-to-width ratio of the arc is approximately
-$\mu_{\mathrm{tan}} \sim 1/\sqrt{d_\perp}$, which can easily reach
+$\mu_{\mathrm{tan}} \sim 1/\sqrt{d_\perp}$, which can reach
 10:1 or more for sources very close to the caustic.
 
 \paragraph{Step 4: Multiple arcs.}
@@ -1648,15 +1512,12 @@ examples for an SIE lens.
 \subsection{Double Configuration}
 
 For a source at $\vecbeta = (0.5, 0.0)''$ lensed by an SIE with
-$\thetaE = 1''$, $q = 0.7$:  The source is outside the tangential
-caustic.  Two images form:
-\begin{itemize}
-    \item Image A at $\vectheta_A \approx (1.43, 0.0)''$: Type~I,
-          positive parity, $\mu_A \approx 6.1$.
-    \item Image B at $\vectheta_B \approx (-0.43, 0.0)''$: Type~II,
-          negative parity, $\mu_B \approx -0.6$.
-\end{itemize}
-The brighter image (A) is on the same side as the source; the
+$\thetaE = 1''$, $q = 0.7$, the source is outside the tangential
+caustic and two images form: image A at
+$\vectheta_A \approx (1.43, 0.0)''$, Type~I with positive parity and
+$\mu_A \approx 6.1$, and image B at
+$\vectheta_B \approx (-0.43, 0.0)''$, Type~II with negative parity
+and $\mu_B \approx -0.6$.  The brighter image (A) is on the same side as the source; the
 fainter image (B) is on the opposite side.
 
 \begin{annotation}[Checking the double by hand]
@@ -1666,8 +1527,8 @@ $\alpha_1 = \mathrm{sgn}(\theta_1)\,(\thetaE\sqrt{q}/k)\arctan(k/q) =
 as for the SIS.  So $\theta_A = 0.5 + 0.932 = 1.432''$ and
 $\theta_B = 0.5 - 0.932 = -0.432''$.  With $\mu = 1/(1-2\kappab)$ and
 $2\kappab = 1/(\sqrt{q}\,|\theta_1|)$ on this axis, $\mu_A = +6.05$ and
-$\mu_B = -0.566$, matching the values above.  Classic error: using the SIS
-formula $\mu = \theta/(\theta-\thetaE)$ with $\thetaE$.  On this axis the SIE
+$\mu_B = -0.566$, matching the values above.  A common error is to use the
+SIS formula $\mu = \theta/(\theta-\thetaE)$ with $\thetaE$.  On this axis the SIE
 behaves like an SIS with Einstein radius $\thetaE/\sqrt{q} = 1.195\,\thetaE$.
 \end{annotation}
 
@@ -1709,51 +1570,32 @@ isolated on the opposite side.
 \section{Summary}
 \label{sec:elliptical_summary}
 
-\begin{itemize}
-    \item \textbf{SIS + external shear} is the simplest
-          non-axisymmetric model.  The external shear
-          $\gamma_{\mathrm{ext}}$ deforms the critical curve into an
-          oval and opens the point caustic into a
-          \textbf{diamond (astroid)} with four cusps.
+The SIS with external shear is the simplest non-axisymmetric model.
+The external shear $\gamma_{\mathrm{ext}}$ deforms the critical curve
+into an oval and opens the point caustic into a diamond (astroid)
+with four cusps.  The singular isothermal ellipsoid (SIE) builds
+ellipticity directly into the mass distribution; its deflection angle
+involves $\arctan$ and $\mathrm{arctanh}$ functions (Kormann et al.\
+1994), and it is the standard model for galaxy-scale lens modeling.
+Critical curves ($\det\Amat = 0$) are parity boundaries in the image
+plane: the tangential critical curve ($1 - \kappab = |\gammaL|$) is
+the site of giant arcs, and the radial critical curve
+($1 - \kappab = -|\gammaL|$) is the site of radial arcs.  Caustics
+are the mappings of critical curves to the source plane and divide
+it into regions of different image multiplicity.
 
-    \item The \textbf{singular isothermal ellipsoid} (SIE) builds
-          ellipticity directly into the mass distribution.  Its
-          deflection angle involves $\arctan$ and $\mathrm{arctanh}$
-          functions (Kormann et al.\ 1994).  It is the standard model
-          for galaxy-scale lens modeling.
-
-    \item \textbf{Critical curves} ($\det\Amat = 0$) are parity
-          boundaries in the image plane.  The tangential critical
-          curve ($1 - \kappab = |\gammaL|$) is the site of giant arcs;
-          the radial critical curve ($1 - \kappab = -|\gammaL|$) is
-          the site of radial arcs.
-
-    \item \textbf{Caustics} are the mappings of critical curves to
-          the source plane.  They divide the source plane into regions
-          of different image multiplicity.
-
-    \item \textbf{Image topology:}  As a source crosses a caustic,
-          two images appear or disappear on opposite sides of the
-          critical curve, with opposite parities.  This preserves
-          Burke's odd-number theorem.
-
-    \item \textbf{Fold caustics:}  Two images merge; magnification
-          $|\mu| \propto 1/\sqrt{d_\perp}$.  This produces giant
-          arcs.
-
-    \item \textbf{Cusp caustics:}  Three images merge; the cusp
-          relation $\mu_A + \mu_B + \mu_C \approx 0$ holds.
-
-    \item \textbf{Image configurations:}  Doubles (source outside
-          caustic), quads/Einstein crosses (source inside caustic),
-          and cusp triplets (source near a cusp) account for the
-          observed morphologies of strong lens systems.
-
-    \item \textbf{Giant arcs} form when extended sources lie near the
-          tangential caustic: images are tangentially stretched by
-          factors of $\mu_{\mathrm{tan}} \propto 1/\sqrt{d_\perp}$
-          along the tangential critical curve.
-\end{itemize}
+As a source crosses a caustic, two images appear or disappear on
+opposite sides of the critical curve, with opposite parities, which
+preserves Burke's odd-number theorem.  At a fold two images merge,
+with magnification $|\mu| \propto 1/\sqrt{d_\perp}$; this produces
+giant arcs.  At a cusp three images merge and the cusp relation
+$\mu_A + \mu_B + \mu_C \approx 0$ holds.  Doubles (source outside
+the caustic), quads or Einstein crosses (source inside the caustic),
+and cusp triplets (source near a cusp) account for the observed
+morphologies of strong lens systems.  Giant arcs form when extended
+sources lie near the tangential caustic: images are tangentially
+stretched by factors of $\mu_{\mathrm{tan}} \propto 1/\sqrt{d_\perp}$
+along the tangential critical curve.
 
 
 % =====================================================================
