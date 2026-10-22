@@ -141,6 +141,17 @@ Every derivation cites the textbook equation it follows (e.g., "Carroll eq. 5.42
 ### Three-edition build
 `build.sh` produces the student PDF (no solutions), the instructor PDF (with solutions) and the **Annotated Study Edition** (solutions + an annotation layer) by passing `\def\showsolutions{}` / `\def\showannotated{}` at compile time. The switches live in `Notes/main.tex` (`\ifsolutions`, `\ifannotated`; annotated implies solutions); the per-module `NN_Solutions.tex` files are `\input` only when `\ifsolutions` is true. The annotation layer is three environments defined in `Notes/editions.tex` — `annotation`, `derivation`, `bridge` — which are `comment`-package exclusions in the other two editions, so the student and instructor PDFs are content-identical with or without annotations in the sources (`build.sh` asserts this via text-md5 fingerprints and the uppercase box-title sentinels). **Read the author rules R1–R5 in `editions.tex` before writing an annotation**; in particular a `\\` inside a skipped `\ifannotated` branch within `align` breaks the build. `keybox` and `aside` (GR reminder) in `preamble.tex` are always visible. After any edit, rebuild and check `Output/build_fingerprints.txt`.
 
+### Prose register (added 2026-10-22)
+
+The running prose must read like the reference texts (Narayan & Bartelmann, Congdon & Keeton, Schneider–Ehlers–Falco, SKW 2006, Carroll for Part I), not like a language model: continuous paragraphs, first person plural, definitions italicised once, no bold in running text, no `---` parentheticals, no "Note that / Importantly / elegant / key insight / Let's / you", no bulleted chapter agendas. The style sheet is `Notes/STYLE.md`; read it before writing or editing any `.tex` prose.
+
+Two scripts enforce it, and both run before every prose commit:
+```bash
+bash Notes/style_lint.sh --all                     # tell counts per file (baseline: Notes/style_lint_baseline_2026-10-22.txt)
+python3 Notes/prose_guard.py --git HEAD -- Notes/NN/*.tex   # must PASS: no math, number, label, ref, cite, link, heading or box changed
+```
+A prose edit that fails the guard changed content; revert it. A content change (a number, an equation) goes through the Mathematica rule above and is committed separately from prose.
+
 ## Important Reminders
 
 - **Copyright:** `Reference_Texts/` contains copyrighted textbooks and is git-ignored. Never commit anything from it.
